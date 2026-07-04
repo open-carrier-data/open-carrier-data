@@ -1,0 +1,84 @@
+{
+  "android_apns": [
+    {
+      "apn": "VZWADMIN",
+      "name": "Verizon FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer_bitmask": "13|14",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "password": "*",
+      "server": "*",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "*"
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Verizon",
+  "match": {
+    "mccmnc": [
+      "310004"
+    ]
+  },
+  "profile_id": "open.310004.7d6255ffa15e",
+  "schema_version": 1
+}

@@ -1,0 +1,455 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/carrier-profile.schema.json",
+  "title": "Open carrier profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "display_name",
+    "match",
+    "capabilities"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "match": {
+      "type": "object",
+      "required": [
+        "mccmnc"
+      ],
+      "properties": {
+        "mccmnc": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]{5,6}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "gid1_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9A-Fa-f]{1,32}$"
+          },
+          "uniqueItems": true
+        },
+        "gid2_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9A-Fa-f]{1,32}$"
+          },
+          "uniqueItems": true
+        },
+        "iccid_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]{5,13}$"
+          },
+          "uniqueItems": true
+        },
+        "imsi_prefix_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9xX]{5,10}$"
+          },
+          "uniqueItems": true
+        },
+        "spn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "uniqueItems": true
+        },
+        "android_carrier_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "volte": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "vowifi": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "vonr": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "video_calling": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "sms_over_ims": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "mms": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "rcs": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "esim": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "ims_conference": {
+          "$ref": "#/$defs/capabilityStatus"
+        },
+        "wifi_calling_roaming": {
+          "$ref": "#/$defs/capabilityStatus"
+        }
+      }
+    },
+    "android_carrier_config": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "boolean",
+          "integer",
+          "string",
+          "array"
+        ]
+      }
+    },
+    "addons": {
+      "type": "object",
+      "properties": {
+        "emergency_calling": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "entitlement": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "euc": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "ims": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "messaging": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "network_policy": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "operator_display": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "presence": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "provisioning": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "rcs": {
+          "$ref": "#/$defs/addonNamespace"
+        },
+        "wifi_calling": {
+          "$ref": "#/$defs/addonNamespace"
+        }
+      },
+      "additionalProperties": false
+    },
+    "android_apns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "apn",
+          "types"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "apn": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "*",
+                "default",
+                "mms",
+                "supl",
+                "dun",
+                "hipri",
+                "fota",
+                "ims",
+                "cbs",
+                "ia",
+                "emergency",
+                "mcx",
+                "xcap",
+                "vsim",
+                "bip",
+                "enterprise",
+                "rcs"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "mmsc": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "mmsproxy": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "mmsport": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "proxy": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "server": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "user": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "authtype": {
+            "type": "integer",
+            "minimum": -1,
+            "maximum": 3
+          },
+          "bearer": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "bearer_bitmask": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "network_type_bitmask": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "lingering_network_type_bitmask": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "infrastructure_bitmask": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "mtu": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "mtu_v4": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "mtu_v6": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "carrier_id": {
+            "type": "integer",
+            "minimum": -1,
+            "maximum": 1000000
+          },
+          "profile_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "apn_set_id": {
+            "type": "integer",
+            "minimum": -1,
+            "maximum": 1000000
+          },
+          "skip_464xlat": {
+            "type": "integer",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "max_conns": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "max_conns_time": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "wait_time": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "user_visible": {
+            "type": "boolean"
+          },
+          "user_editable": {
+            "type": "boolean"
+          },
+          "carrier_enabled": {
+            "type": "boolean"
+          },
+          "modem_cognitive": {
+            "type": "boolean"
+          },
+          "always_on": {
+            "type": "boolean"
+          },
+          "esim_bootstrap_provisioning": {
+            "type": "boolean"
+          },
+          "mvno_type": {
+            "type": "string",
+            "enum": [
+              "spn",
+              "gid",
+              "imsi",
+              "iccid"
+            ]
+          },
+          "mvno_match_data": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "IP",
+              "IPV6",
+              "IPV4V6",
+              "PPP",
+              "NON-IP",
+              "UNSTRUCTURED"
+            ]
+          },
+          "roaming_protocol": {
+            "type": "string",
+            "enum": [
+              "IP",
+              "IPV6",
+              "IPV4V6",
+              "PPP",
+              "NON-IP",
+              "UNSTRUCTURED"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "capabilityStatus": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "unsupported",
+        "conditional",
+        "unknown"
+      ]
+    },
+    "addonNamespace": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]{2,80}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/addonValue"
+      }
+    },
+    "addonValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer",
+          "minimum": -1000000,
+          "maximum": 1000000
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        {
+          "type": "array",
+          "maxItems": 40,
+          "items": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer",
+                "minimum": -1000000,
+                "maximum": 1000000
+              },
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

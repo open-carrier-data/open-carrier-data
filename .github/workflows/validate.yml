@@ -1,0 +1,44 @@
+name: Validate carrier data
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Validate public profiles
+        run: |
+          python3 tools/validate_public_carrier_data.py \
+            carriers \
+            generated/index.json
+
+      - name: Validate community claims
+        run: |
+          python3 tools/validate_community_claims.py \
+            community/claims \
+            generated/community
+
+      - name: Test community claim validator
+        run: |
+          python3 tools/test_community_claims.py
+
+      - name: Test Android output generator
+        run: |
+          python3 tools/test_generated_android_outputs.py
+
+      - name: Check generated Android output
+        run: |
+          python3 tools/generate_android_outputs.py \
+            carriers \
+            generated
+          git diff --exit-code -- generated

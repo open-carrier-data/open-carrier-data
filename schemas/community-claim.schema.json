@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/community-claim.schema.json",
+  "title": "Open Carrier Data community claim",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "claim_id",
+    "summary",
+    "status",
+    "carrier_match",
+    "change_type",
+    "changes",
+    "evidence",
+    "last_verified",
+    "expires"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^claim\\.[a-z0-9][a-z0-9_.-]{5,120}$"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "verified"
+      ]
+    },
+    "carrier_match": {
+      "$ref": "carrier-profile.schema.json#/properties/match"
+    },
+    "change_type": {
+      "enum": [
+        "add",
+        "confirm",
+        "correct",
+        "remove",
+        "override"
+      ]
+    },
+    "changes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "$ref": "carrier-profile.schema.json#/properties/display_name"
+        },
+        "match": {
+          "$ref": "carrier-profile.schema.json#/properties/match"
+        },
+        "capabilities": {
+          "$ref": "carrier-profile.schema.json#/properties/capabilities"
+        },
+        "android_apns": {
+          "$ref": "carrier-profile.schema.json#/properties/android_apns"
+        },
+        "android_carrier_config": {
+          "$ref": "carrier-profile.schema.json#/properties/android_carrier_config"
+        },
+        "addons": {
+          "$ref": "carrier-profile.schema.json#/properties/addons"
+        }
+      }
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "date",
+          "result",
+          "summary"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "enum": [
+              "device_test",
+              "carrier_documentation",
+              "maintained_source_reference",
+              "upstream_issue",
+              "maintainer_review"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "result": {
+            "enum": [
+              "works",
+              "fails",
+              "observed",
+              "unknown"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 280
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://"
+          }
+        }
+      }
+    },
+    "last_verified": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "expires": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "conflicts_with_stable": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    }
+  },
+  "additionalProperties": false
+}

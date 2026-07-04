@@ -1,0 +1,63 @@
+name: Maintained source suggestion
+description: Suggest a carrier-data source that automation could import.
+title: "[source] "
+labels:
+  - source-suggestion
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for sources that may help keep the database current.
+
+        Do not post personal passwords, private tokens, private URLs, private vendor credentials, raw firmware dumps, raw vendor responses, full IMSI values, full ICCID values, IMEI, or personal logs.
+  - type: input
+    id: source_name
+    attributes:
+      label: Source name
+      placeholder: Example carrier public APN page
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: Public URL, if available
+      placeholder: https://example.com/support/apn-settings
+  - type: dropdown
+    id: source_type
+    attributes:
+      label: Source type
+      options:
+        - Carrier public documentation
+        - Open-source carrier data project
+        - Android/AOSP-style data
+        - OEM or vendor carrier package
+        - Carrier bundle
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: usefulness
+    attributes:
+      label: What carrier data does it contain?
+      placeholder: APN, MMS, IMS, Wi-Fi Calling, RCS, CarrierConfig, MVNO matching, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: maintenance
+    attributes:
+      label: Why does this look maintained?
+      placeholder: The carrier updates this page; the upstream repo has recent commits; the package is served through a vendor update mechanism.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes or limitations
+      placeholder: Some raw files may need private processing and sanitizing before anything public is published.
+  - type: checkboxes
+    id: privacy_check
+    attributes:
+      label: Privacy check
+      options:
+        - label: I did not include personal passwords, private tokens, private URLs, private vendor credentials, raw firmware dumps, raw vendor responses, personal identifiers, or personal logs.
+          required: true

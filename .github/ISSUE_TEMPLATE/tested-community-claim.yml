@@ -1,0 +1,115 @@
+name: Tested community claim
+description: Submit a tested carrier-data claim without direct repository write access.
+title: "[claim] "
+labels:
+  - carrier-data
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when you tested a specific carrier-data change but cannot or do not want to submit a pull request.
+
+        A claim issue is not stable phone behavior. If the report is safe and useful, a maintainer or contributor can turn it into a JSON claim under `community/claims/`.
+
+        Do not include phone numbers, account data, personal passwords, private vendor credentials, full IMSI values, full ICCID values, IMEI, serial numbers, raw logs, raw bugreports, raw firmware dumps, or private vendor responses. Public APN usernames/passwords are okay only when they are carrier settings, not private account credentials.
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      placeholder: Example Mobile MMS works with this APN.
+    validations:
+      required: true
+  - type: input
+    id: carrier
+    attributes:
+      label: Carrier or MVNO name
+      placeholder: Example Mobile
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country
+      placeholder: Germany
+    validations:
+      required: true
+  - type: textarea
+    id: safe_match
+    attributes:
+      label: Safe carrier match details
+      description: Do not post full IMSI, full ICCID, IMEI, phone number, or account data.
+      placeholder: "MCC/MNC: 26299, SPN: Example, GID1 prefix: AB"
+    validations:
+      required: true
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: Change type
+      options:
+        - Add missing setting
+        - Fix existing setting
+        - Remove wrong setting
+        - Confirm existing generated setting
+        - I am not sure
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected_features
+    attributes:
+      label: Affected feature
+      options:
+        - label: Mobile data APN
+        - label: MMS APN
+        - label: IMS APN
+        - label: VoLTE
+        - label: Wi-Fi Calling
+        - label: VoNR
+        - label: SMS over IMS
+        - label: RCS
+        - label: eSIM
+        - label: Tethering
+        - label: XCAP or supplementary services
+        - label: Conference calling
+        - label: Carrier matching or MVNO detection
+        - label: Other
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed change
+      description: Describe the exact setting or behavior that should be added, fixed, removed, or confirmed.
+      placeholder: Add MMS APN mms.example with MMSC https://mms.example/mmsc.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and test result
+      description: Include public source links or a safe test summary.
+      placeholder: Tested MMS send and receive on 2026-07-05. Public carrier help page also lists the same MMSC.
+    validations:
+      required: true
+  - type: input
+    id: device_os
+    attributes:
+      label: Device and OS used for testing
+      placeholder: Samsung Galaxy S20, LineageOS build date 2026-07-05
+  - type: input
+    id: test_date
+    attributes:
+      label: Test date
+      placeholder: "2026-07-05"
+    validations:
+      required: true
+  - type: input
+    id: suggested_expiry
+    attributes:
+      label: Suggested expiry date
+      description: Claims should expire so old untested data does not look current forever.
+      placeholder: "2027-07-05"
+  - type: checkboxes
+    id: privacy_check
+    attributes:
+      label: Privacy check
+      options:
+        - label: I did not include phone numbers, account data, personal passwords, private vendor credentials, full IMSI values, full ICCID values, IMEI, raw logs, raw bugreports, raw firmware dumps, or private vendor responses.
+          required: true

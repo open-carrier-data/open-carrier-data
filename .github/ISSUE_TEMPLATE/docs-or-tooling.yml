@@ -1,0 +1,37 @@
+name: Documentation, schema, or tooling issue
+description: Report unclear docs, schema problems, validator bugs, or generated-output tooling issues.
+title: "[docs-tooling] "
+labels:
+  - documentation
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Documentation
+        - JSON schema
+        - Public validator
+        - Community claim validator
+        - Android output generator
+        - Generated output shape
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should be improved or fixed?
+      placeholder: The README does not explain what a missing-carrier report should contain.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      placeholder: A clear step-by-step guide or a validator error that points to the bad field.
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      placeholder: Links, commands, or small safe examples.
