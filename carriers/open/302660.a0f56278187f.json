@@ -1,0 +1,75 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_style": "-voltecall",
+      "network_selection_menu_style": "CHARACTER,5GREADY",
+      "network_type_capability": "BMC-SOL-GSM-CAN"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "indicator_icon_branding": "OYC",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet.mts",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Bell MTS (SOL)",
+  "match": {
+    "mccmnc": [
+      "302660"
+    ],
+    "spn": [
+      "Bell MTS"
+    ]
+  },
+  "profile_id": "open.302660.a0f56278187f",
+  "schema_version": 1
+}

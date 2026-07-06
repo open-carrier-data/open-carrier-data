@@ -1,0 +1,94 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_style": "-voltecall,-allowReasonEnable2g",
+      "network_selection_menu_style": "VODAFONE",
+      "network_type_capability": "BMC-CHR-GSM-CAN"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "chatrisp.apn",
+      "name": "chatr Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "name": "chatr Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "name": "chatr MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "netsvcs",
+      "name": "Netsvcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "chatr (CHR)",
+  "match": {
+    "mccmnc": [
+      "302720"
+    ],
+    "spn": [
+      "chatr"
+    ]
+  },
+  "profile_id": "open.302720.969d06c73249",
+  "schema_version": 1
+}
