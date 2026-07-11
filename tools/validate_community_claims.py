@@ -140,6 +140,10 @@ class ClaimError(Exception):
     pass
 
 
+class ExpiredClaim(ClaimError):
+    pass
+
+
 def load_json(path: Path) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -412,7 +416,7 @@ def evidence_confidence(evidence: list[dict[str, Any]]) -> str:
     medium = 0
     for item in evidence:
         evidence_type = item["type"]
-        if evidence_type in {"maintained_source_reference", "maintainer_review"}:
+        if evidence_type == "maintained_source_reference":
             strong += 1
         elif evidence_type in {"device_test", "carrier_documentation"}:
             medium += 1
@@ -442,7 +446,6 @@ def validate_evidence(path: Path, evidence: Any) -> list[dict[str, Any]]:
             "carrier_documentation",
             "maintained_source_reference",
             "upstream_issue",
-            "maintainer_review",
         }:
             raise ClaimError(f"{path}: evidence[{index}].type is invalid")
         evidence_date = parse_date(path, item.get("date"), f"evidence[{index}].date")
@@ -463,8 +466,118 @@ def validate_evidence(path: Path, evidence: Any) -> list[dict[str, Any]]:
             if not isinstance(url, str) or not URL_RE.fullmatch(url):
                 raise ClaimError(f"{path}: evidence[{index}].url must be an https URL")
             clean["url"] = url
+        if evidence_type in {
+            "carrier_documentation",
+            "maintained_source_reference",
+            "upstream_issue",
+        } and "url" not in clean:
+            raise ClaimError(f"{path}: evidence[{index}].url is required for {evidence_type}")
         out.append(clean)
     return out
+
+
+def prefix_values_overlap(first: list[str], second: list[str]) -> bool:
+    return any(
+        left.lower().startswith(right.lower()) or right.lower().startswith(left.lower())
+        for left in first
+        for right in second
+    )
+
+
+def imsi_patterns_overlap(first: str, second: str) -> bool:
+    for left, right in zip(first.lower(), second.lower()):
+        if left != "x" and right != "x" and left != right:
+            return False
+    return True
+
+
+def carrier_matches_overlap(first: dict[str, Any], second: dict[str, Any]) -> bool:
+    if not set(first.get("mccmnc", [])) & set(second.get("mccmnc", [])):
+        return False
+    for key in ("spn", "android_carrier_ids"):
+        left = first.get(key, [])
+        right = second.get(key, [])
+        if left and right:
+            if key == "spn":
+                if not {str(item).casefold() for item in left} & {
+                    str(item).casefold() for item in right
+                }:
+                    return False
+            elif not set(left) & set(right):
+                return False
+    for key in ("gid1_prefixes", "gid2_prefixes", "iccid_prefixes"):
+        left = first.get(key, [])
+        right = second.get(key, [])
+        if left and right and not prefix_values_overlap(left, right):
+            return False
+    left_imsis = first.get("imsi_prefix_patterns", [])
+    right_imsis = second.get("imsi_prefix_patterns", [])
+    if left_imsis and right_imsis and not any(
+        imsi_patterns_overlap(left, right) for left in left_imsis for right in right_imsis
+    ):
+        return False
+    return True
+
+
+def apn_identity(apn: dict[str, Any]) -> tuple[str, tuple[str, ...], str, str]:
+    return (
+        str(apn.get("apn") or "").casefold(),
+        tuple(sorted(apn.get("types") or [])),
+        str(apn.get("mvno_type") or "").casefold(),
+        str(apn.get("mvno_match_data") or "").casefold(),
+    )
+
+
+def changes_conflict_with_profile(
+    changes: dict[str, Any],
+    change_type: str,
+    profile: dict[str, Any],
+) -> bool:
+    if change_type in {"remove", "override"}:
+        return True
+    if "display_name" in changes and changes["display_name"] != profile.get("display_name"):
+        return True
+    if "match" in changes and changes["match"] != profile.get("match"):
+        return True
+    for key, value in changes.get("capabilities", {}).items():
+        stable = profile.get("capabilities", {}).get(key, "unknown")
+        if stable != "unknown" and value != stable:
+            return True
+    for key, value in changes.get("android_carrier_config", {}).items():
+        stable_config = profile.get("android_carrier_config", {})
+        if key in stable_config and stable_config[key] != value:
+            return True
+    for namespace, values in changes.get("addons", {}).items():
+        stable_values = profile.get("addons", {}).get(namespace, {})
+        if any(key in stable_values and stable_values[key] != value for key, value in values.items()):
+            return True
+    stable_apns = {
+        apn_identity(apn): apn for apn in profile.get("android_apns", []) or []
+    }
+    for apn in changes.get("android_apns", []) or []:
+        stable_apn = stable_apns.get(apn_identity(apn))
+        if stable_apn is not None and stable_apn != apn:
+            return True
+    return False
+
+
+def stable_conflicts(
+    carrier_match: dict[str, Any],
+    changes: dict[str, Any],
+    change_type: str,
+    stable_profiles: list[dict[str, Any]],
+) -> tuple[int, list[str]]:
+    overlapping = [
+        profile
+        for profile in stable_profiles
+        if carrier_matches_overlap(carrier_match, profile.get("match", {}))
+    ]
+    conflicts = sorted(
+        profile["profile_id"]
+        for profile in overlapping
+        if changes_conflict_with_profile(changes, change_type, profile)
+    )
+    return len(overlapping), conflicts
 
 
 def recommended_channel(
@@ -506,7 +619,11 @@ def change_areas(changes: dict[str, Any]) -> list[str]:
     return sorted(areas)
 
 
-def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
+def validate_claim(
+    path: Path,
+    claims_dir: Path,
+    stable_profiles: list[dict[str, Any]],
+) -> dict[str, Any]:
     data = load_json(path)
     require_type(path, data, dict, "root")
     scan_blocked_text(path, data)
@@ -523,7 +640,6 @@ def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
         "evidence",
         "last_verified",
         "expires",
-        "conflicts_with_stable",
         "notes",
     }
     unknown = set(data) - allowed
@@ -554,8 +670,19 @@ def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
     today = date.today()
     if last_verified > today:
         raise ClaimError(f"{path}: last_verified cannot be in the future")
+    newest_evidence = max(parse_date(path, item["date"], "evidence.date") for item in evidence)
+    if last_verified != newest_evidence:
+        raise ClaimError(f"{path}: last_verified must equal the newest evidence date")
     if expires < today:
-        raise ClaimError(f"{path}: claim is expired; refresh or remove it")
+        raise ExpiredClaim(f"{path}: claim is expired")
+
+    stable_overlap_count, stable_conflict_profile_ids = stable_conflicts(
+        carrier_match,
+        changes,
+        change_type,
+        stable_profiles,
+    )
+    conflicts_with_stable = bool(stable_conflict_profile_ids)
 
     field = field_risk(changes)
     effective_match = match_risk(carrier_match)
@@ -566,6 +693,8 @@ def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
         effective_match,
         change_type_risk(change_type),
     )
+    if conflicts_with_stable:
+        computed = max_risk(computed, "medium")
     declared_risk = data.get("risk", computed)
     if declared_risk not in RISK_SCORE:
         raise ClaimError(f"{path}: risk must be low, medium, or high")
@@ -580,10 +709,6 @@ def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
             f"{path}: expires is too far from last_verified for {computed} risk "
             f"(max {max_days} days)"
         )
-
-    conflicts_with_stable = data.get("conflicts_with_stable", False)
-    if not isinstance(conflicts_with_stable, bool):
-        raise ClaimError(f"{path}: conflicts_with_stable must be boolean")
 
     notes = data.get("notes")
     if notes is not None:
@@ -614,6 +739,8 @@ def validate_claim(path: Path, claims_dir: Path) -> dict[str, Any]:
         "last_verified": last_verified.isoformat(),
         "expires": expires.isoformat(),
         "conflicts_with_stable": conflicts_with_stable,
+        "stable_overlap_count": stable_overlap_count,
+        "stable_conflict_profile_ids": stable_conflict_profile_ids,
         "evidence_count": len(evidence),
     }
 
@@ -622,6 +749,20 @@ def claim_paths(claims_dir: Path) -> list[Path]:
     if not claims_dir.exists():
         return []
     return sorted(path for path in claims_dir.rglob("*.json") if path.is_file())
+
+
+def load_stable_profiles(stable_dir: Path) -> list[dict[str, Any]]:
+    if not stable_dir.exists():
+        return []
+    profiles: list[dict[str, Any]] = []
+    for path in sorted(stable_dir.rglob("*.json")):
+        data = load_json(path)
+        require_type(path, data, dict, "stable profile")
+        try:
+            profiles.append(public_data.validate_profile_object(path, data))
+        except public_data.ValidationError as exc:
+            raise ClaimError(str(exc)) from exc
+    return profiles
 
 
 def write_indexes(index_root: Path, claims: list[dict[str, Any]]) -> None:
@@ -700,15 +841,23 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("claims_dir", nargs="?", default="community/claims")
     parser.add_argument("index_root", nargs="?", default="generated/community")
+    parser.add_argument("--stable-dir", default="carriers")
     parser.add_argument("--write-index", action="store_true")
     args = parser.parse_args(argv[1:])
 
     claims_dir = Path(args.claims_dir)
     index_root = Path(args.index_root)
+    stable_profiles = load_stable_profiles(Path(args.stable_dir))
     claims: list[dict[str, Any]] = []
+    expired_count = 0
     seen_ids: set[str] = set()
     for path in claim_paths(claims_dir):
-        claim = validate_claim(path, claims_dir)
+        try:
+            claim = validate_claim(path, claims_dir, stable_profiles)
+        except ExpiredClaim as exc:
+            print(f"warning: {exc}; excluded from generated indexes", file=sys.stderr)
+            expired_count += 1
+            continue
         claim_id = claim["claim_id"]
         if claim_id in seen_ids:
             raise ClaimError(f"{path}: duplicate claim_id {claim_id}")
@@ -724,7 +873,8 @@ def main(argv: list[str]) -> int:
         "validated "
         f"{len(claims)} community claim(s), "
         f"{sum(1 for claim in claims if claim['recommended_channel'] == 'candidate')} candidate, "
-        f"{sum(1 for claim in claims if claim['recommended_channel'] == 'stable_eligible')} stable-eligible"
+        f"{sum(1 for claim in claims if claim['recommended_channel'] == 'stable_eligible')} stable-eligible, "
+        f"{expired_count} expired and excluded"
     )
     return 0
 

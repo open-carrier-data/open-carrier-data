@@ -1,36 +1,11 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": [
-        "DisableMuteHold,EndPreviousCall",
-        "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
-      ]
+      "e911_routing_policy": "auto"
     },
     "network_policy": {
       "display_antenna_limited": true,
-      "gcf_sor": true,
-      "mobile_network_setting_menu_style": [
-        "+dataenabled,-preferrednetworkmode,+disable2gmenu,-voltecall",
-        "+dataenabled,-preferrednetworkmode,-voltecall,+attdiag",
-        "+dataenabled,-preferrednetworkmode,-voltecall_sim_mobility,+attdiag,+autoSwitchNr5gMode"
-      ],
-      "network_type_capability": [
-        "ATT-AIO-GSM-USA",
-        "ATT-ATT-GSM-USA",
-        "ATT-DSH-GSM-USA"
-      ],
-      "voice_network_setting_style": [
-        "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_AIO",
-        "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_ATT"
-      ]
-    },
-    "operator_display": {
-      "indicator_icon_branding": [
-        "AIO",
-        "ATT",
-        "DSA"
-      ]
+      "gcf_sor": true
     },
     "wifi_calling": {
       "show_vowifi_end_call": true
@@ -39,16 +14,7 @@
   "android_apns": [
     {
       "apn": "ereseller",
-      "name": "MVNO eReseller",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "ereseller",
-      "name": "MVNO eReseller FOTA",
+      "name": "ereseller",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

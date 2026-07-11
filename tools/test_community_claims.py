@@ -78,6 +78,8 @@ def main() -> int:
                 "validate_community_claims.py",
                 str(claims_dir),
                 str(index_root),
+                "--stable-dir",
+                str(root / "carriers"),
                 "--write-index",
             ]
         )
@@ -121,6 +123,8 @@ def main() -> int:
                     "validate_community_claims.py",
                     str(claims_dir),
                     str(root / "generated" / "community"),
+                    "--stable-dir",
+                    str(root / "carriers"),
                     "--write-index",
                 ]
             ),
@@ -133,18 +137,94 @@ def main() -> int:
         expired_claim = base_claim()
         expired_claim["claim_id"] = "claim.example.mobile.expired"
         expired_claim["last_verified"] = (date.today() - timedelta(days=10)).isoformat()
+        expired_claim["evidence"][0]["date"] = expired_claim["last_verified"]
         expired_claim["expires"] = (date.today() - timedelta(days=1)).isoformat()
         write_json(claims_dir / "expired.json", expired_claim)
+        result = validate_community_claims.main(
+            [
+                "validate_community_claims.py",
+                str(claims_dir),
+                str(root / "generated" / "community"),
+                "--stable-dir",
+                str(root / "carriers"),
+                "--write-index",
+            ]
+        )
+        assert_true(result == 0, "expired claims should not fail validation")
+        index = json.loads(
+            (root / "generated" / "community" / "index.json").read_text(encoding="utf-8")
+        )
+        assert_true(index["claims"] == [], "expired claims should be excluded from indexes")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        claims_dir = root / "community" / "claims"
+        stable_dir = root / "carriers"
+        match = {"mccmnc": ["00101"], "spn": ["Example"]}
+        profile_id = validate_community_claims.public_data.canonical_profile_id(match)
+        write_json(
+            stable_dir / validate_community_claims.public_data.public_path_for(profile_id),
+            {
+                "schema_version": 1,
+                "profile_id": profile_id,
+                "display_name": "Example",
+                "match": match,
+                "capabilities": {"mms": "unsupported"},
+            },
+        )
+        conflict = base_claim()
+        conflict["claim_id"] = "claim.example.mobile.mms.conflict"
+        conflict["changes"] = {"capabilities": {"mms": "supported"}}
+        conflict["expires"] = (date.today() + timedelta(days=180)).isoformat()
+        write_json(claims_dir / "conflict.json", conflict)
+        validate_community_claims.main(
+            [
+                "validate_community_claims.py",
+                str(claims_dir),
+                str(root / "generated" / "community"),
+                "--stable-dir",
+                str(stable_dir),
+                "--write-index",
+            ]
+        )
+        indexed = json.loads(
+            (root / "generated" / "community" / "index.json").read_text(encoding="utf-8")
+        )["claims"][0]
+        assert_true(indexed["conflicts_with_stable"], "stable conflict should be computed")
+        assert_true(
+            indexed["stable_conflict_profile_ids"] == [profile_id],
+            "computed conflict should identify the stable profile",
+        )
+        assert_true(
+            indexed["recommended_channel"] == "community",
+            "a conflicting claim must not be promoted automatically",
+        )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        claims_dir = root / "community" / "claims"
+        claim = base_claim()
+        claim["evidence"] = [
+            {
+                "type": "maintainer_review",
+                "date": date.today().isoformat(),
+                "result": "observed",
+                "summary": "The submitter cannot grant their own maintainer review.",
+            }
+        ]
+        write_json(claims_dir / "self-review.json", claim)
         expect_error(
             lambda: validate_community_claims.main(
                 [
                     "validate_community_claims.py",
                     str(claims_dir),
                     str(root / "generated" / "community"),
+                    "--stable-dir",
+                    str(root / "carriers"),
                     "--write-index",
                 ]
             ),
-            "claim is expired",
+            "evidence[0].type is invalid",
         )
 
     print("community claim validation tests passed")

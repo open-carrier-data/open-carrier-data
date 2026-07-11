@@ -79,6 +79,9 @@ Good source suggestions are:
 - legal and safe to process privately when raw source material cannot be
   published.
 
+Also include the source's license or usage terms when known. A source can be
+current and still be unsuitable for redistribution.
+
 Examples:
 
 - public APN database;
@@ -106,6 +109,11 @@ community/claims/
 
 A claim is a structured report. It does not silently become default phone
 behavior. It is validated, indexed, and can be used for opt-in testing.
+
+You provide the facts and evidence. The validator calculates risk, overlap with
+stable profiles, conflicts, confidence, and the recommended channel. Do not add
+your own `conflicts_with_stable` value or claim a `maintainer_review` evidence
+type.
 
 Use a claim when you can say:
 
@@ -181,6 +189,9 @@ generated/candidate/index.json
 
 That does not mean they are stable defaults. It means they are structured data
 that downstream projects can inspect or test.
+
+When a claim expires, automation removes it from both generated indexes. The
+claim file may remain as history, but consumers no longer see it as current.
 
 ## Good Reports Are Specific
 

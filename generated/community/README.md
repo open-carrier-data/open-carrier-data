@@ -6,6 +6,9 @@ This directory contains generated indexes for valid community claims.
 claims are useful for investigation and opt-in testing, but they are not stable
 phone defaults.
 
+Risk, stable overlap, and conflicts are computed by the validator. Contributors
+cannot self-approve a claim. Expired claims are automatically excluded.
+
 The stable carrier snapshot is:
 
 ```text

@@ -7,10 +7,12 @@ run validation without dependency downloads.
 
 from __future__ import annotations
 
+from datetime import date
 import json
 import hashlib
 import re
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
@@ -234,6 +236,7 @@ APN_MVNO_TYPES = {
 
 GENERATED_FILES = {
     "README.md",
+    "evidence-index.json",
     "index.json",
     "android/README.md",
     "android/apns-conf.xml",
@@ -241,6 +244,7 @@ GENERATED_FILES = {
     "android/carrier-config-overrides.json",
     "android/carrier-id-index.json",
     "android/lookup.json",
+    "android/metadata.json",
     "android/mccmnc-index.json",
     "candidate/README.md",
     "candidate/index.json",
@@ -643,6 +647,234 @@ def validate_generated_files(generated_dir: Path) -> None:
         )
 
 
+def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: str) -> None:
+    require_type(path, items, list, name)
+    for index, item in enumerate(items):
+        require_type(path, item, dict, f"{name}[{index}]")
+        if set(item) != {
+            "kind",
+            "section",
+            "key",
+            "observed_value_count",
+            "resolution",
+        }:
+            raise ValidationError(f"{path}: {name}[{index}] has invalid keys")
+        if item["kind"] != expected_kind:
+            raise ValidationError(f"{path}: {name}[{index}].kind is invalid")
+        validate_string(path, item["section"], f"{name}[{index}].section", 80)
+        validate_string(path, item["key"], f"{name}[{index}].key", 160)
+        count = item["observed_value_count"]
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+            raise ValidationError(f"{path}: {name}[{index}].observed_value_count is invalid")
+        if item["resolution"] not in {"conditional", "omitted_from_stable"}:
+            raise ValidationError(f"{path}: {name}[{index}].resolution is invalid")
+
+
+def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
+    data = load_json(path)
+    require_type(path, data, dict, "evidence index")
+    if set(data) != {"schema_version", "description", "source_snapshots", "profiles"}:
+        raise ValidationError(f"{path}: evidence index has invalid keys")
+    if data.get("schema_version") != 1:
+        raise ValidationError(f"{path}: schema_version must be 1")
+    validate_string(path, data.get("description"), "description", 400)
+    source_snapshots = data.get("source_snapshots")
+    require_type(path, source_snapshots, list, "source_snapshots")
+    source_names: list[str] = []
+    for index, snapshot in enumerate(source_snapshots):
+        require_type(path, snapshot, dict, f"source_snapshots[{index}]")
+        if set(snapshot) != {
+            "schema_version",
+            "source_name",
+            "upstream_url",
+            "revision",
+            "revision_date",
+            "license_expression",
+            "redistribution",
+        }:
+            raise ValidationError(f"{path}: source_snapshots[{index}] has invalid keys")
+        if snapshot.get("schema_version") != 1:
+            raise ValidationError(f"{path}: source_snapshots[{index}] has invalid schema")
+        source_name = validate_string(
+            path, snapshot.get("source_name"), f"source_snapshots[{index}].source_name", 64
+        )
+        if not re.fullmatch(r"[a-z0-9][a-z0-9_]{1,63}", source_name):
+            raise ValidationError(f"{path}: source_snapshots[{index}].source_name is invalid")
+        source_names.append(source_name)
+        upstream_url = snapshot.get("upstream_url")
+        if not isinstance(upstream_url, str) or not re.fullmatch(r"https://[^\s]{3,500}", upstream_url):
+            raise ValidationError(f"{path}: source_snapshots[{index}].upstream_url is invalid")
+        revision = snapshot.get("revision")
+        if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40,64}", revision):
+            raise ValidationError(f"{path}: source_snapshots[{index}].revision is invalid")
+        try:
+            revision_date = date.fromisoformat(snapshot.get("revision_date"))
+        except (TypeError, ValueError) as exc:
+            raise ValidationError(
+                f"{path}: source_snapshots[{index}].revision_date is invalid"
+            ) from exc
+        age = (date.today() - revision_date).days
+        if age < 0 or age > 180:
+            raise ValidationError(
+                f"{path}: source_snapshots[{index}] is stale or future-dated"
+            )
+        validate_string(
+            path,
+            snapshot.get("license_expression"),
+            f"source_snapshots[{index}].license_expression",
+            80,
+        )
+        if snapshot.get("redistribution") not in {
+            "permitted",
+            "public_domain",
+            "transformed_facts_only",
+        }:
+            raise ValidationError(
+                f"{path}: source_snapshots[{index}].redistribution is invalid"
+            )
+    if source_names != sorted(set(source_names)):
+        raise ValidationError(f"{path}: source snapshots must be sorted and unique")
+    profiles = data.get("profiles")
+    require_type(path, profiles, list, "profiles")
+    actual_profile_ids: list[str] = []
+    allowed_keys = {
+        "profile_id",
+        "observation_count",
+        "sources",
+        "verified_observation_count",
+        "reviewed_range",
+        "observed_scope",
+        "conflicts",
+        "quality_gates",
+    }
+    scope_keys = {
+        "models",
+        "multi_csc",
+        "sales_codes",
+        "android_majors",
+        "omc_revisions",
+        "omc_versions",
+        "source_layers",
+    }
+    for index, evidence in enumerate(profiles):
+        require_type(path, evidence, dict, f"profiles[{index}]")
+        if set(evidence) - allowed_keys:
+            raise ValidationError(f"{path}: profiles[{index}] has unknown keys")
+        profile_id = validate_string(
+            path, evidence.get("profile_id"), f"profiles[{index}].profile_id", 96
+        )
+        actual_profile_ids.append(profile_id)
+        count = evidence.get("observation_count")
+        verified = evidence.get("verified_observation_count")
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+            raise ValidationError(f"{path}: profiles[{index}].observation_count is invalid")
+        if (
+            not isinstance(verified, int)
+            or isinstance(verified, bool)
+            or not 0 <= verified <= count
+        ):
+            raise ValidationError(
+                f"{path}: profiles[{index}].verified_observation_count is invalid"
+            )
+        sources = evidence.get("sources")
+        validate_canonical_list(path, sources, f"profiles[{index}].sources")
+        if not sources:
+            raise ValidationError(f"{path}: profiles[{index}].sources is empty")
+        for source in sources:
+            if not isinstance(source, str) or not re.fullmatch(r"[a-z0-9_]{2,64}", source):
+                raise ValidationError(f"{path}: profiles[{index}] has unsafe source name")
+        reviewed_range = evidence.get("reviewed_range")
+        if reviewed_range is not None:
+            require_type(path, reviewed_range, dict, f"profiles[{index}].reviewed_range")
+            if set(reviewed_range) != {"oldest", "newest"}:
+                raise ValidationError(f"{path}: profiles[{index}].reviewed_range has invalid keys")
+            try:
+                oldest = date.fromisoformat(reviewed_range["oldest"])
+                newest = date.fromisoformat(reviewed_range["newest"])
+            except (TypeError, ValueError) as exc:
+                raise ValidationError(
+                    f"{path}: profiles[{index}].reviewed_range is invalid"
+                ) from exc
+            if oldest > newest:
+                raise ValidationError(f"{path}: profiles[{index}].reviewed_range is reversed")
+        scope = evidence.get("observed_scope")
+        if scope is not None:
+            require_type(path, scope, dict, f"profiles[{index}].observed_scope")
+            if set(scope) - scope_keys:
+                raise ValidationError(f"{path}: profiles[{index}].observed_scope has unknown keys")
+            for key, values in scope.items():
+                validate_canonical_list(path, values, f"profiles[{index}].observed_scope.{key}")
+                for value in values:
+                    if not isinstance(value, str) or not re.fullmatch(
+                        r"[A-Za-z0-9._+-]{1,120}", value
+                    ):
+                        raise ValidationError(
+                            f"{path}: profiles[{index}].observed_scope.{key} is unsafe"
+                        )
+        if "conflicts" in evidence:
+            validate_resolution_items(
+                path, evidence["conflicts"], "conflict", f"profiles[{index}].conflicts"
+            )
+        if "quality_gates" in evidence:
+            validate_resolution_items(
+                path,
+                evidence["quality_gates"],
+                "quality_gate",
+                f"profiles[{index}].quality_gates",
+            )
+    if actual_profile_ids != sorted(actual_profile_ids):
+        raise ValidationError(f"{path}: profiles must be sorted by profile_id")
+    if set(actual_profile_ids) != expected_profile_ids or len(actual_profile_ids) != len(
+        expected_profile_ids
+    ):
+        raise ValidationError(f"{path}: profile IDs do not match the stable database")
+
+
+def validate_android_metadata(generated_dir: Path) -> None:
+    metadata_path = generated_dir / "android" / "metadata.json"
+    metadata = load_json(metadata_path)
+    require_type(metadata_path, metadata, dict, "metadata")
+    if set(metadata) != {"schema_version", "target", "output", "omissions"}:
+        raise ValidationError(f"{metadata_path}: metadata has invalid keys")
+    if metadata.get("schema_version") != 1:
+        raise ValidationError(f"{metadata_path}: schema_version must be 1")
+    target = metadata.get("target")
+    require_type(metadata_path, target, dict, "target")
+    version = target.get("apn_database_version")
+    if not isinstance(version, int) or isinstance(version, bool) or version < 1:
+        raise ValidationError(f"{metadata_path}: APN database version is invalid")
+    if target.get("carrier_config_gid_matching") != "exact_only":
+        raise ValidationError(f"{metadata_path}: CarrierConfig GID policy is invalid")
+
+    try:
+        apn_root = ET.parse(generated_dir / "android" / "apns-conf.xml").getroot()
+        config_root = ET.parse(generated_dir / "android" / "carrier-config-list.xml").getroot()
+    except ET.ParseError as exc:
+        raise ValidationError(f"{generated_dir}: invalid generated Android XML: {exc}") from exc
+    if apn_root.tag != "apns" or apn_root.attrib.get("version") != str(version):
+        raise ValidationError(f"{metadata_path}: APN XML version does not match metadata")
+    if config_root.tag != "carrier_config_list":
+        raise ValidationError(f"{generated_dir}: invalid CarrierConfig XML root")
+    output = metadata.get("output")
+    require_type(metadata_path, output, dict, "output")
+    if output != {
+        "apn_row_count": len(apn_root.findall("apn")),
+        "carrier_config_xml_block_count": len(config_root.findall("carrier_config")),
+    }:
+        raise ValidationError(f"{metadata_path}: output counts do not match XML")
+    omissions = metadata.get("omissions")
+    require_type(metadata_path, omissions, dict, "omissions")
+    expected_omission_keys = {
+        "apn_profiles_with_unrepresentable_match",
+        "carrier_config_profiles_with_unrepresentable_match",
+    }
+    if set(omissions) != expected_omission_keys or any(
+        not isinstance(value, int) or isinstance(value, bool) or value < 0
+        for value in omissions.values()
+    ):
+        raise ValidationError(f"{metadata_path}: omission counts are invalid")
+
+
 def main(argv: list[str]) -> int:
     carriers_dir = Path(argv[1]) if len(argv) > 1 else Path("carriers")
     index_path = Path(argv[2]) if len(argv) > 2 else Path("generated/index.json")
@@ -655,6 +887,7 @@ def main(argv: list[str]) -> int:
     )
     seen_ids: set[str] = set()
     profiles_by_path: dict[str, dict[str, Any]] = {}
+    generic_network_profiles: dict[str, str] = {}
     for path in profile_paths:
         profile = validate_profile(path)
         profile_id = profile["profile_id"]
@@ -668,9 +901,20 @@ def main(argv: list[str]) -> int:
                 f"{path}: public path must be carriers/{expected_path}"
             )
         profiles_by_path[actual_path] = profile
+        match = profile["match"]
+        if set(match) == {"mccmnc"}:
+            for mccmnc in match["mccmnc"]:
+                previous = generic_network_profiles.get(mccmnc)
+                if previous is not None:
+                    raise ValidationError(
+                        f"{path}: broad MCC/MNC {mccmnc} is already owned by {previous}"
+                    )
+                generic_network_profiles[mccmnc] = profile_id
 
     validate_index(index_path, profiles_by_path)
     validate_generated_files(index_path.parent)
+    validate_evidence_index(index_path.parent / "evidence-index.json", seen_ids)
+    validate_android_metadata(index_path.parent)
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0
 

@@ -97,8 +97,7 @@
               "device_test",
               "carrier_documentation",
               "maintained_source_reference",
-              "upstream_issue",
-              "maintainer_review"
+              "upstream_issue"
             ]
           },
           "date": {
@@ -122,7 +121,30 @@
             "type": "string",
             "pattern": "^https://"
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "carrier_documentation",
+                    "maintained_source_reference",
+                    "upstream_issue"
+                  ]
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "then": {
+              "required": [
+                "url"
+              ]
+            }
+          }
+        ]
       }
     },
     "last_verified": {
@@ -132,9 +154,6 @@
     "expires": {
       "type": "string",
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
-    },
-    "conflicts_with_stable": {
-      "type": "boolean"
     },
     "notes": {
       "type": "string",

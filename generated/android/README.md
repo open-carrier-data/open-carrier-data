@@ -15,6 +15,7 @@ mccmnc-index.json                 compact index by MCC/MNC
 carrier-id-index.json             compact index by Android carrier ID
 carrier-config-overrides.json     reviewed CarrierConfig overrides
 carrier-config-list.xml           Android-style CarrierConfig XML
+metadata.json                     target version, output counts, and omissions
 ```
 
 ## How To Match A SIM
@@ -35,6 +36,19 @@ The neutral JSON profiles remain the source of truth.
 Some facts cannot be represented safely in Android XML alone. For example, a
 match that depends on GID2 may stay in JSON lookup data because plain APN or
 CarrierConfig XML could lose that condition.
+
+CarrierConfig XML compares GID values exactly, while the neutral schema stores
+GID prefixes. Profiles that would be broadened are therefore omitted from
+`carrier-config-list.xml` and counted in `metadata.json`.
+
+The checked-in APN XML targets database version 8. Android's TelephonyProvider
+requires this to match the target build. Generate another target explicitly:
+
+```bash
+python3 tools/generate_android_outputs.py carriers generated --apn-version 9
+```
+
+Always inspect `metadata.json` before packaging generated XML.
 
 Runtime phone code should read a local snapshot. It should not fetch these
 files from GitHub while a SIM is loading or a call is starting.

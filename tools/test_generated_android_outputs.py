@@ -214,14 +214,36 @@ def main() -> int:
                 "claims": [],
             },
         )
+        profile_ids = sorted(
+            load_json(path)["profile_id"] for path in carriers_dir.rglob("*.json")
+        )
+        write_profile(
+            generated_dir / "evidence-index.json",
+            {
+                "schema_version": 1,
+                "description": "Safe source and scope summaries for neutral carrier profiles.",
+                "source_snapshots": [],
+                "profiles": [
+                    {
+                        "profile_id": profile_id,
+                        "observation_count": 1,
+                        "sources": ["lineageos"],
+                        "verified_observation_count": 0,
+                    }
+                    for profile_id in profile_ids
+                ],
+            },
+        )
         validation = validate_public_carrier_data.main(
             ["validate_public_carrier_data.py", str(carriers_dir), str(generated_dir / "index.json")]
         )
         assert_true(validation == 0, "public validator returned a non-zero status")
 
+        apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
+        assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")
         apn_rows = [
             dict(element.attrib)
-            for element in ET.parse(generated_dir / "android/apns-conf.xml").getroot()
+            for element in apn_root
         ]
         assert_true(len(apn_rows) == 6, f"expected 6 APN rows, got {len(apn_rows)}")
         by_apn = {(row["mcc"], row["mnc"], row["apn"]): row for row in apn_rows}
@@ -398,56 +420,39 @@ def main() -> int:
 
         config_xml = ET.parse(generated_dir / "android/carrier-config-list.xml").getroot()
         config_nodes = config_xml.findall("carrier_config")
-        assert_true(
-            len(config_nodes) == 3,
-            "CarrierConfig XML should skip GID2/ICCID profiles it cannot represent exactly",
-        )
+        assert_true(len(config_nodes) == 1, "CarrierConfig XML should omit prefix-only matches")
         assert_true(
             sorted(node.attrib["mcc"] + node.attrib["mnc"] for node in config_nodes)
-            == ["26202", "26223", "26226"],
-            "CarrierConfig XML should preserve every MCC/MNC filter",
+            == ["26226"],
+            "CarrierConfig XML should keep only exactly representable matches",
         )
         imsi_config = next(node for node in config_nodes if node.attrib["mcc"] + node.attrib["mnc"] == "26226")
         assert_true(
             imsi_config.attrib["imsi"] == "262260[0-9]1[0-9]*",
             "CarrierConfig XML should convert IMSI x-patterns to Java regex filters",
         )
-        first_config = next(node for node in config_nodes if node.attrib.get("cid") == "2536")
         assert_true(
-            first_config.attrib["cid"] == "2536",
-            "CarrierConfig XML should preserve Android carrier ID filters",
+            "gid1" not in imsi_config.attrib,
+            "CarrierConfig XML must not turn a GID prefix into an exact GID",
         )
-        assert_true(
-            first_config.attrib["gid1"] == "AB",
-            "CarrierConfig XML should preserve GID1 filters",
-        )
-        assert_true(
-            first_config.attrib["name"] == "Example Multi",
-            "CarrierConfig XML should include a readable carrier name filter",
-        )
-        config_children = {child.attrib["name"]: child for child in first_config}
+        config_children = {child.attrib["name"]: child for child in imsi_config}
         assert_true(
             config_children["carrier_volte_available_bool"].tag == "boolean"
             and config_children["carrier_volte_available_bool"].attrib["value"] == "true",
             "CarrierConfig XML should write boolean values",
         )
+        metadata = load_json(generated_dir / "android/metadata.json")
         assert_true(
-            config_children["carrier_default_wfc_ims_roaming_mode_int"].tag == "int"
-            and config_children["carrier_default_wfc_ims_roaming_mode_int"].attrib["value"] == "2",
-            "CarrierConfig XML should write integer values",
+            metadata["target"]["apn_database_version"] == 8,
+            "metadata should identify the APN target version",
         )
         assert_true(
-            config_children["imsvoice.conference_factory_uri_string"].tag == "string"
-            and config_children["imsvoice.conference_factory_uri_string"].text
-            == "sip:conf@example.com",
-            "CarrierConfig XML should write string values",
+            metadata["target"]["carrier_config_gid_matching"] == "exact_only",
+            "metadata should identify exact CarrierConfig GID semantics",
         )
-        error_codes = config_children["wfc_operator_error_codes_string_array"]
         assert_true(
-            error_codes.tag == "string-array"
-            and error_codes.attrib["num"] == "1"
-            and error_codes.find("item").attrib["value"] == "REG09|0",
-            "CarrierConfig XML should write string-array values",
+            metadata["omissions"]["carrier_config_profiles_with_unrepresentable_match"] == 2,
+            "metadata should count CarrierConfig profiles omitted to avoid broadening matches",
         )
 
     print("generated Android output tests passed")

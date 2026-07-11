@@ -19,6 +19,7 @@ fixes alone.
 - Report missing or wrong data: https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
 - Contribution guide: `CONTRIBUTING.md`
 - Stable snapshot: `generated/index.json`
+- Source revisions and merge evidence: `generated/evidence-index.json`
 - Android output: `generated/android/`
 - Data schema: `schemas/carrier-profile.schema.json`
 - Community claims: `community/`
@@ -55,6 +56,7 @@ or handling emergency service.
 carriers/                 public neutral carrier profiles
 community/                public community claims
 generated/index.json      stable generated snapshot
+generated/evidence-index.json exact source revisions and resolution evidence
 generated/android/        generated Android APN, CarrierConfig, and lookup data
 generated/community/      generated index of valid community claims
 generated/candidate/      generated index of testable community claims
@@ -96,6 +98,29 @@ generated/candidate/index.json    claims that are suitable for opt-in testing
 
 Stable data is conservative. Community claims are faster and useful for edge
 cases, but downstream projects must choose whether to use them.
+
+The validator, not the claim author, calculates claim risk, overlap, and
+conflicts with stable data. Expired claims stay out of generated indexes
+without blocking the rest of the database.
+
+## Where The Data Comes From
+
+The current stable snapshot combines maintained AOSP, LineageOS, Mobile
+Broadband Provider Info, Apple carrier-bundle, and Samsung OMC observations.
+Each source is translated into the same neutral profile model.
+
+`generated/evidence-index.json` records:
+
+- exact Git revisions and revision dates for public upstreams;
+- declared source terms;
+- which source families observed each neutral profile;
+- Samsung model, OMC, sales-code, and revision scope when safely publishable;
+- conflicts and quality gates that caused a value to become conditional or be
+  omitted.
+
+Public Git source revisions older than 180 days fail validation. Private vendor
+observations also need a recent checked date. Read `SOURCES.md` for the exact
+source and merge policy.
 
 ## If A Carrier Is Missing Or Wrong
 
@@ -163,6 +188,7 @@ Main files for consumers:
 
 ```text
 generated/index.json
+generated/evidence-index.json
 generated/android/apns-conf.xml
 generated/android/lookup.json
 generated/android/mccmnc-index.json
@@ -178,6 +204,13 @@ or IMSI prefix pattern.
 Some match rules cannot be represented perfectly in every Android XML format.
 Those details stay in JSON and lookup indexes instead of being broadened into
 unsafe matches.
+
+`generated/android/apns-conf.xml` currently targets APN database version 8.
+Android requires this number to match the target build's internal APN version.
+Use `--apn-version` when generating for a different target. Read
+`generated/android/metadata.json` before packaging XML output; it records the
+target version and every profile omitted because XML could not represent its
+match safely.
 
 ## Validate Changes
 
@@ -214,8 +247,13 @@ Open Carrier Data is not:
 It is shared source data and generated output that downstream projects can
 package, test, and ship through their own normal update process.
 
-## License Status
+## License And Source Terms
 
-No final license file has been added yet. Until a clear license is added, treat
-this repository as a public project preview and do not assume the data or
-tooling can be reused outside this repository.
+Project software and documentation are Apache-2.0. The project's own rights in
+the neutral data compilation are waived under CC0, but upstream terms still
+apply. AOSP, LineageOS, and Mobile Broadband Provider Info have clear reusable
+terms. Apple declares no license, and this project does not assert a Samsung
+license; only narrow transformed facts are published from those sources.
+
+Read `DATA-LICENSE.md`, `SOURCES.md`, and the source snapshots in
+`generated/evidence-index.json` before redistribution.

@@ -10,6 +10,7 @@ truth. Change the source profiles or claims first, then regenerate output.
 
 ```text
 index.json              stable maintained-source snapshot
+evidence-index.json     source revisions, scope, conflicts, and quality gates
 android/                Android APN, CarrierConfig, and lookup output
 community/index.json    valid non-expired community claims
 candidate/index.json    community claims suitable for opt-in testing
@@ -21,6 +22,10 @@ candidate/index.json    community claims suitable for opt-in testing
 sources and sanitized public profiles. Private vendor/OEM source snapshots must
 be refreshed and carry a recent checked date before they can affect this stable
 snapshot.
+
+`evidence-index.json` is part of the stable contract. It shows the exact
+revision of each public upstream and explains facts that were made conditional
+or omitted during neutral merging.
 
 Community and candidate indexes are separate. They let downstream projects
 inspect or test user-reported edge cases without silently changing stable phone

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -146,11 +147,16 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, str]]:
     return records
 
 
-def write_apns(path: Path, profiles: list[dict[str, Any]]) -> int:
+def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
     records: list[dict[str, str]] = []
     for profile in profiles:
         records.extend(apn_records(profile))
-    records.sort(
+    unique_records = {
+        json.dumps(record, sort_keys=True, separators=(",", ":")): record
+        for record in records
+    }
+    records = sorted(
+        unique_records.values(),
         key=lambda item: (
             item.get("mcc", ""),
             item.get("mnc", ""),
@@ -162,7 +168,7 @@ def write_apns(path: Path, profiles: list[dict[str, Any]]) -> int:
     )
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
-        '<apns version="1">',
+        f'<apns version="{version}">',
     ]
     for record in records:
         attrs = "".join(attr(key, record[key]) for key in sorted(record))
@@ -290,7 +296,11 @@ def config_filter_records(profile: dict[str, Any]) -> list[dict[str, str]]:
     match = profile.get("match", {})
     if not isinstance(match, dict):
         return []
-    if match.get("gid2_prefixes") or match.get("iccid_prefixes"):
+    if (
+        match.get("gid1_prefixes")
+        or match.get("gid2_prefixes")
+        or match.get("iccid_prefixes")
+    ):
         return []
 
     mccmncs = sorted(
@@ -313,9 +323,6 @@ def config_filter_records(profile: dict[str, Any]) -> list[dict[str, str]]:
     spns = sorted({item for item in match.get("spn", []) if isinstance(item, str) and item}) or [
         None
     ]
-    gids = sorted(
-        {item.upper() for item in match.get("gid1_prefixes", []) if isinstance(item, str) and item}
-    ) or [None]
     imsis = sorted(
         {
             item.lower()
@@ -334,18 +341,15 @@ def config_filter_records(profile: dict[str, Any]) -> list[dict[str, str]]:
         }
         for carrier_id in carrier_ids:
             for spn in spns:
-                for gid in gids:
-                    for imsi in imsis:
-                        record = dict(base)
-                        if carrier_id is not None:
-                            record["cid"] = str(carrier_id)
-                        if spn is not None:
-                            record["spn"] = java_regex_literal(spn)
-                        if gid is not None:
-                            record["gid1"] = gid
-                        if imsi is not None:
-                            record["imsi"] = imsi_xpattern_to_regex(imsi)
-                        records.append(record)
+                for imsi in imsis:
+                    record = dict(base)
+                    if carrier_id is not None:
+                        record["cid"] = str(carrier_id)
+                    if spn is not None:
+                        record["spn"] = java_regex_literal(spn)
+                    if imsi is not None:
+                        record["imsi"] = imsi_xpattern_to_regex(imsi)
+                    records.append(record)
     records.sort(
         key=lambda item: (
             item.get("cid", ""),
@@ -421,12 +425,64 @@ def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
     return len(blocks)
 
 
+def write_metadata(
+    path: Path,
+    profiles: list[dict[str, Any]],
+    apn_version: int,
+    apn_count: int,
+    config_xml_count: int,
+) -> None:
+    apn_unrepresentable = sum(
+        1
+        for profile in profiles
+        if profile.get("android_apns") and not profile_apn_mvnos(profile.get("match", {}))
+    )
+    config_unrepresentable = sum(
+        1
+        for profile in profiles
+        if profile.get("android_carrier_config") and not config_filter_records(profile)
+    )
+    value = {
+        "schema_version": 1,
+        "target": {
+            "apn_database_version": apn_version,
+            "carrier_config_gid_matching": "exact_only",
+        },
+        "output": {
+            "apn_row_count": apn_count,
+            "carrier_config_xml_block_count": config_xml_count,
+        },
+        "omissions": {
+            "apn_profiles_with_unrepresentable_match": apn_unrepresentable,
+            "carrier_config_profiles_with_unrepresentable_match": config_unrepresentable,
+        },
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def main(argv: list[str]) -> int:
-    carriers_dir = Path(argv[1]) if len(argv) > 1 else Path("carriers")
-    generated_dir = Path(argv[2]) if len(argv) > 2 else Path("generated")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("carriers_dir", nargs="?", type=Path, default=Path("carriers"))
+    parser.add_argument("generated_dir", nargs="?", type=Path, default=Path("generated"))
+    parser.add_argument(
+        "--apn-version",
+        type=int,
+        default=8,
+        help="APN XML version expected by the target Android build (default: 8)",
+    )
+    args = parser.parse_args(argv[1:])
+    if args.apn_version < 1:
+        parser.error("--apn-version must be a positive integer")
+    carriers_dir = args.carriers_dir
+    generated_dir = args.generated_dir
     profile_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
     profiles = [profile for _, profile in profile_items]
-    apn_count = write_apns(generated_dir / "android" / "apns-conf.xml", profiles)
+    apn_count = write_apns(
+        generated_dir / "android" / "apns-conf.xml",
+        profiles,
+        args.apn_version,
+    )
     write_lookup(generated_dir / "android" / "lookup.json", carriers_dir, profile_items)
     mccmnc_count = write_mccmnc_index(
         generated_dir / "android" / "mccmnc-index.json",
@@ -445,6 +501,13 @@ def main(argv: list[str]) -> int:
     config_xml_count = write_carrier_config_xml(
         generated_dir / "android" / "carrier-config-list.xml",
         profiles,
+    )
+    write_metadata(
+        generated_dir / "android" / "metadata.json",
+        profiles,
+        args.apn_version,
+        apn_count,
+        config_xml_count,
     )
     print(
         f"generated Android output for {len(profiles)} profile(s): "
