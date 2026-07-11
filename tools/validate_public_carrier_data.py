@@ -16,6 +16,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
+from carrier_config_types import config_value_has_expected_type, expected_config_type
+
 
 ALLOWED_CONFIG_KEYS = {
     "allow_add_call_during_video_call",
@@ -485,14 +487,14 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
                 f"{path}: unreviewed CarrierConfig keys: {sorted(unknown_config)}"
             )
         for key, value in config.items():
-            if not isinstance(value, (bool, int, str, list)):
-                raise ValidationError(f"{path}: unsupported value type for {key}")
-            if isinstance(value, list):
-                for item in value:
-                    if not isinstance(item, (bool, int, str)):
-                        raise ValidationError(
-                            f"{path}: unsupported list item type for {key}"
-                        )
+            try:
+                expected = expected_config_type(key)
+            except ValueError as exc:
+                raise ValidationError(f"{path}: {exc}") from exc
+            if not config_value_has_expected_type(key, value):
+                raise ValidationError(
+                    f"{path}: android_carrier_config.{key} must be {expected}"
+                )
 
     addons = data.get("addons")
     if addons is not None:
@@ -520,6 +522,10 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             require_type(path, types, list, f"android_apns[{index}].types")
             if not types:
                 raise ValidationError(f"{path}: android_apns[{index}].types is empty")
+            if types != sorted(set(types)):
+                raise ValidationError(
+                    f"{path}: android_apns[{index}].types must be sorted and unique"
+                )
             for apn_type in types:
                 if apn_type not in APN_TYPES:
                     raise ValidationError(
@@ -531,12 +537,20 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             for key in APN_PORT_FIELDS:
                 if key in apn:
                     port = apn[key]
-                    if not isinstance(port, int) or not 1 <= port <= 65535:
+                    if (
+                        not isinstance(port, int)
+                        or isinstance(port, bool)
+                        or not 1 <= port <= 65535
+                    ):
                         raise ValidationError(f"{path}: android_apns[{index}].{key}")
             for key, (minimum, maximum) in APN_INT_FIELDS.items():
                 if key in apn:
                     value = apn[key]
-                    if not isinstance(value, int) or not minimum <= value <= maximum:
+                    if (
+                        not isinstance(value, int)
+                        or isinstance(value, bool)
+                        or not minimum <= value <= maximum
+                    ):
                         raise ValidationError(f"{path}: android_apns[{index}].{key}")
             for key in APN_BOOL_FIELDS:
                 if key in apn and not isinstance(apn[key], bool):
@@ -689,11 +703,12 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
             "upstream_url",
             "revision",
             "revision_date",
+            "checked_at",
             "license_expression",
             "redistribution",
         }:
             raise ValidationError(f"{path}: source_snapshots[{index}] has invalid keys")
-        if snapshot.get("schema_version") != 1:
+        if snapshot.get("schema_version") != 2:
             raise ValidationError(f"{path}: source_snapshots[{index}] has invalid schema")
         source_name = validate_string(
             path, snapshot.get("source_name"), f"source_snapshots[{index}].source_name", 64
@@ -713,7 +728,13 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
             raise ValidationError(
                 f"{path}: source_snapshots[{index}].revision_date is invalid"
             ) from exc
-        age = (date.today() - revision_date).days
+        try:
+            checked_at = date.fromisoformat(snapshot.get("checked_at"))
+        except (TypeError, ValueError) as exc:
+            raise ValidationError(
+                f"{path}: source_snapshots[{index}].checked_at is invalid"
+            ) from exc
+        age = (date.today() - checked_at).days
         if age < 0 or age > 180:
             raise ValidationError(
                 f"{path}: source_snapshots[{index}] is stale or future-dated"
@@ -742,6 +763,7 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
         "observation_count",
         "sources",
         "verified_observation_count",
+        "fact_sources",
         "reviewed_range",
         "observed_scope",
         "conflicts",
@@ -783,6 +805,40 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
         for source in sources:
             if not isinstance(source, str) or not re.fullmatch(r"[a-z0-9_]{2,64}", source):
                 raise ValidationError(f"{path}: profiles[{index}] has unsafe source name")
+        fact_sources = evidence.get("fact_sources")
+        require_type(path, fact_sources, list, f"profiles[{index}].fact_sources")
+        actual_fact_keys: list[tuple[str, str]] = []
+        for fact_index, fact in enumerate(fact_sources):
+            label = f"profiles[{index}].fact_sources[{fact_index}]"
+            require_type(path, fact, dict, label)
+            if set(fact) != {"section", "key", "sources"}:
+                raise ValidationError(f"{path}: {label} has invalid keys")
+            section = fact.get("section")
+            if section not in {
+                "profile",
+                "match",
+                "capabilities",
+                "android_carrier_config",
+                "android_apns",
+                "addons",
+            }:
+                raise ValidationError(f"{path}: {label}.section is invalid")
+            key = validate_string(path, fact.get("key"), f"{label}.key", 180)
+            if not re.fullmatch(r"[A-Za-z0-9_.:-]{1,180}", key):
+                raise ValidationError(f"{path}: {label}.key is unsafe")
+            fact_source_names = fact.get("sources")
+            validate_canonical_list(path, fact_source_names, f"{label}.sources")
+            if not fact_source_names or not set(fact_source_names) <= set(sources):
+                raise ValidationError(f"{path}: {label}.sources is invalid")
+            actual_fact_keys.append((section, key))
+        if actual_fact_keys != sorted(set(actual_fact_keys)):
+            raise ValidationError(
+                f"{path}: profiles[{index}].fact_sources must be sorted and unique"
+            )
+        if ("profile", "display_name") not in actual_fact_keys:
+            raise ValidationError(f"{path}: profiles[{index}] lacks display-name provenance")
+        if ("match", "match") not in actual_fact_keys:
+            raise ValidationError(f"{path}: profiles[{index}] lacks match provenance")
         reviewed_range = evidence.get("reviewed_range")
         if reviewed_range is not None:
             require_type(path, reviewed_range, dict, f"profiles[{index}].reviewed_range")
@@ -797,6 +853,10 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
                 ) from exc
             if oldest > newest:
                 raise ValidationError(f"{path}: profiles[{index}].reviewed_range is reversed")
+            if (date.today() - oldest).days > 180 or newest > date.today():
+                raise ValidationError(
+                    f"{path}: profiles[{index}].reviewed_range is stale or future-dated"
+                )
         scope = evidence.get("observed_scope")
         if scope is not None:
             require_type(path, scope, dict, f"profiles[{index}].observed_scope")
@@ -830,7 +890,10 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
         raise ValidationError(f"{path}: profile IDs do not match the stable database")
 
 
-def validate_android_metadata(generated_dir: Path) -> None:
+def validate_android_metadata(
+    generated_dir: Path,
+    expected_profile_ids: set[str],
+) -> None:
     metadata_path = generated_dir / "android" / "metadata.json"
     metadata = load_json(metadata_path)
     require_type(metadata_path, metadata, dict, "metadata")
@@ -865,14 +928,25 @@ def validate_android_metadata(generated_dir: Path) -> None:
     omissions = metadata.get("omissions")
     require_type(metadata_path, omissions, dict, "omissions")
     expected_omission_keys = {
+        "apn_profile_ids_with_unrepresentable_match",
         "apn_profiles_with_unrepresentable_match",
+        "carrier_config_profile_ids_with_unrepresentable_match",
         "carrier_config_profiles_with_unrepresentable_match",
     }
-    if set(omissions) != expected_omission_keys or any(
-        not isinstance(value, int) or isinstance(value, bool) or value < 0
-        for value in omissions.values()
-    ):
-        raise ValidationError(f"{metadata_path}: omission counts are invalid")
+    if set(omissions) != expected_omission_keys:
+        raise ValidationError(f"{metadata_path}: omission fields are invalid")
+    for prefix in ("apn", "carrier_config"):
+        count = omissions[f"{prefix}_profiles_with_unrepresentable_match"]
+        profile_ids = omissions[f"{prefix}_profile_ids_with_unrepresentable_match"]
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValidationError(f"{metadata_path}: omission count is invalid")
+        validate_canonical_list(
+            metadata_path,
+            profile_ids,
+            f"omissions.{prefix}_profile_ids_with_unrepresentable_match",
+        )
+        if len(profile_ids) != count or not set(profile_ids) <= expected_profile_ids:
+            raise ValidationError(f"{metadata_path}: omission profile IDs are invalid")
 
 
 def main(argv: list[str]) -> int:
@@ -914,7 +988,7 @@ def main(argv: list[str]) -> int:
     validate_index(index_path, profiles_by_path)
     validate_generated_files(index_path.parent)
     validate_evidence_index(index_path.parent / "evidence-index.json", seen_ids)
-    validate_android_metadata(index_path.parent)
+    validate_android_metadata(index_path.parent, seen_ids)
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0
 

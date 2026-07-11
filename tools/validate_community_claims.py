@@ -9,12 +9,13 @@ stable after enough evidence exists.
 from __future__ import annotations
 
 import argparse
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import json
 import re
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 import validate_public_carrier_data as public_data
 
@@ -176,7 +177,6 @@ def scan_blocked_text(path: Path, value: Any, parts: tuple[str, ...] = ()) -> No
         for key, child in value.items():
             if not isinstance(key, str):
                 raise ClaimError(f"{path}: object keys must be strings")
-            scan_blocked_text(path, key, parts + ("<key>",))
             scan_blocked_text(path, child, parts + (key,))
         return
     if isinstance(value, list):
@@ -184,6 +184,8 @@ def scan_blocked_text(path: Path, value: Any, parts: tuple[str, ...] = ()) -> No
             scan_blocked_text(path, child, parts + ("[]",))
         return
     if not isinstance(value, str):
+        return
+    if "android_apns" in parts and parts[-1:] in {("user",), ("password",)}:
         return
 
     for name, pattern in BLOCK_PATTERNS.items():
@@ -325,20 +327,28 @@ def max_risk(*risks: str) -> str:
 def match_risk(match: dict[str, Any]) -> str:
     if match.get("android_carrier_ids"):
         return "low"
+    network_count = len(match.get("mccmnc", []))
     specific_keys = {
         key
         for key in ("spn", "gid1_prefixes", "gid2_prefixes", "iccid_prefixes", "imsi_prefix_patterns")
         if match.get(key)
     }
     if "spn" in specific_keys or "gid1_prefixes" in specific_keys or "gid2_prefixes" in specific_keys:
-        return "low"
+        risk = "low"
+        if network_count > 1:
+            risk = "medium"
+        if network_count > 5:
+            risk = "high"
+        return risk
     if "iccid_prefixes" in specific_keys:
         shortest = min(len(value) for value in match["iccid_prefixes"])
-        return "low" if shortest >= 7 else "medium"
+        risk = "low" if shortest >= 7 else "medium"
+        return max_risk(risk, "medium") if network_count > 1 else risk
     if "imsi_prefix_patterns" in specific_keys:
         shortest = min(len(value.replace("x", "").replace("X", "")) for value in match["imsi_prefix_patterns"])
-        return "low" if shortest >= 6 else "medium"
-    return "medium" if len(match.get("mccmnc", [])) == 1 else "high"
+        risk = "low" if shortest >= 6 else "medium"
+        return max_risk(risk, "medium") if network_count > 1 else risk
+    return "medium" if network_count == 1 else "high"
 
 
 def capability_risk(key: str) -> str:
@@ -355,7 +365,16 @@ def apn_risk(apn: dict[str, Any]) -> str:
     types = set(apn.get("types", []))
     if "*" in types or "emergency" in types:
         return "high"
-    if types & {"ims", "xcap", "dun", "enterprise", "ia", "mcx", "rcs"}:
+    if types & {
+        "default",
+        "ims",
+        "xcap",
+        "dun",
+        "enterprise",
+        "ia",
+        "mcx",
+        "rcs",
+    }:
         return "medium"
     return "low"
 
@@ -404,21 +423,50 @@ def change_type_risk(change_type: str) -> str:
 
 
 def combined_claim_risk(field: str, match: str, change: str) -> str:
-    if field == "low":
-        if match == "high" or change == "high":
-            return "medium"
-        return "low"
     return max_risk(field, match, change)
 
 
-def evidence_confidence(evidence: list[dict[str, Any]]) -> str:
+def canonical_url(value: str) -> str:
+    parsed = urlsplit(value)
+    path = parsed.path.rstrip("/") or "/"
+    return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), path, parsed.query, ""))
+
+
+def url_is_trusted_source(value: str, trusted_prefixes: set[str]) -> bool:
+    target = urlsplit(canonical_url(value))
+    for prefix_value in trusted_prefixes:
+        prefix = urlsplit(prefix_value)
+        if target.scheme != prefix.scheme or target.netloc != prefix.netloc:
+            continue
+        prefix_path = prefix.path.rstrip("/")
+        if target.path == prefix_path or target.path.startswith(prefix_path + "/"):
+            return True
+    return False
+
+
+def evidence_confidence(
+    evidence: list[dict[str, Any]],
+    trusted_prefixes: set[str],
+) -> str:
     strong = 0
     medium = 0
-    for item in evidence:
+    unique_items = {
+        json.dumps(item, sort_keys=True, separators=(",", ":")): item
+        for item in evidence
+        if item["result"] != "unknown"
+    }.values()
+    for item in unique_items:
         evidence_type = item["type"]
-        if evidence_type == "maintained_source_reference":
+        if (
+            evidence_type == "maintained_source_reference"
+            and url_is_trusted_source(item.get("url", ""), trusted_prefixes)
+        ):
             strong += 1
-        elif evidence_type in {"device_test", "carrier_documentation"}:
+        elif evidence_type in {
+            "device_test",
+            "carrier_documentation",
+            "maintained_source_reference",
+        }:
             medium += 1
     if strong >= 1 or medium >= 2:
         return "high"
@@ -473,7 +521,27 @@ def validate_evidence(path: Path, evidence: Any) -> list[dict[str, Any]]:
         } and "url" not in clean:
             raise ClaimError(f"{path}: evidence[{index}].url is required for {evidence_type}")
         out.append(clean)
-    return out
+    unique = {
+        json.dumps(item, sort_keys=True, separators=(",", ":")): item
+        for item in out
+    }
+    return [unique[key] for key in sorted(unique)]
+
+
+def claim_has_public_apn_credentials(changes: dict[str, Any]) -> bool:
+    return any(
+        "user" in apn or "password" in apn
+        for apn in changes.get("android_apns", []) or []
+    )
+
+
+def evidence_has_public_setting_url(evidence: list[dict[str, Any]]) -> bool:
+    return any(
+        item["type"] in {"carrier_documentation", "maintained_source_reference"}
+        and item.get("url")
+        and item["result"] != "unknown"
+        for item in evidence
+    )
 
 
 def prefix_values_overlap(first: list[str], second: list[str]) -> bool:
@@ -528,6 +596,36 @@ def apn_identity(apn: dict[str, Any]) -> tuple[str, tuple[str, ...], str, str]:
     )
 
 
+def apn_applicability_overlaps(first: dict[str, Any], second: dict[str, Any]) -> bool:
+    first_types = set(first.get("types") or [])
+    second_types = set(second.get("types") or [])
+    if not (
+        "*" in first_types
+        or "*" in second_types
+        or first_types & second_types
+    ):
+        return False
+    first_mvno = (
+        str(first.get("mvno_type") or "").casefold(),
+        str(first.get("mvno_match_data") or "").casefold(),
+    )
+    second_mvno = (
+        str(second.get("mvno_type") or "").casefold(),
+        str(second.get("mvno_match_data") or "").casefold(),
+    )
+    if all(first_mvno) and all(second_mvno) and first_mvno != second_mvno:
+        return False
+    first_carrier_id = first.get("carrier_id")
+    second_carrier_id = second.get("carrier_id")
+    if (
+        first_carrier_id is not None
+        and second_carrier_id is not None
+        and first_carrier_id != second_carrier_id
+    ):
+        return False
+    return True
+
+
 def changes_conflict_with_profile(
     changes: dict[str, Any],
     change_type: str,
@@ -551,12 +649,11 @@ def changes_conflict_with_profile(
         stable_values = profile.get("addons", {}).get(namespace, {})
         if any(key in stable_values and stable_values[key] != value for key, value in values.items()):
             return True
-    stable_apns = {
-        apn_identity(apn): apn for apn in profile.get("android_apns", []) or []
-    }
+    stable_apns = profile.get("android_apns", []) or []
     for apn in changes.get("android_apns", []) or []:
-        stable_apn = stable_apns.get(apn_identity(apn))
-        if stable_apn is not None and stable_apn != apn:
+        if any(stable_apn == apn for stable_apn in stable_apns):
+            continue
+        if any(apn_applicability_overlaps(apn, stable_apn) for stable_apn in stable_apns):
             return True
     return False
 
@@ -581,20 +678,27 @@ def stable_conflicts(
 
 
 def recommended_channel(
-    status: str,
     computed_risk: str,
     confidence: str,
     change_type: str,
     conflicts_with_stable: bool,
 ) -> str:
-    if status != "verified" or conflicts_with_stable:
+    if conflicts_with_stable:
         return "community"
     if computed_risk == "high":
         return "community"
     if computed_risk == "medium":
-        return "candidate" if confidence == "high" and change_type != "override" else "community"
-    if confidence in {"medium", "high"} and change_type in {"add", "confirm", "correct"}:
-        return "stable_eligible"
+        return (
+            "candidate"
+            if confidence == "high" and change_type in {"add", "confirm", "correct"}
+            else "community"
+        )
+    if confidence in {"medium", "high"} and change_type in {
+        "add",
+        "confirm",
+        "correct",
+    }:
+        return "candidate"
     return "community"
 
 
@@ -623,6 +727,7 @@ def validate_claim(
     path: Path,
     claims_dir: Path,
     stable_profiles: list[dict[str, Any]],
+    trusted_source_prefixes: set[str],
 ) -> dict[str, Any]:
     data = load_json(path)
     require_type(path, data, dict, "root")
@@ -636,7 +741,6 @@ def validate_claim(
         "carrier_match",
         "change_type",
         "changes",
-        "risk",
         "evidence",
         "last_verified",
         "expires",
@@ -654,8 +758,8 @@ def validate_claim(
     summary = require_string(path, data.get("summary"), "summary", 240)
 
     status = data.get("status")
-    if status not in {"proposed", "verified"}:
-        raise ClaimError(f"{path}: status must be proposed or verified")
+    if status != "proposed":
+        raise ClaimError(f"{path}: status must be proposed")
 
     change_type = data.get("change_type")
     if change_type not in {"add", "confirm", "correct", "remove", "override"}:
@@ -664,17 +768,21 @@ def validate_claim(
     carrier_match = validate_match(path, data.get("carrier_match"))
     changes = validate_changes(path, data.get("changes"))
     evidence = validate_evidence(path, data.get("evidence"))
+    if claim_has_public_apn_credentials(changes) and not evidence_has_public_setting_url(
+        evidence
+    ):
+        raise ClaimError(
+            f"{path}: public APN user/password values require a public carrier or "
+            "maintained-source URL"
+        )
 
     last_verified = parse_date(path, data.get("last_verified"), "last_verified")
-    expires = parse_date(path, data.get("expires"), "expires")
     today = date.today()
     if last_verified > today:
         raise ClaimError(f"{path}: last_verified cannot be in the future")
     newest_evidence = max(parse_date(path, item["date"], "evidence.date") for item in evidence)
     if last_verified != newest_evidence:
         raise ClaimError(f"{path}: last_verified must equal the newest evidence date")
-    if expires < today:
-        raise ExpiredClaim(f"{path}: claim is expired")
 
     stable_overlap_count, stable_conflict_profile_ids = stable_conflicts(
         carrier_match,
@@ -694,16 +802,17 @@ def validate_claim(
         change_type_risk(change_type),
     )
     if conflicts_with_stable:
-        computed = max_risk(computed, "medium")
-    declared_risk = data.get("risk", computed)
-    if declared_risk not in RISK_SCORE:
-        raise ClaimError(f"{path}: risk must be low, medium, or high")
-    if RISK_SCORE[declared_risk] < RISK_SCORE[computed]:
-        raise ClaimError(
-            f"{path}: declared risk {declared_risk} is lower than computed risk {computed}"
-        )
+        computed = "high"
 
     max_days = MAX_EXPIRY_DAYS[computed]
+    expires_value = data.get("expires")
+    expires = (
+        parse_date(path, expires_value, "expires")
+        if expires_value is not None
+        else last_verified + timedelta(days=max_days)
+    )
+    if expires < today:
+        raise ExpiredClaim(f"{path}: claim is expired")
     if (expires - last_verified).days > max_days:
         raise ClaimError(
             f"{path}: expires is too far from last_verified for {computed} risk "
@@ -714,34 +823,35 @@ def validate_claim(
     if notes is not None:
         require_string(path, notes, "notes", 500)
 
-    confidence = evidence_confidence(evidence)
+    confidence = evidence_confidence(evidence, trusted_source_prefixes)
     channel = recommended_channel(
-        status,
         computed,
         confidence,
         change_type,
         conflicts_with_stable,
     )
 
-    rel_path = path.relative_to(claims_dir.parent).as_posix()
+    rel_path = path.relative_to(claims_dir.parent.parent).as_posix()
     return {
         "claim_id": claim_id,
         "path": rel_path,
         "summary": summary,
         "status": status,
         "computed_risk": computed,
-        "declared_risk": declared_risk,
         "confidence": confidence,
         "recommended_channel": channel,
         "change_type": change_type,
         "change_areas": change_areas(changes),
         "carrier_match": carrier_match,
+        "changes": changes,
+        "evidence": evidence,
         "last_verified": last_verified.isoformat(),
         "expires": expires.isoformat(),
         "conflicts_with_stable": conflicts_with_stable,
         "stable_overlap_count": stable_overlap_count,
         "stable_conflict_profile_ids": stable_conflict_profile_ids,
         "evidence_count": len(evidence),
+        **({"notes": notes} if notes is not None else {}),
     }
 
 
@@ -765,12 +875,36 @@ def load_stable_profiles(stable_dir: Path) -> list[dict[str, Any]]:
     return profiles
 
 
+def load_trusted_source_prefixes(evidence_index_path: Path) -> set[str]:
+    if not evidence_index_path.exists():
+        return set()
+    data = load_json(evidence_index_path)
+    require_type(evidence_index_path, data, dict, "evidence index")
+    snapshots = data.get("source_snapshots", [])
+    require_type(evidence_index_path, snapshots, list, "source_snapshots")
+    prefixes: set[str] = set()
+    for index, snapshot in enumerate(snapshots):
+        require_type(
+            evidence_index_path,
+            snapshot,
+            dict,
+            f"source_snapshots[{index}]",
+        )
+        upstream_url = snapshot.get("upstream_url")
+        if not isinstance(upstream_url, str) or not URL_RE.fullmatch(upstream_url):
+            raise ClaimError(
+                f"{evidence_index_path}: source_snapshots[{index}].upstream_url is invalid"
+            )
+        prefixes.add(canonical_url(upstream_url))
+    return prefixes
+
+
 def write_indexes(index_root: Path, claims: list[dict[str, Any]]) -> None:
     community_claims = sorted(claims, key=lambda item: item["claim_id"])
     candidate_claims = [
         claim
         for claim in community_claims
-        if claim["recommended_channel"] in {"candidate", "stable_eligible"}
+        if claim["recommended_channel"] == "candidate"
     ]
     index_root.mkdir(parents=True, exist_ok=True)
     (index_root / "index.json").write_text(
@@ -821,7 +955,7 @@ def validate_indexes(index_root: Path, claims: list[dict[str, Any]]) -> None:
         "claims": [
             claim
             for claim in expected_community["claims"]
-            if claim["recommended_channel"] in {"candidate", "stable_eligible"}
+            if claim["recommended_channel"] == "candidate"
         ],
     }
     paths = [
@@ -842,18 +976,29 @@ def main(argv: list[str]) -> int:
     parser.add_argument("claims_dir", nargs="?", default="community/claims")
     parser.add_argument("index_root", nargs="?", default="generated/community")
     parser.add_argument("--stable-dir", default="carriers")
+    parser.add_argument(
+        "--evidence-index",
+        default="generated/evidence-index.json",
+        help="public evidence index used to recognize maintained source URLs",
+    )
     parser.add_argument("--write-index", action="store_true")
     args = parser.parse_args(argv[1:])
 
     claims_dir = Path(args.claims_dir)
     index_root = Path(args.index_root)
     stable_profiles = load_stable_profiles(Path(args.stable_dir))
+    trusted_source_prefixes = load_trusted_source_prefixes(Path(args.evidence_index))
     claims: list[dict[str, Any]] = []
     expired_count = 0
     seen_ids: set[str] = set()
     for path in claim_paths(claims_dir):
         try:
-            claim = validate_claim(path, claims_dir, stable_profiles)
+            claim = validate_claim(
+                path,
+                claims_dir,
+                stable_profiles,
+                trusted_source_prefixes,
+            )
         except ExpiredClaim as exc:
             print(f"warning: {exc}; excluded from generated indexes", file=sys.stderr)
             expired_count += 1
@@ -873,7 +1018,6 @@ def main(argv: list[str]) -> int:
         "validated "
         f"{len(claims)} community claim(s), "
         f"{sum(1 for claim in claims if claim['recommended_channel'] == 'candidate')} candidate, "
-        f"{sum(1 for claim in claims if claim['recommended_channel'] == 'stable_eligible')} stable-eligible, "
         f"{expired_count} expired and excluded"
     )
     return 0

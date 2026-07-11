@@ -1,0 +1,68 @@
+name: Convert tested claim issue
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+
+permissions:
+  actions: write
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: community-claim-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  convert:
+    if: contains(github.event.issue.labels.*.name, 'community-claim')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      CLAIM_BRANCH: automation/community-claim-${{ github.event.issue.number }}
+    steps:
+      - name: Check out the database
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Convert and validate the issue
+        run: |
+          python3 tools/issue_to_claim.py \
+            --event "$GITHUB_EVENT_PATH" \
+            --output-root community/claims
+          python3 tools/validate_community_claims.py --write-index
+          python3 tools/validate_community_claims.py
+
+      - name: Open or update the claim pull request
+        run: |
+          git config user.name "open-carrier-data-bot"
+          git config user.email "open-carrier-data-bot@users.noreply.github.com"
+          git fetch origin "$CLAIM_BRANCH" || true
+          git checkout -B "$CLAIM_BRANCH"
+          git add community/claims generated/community generated/candidate
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "community: import claim from issue #$ISSUE_NUMBER"
+          git push --force-with-lease origin "$CLAIM_BRANCH"
+          existing_pr="$(gh pr list --head "$CLAIM_BRANCH" --json number --jq '.[0].number // empty')"
+          if [ -z "$existing_pr" ]; then
+            gh pr create \
+              --base main \
+              --head "$CLAIM_BRANCH" \
+              --title "Community claim from issue #$ISSUE_NUMBER" \
+              --body "Automated conversion of #$ISSUE_NUMBER. The claim passed structural, privacy-pattern, risk, freshness, and stable-conflict checks. Merge review must still judge whether the evidence is credible. Closes #$ISSUE_NUMBER."
+          fi
+          gh workflow run validate.yml --ref "$CLAIM_BRANCH"
+
+      - name: Explain a validation failure
+        if: failure()
+        run: |
+          gh issue comment "$ISSUE_NUMBER" \
+            --body "The automatic claim check failed. Open the failed workflow run linked on this issue, correct the form fields, and edit the issue to try again. No database data was changed."

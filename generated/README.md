@@ -23,9 +23,9 @@ sources and sanitized public profiles. Private vendor/OEM source snapshots must
 be refreshed and carry a recent checked date before they can affect this stable
 snapshot.
 
-`evidence-index.json` is part of the stable contract. It shows the exact
-revision of each public upstream and explains facts that were made conditional
-or omitted during neutral merging.
+`evidence-index.json` is part of the stable contract. It shows exact upstream
+revisions, last successful check dates, source support for each exported fact,
+and values made conditional or omitted during neutral merging.
 
 Community and candidate indexes are separate. They let downstream projects
 inspect or test user-reported edge cases without silently changing stable phone

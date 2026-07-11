@@ -84,7 +84,7 @@ Community input is handled separately as claims:
 
 - a claim says what should change;
 - it includes evidence and a test date;
-- it has an expiry date;
+- the validator calculates an expiry date from its risk;
 - it is validated and indexed;
 - it does not silently become default phone behavior.
 
@@ -99,9 +99,10 @@ generated/candidate/index.json    claims that are suitable for opt-in testing
 Stable data is conservative. Community claims are faster and useful for edge
 cases, but downstream projects must choose whether to use them.
 
-The validator, not the claim author, calculates claim risk, overlap, and
-conflicts with stable data. Expired claims stay out of generated indexes
-without blocking the rest of the database.
+The validator, not the claim author, calculates confidence, risk, expiry,
+overlap, and conflicts with stable data. A contributor cannot mark their own
+claim verified. Expired claims stay out of generated indexes without blocking
+the rest of the database.
 
 ## Where The Data Comes From
 
@@ -112,8 +113,11 @@ Each source is translated into the same neutral profile model.
 `generated/evidence-index.json` records:
 
 - exact Git revisions and revision dates for public upstreams;
+- when automation last checked each public upstream, even if its revision did
+  not change;
 - declared source terms;
-- which source families observed each neutral profile;
+- which source families support each exact capability, CarrierConfig key,
+  add-on, and APN fact;
 - Samsung model, OMC, sales-code, and revision scope when safely publishable;
 - conflicts and quality gates that caused a value to become conditional or be
   omitted.
@@ -128,7 +132,8 @@ Use the path that matches what you know:
 
 1. If you only know that something is broken, open a guided issue.
 2. If you know a maintained source we should import, open a source suggestion.
-3. If you tested a specific fix, open a tested-claim issue.
+3. If you tested a specific fix, open a tested-claim issue. Automation converts
+   it into claim JSON, validates it, and opens a pull request.
 4. If you are comfortable with Git, fork the repo, add a claim under
    `community/claims/`, and open a pull request.
 5. If you want to improve schemas, validators, generated output, or docs, open
@@ -197,9 +202,11 @@ generated/android/carrier-config-overrides.json
 generated/android/carrier-config-list.xml
 ```
 
-When matching a SIM, start with MCC/MNC or Android carrier ID, then apply the
-more exact match rules from the profile, such as SPN, GID1/GID2, ICCID prefix,
-or IMSI prefix pattern.
+Within one match list, any value may match. Between different match fields,
+every populated field must match. Resolve all matching profiles in
+generic-to-specific order; a more specific profile is an overlay, not a reason
+to ignore the generic profile. The generated indexes expose `specificity`, and
+`tools/resolve_carrier_profiles.py` implements these rules.
 
 Some match rules cannot be represented perfectly in every Android XML format.
 Those details stay in JSON and lookup indexes instead of being broadened into
@@ -226,6 +233,8 @@ For community claims:
 ```bash
 python3 tools/validate_community_claims.py community/claims generated/community
 python3 tools/test_community_claims.py
+python3 tools/test_issue_to_claim.py
+python3 tools/test_resolve_carrier_profiles.py
 ```
 
 To regenerate community indexes while working locally:

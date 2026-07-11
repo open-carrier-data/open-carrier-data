@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import json
+import re
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import generate_android_outputs
 import validate_public_carrier_data
+from carrier_config_types import expected_config_type
 
 
 def write_profile(path: Path, value: dict) -> None:
@@ -38,6 +40,36 @@ def assert_true(condition: bool, message: str) -> None:
 
 
 def main() -> int:
+    schema = load_json(
+        Path(__file__).resolve().parents[1] / "schemas/carrier-profile.schema.json"
+    )
+    schema_config_keys = set(
+        schema["properties"]["android_carrier_config"]["propertyNames"]["enum"]
+    )
+    assert_true(
+        schema_config_keys == validate_public_carrier_data.ALLOWED_CONFIG_KEYS,
+        "CarrierConfig schema and validator key whitelists must match",
+    )
+    config_schema = schema["properties"]["android_carrier_config"]
+    schema_type_names = {
+        "boolean": "bool",
+        "integer": "int",
+        "string": "string",
+        "array": "string_array",
+    }
+    for key in schema_config_keys:
+        declared = config_schema["properties"].get(key)
+        if declared is None:
+            declared = next(
+                value
+                for pattern, value in config_schema["patternProperties"].items()
+                if re.search(pattern, key)
+            )
+        assert_true(
+            schema_type_names[declared["type"]] == expected_config_type(key),
+            f"CarrierConfig schema has the wrong value type for {key}",
+        )
+
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         carriers_dir = root / "carriers"
@@ -175,6 +207,25 @@ def main() -> int:
                 ],
             },
         )
+        carrier_id_only = write_carrier_profile(
+            carriers_dir,
+            {
+                "schema_version": 1,
+                "display_name": "Example Carrier ID",
+                "match": {
+                    "mccmnc": ["26227"],
+                    "android_carrier_ids": [4000],
+                },
+                "capabilities": {"mms": "supported"},
+                "android_apns": [
+                    {
+                        "name": "carrier id",
+                        "apn": "cid.example",
+                        "types": ["default"],
+                    }
+                ],
+            },
+        )
 
         result = generate_android_outputs.main(
             ["generate_android_outputs.py", str(carriers_dir), str(generated_dir)]
@@ -228,6 +279,18 @@ def main() -> int:
                         "profile_id": profile_id,
                         "observation_count": 1,
                         "sources": ["lineageos"],
+                        "fact_sources": [
+                            {
+                                "section": "match",
+                                "key": "match",
+                                "sources": ["lineageos"],
+                            },
+                            {
+                                "section": "profile",
+                                "key": "display_name",
+                                "sources": ["lineageos"],
+                            },
+                        ],
                         "verified_observation_count": 0,
                     }
                     for profile_id in profile_ids
@@ -245,8 +308,12 @@ def main() -> int:
             dict(element.attrib)
             for element in apn_root
         ]
-        assert_true(len(apn_rows) == 6, f"expected 6 APN rows, got {len(apn_rows)}")
-        by_apn = {(row["mcc"], row["mnc"], row["apn"]): row for row in apn_rows}
+        assert_true(len(apn_rows) == 5, f"expected 5 APN rows, got {len(apn_rows)}")
+        by_apn = {
+            (row["mcc"], row["mnc"], row["apn"]): row
+            for row in apn_rows
+            if "mcc" in row and "mnc" in row
+        }
         assert_true(
             "mvno_type" not in by_apn[("262", "02", "internet.example")],
             "plain MCC/MNC APN row should not be MVNO-constrained",
@@ -280,15 +347,17 @@ def main() -> int:
             by_apn[("262", "02", "mvno.example")]["type"] == "*",
             "APN rows should preserve wildcard APN type",
         )
-        for key in [("262", "02", "ims.example"), ("262", "23", "ims.example")]:
-            assert_true(
-                by_apn[key]["mvno_type"] == "gid" and by_apn[key]["mvno_match_data"] == "AB",
-                "GID profile should generate GID-constrained APN rows for every MCC/MNC",
-            )
-            assert_true(
-                by_apn[key]["type"] == "ims,rcs",
-                "APN rows should preserve newer standard APN types",
-            )
+        assert_true(
+            not any(row["apn"] == "ims.example" for row in apn_rows),
+            "carrier-ID plus GID applicability must not be broadened into APN rows",
+        )
+        carrier_id_row = next(row for row in apn_rows if row["apn"] == "cid.example")
+        assert_true(
+            carrier_id_row["carrier_id"] == "4000"
+            and "mcc" not in carrier_id_row
+            and "mnc" not in carrier_id_row,
+            "carrier-ID-only APNs must not become generic MCC/MNC APNs",
+        )
         assert_true(
             by_apn[("262", "24", "iccid.example")]["mvno_type"] == "iccid",
             "ICCID profile should generate ICCID-constrained APN row",
@@ -311,7 +380,7 @@ def main() -> int:
         )
 
         lookup = load_json(generated_dir / "android/lookup.json")
-        assert_true(len(lookup["profiles"]) == 6, "lookup should contain all profiles")
+        assert_true(len(lookup["profiles"]) == 7, "lookup should contain all profiles")
         lookup_by_id = {item["profile_id"]: item for item in lookup["profiles"]}
         assert_true(
             lookup_by_id[multi_id]["android_apn_count"] == 1,
@@ -324,6 +393,11 @@ def main() -> int:
         assert_true(
             lookup_by_id[multi_id]["match"]["android_carrier_ids"] == [2536],
             "lookup should preserve Android carrier ID match constraints",
+        )
+        assert_true(
+            lookup_by_id[base_id]["specificity"] == 0
+            and lookup_by_id[carrier_id_only]["specificity"] == 1,
+            "lookup should expose deterministic match specificity",
         )
         assert_true(
             lookup_by_id[iccid_id]["match"]["iccid_prefixes"] == ["8981090"],
@@ -340,13 +414,14 @@ def main() -> int:
 
         mccmnc_index = load_json(generated_dir / "android/mccmnc-index.json")
         assert_true(
-            sorted(mccmnc_index["mccmnc"]) == ["26202", "26223", "26224", "26225", "26226"],
+            sorted(mccmnc_index["mccmnc"])
+            == ["26202", "26223", "26224", "26225", "26226", "26227"],
             "MCC/MNC index should expose expected SIM operator keys",
         )
         assert_true(
             [item["profile_id"] for item in mccmnc_index["mccmnc"]["26202"]]
-            == sorted([base_id, multi_id, mvno_id]),
-            "MCC/MNC index should list sorted candidate profiles",
+            == [base_id, mvno_id, multi_id],
+            "MCC/MNC index should list generic profiles before more specific matches",
         )
         assert_true(
             [item["profile_id"] for item in mccmnc_index["mccmnc"]["26223"]] == [multi_id],
@@ -371,7 +446,7 @@ def main() -> int:
 
         carrier_id_index = load_json(generated_dir / "android/carrier-id-index.json")
         assert_true(
-            sorted(carrier_id_index["android_carrier_ids"]) == ["2536"],
+            sorted(carrier_id_index["android_carrier_ids"]) == ["2536", "4000"],
             "carrier ID index should expose expected Android carrier ID keys",
         )
         assert_true(
@@ -454,6 +529,68 @@ def main() -> int:
             metadata["omissions"]["carrier_config_profiles_with_unrepresentable_match"] == 2,
             "metadata should count CarrierConfig profiles omitted to avoid broadening matches",
         )
+        assert_true(
+            metadata["omissions"]["apn_profile_ids_with_unrepresentable_match"]
+            == sorted([gid2_id, multi_id]),
+            "metadata should identify every APN profile omitted to preserve match semantics",
+        )
+        assert_true(
+            metadata["omissions"][
+                "carrier_config_profile_ids_with_unrepresentable_match"
+            ]
+            == sorted([gid2_id, multi_id]),
+            "metadata should identify every omitted CarrierConfig profile",
+        )
+
+        invalid_type_profile = {
+            "schema_version": 1,
+            "display_name": "Invalid type",
+            "match": {"mccmnc": ["00199"]},
+            "capabilities": {},
+            "android_carrier_config": {"carrier_volte_available_bool": "yes"},
+        }
+        invalid_type_profile["profile_id"] = (
+            validate_public_carrier_data.canonical_profile_id(
+                invalid_type_profile["match"]
+            )
+        )
+        try:
+            validate_public_carrier_data.validate_profile_object(
+                root / "invalid-type.json",
+                invalid_type_profile,
+            )
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true("must be bool" in str(exc), "wrong CarrierConfig type error")
+        else:
+            raise AssertionError("string-valued boolean CarrierConfig should fail")
+
+        duplicate_types_profile = {
+            "schema_version": 1,
+            "display_name": "Duplicate APN types",
+            "match": {"mccmnc": ["00198"]},
+            "capabilities": {},
+            "android_apns": [
+                {
+                    "name": "internet",
+                    "apn": "internet.example",
+                    "types": ["default", "default"],
+                }
+            ],
+        }
+        duplicate_types_profile["profile_id"] = (
+            validate_public_carrier_data.canonical_profile_id(
+                duplicate_types_profile["match"]
+            )
+        )
+        try:
+            validate_public_carrier_data.validate_profile_object(
+                root / "duplicate-types.json",
+                duplicate_types_profile,
+            )
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true("sorted and unique" in str(exc), "wrong APN type error")
+        else:
+            raise AssertionError("duplicate APN types should fail")
 
     print("generated Android output tests passed")
     return 0
