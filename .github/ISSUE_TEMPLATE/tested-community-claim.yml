@@ -1,115 +1,170 @@
-name: Tested community claim
-description: Submit a tested carrier-data claim without direct repository write access.
-title: "[claim] "
+name: Tested carrier-data change
+description: Report an exact, tested carrier setting without writing JSON or using Git.
+title: "[carrier claim] "
 labels:
   - carrier-data
+  - community-claim
 body:
   - type: markdown
     attributes:
       value: |
-        Use this when you tested a specific carrier-data change but cannot or do not want to submit a pull request.
+        This form creates a proposed community claim. Automation checks it and opens a pull request. It never changes the stable database by itself.
 
-        A claim issue is not stable phone behavior. If the report is safe and useful, a maintainer or contributor can turn it into a JSON claim under `community/claims/`.
-
-        Do not include phone numbers, account data, personal passwords, private vendor credentials, full IMSI values, full ICCID values, IMEI, serial numbers, raw logs, raw bugreports, raw firmware dumps, or private vendor responses. Public APN usernames/passwords are okay only when they are carrier settings, not private account credentials.
+        Do not include phone numbers, account details, personal passwords, private credentials, full IMSI/ICCID values, IMEI, raw logs, bugreports, firmware files, or private vendor responses. A public APN username/password is allowed only when a public carrier or maintained-source URL proves it is a shared setting.
   - type: input
     id: summary
     attributes:
       label: Short summary
-      placeholder: Example Mobile MMS works with this APN.
+      placeholder: Example Mobile MMS works with the documented APN.
     validations:
       required: true
   - type: input
     id: carrier
     attributes:
-      label: Carrier or MVNO name
-      placeholder: Example Mobile
+      label: Carrier and country
+      placeholder: Example Mobile, Germany
     validations:
       required: true
   - type: input
-    id: country
+    id: mccmnc
     attributes:
-      label: Country
-      placeholder: Germany
+      label: MCC/MNC
+      description: Enter one or more public network codes, separated by commas.
+      placeholder: "26299"
     validations:
       required: true
   - type: textarea
-    id: safe_match
+    id: optional_match
     attributes:
-      label: Safe carrier match details
-      description: Do not post full IMSI, full ICCID, IMEI, phone number, or account data.
-      placeholder: "MCC/MNC: 26299, SPN: Example, GID1 prefix: AB"
-    validations:
-      required: true
+      label: Optional carrier match details
+      description: Add only fields you know. Do not enter a full IMSI or ICCID.
+      placeholder: |-
+        SPN: Example
+        Android carrier ID: 1234
+        GID1 prefix: AB
+        ICCID prefix: 8949012
+        IMSI prefix pattern: 26299x1
   - type: dropdown
     id: change_type
     attributes:
       label: Change type
       options:
-        - Add missing setting
-        - Fix existing setting
-        - Remove wrong setting
-        - Confirm existing generated setting
-        - I am not sure
+        - add
+        - confirm
+        - correct
+        - remove
+        - override
     validations:
       required: true
-  - type: checkboxes
-    id: affected_features
+  - type: dropdown
+    id: affected_feature
     attributes:
-      label: Affected feature
+      label: Affected feature or setting
       options:
-        - label: Mobile data APN
-        - label: MMS APN
-        - label: IMS APN
-        - label: VoLTE
-        - label: Wi-Fi Calling
-        - label: VoNR
-        - label: SMS over IMS
-        - label: RCS
-        - label: eSIM
-        - label: Tethering
-        - label: XCAP or supplementary services
-        - label: Conference calling
-        - label: Carrier matching or MVNO detection
-        - label: Other
-  - type: textarea
-    id: proposed_change
+        - mms
+        - volte
+        - vowifi
+        - vonr
+        - video_calling
+        - sms_over_ims
+        - rcs
+        - esim
+        - ims_conference
+        - wifi_calling_roaming
+        - APN settings
+        - Advanced changes JSON
+    validations:
+      required: true
+  - type: dropdown
+    id: capability_state
     attributes:
-      label: Proposed change
-      description: Describe the exact setting or behavior that should be added, fixed, removed, or confirmed.
-      placeholder: Add MMS APN mms.example with MMSC https://mms.example/mmsc.
+      label: Desired capability state
+      description: Choose not_applicable for APN or advanced changes.
+      options:
+        - not_applicable
+        - supported
+        - unsupported
+        - conditional
+        - unknown
     validations:
       required: true
   - type: textarea
-    id: evidence
+    id: apn_settings
     attributes:
-      label: Evidence and test result
-      description: Include public source links or a safe test summary.
-      placeholder: Tested MMS send and receive on 2026-07-05. Public carrier help page also lists the same MMSC.
+      label: APN settings
+      description: Required only when Affected feature is APN settings. Add public user/password values only with a public URL below.
+      placeholder: |-
+        Name: Example MMS
+        APN: mms.example
+        Types: mms
+        MMSC: https://mms.example/mmsc
+        MMS proxy: 192.0.2.1
+        MMS port: 8080
+        Protocol: IPV4V6
+  - type: textarea
+    id: advanced_changes
+    attributes:
+      label: Advanced changes JSON
+      description: Optional escape hatch for exact CarrierConfig, add-on, match, or multi-field changes.
+      render: json
+  - type: dropdown
+    id: evidence_type
+    attributes:
+      label: Evidence type
+      options:
+        - device_test
+        - carrier_documentation
+        - maintained_source_reference
+        - upstream_issue
     validations:
       required: true
+  - type: dropdown
+    id: test_result
+    attributes:
+      label: Test result
+      options:
+        - works
+        - fails
+        - observed
+        - unknown
+    validations:
+      required: true
+  - type: input
+    id: evidence_date
+    attributes:
+      label: Evidence date
+      placeholder: "2026-07-11"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence_summary
+    attributes:
+      label: Evidence summary
+      description: Explain exactly what was tested or what the public source says.
+      placeholder: Sent and received MMS over mobile data with this setting.
+    validations:
+      required: true
+  - type: input
+    id: evidence_url
+    attributes:
+      label: Public evidence URL
+      description: Required for carrier documentation, maintained sources, upstream issues, and public APN credentials.
+      placeholder: https://example.com/carrier/settings
   - type: input
     id: device_os
     attributes:
-      label: Device and OS used for testing
-      placeholder: Samsung Galaxy S20, LineageOS build date 2026-07-05
-  - type: input
-    id: test_date
+      label: Device and OS
+      description: Optional. Do not include serial numbers or other identifiers.
+      placeholder: Galaxy S20, LineageOS 23
+  - type: textarea
+    id: notes
     attributes:
-      label: Test date
-      placeholder: "2026-07-05"
-    validations:
-      required: true
-  - type: input
-    id: suggested_expiry
-    attributes:
-      label: Suggested expiry date
-      description: Claims should expire so old untested data does not look current forever.
-      placeholder: "2027-07-05"
+      label: Extra notes
+      description: Optional context that does not fit above.
   - type: checkboxes
     id: privacy_check
     attributes:
       label: Privacy check
       options:
-        - label: I did not include phone numbers, account data, personal passwords, private vendor credentials, full IMSI values, full ICCID values, IMEI, raw logs, raw bugreports, raw firmware dumps, or private vendor responses.
+        - label: I checked that this report contains no personal data, private credentials, device identifiers, raw logs, firmware, or private vendor material.
           required: true

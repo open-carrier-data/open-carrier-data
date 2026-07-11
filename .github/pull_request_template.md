@@ -25,6 +25,8 @@ Run the checks that apply:
 ```bash
 python3 tools/validate_community_claims.py community/claims generated/community
 python3 tools/test_community_claims.py
+python3 tools/test_issue_to_claim.py
 python3 tools/validate_public_carrier_data.py carriers generated/index.json
 python3 tools/test_generated_android_outputs.py
+python3 tools/test_resolve_carrier_profiles.py
 ```

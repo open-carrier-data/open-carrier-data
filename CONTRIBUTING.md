@@ -120,8 +120,10 @@ Use a claim when you can say:
 - which carrier or MVNO it applies to;
 - exactly what should change;
 - how you tested it;
-- when you tested it;
-- when the claim should expire.
+- when you tested it.
+
+The validator computes confidence, risk, conflicts, and expiry. Do not mark
+your own claim verified or choose its risk level.
 
 After adding or changing a claim, run:
 
@@ -130,9 +132,10 @@ python3 tools/validate_community_claims.py --write-index
 python3 tools/validate_public_carrier_data.py carriers generated/index.json
 ```
 
-If you use the issue path, include the same information in the issue form. A
-maintainer or another contributor can later turn it into a JSON claim if it is
-safe and useful.
+If you use the issue path, automation converts the form into JSON, validates
+it, and opens or updates a pull request. A reviewer still checks whether the
+evidence is credible; valid JSON cannot prove that a network test really
+happened.
 
 ### 4. I want to change stable carrier profiles
 
@@ -163,8 +166,10 @@ Run the relevant checks before submitting:
 ```bash
 python3 tools/validate_community_claims.py community/claims generated/community
 python3 tools/test_community_claims.py
+python3 tools/test_issue_to_claim.py
 python3 tools/validate_public_carrier_data.py carriers generated/index.json
 python3 tools/test_generated_android_outputs.py
+python3 tools/test_resolve_carrier_profiles.py
 ```
 
 ## What Happens After I Report Something?

@@ -10,8 +10,14 @@ The exact public Git revisions used for the current snapshot are recorded in:
 generated/evidence-index.json
 ```
 
-The validator rejects a public-source snapshot when its recorded upstream
-revision is more than 180 days old.
+Every public-source record contains two dates:
+
+- `revision_date`: when the exact upstream commit was created;
+- `checked_at`: when automation last fetched the source successfully.
+
+Freshness uses `checked_at`, not `revision_date`. An unchanged old commit can
+still be current when automation checked it recently. A source is quarantined
+when its recorded check is more than 180 days old.
 
 ## Current Source Families
 
@@ -55,9 +61,10 @@ revision is more than 180 days old.
 - upstream license: no Samsung license is asserted by this project
 - public policy: raw Samsung firmware, OMC files, requests, responses, signed
   URLs, and credentials remain private
-- freshness: every Samsung observation must carry a recent review date; GRAS
-  revisions take precedence over older firmware revisions for the same OMC
-  scope
+- freshness: live GRAS observations need a recent check and complete model,
+  CSC, sales-code, Android-version, OMC-revision, and OMC-version scope;
+  firmware observations need a real release date, not merely a recent import
+  date
 
 ## Merge Rules
 
@@ -69,10 +76,15 @@ Sources are observations, not public carrier identities.
 - Agreement strengthens a fact.
 - Conflicting CarrierConfig and add-on values are omitted from stable output
   and reported in `generated/evidence-index.json`.
+- APN rows with the same applicability selector but different operational
+  values are omitted instead of publishing several indistinguishable choices.
 - Conflicting capabilities become `conditional`.
 - Lower-confidence generic APNs require corroboration or a primary maintained
   APN source.
 - Source names never become duplicate public carrier profiles.
+- `fact_sources` in the evidence index shows which source family supports each
+  exported fact; a profile-wide source list is not treated as proof for every
+  field.
 
 ## Suggest A Source
 

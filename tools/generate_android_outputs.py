@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any
 from xml.sax.saxutils import escape
 
+from carrier_config_types import config_value_has_expected_type, expected_config_type
+
 
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
@@ -74,72 +76,145 @@ def profile_apn_mvnos(match: dict[str, Any]) -> list[tuple[str, str] | None]:
     return dimensions[0]
 
 
-def apn_records(profile: dict[str, Any]) -> list[dict[str, str]]:
-    records: list[dict[str, str]] = []
+def profile_carrier_ids(match: dict[str, Any]) -> list[int]:
+    return sorted(
+        {
+            value
+            for value in match.get("android_carrier_ids", [])
+            if isinstance(value, int) and not isinstance(value, bool)
+        }
+    )
+
+
+def matching_mvno(
+    apn: dict[str, Any],
+    profile_mvnos: list[tuple[str, str] | None],
+) -> list[tuple[str, str] | None]:
+    apn_type = apn.get("mvno_type")
+    apn_value = apn.get("mvno_match_data")
+    if not apn_type and not apn_value:
+        return profile_mvnos
+    if not isinstance(apn_type, str) or not isinstance(apn_value, str):
+        return []
+    if profile_mvnos == [None]:
+        return [(apn_type, apn_value)]
+    normalized = (apn_type.casefold(), apn_value.casefold())
+    if normalized not in {
+        (mvno_type.casefold(), mvno_value.casefold())
+        for item in profile_mvnos
+        if item is not None
+        for mvno_type, mvno_value in [item]
+    }:
+        return []
+    return [(apn_type, apn_value)]
+
+
+def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
     match = profile.get("match", {})
     mccmncs = match.get("mccmnc", [])
     profile_mvnos = profile_apn_mvnos(match)
     if not profile_mvnos:
         return records
-    for mccmnc in mccmncs:
-        if not isinstance(mccmnc, str) or len(mccmnc) not in {5, 6}:
+    carrier_ids = profile_carrier_ids(match)
+    if carrier_ids and profile_mvnos != [None]:
+        return records
+
+    valid_mccmncs = [
+        value
+        for value in mccmncs
+        if isinstance(value, str) and len(value) in {5, 6}
+    ]
+    for apn in profile.get("android_apns", []) or []:
+        if not isinstance(apn, dict):
             continue
-        mcc = mccmnc[:3]
-        mnc = mccmnc[3:]
-        for apn in profile.get("android_apns", []) or []:
-            if not isinstance(apn, dict):
-                continue
-            base = {
-                "carrier": label_text(profile, apn),
-                "mcc": mcc,
-                "mnc": mnc,
-                "apn": apn["apn"],
-                "type": ",".join(apn["types"]),
-            }
-            if apn.get("mvno_type") and apn.get("mvno_match_data"):
-                mvnos: list[tuple[str, str] | None] = [
-                    (str(apn["mvno_type"]), str(apn["mvno_match_data"]))
-                ]
-            else:
-                mvnos = profile_mvnos
-            for key in (
-                "mmsc",
-                "mmsproxy",
-                "mmsport",
-                "protocol",
-                "roaming_protocol",
-                "user",
-                "password",
-                "authtype",
-                "proxy",
-                "port",
-                "server",
-                "bearer",
-                "bearer_bitmask",
-                "network_type_bitmask",
-                "lingering_network_type_bitmask",
-                "infrastructure_bitmask",
-                "mtu",
-                "mtu_v4",
-                "mtu_v6",
-                "carrier_id",
-                "user_visible",
-                "user_editable",
-                "carrier_enabled",
-                "profile_id",
-                "apn_set_id",
-                "skip_464xlat",
-                "modem_cognitive",
-                "always_on",
-                "esim_bootstrap_provisioning",
-                "max_conns",
-                "max_conns_time",
-                "wait_time",
-            ):
-                if key in apn:
-                    base[key] = apn[key]
-            for mvno in mvnos:
+        apn_carrier_id = apn.get("carrier_id")
+        if apn_carrier_id is not None and (
+            not isinstance(apn_carrier_id, int) or isinstance(apn_carrier_id, bool)
+        ):
+            continue
+        selector_carrier_id = (
+            apn_carrier_id
+            if isinstance(apn_carrier_id, int) and apn_carrier_id >= 0
+            else None
+        )
+        if (
+            selector_carrier_id is not None
+            and carrier_ids
+            and selector_carrier_id not in carrier_ids
+        ):
+            continue
+        effective_carrier_ids = (
+            [selector_carrier_id]
+            if selector_carrier_id is not None
+            else carrier_ids
+        )
+        if effective_carrier_ids and (
+            profile_mvnos != [None]
+            or apn.get("mvno_type")
+            or apn.get("mvno_match_data")
+        ):
+            continue
+
+        base: dict[str, Any] = {
+            "carrier": label_text(profile, apn),
+            "apn": apn["apn"],
+            "type": ",".join(apn["types"]),
+        }
+        for key in (
+            "mmsc",
+            "mmsproxy",
+            "mmsport",
+            "protocol",
+            "roaming_protocol",
+            "user",
+            "password",
+            "authtype",
+            "proxy",
+            "port",
+            "server",
+            "bearer",
+            "bearer_bitmask",
+            "network_type_bitmask",
+            "lingering_network_type_bitmask",
+            "infrastructure_bitmask",
+            "mtu",
+            "mtu_v4",
+            "mtu_v6",
+            "user_visible",
+            "user_editable",
+            "carrier_enabled",
+            "profile_id",
+            "apn_set_id",
+            "skip_464xlat",
+            "modem_cognitive",
+            "always_on",
+            "esim_bootstrap_provisioning",
+            "max_conns",
+            "max_conns_time",
+            "wait_time",
+        ):
+            if key in apn:
+                base[key] = apn[key]
+        if apn_carrier_id == -1:
+            base["carrier_id"] = -1
+
+        if effective_carrier_ids:
+            for carrier_id in effective_carrier_ids:
                 record = dict(base)
+                record["carrier_id"] = carrier_id
+                records.append(record)
+            continue
+
+        mvnos = matching_mvno(apn, profile_mvnos)
+        if not mvnos:
+            continue
+        for mccmnc in valid_mccmncs:
+            network_base = dict(base)
+            network_base["mcc"] = mccmnc[:3]
+            network_base["mnc"] = mccmnc[3:]
+            for mvno in mvnos:
+                record = dict(network_base)
                 if mvno:
                     record["mvno_type"] = mvno[0]
                     record["mvno_match_data"] = mvno[1]
@@ -160,6 +235,7 @@ def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
         key=lambda item: (
             item.get("mcc", ""),
             item.get("mnc", ""),
+            item.get("carrier_id", -1),
             item.get("mvno_type", ""),
             item.get("mvno_match_data", ""),
             item.get("apn", ""),
@@ -183,9 +259,29 @@ def write_lookup(path: Path, carriers_dir: Path, profile_items: list[tuple[Path,
     profiles = []
     for profile_path, profile in profile_items:
         profiles.append(lookup_record(carriers_dir, profile_path, profile))
-    value = {"schema_version": 1, "profiles": profiles}
+    value = {
+        "schema_version": 1,
+        "resolution_order": "generic_to_specific",
+        "match_semantics": "OR within a match list; AND between match dimensions",
+        "profiles": profiles,
+    }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def match_specificity(match: dict[str, Any]) -> int:
+    return sum(
+        1
+        for key in (
+            "gid1_prefixes",
+            "gid2_prefixes",
+            "iccid_prefixes",
+            "imsi_prefix_patterns",
+            "spn",
+            "android_carrier_ids",
+        )
+        if match.get(key)
+    )
 
 
 def lookup_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any]) -> dict[str, Any]:
@@ -194,6 +290,7 @@ def lookup_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any
         "display_name": profile["display_name"],
         "path": profile_path.relative_to(carriers_dir.parent).as_posix(),
         "match": profile["match"],
+        "specificity": match_specificity(profile["match"]),
         "capabilities": profile["capabilities"],
         "android_apn_count": len(profile.get("android_apns", []) or []),
         "has_android_carrier_config": bool(profile.get("android_carrier_config")),
@@ -206,6 +303,7 @@ def mccmnc_index_record(carriers_dir: Path, profile_path: Path, profile: dict[st
         "display_name": profile["display_name"],
         "path": profile_path.relative_to(carriers_dir.parent).as_posix(),
         "match": profile["match"],
+        "specificity": match_specificity(profile["match"]),
     }
 
 
@@ -229,7 +327,13 @@ def write_mccmnc_index(
         for mccmnc in valid_mccmncs:
             index.setdefault(mccmnc, []).append(record)
     for records in index.values():
-        records.sort(key=lambda item: (item["profile_id"], item["display_name"]))
+        records.sort(
+            key=lambda item: (
+                item["specificity"],
+                item["profile_id"],
+                item["display_name"],
+            )
+        )
     value = {"schema_version": 1, "mccmnc": dict(sorted(index.items()))}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -256,7 +360,13 @@ def write_carrier_id_index(
         for carrier_id in valid_carrier_ids:
             index.setdefault(str(carrier_id), []).append(record)
     for records in index.values():
-        records.sort(key=lambda item: (item["profile_id"], item["display_name"]))
+        records.sort(
+            key=lambda item: (
+                item["specificity"],
+                item["profile_id"],
+                item["display_name"],
+            )
+        )
     value = {"schema_version": 1, "android_carrier_ids": dict(sorted(index.items()))}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -367,6 +477,9 @@ def config_xml_lines(config: dict[str, Any]) -> list[str]:
     lines: list[str] = []
     for key in sorted(config):
         value = config[key]
+        expected = expected_config_type(key)
+        if not config_value_has_expected_type(key, value):
+            raise ValueError(f"CarrierConfig {key} must be {expected}")
         if isinstance(value, bool):
             lines.append(f"    <boolean{attr('name', key)}{attr('value', value)} />")
         elif isinstance(value, int) and not isinstance(value, bool):
@@ -374,21 +487,15 @@ def config_xml_lines(config: dict[str, Any]) -> list[str]:
         elif isinstance(value, str):
             lines.append(f"    <string{attr('name', key)}>{escape(value)}</string>")
         elif isinstance(value, list):
-            if all(isinstance(item, int) and not isinstance(item, bool) for item in value):
-                lines.append(f"    <int-array{attr('name', key)}{attr('num', len(value))}>")
-                for item in value:
-                    lines.append(f"      <item{attr('value', item)} />")
-                lines.append("    </int-array>")
-            elif all(isinstance(item, str) for item in value):
-                lines.append(f"    <string-array{attr('name', key)}{attr('num', len(value))}>")
-                for item in value:
-                    lines.append(f"      <item{attr('value', item)} />")
-                lines.append("    </string-array>")
+            lines.append(f"    <string-array{attr('name', key)}{attr('num', len(value))}>")
+            for item in value:
+                lines.append(f"      <item{attr('value', item)} />")
+            lines.append("    </string-array>")
     return lines
 
 
 def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
-    blocks: list[tuple[str, dict[str, str], list[str]]] = []
+    blocks: list[tuple[int, str, dict[str, str], list[str]]] = []
     for profile in profiles:
         config = profile.get("android_carrier_config")
         if not isinstance(config, dict) or not config:
@@ -397,23 +504,29 @@ def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
         if not config_lines:
             continue
         for filters in config_filter_records(profile):
-            blocks.append((str(profile["profile_id"]), filters, config_lines))
+            specificity = sum(
+                key in filters for key in ("cid", "spn", "imsi", "gid1", "gid2")
+            )
+            blocks.append(
+                (specificity, str(profile["profile_id"]), filters, config_lines)
+            )
 
     blocks.sort(
         key=lambda item: (
-            item[1].get("cid", ""),
-            item[1].get("mcc", ""),
-            item[1].get("mnc", ""),
-            item[1].get("spn", ""),
-            item[1].get("gid1", ""),
             item[0],
+            item[2].get("mcc", ""),
+            item[2].get("mnc", ""),
+            item[2].get("cid", ""),
+            item[2].get("spn", ""),
+            item[2].get("gid1", ""),
+            item[1],
         )
     )
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
         "<carrier_config_list>",
     ]
-    for profile_id, filters, config_lines in blocks:
+    for _specificity, profile_id, filters, config_lines in blocks:
         lines.append(f"  <!-- {escape(profile_id)} -->")
         attrs = "".join(attr(key, filters[key]) for key in sorted(filters))
         lines.append(f"  <carrier_config{attrs}>")
@@ -432,13 +545,13 @@ def write_metadata(
     apn_count: int,
     config_xml_count: int,
 ) -> None:
-    apn_unrepresentable = sum(
-        1
+    apn_unrepresentable_ids = sorted(
+        str(profile["profile_id"])
         for profile in profiles
-        if profile.get("android_apns") and not profile_apn_mvnos(profile.get("match", {}))
+        if profile.get("android_apns") and not apn_records(profile)
     )
-    config_unrepresentable = sum(
-        1
+    config_unrepresentable_ids = sorted(
+        str(profile["profile_id"])
         for profile in profiles
         if profile.get("android_carrier_config") and not config_filter_records(profile)
     )
@@ -453,8 +566,14 @@ def write_metadata(
             "carrier_config_xml_block_count": config_xml_count,
         },
         "omissions": {
-            "apn_profiles_with_unrepresentable_match": apn_unrepresentable,
-            "carrier_config_profiles_with_unrepresentable_match": config_unrepresentable,
+            "apn_profile_ids_with_unrepresentable_match": apn_unrepresentable_ids,
+            "apn_profiles_with_unrepresentable_match": len(apn_unrepresentable_ids),
+            "carrier_config_profile_ids_with_unrepresentable_match": (
+                config_unrepresentable_ids
+            ),
+            "carrier_config_profiles_with_unrepresentable_match": len(
+                config_unrepresentable_ids
+            ),
         },
     }
     path.parent.mkdir(parents=True, exist_ok=True)

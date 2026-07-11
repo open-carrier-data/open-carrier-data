@@ -12,8 +12,7 @@
     "change_type",
     "changes",
     "evidence",
-    "last_verified",
-    "expires"
+    "last_verified"
   ],
   "properties": {
     "schema_version": {
@@ -29,10 +28,7 @@
       "maxLength": 240
     },
     "status": {
-      "enum": [
-        "proposed",
-        "verified"
-      ]
+      "const": "proposed"
     },
     "carrier_match": {
       "$ref": "carrier-profile.schema.json#/properties/match"
@@ -70,13 +66,6 @@
           "$ref": "carrier-profile.schema.json#/properties/addons"
         }
       }
-    },
-    "risk": {
-      "enum": [
-        "low",
-        "medium",
-        "high"
-      ]
     },
     "evidence": {
       "type": "array",

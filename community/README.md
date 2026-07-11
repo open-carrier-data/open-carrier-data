@@ -13,7 +13,7 @@ A claim says:
 - what setting should be added, changed, or removed;
 - how the result was tested or sourced;
 - when it was last verified;
-- when it expires.
+- a computed expiry based on the change's risk.
 
 A claim can help with edge cases faster than waiting for every maintained
 source to update. It still stays separate from the stable database until it is
@@ -30,7 +30,8 @@ Use one of these paths:
 - or fork the repo, add a JSON claim under `community/claims/`, and open a pull
   request.
 
-Use the issue path if you do not want to write JSON or use Git. Use the pull
+Use the issue path if you do not want to write JSON or use Git. Automation
+converts the form, validates it, and opens a pull request. Use the direct pull
 request path if you already know the exact structured change.
 
 ## Why Claims Are Separate
@@ -59,7 +60,7 @@ generated/index.json
 - Use public, non-personal facts.
 - Include evidence and a test date.
 - Keep the SIM match as specific as possible.
-- Add an expiry date so old reports do not stay trusted forever.
+- Let the validator compute expiry; higher-risk claims expire sooner.
 - Do not include phone numbers, account data, personal passwords, tokens,
   private vendor credentials, full IMSI values, full ICCID values, IMEI, raw
   logs, raw bugreports, raw firmware dumps, or private vendor responses.
@@ -67,9 +68,9 @@ generated/index.json
   settings from public docs or visible phone configuration, not private account
   credentials.
 
-The validator computes risk from the change type, match breadth, evidence,
-freshness, and conflicts with stable data. A claim may include a risk value,
-but CI rejects it if that value is lower than the computed risk.
+The validator computes confidence, risk, expiry, and stable-data conflicts.
+Claims never become stable automatically. A candidate is only an opt-in test
+input; maintained-source automation remains the only normal stable path.
 
 ## Local Checks
 
