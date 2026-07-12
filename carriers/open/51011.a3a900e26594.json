@@ -2,10 +2,42 @@
   "android_apns": [
     {
       "apn": "internet",
+      "name": "internet",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "XL-INTERNET",
       "types": [
         "supl"
       ]
+    },
+    {
+      "apn": "www.xlgprs.net",
+      "name": "www.xlgprs.net",
+      "password": "proxl",
+      "port": 8080,
+      "proxy": "202.152.240.50",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "xlgprs"
+    },
+    {
+      "apn": "www.xlmms.net",
+      "mmsc": "http://mmc.xl.net.id/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "202.152.240.50",
+      "name": "www.xlmms.net",
+      "password": "proxl",
+      "types": [
+        "mms"
+      ],
+      "user": "xlgprs"
     },
     {
       "apn": "xlunlimited",

@@ -34,21 +34,23 @@
     },
     {
       "apn": "telstra.internet",
-      "name": "Telstra Broadband",
+      "mmsc": "http://mmsc.telstra.com:8002",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.181",
+      "name": "telstra.internet",
+      "port": 80,
+      "proxy": "10.1.1.181",
       "types": [
-        "dun"
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
       "apn": "telstra.internet",
-      "mmsc": "http://mmsc.telstra.com:8002",
-      "mmsport": 80,
-      "mmsproxy": "10.1.1.181",
-      "name": "Telstra w/ Portal",
-      "port": 80,
-      "proxy": "10.1.1.181",
+      "name": "Telstra Broadband",
       "types": [
-        "mms"
+        "dun"
       ]
     },
     {

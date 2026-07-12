@@ -2,11 +2,25 @@
   "android_apns": [
     {
       "apn": "internet.coopvoce.it",
-      "name": "WEB CoopVoce",
+      "name": "internet.coopvoce.it",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "message.coopvoce.it",
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "name": "message.coopvoce.it",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     }
   ],

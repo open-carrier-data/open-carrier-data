@@ -11,10 +11,12 @@
     {
       "apn": "internet68",
       "authtype": 0,
-      "name": "Keyyo Mobile Internet",
+      "name": "internet68",
       "types": [
+        "default",
         "dun",
-        "fota"
+        "fota",
+        "supl"
       ]
     },
     {
@@ -97,6 +99,19 @@
     },
     {
       "apn": "sl2sfr",
+      "authtype": 0,
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "sl2sfr",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
       "name": "SFR Option Modem",
       "types": [
         "dun"
@@ -105,30 +120,58 @@
     {
       "apn": "sl2sfr",
       "authtype": 0,
-      "name": "Internet Joe",
+      "name": "sl2sfr",
       "types": [
-        "fota"
+        "fota",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "sl2sfr",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap65",
+      "mmsc": "http://wap.auchantelecom.fr",
+      "name": "wap65",
+      "port": 8080,
+      "proxy": "192.168.21.8",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
       "apn": "wap66",
       "authtype": 0,
-      "name": "RegloMobile WAP",
+      "name": "wap66",
       "port": 8080,
       "proxy": "192.168.21.9",
       "types": [
+        "default",
         "dun",
-        "fota"
+        "fota",
+        "supl"
       ]
     },
     {
       "apn": "wap68",
       "authtype": 0,
-      "name": "Keyyo Mobile Wap",
+      "name": "wap68",
       "port": 8080,
       "proxy": "192.168.21.11",
       "types": [
-        "fota"
+        "default",
+        "fota",
+        "supl"
       ]
     },
     {
@@ -153,12 +196,13 @@
     },
     {
       "apn": "wapsfr",
-      "name": "SFR WAP",
+      "name": "wapsfr",
       "password": "none",
       "port": 8080,
       "proxy": "195.115.25.129",
       "server": "*",
       "types": [
+        "default",
         "supl"
       ],
       "user": "none"
@@ -169,6 +213,15 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "websfr",
+      "name": "websfr",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
       ]
     },
     {

@@ -1,11 +1,24 @@
 {
   "android_apns": [
     {
-      "apn": "web.kenamobile.it",
-      "name": "Kena Mobile Web",
+      "apn": "mms.kenamobile.it",
+      "mmsc": "http://mms.kenamobile.it/",
+      "mmsport": 80,
+      "mmsproxy": "10.248.1.12",
+      "name": "mms.kenamobile.it",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.kenamobile.it",
+      "name": "web.kenamobile.it",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
         "supl"
       ]
     }

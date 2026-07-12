@@ -11,11 +11,26 @@
     {
       "apn": "ctm-mobile",
       "authtype": 0,
-      "name": "CTM Data",
+      "name": "ctm-mobile",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctmmms",
+      "authtype": 0,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "ctmmms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
