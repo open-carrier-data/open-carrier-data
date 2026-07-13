@@ -2,6 +2,7 @@
   "android_apns": [
     {
       "apn": "event.proximus.be",
+      "authtype": 1,
       "mmsc": "http://mmsc.proximus.be/mms",
       "mmsport": 8080,
       "mmsproxy": "10.55.14.75",
@@ -11,6 +12,26 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "hos",
+      "name": "Proximus XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet.bmbpartner.be",
@@ -23,6 +44,7 @@
     {
       "apn": "internet.proximus.be",
       "name": "internet.proximus.be",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -97,6 +119,16 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -104,9 +136,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 20601",

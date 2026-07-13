@@ -14,6 +14,32 @@
       ]
     },
     {
+      "apn": "cmnet",
+      "name": "cmnet",
+      "password": "guest",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "guest"
+    },
+    {
+      "apn": "cmwap",
+      "mmsc": "http://mmsc.monternet.com",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "cmwap",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "proxy": "10.0.0.172",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "cmwap",
       "carrier_id": 1435,
       "mmsc": "http://mmsc.monternet.com",
@@ -30,6 +56,16 @@
     },
     {
       "apn": "ims",
+      "name": "\u4e2d\u56fd\u79fb\u52a8 (China Mobile) IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1435,
       "name": "\u4e2d\u56fd\u79fb\u52a8 (China Mobile) NET IMS",
       "protocol": "IPV4V6",
@@ -39,6 +75,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "allow_add_call_during_video_call": false,
+    "allow_hold_video_call_bool": false,
+    "support_video_conference_call_bool": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

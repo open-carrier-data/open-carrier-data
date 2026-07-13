@@ -2,6 +2,7 @@
   "android_apns": [
     {
       "apn": "gpinternet",
+      "authtype": 0,
       "name": "gpinternet",
       "password": "gp",
       "port": 8080,
@@ -10,10 +11,22 @@
         "default",
         "supl"
       ],
-      "user": "gp"
+      "user": "gp",
+      "user_editable": false
+    },
+    {
+      "apn": "gpinternet",
+      "authtype": 0,
+      "name": "gpinternet",
+      "types": [
+        "dun",
+        "fota"
+      ],
+      "user_editable": false
     },
     {
       "apn": "gpmms",
+      "authtype": 0,
       "mmsc": "http://mms.gpsurf.net/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "10.128.1.2",
@@ -41,11 +54,23 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
+    "enhanced_4g_lte_on_by_default_bool": false,
     "imssms.sms_over_ims_supported_bool": true
   },
   "capabilities": {

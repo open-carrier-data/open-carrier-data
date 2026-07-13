@@ -1,13 +1,56 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "O2 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user": "o2",
+      "user_editable": false
+    }
+  ],
   "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "read_only_apn_types_string_array": [],
+    "smsToMmsTextThreshold": 10,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -16,7 +59,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telefonica GB PayGo",
+  "display_name": "O2Prepaid Gb",
   "match": {
     "gid1_prefixes": [
       "61"

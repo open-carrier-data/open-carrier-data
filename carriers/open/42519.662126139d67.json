@@ -1,7 +1,40 @@
 {
+  "android_apns": [
+    {
+      "apn": "019",
+      "name": "019",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|20",
+      "name": "019IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "019HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc019.mcc425.pub.3gppnetwork.org"
   },
   "capabilities": {
     "esim": "unknown",
@@ -15,7 +48,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telzar IL",
+  "display_name": "Carrier 42519",
   "match": {
     "mccmnc": [
       "42519"

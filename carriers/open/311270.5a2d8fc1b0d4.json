@@ -1,0 +1,223 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_add_call_during_video_call": false,
+    "allow_adding_apns_bool": false,
+    "allow_hold_in_ims_call": false,
+    "allow_merge_wifi_calls_when_vowifi_off_bool": false,
+    "call_forwarding_blocks_while_roaming_string_array": [
+      "*71",
+      "*72"
+    ],
+    "carrier_allow_turnoff_ims_bool": false,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_metered_roaming_apn_types_strings": [
+      "default",
+      "dun",
+      "supl",
+      "mms"
+    ],
+    "carrier_volte_available_bool": true,
+    "carrier_volte_override_wfc_provisioning_bool": true,
+    "carrier_volte_provisioned_bool": true,
+    "carrier_volte_provisioning_required_bool": false,
+    "carrier_vt_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "drop_video_call_when_answering_audio_call_bool": true,
+    "editable_wfc_mode_bool": false,
+    "editable_wfc_roaming_mode_bool": true,
+    "enabledNotifyWapMMSC": true,
+    "enabledTransID": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "httpParams": "x-up-calling-line-id: 1##LINE1NOCOUNTRYCODE##|X-VzW-MDN: 1##LINE1NOCOUNTRYCODE##",
+    "ims.enable_presence_publish_bool": true,
+    "ims.sip_over_ipsec_enabled_bool": false,
+    "ims.use_sip_uri_for_presence_subscribe_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "332|simultaneous call limit has already been reached|1403",
+      "332|Forbidden: Simultaneous Call Limit Has Already Been Reached|1403",
+      "338|another device sent all devices busy response|1404",
+      "501|call completion elsewhere|1014",
+      "510|Call Completion Elsewhere|1014",
+      "501|call has been pulled by another device|1016",
+      "510|call has been pulled by another device|1016",
+      "501|another device sent all devices busy response|1404",
+      "510|another device sent all devices busy response|1404",
+      "1014|call has been pulled by another device|1016",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imsvoice.conference_factory_uri_string": "confserver@vzims.com",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "is_ims_conference_size_enforced_bool": true,
+    "iwlan.epdg_pco_id_ipv4_int": 65282,
+    "iwlan.epdg_pco_id_ipv6_int": 65281,
+    "iwlan.epdg_static_address_string": "wo.vzwwo.com",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1258291,
+    "maxSubjectLength": 80,
+    "mmsCloseConnection": true,
+    "notify_handover_video_from_lte_to_wifi_bool": true,
+    "notify_handover_video_from_wifi_to_lte_bool": true,
+    "notify_vt_handover_to_wifi_failure_bool": true,
+    "read_only_apn_fields_string_array": [
+      "name",
+      "proxy",
+      "port",
+      "user",
+      "password",
+      "server",
+      "mmsc",
+      "mmsproxy",
+      "mmsport",
+      "mcc",
+      "mnc",
+      "authtype",
+      "type",
+      "protocol",
+      "roaming_protocol",
+      "bearer",
+      "bearer_bitmask",
+      "carrier_enabled",
+      "mvno_type",
+      "mvno_match_data"
+    ],
+    "read_only_apn_types_string_array": [],
+    "recipientLimit": 20,
+    "rtt_supported_bool": true,
+    "rtt_upgrade_supported_for_downgraded_vt_call": false,
+    "show_apn_setting_cdma_bool": false,
+    "smsToMmsTextThreshold": 7,
+    "sms_requires_destination_number_conversion_bool": true,
+    "support_3gpp_call_forwarding_while_roaming_bool": false,
+    "support_downgrade_vt_to_audio_bool": false,
+    "support_pause_ims_video_calls_bool": true,
+    "support_swap_after_merge_bool": true,
+    "treat_downgraded_video_calls_as_video_calls_bool": true,
+    "video_calls_can_be_hd_audio": false,
+    "volte_replacement_rat_int": 3,
+    "vt_upgrade_supported_for_downgraded_rtt_call": false,
+    "wfc_spn_format_idx_int": 7,
+    "wifi_calls_can_be_hd_audio": false
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "conditional",
+    "sms_over_ims": "unknown",
+    "video_calling": "supported",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
+  },
+  "display_name": "Verizon Us",
+  "match": {
+    "mccmnc": [
+      "311270"
+    ]
+  },
+  "profile_id": "open.311270.5a2d8fc1b0d4",
+  "schema_version": 1
+}

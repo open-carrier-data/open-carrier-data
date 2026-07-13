@@ -1,6 +1,20 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "authtype": 1,
       "name": "Cosmote IMS",
@@ -11,12 +25,45 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "Cosmote Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "mms",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "Cosmote MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -32,6 +79,18 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 614400,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 11
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -39,9 +98,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 20201",

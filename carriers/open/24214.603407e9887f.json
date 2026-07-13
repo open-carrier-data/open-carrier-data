@@ -1,8 +1,38 @@
 {
+  "android_apns": [
+    {
+      "apn": "ice.net",
+      "name": "ice.net",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "editable_wfc_roaming_mode_bool": false,
+    "imssms.sms_over_ims_supported_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc014.mcc242.pub.3gppnetwork.org",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -14,7 +44,7 @@
     "volte": "supported",
     "vonr": "unknown",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 24214",
   "match": {

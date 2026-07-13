@@ -1,11 +1,83 @@
 {
   "android_apns": [
     {
+      "apn": "EMERGENCY",
+      "name": "Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "isp.apn",
       "name": "tbaytel",
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "Tbaytel Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Tbaytel Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "netsvcs",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Netsvcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "netsvcs",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "name": "Netsvcs XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "rogers-core-appl1.apn",
@@ -19,10 +91,25 @@
     }
   ],
   "android_carrier_config": {
+    "call_forwarding_map_non_number_to_voicemail_bool": true,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc720.mcc302.3gppnetwork.org",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc720.mcc302.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 80,
+    "read_only_apn_types_string_array": [],
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 6,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -34,9 +121,9 @@
     "volte": "supported",
     "vonr": "supported",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
-  "display_name": "RWC CA TBT",
+  "display_name": "Tbaytel Ca",
   "match": {
     "gid1_prefixes": [
       "BA"

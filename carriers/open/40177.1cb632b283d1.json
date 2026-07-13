@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.altel.kz",
       "name": "Altel",
       "protocol": "IPV4V6",
@@ -17,6 +25,16 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.tele2.kz/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.26.10",
+      "name": "Tele2 MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -27,7 +45,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "supported",

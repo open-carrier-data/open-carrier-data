@@ -2,10 +2,11 @@
   "android_apns": [
     {
       "apn": "wap",
+      "authtype": 1,
       "mmsc": "http://mms.digicelgroup.com",
       "mmsport": 8080,
       "mmsproxy": "172.16.7.12",
-      "name": "Digicel MMS",
+      "name": "wap",
       "password": "wap03aruba",
       "types": [
         "mms"
@@ -15,6 +16,15 @@
     {
       "apn": "web",
       "name": "web",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.digicelaruba.com",
+      "authtype": 1,
+      "name": "INTERNET Aruba",
       "types": [
         "default",
         "supl"

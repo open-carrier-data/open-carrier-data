@@ -1,8 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -10,23 +33,37 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mms",
       "mmsport": 80,
       "mmsproxy": "10.11.10.111",
       "name": "mms",
       "password": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "server": "mms",
       "types": [
         "mms"
       ],
-      "user": "mms"
+      "user": "mms",
+      "user_editable": false
     }
   ],
   "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 6,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -38,7 +75,7 @@
     "volte": "supported",
     "vonr": "unknown",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 23003",
   "match": {

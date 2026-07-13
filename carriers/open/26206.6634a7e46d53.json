@@ -1,4 +1,74 @@
 {
+  "android_apns": [
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "mmsproxy.telekom.de",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "name": "internet.v6.telekom",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telekom"
+    }
+  ],
+  "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl",
+      "enterprise"
+    ],
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "361||338",
+      "361|declined|338",
+      "510|Call completed elsewhere|1014"
+    ],
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc262.pub.3gppnetwork.org",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "show_ims_registration_status_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -6,12 +76,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
-  "display_name": "T-Mobile(Telekom)",
+  "display_name": "Carrier 26206",
   "match": {
     "mccmnc": [
       "26206"

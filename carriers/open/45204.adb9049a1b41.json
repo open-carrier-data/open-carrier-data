@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "v-internet",
       "name": "v-internet",
       "protocol": "IPV4V6",
@@ -14,8 +25,21 @@
       "types": [
         "supl"
       ]
+    },
+    {
+      "apn": "v-wap",
+      "name": "Viettel-wap-gprs 2",
+      "port": 8080,
+      "proxy": "192.168.233.10",
+      "types": [
+        "default",
+        "supl"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

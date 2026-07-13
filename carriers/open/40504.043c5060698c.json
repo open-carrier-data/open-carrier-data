@@ -1,20 +1,9 @@
 {
   "android_apns": [
     {
-      "apn": "rcommms",
-      "mmsc": "http://10.239.221.47/mms/",
-      "mmsport": 8080,
-      "mmsproxy": "10.239.221.5",
-      "name": "Smart MMS",
-      "port": 8080,
-      "proxy": "10.239.221.5",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "rcomnet",
-      "name": "NetConnect",
+      "name": "rcomnet",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -22,8 +11,9 @@
     },
     {
       "apn": "rcomwap",
-      "name": "Reliance GPRS",
+      "name": "rcomwap",
       "port": 8080,
+      "protocol": "IPV4V6",
       "proxy": "10.239.221.5",
       "types": [
         "default",

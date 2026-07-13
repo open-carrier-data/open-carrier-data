@@ -1,0 +1,65 @@
+{
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms.prontogo.net",
+      "authtype": 3,
+      "mmsc": "http://mms.manxpronto.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "195.10.99.41",
+      "name": "MMS",
+      "password": "mmsgo",
+      "types": [
+        "mms"
+      ],
+      "user": "mmsgo",
+      "user_editable": false
+    },
+    {
+      "apn": "web.prontogo.net",
+      "name": "web.prontogo.net",
+      "password": "webgo",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "webgo"
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Manxprepaid Im",
+  "match": {
+    "imsi_prefix_patterns": [
+      "23458851"
+    ],
+    "mccmnc": [
+      "23458"
+    ]
+  },
+  "profile_id": "open.23458.ffd36b94976f",
+  "schema_version": 1
+}

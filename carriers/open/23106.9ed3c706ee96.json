@@ -1,12 +1,33 @@
 {
   "android_apns": [
     {
+      "apn": "EMERGENCY",
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "O2 internet",
       "name": "Internet",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "o2 mms",
@@ -21,6 +42,8 @@
     {
       "apn": "o2internet",
       "name": "o2internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -32,15 +55,33 @@
       "mmsport": 8080,
       "mmsproxy": "10.97.1.11",
       "name": "o2mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|18|20",
+      "name": "O2 VoLTE",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -52,7 +93,7 @@
     "volte": "supported",
     "vonr": "unknown",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 23106",
   "match": {

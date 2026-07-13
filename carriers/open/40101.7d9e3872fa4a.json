@@ -1,4 +1,27 @@
 {
+  "android_apns": [
+    {
+      "apn": "internet.dos.kz",
+      "name": "DOS Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.beeline.kz",
+      "authtype": 1,
+      "mmsc": "http://mms.beeline.kz/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "172.27.6.93",
+      "name": "Beeline MMS",
+      "password": "beeline",
+      "types": [
+        "mms"
+      ],
+      "user": "@mms.beeline"
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
@@ -7,7 +30,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

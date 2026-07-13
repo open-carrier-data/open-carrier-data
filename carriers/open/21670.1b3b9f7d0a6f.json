@@ -1,11 +1,50 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "name": "internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.vodafone.net",
       "name": "internet.vodafone.net",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.one.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -28,7 +67,17 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_default_wfc_ims_enabled_bool": false,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
+    "wfc_spn_format_idx_int": 4
   },
   "capabilities": {
     "esim": "unknown",
@@ -39,8 +88,8 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 21670",
   "match": {

@@ -1,8 +1,38 @@
 {
+  "android_apns": [
+    {
+      "apn": "e-internet",
+      "name": "e-internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "e-mms",
+      "mmsc": "http://10.18.2.172:38090",
+      "mmsport": 8080,
+      "mmsproxy": "10.18.2.183",
+      "name": "e-mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "e-wap",
+      "name": "e-wap",
+      "port": 8080,
+      "proxy": "10.18.2.183",
+      "types": [
+        "default",
+        "supl"
+      ]
+    }
+  ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -11,7 +41,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "EVNTelecom/E-Mobile",
+  "display_name": "Carrier 45208",
   "match": {
     "mccmnc": [
       "45208"

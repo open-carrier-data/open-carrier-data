@@ -6,16 +6,36 @@
       "name": "entel.pe",
       "types": [
         "default",
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "entel.pe",
+      "authtype": 0,
+      "name": "Entel Internet",
+      "types": [
         "supl"
       ]
     },
     {
-      "apn": "mms.entel.pe",
-      "authtype": 0,
-      "mmsc": "http://mms.nextel.pe",
-      "name": "Entel MMS",
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "location.entel.pe",
+      "authtype": 0,
+      "name": "Entel Location",
+      "server": "http://location.entel.pe",
+      "types": [
+        "supl"
       ]
     }
   ],
@@ -23,6 +43,7 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "ims.sip_over_ipsec_enabled_bool": false,
     "imssms.sms_over_ims_supported_bool": true
   },
   "capabilities": {

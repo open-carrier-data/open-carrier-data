@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Optus MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "connect",
       "name": "connect",
       "types": [
@@ -23,6 +33,27 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "hos",
+      "name": "Optus XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "Optus IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet",
@@ -77,6 +108,8 @@
     {
       "apn": "yesbusiness",
       "name": "Optus Business Mobile Broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -88,7 +121,9 @@
       "name": "yesinternet",
       "password": "*",
       "port": 554,
+      "protocol": "IPV4V6",
       "proxy": "172.22.1.3",
+      "roaming_protocol": "IPV4V6",
       "server": "*",
       "types": [
         "default",
@@ -108,9 +143,17 @@
     }
   ],
   "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "is_ims_conference_size_enforced_bool": true,
+    "volte_replacement_rat_int": 3
   },
   "capabilities": {
     "esim": "unknown",

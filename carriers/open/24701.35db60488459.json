@@ -1,6 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "name": "LMT MMS WIFI",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.lmt.lv",
       "mmsc": "http://mmsc.lmt.lv/mmsc",
       "mmsport": 8081,
@@ -15,6 +48,19 @@
     },
     {
       "apn": "internet.lmt.lv",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "name": "LMT LV",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.lmt.lv",
       "name": "LMT",
       "types": [
         "supl"
@@ -22,8 +68,19 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_vt_available_bool": true
+    "carrier_vt_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "338|busy everywhere|1017",
+      "510|Call completed elsewhere|1014"
+    ],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -34,7 +91,7 @@
     "video_calling": "supported",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 24701",

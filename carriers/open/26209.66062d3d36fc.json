@@ -1,13 +1,54 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims.testnetz-vd2.de",
+      "bearer_bitmask": "14|18|20",
+      "name": "VF DE IMS Lab 32",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos.testnetz-vd2.de",
+      "name": "VF DE SOS Lab 32",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "web.testnetz-vd2.de",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "VF DE Web Lab 32",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    }
+  ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "editable_wfc_mode_bool": false,
+    "enabledMMS": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 11
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "unsupported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

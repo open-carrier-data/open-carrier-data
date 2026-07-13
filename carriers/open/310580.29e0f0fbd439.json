@@ -1,6 +1,47 @@
 {
   "android_apns": [
     {
+      "apn": "SOS",
+      "name": "Inland SOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland MMS IWLAN",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|20",
+      "name": "Inland XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "Inland IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.inland.com",
       "authtype": 3,
       "mmsc": "http://mms.inland3g.com/inland/mms.php",
@@ -8,6 +49,18 @@
       "types": [
         "default",
         "mms"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
+      "bearer_bitmask": "3|9|10|11|14|15|20",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -35,6 +88,16 @@
       ]
     },
     {
+      "apn": "modem.inland.com",
+      "name": "Inland Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ota.inland.com",
       "bearer": 14,
       "name": "Inland Cellular FOTA",
@@ -43,11 +106,33 @@
       "types": [
         "fota"
       ]
+    },
+    {
+      "apn": "ota.inland.com",
+      "name": "Inland OTA",
+      "types": [
+        "fota"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_ims_gba_required_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "httpParams": "X-MDN: ##LINE1##",
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxImageHeight": 2432,
+    "maxImageWidth": 4320,
+    "maxMessageSize": 1228800,
+    "maxSubjectLength": 80,
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 1,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -58,8 +143,8 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "supported",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 310580",
   "match": {

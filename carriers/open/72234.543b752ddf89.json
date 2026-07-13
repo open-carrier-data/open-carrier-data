@@ -2,6 +2,7 @@
   "android_apns": [
     {
       "apn": "datos.personal.com",
+      "authtype": 1,
       "name": "datos.personal.com",
       "password": "datos",
       "protocol": "IPV4V6",
@@ -13,6 +14,7 @@
     },
     {
       "apn": "datos.personal.com",
+      "authtype": 1,
       "name": "datos.personal.com",
       "password": "datos",
       "types": [
@@ -29,8 +31,35 @@
         "supl"
       ],
       "user": "gprs"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "Personal IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.personal.com",
+      "authtype": 1,
+      "name": "internet.personal.com",
+      "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "internet",
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -38,7 +67,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

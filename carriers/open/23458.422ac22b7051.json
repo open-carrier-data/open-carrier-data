@@ -13,6 +13,25 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "mms.prontogo.net",
       "mmsc": "http://mms.manxpronto.net:8002",
       "mmsport": 8080,
@@ -59,6 +78,9 @@
       "user": "webgo"
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -66,7 +88,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

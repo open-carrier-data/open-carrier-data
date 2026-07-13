@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "internet",
+      "name": "Airtel Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "ke.celtel.com",
       "authtype": 1,
       "name": "ke.celtel.com",
@@ -12,6 +20,27 @@
         "supl"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "ke.celtel.com",
+      "mmsc": "http://mms.ke.celtel.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.30.8.50",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.ke.airtel.com:8002",
+      "mmsport": 8080,
+      "mmsproxy": "172.30.9.8",
+      "name": "Airtel mms",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "capabilities": {

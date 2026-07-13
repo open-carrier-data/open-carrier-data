@@ -1,12 +1,48 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "OptimERA IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.oexg.mobi",
+      "name": "OptimERA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "tether",
+      "name": "OptimERA Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +51,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US GoogleGC",
+  "display_name": "Carrier 313380",
   "match": {
     "mccmnc": [
       "313380"

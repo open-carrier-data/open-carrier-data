@@ -1,8 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
-      "name": "M1 Internet GPRS",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -27,12 +50,32 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "editable_enhanced_4g_lte_bool": false,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "is_ims_conference_size_enforced_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc238.pub.3gppnetwork.org",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

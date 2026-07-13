@@ -1,0 +1,65 @@
+{
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "mmsc": "http://mms.sasktel.com/",
+      "mmsport": 80,
+      "mmsproxy": "mig.sasktel.com",
+      "name": "SaskTel",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "imsvoice.conference_factory_uri_string": "conference@ibc.sasktel.com",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Sasktel Ca",
+  "match": {
+    "gid1_prefixes": [
+      "5A"
+    ],
+    "mccmnc": [
+      "302780"
+    ]
+  },
+  "profile_id": "open.302780.547d7378d007",
+  "schema_version": 1
+}

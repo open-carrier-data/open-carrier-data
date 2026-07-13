@@ -4,12 +4,29 @@
       "apn": "gint.b-online.gr",
       "name": "gint.b-online.gr",
       "password": "web",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "protocol": "IPV4V6",
       "types": [
-        "default"
+        "supl"
       ],
       "user": "web"
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -34,8 +51,14 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "imsvoice.conference_factory_uri_string": "conf@ims.wind.gr",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

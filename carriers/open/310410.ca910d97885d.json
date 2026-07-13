@@ -1,0 +1,108 @@
+{
+  "android_apns": [
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net/",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "3|9|10|11|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "allow_merging_rtt_calls_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_metered_roaming_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "enableSMSDeliveryReports": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_dtmf_tone_delay_int": 120,
+    "ims_reasoninfo_mapping_string_array": [
+      "332|service not allowed in this location|1623",
+      "352|emergency calls over wifi not allowed in this location|1622",
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "iwlan.epdg_static_address_string": "epdg.epc.att.net",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 0,
+    "read_only_apn_types_string_array": [
+      "dun",
+      "ims"
+    ],
+    "recipientLimit": 20,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "support_pause_ims_video_calls_bool": false,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
+  },
+  "display_name": "Commonmvnxatt Us",
+  "match": {
+    "gid1_prefixes": [
+      "30"
+    ],
+    "mccmnc": [
+      "310410"
+    ]
+  },
+  "profile_id": "open.310410.ca910d97885d",
+  "schema_version": 1
+}

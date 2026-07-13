@@ -14,19 +14,6 @@
       "user": "wap"
     },
     {
-      "apn": "mms.orange.jo",
-      "authtype": 3,
-      "mmsc": "http://172.16.1.96/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.1.2",
-      "name": "mms.orange.jo",
-      "password": "mmc",
-      "types": [
-        "mms"
-      ],
-      "user": "mmc"
-    },
-    {
       "apn": "mms.orangemobile.jo",
       "mmsc": "http://172.16.1.96/servlets/mms",
       "mmsport": 8080,
@@ -40,6 +27,7 @@
     },
     {
       "apn": "net.orange.jo",
+      "authtype": 1,
       "name": "net.orange.jo",
       "password": "net",
       "protocol": "IPV4V6",
@@ -51,12 +39,26 @@
     },
     {
       "apn": "net.orange.jo",
+      "authtype": 1,
       "name": "net.orange.jo",
       "password": "net",
       "types": [
         "supl"
       ],
       "user": "net"
+    },
+    {
+      "apn": "wap.orange.jo",
+      "authtype": 1,
+      "name": "Orange WAP",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "172.16.1.2",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     }
   ],
   "android_carrier_config": {

@@ -1,12 +1,49 @@
 {
+  "android_apns": [
+    {
+      "apn": "hos",
+      "name": "Strata XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "Rinainternet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user_editable": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "imssms.sms_over_ims_supported_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +52,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US RinaWireless",
+  "display_name": "Carrier 312290",
   "match": {
     "mccmnc": [
       "312290"

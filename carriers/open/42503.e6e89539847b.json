@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.pelephone.net.il",
       "name": "internet.pelephone.net.il",
       "password": "pcl",
@@ -45,6 +56,7 @@
     },
     {
       "apn": "sphone.pelephone.net.il",
+      "authtype": 2,
       "name": "sphone.pelephone.net.il",
       "password": "pcl",
       "protocol": "IPV4V6",
@@ -56,6 +68,7 @@
     },
     {
       "apn": "sphone.pelephone.net.il",
+      "authtype": 2,
       "name": "Sphone Pelephone",
       "password": "pcl",
       "types": [
@@ -65,9 +78,12 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

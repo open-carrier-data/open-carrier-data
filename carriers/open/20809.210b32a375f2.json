@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "SFR IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mmssfr",
       "mmsc": "http://mms1",
       "mmsport": 8080,
@@ -12,11 +23,29 @@
     },
     {
       "apn": "sl2sfr",
-      "name": "SFR",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "sl2sfr",
+      "protocol": "IPV4V6",
       "server": "*",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun",
+        "hipri",
+        "mms",
+        "xcap"
       ]
     },
     {
@@ -41,6 +70,27 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "is_ims_conference_size_enforced_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "support_ims_conference_event_package_bool": false,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -48,9 +98,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 20809",

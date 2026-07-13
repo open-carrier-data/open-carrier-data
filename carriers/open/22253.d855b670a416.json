@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.coopvoce.it",
       "name": "internet.coopvoce.it",
       "protocol": "IP",
@@ -22,10 +33,24 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "xcap.coopvoce.it",
+      "name": "Ut CoopVoce",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true
   },
   "capabilities": {
     "esim": "unknown",

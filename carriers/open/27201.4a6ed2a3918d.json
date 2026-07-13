@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "isp.vodafone.ie",
       "name": "isp.vodafone.ie",
       "password": "vodafone",
@@ -12,10 +23,13 @@
     },
     {
       "apn": "live.vodafone.com",
+      "authtype": 0,
       "name": "live.vodafone.com",
       "password": "vodafone",
       "port": 80,
+      "protocol": "IPV4V6",
       "proxy": "10.24.59.100",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -28,6 +42,8 @@
       "mmsport": 80,
       "mmsproxy": "10.24.59.200",
       "name": "mms.vodafone.net",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -43,11 +59,28 @@
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "imsvoice.conference_factory_uri_string": "teleconferenceuri-factory@ims.vodafone.ie",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 5
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,0 +1,123 @@
+{
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "3|9|10|11|14|15|18|20",
+      "name": "TELUS IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "isp.telus.com",
+      "name": "TELUS ISP",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "services.telus.com",
+      "bearer_bitmask": "18",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "TELUS Services",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "services.telus.com",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "TELUS Services",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "TELUS SOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sp.telus.com",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "TELUS SP",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "always_play_remote_hold_tone_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_conference_size_limit_int": 2,
+    "imsvoice.conference_factory_uri_string": "factory@conference.ims.mnc220.mcc302.3gppnetwork.org",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "is_ims_conference_size_enforced_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc220.mcc302.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 2097152,
+    "maxSubjectLength": 80,
+    "read_only_apn_types_string_array": [],
+    "recipientLimit": 10,
+    "smsToMmsTextThreshold": 5,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Telus Ca",
+  "match": {
+    "gid1_prefixes": [
+      "5455"
+    ],
+    "mccmnc": [
+      "302221"
+    ]
+  },
+  "profile_id": "open.302221.ca95faa8da60",
+  "schema_version": 1
+}

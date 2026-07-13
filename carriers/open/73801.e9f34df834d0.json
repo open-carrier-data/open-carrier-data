@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "default",
+      "name": "Digicel",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "wap",
       "mmsc": "http://mmc.digicelgy.com/servlets/mms",
       "mmsport": 8080,
@@ -11,6 +19,20 @@
         "mms"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "wap.digicelgy.com",
+      "authtype": 1,
+      "mmsc": "http://www.digicelive.com",
+      "name": "Guyana:Digicel:Modem",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "172.20.6.12",
+      "types": [
+        "dun"
+      ],
+      "user": "wap",
+      "user_editable": false
     },
     {
       "apn": "web",

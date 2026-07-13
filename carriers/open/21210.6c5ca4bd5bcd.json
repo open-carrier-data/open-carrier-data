@@ -1,7 +1,34 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.monaco-telecom.mc",
+      "name": "Monaco Telecom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "maxMessageSize": 614400,
+    "read_only_apn_types_string_array": []
   },
   "capabilities": {
     "esim": "unknown",

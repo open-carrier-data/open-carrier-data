@@ -1,18 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "internet.claro.com.ec",
+      "name": "Internet Claro",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.porta.com.ec",
       "name": "Porta EC",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms.claro.com.ec",
+      "authtype": 1,
+      "mmsc": "http://iesmms.porta.com.ec/",
+      "mmsport": 8799,
+      "mmsproxy": "216.250.208.94",
+      "name": "MMS Claro",
+      "password": "portamms2003",
+      "types": [
+        "mms"
+      ],
+      "user": "portamms"
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -21,7 +42,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Porta EC",
+  "display_name": "Carrier 740010",
   "match": {
     "mccmnc": [
       "740010"

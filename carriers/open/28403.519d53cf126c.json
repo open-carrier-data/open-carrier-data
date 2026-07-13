@@ -1,24 +1,32 @@
 {
   "android_apns": [
     {
-      "apn": "mms.vivacom.bg",
-      "authtype": 0,
-      "mmsc": "http://mmsc.vivacom.bg",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.123.123",
-      "name": "mms.vivacom.bg",
-      "password": "mms",
+      "apn": "hos",
+      "name": "HOS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "xcap"
       ],
-      "user": "mms"
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

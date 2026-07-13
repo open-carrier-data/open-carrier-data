@@ -1,21 +1,92 @@
 {
+  "android_apns": [
+    {
+      "apn": "4g.myawi.com",
+      "bearer_bitmask": "14",
+      "mmsc": "http://mms.ekn.com",
+      "name": "Appalachian",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "hos.myawi.com",
+      "name": "Appalachian XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18",
+      "name": "Appalachian IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms.myawi.com",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.ekn.com",
+      "name": "Appalachian MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Appalachian Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "httpParams": "X-MDN: ##LINE1##",
+    "imssms.sms_over_ims_supported_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.myawi.com",
+    "maxImageHeight": 2432,
+    "maxImageWidth": 4320,
+    "maxMessageSize": 1228800,
+    "maxSubjectLength": 80,
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 1,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "supported",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
-  "display_name": "GenericIR92 US Appalachian",
+  "display_name": "Carrier 312130",
   "match": {
     "mccmnc": [
       "312130"

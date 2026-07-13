@@ -1,11 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "mms.vtr.com",
+      "authtype": 0,
+      "mmsc": "http://192.168.94.162:19090/was",
+      "mmsport": 9028,
+      "mmsproxy": "192.168.94.210",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "movil.vtr.com",
+      "authtype": 2,
       "name": "movil.vtr.com",
       "password": "vtrmovil",
       "types": [
-        "default"
+        "default",
+        "supl"
       ],
       "user": "vtrmovil"
     }
@@ -17,7 +31,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

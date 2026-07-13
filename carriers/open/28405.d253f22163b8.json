@@ -12,6 +12,39 @@
       "user": "globul"
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "mmsc": "http://mmsc",
+      "mmsport": 8004,
+      "mmsproxy": "192.168.87.11",
+      "name": "mms",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "mms.globul.bg",
       "mmsc": "http://mmsc1.mms.globul.bg:8002",
       "mmsport": 8004,
@@ -45,7 +78,8 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_vt_available_bool": true
+    "carrier_vt_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true
   },
   "capabilities": {
     "esim": "unknown",

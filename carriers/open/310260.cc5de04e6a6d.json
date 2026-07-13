@@ -1,0 +1,89 @@
+{
+  "android_apns": [
+    {
+      "always_on": true,
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mtu": 1440,
+      "name": "Vodafone US IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "always_on": true,
+      "apn": "ims",
+      "bearer_bitmask": "18",
+      "mtu": 1440,
+      "name": "Vodafone US IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Vodafone US Service",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "us.vodafone.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Vodafone US",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_ims_gba_required_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_vt_available_bool": false,
+    "carrier_wfc_ims_available_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "rtt_supported_bool": true,
+    "volte_replacement_rat_int": 3,
+    "wfc_operator_error_codes_string_array": [
+      "REG09|0"
+    ],
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unsupported",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "310260Gid1=2801",
+  "match": {
+    "gid1_prefixes": [
+      "2801"
+    ],
+    "mccmnc": [
+      "310260"
+    ]
+  },
+  "profile_id": "open.310260.cc5de04e6a6d",
+  "schema_version": 1
+}

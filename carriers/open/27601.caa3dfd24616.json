@@ -1,12 +1,23 @@
 {
   "android_apns": [
     {
-      "apn": "internet.one",
-      "name": "internet.one",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.one",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
       ]
     },
     {

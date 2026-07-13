@@ -1,8 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "ims.cellularoneaz.net",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "isp.cellularoneaz.net",
       "carrier_id": 1796,
+      "name": "Cellular One NEAZ ISP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.cellularoneaz.net",
       "name": "Cellular One NEAZ ISP",
       "types": [
         "default",
@@ -19,11 +38,22 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "wap.c1csky.net",
+      "mmsc": "http://mmsc.c1neaz.csky.us:6672",
+      "mmsport": 9401,
+      "mmsproxy": "209.4.229.94",
+      "name": "Cellular One ClearSky MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc320.mcc310.pub.3gppnetwork.org"
   },
   "capabilities": {
     "esim": "unknown",
@@ -32,7 +62,7 @@
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
-    "volte": "supported",
+    "volte": "conditional",
     "vonr": "supported",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

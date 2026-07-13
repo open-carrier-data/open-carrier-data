@@ -1,0 +1,89 @@
+{
+  "android_apns": [
+    {
+      "apn": "gprs.swisscom.ch",
+      "name": "Swisscom Services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "EIMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_enabled_bool": false,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_ims_gba_required_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": true,
+    "enabledMMS": false,
+    "ims_reasoninfo_mapping_string_array": [
+      "338|busy everywhere|1017",
+      "510|Call completed elsewhere|1014"
+    ],
+    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc001.mcc228.3gppnetwork.org",
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc228.pub.3gppnetwork.org",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unsupported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
+  },
+  "display_name": "Swisscommvno Ch",
+  "match": {
+    "mccmnc": [
+      "22801"
+    ],
+    "spn": [
+      "M-Budget Mobile"
+    ]
+  },
+  "profile_id": "open.22801.4be855d8e7bc",
+  "schema_version": 1
+}

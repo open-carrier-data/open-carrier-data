@@ -10,6 +10,7 @@
     },
     {
       "apn": "digimms",
+      "authtype": 1,
       "mmsc": "http://mms.digi.com.my/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "203.92.128.160",
@@ -24,6 +25,8 @@
       "apn": "diginet",
       "name": "diginet",
       "password": "digi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -40,13 +43,37 @@
         "supl"
       ],
       "user": "digi"
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

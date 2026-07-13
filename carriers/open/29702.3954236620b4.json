@@ -1,6 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "authtype": 1,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms",
       "mmsc": "http://192.168.180.100/servlets/mms",
       "mmsport": 8080,
@@ -9,6 +30,18 @@
       "password": "38267",
       "types": [
         "mms"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "tmcg-4g",
+      "authtype": 1,
+      "name": "T-Mobile ME Internet",
+      "password": "38267",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "38267"
     },
@@ -24,9 +57,11 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

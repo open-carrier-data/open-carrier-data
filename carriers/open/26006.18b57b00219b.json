@@ -10,14 +10,56 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "Play IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Play XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl",
+      "enterprise"
+    ],
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 6,
+    "wfc_spn_format_idx_int": 11
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -25,10 +67,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 26006",
   "match": {

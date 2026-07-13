@@ -1,4 +1,86 @@
 {
+  "android_apns": [
+    {
+      "apn": "firstnet-hotspot",
+      "name": "firstnet-hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "firstnet-phone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "firstnet-phone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "firstnet-phone",
+      "name": "ATT FirstNet-Phone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "3|9|10|11|14|15|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "allow_merging_rtt_calls_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "enableSMSDeliveryReports": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc110.mcc313.3gppnetwork.org",
+    "iwlan.epdg_static_address_string": "epdg.epc.firstnet.com",
+    "read_only_apn_types_string_array": [
+      "dun",
+      "ims"
+    ],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -6,10 +88,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 313110",
   "match": {

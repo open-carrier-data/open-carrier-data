@@ -1,12 +1,41 @@
 {
   "android_apns": [
     {
+      "apn": "EMERGENCY",
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ibox.tim.it",
       "name": "ibox.tim.it",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "ibox.tim.it",
+      "authtype": 0,
+      "name": "TIM Web",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "TIM IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "mms.tim.it",
@@ -53,11 +82,22 @@
       "authtype": 1,
       "name": "wap.tim.it",
       "password": "WAPTIM",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
       ],
       "user": "WAPTIM"
+    },
+    {
+      "apn": "xcap.tim.it",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "mms.coopvoce.it",
@@ -155,6 +195,24 @@
       "user": "iusacellgsm"
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc222.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 11
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

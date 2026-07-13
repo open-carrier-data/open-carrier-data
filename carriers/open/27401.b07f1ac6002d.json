@@ -1,20 +1,35 @@
 {
   "android_apns": [
     {
-      "apn": "internet",
-      "authtype": 3,
-      "name": "internet",
-      "port": 8080,
-      "proxy": "213.167.138.200",
+      "apn": "hos",
+      "authtype": 0,
+      "name": "Siminn HOS",
       "types": [
-        "default",
-        "supl"
-      ]
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_vt_available_bool": true
+    "carrier_vt_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 6
   },
   "capabilities": {
     "esim": "unknown",
@@ -25,8 +40,8 @@
     "video_calling": "supported",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 27401",
   "match": {

@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.itelcel.com",
       "authtype": 1,
       "carrier_id": 1913,
@@ -16,11 +27,15 @@
     },
     {
       "apn": "internet.itelcel.com",
+      "authtype": 1,
       "name": "internet.itelcel.com",
       "password": "webgprs2002",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "supl"
+        "supl",
+        "xcap"
       ],
       "user": "webgprs"
     },
@@ -42,17 +57,34 @@
     },
     {
       "apn": "mms.itelcel.com",
+      "authtype": 1,
       "mmsc": "http://mms.itelcel.com/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "148.233.151.240",
       "name": "mms.itelcel.com",
       "password": "mmsgprs2003",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
       "user": "mmsgprs"
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "iwlan.epdg_static_address_string": "epdg.ims.mnc020.mcc334.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "wfc_spn_format_idx_int": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -60,10 +92,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 334020",
   "match": {

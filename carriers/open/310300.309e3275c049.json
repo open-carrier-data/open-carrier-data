@@ -1,8 +1,28 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "name": "1GLOBAL HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "1GLOBAL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "1GLOBAL IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -21,14 +41,24 @@
     {
       "apn": "truphone.com",
       "mmsc": "http://mmsc.truphone.com:1981/mm1",
-      "name": "1GLOBAL",
+      "name": "truphone.com",
       "types": [
         "default",
         "dun",
-        "mms"
-      ]
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.eps.truphone.net",
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -36,12 +66,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
-  "display_name": "1GLOBAL",
+  "display_name": "Truphone Us",
   "match": {
     "gid1_prefixes": [
       "547275554B3030656E"

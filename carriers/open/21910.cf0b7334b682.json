@@ -4,6 +4,7 @@
       "apn": "data.vip.hr",
       "name": "data.vip.hr",
       "password": "38591",
+      "protocol": "IPV4V6",
       "server": "219.91.99.91",
       "types": [
         "default",
@@ -22,19 +23,51 @@
       "user": "38591"
     },
     {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.vipnet.hr",
+      "authtype": 1,
       "mmsc": "http://mms.vipnet.hr/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "212.91.99.91",
       "name": "mms.vipnet.hr",
+      "password": "38591",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
-      ]
+      ],
+      "user": "38591"
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_vt_available_bool": true
+    "carrier_vt_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -45,8 +78,8 @@
     "video_calling": "supported",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 21910",
   "match": {

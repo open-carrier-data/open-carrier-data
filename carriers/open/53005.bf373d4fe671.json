@@ -1,12 +1,47 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "Spark IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://lsmmsc.xtra.co.nz",
+      "mmsport": 80,
+      "mmsproxy": "210.55.11.73",
+      "name": "internet",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "internet.telecom.co.nz",
       "name": "internet.telecom.co.nz",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "sos",
+      "name": "Spark SOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     },
     {
       "apn": "wap.telecom.co.nz",
@@ -25,12 +60,26 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Spark XCAP",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "supportMmsContentDisposition": false,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

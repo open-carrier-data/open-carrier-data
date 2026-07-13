@@ -2,21 +2,28 @@
   "android_apns": [
     {
       "apn": "internet",
-      "name": "Only",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "supl"
       ]
     },
     {
       "apn": "mms",
       "mmsc": "http://mmsc.telcooi.re:9091",
-      "name": "Only",
+      "name": "mms",
       "types": [
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "maxMessageSize": 614400,
+    "read_only_apn_types_string_array": []
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -29,7 +36,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Only",
+  "display_name": "Only Yt",
   "match": {
     "gid1_prefixes": [
       "F004"

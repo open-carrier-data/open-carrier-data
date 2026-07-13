@@ -2,6 +2,7 @@
   "android_apns": [
     {
       "apn": "MMS",
+      "authtype": 1,
       "mmsc": "http://mms:8002/",
       "mmsport": 8080,
       "mmsproxy": "172.29.11.12",
@@ -14,6 +15,7 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
       "name": "internet",
       "password": "atheer",
       "types": [
@@ -26,7 +28,10 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 153600
   },
   "capabilities": {
     "esim": "unknown",

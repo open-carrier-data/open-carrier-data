@@ -2,15 +2,27 @@
   "android_apns": [
     {
       "apn": "bam.entelpcs.cl",
+      "authtype": 1,
       "name": "bam.entelpcs.cl",
       "password": "entelpcs",
       "port": 8080,
+      "protocol": "IPV4V6",
       "proxy": "10.99.0.10",
       "types": [
         "default",
         "supl"
       ],
       "user": "entelpcs"
+    },
+    {
+      "apn": "hos",
+      "name": "Entel XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "imovil.entelpcs.cl",
@@ -23,19 +35,19 @@
       "user": "entelpcs"
     },
     {
-      "apn": "mms.entelpcs.cl",
-      "mmsc": "http://mmsc.entelpcs.cl",
-      "mmsport": 8080,
-      "mmsproxy": "10.99.0.10",
-      "name": "Entel MMS",
-      "password": "entelmms",
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS Claro CL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "ims"
       ],
-      "user": "entelpcs"
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true
   },

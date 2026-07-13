@@ -1,13 +1,84 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "SKY MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mobile.sky",
+      "name": "SKY Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ut.mobile.sky",
+      "bearer_bitmask": "14|18|20",
+      "name": "Sky Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "wifi.mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "18",
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "SKY WiFi MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "editable_wfc_mode_bool": false,
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "maxMessageSize": 307200,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -16,7 +87,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Sky GB",
+  "display_name": "Sky Gb",
   "match": {
     "gid1_prefixes": [
       "0C"

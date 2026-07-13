@@ -1,7 +1,81 @@
 {
+  "android_apns": [
+    {
+      "apn": "admin.lte.ntwls.com",
+      "bearer_bitmask": "13|14",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "NexTech Ota",
+      "server": "*",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.lte.ntwls.com",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "internet.lte.ntwls.com",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.lte.ntwls.com",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "NexTech Wireless",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "hipri",
+        "supl"
+      ]
+    },
+    {
+      "apn": "modem.lte.ntwls.com",
+      "bearer_bitmask": "13|14",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "NexTech Tether",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 4
   },
   "capabilities": {
     "esim": "unknown",
@@ -12,8 +86,8 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "supported",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 312420",
   "match": {

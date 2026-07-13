@@ -1,4 +1,48 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "lte.internet.pinebelt.net",
+      "mmsc": "http://mmsc.pinebelt.net",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "lte.ota.pinebelt.net",
+      "name": "fota",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "lte.tether.pinebelt.net",
+      "name": "dun",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "imssms.sms_over_ims_supported_bool": true
@@ -6,7 +50,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +59,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US PineBelt",
+  "display_name": "Carrier 311670",
   "match": {
     "mccmnc": [
       "311670"

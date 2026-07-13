@@ -1,6 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "cmn.mgx",
+      "authtype": 1,
+      "name": "Closed Networks[Enterprise]",
+      "password": "mgx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "cmn@mgx",
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "name": "ims",
       "protocol": "IPV6",
@@ -77,6 +102,38 @@
       "user": "plus"
     },
     {
+      "apn": "plus.acs.jp.v6",
+      "authtype": 2,
+      "mmsc": "http://mms-s",
+      "mmsport": 8080,
+      "mmsproxy": "andmms.plusacs.ne.jp",
+      "name": "Application",
+      "password": "ym",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "ym",
+      "user_editable": false
+    },
+    {
+      "apn": "plus.acs.jp.v6",
+      "authtype": 2,
+      "name": "XCAP",
+      "password": "ym",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "ym",
+      "user_visible": false
+    },
+    {
       "apn": "sb.mvno",
       "authtype": 3,
       "name": "b-mobile(\u30bd\u30d5\u30c8\u30d0\u30f3\u30af)",
@@ -117,10 +174,42 @@
         "supl"
       ],
       "user": "nuro"
+    },
+    {
+      "apn": "sos",
+      "name": "EIMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "skip_464xlat": 1,
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "allow_hold_call_during_emergency_bool": false,
+    "call_barring_supports_deactivate_all_bool": false,
+    "call_barring_supports_password_change_bool": false,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "ignore_data_enabled_changed_for_video_calls": true,
+    "ims_dtmf_tone_delay_int": 300,
+    "ims_reasoninfo_mapping_string_array": [
+      "332||510",
+      "332|q.850|510",
+      "510|Call completed elsewhere|1014"
+    ],
+    "imsvoice.conference_subscribe_type_int": 0,
+    "is_ims_conference_size_enforced_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 307200,
+    "read_only_apn_types_string_array": [
+      "ims"
+    ],
+    "recipientLimit": -1,
+    "volte_replacement_rat_int": 3
   },
   "capabilities": {
     "esim": "unknown",

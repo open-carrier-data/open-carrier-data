@@ -14,28 +14,54 @@
       "apn": "airtelgprs.com",
       "name": "airtelgprs.com",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "airtelgprs.com",
-      "name": "Airtel GPRS",
-      "types": [
+        "default",
         "supl"
       ]
     },
     {
       "apn": "airtelmms.com",
+      "authtype": 1,
       "mmsc": "http://100.1.201.171:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "100.1.201.172",
       "name": "Airtel MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "is_ims_conference_size_enforced_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -43,10 +69,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 40416",
   "match": {

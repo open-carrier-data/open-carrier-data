@@ -1,7 +1,30 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "MTN-WEB",
+      "password": "web",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "web"
+    },
+    {
       "apn": "web.gprs.mtnnigeria.net",
+      "authtype": 1,
       "name": "web.gprs.mtnnigeria.net",
       "password": "web",
       "proxy": "10.199.212.2",
@@ -16,7 +39,7 @@
       "mmsc": "http://10.199.212.8/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "10.199.212.2",
-      "name": "MTN NG MMS",
+      "name": "web.gprs.mtnnigeria.net",
       "password": "web",
       "types": [
         "mms"

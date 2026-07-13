@@ -1,7 +1,19 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.kenamobile.it",
+      "authtype": 0,
       "mmsc": "http://mms.kenamobile.it/",
       "mmsport": 80,
       "mmsproxy": "10.248.1.12",
@@ -14,6 +26,7 @@
     },
     {
       "apn": "web.kenamobile.it",
+      "authtype": 0,
       "name": "web.kenamobile.it",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -21,10 +34,41 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "web.kenamobile.it",
+      "authtype": 0,
+      "name": "web.kenamobile.it",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "xcap.kenamobile.it",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": false,
+    "carrier_volte_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc222.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 11
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "mms",
+      "mmsc": "http://10.239.221.47/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "10.239.221.7",
+      "name": "Reliance MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "portalnmms",
       "mmsc": "http://mms1.live.vodafone.in/mms/",
       "mmsport": 9401,
@@ -27,6 +38,27 @@
       "name": "Reliance GPRS",
       "port": 8080,
       "proxy": "10.239.221.5",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "smartnet",
+      "name": "Reliance Net",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "smartwap",
+      "authtype": 1,
+      "name": "Reliance WAP",
+      "port": 8080,
+      "protocol": "IPV4V6",
+      "proxy": "10.239.221.7",
       "types": [
         "default",
         "supl"

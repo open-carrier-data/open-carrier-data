@@ -1,7 +1,19 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://wap.mms.orange.ro:8002",
       "mmsport": 8799,
       "mmsproxy": "62.217.247.252",
@@ -21,6 +33,13 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -28,9 +47,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 22610",

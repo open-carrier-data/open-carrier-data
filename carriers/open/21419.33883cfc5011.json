@@ -1,0 +1,80 @@
+{
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1400,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "orangemms",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "name": "simyo MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangeworld",
+      "authtype": 1,
+      "name": "internet simyo",
+      "password": "orange",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user": "orange",
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Simyo Es",
+  "match": {
+    "mccmnc": [
+      "21419"
+    ],
+    "spn": [
+      "simyo"
+    ]
+  },
+  "profile_id": "open.21419.33883cfc5011",
+  "schema_version": 1
+}

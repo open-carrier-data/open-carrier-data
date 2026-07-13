@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "TIGO IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "OLA",
       "password": "internet",
@@ -35,14 +46,24 @@
     },
     {
       "apn": "web.colombiamovil.com.co",
+      "authtype": 1,
       "name": "web.colombiamovil.com.co",
       "types": [
         "default",
-        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.colombiamovil.com.co",
+      "name": "TIGO WEB",
+      "types": [
+        "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -50,7 +71,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

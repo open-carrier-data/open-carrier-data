@@ -1,0 +1,96 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "povo IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "admin.au-net.ne.jp",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "povo OTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "povo.jp",
+      "name": "povo",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "sos",
+      "name": "povo Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|20",
+      "name": "povo XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "disable_dun_apn_while_roaming_with_preset_apn_bool": true,
+    "enabledMMS": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_conference_size_limit_int": 2,
+    "imsvoice.conference_factory_uri_string": "mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org",
+    "is_ims_conference_size_enforced_bool": true,
+    "read_only_apn_types_string_array": [
+      "ims"
+    ],
+    "support_ims_conference_event_package_bool": false
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unsupported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Povo Jp",
+  "match": {
+    "gid1_prefixes": [
+      "26"
+    ],
+    "mccmnc": [
+      "44051"
+    ]
+  },
+  "profile_id": "open.44051.6b5c7525ce9a",
+  "schema_version": 1
+}

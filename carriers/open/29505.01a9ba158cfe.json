@@ -2,11 +2,33 @@
   "android_apns": [
     {
       "apn": "globaldata",
-      "name": "Connect",
+      "name": "globaldata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "globaldata",
+      "name": "Connect",
+      "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "capabilities": {

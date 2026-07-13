@@ -1,7 +1,51 @@
 {
+  "android_apns": [
+    {
+      "apn": "a.rmobile.jp",
+      "authtype": 3,
+      "name": "Rakuten mobile",
+      "password": "0000",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "rakuten@vdm"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "KDDI JP Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_conference_size_limit_int": 2,
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_factory_uri_string": "mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org",
+    "is_ims_conference_size_enforced_bool": true,
+    "read_only_apn_types_string_array": [],
+    "support_ims_conference_event_package_bool": false
   },
   "capabilities": {
     "esim": "unknown",
@@ -15,7 +59,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "KDDI JP",
+  "display_name": "Carrier 44054",
   "match": {
     "mccmnc": [
       "44054"

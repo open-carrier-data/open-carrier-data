@@ -12,6 +12,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "o2 DE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "carrier_id": 1456,
       "mmsc": "http://10.81.0.7:8002",
@@ -22,6 +33,20 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "xcap"
       ]
     },
     {
@@ -38,6 +63,24 @@
       "user": "mms"
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_ims_apn_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imsvoice.conference_factory_uri_string": "teleconferenceuri-factory@telefonica.de",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -45,10 +88,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 26203",
   "match": {

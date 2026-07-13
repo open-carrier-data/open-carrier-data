@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "EMERGENCY",
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "data.lycamobile.it",
       "name": "Lycamobile",
       "password": "plus",
@@ -9,6 +19,17 @@
         "supl"
       ],
       "user": "lmit"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -34,6 +55,8 @@
       "mmsport": 80,
       "mmsproxy": "10.128.224.10",
       "name": "mms.vodafone.it",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -41,6 +64,8 @@
     {
       "apn": "mobile.vodafone.it",
       "name": "mobile.vodafone.it",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -58,7 +83,9 @@
     },
     {
       "apn": "web.omnitel.it",
-      "name": "Vodafone Tethering",
+      "name": "web.omnitel.it",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ]
@@ -135,8 +162,19 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -147,7 +185,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "supported",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 22210",

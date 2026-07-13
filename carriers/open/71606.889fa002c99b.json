@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.movistar.pe",
       "authtype": 1,
       "mmsc": "http://mmsc.telefonicamovistar.com.pe:8088/mms/",
@@ -18,6 +29,8 @@
       "authtype": 1,
       "name": "movistar.pe",
       "password": "movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -28,7 +41,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "enableGroupMms": false,
+    "enabledMMS": false
   },
   "capabilities": {
     "esim": "unknown",

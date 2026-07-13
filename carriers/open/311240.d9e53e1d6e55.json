@@ -1,4 +1,40 @@
 {
+  "android_apns": [
+    {
+      "apn": "cwc.apn",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "cwc.mms",
+      "mmsc": "http://mms.cordova.mobi",
+      "mmsport": 80,
+      "mmsproxy": "mms.cordova.mobi",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "imssms.sms_over_ims_supported_bool": true
@@ -6,7 +42,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +51,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US GoogleGC",
+  "display_name": "Carrier 311240",
   "match": {
     "mccmnc": [
       "311240"

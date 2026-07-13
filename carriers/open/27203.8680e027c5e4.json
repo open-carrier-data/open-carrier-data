@@ -1,12 +1,46 @@
 {
   "android_apns": [
     {
+      "apn": "data.myeirmobile.ie",
+      "name": "data.myeirmobile.ie",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "data.mymeteor.ie",
       "name": "data.mymeteor.ie",
       "password": "meteor",
       "types": [
         "default",
         "supl"
+      ],
+      "user": "my"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms.myeirmobile.ie",
+      "authtype": 1,
+      "mmsc": "http://mms.mymeteor.ie",
+      "mmsport": 8799,
+      "mmsproxy": "10.85.85.85",
+      "name": "mms.myeirmobile.ie",
+      "password": "wap",
+      "protocol": "IP",
+      "types": [
+        "mms"
       ],
       "user": "my"
     },
@@ -27,9 +61,14 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc003.mcc272.pub.3gppnetwork.org",
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

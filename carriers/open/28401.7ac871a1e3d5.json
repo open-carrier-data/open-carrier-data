@@ -1,6 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "inet-gprs.mtel.bg",
       "name": "inet-gprs.mtel.bg",
       "types": [
@@ -19,11 +40,22 @@
         "mms"
       ],
       "user": "mtel"
+    },
+    {
+      "apn": "wap-gprs.mtel.bg",
+      "name": "Mtel Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -34,7 +66,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 28401",

@@ -11,11 +11,31 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14",
+      "name": "DPAC IMS",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "Docomo Pacific",
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "internet",
+      "bearer_bitmask": "14",
+      "name": "Docomo Pacific",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user_editable": false
     },
     {
       "apn": "isp.cingular",
@@ -38,8 +58,19 @@
         "supl"
       ],
       "user": "WAP@CINGULARGPRS.COM"
+    },
+    {
+      "apn": "xcap",
+      "name": "DPAC XCAP",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -47,7 +78,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

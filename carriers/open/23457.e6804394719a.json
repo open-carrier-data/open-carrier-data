@@ -2,14 +2,28 @@
   "android_apns": [
     {
       "apn": "data.esim",
-      "name": "eSIM Go",
+      "name": "data.esim",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
+        "ia",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "data.esim",
+      "name": "eSIM Go",
+      "types": [
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -17,12 +31,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "unsupported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "eSIM Go",
+  "display_name": "Esimgotravel Zz",
   "match": {
     "gid1_prefixes": [
       "0409"

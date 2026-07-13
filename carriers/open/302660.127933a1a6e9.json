@@ -10,6 +10,14 @@
       "user_visible": false
     },
     {
+      "apn": "internet.mts",
+      "name": "internet.mts",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "sp.mts",
       "carrier_id": 578,
       "mmsc": "http://mmsc2.mts.net/",
@@ -23,8 +31,28 @@
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9401,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 80,
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 6
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

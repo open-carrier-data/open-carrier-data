@@ -13,12 +13,33 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.mobi.eastlink.ca",
       "carrier_id": 2252,
       "mmsc": "http://mmss.mobi.eastlink.ca",
       "mmsport": 8080,
       "mmsproxy": "10.232.12.49",
       "name": "Eastlink MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.mobi.eastlink.ca",
+      "mmsc": "http://mmss.mobi.eastlink.ca",
+      "mmsport": 8080,
+      "mmsproxy": "10.232.12.49",
+      "name": "mms.mobi.eastlink.ca",
       "types": [
         "mms"
       ]
@@ -34,6 +55,24 @@
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "services",
+      "name": "Eastlink XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "wisp.mobi.eastlink.ca",
+      "name": "wisp.mobi.eastlink.ca",
+      "types": [
+        "default"
+      ],
+      "user_editable": false
     },
     {
       "apn": "wisp.mobi.eastlink.ca",
@@ -52,8 +91,16 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 80,
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 6
   },
   "capabilities": {
     "esim": "unknown",

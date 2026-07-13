@@ -9,16 +9,46 @@
       ]
     },
     {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "EE MMS",
+      "password": "secure",
+      "types": [
+        "xcap"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
       "apn": "everywhere",
       "authtype": 1,
       "name": "everywhere",
       "password": "secure",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
       ],
-      "user": "eesecure"
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure",
+      "user_visible": false
     },
     {
       "apn": "nowmobilenet",
@@ -50,6 +80,16 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     },
     {
       "apn": "tslpaymnet",
@@ -156,6 +196,20 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_enhanced_4g_lte_bool": false,
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "hide_ims_apn_bool": true,
+    "imsvoice.conference_subscribe_type_int": 0,
+    "wfc_operator_error_codes_string_array": [
+      "REG09|0"
+    ],
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -163,9 +217,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 23433",

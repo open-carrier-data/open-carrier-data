@@ -3,13 +3,37 @@
     {
       "apn": "ctnet",
       "authtype": 3,
+      "name": "CTNET",
+      "password": "vnet.mobi",
+      "server": "*",
+      "types": [
+        "cbs",
+        "fota"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "default",
+        "hipri"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
       "name": "\u4e2d\u56fd\u7535\u4fe1 (China Telecom) GPRS",
       "password": "vnet.mobi",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "hipri",
         "supl"
       ],
       "user": "ctnet@mycdma.cn"
@@ -20,10 +44,16 @@
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
       "mmsproxy": "10.0.0.200",
-      "name": "\u4e2d\u56fd\u7535\u4fe1\u5f69\u4fe1 (China Telecom)",
+      "name": "ctwap",
       "password": "vnet.mobi",
+      "server": "*",
       "types": [
-        "mms"
+        "cbs",
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
       ],
       "user": "ctwap@mycdma.cn"
     },
@@ -62,6 +92,9 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "show_apn_setting_cdma_bool": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

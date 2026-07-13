@@ -11,7 +11,19 @@
       "user": "gprs"
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
+      "authtype": 0,
       "name": "internet",
       "password": "gprs",
       "port": 8080,
@@ -21,6 +33,14 @@
         "supl"
       ],
       "user": "gprs"
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "name": "internet",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "mms.promonte.com",
@@ -36,6 +56,7 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true
   },
   "capabilities": {

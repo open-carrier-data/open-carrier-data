@@ -1,0 +1,134 @@
+{
+  "android_apns": [
+    {
+      "apn": "TMUS",
+      "bearer_bitmask": "18",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "DISH MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "always_on": true,
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1440,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "always_on": true,
+      "apn": "sos",
+      "name": "Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "tethering.dish.com",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "wireless.dish.com",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": false,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_default_wfc_ims_roaming_mode_int": 2,
+    "carrier_ims_gba_required_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_vowifi_tty_supported_bool": false,
+    "carrier_vt_available_bool": false,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims.enable_presence_capability_exchange_bool": false,
+    "ims.enable_presence_publish_bool": false,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imsvoice.conference_factory_uri_string": "8881112663@msg.pc.t-mobile.com",
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc260.mcc310.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "mmsCloseConnection": true,
+    "read_only_apn_types_string_array": [],
+    "recipientLimit": 20,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 12,
+    "support_video_conference_call_bool": false,
+    "volte_replacement_rat_int": 3,
+    "wfc_operator_error_codes_string_array": [
+      "REG09|0"
+    ],
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unsupported",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
+  },
+  "display_name": "Dish Us",
+  "match": {
+    "gid1_prefixes": [
+      "6442"
+    ],
+    "mccmnc": [
+      "310260"
+    ]
+  },
+  "profile_id": "open.310260.5bff82ad349b",
+  "schema_version": 1
+}

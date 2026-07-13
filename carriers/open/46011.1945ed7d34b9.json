@@ -12,6 +12,31 @@
       "user_editable": false
     },
     {
+      "apn": "ctlte",
+      "authtype": 0,
+      "name": "ctlte",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "cbs",
+        "fota",
+        "hipri"
+      ]
+    },
+    {
+      "apn": "ctlte",
+      "authtype": 0,
+      "name": "ctlte",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "ctlte@mycdma.cn"
+    },
+    {
       "apn": "ctnet",
       "carrier_id": 2237,
       "mtu": 1400,
@@ -30,6 +55,21 @@
     },
     {
       "apn": "ctwap",
+      "authtype": 0,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "ctwap",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "mms"
+      ],
+      "user": "ctwap@mycdma.cn"
+    },
+    {
+      "apn": "ctwap",
       "carrier_id": 2237,
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
@@ -45,6 +85,9 @@
       "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "show_apn_setting_cdma_bool": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

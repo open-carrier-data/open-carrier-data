@@ -1,0 +1,114 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "UQ mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "admin.au-net.ne.jp",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "UQ mobile OTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "UQ mobile Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "trg.uqmobile.jp",
+      "authtype": 2,
+      "name": "UQ mobile",
+      "password": "uq",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "uq@trg.uqmobile.jp",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "uqmobile.jp",
+      "authtype": 2,
+      "mmsc": "http://mms.ezweb.ne.jp:80/MMS",
+      "name": "UQ mobile",
+      "password": "uq",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "uq@uqmobile.jp",
+      "user_editable": false
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|20",
+      "name": "UQ mobile XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "disable_dun_apn_while_roaming_with_preset_apn_bool": true,
+    "enabledMMS": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_conference_size_limit_int": 2,
+    "imsvoice.conference_factory_uri_string": "mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org",
+    "is_ims_conference_size_enforced_bool": true,
+    "read_only_apn_types_string_array": [
+      "ims"
+    ],
+    "support_ims_conference_event_package_bool": false
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Uqmobile5Gsa Jp",
+  "match": {
+    "gid1_prefixes": [
+      "20"
+    ],
+    "mccmnc": [
+      "44054"
+    ]
+  },
+  "profile_id": "open.44054.41f6052f474b",
+  "schema_version": 1
+}

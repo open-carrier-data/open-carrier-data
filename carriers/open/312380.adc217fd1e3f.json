@@ -1,4 +1,30 @@
 {
+  "android_apns": [
+    {
+      "apn": "cvt01",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "CVT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "imssms.sms_over_ims_supported_bool": true
@@ -6,7 +32,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +41,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US CopperValley",
+  "display_name": "Carrier 312380",
   "match": {
     "mccmnc": [
       "312380"

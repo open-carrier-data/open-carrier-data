@@ -1,6 +1,43 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "A1 SRB XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "A1 SRB IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "A1 SRB Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.a1.rs",
+      "name": "A1 SRB mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "vipmobile",
       "authtype": 1,
       "name": "vipmobile",
@@ -15,6 +52,7 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true
   },
   "capabilities": {

@@ -44,6 +44,28 @@
       ]
     },
     {
+      "apn": "hos",
+      "bearer_bitmask": "14",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "1&1 DE IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "carrier_id": 2536,
@@ -91,13 +113,43 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "mmsc": "http://mms.1und1-mobilfunk.de/",
+      "mmsport": 80,
+      "mmsproxy": "2a00:0fbc:2200:c999:0109:1f87:2:1",
+      "name": "MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "hide_ims_apn_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
     "imssms.sms_over_ims_supported_bool": true,
-    "smsToMmsTextThreshold": 5
+    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.1und1-mobilfunk.de",
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc023.mcc262.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 5,
+    "wfc_spn_format_idx_int": 9
   },
   "capabilities": {
     "esim": "unknown",
@@ -109,7 +161,7 @@
     "volte": "supported",
     "vonr": "supported",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 26223",
   "match": {

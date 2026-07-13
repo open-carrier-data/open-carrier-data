@@ -36,6 +36,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "M1 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "miworld",
       "authtype": 1,
       "carrier_id": 1706,
@@ -60,11 +71,38 @@
         "ia",
         "supl"
       ]
+    },
+    {
+      "apn": "sunsurf",
+      "name": "sunsurf",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "65"
+    },
+    {
+      "apn": "xcap",
+      "name": "M1 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.mobileone.net.sg",
+    "support_ims_conference_event_package_bool": false,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

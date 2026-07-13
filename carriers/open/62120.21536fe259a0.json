@@ -2,11 +2,39 @@
   "android_apns": [
     {
       "apn": "internet.ng.zain.com",
-      "name": "Zain NG",
+      "authtype": 1,
+      "name": "internet.ng.zain.com",
+      "password": "internet",
       "types": [
         "default",
         "supl"
-      ]
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "mms.ng.zain.com",
+      "authtype": 1,
+      "mmsc": "http://10.210.3.239:9800/mm1",
+      "mmsproxy": "172.18.254.5",
+      "name": "Airtel MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "wap.ng.zain.com",
+      "authtype": 1,
+      "name": "Airtel WAP",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "172.18.254.5",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     }
   ],
   "capabilities": {

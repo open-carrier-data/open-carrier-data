@@ -1,7 +1,42 @@
 {
+  "android_apns": [
+    {
+      "apn": "giga",
+      "name": "giga",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "shxcap",
+      "bearer_bitmask": "14|20",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "imsvoice.conference_factory_uri_string": "shconf@ims.mnc005.mcc525.3gppnetwork.org"
   },
   "capabilities": {
     "esim": "unknown",
@@ -15,7 +50,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Starhub SG MVNO",
+  "display_name": "Giga Sg",
   "match": {
     "mccmnc": [
       "52505"

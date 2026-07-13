@@ -1,12 +1,26 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "Movistar IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.movistar.com.co",
       "authtype": 1,
       "name": "internet.movistar.com.co",
       "password": "movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
         "supl"
       ],
       "user": "movistar"
@@ -19,12 +33,17 @@
       "mmsproxy": "192.168.222.7",
       "name": "mms.movistar.com.co",
       "password": "movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
       "user": "movistar"
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

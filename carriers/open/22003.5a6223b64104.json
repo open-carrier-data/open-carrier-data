@@ -15,15 +15,38 @@
       "name": "gprswap",
       "password": "064",
       "port": 8080,
+      "protocol": "IPV4V6",
       "proxy": "172.17.88.198",
       "types": [
         "default",
         "supl"
       ],
       "user": "mts"
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true
   },
   "capabilities": {

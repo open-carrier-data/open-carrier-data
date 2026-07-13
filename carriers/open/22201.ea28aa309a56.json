@@ -1,11 +1,57 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.coopvoce.it",
+      "name": "WEB CoopVoce",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "message.coopvoce.it",
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "name": "MMS CoopVoce",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap.coopvoce.it",
+      "name": "Ut CoopVoce",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -14,7 +60,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Coopvoce IT",
+  "display_name": "Coopvoce It",
   "match": {
     "gid1_prefixes": [
       "434F4F50FFFFFFFFFF"

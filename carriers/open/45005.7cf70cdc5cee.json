@@ -9,6 +9,18 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "SKT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "lte-roaming.sktelecom.com",
       "mmsc": "http://omms.nate.com:9082/oma_mms",
       "mmsport": 9093,
@@ -62,9 +74,18 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enableSMSDeliveryReports": false,
+    "ims.sip_over_ipsec_enabled_bool": false,
+    "imsvoice.conference_factory_uri_string": "conference-factory@sktims.net",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "support_conference_call_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
-    "ims_conference": "unknown",
+    "ims_conference": "supported",
     "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",

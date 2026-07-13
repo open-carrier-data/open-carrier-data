@@ -10,6 +10,17 @@
       ]
     },
     {
+      "apn": "mms.attmex.mx",
+      "mmsc": "http://mms.att.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "mms.attmex.mx",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "mms.nexteldata.com.mx",
       "mmsc": "http://3gmms.nexteldata.com.mx",
       "mmsport": 8080,
@@ -20,11 +31,31 @@
       ]
     },
     {
+      "apn": "modem.attmex.mx",
+      "name": "modem.attmex.mx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "modem.nexteldata.com.mx",
       "name": "Nextel Internet",
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "wap.attmex.mx",
+      "name": "wap.attmex.mx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user_editable": false
     },
     {
       "apn": "wap.nexteldata.com.mx",
@@ -36,6 +67,19 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": false,
+    "editable_wfc_mode_bool": false,
+    "imsvoice.conference_factory_uri_string": "ALU_CONF@ims.attmex.mx",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc050.mcc334.pub.3gppnetwork.org",
+    "read_only_apn_types_string_array": [],
+    "smsToMmsTextThreshold": 5,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -46,7 +90,7 @@
     "volte": "unknown",
     "vonr": "unknown",
     "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 334090",
   "match": {

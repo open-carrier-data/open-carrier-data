@@ -1,6 +1,26 @@
 {
   "android_apns": [
     {
+      "apn": "data",
+      "mmsc": "http://mmsr.ooredoomms.qa",
+      "mmsport": 8080,
+      "mmsproxy": "10.23.8.3",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "data",
+      "authtype": 1,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "gprs.qtel",
       "name": "gprs.qtel",
       "password": "gprs",
@@ -11,6 +31,17 @@
         "supl"
       ],
       "user": "gprs"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "web.qtel",

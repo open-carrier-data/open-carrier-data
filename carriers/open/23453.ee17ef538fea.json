@@ -1,4 +1,49 @@
 {
+  "android_apns": [
+    {
+      "apn": "globaldata",
+      "mmsc": "http://mms.mobileuc.global/",
+      "mmsport": 8008,
+      "mmsproxy": "37.18.129.98",
+      "name": "globaldata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "globalhotspot",
+      "name": "globalhotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -6,12 +51,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Extend",
+  "display_name": "Carrier 23453",
   "match": {
     "mccmnc": [
       "23453"

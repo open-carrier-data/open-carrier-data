@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mobile.lte.three.com.hk",
       "authtype": 1,
       "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
@@ -13,17 +24,6 @@
       ]
     },
     {
-      "apn": "mobile.three.com.hk",
-      "authtype": 1,
-      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "172.20.97.116",
-      "name": "mobile.three.com.hk",
-      "types": [
-        "supl"
-      ]
-    },
-    {
       "apn": "share.lte.three.com.hk",
       "authtype": 1,
       "name": "3 Share",
@@ -33,10 +33,13 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "ims.sip_over_ipsec_enabled_bool": false,
+    "imssms.sms_over_ims_supported_bool": true,
+    "iwlan.epdg_static_address_string": "wlan.three.com.hk"
   },
   "capabilities": {
     "esim": "unknown",

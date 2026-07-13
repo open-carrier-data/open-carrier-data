@@ -1,6 +1,47 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms2",
+      "mmsc": "http://10.3.3.133:9090/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.3.2.133",
+      "name": "Mobily MMS Prepaid",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap1",
+      "name": "Mobily postpaid - GPRS",
+      "port": 8080,
+      "proxy": "10.3.2.133",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap2",
+      "name": "Mobily prepaid - GPRS",
+      "port": 8080,
+      "proxy": "10.3.2.133",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "web1",
       "name": "web1",
       "types": [
@@ -16,12 +57,21 @@
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "web2",
+      "name": "web2",
+      "types": [
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.mobily.com.sa",
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

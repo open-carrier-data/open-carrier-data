@@ -10,6 +10,25 @@
       ]
     },
     {
+      "apn": "hos",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "Orange IL",
       "password": "orange",
@@ -29,15 +48,30 @@
     },
     {
       "apn": "uinternet",
+      "authtype": 3,
       "mmsc": "http://192.168.220.15/servlets/mms",
       "name": "uinternet",
       "password": "mobile54",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "mms"
       ],
-      "user": "orange"
+      "user": "orange",
+      "user_editable": false
+    },
+    {
+      "apn": "uinternet",
+      "authtype": 3,
+      "mmsc": "http://192.168.220.15/servlets/mms",
+      "name": "uinternet",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun",
+        "supl"
+      ],
+      "user_editable": false
     },
     {
       "apn": "uwap.orange.co.il",
@@ -70,9 +104,11 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

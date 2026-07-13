@@ -1,6 +1,46 @@
 {
   "android_apns": [
     {
+      "apn": "batelco.com",
+      "authtype": 0,
+      "name": "GPRS",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "batelco.com",
+      "authtype": 0,
+      "mmsc": "http://192.168.36.10/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "192.168.1.2",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.batelco.com",
       "name": "internet.batelco.com",
       "password": "wap",
@@ -25,8 +65,10 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

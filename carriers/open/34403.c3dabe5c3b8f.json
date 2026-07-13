@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "net.apuapcs.ag",
       "name": "Imobile",
       "port": 9090,
@@ -23,6 +33,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -30,9 +45,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 34403",

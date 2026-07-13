@@ -1,6 +1,26 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "POST XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.pt.lu",
       "authtype": 1,
       "mmsc": "http://mmsc.pt.lu",
@@ -28,16 +48,25 @@
     },
     {
       "apn": "web.pt.lu",
-      "name": "Luxgsm Internet",
+      "name": "web.pt.lu",
       "types": [
+        "ia",
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": false,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "supported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

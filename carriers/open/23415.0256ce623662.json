@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "Internet",
       "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
       "mmsport": 8799,
@@ -115,21 +126,14 @@
       "user": "wap"
     },
     {
-      "apn": "wap.vodafone.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
-      "name": "wap.vodafone.co.uk",
-      "password": "wap",
-      "port": 8799,
-      "proxy": "212.183.137.12",
-      "server": "*",
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "xcap"
       ],
-      "user": "wap"
+      "user_visible": false
     },
     {
       "apn": "btmobile.bt.com",
@@ -266,6 +270,22 @@
       "user": "wap"
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "338|busy everywhere|1017",
+      "510|Call completed elsewhere|1014"
+    ],
+    "imsvoice.conference_subscribe_type_int": 0,
+    "read_only_apn_types_string_array": [],
+    "smsToMmsTextThreshold": 10,
+    "wfc_spn_format_idx_int": 12
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

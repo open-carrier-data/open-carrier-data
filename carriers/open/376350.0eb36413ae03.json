@@ -2,17 +2,38 @@
   "android_apns": [
     {
       "apn": "internet",
+      "authtype": 1,
       "name": "internet",
       "port": 8799,
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "mmsc": "http://www.time4lime.com/",
+      "name": "internet",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "name": "LIME Postpaid Internet",
+      "port": 8799,
+      "types": [
         "supl"
       ]
     },
     {
       "apn": "multimedia",
+      "authtype": 1,
       "mmsc": "http://mmsc",
-      "name": "LIME Postpaid MMS",
+      "mmsport": 8799,
+      "mmsproxy": "10.20.5.34",
+      "name": "multimedia",
       "port": 8799,
       "proxy": "10.20.5.34",
       "types": [

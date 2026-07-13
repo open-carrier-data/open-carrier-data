@@ -2,15 +2,15 @@
   "android_apns": [
     {
       "apn": "wap",
-      "mmsc": "http://mms.digicelgroup.com",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.7.12",
-      "name": "Digicel MMS",
-      "password": "wap03cur",
+      "authtype": 1,
+      "mmsc": "http://wapdigicel.com",
+      "name": "Curacao:Digicel:Modem",
+      "port": 8080,
+      "proxy": "172.16.7.12",
       "types": [
-        "mms"
+        "dun"
       ],
-      "user": "wapcu"
+      "user_editable": false
     },
     {
       "apn": "web",
@@ -18,6 +18,14 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.digicelcuracao.com",
+      "authtype": 1,
+      "name": "web.digicelcuracao.com",
+      "types": [
+        "default"
       ]
     }
   ],

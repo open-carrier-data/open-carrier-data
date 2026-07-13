@@ -1,0 +1,83 @@
+{
+  "android_apns": [
+    {
+      "apn": "3hotspot",
+      "authtype": 0,
+      "name": "3hotspot",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "three.co.uk",
+      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.co.uk",
+      "mtu": 1440,
+      "name": "3",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imsvoice.conference_factory_uri_string": "Conf-Factory@three.co.uk",
+    "maxMessageSize": 3145728,
+    "volte_replacement_rat_int": 3,
+    "wfc_operator_error_codes_string_array": [
+      "REG09|0"
+    ],
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "H3 Gb",
+  "match": {
+    "mccmnc": [
+      "23494"
+    ]
+  },
+  "profile_id": "open.23494.9c00d2776c2c",
+  "schema_version": 1
+}

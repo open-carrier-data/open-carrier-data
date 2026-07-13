@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "default",
+      "name": "MTN",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "fast-internet",
       "name": "MTN NET",
       "types": [
@@ -10,13 +18,15 @@
     },
     {
       "apn": "fast-mms",
+      "authtype": 0,
       "mmsc": "http://192.168.97.1/mmsc",
       "mmsport": 3130,
       "mmsproxy": "192.168.97.1",
-      "name": "MTN MMS",
+      "name": "fast-mms",
       "types": [
         "mms"
-      ]
+      ],
+      "user": "mms"
     },
     {
       "apn": "fast-wap",

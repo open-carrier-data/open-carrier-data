@@ -1,8 +1,28 @@
 {
+  "android_apns": [
+    {
+      "apn": "hcmMMS",
+      "mmsc": "http://82.166.164.229:9000/mmsc",
+      "mmsport": 8898,
+      "mmsproxy": "82.166.164.229",
+      "name": "Home Cellular MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hcminternet",
+      "name": "hcminternet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    }
+  ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -11,7 +31,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Home Cellular",
+  "display_name": "Carrier 42515",
   "match": {
     "mccmnc": [
       "42515"

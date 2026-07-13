@@ -1,18 +1,58 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "Tango XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 1,
+      "mmsc": "http://mms.tango.lu",
+      "mmsport": 8080,
+      "mmsproxy": "212.66.75.3",
       "name": "internet",
+      "password": "tango",
       "types": [
         "default",
         "supl"
-      ]
+      ],
+      "user": "tango"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.tango.lu",
+      "mmsport": 8080,
+      "mmsproxy": "212.66.75.3",
+      "name": "Tango Internet",
+      "password": "tango",
+      "types": [
+        "mms"
+      ],
+      "user": "tango"
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -24,7 +64,7 @@
     "volte": "supported",
     "vonr": "unknown",
     "vowifi": "supported",
-    "wifi_calling_roaming": "unknown"
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 27077",
   "match": {

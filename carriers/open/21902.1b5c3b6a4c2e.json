@@ -1,6 +1,62 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "telemach.hr",
+      "mmsc": "http://mms.telemach.hr",
+      "mmsport": 80,
+      "mmsproxy": "86.32.5.243",
+      "name": "telemach.hr",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "Telemach Internet"
+    },
+    {
+      "apn": "telemach.hr",
+      "mmsc": "http://mms.telemach.hr",
+      "mmsport": 80,
+      "mmsproxy": "86.32.5.243",
+      "name": "telemach.hr",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "Telemach MMS"
+    },
+    {
+      "apn": "telemach.hr",
+      "mmsc": "http://mms.telemach.hr",
+      "mmsport": 80,
+      "mmsproxy": "86.32.5.243",
+      "name": "Telemach Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "wap.tele2.hr",
       "mmsc": "http://mmsc.tele2.hr",
       "mmsport": 8080,
@@ -13,6 +69,15 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -20,9 +85,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 21902",

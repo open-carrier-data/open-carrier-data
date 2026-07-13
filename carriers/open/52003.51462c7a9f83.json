@@ -1,13 +1,15 @@
 {
   "android_apns": [
     {
-      "apn": "internet",
-      "authtype": 2,
-      "name": "internet",
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
-      ]
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "mms",
@@ -19,13 +21,26 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "multimedia",
+      "mmsc": "http://mms.mobilelife.co.th",
+      "mmsport": 8080,
+      "mmsproxy": "203.170.229.34",
+      "name": "multimedia",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "imsvoice.conference_factory_uri_string": "conf@ims.mnc003.mcc520.3gppnetwork.org",
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

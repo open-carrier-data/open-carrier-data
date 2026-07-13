@@ -1,0 +1,64 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.setar.aw",
+      "name": "SETAR Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.setar.aw",
+      "authtype": 3,
+      "mmsc": "http://mms.setar.aw",
+      "mmsport": 8081,
+      "mmsproxy": "201.229.65.204",
+      "name": "SETAR MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Setar Aw",
+  "match": {
+    "imsi_prefix_patterns": [
+      "3630100"
+    ],
+    "mccmnc": [
+      "36301"
+    ]
+  },
+  "profile_id": "open.36301.4bec704037b1",
+  "schema_version": 1
+}

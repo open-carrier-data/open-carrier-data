@@ -12,33 +12,22 @@
       "user_visible": false
     },
     {
-      "apn": "internet",
-      "authtype": 1,
-      "name": "internet",
-      "password": "vodafone",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
       "types": [
-        "default"
+        "ims"
       ],
-      "user": "vodafone"
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "name": "Vodafone Internet",
-      "password": "vodafone",
-      "protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ],
-      "user": "vodafone"
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "wfc_spn_format_idx_int": 4
   },
   "capabilities": {
     "esim": "unknown",

@@ -2,6 +2,17 @@
   "android_apns": [
     {
       "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "Movistar IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1337,
       "name": "Movistar IMS",
       "protocol": "IPV6",
@@ -23,6 +34,34 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "mms.gprs.unifon.com.ar",
+      "authtype": 1,
+      "mmsc": "http://mms.movistar.com.ar",
+      "mmsport": 8080,
+      "mmsproxy": "200.68.32.239",
+      "name": "Movistar MMS",
+      "password": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "wap.gprs.unifon.com.ar",
+      "authtype": 1,
+      "name": "wap.gprs.unifon.com.ar",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     },
     {
       "apn": "wap.gprs.unifon.com.ar",

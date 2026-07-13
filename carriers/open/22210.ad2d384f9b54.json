@@ -1,0 +1,63 @@
+{
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "wap.optima.it",
+      "name": "Optima",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": false,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "read_only_apn_types_string_array": [],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
+    "volte_replacement_rat_int": 3,
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unsupported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Optima It",
+  "match": {
+    "mccmnc": [
+      "22210"
+    ],
+    "spn": [
+      "Optima"
+    ]
+  },
+  "profile_id": "open.22210.ad2d384f9b54",
+  "schema_version": 1
+}

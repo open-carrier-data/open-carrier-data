@@ -1,0 +1,73 @@
+{
+  "android_apns": [
+    {
+      "apn": "altice",
+      "name": "Optimum Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.altice.com/mmsc/MMS",
+      "name": "Optimum MMS",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|18|20",
+      "name": "xcap",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "hide_enhanced_4g_lte_bool": true,
+    "iwlan.epdg_static_address_string": "EPDG.EPC.mnc390.mcc313.pub.3gppnetwork.org",
+    "wfc_spn_format_idx_int": 1
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Alticeroaming Us",
+  "match": {
+    "imsi_prefix_patterns": [
+      "208090060"
+    ],
+    "mccmnc": [
+      "208090"
+    ]
+  },
+  "profile_id": "open.208090.3e4dfdf3c925",
+  "schema_version": 1
+}

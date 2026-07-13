@@ -1,34 +1,53 @@
 {
   "android_apns": [
     {
-      "apn": "net2.vodafone.pt",
-      "authtype": 3,
-      "mmsc": "http://mms.vodafone.pt/servlets/mms",
-      "mmsport": 80,
-      "mmsproxy": "iproxy.vodafone.pt",
-      "name": "net2.vodafone.pt",
-      "password": "vodafone",
-      "port": 80,
-      "proxy": "iproxy.vodafone.pt",
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "mms"
+        "ims"
       ],
-      "user": "vodafone"
+      "user_visible": false
+    },
+    {
+      "apn": "internet.vodafone.pt",
+      "authtype": 0,
+      "name": "Vodafone Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
     },
     {
       "apn": "net2.vodafone.pt",
+      "authtype": 0,
       "mmsc": "http://mms.vodafone.pt/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "iproxy.vodafone.pt",
       "name": "net2.vodafone.pt",
       "password": "vodafone",
       "port": 80,
+      "protocol": "IPV4V6",
       "proxy": "iproxy.vodafone.pt",
       "types": [
         "supl"
       ],
       "user": "vodafone"
+    },
+    {
+      "apn": "net2.vodafone.pt",
+      "authtype": 0,
+      "mmsc": "http://mms.vodafone.pt/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "iproxy.vodafone.pt",
+      "name": "Vodafone Net2",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "vas.vodafone.pt",
@@ -56,7 +75,16 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "338|busy everywhere|1017",
+      "510|Call completed elsewhere|1014"
+    ],
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 5,
     "volte_replacement_rat_int": 3
   },
   "capabilities": {

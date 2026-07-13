@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "data.dk",
       "name": "data.dk",
       "types": [
@@ -20,6 +31,21 @@
     },
     {
       "apn": "data.tre.dk",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.3.dk/",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
       "authtype": 3,
       "mmsc": "http://mms.3.dk",
       "mmsport": 8799,
@@ -29,12 +55,52 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "services",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.3.dk/",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "services",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "H3G XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
+    "auto_retry_failed_wifi_emergency_call": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
+    "imssms.sms_over_ims_supported_bool": true,
+    "is_ims_conference_size_enforced_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

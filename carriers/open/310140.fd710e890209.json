@@ -1,4 +1,42 @@
 {
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|20",
+      "name": "GTA IMS",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mpulse.gta.net",
+      "name": "GTA",
+      "types": [
+        "default"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "service",
+      "name": "GTA Service",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "tether.gta.net",
+      "name": "GTA Hotspot",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -6,12 +44,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GTA",
+  "display_name": "Carrier 310140",
   "match": {
     "mccmnc": [
       "310140"

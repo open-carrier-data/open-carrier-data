@@ -1,0 +1,151 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "apn_set_id": -1,
+      "bearer_bitmask": "14|18|20",
+      "name": "KDDI JP IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "admin.au-net.ne.jp",
+      "apn_set_id": -1,
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "KDDI JP OTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "au5g.au-net.ne.jp",
+      "apn_set_id": 1,
+      "authtype": 2,
+      "name": "5G NET for DATA",
+      "password": "au",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "supl"
+      ],
+      "user": "user@au5g.au-net.ne.jp",
+      "user_editable": false
+    },
+    {
+      "apn": "au5gtrg.au-net.ne.jp",
+      "apn_set_id": 1,
+      "authtype": 2,
+      "bearer_bitmask": "14|20",
+      "infrastructure_bitmask": "cellular",
+      "name": "5G NET for DATA",
+      "password": "au",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "user@au5gtrg.au-net.ne.jp",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "apn_set_id": -1,
+      "name": "KDDI JP Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "uad5gn.au-net.ne.jp",
+      "apn_set_id": 0,
+      "authtype": 2,
+      "name": "5G NET",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "supl"
+      ],
+      "user": "685840734641020@uad5gn.au-net.ne.jp",
+      "user_editable": false
+    },
+    {
+      "apn": "uad5gntrg.au-net.ne.jp",
+      "apn_set_id": 0,
+      "authtype": 2,
+      "bearer_bitmask": "14|20",
+      "infrastructure_bitmask": "cellular",
+      "name": "5G NET",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "X36yN3Dhe9UjPhzm@uad5gntrg.au-net.ne.jp",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "apn_set_id": -1,
+      "bearer_bitmask": "14|20",
+      "name": "KDDI XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    }
+  ],
+  "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "disable_dun_apn_while_roaming_with_preset_apn_bool": true,
+    "enabledMMS": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_conference_size_limit_int": 2,
+    "imsvoice.conference_factory_uri_string": "mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org",
+    "is_ims_conference_size_enforced_bool": true,
+    "read_only_apn_types_string_array": [
+      "ims"
+    ],
+    "support_ims_conference_event_package_bool": false
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unsupported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Kddi Jp",
+  "match": {
+    "gid1_prefixes": [
+      "10"
+    ],
+    "mccmnc": [
+      "44051"
+    ]
+  },
+  "profile_id": "open.44051.dc16892ada47",
+  "schema_version": 1
+}

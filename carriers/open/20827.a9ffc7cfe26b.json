@@ -1,4 +1,47 @@
 {
+  "android_apns": [
+    {
+      "apn": "coriolis",
+      "name": "Coriolis",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "Coriolis IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mmscoriolis",
+      "mmsc": "http://mms.coriolis.fr",
+      "mmsport": 9028,
+      "mmsproxy": "10.12.0.1",
+      "name": "mmscoriolis",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "editable_wfc_mode_bool": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc027.mcc208.3gppnetwork.org",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc027.mcc208.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -11,7 +54,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Coriolis",
+  "display_name": "Carrier 20827",
   "match": {
     "mccmnc": [
       "20827"

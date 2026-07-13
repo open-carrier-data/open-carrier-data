@@ -1,6 +1,49 @@
 {
   "android_apns": [
     {
+      "apn": "home.cww.com",
+      "name": "Carolina West Wireless",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "hos",
+      "name": "Carolina West XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.cwwmms.com/cww/mms.php",
+      "name": "Carolina West Wireless MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "mms.c1.ama",
       "mmsc": "http://mms.iot1.com/amarillo/mms.php",
       "name": "My Multi Media",
@@ -9,11 +52,42 @@
         "mms"
       ],
       "user": "cell1mms"
+    },
+    {
+      "apn": "sos",
+      "name": "SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "tethering.cww.com",
+      "name": "Carolina West Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "httpParams": "X-MDN: ##LINE1##",
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxImageHeight": 2432,
+    "maxImageWidth": 4320,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 80,
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 1,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -24,8 +98,8 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "supported",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 310130",
   "match": {

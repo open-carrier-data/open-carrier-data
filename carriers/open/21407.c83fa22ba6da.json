@@ -1,6 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "XCAP",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "movistar.es",
       "authtype": 1,
       "name": "Conexi\u00f3n Compartida",
@@ -18,8 +39,21 @@
       "name": "telefonica.es",
       "password": "telefonica",
       "port": 8080,
+      "protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ],
+      "user": "telefonica"
+    },
+    {
+      "apn": "telefonica.es",
+      "authtype": 1,
+      "mmsc": "http://mms.movistar.com",
+      "mmsport": 8080,
+      "name": "telefonica.es",
+      "password": "telefonica",
+      "port": 8080,
+      "types": [
         "mms",
         "supl"
       ],
@@ -48,6 +82,23 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_allow_transfer_ims_call_bool": true,
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "ims_conference_size_limit_int": 4,
+    "imsvoice.conference_subscribe_type_int": 1,
+    "is_ims_conference_size_enforced_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc007.mcc214.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 512000,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -55,9 +106,9 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Carrier 21407",

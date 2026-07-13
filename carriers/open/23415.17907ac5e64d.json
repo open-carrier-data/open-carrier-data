@@ -1,0 +1,68 @@
+{
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "MY.INTERNET",
+      "mtu": 1340,
+      "name": "Gigs Data",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap",
+      "user_editable": false
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_default_wfc_ims_roaming_mode_int": 1,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": false,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims_reasoninfo_mapping_string_array": [
+      "338|busy everywhere|1017",
+      "510|Call completed elsewhere|1014"
+    ],
+    "imsvoice.conference_subscribe_type_int": 0,
+    "read_only_apn_types_string_array": [],
+    "smsToMmsTextThreshold": 10,
+    "wfc_spn_format_idx_int": 12
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unsupported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "supported",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Gigs Gb",
+  "match": {
+    "mccmnc": [
+      "23415"
+    ],
+    "spn": [
+      "Gigs"
+    ]
+  },
+  "profile_id": "open.23415.17907ac5e64d",
+  "schema_version": 1
+}

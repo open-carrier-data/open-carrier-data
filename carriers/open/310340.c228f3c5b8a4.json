@@ -1,12 +1,38 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.westlink",
       "authtype": 0,
       "name": "Westlink Internet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "limitless.us4g.com",
+      "mmsc": "http://mms.limitless.csky.us:6672/",
+      "mmsport": 9401,
+      "mmsproxy": "209.4.229.79",
+      "name": "Limitless",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "xcap"
       ]
     },
     {

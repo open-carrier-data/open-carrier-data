@@ -2,6 +2,17 @@
   "android_apns": [
     {
       "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "name": "TIM IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -23,12 +34,32 @@
       "types": [
         "default",
         "ia",
-        "supl",
-        "xcap"
+        "supl"
       ],
       "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "authtype": 1,
+      "mmsc": "http://mms.tim.br",
+      "mmsport": 8080,
+      "mmsproxy": "189.40.191.96",
+      "name": "timbrasil.br",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "tim",
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "ims.sip_over_ipsec_enabled_bool": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -36,7 +67,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

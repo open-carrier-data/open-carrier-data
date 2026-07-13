@@ -19,12 +19,45 @@
       ]
     },
     {
+      "apn": "EMERGENCY",
+      "name": "Tele2 Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "data.springmobil.se",
       "name": "Spring data",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet.tele2.no",
@@ -46,12 +79,14 @@
     },
     {
       "apn": "internet.tele2.se",
-      "mmsc": "http://mmsc.tele2.se",
+      "mmsc": "http://mmsc.tele2.se/",
       "mmsport": 8080,
       "mmsproxy": "mmsproxy.tele2.se",
       "name": "internet.tele2.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "supl"
       ]
     },
     {
@@ -66,7 +101,15 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_wfc_ims_available_bool": true
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "is_ims_conference_size_enforced_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",

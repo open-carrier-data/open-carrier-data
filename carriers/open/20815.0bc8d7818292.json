@@ -3,14 +3,26 @@
     {
       "apn": "free.gp",
       "mmsc": "http://mms.free.gp",
-      "name": "Free",
+      "name": "free.gp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "free.gp",
+      "mmsc": "http://mms.free.gp",
+      "name": "Free",
+      "types": [
+        "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "maxMessageSize": 614400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -23,7 +35,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Free",
+  "display_name": "Free Gp",
   "match": {
     "gid1_prefixes": [
       "F007"

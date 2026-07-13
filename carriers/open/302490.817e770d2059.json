@@ -13,13 +13,15 @@
       "user_visible": false
     },
     {
-      "apn": "internet.freedommobile.ca",
-      "name": "internet.freedommobile.ca",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet.freedommobile.ca",
@@ -30,6 +32,16 @@
       "types": [
         "default",
         "dun",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet.freedommobile.ca",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
         "supl"
       ],
       "user_editable": false
@@ -56,7 +68,8 @@
       "roaming_protocol": "IP",
       "types": [
         "mms"
-      ]
+      ],
+      "user_editable": false
     },
     {
       "apn": "xcap.freedommobile.ca",
@@ -69,8 +82,39 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap.freedommobile.ca",
+      "bearer_bitmask": "14|18",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "carrier_default_wfc_ims_roaming_enabled_bool": true,
+    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "ims.sip_over_ipsec_enabled_bool": false,
+    "ims_conference_size_limit_int": 2,
+    "imsvoice.conference_factory_uri_string": "conf@mobilefrdm.ca",
+    "is_ims_conference_size_enforced_bool": true,
+    "iwlan.epdg_static_address_string": "epdg.epc.mnc490.mcc302.pub.3gppnetwork.org",
+    "maxImageHeight": 1944,
+    "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
+    "maxSubjectLength": 80,
+    "read_only_apn_types_string_array": [],
+    "recipientLimit": 20,
+    "smsToMmsTextThreshold": 6,
+    "wfc_spn_format_idx_int": 1
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -78,10 +122,10 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
-    "wifi_calling_roaming": "unknown"
+    "vowifi": "supported",
+    "wifi_calling_roaming": "supported"
   },
   "display_name": "Carrier 302490",
   "match": {

@@ -1,13 +1,15 @@
 {
   "android_apns": [
     {
-      "apn": "internet",
-      "name": "internet",
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet",
@@ -22,6 +24,17 @@
       "mmsport": 8080,
       "mmsproxy": "129.192.129.104",
       "name": "MMS WOM",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.nextelmovil.cl",
+      "authtype": 0,
+      "mmsc": "http://3gmms.nextelmovil.cl",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "MMS Nextel",
       "types": [
         "mms"
       ]

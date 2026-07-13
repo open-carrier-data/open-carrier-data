@@ -1,7 +1,19 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "orangerun",
+      "authtype": 1,
       "name": "orangerun",
       "password": "orange",
       "port": 8080,
@@ -15,9 +27,11 @@
     },
     {
       "apn": "orangerun",
+      "authtype": 1,
       "name": "orangerun",
       "password": "orange",
       "port": 8080,
+      "protocol": "IPV6",
       "proxy": "192.168.010.100",
       "types": [
         "supl"
@@ -28,7 +42,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "hide_enhanced_4g_lte_bool": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
