@@ -1,18 +1,15 @@
 {
   "android_apns": [
     {
-      "apn": "mms.iusacellgsm.mx",
-      "mmsc": "http://mms.iusacell3g.com/",
-      "name": "Iusacell MMS",
-      "password": "mmsiusacellgsm",
+      "apn": "ims",
+      "name": "AT&T",
       "types": [
-        "mms"
-      ],
-      "user": "mmsiusacellgsm"
+        "ims"
+      ]
     },
     {
       "apn": "modem.iusacellgsm.mx",
-      "name": "Internet Modem",
+      "name": "modem.iusacellgsm.mx",
       "password": "iusacellgsm",
       "types": [
         "dun"
@@ -22,10 +19,20 @@
     {
       "apn": "web.iusacellgsm.mx",
       "authtype": 0,
+      "name": "web.iusacellgsm.mx",
+      "password": "iusacellgsm",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "iusacellgsm"
+    },
+    {
+      "apn": "web.iusacellgsm.mx",
+      "authtype": 0,
       "name": "Iusacell Internet",
       "password": "iusacellgsm",
       "types": [
-        "default",
         "supl"
       ],
       "user": "iusacellgsm"
@@ -34,7 +41,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

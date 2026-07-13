@@ -12,6 +12,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Orange Romania",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms",
       "authtype": 1,
       "mmsc": "http://wap.mms.orange.ro:8002",
@@ -29,13 +37,24 @@
       "name": "net",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Orange Romania",
+      "protocol": "IPV6",
+      "types": [
+        "emergency"
       ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

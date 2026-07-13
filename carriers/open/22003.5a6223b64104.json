@@ -24,6 +24,15 @@
       "user": "mts"
     },
     {
+      "apn": "gprswap",
+      "name": "mt:s",
+      "password": "064",
+      "types": [
+        "dun"
+      ],
+      "user": "mts"
+    },
+    {
       "apn": "hos",
       "name": "HOS",
       "protocol": "IPV4V6",
@@ -43,11 +52,21 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "mt:s",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

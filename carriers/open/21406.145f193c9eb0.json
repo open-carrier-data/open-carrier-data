@@ -9,18 +9,27 @@
       ]
     },
     {
-      "apn": "sos",
+      "apn": "mms.lowi.omv.es",
+      "mmsc": "http://mms.lowi.omv.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
       "name": "Lowi",
-      "protocol": "IPV4V6",
+      "password": "wap125",
       "types": [
-        "emergency"
-      ]
+        "mms"
+      ],
+      "user": "wap@wap"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

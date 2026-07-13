@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "connect",
+      "name": "epic",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "name": "Internet",
@@ -11,8 +19,22 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "mms.telco.mt",
+      "mmsc": "http://mms.vodafone.com.mt/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.3",
+      "name": "epic",
+      "types": [
+        "mms"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

@@ -32,11 +32,18 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "Vodafone IT IMS",
-      "protocol": "IPV4V6",
+      "apn": "internet",
+      "name": "Vodafone IT",
       "types": [
-        "ims"
+        "dun"
+      ]
+    },
+    {
+      "apn": "iphone.vodafone.it",
+      "name": "Vodafone IT",
+      "protocol": "IP",
+      "types": [
+        "default"
       ]
     },
     {
@@ -79,6 +86,13 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "name": "web.omnitel.it",
+      "types": [
+        "default"
       ]
     },
     {
@@ -167,9 +181,12 @@
     "carrier_default_wfc_ims_mode_int": 1,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
     "read_only_apn_types_string_array": [],
+    "recipientLimit": 99,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "smsToMmsTextThreshold": 10,

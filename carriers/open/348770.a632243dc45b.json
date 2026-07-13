@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "Wap",
+      "mmsc": "http://mmc.digiceljamaica.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.7.12",
+      "name": "Digicel",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "wap",
       "mmsc": "http://mmc.digiceljamaica.com/servlets/mms",
       "mmsport": 8080,
@@ -15,10 +25,16 @@
       "name": "web",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 2196608,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

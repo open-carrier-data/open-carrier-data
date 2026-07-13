@@ -23,16 +23,10 @@
       "user_visible": false
     },
     {
-      "apn": "internet",
-      "carrier_id": 1456,
-      "mmsc": "http://10.81.0.7:8002",
-      "mmsport": 8080,
-      "mmsproxy": "82.113.100.5",
-      "name": "O2 DE Internet",
+      "apn": "ims",
+      "name": "o2-de",
       "types": [
-        "default",
-        "mms",
-        "supl"
+        "ims"
       ]
     },
     {
@@ -45,8 +39,22 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "dun",
         "mms",
         "xcap"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1456,
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "O2 DE Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -68,6 +76,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_ims_apn_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",
@@ -76,7 +85,6 @@
     "imsvoice.conference_factory_uri_string": "teleconferenceuri-factory@telefonica.de",
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

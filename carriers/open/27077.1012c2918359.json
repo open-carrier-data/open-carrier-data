@@ -1,6 +1,15 @@
 {
   "android_apns": [
     {
+      "apn": "Internet2",
+      "name": "TANGO",
+      "password": "tango",
+      "types": [
+        "default"
+      ],
+      "user": "tango"
+    },
+    {
       "apn": "hos",
       "name": "Tango XCAP",
       "protocol": "IPV4V6",
@@ -45,6 +54,20 @@
         "mms"
       ],
       "user": "tango"
+    },
+    {
+      "apn": "internet2",
+      "mmsc": "http://mms.tango.lu",
+      "mmsport": 8080,
+      "mmsproxy": "212.066.075.003",
+      "name": "TANGO",
+      "password": "tango",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "tango"
     }
   ],
   "android_carrier_config": {
@@ -52,6 +75,8 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

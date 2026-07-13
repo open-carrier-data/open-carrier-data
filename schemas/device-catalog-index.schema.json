@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-carrier-data.github.io/schemas/device-catalog-index.schema.json",
+  "title": "Open Carrier Data device catalog index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "description",
+    "generated_from_checks_through",
+    "sources",
+    "platforms",
+    "artifact_registries"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "generated_from_checks_through": { "type": "string", "format": "date" },
+    "sources": { "type": "array", "minItems": 1 },
+    "platforms": {
+      "type": "object",
+      "required": ["android", "apple"]
+    },
+    "artifact_registries": {
+      "type": "object",
+      "required": ["apple_carrier_bundles"]
+    }
+  }
+}

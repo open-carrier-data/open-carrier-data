@@ -12,6 +12,16 @@
       "user_visible": false
     },
     {
+      "apn": "tigowap",
+      "mmsc": "http://mms.tigomms.co.tz",
+      "mmsport": 8080,
+      "mmsproxy": "10.168.20.80",
+      "name": "Tigo",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "tigoweb",
       "name": "tigoweb",
       "protocol": "IPV4V6",
@@ -20,8 +30,19 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "tigoweb",
+      "name": "Tigo",
+      "types": [
+        "dun"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

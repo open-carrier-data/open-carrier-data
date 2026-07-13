@@ -14,6 +14,13 @@
     },
     {
       "apn": "internet.movistar.ve",
+      "name": "movistar",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.movistar.ve",
       "mmsc": "http://mms.movistar.ve",
       "mmsport": 9001,
       "mmsproxy": "200.35.64.73",
@@ -27,7 +34,7 @@
       "mmsc": "http://mms.movistar.com.ve:8088/mms",
       "mmsport": 9001,
       "mmsproxy": "200.35.64.73",
-      "name": "Movistar MMS",
+      "name": "mms.movistar.ve",
       "types": [
         "mms"
       ]
@@ -45,6 +52,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

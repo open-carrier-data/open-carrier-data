@@ -19,6 +19,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "\u53f0\u7063\u5927\u54e5\u5927",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
@@ -26,6 +34,21 @@
         "default",
         "hipri",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "\u53f0\u7063\u5927\u54e5\u5927",
+      "protocol": "IPV6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -45,6 +68,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",
@@ -54,6 +78,8 @@
     "imsvoice.conference_factory_uri_string": "conf-factory@ims.taiwanmobile.com",
     "is_ims_conference_size_enforced_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc097.mcc466.pub.3gppnetwork.org",
+    "maxMessageSize": 1048576,
+    "recipientLimit": 30,
     "support_ims_conference_event_package_bool": false,
     "volte_replacement_rat_int": 3,
     "wfc_spn_format_idx_int": 1

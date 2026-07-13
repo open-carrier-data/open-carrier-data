@@ -1,12 +1,24 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "CLARO PA",
-      "protocol": "IP",
+      "apn": "ba.amx",
+      "name": "Claro 3G",
       "types": [
-        "ims"
+        "default",
+        "dun"
       ]
+    },
+    {
+      "apn": "mms.claro.com.pa",
+      "mmsc": "http://www.claro.com.pa/mms/",
+      "mmsport": 8799,
+      "mmsproxy": "10.240.3.129",
+      "name": "CLARO PA",
+      "password": "CLAROMMS",
+      "types": [
+        "mms"
+      ],
+      "user": "CLAROMMS"
     },
     {
       "apn": "web.claro.com.pa",
@@ -19,10 +31,15 @@
       "user": "CLAROWEB"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

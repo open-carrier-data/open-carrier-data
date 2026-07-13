@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "3internet",
+      "name": "3 Ireland",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "3ireland.ie",
       "mmsc": "http://mms.um.3ireland.ie:10021/mmsc",
       "mmsport": 8799,
@@ -11,6 +19,16 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "3ireland.ie",
+      "mmsc": "http://mms.um.3ireland.ie:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.3ireland.ie",
+      "name": "3 Ireland",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -25,6 +43,14 @@
     },
     {
       "apn": "ims",
+      "name": "3 Ireland",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -33,6 +59,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "3 Ireland",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -41,8 +75,10 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
     "iwlan.epdg_static_address_string": "epdg.three.ie",
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

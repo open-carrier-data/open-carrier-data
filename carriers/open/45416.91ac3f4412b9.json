@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "mobile",
+      "name": "csl.",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "pccw",
       "authtype": 3,
       "mmsc": "http://mms.hkcsl.com:8080",
@@ -36,7 +44,9 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

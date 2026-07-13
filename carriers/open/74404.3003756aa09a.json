@@ -4,17 +4,16 @@
       "apn": "internet.tigo.py",
       "authtype": 1,
       "name": "internet.tigo.py",
-      "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "supl"
       ]
     },
     {
       "apn": "internet.tigo.py",
-      "authtype": 1,
-      "name": "internet.tigo.py",
+      "name": "TIGO",
       "types": [
-        "supl"
+        "dun"
       ]
     },
     {
@@ -33,7 +32,9 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

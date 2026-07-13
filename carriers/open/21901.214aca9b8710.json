@@ -1,10 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "HT HR",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.ht.hr",
+      "name": "internet.ht.hr",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet.ht.hr",
       "name": "T-Mobile HR",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -38,6 +53,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

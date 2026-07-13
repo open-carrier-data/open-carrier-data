@@ -1,6 +1,18 @@
 {
   "android_apns": [
     {
+      "apn": "Wap",
+      "mmsc": "http://mmc.digiceltt.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.6.12",
+      "name": "Digicel",
+      "password": "wap",
+      "types": [
+        "mms"
+      ],
+      "user": "wap"
+    },
+    {
       "apn": "wap",
       "mmsc": "http://mmc.digiceltt.com/servlets/mms",
       "mmsport": 8080,
@@ -30,6 +42,7 @@
       "name": "web",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
@@ -43,6 +56,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

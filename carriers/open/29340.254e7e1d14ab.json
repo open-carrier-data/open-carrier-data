@@ -11,6 +11,14 @@
     },
     {
       "apn": "ims",
+      "name": "A1 SI",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -19,6 +27,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "A1 SI",
+      "password": "internet",
+      "types": [
+        "default",
+        "dun"
+      ]
     },
     {
       "apn": "internet.simobil.si",
@@ -32,6 +49,17 @@
         "supl"
       ],
       "user": "simobil"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmc",
+      "mmsport": 9201,
+      "mmsproxy": "80.95.224.46",
+      "name": "A1 SI",
+      "password": "mms",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -39,7 +67,9 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

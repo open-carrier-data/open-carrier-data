@@ -1,13 +1,36 @@
 {
+  "android_apns": [
+    {
+      "apn": "Internet.ch.upcmobile.com",
+      "name": "upc ch",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.ch.upcmobile.com",
+      "mmsc": "http://mms.ch.upcmobile.com:8080/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "62.179.127.18",
+      "name": "upc ch",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -16,7 +39,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "UPC CH",
+  "display_name": "upc ch",
   "match": {
     "mccmnc": [
       "22853"

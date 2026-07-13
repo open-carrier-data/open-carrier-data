@@ -1,4 +1,58 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "TELUS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "isp.telus.com",
+      "name": "TELUS",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "TELUS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 80,
+      "mmsproxy": "74.49.0.18",
+      "name": "TELUS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 80,
+      "mmsproxy": "74.49.0.18",
+      "name": "TELUS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 614400,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

@@ -5,10 +5,25 @@
       "name": "internet",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.tz.airtel.com:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.87.248.136",
+      "name": "Airtel",
+      "types": [
+        "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 614400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

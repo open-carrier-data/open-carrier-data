@@ -34,6 +34,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "LMT",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.lmt.lv",
       "mmsc": "http://mmsc.lmt.lv/mmsc",
       "mmsport": 8081,
@@ -42,7 +50,8 @@
       "password": "lmt",
       "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun"
       ],
       "user": "lmt"
     },
@@ -73,11 +82,13 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1017",
       "510|Call completed elsewhere|1014"
     ],
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

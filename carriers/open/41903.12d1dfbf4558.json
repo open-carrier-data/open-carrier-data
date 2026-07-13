@@ -1,11 +1,35 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "Ooredoo",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "action.ooredoo.com",
       "authtype": 0,
       "name": "action.ooredoo.com",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "action.ooredoo.com",
+      "name": "Ooredoo",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "action.ooredoo.com",
+      "authtype": 0,
+      "name": "Ooredoo Internet",
+      "types": [
         "supl"
       ]
     },
@@ -58,7 +82,10 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 614400,
+    "recipientLimit": 25
   },
   "capabilities": {
     "esim": "unknown",

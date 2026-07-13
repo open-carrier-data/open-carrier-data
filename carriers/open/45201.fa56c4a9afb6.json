@@ -19,9 +19,21 @@
       "mmsproxy": "203.162.21.114",
       "name": "m-wap",
       "password": "mms",
-      "protocol": "IPV4V6",
       "types": [
         "default"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "m-wap",
+      "mmsc": "http://203.162.21.114/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "203.162.21.114",
+      "name": "Mobifone",
+      "password": "mms",
+      "types": [
+        "dun",
+        "mms"
       ],
       "user": "mms"
     },
@@ -39,7 +51,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 102400
   },
   "capabilities": {
     "esim": "unknown",

@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "3gnet",
+      "name": "\u4e2d\u56fd\u8054\u901a",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "3gnet",
       "name": "3gnet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -24,6 +33,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 50
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

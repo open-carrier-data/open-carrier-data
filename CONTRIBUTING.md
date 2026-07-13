@@ -48,6 +48,7 @@ https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
 Use this when:
 
 - a carrier is missing;
+- a device identity is missing or named incorrectly in the coverage catalog;
 - mobile data, MMS, VoLTE, Wi-Fi Calling, RCS, eSIM, tethering, XCAP, or
   conference calling looks wrong;
 - the generated Android files do not match a known-good source;
@@ -130,6 +131,7 @@ After adding or changing a claim, run:
 ```bash
 python3 tools/validate_community_claims.py --write-index
 python3 tools/validate_public_carrier_data.py carriers generated/index.json
+python3 tools/validate_device_catalog.py generated/devices
 ```
 
 If you use the issue path, automation converts the form into JSON, validates

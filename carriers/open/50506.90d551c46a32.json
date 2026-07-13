@@ -4,31 +4,32 @@
       "apn": "3services",
       "mmsc": "http://mmsc.three.net.au:10021/mmsc",
       "mmsport": 8799,
-      "mmsproxy": "10.176.57.25",
-      "name": "3services",
-      "password": "a",
+      "mmsproxy": "mmscprox.three.net.au",
+      "name": "3",
       "types": [
-        "default",
-        "supl"
-      ],
-      "user": "a"
+        "dun"
+      ]
     },
     {
       "apn": "3services",
       "mmsc": "http://mmsc.three.net.au:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "10.176.57.25",
-      "name": "3 AU",
+      "name": "3services",
+      "password": "a",
       "types": [
-        "mms"
-      ]
+        "supl"
+      ],
+      "user": "a"
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,6 +1,24 @@
 {
   "android_apns": [
     {
+      "apn": "airtelgprs.com",
+      "name": "Airtel",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "airtelmms.com",
+      "mmsc": "http://10.252.38.11/servlets/mms",
+      "mmsport": 9401,
+      "mmsproxy": "10.252.38.11",
+      "name": "Airtel",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "default",
       "name": "Airtel",
       "types": [
@@ -9,6 +27,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

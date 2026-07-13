@@ -11,6 +11,13 @@
       "user": "nedjma"
     },
     {
+      "apn": "internet",
+      "name": "Ooredoo",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "nedjmamms",
       "authtype": 1,
       "mmsc": "http://10.10.111.1",
@@ -35,8 +42,24 @@
         "supl"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "ooredooMMS",
+      "mmsc": "http://10.10.111.1",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.52.3",
+      "name": "Ooredoo",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 204800
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

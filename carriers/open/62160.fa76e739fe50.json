@@ -7,7 +7,6 @@
       "types": [
         "bip",
         "cbs",
-        "dun",
         "emergency",
         "enterprise",
         "fota",
@@ -23,12 +22,14 @@
     {
       "apn": "etisalat",
       "authtype": 3,
+      "mmsc": "http://10.71.170.30:38090/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.71.170.5",
       "name": "etisalat",
       "port": 8080,
       "proxy": "10.71.170.5",
       "types": [
-        "default",
-        "supl"
+        "default"
       ]
     },
     {
@@ -39,10 +40,25 @@
       "mmsproxy": "10.71.170.5",
       "name": "etisalat",
       "types": [
+        "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "etisalat",
+      "authtype": 3,
+      "name": "etisalat",
+      "port": 8080,
+      "proxy": "10.71.170.5",
+      "types": [
+        "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

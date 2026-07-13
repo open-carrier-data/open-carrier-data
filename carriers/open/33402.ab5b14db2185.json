@@ -1,11 +1,20 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "Telcel",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.itelcel.com",
       "name": "Telcel",
       "password": "webgprs2002",
       "types": [
-        "default"
+        "default",
+        "dun"
       ],
       "user": "webgprs"
     },
@@ -22,6 +31,11 @@
       "user": "mmsgprs"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 30
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

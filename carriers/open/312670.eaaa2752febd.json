@@ -1,6 +1,13 @@
 {
   "android_apns": [
     {
+      "apn": "broadband",
+      "name": "AT&T",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "firstnet-hotspot",
       "name": "firstnet-hotspot",
       "protocol": "IPV4V6",
@@ -46,6 +53,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "phone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "phone",
+      "types": [
+        "default",
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -59,6 +76,7 @@
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": true,
     "enableSMSDeliveryReports": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",

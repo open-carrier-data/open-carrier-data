@@ -1,12 +1,38 @@
 {
+  "android_apns": [
+    {
+      "apn": "orange",
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "name": "Monaco Telecom",
+      "password": "orange",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangenew.fr",
+      "name": "Monaco Telecom",
+      "password": "orange",
+      "types": [
+        "dun"
+      ],
+      "user": "orange"
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 614400
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -15,7 +41,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telecom MC",
+  "display_name": "Monaco Telecom",
   "match": {
     "gid1_prefixes": [
       "4D433031"

@@ -1,14 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "Monaco Telecom",
-      "protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet",
       "mmsc": "http://mms.monaco-telecom.mc",
       "name": "Monaco Telecom",
@@ -19,6 +11,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 614400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

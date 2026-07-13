@@ -12,10 +12,27 @@
       "apn": "internet",
       "name": "internet",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://www.mtcmobile.com.na",
+      "mmsport": 80,
+      "mmsproxy": "10.40.10.252",
+      "name": "MTC",
+      "password": "mmsc",
+      "types": [
+        "mms"
+      ],
+      "user": "mmsc"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

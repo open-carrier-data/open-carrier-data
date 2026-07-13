@@ -13,6 +13,16 @@
       "user_visible": false
     },
     {
+      "apn": "goto.virginmobile.uk",
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "name": "Virgin",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "hos",
       "bearer_bitmask": "14",
       "name": "XCAP",
@@ -21,6 +31,13 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Virgin",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -30,8 +47,10 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "hide_ims_apn_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc038.mcc234.pub.3gppnetwork.org",
+    "maxMessageSize": 307200,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

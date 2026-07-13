@@ -12,6 +12,18 @@
     },
     {
       "apn": "etisalat.ae",
+      "mmsc": "http://mms/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.32",
+      "name": "etisalat",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "etisalat.ae",
       "authtype": 1,
       "name": "etisalat.ae",
       "password": "etisalat.ae",
@@ -33,6 +45,13 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "etisalat",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms",
@@ -63,9 +82,12 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_factory_uri_string": "atsconf@ims.mnc002.mcc424.3gppnetwork.org",
     "iwlan.epdg_static_address_string": "epdg.epc.mnc002.mcc424.etisalat.ae",
+    "maxMessageSize": 512000,
+    "recipientLimit": 20,
     "wfc_spn_format_idx_int": 4
   },
   "capabilities": {

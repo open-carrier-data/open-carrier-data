@@ -10,6 +10,14 @@
     },
     {
       "apn": "ims",
+      "name": "SFR",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "SFR IMS",
       "protocol": "IPV4V6",
@@ -238,18 +246,18 @@
     {
       "apn": "websfr",
       "name": "websfr",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "default",
-        "supl"
+        "dun"
       ]
     },
     {
       "apn": "websfr",
       "name": "websfr",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "supl"
       ]
     },
     {
@@ -384,6 +392,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",
@@ -394,6 +403,7 @@
     "maxImageWidth": 2592,
     "maxMessageSize": 614400,
     "read_only_apn_types_string_array": [],
+    "recipientLimit": 50,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "support_ims_conference_event_package_bool": false,

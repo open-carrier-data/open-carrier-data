@@ -12,6 +12,14 @@
     },
     {
       "apn": "ims",
+      "name": "TELIA",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "name": "ims",
@@ -42,6 +50,13 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "www.internet.mtelia.dk",
+      "name": "TELIA",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -116,6 +131,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1017",
@@ -124,7 +140,6 @@
     "imssms.sms_over_ims_supported_bool": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "is_ims_conference_size_enforced_bool": true,
-    "maxMessageSize": 2097152,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

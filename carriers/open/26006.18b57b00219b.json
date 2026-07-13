@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "Play",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "Internet",
       "authtype": 3,
       "name": "Internet",
@@ -32,6 +40,13 @@
       ]
     },
     {
+      "apn": "internet",
+      "name": "Play",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "xcap",
       "name": "Play XCAP",
       "protocol": "IPV4V6",
@@ -54,7 +69,9 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "smsToMmsTextThreshold": 6,

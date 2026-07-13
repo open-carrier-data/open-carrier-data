@@ -2,6 +2,17 @@
   "android_apns": [
     {
       "apn": "igprs.claro.com.uy",
+      "mmsc": "http://mms.claro.com.uy",
+      "name": "CLARO Uruguay",
+      "password": "clarogprs999",
+      "types": [
+        "dun",
+        "mms"
+      ],
+      "user": "clarogprs"
+    },
+    {
+      "apn": "igprs.claro.com.uy",
       "authtype": 1,
       "name": "igprs.claro.com.uy",
       "password": "ctigprs999",
@@ -9,8 +20,21 @@
         "supl"
       ],
       "user": "ctigprs"
+    },
+    {
+      "apn": "ims",
+      "name": "CLARO Uruguay",
+      "protocol": "IPV6",
+      "types": [
+        "default"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

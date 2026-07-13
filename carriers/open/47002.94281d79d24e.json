@@ -1,6 +1,24 @@
 {
   "android_apns": [
     {
+      "apn": "INTERNET",
+      "name": "Robi",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "WAP",
+      "mmsc": "http://10.16.18.40:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "10.16.18.77",
+      "name": "Robi",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -13,7 +31,7 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
+      "name": "Robi IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -53,8 +71,11 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
+    "enabledMMS": true,
     "enhanced_4g_lte_on_by_default_bool": false,
-    "imssms.sms_over_ims_supported_bool": true
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

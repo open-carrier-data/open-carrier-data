@@ -23,6 +23,14 @@
     },
     {
       "apn": "internet",
+      "name": "ALCOM",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "internet",
       "port": 8080,
       "proxy": "194.110.177.70",
@@ -44,7 +52,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

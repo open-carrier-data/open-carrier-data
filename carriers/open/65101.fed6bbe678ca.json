@@ -1,11 +1,23 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.vodacom4me.co.za",
+      "mmsport": 8080,
+      "mmsproxy": "10.113.63.12",
+      "name": "Vodacom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     },
     {
@@ -26,6 +38,9 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

@@ -5,6 +5,7 @@
       "name": "internet.btcbahamas.com",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
@@ -16,6 +17,18 @@
       ]
     },
     {
+      "apn": "mms1.btcbahamas.com",
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.30.23",
+      "name": "BTC",
+      "password": "btc",
+      "types": [
+        "mms"
+      ],
+      "user": "btc"
+    },
+    {
       "apn": "ppmms1.btcbahamas.com",
       "mmsport": 8080,
       "mmsproxy": "172.16.220.44",
@@ -25,10 +38,15 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

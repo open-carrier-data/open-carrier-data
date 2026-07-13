@@ -13,6 +13,15 @@
     },
     {
       "apn": "ims",
+      "name": "Rogers",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1403,
       "name": "Rogers IMS",
@@ -24,6 +33,13 @@
       "user_visible": false
     },
     {
+      "apn": "isp.apn",
+      "name": "Rogers",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "ltedata.apn",
       "carrier_id": 1403,
       "name": "Rogers Tethering",
@@ -80,6 +96,18 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "ltemobile.apn",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
     },
     {
       "apn": "netsvcs",
@@ -136,19 +164,26 @@
       "user_visible": false
     },
     {
-      "apn": "sos",
-      "carrier_id": 1403,
-      "name": "Rogers SOS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers",
       "types": [
-        "emergency"
-      ],
-      "user_visible": false
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "name": "Rogers",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "sos",
-      "name": "emergency",
+      "carrier_id": 1403,
+      "name": "Rogers SOS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -776,6 +811,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc720.mcc302.3gppnetwork.org",
     "imsvoice.conference_subscribe_type_int": 0,

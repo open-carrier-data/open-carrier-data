@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "apps.bell.ca",
+      "name": "Bell",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "apps.bell.ca",
       "bearer_bitmask": "18",
       "carrier_id": 576,
       "mmsc": "http://mms.bell.ca/mms/wapenc",
@@ -27,6 +36,15 @@
     },
     {
       "apn": "ims",
+      "name": "Bell",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "carrier_id": 576,
       "name": "Bell Mobility IMS",
@@ -82,6 +100,16 @@
       "user_editable": false
     },
     {
+      "apn": "pda2.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "sos",
       "carrier_id": 576,
       "name": "Bell Mobility SOS",
@@ -94,7 +122,7 @@
     },
     {
       "apn": "sos",
-      "name": "Bell Mobility SOS",
+      "name": "sos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -311,16 +339,15 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims.sip_over_ipsec_enabled_bool": false,
     "imsvoice.conference_factory_uri_string": "conf@ims.bell.ca",
     "is_ims_conference_size_enforced_bool": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 614400,
     "maxSubjectLength": 80,
     "read_only_apn_types_string_array": [],
-    "recipientLimit": 20,
     "smsToMmsTextThreshold": 8,
     "volte_replacement_rat_int": 3,
     "wfc_spn_format_idx_int": 1

@@ -1,18 +1,38 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "aliv",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "pda.newcomobile.com",
       "mmsc": "http://mms.bealiv.com",
       "name": "aliv",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "protocol": "IP",
       "types": [
         "default",
         "dun",
         "mms"
       ]
+    },
+    {
+      "apn": "sos",
+      "name": "aliv",
+      "protocol": "IP",
+      "types": [
+        "emergency"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 2097152,
+    "recipientLimit": 33
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

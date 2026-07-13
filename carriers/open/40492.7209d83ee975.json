@@ -21,16 +21,19 @@
       ]
     },
     {
-      "apn": "airtelmms.com",
-      "authtype": 1,
-      "mmsc": "http://100.1.201.171:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "100.1.201.172",
-      "name": "Airtel MMS",
+      "apn": "airtelgprs.com",
+      "name": "AirTel",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "AirTel",
+      "protocol": "IP",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -54,12 +57,15 @@
     "carrier_default_wfc_ims_roaming_enabled_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",
       "*|Call is dropped due to Wi-Fi signal is degraded|1407"
     ],
     "is_ims_conference_size_enforced_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 25,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

@@ -1,6 +1,24 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "195.156.25.33",
+      "name": "Telia FI",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "emergency",
+      "name": "Telia FI",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
       "apn": "hos",
       "name": "hos",
       "protocol": "IPV6",
@@ -23,6 +41,13 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Telia FI",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
@@ -30,6 +55,14 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -52,6 +85,7 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1017",

@@ -32,13 +32,30 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "internet-ofl",
+      "name": "Salt",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms-ofl",
+      "mmsc": "http://192.168.151.3:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.151.2",
+      "name": "Salt",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "enabledMMS": false,
+    "maxMessageSize": 307200,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

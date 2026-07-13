@@ -1,13 +1,28 @@
 {
   "android_apns": [
     {
+      "apn": "tigo.mms",
+      "mmsc": "http://mms.tigo.cd",
+      "mmsport": 8080,
+      "mmsproxy": "10.25.105.130",
+      "name": "Tigo",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "tigo.web",
       "name": "tigo.web",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 204800
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

@@ -5,13 +5,22 @@
       "mmsc": "http://mmsc-ac.mms.o2.co.uk:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "82.132.254.1",
-      "name": "idata.o2.co.uk",
+      "name": "O2",
       "password": "password",
       "protocol": "IPV4V6",
       "types": [
-        "default"
+        "dun",
+        "mms"
       ],
       "user": "vertigo"
+    },
+    {
+      "apn": "ims",
+      "name": "O2",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -33,7 +42,6 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun",
         "hipri",
         "xcap"
       ],
@@ -117,12 +125,15 @@
     "carrier_volte_available_bool": true,
     "carrier_volte_provisioning_required_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "ims_reasoninfo_mapping_string_array": [
       "510|Call completed elsewhere|1014",
       "*|Call is dropped due to Wi-Fi signal is degraded|1407"
     ],
     "imsvoice.conference_subscribe_type_int": 0,
+    "maxMessageSize": 2097152,
     "read_only_apn_types_string_array": [],
+    "recipientLimit": 50,
     "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },

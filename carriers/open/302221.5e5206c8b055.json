@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "Koodo",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "3|9|10|11|14|15|18|20",
       "name": "Koodo IMS",
       "protocol": "IPV6",
@@ -38,16 +47,6 @@
       "user_visible": false
     },
     {
-      "apn": "sos",
-      "name": "Koodo SOS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "sp.koodo.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
@@ -62,6 +61,19 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sp.koodo.com",
+      "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "Koodo",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -72,6 +84,7 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_conference_size_limit_int": 2,
     "imsvoice.conference_factory_uri_string": "factory@conference.ims.mnc220.mcc302.3gppnetwork.org",
@@ -80,10 +93,8 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc220.mcc302.pub.3gppnetwork.org",
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 2097152,
     "maxSubjectLength": 80,
     "read_only_apn_types_string_array": [],
-    "recipientLimit": 10,
     "smsToMmsTextThreshold": 5,
     "volte_replacement_rat_int": 3,
     "wfc_spn_format_idx_int": 1
@@ -100,7 +111,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Koodo Ca",
+  "display_name": "Koodo",
   "match": {
     "gid1_prefixes": [
       "4B4F"

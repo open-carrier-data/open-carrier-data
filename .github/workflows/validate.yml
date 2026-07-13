@@ -25,6 +25,10 @@ jobs:
             carriers \
             generated/index.json
 
+      - name: Validate device and artifact catalog
+        run: |
+          python3 tools/validate_device_catalog.py generated/devices
+
       - name: Validate community claims
         run: |
           python3 tools/validate_community_claims.py \

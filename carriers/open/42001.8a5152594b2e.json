@@ -1,6 +1,23 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "stc",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "JAWALNET.COM.SA",
+      "name": "stc",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -21,14 +38,24 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "jawalnet.com.sa",
+      "name": "STC",
+      "types": [
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
-    "imsvoice.conference_factory_uri_string": "confuri@fmc.stc.com.sa"
+    "imsvoice.conference_factory_uri_string": "confuri@fmc.stc.com.sa",
+    "maxMessageSize": 614400,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

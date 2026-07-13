@@ -5,7 +5,7 @@
       "mmsc": "http://mmsc.aiowireless.net",
       "mmsport": 80,
       "mmsproxy": "proxy.aiowireless.net",
-      "name": "internet",
+      "name": "endo",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -25,6 +25,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Cricket",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -53,13 +61,33 @@
       "mmsc": "http://mmsc.aiowireless.net",
       "mmsport": 80,
       "mmsproxy": "proxy.aiowireless.net",
+      "name": "ndo",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ndo",
+      "mmsc": "http://mmsc.aiowireless.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.aiowireless.net",
       "name": "Cricket AIO",
       "types": [
-        "default",
         "fota",
         "hipri",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Cricket",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     }
   ],
@@ -74,6 +102,7 @@
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
     "enableSMSDeliveryReports": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.att.net",
@@ -84,6 +113,7 @@
       "dun",
       "ims"
     ],
+    "recipientLimit": 20,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "volte_replacement_rat_int": 3,

@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "free.gp",
+      "mmsc": "http://mms.free.gp",
+      "name": "Free",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
       "apn": "free.mq",
       "mmsc": "http://mms.free.mq",
       "name": "Free Mq",
@@ -13,7 +23,8 @@
     }
   ],
   "android_carrier_config": {
-    "maxMessageSize": 614400
+    "enabledMMS": true,
+    "recipientLimit": 50
   },
   "capabilities": {
     "esim": "unknown",

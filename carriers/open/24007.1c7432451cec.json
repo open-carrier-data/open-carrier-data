@@ -1,6 +1,13 @@
 {
   "android_apns": [
     {
+      "apn": "4g.tele2.se",
+      "name": "Tele2",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "emergency",
       "name": "Tele2",
       "types": [
@@ -15,7 +22,7 @@
       ]
     },
     {
-      "apn": "internet.tele2.se",
+      "apn": "surf.tele2.se",
       "mmsc": "http://mmsc.tele2.se",
       "mmsport": 8080,
       "mmsproxy": "mmsproxy.tele2.se",
@@ -27,6 +34,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 2097152,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

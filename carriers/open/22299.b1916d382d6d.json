@@ -1,17 +1,8 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "Very",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet.it",
       "name": "Very",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "dun"
@@ -26,16 +17,12 @@
       "types": [
         "mms"
       ]
-    },
-    {
-      "apn": "sos",
-      "name": "Very",
-      "protocol": "IPV4V6",
-      "types": [
-        "emergency"
-      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

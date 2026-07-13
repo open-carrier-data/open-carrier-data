@@ -1,14 +1,32 @@
 {
   "android_apns": [
     {
-      "apn": "igprs.claro.com.ar",
-      "mmsc": "http://mms.claro.com.ar",
-      "name": "Claro AR",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "ba.amx",
+      "name": "CLARO Argentina",
       "types": [
-        "mms"
+        "default",
+        "dun"
       ]
+    },
+    {
+      "apn": "igprs.claro.com.ar",
+      "mmsc": "http://mms.claro.com.ar/",
+      "name": "CLARO Argentina",
+      "password": "clarogprs999",
+      "types": [
+        "dun"
+      ],
+      "user": "clarogprs"
+    },
+    {
+      "apn": "ims",
+      "name": "CLARO Argentina",
+      "password": "claro",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user": "claro"
     },
     {
       "apn": "ims",
@@ -23,7 +41,10 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

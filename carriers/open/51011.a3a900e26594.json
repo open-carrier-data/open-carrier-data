@@ -22,6 +22,14 @@
     },
     {
       "apn": "internet",
+      "name": "XL Axiata",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 1,
       "name": "internet",
       "types": [
@@ -67,7 +75,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

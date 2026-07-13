@@ -3,16 +3,9 @@
     {
       "apn": "internet.ideasclaro",
       "name": "internet.ideasclaro",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.ideasclaro",
-      "name": "Internet Claro",
-      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },
@@ -27,6 +20,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

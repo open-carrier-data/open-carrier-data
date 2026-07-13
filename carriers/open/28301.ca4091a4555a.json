@@ -11,16 +11,27 @@
       "user": "internet"
     },
     {
+      "apn": "internet.beeline.am",
+      "name": "Beeline",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "mms.beeline.am",
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "10.3.2.205",
-      "name": "BeeLine AM MMS",
+      "name": "mms.beeline.am",
       "types": [
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

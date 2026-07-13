@@ -2,9 +2,10 @@
   "android_apns": [
     {
       "apn": "gprs.is",
-      "name": "Vodafone Internet",
+      "name": "gprs.is",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
@@ -26,6 +27,23 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Vodafone",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.gprs.is",
+      "mmsc": "http://mmsc.vodafone.is",
+      "mmsport": 8080,
+      "mmsproxy": "10.22.0.10",
+      "name": "mms.gprs.is",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -34,6 +52,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "ims.sip_over_ipsec_enabled_bool": false,
     "imssms.sms_over_ims_supported_bool": true,
     "maxImageHeight": 1944,

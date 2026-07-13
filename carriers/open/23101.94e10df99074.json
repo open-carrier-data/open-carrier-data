@@ -12,13 +12,18 @@
       "user_visible": false
     },
     {
-      "apn": "internet",
-      "authtype": 3,
-      "name": "internet",
+      "apn": "ims",
+      "name": "Orange Slovensko",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Orange Slovensko",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -43,6 +48,14 @@
       "user": "wap"
     },
     {
+      "apn": "sos",
+      "name": "Orange Slovensko",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
       "apn": "xcap",
       "bearer_bitmask": "14|18|20",
       "name": "XCAP",
@@ -61,6 +74,8 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

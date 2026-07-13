@@ -26,6 +26,15 @@
       "user": "movistar"
     },
     {
+      "apn": "internet.movistar.com.co",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "dun"
+      ],
+      "user": "movistar"
+    },
+    {
       "apn": "mms.movistar.com.co",
       "authtype": 1,
       "mmsc": "http://mms.movistar.com.co",
@@ -42,7 +51,10 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 614400,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

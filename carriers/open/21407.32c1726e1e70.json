@@ -2,7 +2,29 @@
   "android_apns": [
     {
       "apn": "internet.movistar.com.ec",
-      "name": "movistar_ec",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "movistar"
+    },
+    {
+      "apn": "mms.movistar.com.ec",
+      "mmsc": "http://mms.movistar.com.ec:8088/mms/",
+      "mmsport": 9001,
+      "mmsproxy": "10.3.5.50",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "mms"
+      ],
+      "user": "movistar"
+    },
+    {
+      "apn": "navega.movistar.ec",
+      "name": "movistar",
       "password": "movistar",
       "types": [
         "default",
@@ -11,10 +33,14 @@
       "user": "movistar"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -23,7 +49,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "movistar_ec",
+  "display_name": "movistar",
   "match": {
     "iccid_prefixes": [
       "8959300"

@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "mms.vtr.com",
+      "mmsc": "http://192.168.94.162:19090/was",
+      "mmsport": 9028,
+      "mmsproxy": "192.168.94.210",
+      "name": "vtr",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "movil.vtr.com",
       "name": "vtr",
       "password": "vtrmovil",
@@ -11,10 +22,15 @@
       "user": "vtrmovil"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

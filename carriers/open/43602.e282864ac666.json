@@ -1,14 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "Tcell",
+      "name": "TCELL",
+      "password": "Tcell",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "Tcell"
+    },
+    {
       "apn": "default",
       "name": "Tcell",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.tcell.tj",
+      "mmsport": 3128,
+      "mmsproxy": "69.69.69.69",
+      "name": "TCELL",
+      "types": [
+        "mms"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

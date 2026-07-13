@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "CTM",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "XCAP",
       "name": "CTM XCAP",
       "types": [
@@ -18,6 +26,14 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "ctm-mobile",
+      "name": "CTM",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -73,7 +89,10 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 20
   },
   "capabilities": {
     "esim": "unknown",

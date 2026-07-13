@@ -1,40 +1,38 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
+      "apn": "mms.iusacellgsm.mx",
+      "mmsc": "http://mms.iusacell3g.com/",
       "name": "UNEFON",
-      "protocol": "IP",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "mms.attmex.mx",
-      "mmsc": "http://mms.att.com.mx",
-      "mmsport": 8080,
-      "mmsproxy": "129.192.129.104",
-      "name": "UNEFON",
+      "password": "mmsiusacellgsm",
       "types": [
         "mms"
-      ]
+      ],
+      "user": "mmsiusacellgsm"
     },
     {
-      "apn": "modem.attmex.mx",
+      "apn": "modem.iusacellgsm.mx",
       "name": "UNEFON",
+      "password": "iusacellgsm",
       "types": [
         "dun"
-      ]
+      ],
+      "user": "iusacellgsm"
     },
     {
-      "apn": "web.attmex.mx",
+      "apn": "web.iusacellgsm.mx",
       "name": "UNEFON",
-      "protocol": "IP",
+      "password": "iusacellgsm",
       "types": [
         "default"
-      ]
+      ],
+      "user": "iusacellgsm"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

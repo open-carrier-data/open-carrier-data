@@ -20,6 +20,14 @@
     },
     {
       "apn": "ims",
+      "name": "DNA",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -50,6 +58,7 @@
       "apn": "internet",
       "name": "internet",
       "types": [
+        "dun",
         "supl"
       ]
     },
@@ -242,7 +251,9 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

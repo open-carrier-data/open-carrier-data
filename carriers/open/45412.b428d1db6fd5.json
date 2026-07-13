@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "CMHK",
+      "name": "CMHK",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "cmhk",
       "mmsc": "http://mms.hk.chinamobile.com/mms",
       "mmsport": 8080,
@@ -8,6 +16,7 @@
       "name": "cmhk",
       "types": [
         "default",
+        "dun",
         "mms"
       ]
     },
@@ -17,6 +26,14 @@
       "name": "cmhk",
       "types": [
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "CMHK",
+      "protocol": "IP",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -36,7 +53,9 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

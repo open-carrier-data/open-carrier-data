@@ -12,18 +12,12 @@
       "user_visible": false
     },
     {
-      "apn": "orangerun",
-      "authtype": 1,
-      "name": "orangerun",
-      "password": "orange",
-      "port": 8080,
-      "protocol": "IPV6",
-      "proxy": "192.168.010.100",
-      "roaming_protocol": "IP",
+      "apn": "ims",
+      "name": "Orange Reunion",
+      "protocol": "IP",
       "types": [
-        "default"
-      ],
-      "user": "orange"
+        "ims"
+      ]
     },
     {
       "apn": "orangerun",
@@ -34,16 +28,36 @@
       "protocol": "IPV6",
       "proxy": "192.168.010.100",
       "types": [
+        "default",
         "supl"
       ],
       "user": "orange"
+    },
+    {
+      "apn": "orangerun",
+      "name": "Orange Reunion",
+      "password": "orange",
+      "types": [
+        "dun"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "sos",
+      "name": "Orange Reunion",
+      "protocol": "IP",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 614400,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

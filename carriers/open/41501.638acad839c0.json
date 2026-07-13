@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "ALFA",
+      "name": "alfa",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet.mic1.com.lb",
       "name": "internet.mic1.com.lb",
       "password": "mic1",
@@ -25,7 +33,10 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_vt_available_bool": true
+    "carrier_vt_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

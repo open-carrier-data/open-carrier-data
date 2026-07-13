@@ -5,19 +5,8 @@
       "authtype": 1,
       "name": "datos.personal.com",
       "password": "datos",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ],
-      "user": "datos"
-    },
-    {
-      "apn": "datos.personal.com",
-      "authtype": 1,
-      "name": "datos.personal.com",
-      "password": "datos",
-      "types": [
+        "default",
         "supl"
       ],
       "user": "datos"
@@ -31,6 +20,14 @@
         "supl"
       ],
       "user": "gprs"
+    },
+    {
+      "apn": "ims",
+      "name": "Personal",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -48,8 +45,6 @@
       "authtype": 1,
       "name": "internet.personal.com",
       "password": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ],
@@ -58,7 +53,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

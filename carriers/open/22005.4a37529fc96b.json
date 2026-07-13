@@ -12,6 +12,14 @@
     },
     {
       "apn": "ims",
+      "name": "A1 SRB",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "A1 SRB IMS",
       "protocol": "IPV4V6",
@@ -49,11 +57,22 @@
         "supl"
       ],
       "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile",
+      "name": "A1 SRB",
+      "password": "vipmobile",
+      "types": [
+        "dun"
+      ],
+      "user": "vipmobile"
     }
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

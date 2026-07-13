@@ -20,6 +20,7 @@ fixes alone.
 - Contribution guide: `CONTRIBUTING.md`
 - Stable snapshot: `generated/index.json`
 - Source revisions and merge evidence: `generated/evidence-index.json`
+- Device and carrier-artifact coverage: `generated/devices/index.json`
 - Android output: `generated/android/`
 - Data schema: `schemas/carrier-profile.schema.json`
 - Community claims: `community/`
@@ -58,6 +59,7 @@ community/                public community claims
 generated/index.json      stable generated snapshot
 generated/evidence-index.json exact source revisions and resolution evidence
 generated/android/        generated Android APN, CarrierConfig, and lookup data
+generated/devices/        device discovery and carrier-artifact coverage
 generated/community/      generated index of valid community claims
 generated/candidate/      generated index of testable community claims
 schemas/                  JSON schemas
@@ -111,9 +113,15 @@ Broadband Provider Info, Apple carrier-bundle, Google Pixel CarrierSettings,
 Samsung OMC, and scoped Samsung IMS capability observations.
 Each source is translated into the same neutral profile model.
 
+Device discovery is tracked separately. The Android inventory comes from
+Google's current public Google Play supported-device list. Apple product types
+and carrier artifacts come directly from Apple's official carrier index. This
+separate catalog makes coverage gaps visible without turning a device name into
+a carrier setting.
+
 `generated/evidence-index.json` records:
 
-- exact Git revisions and revision dates for public upstreams;
+- exact Git revisions or source-content hashes and their revision dates;
 - when automation last checked each public upstream, even if its revision did
   not change;
 - declared source terms;
@@ -126,9 +134,28 @@ Each source is translated into the same neutral profile model.
 - conflicts and quality gates that caused a value to become conditional or be
   omitted.
 
-Public Git source revisions older than 180 days fail validation. Private vendor
+Maintained source checks older than 180 days fail validation. Private vendor
 observations also need a recent checked date. Read `SOURCES.md` for the exact
 source and merge policy.
+
+## Device Coverage Does Not Mean Device Support
+
+`generated/devices/` keeps several claims separate:
+
+- `present` means a maintained source currently lists the device identity;
+- `historical` means the identity was listed before but is absent now;
+- `carrier_observations` means current carrier evidence named that exact model
+  or device code;
+- an Apple `product_family` artifact match means Apple's current index has
+  carrier artifacts for that family, not that every carrier feature was tested
+  on every model;
+- `indexed` means an artifact and digest are in the current official index;
+- `verified` also means automation downloaded the package and matched the
+  indexed digest.
+
+Failed downloads and digest mismatches are quarantined. They are counted in the
+small coverage summary but are not published as usable artifacts or imported
+as carrier facts.
 
 ## If A Carrier Is Missing Or Wrong
 
@@ -191,6 +218,7 @@ Clone and validate:
 git clone https://github.com/open-carrier-data/open-carrier-data.git
 cd open-carrier-data
 python3 tools/validate_public_carrier_data.py carriers generated/index.json
+python3 tools/validate_device_catalog.py generated/devices
 ```
 
 Main files for consumers:
@@ -204,6 +232,10 @@ generated/android/mccmnc-index.json
 generated/android/carrier-id-index.json
 generated/android/carrier-config-overrides.json
 generated/android/carrier-config-list.xml
+generated/devices/index.json
+generated/devices/android.json
+generated/devices/apple.json
+generated/devices/apple-carrier-artifacts.json
 ```
 
 Within one match list, any value may match. Between different match fields,

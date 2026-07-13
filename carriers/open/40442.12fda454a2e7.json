@@ -31,16 +31,6 @@
       ]
     },
     {
-      "apn": "aircelmms",
-      "mmsc": "http://172.17.83.67/servlets/mms/",
-      "mmsport": 8080,
-      "mmsproxy": "172.17.83.69",
-      "name": "Aircel MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "aircelmms.po",
       "mmsc": "http://mmsc/mmrelay.app",
       "mmsport": 8081,
@@ -60,6 +50,14 @@
       "protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "aircelnet",
+      "name": "AIRCEL",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -95,6 +93,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

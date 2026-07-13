@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "TELIA",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mmssp",
       "mmsc": "http://mms.telia.dk",
       "mmsport": 8080,
@@ -24,7 +32,6 @@
       "apn": "www.internet.mtelia.dk",
       "name": "www.internet.mtelia.dk",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -33,6 +40,7 @@
       "apn": "www.internet.mtelia.dk",
       "name": "www.internet.mtelia.dk",
       "types": [
+        "dun",
         "supl"
       ]
     }
@@ -40,7 +48,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

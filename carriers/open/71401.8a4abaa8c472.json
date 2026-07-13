@@ -4,25 +4,26 @@
       "apn": "apn01.cwpanama.com.pa",
       "name": "apn01.cwpanama.com.pa",
       "port": 8080,
-      "protocol": "IPV4V6",
       "proxy": "172.25.3.5",
       "types": [
-        "default"
+        "default",
+        "supl"
       ]
     },
     {
       "apn": "apn01.cwpanama.com.pa",
-      "name": "apn01.cwpanama.com.pa",
-      "port": 8080,
-      "proxy": "172.25.3.5",
+      "name": "+Movil",
       "types": [
-        "supl"
+        "dun"
       ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

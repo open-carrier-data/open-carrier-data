@@ -13,6 +13,16 @@
       "user_editable": false
     },
     {
+      "apn": "wap.digicelcuracao.com",
+      "mmsc": "http://mms.digicelgroup.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.7.12",
+      "name": "Digicel",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "web",
       "name": "Digicel Web",
       "types": [
@@ -27,8 +37,20 @@
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "web.digicelcuracao.com",
+      "name": "Digicel",
+      "types": [
+        "dun"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

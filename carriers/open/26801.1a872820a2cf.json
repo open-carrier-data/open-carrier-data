@@ -12,9 +12,25 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "vodafone P",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.pt",
+      "name": "internet.vodafone.pt",
+      "password": "vodafone",
+      "types": [
+        "default"
+      ],
+      "user": "vodafone"
+    },
+    {
       "apn": "internet.vodafone.pt",
       "authtype": 0,
-      "name": "Vodafone Internet",
+      "name": "internet.vodafone.pt",
       "protocol": "IPV4V6",
       "types": [
         "dun"
@@ -77,11 +93,14 @@
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1017",
       "510|Call completed elsewhere|1014"
     ],
+    "maxMessageSize": 614400,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "smsToMmsTextThreshold": 5,

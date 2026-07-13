@@ -12,16 +12,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "TIM IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "timbrasil.br",
       "authtype": 1,
       "mmsc": "http://mms.tim.br",
@@ -35,6 +25,19 @@
         "default",
         "ia",
         "supl"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "mmsc": "http://mms.tim.br",
+      "mmsport": 8080,
+      "mmsproxy": "189.40.191.96",
+      "name": "TIM",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ],
       "user": "tim"
     },
@@ -58,7 +61,10 @@
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "ims.sip_over_ipsec_enabled_bool": false
+    "enabledMMS": true,
+    "ims.sip_over_ipsec_enabled_bool": false,
+    "maxMessageSize": 614400,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

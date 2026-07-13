@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "Telenetwap.be",
+      "name": "Telenet",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -10,6 +18,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Telenet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms.be",
@@ -36,6 +53,14 @@
       ]
     },
     {
+      "apn": "telenetwap.be",
+      "name": "Telenet",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "xcap",
       "name": "XCAP",
       "types": [
@@ -49,8 +74,10 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "iwlan.epdg_static_address_string": "epdg.telco.telenet-ops.be",
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 11

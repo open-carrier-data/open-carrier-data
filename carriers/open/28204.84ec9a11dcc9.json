@@ -13,23 +13,43 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "name": "Cellfie Mobile Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "internet.ge.beeline.net",
+      "name": "Beeline",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.ge.beeline.net",
+      "mmsc": "http://mms.ge.beeline.net/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "172.30.141.119",
+      "name": "Beeline",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

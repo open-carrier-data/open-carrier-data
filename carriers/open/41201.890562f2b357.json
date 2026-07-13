@@ -1,11 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "INTERNET",
+      "name": "AWCC",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "default",
       "name": "AWCC",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "hotspot",
+      "name": "AWCC",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -19,6 +33,16 @@
       "user": "awcc"
     },
     {
+      "apn": "mms",
+      "mmsc": "http://172.18.29.223:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "172.18.30.91",
+      "name": "AWCC",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "mms1",
       "mmsc": "http://172.17.81.2:8002",
       "mmsport": 8002,
@@ -29,6 +53,9 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

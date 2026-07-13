@@ -25,12 +25,37 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Telekom SK",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Telekom SK",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "name": "internet",
       "protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ]
     }
@@ -44,7 +69,10 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

@@ -21,12 +21,34 @@
         "supl"
       ],
       "user": "3gprs"
+    },
+    {
+      "apn": "indosatmms",
+      "mmsc": "http://mmsc.indosat.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.19.19.19",
+      "name": "INDOSAT",
+      "password": "indosat",
+      "types": [
+        "mms"
+      ],
+      "user": "indosat"
+    },
+    {
+      "apn": "internet",
+      "name": "INDOSAT",
+      "types": [
+        "default",
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

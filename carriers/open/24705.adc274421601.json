@@ -1,10 +1,17 @@
 {
   "android_apns": [
     {
-      "apn": "internet",
+      "apn": "ims",
       "name": "Bite",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Bite",
       "types": [
         "default",
         "dun"
@@ -23,6 +30,11 @@
       "user": "mms@mms"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 50
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

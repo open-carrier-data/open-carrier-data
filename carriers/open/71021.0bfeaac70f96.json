@@ -13,6 +13,14 @@
       "user": "internet"
     },
     {
+      "apn": "internet.ideasclaro",
+      "name": "Claro Nicaragua",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "mms.ideasalo.ni",
       "authtype": 1,
       "mmsc": "http://10.6.32.27/servlets/mms",
@@ -24,6 +32,16 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "mms.ideasclaro",
+      "mmsc": "http://10.6.32.27/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.6.32.2",
+      "name": "Claro Nicaragua",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.indeasalo.ni",
@@ -39,6 +57,11 @@
       "user": "mms"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 512000,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

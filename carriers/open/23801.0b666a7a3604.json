@@ -23,6 +23,14 @@
     },
     {
       "apn": "ims",
+      "name": "TDC",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV6",
@@ -34,12 +42,19 @@
     },
     {
       "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 3,
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -66,6 +81,14 @@
       "name": "DLG Tele MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "TDC",
+      "protocol": "IPV6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -140,9 +163,11 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_enhanced_4g_lte_bool": false,
+    "enabledMMS": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "is_ims_conference_size_enforced_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc238.pub.3gppnetwork.org",
+    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

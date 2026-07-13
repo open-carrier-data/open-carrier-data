@@ -42,6 +42,16 @@
       "user": "test"
     },
     {
+      "apn": "ooredoo",
+      "mmsc": "http://10.128.240.16/servlets/mms",
+      "name": "Ooredoo",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
       "apn": "wap.nawras.com.om",
       "name": "nawras wap",
       "password": "test",
@@ -56,7 +66,9 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

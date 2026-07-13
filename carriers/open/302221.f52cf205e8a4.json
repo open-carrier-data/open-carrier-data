@@ -2,6 +2,53 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "TELUS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "isp.telus.com",
+      "name": "TELUS",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "TELUS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 80,
+      "mmsproxy": "74.49.0.18",
+      "name": "TELUS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 80,
+      "mmsproxy": "74.49.0.18",
+      "name": "TELUS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "3|9|10|11|14|15|18|20",
       "carrier_id": 2020,
       "mvno_match_data": "4B4F",
@@ -360,11 +407,10 @@
   ],
   "android_carrier_config": {
     "always_play_remote_hold_tone_bool": true,
+    "enabledMMS": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 1048576,
     "maxSubjectLength": 80,
-    "recipientLimit": 10,
     "smsToMmsTextThreshold": 5
   },
   "capabilities": {

@@ -1,10 +1,32 @@
 {
   "android_apns": [
     {
+      "apn": "mmssfr",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.224.145",
+      "name": "mmssfr",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "sl2sfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
       "name": "sl2sfr",
       "types": [
         "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "name": "sl2sfr",
+      "types": [
         "supl"
       ]
     },
@@ -25,14 +47,17 @@
       "name": "websfr",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     }
   ],
   "android_carrier_config": {
+    "enabledMMS": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 614400
+    "maxMessageSize": 614400,
+    "recipientLimit": 50
   },
   "capabilities": {
     "esim": "unknown",

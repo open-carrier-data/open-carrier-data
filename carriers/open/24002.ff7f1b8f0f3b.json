@@ -1,6 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "bredband.tre.se",
+      "name": "bredband.tre.se",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "data.tre.se",
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
+      "name": "data.tre.se",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "data.tre.se",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
@@ -23,9 +42,17 @@
       "mmsproxy": "mmsproxy.tre.se",
       "name": "data.tre.se",
       "types": [
-        "default",
+        "dun",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "3 SE",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -65,6 +92,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "3 SE",
+      "protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -77,9 +112,11 @@
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
     "editable_wfc_roaming_mode_bool": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true,
     "is_ims_conference_size_enforced_bool": true,
+    "maxMessageSize": 2097152,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

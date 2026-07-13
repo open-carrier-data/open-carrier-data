@@ -1,15 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mms.avea.com.tr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.174.44.80",
+      "name": "Turk Telekom",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Turk Telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

@@ -2,18 +2,44 @@
   "android_apns": [
     {
       "apn": "internet.ideasclaro.com.jm",
+      "name": "internet.ideasclaro.com.jm",
+      "password": "claro",
+      "port": 8080,
+      "types": [
+        "default"
+      ],
+      "user": "claro"
+    },
+    {
+      "apn": "internet.ideasclaro.com.jm",
       "name": "Claro JM",
       "port": 8080,
       "types": [
-        "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms.ideasclaro.com.jm",
+      "mmsc": "http://mms.ideasclaro.com.jm/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "190.80.147.118",
+      "name": "Claro",
+      "password": "claro",
+      "types": [
+        "mms"
+      ],
+      "user": "claro"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 409600,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -22,7 +48,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Claro JM",
+  "display_name": "Carrier 33870",
   "match": {
     "mccmnc": [
       "33870"

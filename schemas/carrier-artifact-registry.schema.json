@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-carrier-data.github.io/schemas/carrier-artifact-registry.schema.json",
+  "title": "Open Carrier Data carrier artifact registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "registry_id", "description", "source", "artifacts"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "registry_id": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "required": ["name", "url", "revision", "revision_date", "checked_at"]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifact_id",
+          "source",
+          "carrier_bundle_ids",
+          "categories",
+          "product_scopes",
+          "os_versions",
+          "build_versions",
+          "bundle_versions",
+          "verification"
+        ],
+        "properties": {
+          "artifact_id": { "type": "string", "pattern": "^apple:[0-9a-f]{24}$" },
+          "source": { "const": "apple_carrier_bundles" },
+          "carrier_bundle_ids": { "$ref": "#/$defs/strings" },
+          "categories": { "$ref": "#/$defs/strings" },
+          "product_scopes": { "$ref": "#/$defs/strings" },
+          "os_versions": { "$ref": "#/$defs/strings" },
+          "build_versions": { "$ref": "#/$defs/strings" },
+          "bundle_versions": { "$ref": "#/$defs/strings" },
+          "verification": { "enum": ["indexed", "verified"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "strings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 }
+    }
+  }
+}

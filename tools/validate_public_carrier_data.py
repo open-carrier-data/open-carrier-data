@@ -253,10 +253,17 @@ GENERATED_FILES = {
     "candidate/index.json",
     "community/README.md",
     "community/index.json",
+    "devices/README.md",
+    "devices/android.json",
+    "devices/apple-carrier-artifacts.json",
+    "devices/apple.json",
+    "devices/index.json",
 }
 
 REQUIRED_GENERATED_FILES = {
-    path for path in GENERATED_FILES if not path.endswith("README.md")
+    path
+    for path in GENERATED_FILES
+    if not path.endswith("README.md") and not path.startswith("devices/")
 }
 
 ADDON_NAMESPACES = {

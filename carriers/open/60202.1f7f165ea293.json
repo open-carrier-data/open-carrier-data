@@ -5,19 +5,18 @@
       "authtype": 3,
       "name": "internet.vodafone.net",
       "password": "internet",
-      "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "supl"
       ],
       "user": "internet"
     },
     {
       "apn": "internet.vodafone.net",
-      "authtype": 3,
-      "name": "internet.vodafone.net",
+      "name": "Vodafone",
       "password": "internet",
       "types": [
-        "supl"
+        "dun"
       ],
       "user": "internet"
     },
@@ -49,7 +48,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

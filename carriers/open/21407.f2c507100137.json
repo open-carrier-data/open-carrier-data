@@ -9,6 +9,18 @@
       ]
     },
     {
+      "apn": "mms.movistar.pe",
+      "mmsc": "http://mmsc.telefonicamovistar.com.pe:8088/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "200.4.196.118",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "mms"
+      ],
+      "user": "movistar@mms"
+    },
+    {
       "apn": "movistar.pe",
       "name": "movistar",
       "password": "movistar",
@@ -19,10 +31,15 @@
       "user": "movistar@datos"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

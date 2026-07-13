@@ -1,6 +1,24 @@
 {
   "android_apns": [
     {
+      "apn": "internet.btonephone.com",
+      "name": "BT-OP",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.btonephone.com",
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "proxy.btonephone.com",
+      "name": "BT-OP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "btmobile.bt.com",
       "mvno_match_data": "BT",
       "mvno_type": "spn",
@@ -26,7 +44,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

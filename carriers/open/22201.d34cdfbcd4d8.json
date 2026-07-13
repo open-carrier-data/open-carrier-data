@@ -14,7 +14,6 @@
       "mmsport": 8080,
       "mmsproxy": "10.10.2.60",
       "name": "NOVA",
-      "protocol": "IP",
       "types": [
         "mms"
       ]
@@ -28,15 +27,12 @@
         "default",
         "dun"
       ]
-    },
-    {
-      "apn": "sos",
-      "name": "NOVA",
-      "types": [
-        "emergency"
-      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

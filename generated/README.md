@@ -12,6 +12,7 @@ truth. Change the source profiles or claims first, then regenerate output.
 index.json              stable maintained-source snapshot
 evidence-index.json     source revisions, scope, conflicts, and quality gates
 android/                Android APN, CarrierConfig, and lookup output
+devices/                device discovery and carrier-artifact coverage
 community/index.json    valid non-expired community claims
 candidate/index.json    community claims suitable for opt-in testing
 ```
@@ -26,6 +27,11 @@ snapshot.
 `evidence-index.json` is part of the stable contract. It shows exact upstream
 revisions, last successful check dates, source support for each exported fact,
 and values made conditional or omitted during neutral merging.
+
+`devices/` is a coverage catalog, not a second carrier database. It records
+which device identities maintained inventories currently expose, which exact
+models appear in carrier evidence, and which Apple carrier artifacts were
+indexed or digest-verified.
 
 Community and candidate indexes are separate. They let downstream projects
 inspect or test user-reported edge cases without silently changing stable phone

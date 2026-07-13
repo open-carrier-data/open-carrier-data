@@ -17,9 +17,29 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.122.2",
       "name": "dialogbb",
+      "protocol": "IPV4V6",
       "server": "dialog",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "dialogbb",
+      "mmsc": "http://mms.dialog.lk:3130/mmsc",
+      "name": "Dialog",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "dialogbb",
+      "mmsc": "http://mms.dialog.lk:3130/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.122.2",
+      "name": "dialogbb",
+      "server": "dialog",
+      "types": [
         "mms",
         "supl"
       ]
@@ -70,7 +90,10 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 3072000,
+    "recipientLimit": 20
   },
   "capabilities": {
     "esim": "unknown",

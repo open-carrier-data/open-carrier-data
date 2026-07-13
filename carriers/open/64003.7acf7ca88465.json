@@ -1,13 +1,28 @@
 {
   "android_apns": [
     {
+      "apn": "zmms",
+      "mmsc": "http://mms.zantel.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.9.30",
+      "name": "ZANTEL",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "znet",
       "name": "znet",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

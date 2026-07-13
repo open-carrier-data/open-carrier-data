@@ -3,16 +3,9 @@
     {
       "apn": "internet.ideasclaro",
       "name": "internet.ideasclaro",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.ideasclaro",
-      "name": "internet.ideasclaro",
-      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },
@@ -21,12 +14,17 @@
       "mmsc": "http://mms.ideasclaro.com:8002",
       "mmsport": 8080,
       "mmsproxy": "216.230.133.66",
-      "name": "MMS CLARO",
+      "name": "mms.ideasclaro",
       "types": [
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

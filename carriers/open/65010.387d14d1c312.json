@@ -12,10 +12,25 @@
       "apn": "internet",
       "name": "internet",
       "types": [
-        "default"
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.mw.airtel.com:8002",
+      "mmsport": 9401,
+      "mmsproxy": "10.150.0.142",
+      "name": "Airtel",
+      "types": [
+        "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

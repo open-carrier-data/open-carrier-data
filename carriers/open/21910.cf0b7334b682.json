@@ -33,6 +33,13 @@
     },
     {
       "apn": "ims",
+      "name": "A1 HR",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -41,6 +48,24 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "A1 HR",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.a1.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.91.99.91",
+      "name": "A1 HR",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.vipnet.hr",
@@ -65,6 +90,9 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 20,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

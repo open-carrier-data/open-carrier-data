@@ -1,6 +1,18 @@
 {
   "android_apns": [
     {
+      "apn": "safaricom",
+      "mmsc": "http://mmsc.gprs.safaricom.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.2.38",
+      "name": "Safaricom",
+      "password": "data",
+      "types": [
+        "dun"
+      ],
+      "user": "saf"
+    },
+    {
       "apn": "wap.safaricom.com",
       "mmsc": "http://mms.gprs.safaricom.com",
       "name": "Safaricom",
@@ -16,7 +28,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 2097152
   },
   "capabilities": {
     "esim": "unknown",

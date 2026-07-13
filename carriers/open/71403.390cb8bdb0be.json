@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "ba.amx",
+      "name": "Claro 3G",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "wap.claro.com.pa",
       "name": "PA WAP CLARO",
       "password": "CLAROWAP",
@@ -22,8 +30,22 @@
         "supl"
       ],
       "user": "CLAROWEB"
+    },
+    {
+      "apn": "web.claro.com.pa",
+      "name": "CLARO PA",
+      "password": "CLAROWEB",
+      "types": [
+        "dun"
+      ],
+      "user": "CLAROWEB"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

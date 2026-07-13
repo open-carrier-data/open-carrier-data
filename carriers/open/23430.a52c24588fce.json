@@ -33,8 +33,17 @@
       "apn": "everywhere",
       "name": "EE",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "EE",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -50,16 +59,6 @@
       ],
       "user": "eesecure",
       "user_visible": false
-    },
-    {
-      "apn": "sos",
-      "name": "EE Emergency",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
     }
   ],
   "android_carrier_config": {
@@ -68,7 +67,9 @@
     "carrier_wfc_ims_available_bool": true,
     "editable_enhanced_4g_lte_bool": false,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "hide_ims_apn_bool": true,
+    "maxMessageSize": 307200,
     "wfc_operator_error_codes_string_array": [
       "REG09|0"
     ],
@@ -86,7 +87,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Btb Gb",
+  "display_name": "EE",
   "match": {
     "gid1_prefixes": [
       "B3"

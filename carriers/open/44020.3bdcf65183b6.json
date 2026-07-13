@@ -37,6 +37,20 @@
       "user_visible": false
     },
     {
+      "apn": "iorohq",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "smilemms.softbank.ne.jp",
+      "name": "\u30bd\u30d5\u30c8\u30d0\u30f3\u30af",
+      "password": "softbank",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "data"
+    },
+    {
       "apn": "jpspir",
       "mmsc": "http://mms/",
       "mmsport": 8080,
@@ -49,6 +63,21 @@
         "supl"
       ],
       "user": "sirobit"
+    },
+    {
+      "apn": "jpspirdi",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "smilemms.softbank.ne.jp",
+      "name": "\u30bd\u30d5\u30c8\u30d0\u30f3\u30af",
+      "password": "titbopt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "sdittbsb"
     },
     {
       "apn": "line.me",
@@ -150,6 +179,15 @@
       "user": "jci@jci"
     },
     {
+      "apn": "sbm",
+      "name": "\u30bd\u30d5\u30c8\u30d0\u30f3\u30af",
+      "password": "softbank",
+      "types": [
+        "default"
+      ],
+      "user": "data"
+    },
+    {
       "apn": "sbm4glte",
       "name": "Softbank(sbm4glte)",
       "password": "softbank",
@@ -193,6 +231,7 @@
     "call_barring_supports_password_change_bool": false,
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
+    "enabledMMS": true,
     "ignore_data_enabled_changed_for_video_calls": true,
     "ims_dtmf_tone_delay_int": 300,
     "ims_reasoninfo_mapping_string_array": [
@@ -204,11 +243,9 @@
     "is_ims_conference_size_enforced_bool": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 307200,
     "read_only_apn_types_string_array": [
       "ims"
     ],
-    "recipientLimit": -1,
     "volte_replacement_rat_int": 3
   },
   "capabilities": {

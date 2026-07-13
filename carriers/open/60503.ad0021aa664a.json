@@ -3,16 +3,9 @@
     {
       "apn": "internet.ooredoo.tn",
       "name": "Ooredoo TN",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.ooredoo.tn",
-      "name": "Ooredoo TN",
-      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },
@@ -28,12 +21,26 @@
         "supl"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "mms.ooredoo.tn",
+      "mmsc": "http://mmsc.ooredoo.tn",
+      "mmsport": 80,
+      "mmsproxy": "10.3.2.100",
+      "name": "Ooredoo TN",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

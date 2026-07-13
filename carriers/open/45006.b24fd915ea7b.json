@@ -25,6 +25,14 @@
       ]
     },
     {
+      "apn": "internet.lguplus.co.kr",
+      "name": "LG U+",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "lte-roaming.lguplus.co.kr",
       "authtype": 0,
       "mmsc": "http://omammsc.uplus.co.kr:9084",
@@ -45,10 +53,12 @@
   ],
   "android_carrier_config": {
     "enableSMSDeliveryReports": false,
+    "enabledMMS": true,
     "imsvoice.conference_factory_uri_string": "conference-factory",
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
     "maxMessageSize": 1048576,
+    "recipientLimit": 30,
     "smsToMmsTextLengthThreshold": 80,
     "support_conference_call_bool": false
   },

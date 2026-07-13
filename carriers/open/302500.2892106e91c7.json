@@ -2,6 +2,14 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "Videotron",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_id": 2008,
       "name": "Videotron IMS",
       "protocol": "IPV4V6",
@@ -11,6 +19,15 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "media.ng",
+      "name": "Videotron",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "media.ng",
@@ -24,6 +41,14 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sos",
+      "name": "Videotron",
+      "protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "xcap",
@@ -104,6 +129,11 @@
       "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

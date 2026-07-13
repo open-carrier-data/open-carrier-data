@@ -1,22 +1,26 @@
 {
   "android_apns": [
     {
-      "apn": "event.swisscom.ch",
-      "name": "event.swisscom.ch",
+      "apn": "gprs.swisscom.ch",
+      "authtype": 3,
+      "name": "gprs.swisscom.ch",
+      "password": "password",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
-      ]
+      ],
+      "user": "username",
+      "user_editable": false
     },
     {
-      "apn": "event.swisscom.ch",
-      "authtype": 3,
-      "mmsc": "http://mms.natel.ch:8079",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.210.2",
-      "name": "event.swisscom.ch",
+      "apn": "gprs.swisscom.ch",
+      "name": "Swisscom",
+      "password": "password",
       "types": [
-        "mms"
-      ]
+        "dun"
+      ],
+      "user": "username"
     },
     {
       "apn": "gprs.swisscom.ch",
@@ -25,7 +29,6 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ],
       "user_editable": false
@@ -40,6 +43,14 @@
     },
     {
       "apn": "ims",
+      "name": "Swisscom",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -51,7 +62,7 @@
     },
     {
       "apn": "sos",
-      "name": "sos",
+      "name": "EIMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -71,13 +82,13 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": true,
-    "enabledMMS": false,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1017",
       "510|Call completed elsewhere|1014"
     ],
     "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc001.mcc228.3gppnetwork.org",
     "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc228.pub.3gppnetwork.org",
+    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

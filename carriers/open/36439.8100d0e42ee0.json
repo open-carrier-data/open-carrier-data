@@ -1,11 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "internet.btcbahamas.com",
+      "name": "BTC",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet1.btcbahamas.com",
       "name": "Postpaid Internet",
       "types": [
         "supl"
       ]
+    },
+    {
+      "apn": "mms1.btcbahamas.com",
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.30.23",
+      "name": "BTC",
+      "password": "btc",
+      "types": [
+        "mms"
+      ],
+      "user": "btc"
     },
     {
       "apn": "ppmms1.btcbahamas.com",
@@ -19,7 +39,10 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "carrier_wfc_ims_available_bool": true
+    "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 20
   },
   "capabilities": {
     "esim": "unknown",

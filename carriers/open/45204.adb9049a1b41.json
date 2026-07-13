@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "e-connect",
+      "name": "e-connect",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -12,11 +20,20 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Viettel",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "v-internet",
       "name": "v-internet",
       "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     },
     {
@@ -38,7 +55,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 614400
   },
   "capabilities": {
     "esim": "unknown",

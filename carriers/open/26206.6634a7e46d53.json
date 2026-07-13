@@ -29,6 +29,26 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Telekom.de",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "0"
+    },
+    {
+      "apn": "internet.telekom",
+      "name": "internet.telekom",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "telekom"
+    },
+    {
       "apn": "internet.v6.telekom",
       "authtype": 1,
       "name": "internet.v6.telekom",
@@ -58,6 +78,7 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "361||338",
@@ -65,6 +86,8 @@
       "510|Call completed elsewhere|1014"
     ],
     "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc262.pub.3gppnetwork.org",
+    "maxMessageSize": 307200,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "show_ims_registration_status_bool": true

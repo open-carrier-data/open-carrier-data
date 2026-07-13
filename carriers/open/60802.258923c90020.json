@@ -1,18 +1,32 @@
 {
   "android_apns": [
     {
+      "apn": "mms.sentelgsm.com",
+      "mmsport": 9201,
+      "mmsproxy": "172.16.16.16",
+      "name": "Tigo",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "web.sentel.com",
       "name": "web.sentel.com",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 256000
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

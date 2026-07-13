@@ -36,6 +36,15 @@
     },
     {
       "apn": "internet",
+      "name": "Telenor",
+      "password": "gprs",
+      "types": [
+        "dun"
+      ],
+      "user": "gprs"
+    },
+    {
+      "apn": "internet",
       "authtype": 0,
       "name": "internet",
       "types": [
@@ -57,7 +66,9 @@
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

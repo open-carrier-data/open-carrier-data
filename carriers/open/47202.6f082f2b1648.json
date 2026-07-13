@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "MMS",
+      "mmsc": "http://mms.ooredoo.mv",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.10.20",
+      "name": "Ooredoo",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "default",
       "name": "Wataniya",
       "types": [
@@ -18,13 +28,31 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Ooredoo",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ooredoodata",
+      "name": "Ooredoo",
+      "types": [
+        "default",
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

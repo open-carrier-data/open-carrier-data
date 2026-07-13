@@ -22,11 +22,17 @@
       "apn": "ufone.internet",
       "name": "Ufone",
       "password": "ufone",
-      "protocol": "IPV4V6",
       "types": [
         "default"
       ],
       "user": "ufone"
+    },
+    {
+      "apn": "ufone.internet",
+      "name": "Ufone",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "ufone.pinternet",
@@ -37,6 +43,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

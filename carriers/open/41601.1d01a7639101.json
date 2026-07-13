@@ -32,6 +32,18 @@
     },
     {
       "apn": "zain",
+      "mmsc": "http://mms.jo.zain.com",
+      "mmsport": 80,
+      "mmsproxy": "192.168.55.10",
+      "name": "Zain JO",
+      "password": "zain",
+      "types": [
+        "dun"
+      ],
+      "user": "zain"
+    },
+    {
+      "apn": "zain",
       "authtype": 1,
       "mmsc": "http://mms.jo.zain.com",
       "mmsport": 80,
@@ -45,7 +57,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

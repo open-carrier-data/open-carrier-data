@@ -1,4 +1,40 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Bravado Wireless",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Bravado Wireless",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "tuligw",
+      "mmsc": "http://mms.bravadowireless.com",
+      "name": "Bravado Wireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

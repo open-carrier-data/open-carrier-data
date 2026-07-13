@@ -1,12 +1,38 @@
 {
   "android_apns": [
     {
+      "apn": "Internet.no",
+      "name": "TDC",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 3,
       "name": "TDC Internet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.no",
+      "name": "TDC",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -21,6 +47,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 614400,
+    "recipientLimit": 50
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

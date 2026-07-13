@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "internet.orange.ma",
+      "name": "Orange",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet1.meditel.ma",
       "authtype": 1,
       "name": "internet1.meditel.ma",
@@ -25,6 +33,18 @@
       "user": "MEDIMMS"
     },
     {
+      "apn": "mms.orange.ma",
+      "mmsc": "http://mms.orange.ma:8088/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.8.8.9",
+      "name": "Orange",
+      "password": "MEDIMMS",
+      "types": [
+        "mms"
+      ],
+      "user": "MEDIMMS"
+    },
+    {
       "apn": "wap.meditel.ma",
       "authtype": 1,
       "name": "wap.meditel.ma",
@@ -39,6 +59,7 @@
     }
   ],
   "android_carrier_config": {
+    "enabledMMS": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
     "maxMessageSize": 102400

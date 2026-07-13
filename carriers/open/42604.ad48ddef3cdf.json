@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "stc",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -12,10 +20,45 @@
       "user_visible": false
     },
     {
+      "apn": "sos",
+      "name": "stc",
+      "protocol": "IP",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "stc.bh",
+      "name": "stc",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "stcwap.bh",
+      "mmsc": "http://mms.stc.com.bh:38090",
+      "mmsport": 8080,
+      "mmsproxy": "172.18.142.36",
+      "name": "stc",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "viva.bh",
+      "name": "viva.bh",
+      "password": "guest",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "guest"
+    },
+    {
       "apn": "viva.bh",
       "name": "viva.bh",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -43,7 +86,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 409600
   },
   "capabilities": {
     "esim": "unknown",

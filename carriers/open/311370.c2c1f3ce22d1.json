@@ -1,6 +1,15 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "GCI",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.gci",
       "mmsc": "http://mmsc.gci.net",
       "mmsport": 9201,
@@ -11,14 +20,43 @@
       ]
     },
     {
+      "apn": "sos",
+      "name": "GCI",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "tether.gci",
+      "name": "GCI",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.gci",
+      "name": "GCI",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "web.gci",
       "name": "GCI",
       "types": [
-        "default",
         "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

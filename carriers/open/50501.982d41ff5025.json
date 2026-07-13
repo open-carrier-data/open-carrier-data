@@ -68,8 +68,9 @@
     },
     {
       "apn": "telstra.internet",
-      "name": "Telstra Broadband",
+      "name": "telstra.internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "dun"
       ]
@@ -87,7 +88,6 @@
       "name": "telstra.wap",
       "protocol": "IPV6",
       "types": [
-        "default",
         "ia",
         "supl"
       ]
@@ -108,6 +108,7 @@
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "338|busy everywhere|1404",
@@ -120,8 +121,8 @@
     "is_ims_conference_size_enforced_bool": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 2097152,
     "read_only_apn_types_string_array": [],
+    "recipientLimit": 99,
     "volte_replacement_rat_int": 3
   },
   "capabilities": {

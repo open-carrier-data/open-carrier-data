@@ -9,16 +9,36 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "DHIRAAGU",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.dhimobile",
       "mmsc": "http://mms.dhimobile.com.mv",
       "mmsport": 8080,
       "mmsproxy": "172.24.97.4",
       "name": "internet.dhimobile",
       "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "watch.dhimobile",
+      "name": "DHIRAAGU",
+      "types": [
         "default"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

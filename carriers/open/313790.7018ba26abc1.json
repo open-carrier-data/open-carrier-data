@@ -2,7 +2,7 @@
   "android_apns": [
     {
       "apn": "hotspot",
-      "name": "Hotspot",
+      "name": "hotspot",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -20,6 +20,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Liberty",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "internet",
@@ -46,6 +54,14 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sos",
+      "name": "Liberty",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -68,6 +84,7 @@
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "enableSMSDeliveryReports": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_dtmf_tone_delay_int": 120,
     "ims_reasoninfo_mapping_string_array": [
@@ -80,7 +97,6 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc790.mcc313.pub.3gppnetwork.org",
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
-    "maxMessageSize": 1048576,
     "maxSubjectLength": 0,
     "read_only_apn_types_string_array": [
       "dun",

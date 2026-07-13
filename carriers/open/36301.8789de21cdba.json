@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "internet.setar.aw",
+      "name": "SETAR",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "wap.setar.aw",
       "name": "Setar",
       "types": [
@@ -9,6 +17,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 409600,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

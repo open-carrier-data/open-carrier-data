@@ -3,11 +3,20 @@
     {
       "apn": "internet.movistar.ni",
       "authtype": 1,
-      "name": "Movistar INTERNET",
+      "name": "internet.movistar.ni",
       "password": "movistarni",
       "types": [
         "default",
         "supl"
+      ],
+      "user": "movistarni"
+    },
+    {
+      "apn": "internet.movistar.ni",
+      "name": "Movistar",
+      "password": "movistarni",
+      "types": [
+        "dun"
       ],
       "user": "movistarni"
     },
@@ -17,7 +26,7 @@
       "mmsc": "http://mms.movistar.ni",
       "mmsport": 80,
       "mmsproxy": "10.12.23.1",
-      "name": "Movistar MMS",
+      "name": "mms.movistar.ni",
       "password": "movistarni",
       "types": [
         "mms"
@@ -27,7 +36,9 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

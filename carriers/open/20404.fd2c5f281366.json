@@ -1,17 +1,46 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "SaskTel",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pda2.stm.sk.ca",
+      "mmsc": "http://mms.sasktel.com",
+      "mmsproxy": "mig.sasktel.com",
+      "name": "SaskTel",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
       "apn": "pda2.stm.sk.ca",
       "mmsc": "http://mms.sasktel.com",
       "mmsproxy": "mig.sasktel.com",
       "name": "SaskTel",
       "types": [
-        "default",
-        "dun",
-        "mms"
+        "dun"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "SaskTel",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 2097152
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

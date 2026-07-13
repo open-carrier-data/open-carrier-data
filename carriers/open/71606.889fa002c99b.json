@@ -12,12 +12,20 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "movistar",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.movistar.pe",
       "authtype": 1,
       "mmsc": "http://mmsc.telefonicamovistar.com.pe:8088/mms/",
       "mmsport": 8080,
       "mmsproxy": "200.4.196.118",
-      "name": "Movistar MMS",
+      "name": "mms.movistar.pe",
       "password": "movistar",
       "types": [
         "mms"
@@ -36,6 +44,15 @@
         "supl"
       ],
       "user": "movistar@datos"
+    },
+    {
+      "apn": "movistar.pe",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "dun"
+      ],
+      "user": "movistar@datos"
     }
   ],
   "android_carrier_config": {
@@ -43,7 +60,8 @@
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "enableGroupMms": false,
-    "enabledMMS": false
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

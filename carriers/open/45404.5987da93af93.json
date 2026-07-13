@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "imobile.three.com.hk",
+      "name": "3",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "mms-g.three.com.hk",
       "mmsc": "http://10.30.15.51:10021/mmsc",
       "mmsport": 8080,
@@ -17,7 +25,9 @@
       "mmsproxy": "mms.three.com.hk",
       "name": "mobile.three.com.hk",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "mms"
       ]
     },
     {
@@ -31,6 +41,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

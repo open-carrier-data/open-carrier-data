@@ -1,6 +1,17 @@
 {
   "android_apns": [
     {
+      "apn": "A1.net",
+      "name": "A1",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "ppp@A1plus.at"
+    },
+    {
       "apn": "a1.net",
       "authtype": 1,
       "name": "a1.net",
@@ -39,6 +50,15 @@
     },
     {
       "apn": "ims",
+      "name": "A1",
+      "password": "ppp",
+      "types": [
+        "ims"
+      ],
+      "user": "ppp@A1plus.at"
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -55,8 +75,11 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
     "imsvoice.conference_factory_uri_string": "*28@ims.mnc001.mcc232.3gppnetwork.org",
+    "maxMessageSize": 307200,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 10

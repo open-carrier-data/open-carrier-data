@@ -1,8 +1,33 @@
 {
+  "android_apns": [
+    {
+      "apn": "internet.ideasclaro",
+      "name": "Claro Costa Rica",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.ideasclaro",
+      "mmsc": "http://mms.ideasclaro.com:8002",
+      "mmsport": 8080,
+      "mmsproxy": "216.230.133.66",
+      "name": "Claro Costa Rica",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

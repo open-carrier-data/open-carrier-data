@@ -2,6 +2,14 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "Claro Puerto Rico",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -25,6 +33,23 @@
       ]
     },
     {
+      "apn": "lte.claropr.com",
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "name": "Claro Puerto Rico",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltem.claropr.com",
+      "name": "Claro Puerto Rico",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "mmslte.claropr.com",
       "authtype": 1,
       "mmsc": "http://mmsg.claropr.com:10021/mmsc",
@@ -43,8 +68,8 @@
     "carrier_volte_available_bool": true,
     "editable_wfc_mode_bool": false,
     "enableGroupMms": false,
+    "enabledMMS": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc110.mcc330.pub.3gppnetwork.org",
-    "maxMessageSize": 1048576,
     "maxSubjectLength": 80,
     "recipientLimit": 20,
     "smsToMmsTextThreshold": 6

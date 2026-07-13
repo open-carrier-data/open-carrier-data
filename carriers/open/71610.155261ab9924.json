@@ -1,17 +1,49 @@
 {
   "android_apns": [
     {
+      "apn": "ba.amx",
+      "name": "ba.amx",
+      "password": "amx",
+      "types": [
+        "default"
+      ],
+      "user": "amx"
+    },
+    {
+      "apn": "ba.amx",
+      "name": "CLARO PERU",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "claro.pe",
+      "name": "CLARO PERU",
+      "password": "claro",
+      "types": [
+        "dun"
+      ],
+      "user": "claro"
+    },
+    {
       "apn": "claro.pe",
       "authtype": 1,
-      "name": "claro.pe",
+      "name": "CLARO DATOS",
       "password": "claro",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ],
       "user": "claro"
+    },
+    {
+      "apn": "ims",
+      "name": "CLARO PERU",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -41,7 +73,9 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 1048576
   },
   "capabilities": {
     "esim": "unknown",

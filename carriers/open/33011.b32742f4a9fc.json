@@ -1,12 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "Claro Puerto Rico",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.claropr.com",
       "name": "Claro PR",
       "port": 8080,
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "lte.claropr.com",
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "name": "Claro Puerto Rico",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "ltem.claropr.com",
+      "name": "Claro Puerto Rico",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -20,6 +47,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

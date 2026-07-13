@@ -12,6 +12,15 @@
     },
     {
       "apn": "ims",
+      "name": "Telenor",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -58,6 +67,14 @@
       "user": "dj"
     },
     {
+      "apn": "telenor.apple",
+      "name": "Telenor",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "telenor.mms",
       "mmsc": "http://mmsc",
       "mmsport": 8080,
@@ -80,6 +97,15 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "telenor.smart",
+      "name": "Telenor",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -88,6 +114,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "is_ims_conference_size_enforced_bool": true,

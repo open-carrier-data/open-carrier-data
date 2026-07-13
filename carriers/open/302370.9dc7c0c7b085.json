@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1962,
@@ -22,6 +32,13 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "isp.fido.apn",
+      "name": "Fido",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -305,6 +322,7 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc720.mcc302.3gppnetwork.org",
     "imsvoice.conference_subscribe_type_int": 0,

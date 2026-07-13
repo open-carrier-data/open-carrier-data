@@ -2,8 +2,17 @@
   "android_apns": [
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
-      "name": "Vodafone IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -12,13 +21,11 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "bearer_bitmask": "14|18|20",
-      "name": "ims",
+      "apn": "internet",
+      "name": "VODAFONE TR",
       "types": [
-        "ims"
-      ],
-      "user_visible": false
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -27,6 +34,8 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200,
     "wfc_spn_format_idx_int": 4
   },
   "capabilities": {

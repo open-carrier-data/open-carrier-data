@@ -1,6 +1,13 @@
 {
   "android_apns": [
     {
+      "apn": "broadband",
+      "name": "broadband",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "hotspot",
       "name": "ATT Hotspot",
       "protocol": "IPV4V6",
@@ -49,6 +56,16 @@
       "user_visible": false
     },
     {
+      "apn": "phone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "AT&T",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
       "apn": "wap.cingular",
       "mmsc": "http://mmsc.cingular.com/",
       "mmsproxy": "wireless.cingular.com",
@@ -86,6 +103,7 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "enableSMSDeliveryReports": false,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims_dtmf_tone_delay_int": 120,
     "ims_reasoninfo_mapping_string_array": [
@@ -103,7 +121,6 @@
       "dun",
       "ims"
     ],
-    "recipientLimit": 20,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "support_pause_ims_video_calls_bool": false,

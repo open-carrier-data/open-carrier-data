@@ -1,6 +1,18 @@
 {
   "android_apns": [
     {
+      "apn": "internet.ng.airtel.com",
+      "mmsc": "http://mms.ng.airtel.com:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.175.184",
+      "name": "Airtel",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
       "apn": "internet.ng.zain.com",
       "authtype": 1,
       "name": "internet.ng.zain.com",
@@ -37,6 +49,10 @@
       "user": "wap"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

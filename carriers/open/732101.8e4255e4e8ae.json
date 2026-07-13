@@ -1,6 +1,22 @@
 {
   "android_apns": [
     {
+      "apn": "ba.amx",
+      "name": "Claro",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Claro",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS Claro CO",
@@ -25,10 +41,21 @@
         "xcap"
       ],
       "user": "COMCELWEB"
+    },
+    {
+      "apn": "internet.comcel.com.co",
+      "name": "Claro",
+      "password": "COMCELWEB",
+      "types": [
+        "dun"
+      ],
+      "user": "COMCELWEB"
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 307200
   },
   "capabilities": {
     "esim": "unknown",

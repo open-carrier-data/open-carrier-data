@@ -1,19 +1,36 @@
 {
   "android_apns": [
     {
-      "apn": "internet.tigo.ni",
-      "name": "Tigo",
-      "roaming_protocol": "IP",
+      "apn": "internet.movistar.ni",
+      "name": "Movistar",
+      "password": "movistarni",
       "types": [
         "default",
         "dun"
-      ]
+      ],
+      "user": "movistarni"
+    },
+    {
+      "apn": "mms.movistar.ni",
+      "mmsc": "http://mms.movistar.ni",
+      "mmsport": 80,
+      "mmsproxy": "10.12.23.1",
+      "name": "Movistar",
+      "password": "movistarni",
+      "types": [
+        "mms"
+      ],
+      "user": "movistarni"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -22,7 +39,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Tigo",
+  "display_name": "Movistar",
   "match": {
     "iccid_prefixes": [
       "8950530"

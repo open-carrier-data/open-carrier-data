@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "bandalarga.claro.com.br",
+      "name": "bandalarga.claro.com.br",
+      "password": "claro",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "claro"
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "Claro IMS",
@@ -17,6 +27,7 @@
       "password": "claro",
       "types": [
         "default",
+        "dun",
         "ia",
         "supl"
       ],
@@ -48,7 +59,10 @@
   ],
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 33
   },
   "capabilities": {
     "esim": "unknown",

@@ -10,7 +10,7 @@
     },
     {
       "apn": "antel.lte",
-      "name": "antel.lte",
+      "name": "Vera 1",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -22,6 +22,7 @@
       "name": "gprs.ancel",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
@@ -74,7 +75,9 @@
   "android_carrier_config": {
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 512000
   },
   "capabilities": {
     "esim": "unknown",

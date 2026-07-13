@@ -1,13 +1,11 @@
 {
   "android_apns": [
     {
-      "apn": "jazzmms",
-      "mmsc": "http://jazztelmms.com:8081",
-      "mmsport": 8081,
-      "mmsproxy": "217.18.32.183",
-      "name": "Jazztel MMS",
+      "apn": "jazzinternet",
+      "name": "jazzinternet",
       "types": [
-        "mms"
+        "default",
+        "dun"
       ]
     },
     {
@@ -33,6 +31,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

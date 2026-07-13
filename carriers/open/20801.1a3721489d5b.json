@@ -1,26 +1,28 @@
 {
   "android_apns": [
     {
-      "apn": "mms26",
-      "mmsc": "http://mms26",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.5",
-      "name": "BTBD",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "net26",
-      "name": "BTBD",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "apn": "fnetnrj",
+      "name": "NRJ",
       "types": [
         "default",
         "dun"
       ]
+    },
+    {
+      "apn": "mmsnrj",
+      "mmsc": "http://mmsnrj",
+      "mmsport": 8080,
+      "mmsproxy": "10.143.156.5",
+      "name": "NRJ",
+      "types": [
+        "mms"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 614400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -33,7 +35,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "BTBD",
+  "display_name": "NRJ",
   "match": {
     "iccid_prefixes": [
       "893326"

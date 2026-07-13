@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "VIVO",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.vivo.com.br",
       "mmsc": "http://termnat.vivomms.com.br:8088/mms",
       "mmsport": 80,
@@ -16,6 +24,8 @@
       "apn": "zap.vivo.com.br",
       "name": "VIVO",
       "password": "vivo",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "dun"
@@ -23,6 +33,10 @@
       "user": "vivo"
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

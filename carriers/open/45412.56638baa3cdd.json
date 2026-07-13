@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "CMHK",
+      "name": "HKBN",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "cmhk",
       "mmsc": "http://mms.hk.chinamobile.com/mms",
       "mmsport": 8080,
@@ -22,6 +30,10 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

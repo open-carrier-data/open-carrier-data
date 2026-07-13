@@ -34,6 +34,31 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "StarHub",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "shinternet",
+      "name": "shinternet",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "shmms",
+      "mmsc": "http://mms.starhubgee.com.sg:8002/",
+      "mmsport": 80,
+      "mmsproxy": "10.12.1.80",
+      "name": "shmms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "shppd",
       "carrier_id": 1707,
       "name": "SH Data Prepaid",
@@ -74,6 +99,13 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "shwap",
+      "name": "StarHub",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -119,10 +151,11 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "enabledMMS": false,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_factory_uri_string": "shconf@ims.mnc005.mcc525.3gppnetwork.org",
     "is_ims_conference_size_enforced_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 50,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

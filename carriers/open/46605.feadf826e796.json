@@ -2,12 +2,26 @@
   "android_apns": [
     {
       "apn": "gtnet",
-      "name": "gtnet",
+      "name": "GT",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "gtnet",
+      "name": "GT Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "GT",
+      "protocol": "IP",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -19,6 +33,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "GT",
+      "protocol": "IP",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {

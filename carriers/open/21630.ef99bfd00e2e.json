@@ -26,11 +26,28 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Telekom HU",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.telekom",
+      "name": "internet.telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -51,14 +68,6 @@
     },
     {
       "apn": "internet.telekom",
-      "name": "Telekom HU NET",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.telekom",
       "mmsc": "http://mms.t-mobile.hu/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "212.51.126.10",
@@ -68,17 +77,11 @@
       ]
     },
     {
-      "apn": "mms",
-      "authtype": 1,
-      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "212.051.126.010",
-      "name": "T-Mobile MMS",
-      "password": "mms",
+      "apn": "internet.telekom",
+      "name": "Telekom HU NET",
       "types": [
-        "mms"
-      ],
-      "user": "mms"
+        "supl"
+      ]
     },
     {
       "apn": "wnw",
@@ -104,7 +107,10 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 1

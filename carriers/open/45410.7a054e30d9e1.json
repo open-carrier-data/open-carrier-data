@@ -24,6 +24,14 @@
       "user_visible": false
     },
     {
+      "apn": "mobile",
+      "name": "CSL",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "cslp1",
       "authtype": 3,
       "mmsc": "http://mms.hkcsl.com:8002",
@@ -73,7 +81,10 @@
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 307200,
+    "recipientLimit": 20
   },
   "capabilities": {
     "esim": "unknown",

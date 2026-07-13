@@ -6,7 +6,7 @@
       "mmsc": "http://192.168.94.162:19090/was",
       "mmsport": 9028,
       "mmsproxy": "192.168.94.210",
-      "name": "MMS",
+      "name": "mms.vtr.com",
       "types": [
         "mms"
       ],
@@ -22,11 +22,23 @@
         "supl"
       ],
       "user": "vtrmovil"
+    },
+    {
+      "apn": "movil.vtr.com",
+      "name": "vtr",
+      "password": "vtrmovil",
+      "types": [
+        "dun"
+      ],
+      "user": "vtrmovil"
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 102400,
+    "recipientLimit": 10
   },
   "capabilities": {
     "esim": "unknown",

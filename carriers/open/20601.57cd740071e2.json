@@ -2,7 +2,7 @@
   "android_apns": [
     {
       "apn": "internet",
-      "name": "Only",
+      "name": "Free",
       "types": [
         "default",
         "dun"
@@ -11,12 +11,16 @@
     {
       "apn": "mms",
       "mmsc": "http://mmsc.telcooi.re:9091",
-      "name": "Only",
+      "name": "Free",
       "types": [
         "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 600000
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -29,7 +33,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Only",
+  "display_name": "Free",
   "match": {
     "gid1_prefixes": [
       "F004"

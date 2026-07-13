@@ -45,11 +45,18 @@
     },
     {
       "apn": "smartnet",
-      "name": "Reliance Net",
+      "name": "smartnet",
       "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "smartnet",
+      "name": "Reliance",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -65,6 +72,11 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1048576,
+    "recipientLimit": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

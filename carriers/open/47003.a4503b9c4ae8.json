@@ -13,15 +13,9 @@
     {
       "apn": "blweb",
       "name": "blweb",
-      "roaming_protocol": "IP",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "blweb",
-      "name": "blweb",
-      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },
@@ -36,6 +30,10 @@
       "user_visible": false
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

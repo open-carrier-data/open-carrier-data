@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "Internet",
+      "name": "Sure",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "MMS",
       "mmsc": "http://mmsc.gprs.cw.com/",
       "mmsport": 80,
@@ -44,7 +52,9 @@
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 1048576
   },
   "capabilities": {
     "esim": "unknown",

@@ -32,6 +32,14 @@
     },
     {
       "apn": "ims",
+      "name": "Magenta-T-",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "mtu": 1500,
@@ -42,6 +50,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "name": "Magenta-T-",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -54,8 +70,11 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc003.mcc232.pub.3gppnetwork.org",
+    "maxMessageSize": 307200,
+    "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "wfc_spn_format_idx_int": 2

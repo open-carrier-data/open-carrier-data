@@ -1,4 +1,30 @@
 {
+  "android_apns": [
+    {
+      "apn": "mms",
+      "mmsc": "http://192.168.0.7:8514",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.0.7",
+      "name": "Emtel",
+      "password": "mmsc",
+      "types": [
+        "mms"
+      ],
+      "user": "1234"
+    },
+    {
+      "apn": "web",
+      "name": "Emtel",
+      "types": [
+        "default",
+        "dun"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 102400
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

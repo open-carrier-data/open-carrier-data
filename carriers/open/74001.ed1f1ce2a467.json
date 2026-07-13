@@ -2,10 +2,19 @@
   "android_apns": [
     {
       "apn": "ba.amx",
-      "name": "Banda Acha M??vil",
+      "name": "ba.amx",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "CLARO",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -13,10 +22,16 @@
       "name": "internet.claro.com.ec",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 153600,
+    "recipientLimit": 25
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

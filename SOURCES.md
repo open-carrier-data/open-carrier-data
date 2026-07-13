@@ -4,7 +4,8 @@ Open Carrier Data combines carrier facts from maintained sources. It does not
 publish raw vendor packages, credentials, signed URLs, device identifiers, or
 private logs.
 
-The exact public Git revisions used for the current snapshot are recorded in:
+The exact public Git revisions or downloaded-content hashes used for the
+current snapshot are recorded in:
 
 ```text
 generated/evidence-index.json
@@ -12,10 +13,11 @@ generated/evidence-index.json
 
 Every public-source record contains two dates:
 
-- `revision_date`: when the exact upstream commit was created;
+- `revision_date`: when the exact upstream commit or source revision was
+  published;
 - `checked_at`: when automation last fetched the source successfully.
 
-Freshness uses `checked_at`, not `revision_date`. An unchanged old commit can
+Freshness uses `checked_at`, not `revision_date`. Unchanged source content can
 still be current when automation checked it recently. A source is quarantined
 when its recorded check is more than 180 days old.
 
@@ -45,13 +47,24 @@ when its recorded check is more than 180 days old.
 
 ### Apple carrier bundles
 
-- upstream used by automation: `dwilliamsuk/ios-carrier-bundles`, generated
-  from current Apple system images
-- data: translated APN facts only
-- upstream license: `NOASSERTION`; the mirror does not declare a license
-- public policy: raw Apple bundles are not republished here; only narrow,
-  sanitized factual fields are emitted
-- update method: scheduled Git import recorded by full commit ID
+- upstream used by automation: Apple's official carrier index at
+  `itunes.apple.com/WebObjects/MZStore.woa/wa/com.apple.jingle.appserver.client.MZITunesClientCheck/version`
+- data: current Apple product types, current carrier-bundle selections, and
+  translated APN/MMS facts from verified IPCC packages
+- upstream license: `NOASSERTION`; this project makes no license claim for
+  Apple's bundle data
+- verification: the index is fetched over HTTPS; every selected IPCC must
+  match the SHA-1 or SHA-384 digest carried by that index before its facts are
+  imported
+- legacy transport: a current HTTPS index can still point to an old HTTP Apple
+  CDN URL; that package is accepted only when its full digest matches
+- public policy: raw Apple indexes, package URLs, package paths, selectors, and
+  IPCC files are not republished; only sanitized facts and small safe artifact
+  summaries are emitted
+- failure policy: unavailable packages and digest mismatches are quarantined,
+  excluded from carrier import, and retried by later scheduled runs
+- update method: scheduled direct check recorded by full index SHA-256 and last
+  successful check date; no third-party mirror is used
 
 ### Google Pixel CarrierSettings
 
@@ -101,6 +114,46 @@ when its recorded check is more than 180 days old.
   observations as current
 - negative rule: a false or absent Samsung switch is not published as proof
   that the carrier universally lacks a feature
+
+## Device Inventories And Artifact Coverage
+
+Device discovery is separate from carrier-profile resolution. An inventory
+entry answers "which identity did this maintained source list?" It does not
+answer "does VoLTE work on this device?"
+
+### Android device inventory
+
+- upstream: Google's public Google Play supported-device CSV at
+  `storage.googleapis.com/play_public/supported_devices.csv`
+- identity rule: Google defines a device model by retail brand plus device;
+  model and marketing-name values are retained as aliases and variants
+- scope: Google Play supported devices, not a claim that every row has cellular
+  hardware and not a complete list of non-Google-Play Android devices
+- history: identities removed from a later source revision remain available as
+  `historical`; current aliases come only from the current revision
+- update method: scheduled direct check recorded by full CSV SHA-256
+- terms: `NOASSERTION`; only normalized factual identity fields are published
+
+### Apple product and artifact inventory
+
+- upstream: the same official Apple carrier index used for carrier-bundle
+  import
+- product identity: Apple's exact product-type strings
+- artifact scope: exact product types where Apple publishes an override,
+  otherwise product-family scope such as iPhone, iPad, or Watch
+- verification states: `indexed` means the current official index lists the
+  artifact and digest; `verified` additionally means the downloaded package
+  matched that digest
+
+### Exact carrier evidence
+
+`generated/evidence-index.json` can contain an `observed_scope.models` list for
+Samsung and Google CarrierSettings observations. The device catalog matches
+those exact values against Android device codes and model aliases. It does not
+guess from marketing names.
+
+The coverage files live under `generated/devices/`. Failed artifact checks are
+not included in the public artifact list.
 
 ## Merge Rules
 

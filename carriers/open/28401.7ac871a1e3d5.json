@@ -12,6 +12,13 @@
     },
     {
       "apn": "ims",
+      "name": "A1 BG",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -26,7 +33,16 @@
       "name": "inet-gprs.mtel.bg",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.a1.bg",
+      "name": "A1 BG",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -42,6 +58,16 @@
       "user": "mtel"
     },
     {
+      "apn": "mms.a1.bg",
+      "mmsc": "http://mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.150.0.33",
+      "name": "A1 BG",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "wap-gprs.mtel.bg",
       "name": "Mtel Internet",
       "types": [
@@ -54,7 +80,9 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 512000,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

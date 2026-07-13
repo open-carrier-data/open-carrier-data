@@ -12,10 +12,25 @@
       "apn": "internet",
       "name": "internet",
       "types": [
-        "default"
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.vm.co.mz",
+      "mmsport": 8080,
+      "mmsproxy": "10.201.47.14",
+      "name": "VodaCom",
+      "types": [
+        "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 307200
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
