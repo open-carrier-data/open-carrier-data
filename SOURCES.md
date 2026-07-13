@@ -76,7 +76,9 @@ when its recorded check is more than 180 days old.
   public evidence includes only neutral carrier matches, capabilities, and a
   safe model/region/build scope summary
 - freshness: automation checks Samsung's current firmware metadata for the
-  exact model and region; a build mismatch quarantines the old observations
+  exact model and region; a build mismatch triggers a narrowly scoped firmware
+  download and minimal index rebuild, while a failed rebuild cannot relabel old
+  observations as current
 - negative rule: a false or absent Samsung switch is not published as proof
   that the carrier universally lacks a feature
 
