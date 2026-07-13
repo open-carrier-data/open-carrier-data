@@ -1,0 +1,89 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "XCAP",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "4KA SK",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "4KA SK",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "4KA SK",
+      "mvno_type": "spn",
+      "name": "4ka Internet",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "4KA SK",
+  "match": {
+    "mccmnc": [
+      "23103"
+    ],
+    "spn": [
+      "4KA SK"
+    ]
+  },
+  "profile_id": "open.23103.21c90d23c096",
+  "schema_version": 1
+}

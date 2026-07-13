@@ -1,0 +1,76 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold,OFFWIFI"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g",
+        "-preferrednetworkmode",
+        "-voltecall"
+      ],
+      "network_type_capability": "VZW-TFN-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB,SupportDataPopup"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "VZW_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Tracfone - Test2 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "name": "Tracfone - Test2 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "VZWINTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Tracfone - Test2",
+  "match": {
+    "mccmnc": [
+      "246081"
+    ],
+    "spn": [
+      "Tracfone - Test2"
+    ]
+  },
+  "profile_id": "open.246081.c8b67a0f4027",
+  "schema_version": 1
+}

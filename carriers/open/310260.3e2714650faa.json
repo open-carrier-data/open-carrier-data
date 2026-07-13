@@ -1,0 +1,72 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall_sim_mobility",
+        "+vonrcall"
+      ],
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "Tello",
+      "name": "Tello",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Tello",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Tello MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Tello IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Tello",
+  "match": {
+    "mccmnc": [
+      "310260"
+    ],
+    "spn": [
+      "Tello"
+    ]
+  },
+  "profile_id": "open.310260.3e2714650faa",
+  "schema_version": 1
+}

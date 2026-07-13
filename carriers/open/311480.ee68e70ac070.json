@@ -1,0 +1,74 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "+cdmaapn",
+        "-voltecall",
+        "-allowReasonEnable2g",
+        "-preferrednetworkmode"
+      ],
+      "network_type_capability": "VZW-LRA-GLB-USA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Thumb IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "Thumb",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://mms.thumbcell.com/thumb/mms.php",
+      "name": "Thumb MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Thumb",
+  "match": {
+    "mccmnc": [
+      "311480"
+    ],
+    "spn": [
+      "Thumb"
+    ]
+  },
+  "profile_id": "open.311480.ee68e70ac070",
+  "schema_version": 1
+}

@@ -1,0 +1,59 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "MTN af",
+      "name": "MTN internet",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "MTN mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.4.136",
+      "name": "MTN MMS",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "MTN",
+  "match": {
+    "mccmnc": [
+      "41240"
+    ],
+    "spn": [
+      "MTN"
+    ]
+  },
+  "profile_id": "open.41240.c9b8cf9c844d",
+  "schema_version": 1
+}

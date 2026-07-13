@@ -1,0 +1,97 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,EndPreviousCall,E911Wificall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "-voltecall",
+        "-preferrednetworkmode",
+        "+allow2gService",
+        "+allow5gService",
+        "+vonrcall"
+      ],
+      "network_type_capability": "TMO-MTR-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,AutoSelectionWhenBootup,CdmaSubscriptionEnable,SupportDataPopup,SupportInternationalRoamingNotification,NetworkSetting_TMO"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "TMK_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "fast.metropcs.com",
+      "name": "fast.metropcs.com",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "name": "Metro MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Metro IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "Metro MMS EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "name": "Metro XCAP EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Metro",
+  "match": {
+    "mccmnc": [
+      "310270"
+    ],
+    "spn": [
+      "Metro"
+    ]
+  },
+  "profile_id": "open.310270.d0a6141bc955",
+  "schema_version": 1
+}

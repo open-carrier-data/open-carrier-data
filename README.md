@@ -113,11 +113,13 @@ Broadband Provider Info, Apple carrier-bundle, Google Pixel CarrierSettings,
 Samsung OMC, and scoped Samsung IMS capability observations.
 Each source is translated into the same neutral profile model.
 
-Device discovery is tracked separately. The Android inventory comes from
-Google's current public Google Play supported-device list. Apple product types
-and carrier artifacts come directly from Apple's official carrier index. This
-separate catalog makes coverage gaps visible without turning a device name into
-a carrier setting.
+Device discovery is tracked separately. The broad Android inventory comes from
+Google's current public Google Play supported-device list. Current Pixel
+CarrierSettings codenames add a second source-derived inventory and exact
+extraction receipts. Samsung firmware discovery records each inventory identity
+and its progress. Apple product types and carrier artifacts come directly from
+Apple's official carrier index. This separate catalog makes gaps visible
+without turning a device name into a carrier setting.
 
 `generated/evidence-index.json` records:
 
@@ -151,7 +153,15 @@ source and merge policy.
   on every model;
 - `indexed` means an artifact and digest are in the current official index;
 - `verified` also means automation downloaded the package and matched the
-  indexed digest.
+  indexed digest;
+- Android `extracted` means automation obtained and integrity-checked the
+  device-scoped carrier source;
+- `source_discovery_in_progress` means scheduled vendor checks still have
+  model/region work left;
+- `source_not_queryable` means the maintained inventory has the identity but
+  does not provide the identifier needed by that vendor update service;
+- `source_checked_no_artifact` means the configured vendor scope was checked
+  completely without finding a current artifact.
 
 Failed downloads and digest mismatches are quarantined. They are counted in the
 small coverage summary but are not published as usable artifacts or imported
@@ -235,6 +245,7 @@ generated/android/carrier-config-list.xml
 generated/devices/index.json
 generated/devices/android.json
 generated/devices/apple.json
+generated/devices/android-carrier-artifacts.json
 generated/devices/apple-carrier-artifacts.json
 ```
 

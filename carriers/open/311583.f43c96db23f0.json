@@ -1,0 +1,67 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-preferrednetworkmode",
+        "-cdmasystemselect",
+        "-voltecall"
+      ],
+      "network_type_capability": "USC-USC-GLB-USA",
+      "voice_network_setting_style": "NetworkSetting_USC"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "USC_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "LTE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "usccinternet",
+      "mmsc": "http://mmsc1.uscc.net/mmsc/MMS",
+      "name": "LTE INTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "USC",
+  "match": {
+    "mccmnc": [
+      "311583"
+    ],
+    "spn": [
+      "USC"
+    ]
+  },
+  "profile_id": "open.311583.f43c96db23f0",
+  "schema_version": 1
+}

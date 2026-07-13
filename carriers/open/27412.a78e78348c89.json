@@ -1,5 +1,43 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "internet.tal.is",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.tal.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.210",
+      "name": "internet.tal.is",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
     {
       "apn": "internet.tal.is",
       "mmsc": "http://mms.tal.is/servlets/mms",
@@ -7,12 +45,25 @@
       "mmsproxy": "213.167.138.210",
       "name": "Tal",
       "types": [
-        "default",
-        "mms",
-        "supl"
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.tal.is",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.tal.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.210",
+      "name": "Tal MMS",
+      "types": [
+        "mms"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -20,7 +71,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

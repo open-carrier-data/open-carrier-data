@@ -1,4 +1,25 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "EMERGENCY",
@@ -31,7 +52,12 @@
     },
     {
       "apn": "ims",
-      "name": "O2 - SK",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -48,12 +74,13 @@
     },
     {
       "apn": "o2internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "o2internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "default"
       ]
     },
     {
@@ -64,7 +91,18 @@
       ]
     },
     {
+      "apn": "o2internet",
+      "name": "o2internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "o2mms",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.o2world.sk:8002",
       "mmsport": 8080,
       "mmsproxy": "10.97.1.11",
@@ -92,6 +130,18 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "O2 VoLTE",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

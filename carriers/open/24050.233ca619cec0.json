@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -26,6 +51,61 @@
       "apn": "mms",
       "mmsc": "http://mms.media",
       "name": "Telavox MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.media",
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]

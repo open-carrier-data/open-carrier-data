@@ -1,0 +1,63 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet.beeline.tj",
+      "name": "Beeline Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.beeline.tj",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.028.253.069",
+      "name": "Beeline MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Beeline TJ",
+  "match": {
+    "mccmnc": [
+      "43605"
+    ],
+    "spn": [
+      "Beeline TJ"
+    ]
+  },
+  "profile_id": "open.43605.af2606196c92",
+  "schema_version": 1
+}

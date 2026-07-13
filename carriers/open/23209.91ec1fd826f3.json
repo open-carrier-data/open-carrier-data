@@ -1,5 +1,63 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "A1.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "A1.net",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user": "ppp@a1plus.at"
+    },
+    {
+      "apn": "IMS",
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "free.A1.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.A1.net",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.71",
+      "name": "A1 MMS",
+      "password": "ppp",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "ppp@a1plus.at"
+    },
     {
       "apn": "free.a1.net",
       "authtype": 1,
@@ -16,6 +74,9 @@
     },
     {
       "apn": "hos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -46,6 +107,7 @@
     "imsvoice.conference_factory_uri_string": "*28@ims.mnc001.mcc232.3gppnetwork.org",
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 10
   },
   "capabilities": {

@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -13,9 +38,21 @@
     },
     {
       "apn": "bredband.tre.dk",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "bredband.tre.dk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "bredband.tre.dk",
+      "name": "3 DK",
+      "types": [
         "dun"
       ]
     },
@@ -35,18 +72,6 @@
       "name": "Oister MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "data.tre.dk",
-      "authtype": 3,
-      "mmsc": "http://mms.3.dk",
-      "mmsport": 8799,
-      "mmsproxy": "mmsproxy.3.dk",
-      "name": "data.tre.dk",
-      "protocol": "IPV4V6",
-      "types": [
-        "default"
       ]
     },
     {
@@ -75,22 +100,17 @@
       ]
     },
     {
-      "apn": "data.tre.dk",
-      "authtype": 3,
+      "apn": "services",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.3.dk",
       "mmsport": 8799,
       "mmsproxy": "mmsproxy.3.dk",
-      "name": "data.tre.dk",
+      "name": "services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "3 DK",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
+        "mms"
       ]
     },
     {
@@ -119,6 +139,21 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "services",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.3.dk",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "mtu": 1440,
+      "name": "services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",

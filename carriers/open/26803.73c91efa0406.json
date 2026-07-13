@@ -1,9 +1,36 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "contacts_operator_style": "NOS",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "+autoSwitchNr5gMode",
+        "+vonrcall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
-      "name": "xcap",
+      "carrier_enabled": true,
+      "name": "hos",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
@@ -22,7 +49,10 @@
     },
     {
       "apn": "ims",
-      "name": "NOS",
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -40,6 +70,8 @@
     },
     {
       "apn": "umts",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "62.169.66.5",
@@ -49,22 +81,20 @@
       "types": [
         "default",
         "dun",
-        "ia",
         "supl"
       ],
       "user_editable": false
     },
     {
       "apn": "umts",
-      "authtype": 1,
       "mmsc": "http://mmsc:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "62.169.66.5",
-      "name": "umts",
+      "name": "Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "ia"
       ],
       "user_editable": false
     }
@@ -81,7 +111,8 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc003.mcc268.pub.3gppnetwork.org",
     "maxMessageSize": 307200,
     "rtt_supported_bool": true,
-    "rtt_supported_while_roaming_bool": true
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

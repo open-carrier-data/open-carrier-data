@@ -85,6 +85,8 @@ when its recorded check is more than 180 days old.
 - device differences: conflicting Pixel variants remain separate source
   observations and become conditional or omitted during the neutral public
   merge; identical variants are grouped with their observed device codenames
+- coverage: every current maintained snapshot codename produces an exact
+  extracted-artifact receipt after the live update checks succeed
 
 ### Samsung OMC
 
@@ -98,6 +100,9 @@ when its recorded check is more than 180 days old.
   CSC, sales-code, Android-version, OMC-revision, and OMC-version scope;
   firmware observations need a real release date, not merely a recent import
   date
+- coverage: Samsung identities and model aliases are discovered from the
+  maintained Android inventory, checked against FUS in bounded round-robin
+  batches, and selectively reduced to integrity-checked CSC carrier archives
 
 ### Samsung IMS capability evidence
 
@@ -144,6 +149,20 @@ answer "does VoLTE work on this device?"
 - verification states: `indexed` means the current official index lists the
   artifact and digest; `verified` additionally means the downloaded package
   matched that digest
+
+### Android carrier-source artifacts
+
+`android-carrier-artifacts.json` currently records two exact source lanes:
+
+- current Pixel CarrierSettings snapshots that were processed after successful
+  per-device live update checks;
+- current Samsung firmware confirmed by exact model/region FUS lookups, with
+  `indexed` and selectively `extracted` states kept separate.
+
+Every record carries canonical device IDs as well as source model strings. A
+model name alone cannot attach one OEM's artifact to another OEM's identity.
+Discovery gaps remain explicit as in-progress, checked with no artifact, or
+missing the identifier required to query the vendor service.
 
 ### Exact carrier evidence
 

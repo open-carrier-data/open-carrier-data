@@ -58,7 +58,8 @@
         "models",
         "marketing_names",
         "inventory_status",
-        "inventory_sources"
+        "inventory_sources",
+        "carrier_data_coverage"
       ],
       "properties": {
         "device_id": {
@@ -120,6 +121,77 @@
             "scopes": { "$ref": "#/$defs/strings" },
             "source": { "const": "apple_carrier_bundles" },
             "verified_artifact_count": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "carrier_source_catalogs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "match_kind",
+              "matched_identifiers",
+              "artifact_count",
+              "indexed_artifact_count",
+              "extracted_artifact_count"
+            ],
+            "properties": {
+              "source": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_]{1,63}$" },
+              "match_kind": { "const": "exact_model" },
+              "matched_identifiers": { "$ref": "#/$defs/strings" },
+              "artifact_count": { "type": "integer", "minimum": 1 },
+              "indexed_artifact_count": { "type": "integer", "minimum": 0 },
+              "extracted_artifact_count": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "carrier_source_discovery": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "matched_identifiers", "scope_count", "status_counts"],
+            "properties": {
+              "source": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_]{1,63}$" },
+              "matched_identifiers": { "$ref": "#/$defs/strings" },
+              "scope_count": { "type": "integer", "minimum": 1 },
+              "status_counts": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "discovery_in_progress": { "type": "integer", "minimum": 1 },
+                  "no_artifact_found": { "type": "integer", "minimum": 1 },
+                  "no_query_identifier": { "type": "integer", "minimum": 1 },
+                  "artifact_indexed": { "type": "integer", "minimum": 1 },
+                  "source_extracted": { "type": "integer", "minimum": 1 }
+                }
+              }
+            }
+          }
+        },
+        "carrier_data_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "sources"],
+          "properties": {
+            "status": {
+              "enum": [
+                "exact_carrier_data_observed",
+                "exact_source_extracted",
+                "exact_source_verified",
+                "exact_source_indexed",
+                "family_source_verified",
+                "family_source_indexed",
+                "source_discovery_in_progress",
+                "source_checked_no_artifact",
+                "source_not_queryable",
+                "inventory_only"
+              ]
+            },
+            "sources": { "$ref": "#/$defs/strings" }
           }
         }
       }

@@ -1,21 +1,36 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
-      "name": "HOS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1330,
+      "name": "hos",
+      "port": 8080,
       "protocol": "IPV4V6",
+      "proxy": "xcap.ims.mnc001.mcc284.pub.3gppnetwork.org",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "A1 BG",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "ims",
@@ -29,6 +44,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1330,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "inet-gprs.mtel.bg",
       "name": "inet-gprs.mtel.bg",
       "types": [
@@ -39,9 +65,18 @@
     },
     {
       "apn": "internet.a1.bg",
-      "name": "A1 BG",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "internet.a1.bg",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.a1.bg",
+      "name": "A1 BG",
+      "types": [
         "dun"
       ]
     },
@@ -56,16 +91,6 @@
         "mms"
       ],
       "user": "mtel"
-    },
-    {
-      "apn": "mms.a1.bg",
-      "mmsc": "http://mmsc",
-      "mmsport": 8080,
-      "mmsproxy": "10.150.0.33",
-      "name": "A1 BG",
-      "types": [
-        "mms"
-      ]
     },
     {
       "apn": "wap-gprs.mtel.bg",

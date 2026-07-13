@@ -1,0 +1,75 @@
+{
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "CHARACTER"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "name": "Videotron",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "mmsc": "http://media.videotron.com",
+      "name": "VideotronMMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "mmsc": "http://media.videotron.com",
+      "name": "xcap",
+      "protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Videotron",
+  "match": {
+    "mccmnc": [
+      "302520"
+    ],
+    "spn": [
+      "Videotron"
+    ]
+  },
+  "profile_id": "open.302520.990385a597fc",
+  "schema_version": 1
+}

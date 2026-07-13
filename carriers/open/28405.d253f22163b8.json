@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "globul",
@@ -24,7 +41,9 @@
     },
     {
       "apn": "ims",
-      "name": "Yettel",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
       "protocol": "IPV4V6",
       "types": [
         "ims"
@@ -33,6 +52,7 @@
     {
       "apn": "internet",
       "authtype": 0,
+      "carrier_enabled": true,
       "name": "internet",
       "types": [
         "default",
@@ -45,19 +65,6 @@
       "types": [
         "dun"
       ]
-    },
-    {
-      "apn": "mms",
-      "authtype": 0,
-      "mmsc": "http://mmsc",
-      "mmsport": 8004,
-      "mmsproxy": "192.168.87.11",
-      "name": "mms",
-      "password": "mms",
-      "types": [
-        "mms"
-      ],
-      "user": "mms"
     },
     {
       "apn": "mms.globul.bg",

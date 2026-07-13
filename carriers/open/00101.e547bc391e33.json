@@ -1,0 +1,112 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,ERRPOPUP"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "-voltecall",
+        "-preferrednetworkmode",
+        "-cdmasystemselect",
+        "+cdmaapn"
+      ],
+      "network_type_capability": "TMO-ATC-GSM-USA"
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "Optimum Test LTE XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "altice",
+      "name": "Optimum Test Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Optimum Test IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.altice.com/mmsc/MMS",
+      "name": "Optimum Test MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://mms.altice.com/mmsc/MMS",
+      "name": "Optimum Test Service EPDG",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Optimum Test Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "tethering",
+      "name": "Optimum Test Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "ATC TEST",
+  "match": {
+    "mccmnc": [
+      "00101"
+    ],
+    "spn": [
+      "ATC TEST"
+    ]
+  },
+  "profile_id": "open.00101.e547bc391e33",
+  "schema_version": 1
+}

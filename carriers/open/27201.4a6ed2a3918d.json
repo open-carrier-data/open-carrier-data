@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "VDI",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "OVF",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -9,10 +34,15 @@
     },
     {
       "apn": "hs.vodafone.ie",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "hs.vodafone.ie",
       "password": "vodafone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "supl"
       ],
       "user": "vodafone"
     },
@@ -21,6 +51,17 @@
       "name": "vodafone IE",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "hs.vodafone.ie",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "Vodafone MISP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "hipri"
       ]
     },
     {
@@ -35,6 +76,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "isp.vodafone.ie",
       "name": "isp.vodafone.ie",
       "password": "vodafone",
@@ -47,6 +99,7 @@
     {
       "apn": "live.vodafone.com",
       "authtype": 0,
+      "carrier_enabled": true,
       "name": "live.vodafone.com",
       "password": "vodafone",
       "port": 80,
@@ -61,6 +114,8 @@
     },
     {
       "apn": "mms.vodafone.net",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://www.vodafone.ie/mms",
       "mmsport": 80,
       "mmsproxy": "10.24.59.200",
@@ -85,7 +140,11 @@
     },
     {
       "apn": "xcap",
-      "name": "XCAP",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],

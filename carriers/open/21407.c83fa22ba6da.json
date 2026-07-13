@@ -1,4 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "XCAP",
@@ -11,6 +33,13 @@
       "user_visible": false
     },
     {
+      "apn": "XCAP",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -20,14 +49,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "movistar",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "movistar.es",
@@ -42,6 +63,7 @@
     {
       "apn": "telefonica.es",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.movistar.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.5",
@@ -71,11 +93,13 @@
     {
       "apn": "telefonica.es",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.movistar.com",
       "mmsport": 8080,
       "name": "telefonica.es",
       "password": "telefonica",
       "port": 8080,
+      "protocol": "IPV4V6",
       "types": [
         "supl"
       ],

@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -25,6 +45,14 @@
       "apn": "dun.unitedwireless",
       "name": "United Wireless Tethering",
       "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "dun.unitedwireless",
+      "name": "United Wireless Tethering",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
@@ -33,13 +61,30 @@
     },
     {
       "apn": "hos",
-      "name": "United Wireless HOS",
+      "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "name": "United Wireless IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ota.unitedwireless",
+      "name": "United Wireless FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "ota.unitedwireless",
@@ -54,7 +99,7 @@
     {
       "apn": "unitedwireless",
       "mmsc": "http://mms.unitedwireless.com",
-      "name": "United Wireless Internet",
+      "name": "unitedwireless",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

@@ -1,0 +1,61 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "CHC-CHC-GSM-CHN",
+      "voice_network_setting_style": "SupportSoftSim"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "CHC"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hkw",
+      "name": "hkw",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "HKW",
+  "match": {
+    "mccmnc": [
+      "45407"
+    ],
+    "spn": [
+      "HKW"
+    ]
+  },
+  "profile_id": "open.45407.f875025b1a66",
+  "schema_version": 1
+}

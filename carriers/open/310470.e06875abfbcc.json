@@ -1,0 +1,72 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "DOCOMO IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "DOCOMO",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "DOCOMO XCAP",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "DOCOMO PACIFIC",
+  "match": {
+    "mccmnc": [
+      "310470"
+    ],
+    "spn": [
+      "DOCOMO PACIFIC"
+    ]
+  },
+  "profile_id": "open.310470.e06875abfbcc",
+  "schema_version": 1
+}

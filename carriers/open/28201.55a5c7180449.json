@@ -1,0 +1,67 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet",
+      "name": "Geocell Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.geocell.com.ge/cmmsc/post",
+      "mmsport": 8080,
+      "mmsproxy": "10.11.240.7",
+      "name": "Geocell MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Geocell",
+  "match": {
+    "mccmnc": [
+      "28201"
+    ],
+    "spn": [
+      "Geocell"
+    ]
+  },
+  "profile_id": "open.28201.55a5c7180449",
+  "schema_version": 1
+}

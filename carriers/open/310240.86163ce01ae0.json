@@ -1,0 +1,72 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall_sim_mobility",
+        "+vonrcall"
+      ],
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "CONSUMER IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "name": "CONSUMER",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "CONSUMER MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Consumer Cellular TMO",
+  "match": {
+    "mccmnc": [
+      "310240"
+    ],
+    "spn": [
+      "Consumer Cellular TMO"
+    ]
+  },
+  "profile_id": "open.310240.86163ce01ae0",
+  "schema_version": 1
+}

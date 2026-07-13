@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "orange",
@@ -21,13 +41,56 @@
         "dun"
       ],
       "user": "orange"
+    },
+    {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "mvno_match_data": "4D433031",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "orange",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "4D433031",
+      "mvno_type": "gid",
+      "name": "Monaco Telecom",
+      "password": "orange",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "xcap"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.orange.fr",
+      "mvno_match_data": "4D433031",
+      "mvno_type": "gid",
+      "name": "Monaco Telecom MMS",
+      "password": "orange",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
-    "maxMessageSize": 614400
+    "maxMessageSize": 614400,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

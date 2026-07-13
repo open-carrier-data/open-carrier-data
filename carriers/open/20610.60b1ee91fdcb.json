@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "iew.be",
@@ -28,28 +45,29 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1300,
+      "name": "Orange B IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.be",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc.mobistar.be",
       "mmsport": 8080,
       "mmsproxy": "212.65.63.143",
       "name": "mms.be",
       "password": "mobistar",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
-      ],
-      "user": "mobistar"
-    },
-    {
-      "apn": "mworld.be",
-      "authtype": 1,
-      "name": "mworld.be",
-      "password": "mobistar",
-      "port": 8080,
-      "proxy": "212.65.63.143",
-      "types": [
-        "default",
-        "supl"
       ],
       "user": "mobistar"
     },
@@ -69,6 +87,7 @@
     "carrier_wfc_ims_available_bool": true,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

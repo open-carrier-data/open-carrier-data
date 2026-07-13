@@ -1,5 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -12,7 +37,18 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "password": "gprs",
       "types": [
@@ -23,9 +59,13 @@
     },
     {
       "apn": "internet",
-      "name": "TeliaSonera",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
       "types": [
-        "dun"
+        "dun",
+        "hipri",
+        "rcs"
       ]
     }
   ],

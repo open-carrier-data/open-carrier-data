@@ -1,4 +1,36 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "FTM",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "ORANGE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_GPG",
+        "WFC_HELP_NOTI",
+        "WFC_FTM"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,24 +44,17 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "Orange Reunion",
-      "protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "orangerun",
       "authtype": 1,
+      "carrier_enabled": true,
       "name": "orangerun",
       "password": "orange",
       "port": 8080,
       "protocol": "IPV6",
       "proxy": "192.168.010.100",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
-        "supl"
+        "default"
       ],
       "user": "orange"
     },
@@ -41,6 +66,29 @@
         "dun"
       ],
       "user": "orange"
+    },
+    {
+      "apn": "orangerun",
+      "authtype": 1,
+      "name": "orangerun",
+      "password": "orange",
+      "port": 8080,
+      "protocol": "IPV6",
+      "proxy": "192.168.010.100",
+      "types": [
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangeut",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",
@@ -58,6 +106,7 @@
     "hide_enhanced_4g_lte_bool": true,
     "imssms.sms_over_ims_supported_bool": true,
     "maxMessageSize": 614400,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

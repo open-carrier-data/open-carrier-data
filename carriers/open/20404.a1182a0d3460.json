@@ -1,0 +1,88 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "admin.cs4glte.com",
+      "name": "INTL CSpire Admin",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ims.cs4glte.com",
+      "name": "INTL CSpire IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "name": "INTL CSpire Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "mmsc": "http://pix.cspire.com",
+      "name": "INTL CSpire MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "name": "INTL CSpire Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "C Spire Roaming",
+  "match": {
+    "mccmnc": [
+      "20404"
+    ],
+    "spn": [
+      "C Spire Roaming"
+    ]
+  },
+  "profile_id": "open.20404.a1182a0d3460",
+  "schema_version": 1
+}

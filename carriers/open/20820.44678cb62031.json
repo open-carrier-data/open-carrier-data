@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "a2bouygtel.com",
@@ -16,14 +39,6 @@
       "types": [
         "default",
         "dun"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "Bouygues Telecom",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
       ]
     },
     {
@@ -50,6 +65,7 @@
     {
       "apn": "mmsbouygtel.com",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "62.201.129.226",
@@ -63,7 +79,8 @@
     {
       "apn": "mmsbouygtel.com",
       "authtype": 1,
-      "name": "Bouygues XCAP",
+      "carrier_enabled": true,
+      "name": "mmsbouygtel.com",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
@@ -134,7 +151,8 @@
     "maxImageWidth": 2592,
     "maxMessageSize": 614400,
     "rtt_supported_bool": true,
-    "rtt_supported_while_roaming_bool": true
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,0 +1,73 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "NoWaitInSvcE911"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "LG U+ Roaming IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.lguplus.co.kr",
+      "name": "LG U+ Roaming",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.lguplus.co.kr",
+      "mmsc": "http://omammsc.uplus.co.kr:9084",
+      "name": "LG U+ Roaming MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "tethering.lguplus.co.kr",
+      "name": "LG U+ Roaming Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "LG U+ Roaming",
+  "match": {
+    "mccmnc": [
+      "45006"
+    ],
+    "spn": [
+      "LG U+ Roaming"
+    ]
+  },
+  "profile_id": "open.45006.5128256dc3ac",
+  "schema_version": 1
+}

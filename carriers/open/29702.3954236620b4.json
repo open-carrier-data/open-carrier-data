@@ -1,5 +1,45 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "hos",
       "authtype": 1,
@@ -36,11 +76,23 @@
     {
       "apn": "tmcg-4g",
       "authtype": 1,
+      "carrier_enabled": true,
+      "name": "tmcg-4g",
+      "password": "38267",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "tmcg-4g",
+      "authtype": 1,
       "name": "T-Mobile ME Internet",
       "password": "38267",
       "protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ],
       "user": "38267"
@@ -61,7 +113,6 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
-    "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
     "maxMessageSize": 102400,
     "recipientLimit": 10,
@@ -70,7 +121,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "supported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

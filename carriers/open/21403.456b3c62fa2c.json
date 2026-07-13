@@ -1,4 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "AMO",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "ORANGE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -29,6 +62,47 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "jazzinternet",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "JAZZTEL Internet",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "jazzmms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://jazztelmms.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "37.132.0.10",
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "JAZZTEL MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -40,6 +114,7 @@
     "maxMessageSize": 512000,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
@@ -54,7 +129,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Jazztel Es",
+  "display_name": "Jazztel",
   "match": {
     "mccmnc": [
       "21403"

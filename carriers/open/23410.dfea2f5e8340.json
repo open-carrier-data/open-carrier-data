@@ -1,0 +1,68 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet",
+      "name": "Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.manxpronto.net",
+      "mmsc": "http://mms.manxpronto.net:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "195.010.099.046",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Manx Telecom Contract",
+  "match": {
+    "mccmnc": [
+      "23410"
+    ],
+    "spn": [
+      "Manx Telecom Contract"
+    ]
+  },
+  "profile_id": "open.23410.dfea2f5e8340",
+  "schema_version": 1
+}

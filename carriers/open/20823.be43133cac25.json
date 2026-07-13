@@ -1,0 +1,65 @@
+{
+  "addons": {
+    "ims": {
+      "contacts_operator_style": "SFR",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "SFR",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "virgin-mobile.fr",
+      "name": "Virgin mobile",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "virgin-mobile.fr",
+      "mmsc": "http://virginmms.fr",
+      "mmsport": 8080,
+      "mmsproxy": "10.6.10.1",
+      "name": "VM MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Virgin (OMEA)",
+  "match": {
+    "mccmnc": [
+      "20823"
+    ],
+    "spn": [
+      "Virgin (OMEA)"
+    ]
+  },
+  "profile_id": "open.20823.be43133cac25",
+  "schema_version": 1
+}

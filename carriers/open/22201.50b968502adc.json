@@ -1,11 +1,90 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "TIM",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "Kena Mobile R",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.kenamobile.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.kenamobile.it/",
+      "mmsport": 80,
+      "mmsproxy": "10.248.1.12",
+      "mvno_match_data": "Kena Mobile R",
+      "mvno_type": "spn",
+      "name": "Kena Mobile MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.kenamobile.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "Kena Mobile R",
+      "mvno_type": "spn",
+      "name": "Kena Mobile Web",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "xcap.kena.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "Kena Mobile R",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -14,7 +93,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telecom IT Kena",
+  "display_name": "Kena Mobile R",
   "match": {
     "mccmnc": [
       "22201"

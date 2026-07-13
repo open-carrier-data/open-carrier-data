@@ -1,0 +1,76 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-preferrednetworkmode",
+        "-voltecall"
+      ],
+      "network_type_capability": "DSG-DSG-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_AIO"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "DSG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hotspot",
+      "name": "hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ota",
+      "name": "OTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Dish 5G Data only",
+  "match": {
+    "mccmnc": [
+      "313340"
+    ],
+    "spn": [
+      "Dish 5G Data only"
+    ]
+  },
+  "profile_id": "open.313340.270b8a6dc0ed",
+  "schema_version": 1
+}

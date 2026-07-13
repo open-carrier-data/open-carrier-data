@@ -1,0 +1,63 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "mms.mts.tm",
+      "mmsc": "http://mmsc",
+      "mmsport": 3128,
+      "mmsproxy": "10.192.35.1",
+      "name": "MTS MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "net.mts.tm",
+      "name": "MTS TM",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "MTS-TM",
+  "match": {
+    "mccmnc": [
+      "43801"
+    ],
+    "spn": [
+      "MTS-TM"
+    ]
+  },
+  "profile_id": "open.43801.c7af63b8893d",
+  "schema_version": 1
+}

@@ -1,4 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "AMO",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "ORANGE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -37,6 +70,49 @@
       ],
       "user": "orange",
       "user_editable": false
+    },
+    {
+      "apn": "IMS",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "simyo",
+      "mvno_type": "spn",
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "orangemms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "mvno_match_data": "simyo",
+      "mvno_type": "spn",
+      "name": "simyo MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "orangeworld",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "simyo",
+      "mvno_type": "spn",
+      "name": "internet simyo",
+      "password": "orange",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ],
+      "user": "orange"
     }
   ],
   "android_carrier_config": {
@@ -52,6 +128,7 @@
     "maxMessageSize": 1048576,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
@@ -66,7 +143,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Simyo Es",
+  "display_name": "simyo",
   "match": {
     "mccmnc": [
       "21403"

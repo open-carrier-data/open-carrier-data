@@ -1,0 +1,104 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "T-2",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "T-2",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.t-2.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "T-2",
+      "mvno_type": "spn",
+      "name": "T-2 Internet",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "rcs",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.t-2.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://www.mms.t-2.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.18.137",
+      "mvno_match_data": "T-2",
+      "mvno_type": "spn",
+      "name": "T-2 MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "T-2",
+  "match": {
+    "mccmnc": [
+      "21407"
+    ],
+    "spn": [
+      "T-2"
+    ]
+  },
+  "profile_id": "open.21407.251866a74aea",
+  "schema_version": 1
+}

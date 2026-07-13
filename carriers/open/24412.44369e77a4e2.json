@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "dnapro.fi",
@@ -10,21 +35,15 @@
     },
     {
       "apn": "hos",
-      "name": "HOS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "hos",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "DNA",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "ims",
@@ -38,6 +57,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "inet.tdc.fi",
       "name": "TDC Internet",
       "types": [
@@ -47,6 +77,8 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -58,7 +90,16 @@
       "apn": "internet",
       "name": "internet",
       "types": [
-        "dun",
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
         "supl"
       ]
     },

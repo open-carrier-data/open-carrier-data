@@ -1,0 +1,81 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "Illinois Valley Cellular XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Illinois Valley Cellular IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ivc.mymobiletxt.com",
+      "name": "Illinois Valley Cellular",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ivc.mymobiletxt.com",
+      "mmsc": "http://mms.ivcel.com/ivc/mms.php",
+      "name": "Illinois Valley Cellular MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Illinois Valley Cellular",
+  "match": {
+    "mccmnc": [
+      "311340"
+    ],
+    "spn": [
+      "Illinois Valley Cellular"
+    ]
+  },
+  "profile_id": "open.311340.889389efa327",
+  "schema_version": 1
+}

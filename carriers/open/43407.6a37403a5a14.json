@@ -1,0 +1,79 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Mobiuz IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.ums.uz",
+      "mmsc": "http://mmsc/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.0.10",
+      "name": "Mobiuz MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "net.ums.uz",
+      "name": "Mobiuz Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Mobiuz XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Mobiuz",
+  "match": {
+    "mccmnc": [
+      "43407"
+    ],
+    "spn": [
+      "Mobiuz"
+    ]
+  },
+  "profile_id": "open.43407.6a37403a5a14",
+  "schema_version": 1
+}

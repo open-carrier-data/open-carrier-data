@@ -1,0 +1,77 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Babylon-Mobile IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "name": "Babylon-Mobile XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "babilon",
+      "name": "BM Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsdb",
+      "mmsport": 8080,
+      "mmsproxy": "129.9.0.50",
+      "name": "BM MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Babylon-Mobile",
+  "match": {
+    "mccmnc": [
+      "43604"
+    ],
+    "spn": [
+      "Babylon-Mobile"
+    ]
+  },
+  "profile_id": "open.43604.bf7078e6f3f5",
+  "schema_version": 1
+}

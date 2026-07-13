@@ -1,4 +1,23 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -36,12 +55,79 @@
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "ims",
+      "mtu": 1300,
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.mobile.sky",
+      "carrier_enabled": true,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "Sky MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.sky",
+      "carrier_enabled": true,
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "Sky Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ut.mobile.sky",
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wifi.mms.mobile.sky",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "Sky MMS VoWiFi",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "maxMessageSize": 307200,
-    "recipientLimit": 50
+    "recipientLimit": 50,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",
@@ -50,7 +136,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

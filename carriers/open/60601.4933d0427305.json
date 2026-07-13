@@ -1,0 +1,73 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "almadar.mms",
+      "mmsport": 8080,
+      "mmsproxy": "41.208.82.50",
+      "name": "almadar MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "almadar.net",
+      "name": "almadar internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Almadar",
+  "match": {
+    "mccmnc": [
+      "60601"
+    ],
+    "spn": [
+      "Almadar"
+    ]
+  },
+  "profile_id": "open.60601.4933d0427305",
+  "schema_version": 1
+}

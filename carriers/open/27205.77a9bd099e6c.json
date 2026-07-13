@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "3internet",
@@ -10,9 +26,12 @@
     },
     {
       "apn": "3ireland.ie",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.um.3ireland.ie:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "mms.3ireland.ie",
+      "mtu": 1440,
       "name": "3ireland.ie",
       "server": "3ireland.ie",
       "types": [
@@ -33,6 +52,16 @@
     },
     {
       "apn": "hos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "3HOS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "bearer_bitmask": "14|18|20",
       "name": "XCAP",
       "protocol": "IPV4V6",
@@ -40,14 +69,6 @@
         "xcap"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "3 Ireland",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "ims",
@@ -59,6 +80,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "sos",
@@ -81,6 +113,7 @@
     "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

@@ -1,0 +1,83 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+dataenabled",
+        "-preferrednetworkmode",
+        "-voltecall",
+        "+attdiag",
+        "+autoSwitchNr5gMode"
+      ],
+      "network_type_capability": "ATT-ATT-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,NetworkSetting_ATT"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ATT_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ATT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "nxtgenphone",
+      "name": "nxtgenphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "nxtgenphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ATT Nxtgenphone MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "ATT",
+  "match": {
+    "mccmnc": [
+      "99999"
+    ],
+    "spn": [
+      "ATT"
+    ]
+  },
+  "profile_id": "open.99999.76927e712da2",
+  "schema_version": 1
+}

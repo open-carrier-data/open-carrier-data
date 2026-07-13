@@ -1,5 +1,33 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "hos",
       "bearer_bitmask": "18",
@@ -14,6 +42,8 @@
     },
     {
       "apn": "hos",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -43,15 +73,17 @@
     },
     {
       "apn": "internet.lmt.lv",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc.lmt.lv/mmsc",
       "mmsport": 8081,
       "mmsproxy": "mmscp.lmt.lv",
-      "name": "LMT",
+      "name": "internet.lmt.lv",
       "password": "lmt",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun"
+        "default"
       ],
       "user": "lmt"
     },
@@ -70,7 +102,24 @@
     },
     {
       "apn": "internet.lmt.lv",
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "mmsport": 8081,
+      "mmsproxy": "mmscp.lmt.lv",
       "name": "LMT",
+      "password": "lmt",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "lmt"
+    },
+    {
+      "apn": "internet.lmt.lv",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet.lmt.lv",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "supl"
       ]

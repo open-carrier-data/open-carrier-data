@@ -1,11 +1,36 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall_sim_mobility"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "VAU",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "HOS",
+      "authtype": 1,
       "mmsc": "http://pxt.vodafone.net.au/pxtsend",
       "mmsport": 8080,
       "mmsproxy": "10.202.2.60",
-      "name": "Vodafone AU MMS",
+      "name": "HOS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -24,6 +49,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "authtype": 1,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "live.vodafone.com",

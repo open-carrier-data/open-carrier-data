@@ -1,0 +1,90 @@
+{
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "CHARACTER"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "isp.telus.com",
+      "name": "TELUS ISP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "services.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "services.telus.com",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "name": "TELUS SP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "TELUS MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "TELUS",
+  "match": {
+    "mccmnc": [
+      "302220"
+    ],
+    "spn": [
+      "TELUS"
+    ]
+  },
+  "profile_id": "open.302220.b53759a34647",
+  "schema_version": 1
+}

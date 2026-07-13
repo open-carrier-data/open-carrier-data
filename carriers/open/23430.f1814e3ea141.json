@@ -1,5 +1,37 @@
 {
+  "addons": {
+    "ims": {
+      "contacts_operator_style": "EVR",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "EE",
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "EEZONE",
+      "authtype": 0,
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "eezone",
       "authtype": 1,
@@ -17,6 +49,7 @@
     {
       "apn": "everywhere",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
@@ -67,7 +100,18 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "sos",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "EE Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -223,6 +267,7 @@
     "hide_ims_apn_bool": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "maxMessageSize": 307200,
+    "smsToMmsTextThreshold": 13,
     "wfc_operator_error_codes_string_array": [
       "REG09|0"
     ],

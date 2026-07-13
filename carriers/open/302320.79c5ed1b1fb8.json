@@ -1,0 +1,61 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "mms.davewireless.com",
+      "mmsc": "http://mms.mobilicity.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.100.3.4",
+      "name": "MOMMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.davewireless.com",
+      "name": "MOWAP",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Mobilicity",
+  "match": {
+    "mccmnc": [
+      "302320"
+    ],
+    "spn": [
+      "Mobilicity"
+    ]
+  },
+  "profile_id": "open.302320.79c5ed1b1fb8",
+  "schema_version": 1
+}

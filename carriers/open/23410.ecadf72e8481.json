@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "O2U",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -29,6 +49,72 @@
       ],
       "user": "o2",
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1280,
+      "mvno_match_data": "99",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "m-bb.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "99",
+      "mvno_type": "gid",
+      "name": "O2 Mobile Broadband",
+      "password": "password",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "o2bb"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "99",
+      "mvno_type": "gid",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mtu": 1500,
+      "mvno_match_data": "99",
+      "mvno_type": "gid",
+      "name": "O2 MMS",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "o2"
     }
   ],
   "android_carrier_config": {
@@ -59,7 +145,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "O2Prepaid Gb",
+  "display_name": "O2 Pay & Go",
   "match": {
     "gid1_prefixes": [
       "99"

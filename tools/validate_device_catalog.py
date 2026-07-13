@@ -14,7 +14,8 @@ from typing import Any
 
 HASH_RE = re.compile(r"^[0-9a-f]{64}$")
 DEVICE_ID_RE = re.compile(r"^(?:android|apple):[a-z0-9-]{3,80}$")
-ARTIFACT_ID_RE = re.compile(r"^apple:[0-9a-f]{24}$")
+APPLE_ARTIFACT_ID_RE = re.compile(r"^apple:[0-9a-f]{24}$")
+ANDROID_ARTIFACT_ID_RE = re.compile(r"^android:[0-9a-f]{24}$")
 SOURCE_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9_]{1,63}$")
 BASE_DEVICE_FIELDS = {
     "device_id",
@@ -29,6 +30,21 @@ BASE_DEVICE_FIELDS = {
     "inventory_sources",
     "carrier_observations",
     "carrier_artifact_catalog",
+    "carrier_source_catalogs",
+    "carrier_source_discovery",
+    "carrier_data_coverage",
+}
+DATA_COVERAGE_STATUSES = {
+    "exact_carrier_data_observed",
+    "exact_source_extracted",
+    "exact_source_verified",
+    "exact_source_indexed",
+    "family_source_verified",
+    "family_source_indexed",
+    "source_discovery_in_progress",
+    "source_checked_no_artifact",
+    "source_not_queryable",
+    "inventory_only",
 }
 
 
@@ -123,6 +139,120 @@ def validate_artifact_scope(path: Path, device_id: str, value: Any) -> None:
         raise ValidationError(f"{path}: invalid artifact counts for {device_id}")
 
 
+def validate_source_catalogs(path: Path, device_id: str, value: Any) -> None:
+    if not isinstance(value, list) or not value:
+        raise ValidationError(f"{path}: invalid source catalogs for {device_id}")
+    previous_source = ""
+    for item in value:
+        expected = {
+            "source",
+            "match_kind",
+            "matched_identifiers",
+            "artifact_count",
+            "indexed_artifact_count",
+            "extracted_artifact_count",
+        }
+        if not isinstance(item, dict) or set(item) != expected:
+            raise ValidationError(f"{path}: invalid source catalog for {device_id}")
+        source = item["source"]
+        if (
+            not isinstance(source, str)
+            or not SOURCE_NAME_RE.fullmatch(source)
+            or source <= previous_source
+        ):
+            raise ValidationError(f"{path}: source catalogs are invalid or unsorted")
+        if item["match_kind"] != "exact_model":
+            raise ValidationError(f"{path}: invalid source match kind for {device_id}")
+        validate_string_array(path, "matched identifiers", item["matched_identifiers"])
+        counts = [
+            item["artifact_count"],
+            item["indexed_artifact_count"],
+            item["extracted_artifact_count"],
+        ]
+        if any(not isinstance(count, int) or count < 0 for count in counts):
+            raise ValidationError(f"{path}: invalid source artifact counts for {device_id}")
+        if counts[0] < 1 or counts[1] + counts[2] != counts[0]:
+            raise ValidationError(f"{path}: inconsistent source artifact counts for {device_id}")
+        previous_source = source
+
+
+def validate_data_coverage(path: Path, device_id: str, record: dict[str, Any]) -> None:
+    value = record.get("carrier_data_coverage")
+    if not isinstance(value, dict) or set(value) != {"status", "sources"}:
+        raise ValidationError(f"{path}: carrier data coverage is missing for {device_id}")
+    status = value["status"]
+    if status not in DATA_COVERAGE_STATUSES:
+        raise ValidationError(f"{path}: invalid carrier data coverage for {device_id}")
+    sources = validate_string_array(path, "coverage sources", value["sources"])
+    if status == "inventory_only" and sources:
+        raise ValidationError(f"{path}: inventory-only device has carrier sources")
+    if status != "inventory_only" and not sources:
+        raise ValidationError(f"{path}: covered device has no carrier sources")
+    if status == "exact_carrier_data_observed" and "carrier_observations" not in record:
+        raise ValidationError(f"{path}: observed coverage has no observations")
+    if status == "exact_source_extracted" and not any(
+        item["extracted_artifact_count"] > 0
+        for item in record.get("carrier_source_catalogs") or []
+    ):
+        raise ValidationError(f"{path}: extracted coverage has no extracted artifact")
+    if status in {"family_source_verified", "family_source_indexed"} and (
+        record.get("carrier_artifact_catalog", {}).get("match_kind") != "product_family"
+    ):
+        raise ValidationError(f"{path}: family coverage has no family artifact")
+    discovery_statuses: Counter[str] = Counter()
+    for item in record.get("carrier_source_discovery") or []:
+        discovery_statuses.update(item["status_counts"])
+    if status == "source_discovery_in_progress" and not discovery_statuses[
+        "discovery_in_progress"
+    ]:
+        raise ValidationError(f"{path}: in-progress coverage has no active discovery")
+    if status == "source_checked_no_artifact" and (
+        not discovery_statuses["no_artifact_found"]
+        or discovery_statuses["discovery_in_progress"]
+    ):
+        raise ValidationError(f"{path}: no-artifact coverage is inconsistent")
+    if status == "source_not_queryable" and set(discovery_statuses) != {
+        "no_query_identifier"
+    }:
+        raise ValidationError(f"{path}: not-queryable coverage is inconsistent")
+
+
+def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
+    if not isinstance(value, list) or not value:
+        raise ValidationError(f"{path}: invalid source discovery for {device_id}")
+    previous_source = ""
+    allowed_statuses = {
+        "discovery_in_progress",
+        "no_artifact_found",
+        "no_query_identifier",
+        "artifact_indexed",
+        "source_extracted",
+    }
+    for item in value:
+        expected = {"source", "matched_identifiers", "scope_count", "status_counts"}
+        if not isinstance(item, dict) or set(item) != expected:
+            raise ValidationError(f"{path}: invalid source discovery record for {device_id}")
+        source = item["source"]
+        if (
+            not isinstance(source, str)
+            or not SOURCE_NAME_RE.fullmatch(source)
+            or source <= previous_source
+        ):
+            raise ValidationError(f"{path}: source discovery is invalid or unsorted")
+        validate_string_array(path, "source discovery identifiers", item["matched_identifiers"])
+        counts = item["status_counts"]
+        if (
+            not isinstance(counts, dict)
+            or not counts
+            or not set(counts) <= allowed_statuses
+            or any(not isinstance(count, int) or count < 1 for count in counts.values())
+        ):
+            raise ValidationError(f"{path}: source discovery counts are invalid")
+        if not isinstance(item["scope_count"], int) or item["scope_count"] != sum(counts.values()):
+            raise ValidationError(f"{path}: source discovery scope count is inconsistent")
+        previous_source = source
+
+
 def validate_inventory(
     path: Path, platform: str
 ) -> tuple[list[dict[str, str]], list[dict[str, Any]]]:
@@ -203,6 +333,11 @@ def validate_inventory(
             validate_observations(path, device_id, record["carrier_observations"])
         if "carrier_artifact_catalog" in record:
             validate_artifact_scope(path, device_id, record["carrier_artifact_catalog"])
+        if "carrier_source_catalogs" in record:
+            validate_source_catalogs(path, device_id, record["carrier_source_catalogs"])
+        if "carrier_source_discovery" in record:
+            validate_source_discovery(path, device_id, record["carrier_source_discovery"])
+        validate_data_coverage(path, device_id, record)
         seen.add(device_id)
         previous_id = device_id
     return sources, devices
@@ -240,7 +375,7 @@ def validate_artifacts(path: Path) -> tuple[dict[str, str], list[dict[str, Any]]
         artifact_id = record.get("artifact_id")
         if (
             not isinstance(artifact_id, str)
-            or not ARTIFACT_ID_RE.fullmatch(artifact_id)
+            or not APPLE_ARTIFACT_ID_RE.fullmatch(artifact_id)
             or artifact_id in seen
             or artifact_id <= previous_id
         ):
@@ -263,13 +398,158 @@ def validate_artifacts(path: Path) -> tuple[dict[str, str], list[dict[str, Any]]
     return source, artifacts
 
 
+def validate_android_artifacts(
+    path: Path,
+) -> tuple[list[dict[str, str]], list[dict[str, Any]], list[dict[str, Any]]]:
+    value = load_object(path)
+    expected = {
+        "schema_version",
+        "registry_id",
+        "description",
+        "sources",
+        "scope_coverage",
+        "artifacts",
+    }
+    if set(value) != expected or value.get("schema_version") != 1:
+        raise ValidationError(f"{path}: Android artifact registry keys are invalid")
+    if value.get("registry_id") != "android_carrier_source_artifacts":
+        raise ValidationError(f"{path}: Android artifact registry ID is invalid")
+    if not isinstance(value.get("description"), str) or not value["description"]:
+        raise ValidationError(f"{path}: Android artifact description is invalid")
+    raw_sources = value.get("sources")
+    if not isinstance(raw_sources, list) or not raw_sources:
+        raise ValidationError(f"{path}: Android artifact sources are missing")
+    sources = [validate_source(path, item) for item in raw_sources]
+    source_names = [item["name"] for item in sources]
+    if source_names != sorted(source_names) or len(source_names) != len(set(source_names)):
+        raise ValidationError(f"{path}: Android artifact sources are invalid or unsorted")
+    artifacts = value.get("artifacts")
+    if not isinstance(artifacts, list):
+        raise ValidationError(f"{path}: Android artifacts must be an array")
+    expected_record = {
+        "artifact_id",
+        "source",
+        "device_scopes",
+        "device_ids",
+        "regions",
+        "build_versions",
+        "verification",
+        "checked_at",
+    }
+    seen: set[str] = set()
+    previous_id = ""
+    for record in artifacts:
+        if not isinstance(record, dict) or set(record) != expected_record:
+            raise ValidationError(f"{path}: Android artifact record fields are invalid")
+        artifact_id = record.get("artifact_id")
+        if (
+            not isinstance(artifact_id, str)
+            or not ANDROID_ARTIFACT_ID_RE.fullmatch(artifact_id)
+            or artifact_id in seen
+            or artifact_id <= previous_id
+        ):
+            raise ValidationError(f"{path}: Android artifact ID is invalid or unsorted")
+        if record.get("source") not in source_names:
+            raise ValidationError(f"{path}: Android artifact source is unknown")
+        for field in ("device_scopes", "regions", "build_versions"):
+            values = validate_string_array(path, f"{artifact_id}.{field}", record.get(field))
+            if not values:
+                raise ValidationError(f"{path}: Android artifact {field} is empty")
+        device_ids = validate_string_array(
+            path, f"{artifact_id}.device_ids", record.get("device_ids")
+        )
+        if not device_ids or any(not DEVICE_ID_RE.fullmatch(item) for item in device_ids):
+            raise ValidationError(f"{path}: Android artifact device IDs are invalid")
+        if record.get("verification") not in {"indexed", "extracted"}:
+            raise ValidationError(f"{path}: Android artifact verification is invalid")
+        checked_at = validate_date(path, f"{artifact_id}.checked_at", record.get("checked_at"))
+        source = next(item for item in sources if item["name"] == record["source"])
+        if checked_at > source["checked_at"]:
+            raise ValidationError(f"{path}: Android artifact is newer than its source check")
+        seen.add(artifact_id)
+        previous_id = artifact_id
+    scope_coverage = value.get("scope_coverage")
+    if not isinstance(scope_coverage, list):
+        raise ValidationError(f"{path}: Android scope coverage must be an array")
+    expected_coverage = {
+        "source",
+        "device_scope",
+        "scope_kind",
+        "device_ids",
+        "discovery_status",
+        "region_seed_count",
+        "probed_region_count",
+        "available_region_count",
+        "extracted_artifact_count",
+    }
+    previous_key = ("", "")
+    seen_coverage: set[tuple[str, str]] = set()
+    allowed_statuses = {
+        "discovery_in_progress",
+        "no_artifact_found",
+        "no_query_identifier",
+        "artifact_indexed",
+        "source_extracted",
+    }
+    for record in scope_coverage:
+        if not isinstance(record, dict) or set(record) != expected_coverage:
+            raise ValidationError(f"{path}: Android scope coverage fields are invalid")
+        key = (record.get("source"), record.get("device_scope"))
+        if (
+            not all(isinstance(item, str) and item for item in key)
+            or key[0] not in source_names
+            or key in seen_coverage
+            or key <= previous_key
+            or record.get("scope_kind") not in {"model", "device_id"}
+            or record.get("discovery_status") not in allowed_statuses
+        ):
+            raise ValidationError(f"{path}: Android scope coverage is invalid or unsorted")
+        counts = [
+            record.get("region_seed_count"),
+            record.get("probed_region_count"),
+            record.get("available_region_count"),
+            record.get("extracted_artifact_count"),
+        ]
+        if any(not isinstance(count, int) or count < 0 for count in counts):
+            raise ValidationError(f"{path}: Android scope coverage counts are invalid")
+        if counts[1] > counts[0] or counts[2] > counts[1]:
+            raise ValidationError(f"{path}: Android scope coverage counts are inconsistent")
+        device_ids = validate_string_array(
+            path,
+            f"{record['source']}.{record['device_scope']}.device_ids",
+            record.get("device_ids"),
+        )
+        if not device_ids or any(not DEVICE_ID_RE.fullmatch(item) for item in device_ids):
+            raise ValidationError(f"{path}: Android scope coverage device IDs are invalid")
+        if record["scope_kind"] == "device_id" and not DEVICE_ID_RE.fullmatch(
+            record["device_scope"]
+        ):
+            raise ValidationError(f"{path}: Android device-ID scope is invalid")
+        if record["scope_kind"] == "device_id" and device_ids != [record["device_scope"]]:
+            raise ValidationError(f"{path}: Android device-ID scope does not identify itself")
+        if (record["discovery_status"] == "no_query_identifier") != (
+            record["scope_kind"] == "device_id"
+        ):
+            raise ValidationError(f"{path}: no-query scope kind is inconsistent")
+        if record["discovery_status"] == "artifact_indexed" and counts[2] < 1:
+            raise ValidationError(f"{path}: indexed scope has no available artifact")
+        if record["discovery_status"] == "source_extracted" and counts[3] < 1:
+            raise ValidationError(f"{path}: extracted scope has no extracted artifact")
+        seen_coverage.add(key)
+        previous_key = key
+    return sources, artifacts, scope_coverage
+
+
 def validate_index(
     path: Path,
     android_sources: list[dict[str, str]],
     android_devices: list[dict[str, Any]],
     apple_sources: list[dict[str, str]],
     apple_devices: list[dict[str, Any]],
+    apple_artifact_source: dict[str, str],
     artifacts: list[dict[str, Any]],
+    android_artifact_sources: list[dict[str, str]],
+    android_artifacts: list[dict[str, Any]],
 ) -> None:
     value = load_object(path)
     expected = {
@@ -286,7 +566,12 @@ def validate_index(
     expected_sources = sorted(
         {
             source["name"]: source
-            for source in android_sources + apple_sources
+            for source in (
+                android_sources
+                + apple_sources
+                + [apple_artifact_source]
+                + android_artifact_sources
+            )
         }.values(),
         key=lambda source: source["name"],
     )
@@ -309,6 +594,15 @@ def validate_index(
         item.get("carrier_artifact_catalog", {}).get("match_kind") == "product_family"
         for item in apple_devices
     )
+    android_artifact_matches = sum("carrier_source_catalogs" in item for item in android_devices)
+    android_discovery_matches = sum(
+        "carrier_source_discovery" in item for item in android_devices
+    )
+
+    def coverage_counts(devices: list[dict[str, Any]]) -> dict[str, int]:
+        return dict(
+            sorted(Counter(item["carrier_data_coverage"]["status"] for item in devices).items())
+        )
 
     def brand_counts(devices: list[dict[str, Any]]) -> dict[str, int]:
         counts: Counter[str] = Counter()
@@ -319,9 +613,24 @@ def validate_index(
             counts[brands[0] if brands else "(not provided by source)"] += 1
         return dict(sorted(counts.items(), key=lambda item: (item[0].casefold(), item[0])))
 
+    def coverage_counts_by_brand(devices: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
+        counts: dict[str, Counter[str]] = {}
+        for device in devices:
+            brands = device.get("brands") or []
+            brand = brands[0] if brands else "(not provided by source)"
+            counts.setdefault(brand, Counter())[device["carrier_data_coverage"]["status"]] += 1
+        return {
+            brand: dict(sorted(statuses.items()))
+            for brand, statuses in sorted(counts.items(), key=lambda item: item[0].casefold())
+        }
+
     expected_platforms = {
         "android": {
             "carrier_observation_match_count": android_observed,
+            "carrier_artifact_match_count": android_artifact_matches,
+            "carrier_source_discovery_match_count": android_discovery_matches,
+            "carrier_data_coverage_counts": coverage_counts(android_devices),
+            "carrier_data_coverage_counts_by_brand": coverage_counts_by_brand(android_devices),
             "device_count": len(android_devices),
             "historical_device_count": sum(
                 item["inventory_status"] == "historical" for item in android_devices
@@ -333,6 +642,8 @@ def validate_index(
         },
         "apple": {
             "carrier_observation_match_count": apple_observed,
+            "carrier_data_coverage_counts": coverage_counts(apple_devices),
+            "carrier_data_coverage_counts_by_brand": coverage_counts_by_brand(apple_devices),
             "device_count": len(apple_devices),
             "exact_artifact_scope_match_count": apple_exact,
             "family_artifact_scope_match_count": apple_family,
@@ -348,6 +659,7 @@ def validate_index(
     if platforms != expected_platforms:
         raise ValidationError(f"{path}: platform counts do not match records")
     statuses = Counter(item["verification"] for item in artifacts)
+    android_statuses = Counter(item["verification"] for item in android_artifacts)
     registries = value.get("artifact_registries")
     if not isinstance(registries, dict):
         raise ValidationError(f"{path}: artifact registries must be an object")
@@ -357,6 +669,12 @@ def validate_index(
     quarantined_count = apple_registry.get("quarantined_count")
     if not isinstance(quarantined_count, int) or quarantined_count < 0:
         raise ValidationError(f"{path}: quarantined artifact count is invalid")
+    android_registry = registries.get("android_carrier_source_artifacts")
+    if not isinstance(android_registry, dict):
+        raise ValidationError(f"{path}: Android artifact registry summary is missing")
+    android_quarantined_count = android_registry.get("quarantined_count")
+    if not isinstance(android_quarantined_count, int) or android_quarantined_count < 0:
+        raise ValidationError(f"{path}: Android quarantined artifact count is invalid")
     expected_registries = {
         "apple_carrier_bundles": {
             "artifact_count": len(artifacts),
@@ -364,7 +682,14 @@ def validate_index(
             "verified_count": statuses["verified"],
             "failed_count": 0,
             "quarantined_count": quarantined_count,
-        }
+        },
+        "android_carrier_source_artifacts": {
+            "artifact_count": len(android_artifacts),
+            "indexed_count": android_statuses["indexed"],
+            "extracted_count": android_statuses["extracted"],
+            "failed_count": 0,
+            "quarantined_count": android_quarantined_count,
+        },
     }
     if registries != expected_registries:
         raise ValidationError(f"{path}: artifact counts do not match records")
@@ -375,6 +700,9 @@ def main(argv: list[str]) -> int:
     android_sources, android_devices = validate_inventory(root / "android.json", "android")
     apple_sources, apple_devices = validate_inventory(root / "apple.json", "apple")
     artifact_source, artifacts = validate_artifacts(root / "apple-carrier-artifacts.json")
+    android_artifact_sources, android_artifacts, _android_scope_coverage = validate_android_artifacts(
+        root / "android-carrier-artifacts.json"
+    )
     if artifact_source not in apple_sources:
         raise ValidationError("Apple device and artifact sources do not match")
     validate_index(
@@ -383,11 +711,14 @@ def main(argv: list[str]) -> int:
         android_devices,
         apple_sources,
         apple_devices,
+        artifact_source,
         artifacts,
+        android_artifact_sources,
+        android_artifacts,
     )
     print(
         f"validated {len(android_devices)} Android devices, {len(apple_devices)} Apple "
-        f"products, and {len(artifacts)} carrier artifacts"
+        f"products, and {len(android_artifacts) + len(artifacts)} carrier artifacts"
     )
     return 0
 

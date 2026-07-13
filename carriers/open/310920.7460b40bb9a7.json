@@ -1,0 +1,80 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hos",
+      "name": "James Valley Cellular XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "James Valley Cellular IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.jvw.net",
+      "name": "internet.jvw.net",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.jvw.net",
+      "mmsc": "http://m.iot1.com/jamesvalley/mms.php",
+      "name": "James Valley Cellular MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "James Valley Cellular",
+  "match": {
+    "mccmnc": [
+      "310920"
+    ],
+    "spn": [
+      "James Valley Cellular"
+    ]
+  },
+  "profile_id": "open.310920.7460b40bb9a7",
+  "schema_version": 1
+}

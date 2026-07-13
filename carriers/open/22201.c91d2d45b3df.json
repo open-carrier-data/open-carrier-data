@@ -1,4 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "TIM",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "EMERGENCY",
@@ -28,13 +52,6 @@
     },
     {
       "apn": "ims",
-      "name": "TIM",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "name": "TIM IMS",
@@ -43,6 +60,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms.tim.it",
@@ -82,6 +110,8 @@
     },
     {
       "apn": "unico.tim.it",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.tim.it/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "213.230.130.89",
@@ -95,6 +125,7 @@
     {
       "apn": "wap.tim.it",
       "authtype": 1,
+      "carrier_enabled": true,
       "name": "wap.tim.it",
       "password": "WAPTIM",
       "protocol": "IPV4V6",
@@ -107,15 +138,22 @@
     },
     {
       "apn": "wap.tim.it",
-      "name": "TIM",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "wap.tim.it",
+      "password": "WAPTIM",
       "types": [
         "dun"
-      ]
+      ],
+      "user": "WAPTIM"
     },
     {
       "apn": "xcap.tim.it",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
@@ -234,6 +272,7 @@
     "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 11
   },
   "capabilities": {

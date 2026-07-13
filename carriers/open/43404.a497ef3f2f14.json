@@ -1,0 +1,81 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "BEELINE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.beeline.uz",
+      "name": "BEELINE Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.beeline.uz",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.30.30.166",
+      "name": "BEELINE MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "BEELINE XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "BEELINE UZ",
+  "match": {
+    "mccmnc": [
+      "43404"
+    ],
+    "spn": [
+      "BEELINE UZ"
+    ]
+  },
+  "profile_id": "open.43404.a497ef3f2f14",
+  "schema_version": 1
+}

@@ -1,0 +1,80 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "OptimERA IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "OptimERA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.optimerawireless.mobi",
+      "name": "OptimERA MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "tether",
+      "name": "Tether",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "OptimERA",
+  "match": {
+    "mccmnc": [
+      "313380"
+    ],
+    "spn": [
+      "OptimERA"
+    ]
+  },
+  "profile_id": "open.313380.90ea71db4499",
+  "schema_version": 1
+}

@@ -1,4 +1,25 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "XFA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -6,6 +27,13 @@
       "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "rainims",
       "types": [
         "ims"
       ]
@@ -19,9 +47,17 @@
         "default",
         "dun"
       ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "read_only_apn_types_string_array": []
   },
   "capabilities": {
@@ -31,12 +67,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Rain Za",
+  "display_name": "rain",
   "match": {
     "mccmnc": [
       "65538"

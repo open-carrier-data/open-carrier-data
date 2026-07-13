@@ -1,5 +1,48 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "carrier_enabled": true,
+      "name": "Plus HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "carrier_enabled": true,
+      "mtu": 1300,
+      "name": "Plus IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -12,6 +55,18 @@
       "user_visible": false
     },
     {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet"
+    },
+    {
       "apn": "internet.gadu-gadu.pl",
       "name": "GaduAIR",
       "types": [
@@ -21,6 +76,8 @@
     },
     {
       "apn": "mms",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.plusgsm.pl:8002",
       "mmsport": 8080,
       "mmsproxy": "212.2.96.16",
@@ -71,16 +128,28 @@
     },
     {
       "apn": "plus",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "plus",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "plus",
+      "name": "Plus",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
         "dun"
       ]
     },
     {
       "apn": "plus",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "plus",
       "types": [
         "supl"
@@ -133,6 +202,7 @@
     "maxMessageSize": 5242880,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 6,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

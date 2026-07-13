@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -33,6 +51,53 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1440,
+      "mvno_match_data": "0310",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mobile.connect",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1440,
+      "mvno_match_data": "0310",
+      "mvno_type": "gid",
+      "name": "Superdrug",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "superdrug.net",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.co.uk",
+      "mtu": 1440,
+      "mvno_match_data": "0310",
+      "mvno_type": "gid",
+      "name": "Superdrug MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -50,6 +115,7 @@
     ],
     "imsvoice.conference_factory_uri_string": "Conf-Factory@three.co.uk",
     "maxMessageSize": 3145728,
+    "smsToMmsTextThreshold": 10,
     "volte_replacement_rat_int": 3,
     "wfc_operator_error_codes_string_array": [
       "REG09|0"
@@ -68,7 +134,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Superdrug Gb",
+  "display_name": "Superdrug",
   "match": {
     "gid1_prefixes": [
       "0310"

@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -10,15 +35,15 @@
       "user_visible": false
     },
     {
-      "apn": "internet",
-      "authtype": 0,
-      "name": "internet",
-      "port": 8080,
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1358,
+      "name": "\u00c5lcom IMS",
       "protocol": "IPV4V6",
-      "proxy": "194.110.177.70",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "ims"
       ]
     },
     {
@@ -31,6 +56,20 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.amt.aland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "194.110.177.70",
+      "name": "\u00c5lcom MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "port": 8080,
       "proxy": "194.110.177.70",

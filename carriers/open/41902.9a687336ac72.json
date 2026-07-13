@@ -1,0 +1,82 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pps",
+      "name": "ZAIN MI",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "pps",
+      "mmsc": "http://mms.zain",
+      "mmsport": 8080,
+      "mmsproxy": "176.0.0.65",
+      "name": "ZAIN MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "ZAIN KW",
+  "match": {
+    "mccmnc": [
+      "41902"
+    ],
+    "spn": [
+      "ZAIN KW"
+    ]
+  },
+  "profile_id": "open.41902.9a687336ac72",
+  "schema_version": 1
+}

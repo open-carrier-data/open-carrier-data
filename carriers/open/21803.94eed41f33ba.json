@@ -1,4 +1,23 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "data1.eronet.ba",
@@ -30,31 +49,42 @@
     },
     {
       "apn": "gprs.eronet.ba",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://www.hteronet.ba",
       "name": "gprs.eronet.ba",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "gprs.eronet.ba",
+      "name": "gprs.eronet.ba",
+      "types": [
         "supl"
       ]
     },
     {
-      "apn": "mms.eronet.ba",
-      "mmsc": "http://mms.gprs.eronet.ba/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "10.12.3.11",
-      "name": "mms.eronet.ba",
+      "apn": "web.eronet.ba",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "web.eronet.ba",
+      "port": 8080,
       "types": [
-        "mms"
+        "default"
       ]
     },
     {
       "apn": "web.eronet.ba",
       "name": "web.eronet.ba",
       "types": [
-        "default",
         "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -62,7 +92,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

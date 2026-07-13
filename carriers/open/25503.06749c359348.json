@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
@@ -33,9 +49,27 @@
     },
     {
       "apn": "ims",
-      "name": "Kyivstar",
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "cbs",
+        "dun",
+        "fota",
+        "hipri",
+        "rcs"
       ]
     },
     {
@@ -50,24 +84,6 @@
         "default",
         "dun",
         "fota",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "Kyivstar",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
         "supl"
       ]
     },

@@ -1,0 +1,86 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "CHARACTER",
+      "network_type_capability": "BMC-XAC-GSM-CAN"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Xplore IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.xploremobile.com",
+      "name": "Xplore Mobility",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.xploremobile.com",
+      "mmsc": "http://mmsc.xploremobile.com",
+      "name": "Xplore MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap.xploremobile.com",
+      "name": "Xplore XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Xplore Mobile",
+  "match": {
+    "mccmnc": [
+      "302130"
+    ],
+    "spn": [
+      "Xplore Mobile"
+    ]
+  },
+  "profile_id": "open.302130.e3308b31bbff",
+  "schema_version": 1
+}

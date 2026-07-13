@@ -1,0 +1,64 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsport": 80,
+      "mmsproxy": "192.168.55.10",
+      "name": "Zain JO MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "zain",
+      "name": "Zain JO Internet",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Zain JO",
+  "match": {
+    "mccmnc": [
+      "41601"
+    ],
+    "spn": [
+      "Zain JO"
+    ]
+  },
+  "profile_id": "open.41601.2f116b3b52f8",
+  "schema_version": 1
+}

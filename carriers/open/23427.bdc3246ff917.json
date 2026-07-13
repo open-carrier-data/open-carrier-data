@@ -1,5 +1,34 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -13,15 +42,30 @@
     },
     {
       "apn": "move.dataxs.mobi",
-      "name": "TCL MOVE",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "move.dataxs.mobi",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "move.dataxs.mobi",
+      "name": "TCL MOVE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
         "dun"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -29,12 +73,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Tcl Gb",
+  "display_name": "Carrier 23427",
   "match": {
     "mccmnc": [
       "23427"

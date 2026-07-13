@@ -1,7 +1,38 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "3g.utel.ua",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "3Mob Internet",
+      "types": [
+        "cbs",
+        "dun",
+        "fota",
+        "hipri",
+        "rcs"
+      ]
+    },
+    {
+      "apn": "3g.utel.ua",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://10.212.1.4/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "10.212.3.148",

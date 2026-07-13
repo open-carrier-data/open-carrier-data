@@ -1,4 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "event.swisscom.ch",
@@ -12,6 +36,7 @@
     },
     {
       "apn": "gprs.swisscom.ch",
+      "authtype": 0,
       "name": "Swisscom Services",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -23,11 +48,26 @@
     },
     {
       "apn": "hos",
-      "name": "HOS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "hos",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Swisscom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -61,6 +101,7 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc228.pub.3gppnetwork.org",
     "rtt_supported_bool": false,
     "rtt_supported_while_roaming_bool": false,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
@@ -75,7 +116,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Swisscom Li",
+  "display_name": "Carrier 29501",
   "match": {
     "mccmnc": [
       "29501"

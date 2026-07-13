@@ -1,0 +1,56 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-preferrednetworkmode",
+        "-cdmasystemselect",
+        "-voltecall"
+      ],
+      "network_type_capability": "USC-USC-GLB-USA",
+      "voice_network_setting_style": "NetworkSetting_USC"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "USC_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "cdma",
+      "mmsc": "http://mmsc1.uscc.net/mmsc/MMS",
+      "name": "USC CDMA",
+      "types": [
+        "default",
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "USCCDMA",
+  "match": {
+    "mccmnc": [
+      "311588"
+    ],
+    "spn": [
+      "USCCDMA"
+    ]
+  },
+  "profile_id": "open.311588.f325aed8a52a",
+  "schema_version": 1
+}

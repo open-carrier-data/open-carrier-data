@@ -1,5 +1,46 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "WiFi Hang",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC",
+        "WFC_DT"
+      ]
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "Telekom HU IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "hos",
       "bearer_bitmask": "18",
@@ -12,6 +53,22 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.051.126.010",
+      "mtu": 1500,
+      "name": "HOS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
     },
     {
       "apn": "ims",
@@ -44,14 +101,6 @@
     },
     {
       "apn": "internet.telekom",
-      "name": "internet.telekom",
-      "protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.telekom",
       "authtype": 1,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "mmsc": "http://mms.t-mobile.hu/servlets/mms",
@@ -68,19 +117,18 @@
     },
     {
       "apn": "internet.telekom",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.t-mobile.hu/servlets/mms",
       "mmsport": 8080,
-      "mmsproxy": "212.51.126.10",
-      "name": "Telekom HU MMS",
+      "mmsproxy": "212.051.126.010",
+      "name": "internet.telekom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "internet.telekom",
-      "name": "Telekom HU NET",
-      "types": [
-        "supl"
+        "default",
+        "supl",
+        "xcap"
       ]
     },
     {
@@ -113,6 +161,7 @@
     "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 13,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

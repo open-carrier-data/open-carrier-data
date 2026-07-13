@@ -254,6 +254,7 @@ GENERATED_FILES = {
     "community/README.md",
     "community/index.json",
     "devices/README.md",
+    "devices/android-carrier-artifacts.json",
     "devices/android.json",
     "devices/apple-carrier-artifacts.json",
     "devices/apple.json",

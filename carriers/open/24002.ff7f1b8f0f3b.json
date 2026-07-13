@@ -1,22 +1,45 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "-allowReasonEnable2g"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "bredband.tre.se",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "bredband.tre.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "dun"
+        "supl"
       ]
     },
     {
-      "apn": "data.tre.se",
-      "mmsc": "http://mms.tre.se",
-      "mmsport": 8799,
-      "mmsproxy": "mmsproxy.tre.se",
-      "name": "data.tre.se",
-      "protocol": "IPV4V6",
+      "apn": "bredband.tre.se",
+      "name": "3 SE",
       "types": [
-        "default"
+        "dun"
       ]
     },
     {
@@ -37,22 +60,29 @@
     },
     {
       "apn": "data.tre.se",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.tre.se",
       "mmsport": 8799,
       "mmsproxy": "mmsproxy.tre.se",
+      "mtu": 1280,
       "name": "data.tre.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun",
+        "default",
         "mms",
         "supl"
       ]
     },
     {
-      "apn": "ims",
+      "apn": "data.tre.se",
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
       "name": "3 SE",
-      "protocol": "IPV6",
       "types": [
-        "ims"
+        "dun"
       ]
     },
     {
@@ -81,6 +111,22 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "services",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
+      "mtu": 1440,
+      "name": "services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
     },
     {
       "apn": "services",
@@ -119,6 +165,7 @@
     "maxMessageSize": 2097152,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

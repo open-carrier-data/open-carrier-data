@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause,DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
@@ -75,6 +95,66 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.1und1-mobilfunk.de/",
+      "mmsport": 80,
+      "mmsproxy": "2a00:0fbc:2200:c999:0109:1f87:2:1",
+      "mtu": 1500,
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -97,6 +177,7 @@
     "recipientLimit": 50,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 5,
     "wfc_spn_format_idx_int": 9
   },
   "capabilities": {

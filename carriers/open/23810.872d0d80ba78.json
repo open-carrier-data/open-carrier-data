@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "MMS",
@@ -8,6 +33,28 @@
       "name": "TDC MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -23,6 +70,8 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -33,12 +82,14 @@
     },
     {
       "apn": "mms",
-      "mmsc": "http://192.168.241.114:8002",
-      "mmsport": 8080,
-      "mmsproxy": "194.182.251.15",
-      "name": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "name": "TDC MMS DK",
+      "port": 8080,
+      "proxy": "62.135.173.214",
       "types": [
-        "mms"
+        "default"
       ]
     },
     {

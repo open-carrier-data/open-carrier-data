@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -13,16 +33,30 @@
     },
     {
       "apn": "ims",
-      "name": "Telenor HU",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
     },
     {
       "apn": "net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "net",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "net",
       "name": "net",
       "types": [
-        "default",
         "dun",
         "supl"
       ]
@@ -33,16 +67,6 @@
       "protocol": "IPV6",
       "types": [
         "dun"
-      ]
-    },
-    {
-      "apn": "online",
-      "authtype": 1,
-      "name": "online",
-      "protocol": "IPV4V6",
-      "types": [
-        "supl",
-        "xcap"
       ]
     }
   ],

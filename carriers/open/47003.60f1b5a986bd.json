@@ -1,0 +1,70 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "blmms",
+      "mmsc": "http://mmsc1:10021/mmsc/01",
+      "mmsport": 8799,
+      "mmsproxy": "10.10.55.34",
+      "name": "Banglalink MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "blweb",
+      "name": "Banglalink-WEB",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Banglalink IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Banglalink",
+  "match": {
+    "mccmnc": [
+      "47003"
+    ],
+    "spn": [
+      "Banglalink"
+    ]
+  },
+  "profile_id": "open.47003.60f1b5a986bd",
+  "schema_version": 1
+}

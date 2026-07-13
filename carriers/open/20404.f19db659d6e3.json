@@ -1,0 +1,87 @@
+{
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "CHARACTER"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "apps.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell-EPDG-MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "apps.bell.ca",
+      "name": "Bell-EPDG-XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pda.bell.ca",
+      "name": "pda.bell.ca",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "pda.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell-MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Virgin Plus",
+  "match": {
+    "mccmnc": [
+      "20404"
+    ],
+    "spn": [
+      "Virgin Plus"
+    ]
+  },
+  "profile_id": "open.20404.f19db659d6e3",
+  "schema_version": 1
+}

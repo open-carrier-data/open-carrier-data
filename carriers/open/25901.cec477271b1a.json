@@ -1,5 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -34,13 +60,34 @@
         "emergency",
         "enterprise",
         "fota",
-        "hipri",
         "ia",
         "ims",
         "mcx",
         "mms",
         "rcs",
         "vsim",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wap.orange.md",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://wap.orange.md/",
+      "mmsport": 8799,
+      "mmsproxy": "9201",
+      "name": "wap.orange.md",
+      "types": [
+        "hipri"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_enabled": true,
+      "name": "Orange XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
         "xcap"
       ]
     }

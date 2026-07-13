@@ -1,0 +1,97 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "+cdmaapn",
+        "-voltecall_sim_mobility",
+        "-preferrednetworkmode",
+        "-allowReasonEnable2g",
+        "+allow5gService"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "admin.lte.ntwls.com",
+      "name": "Nex Tech Wireless FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "Nex Tech Wireless Service EPDG",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Nex Tech Wireless IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.lte.ntwls.com",
+      "name": "Nex Tech Wireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.lte.ntwls.com",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "Nex Tech Wireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "modem.lte.ntwls.com",
+      "name": "Nex Tech Wireless Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Nex Tech Wireless",
+  "match": {
+    "mccmnc": [
+      "312420"
+    ],
+    "spn": [
+      "Nex Tech Wireless"
+    ]
+  },
+  "profile_id": "open.312420.7d0d31fb42ae",
+  "schema_version": 1
+}

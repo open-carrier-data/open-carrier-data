@@ -1,14 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
-      "apn": "hos",
-      "name": "hos",
-      "protocol": "IPV4V6",
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "Bite LV IMS",
+      "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "xcap"
-      ],
-      "user_visible": false
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -23,6 +40,8 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -34,6 +53,7 @@
     {
       "apn": "mms",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "192.168.150.2",

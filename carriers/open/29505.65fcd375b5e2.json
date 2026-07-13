@@ -1,4 +1,25 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "fl1",
@@ -12,13 +33,40 @@
       "user": "gprs@a1plus.at"
     },
     {
+      "apn": "fl1",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "FL1 DATA",
+      "password": "fl1",
+      "types": [
+        "supl"
+      ],
+      "user": "gprs@a1plus.at"
+    },
+    {
       "apn": "fl1.li",
-      "name": "fl1 XCAP",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "fl1.li",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "free.fl1.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.a1.net",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.71",
+      "name": "FL1 MMS",
+      "password": "ppp",
+      "types": [
+        "mms"
+      ],
+      "user": "ppp@a1plus.at"
     },
     {
       "apn": "ims",
@@ -30,6 +78,18 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -41,7 +101,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

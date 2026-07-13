@@ -1,5 +1,34 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "mtu": 1300,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "gprs.promonte.com",
       "name": "gprs.promonte.com",
@@ -24,13 +53,13 @@
     {
       "apn": "internet",
       "authtype": 0,
+      "carrier_enabled": true,
       "name": "internet",
       "password": "gprs",
       "port": 8080,
       "proxy": "192.168.246.005",
       "types": [
-        "default",
-        "supl"
+        "default"
       ],
       "user": "gprs"
     },
@@ -46,6 +75,19 @@
     {
       "apn": "internet",
       "authtype": 0,
+      "name": "internet",
+      "password": "gprs",
+      "port": 8080,
+      "proxy": "192.168.246.005",
+      "types": [
+        "supl"
+      ],
+      "user": "gprs"
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "internet",
       "types": [
         "xcap"

@@ -1,20 +1,54 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "Vodafone IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "types": [
+        "cbs",
+        "dun",
+        "fota",
+        "hipri",
+        "rcs",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
       "name": "internet",
       "types": [
         "default",
         "supl"
       ],
       "user": "internet"
-    },
-    {
-      "apn": "internet",
-      "name": "Vodafone UA",
-      "types": [
-        "dun"
-      ]
     }
   ],
   "capabilities": {

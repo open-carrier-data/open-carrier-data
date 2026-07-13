@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "virgin-mobile.fr",
@@ -19,8 +39,39 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "event.proximus.be",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.proximus.be/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.55.14.75",
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "Proximus MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "internet.proximus.be",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "Proximus Web",
+      "types": [
+        "default"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -28,12 +79,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Virgin Fr",
+  "display_name": "Proximus (Virgin)",
   "match": {
     "gid1_prefixes": [
       "52"

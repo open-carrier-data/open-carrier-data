@@ -1,0 +1,123 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "AMO",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "indicator_icon_branding": "ORANGE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "Orange",
+      "mvno_type": "spn",
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "Orange",
+      "mvno_type": "spn",
+      "name": "Orange Internet PC",
+      "password": "orange",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangemms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "mvno_match_data": "Orange",
+      "mvno_type": "spn",
+      "name": "Orange MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangeworld",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "Orange",
+      "mvno_type": "spn",
+      "name": "Orange Internet M\u00f3vil",
+      "password": "orange",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "orange"
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Orange",
+  "match": {
+    "mccmnc": [
+      "21403"
+    ],
+    "spn": [
+      "Orange"
+    ]
+  },
+  "profile_id": "open.21403.fca13a442a96",
+  "schema_version": 1
+}

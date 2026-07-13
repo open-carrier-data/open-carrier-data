@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "TCL",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,8 +37,20 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Vodafone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.vodafone.pt",
       "authtype": 0,
+      "carrier_enabled": true,
       "name": "Vodafone Internet",
       "protocol": "IPV4V6",
       "types": [
@@ -24,10 +61,11 @@
     {
       "apn": "net2.vodafone.pt",
       "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.vodafone.pt/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "iproxy.vodafone.pt",
-      "name": "Vodafone Net2",
+      "name": "net2.vodafone.pt",
       "protocol": "IPV4V6",
       "types": [
         "default",
@@ -62,7 +100,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Vodafone Pt",
+  "display_name": "Carrier 26892",
   "match": {
     "mccmnc": [
       "26892"

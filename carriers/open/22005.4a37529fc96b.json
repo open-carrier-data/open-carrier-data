@@ -1,23 +1,27 @@
 {
-  "android_apns": [
-    {
-      "apn": "hos",
-      "name": "A1 SRB XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
       ],
-      "user_visible": false
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
     },
-    {
-      "apn": "ims",
-      "name": "A1 SRB",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -31,19 +35,33 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "A1 SRB Internet",
+      "password": "internet",
+      "types": [
+        "default"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet",
       "name": "A1 SRB Internet",
       "types": [
-        "default",
         "supl"
       ]
     },
     {
       "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.a1.rs",
-      "name": "A1 SRB mms",
+      "name": "mms",
+      "password": "mms",
       "types": [
         "mms"
-      ]
+      ],
+      "user": "mms"
     },
     {
       "apn": "vipmobile",

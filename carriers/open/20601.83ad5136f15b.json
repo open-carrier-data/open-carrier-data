@@ -1,0 +1,104 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "2800000000000000",
+      "mvno_type": "gid",
+      "name": "Virgin Media Mobile Internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.030.166.002",
+      "mvno_match_data": "2800000000000000",
+      "mvno_type": "gid",
+      "name": "VM Picture messaging",
+      "types": [
+        "mms"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1280,
+      "mvno_match_data": "2800000000000000",
+      "mvno_type": "gid",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1280,
+      "mvno_match_data": "2800000000000000",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Virgin",
+  "match": {
+    "gid1_prefixes": [
+      "2800000000000000"
+    ],
+    "mccmnc": [
+      "20601"
+    ]
+  },
+  "profile_id": "open.20601.83ad5136f15b",
+  "schema_version": 1
+}

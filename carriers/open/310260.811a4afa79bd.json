@@ -1,0 +1,72 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall_sim_mobility",
+        "+vonrcall"
+      ],
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "Wholesale",
+      "name": "Wholesale",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Ting MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Ting IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Ting",
+  "match": {
+    "mccmnc": [
+      "310260"
+    ],
+    "spn": [
+      "Ting"
+    ]
+  },
+  "profile_id": "open.310260.811a4afa79bd",
+  "schema_version": 1
+}

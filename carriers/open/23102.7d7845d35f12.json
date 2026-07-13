@@ -1,11 +1,60 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://m.telekom.sk",
+      "name": "Telekom Xcap",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "hos",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc.telekom.sk",
+      "mtu": 1500,
       "name": "HOS",
       "password": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms",
         "xcap"
@@ -35,6 +84,8 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -75,6 +126,7 @@
     "recipientLimit": 10,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 13,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {

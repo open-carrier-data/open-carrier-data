@@ -1,0 +1,58 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "mms.mtn.ci",
+      "mmsc": "http://mms.mtn.ci/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.100.5",
+      "name": "MTN MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.mtn.ci",
+      "name": "MTN",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "MTN CI",
+  "match": {
+    "mccmnc": [
+      "61205"
+    ],
+    "spn": [
+      "MTN CI"
+    ]
+  },
+  "profile_id": "open.61205.8dd022432659",
+  "schema_version": 1
+}

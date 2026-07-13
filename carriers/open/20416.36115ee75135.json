@@ -1,12 +1,56 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "PHN",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:NONE,not_restricted_rrc_con:NONE",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
-      "apn": "hos",
-      "name": "HOS",
+      "apn": "IMS",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "HOS",
+      "password": "tmobilemms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
+      "user": "tmobilemms",
       "user_visible": false
     },
     {
@@ -51,8 +95,11 @@
     {
       "apn": "internet.mobiel",
       "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
       "name": "internet.mobiel",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "default",
         "supl"
@@ -94,6 +141,7 @@
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": false,
     "hide_enhanced_4g_lte_bool": true,
     "ims_reasoninfo_mapping_string_array": [
       "361| call declined|1017",
@@ -103,12 +151,13 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc016.mcc204.pub.3gppnetwork.org",
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "supported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

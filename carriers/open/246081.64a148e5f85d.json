@@ -1,0 +1,59 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold,OFFWIFI"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g",
+        "-preferrednetworkmode",
+        "-voltecall"
+      ],
+      "network_type_capability": "VZW-TFN-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB,SupportDataPopup"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "VZW_OPEN"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "cdma",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "name": "Tracfone CDMA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "TFNCDMA",
+  "match": {
+    "mccmnc": [
+      "246081"
+    ],
+    "spn": [
+      "TFNCDMA"
+    ]
+  },
+  "profile_id": "open.246081.64a148e5f85d",
+  "schema_version": 1
+}

@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": "connected_mmwave:5G,connected:5G,not_restricted_rrc_idle:5G,not_restricted_rrc_con:5G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,15 +32,35 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.monaco-telecom.mc",
-      "name": "Monaco Telecom",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "Monaco Telecom",
+      "types": [
+        "xcap"
       ]
     }
   ],
@@ -29,7 +69,8 @@
     "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
     "maxMessageSize": 614400,
-    "read_only_apn_types_string_array": []
+    "read_only_apn_types_string_array": [],
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",
