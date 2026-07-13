@@ -107,8 +107,8 @@ the rest of the database.
 ## Where The Data Comes From
 
 The current stable snapshot combines maintained AOSP, LineageOS, Mobile
-Broadband Provider Info, Apple carrier-bundle, Samsung OMC, and scoped Samsung
-IMS capability observations.
+Broadband Provider Info, Apple carrier-bundle, Google Pixel CarrierSettings,
+Samsung OMC, and scoped Samsung IMS capability observations.
 Each source is translated into the same neutral profile model.
 
 `generated/evidence-index.json` records:
@@ -121,6 +121,8 @@ Each source is translated into the same neutral profile model.
   add-on, and APN fact;
 - Samsung model, firmware build/region, OMC, sales-code, and revision scope
   when safely publishable;
+- Google Pixel device codenames, Android version, firmware build, and whether
+  the observation came from a firmware baseline or a newer network delta;
 - conflicts and quality gates that caused a value to become conditional or be
   omitted.
 
@@ -263,8 +265,9 @@ package, test, and ship through their own normal update process.
 Project software and documentation are Apache-2.0. The project's own rights in
 the neutral data compilation are waived under CC0, but upstream terms still
 apply. AOSP, LineageOS, and Mobile Broadband Provider Info have clear reusable
-terms. Apple declares no license, and this project does not assert a Samsung
-license; only narrow transformed facts are published from those sources.
+terms. Apple declares no license, and this project does not assert a Google
+CarrierSettings or Samsung license; only narrow transformed facts are published
+from those sources.
 
 Read `DATA-LICENSE.md`, `SOURCES.md`, and the source snapshots in
 `generated/evidence-index.json` before redistribution.

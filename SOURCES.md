@@ -53,6 +53,26 @@ when its recorded check is more than 180 days old.
   sanitized factual fields are emitted
 - update method: scheduled Git import recorded by full commit ID
 
+### Google Pixel CarrierSettings
+
+- maintained snapshot source: the newest numeric Android branch in
+  `GrapheneOS/adevtool`, which contains decoded CarrierSettings snapshots for
+  current supported Pixel devices
+- live update source: Google's per-device CarrierSettings update endpoint
+- data: safe carrier match rules, APNs, reviewed CarrierConfig values, and
+  feature observations
+- upstream terms: the GrapheneOS tooling is MIT; this project makes no license
+  claim for Google's CarrierSettings data
+- public policy: raw textproto/protobuf files, endpoint responses, download
+  URLs, and firmware material stay private; only narrow normalized facts and
+  safe scope summaries are published
+- update method: automation records the exact GrapheneOS revision, checks every
+  Pixel device against Google's live endpoint, and applies a delta only when
+  its internal version is newer than the firmware baseline
+- device differences: conflicting Pixel variants remain separate source
+  observations and become conditional or omitted during the neutral public
+  merge; identical variants are grouped with their observed device codenames
+
 ### Samsung OMC
 
 - upstream: Samsung firmware OMC baselines and Samsung GRAS/OMC update checks
