@@ -70,6 +70,13 @@
       ]
     },
     {
+      "apn": "ims.lte.three.com.hk",
+      "name": "3 IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mobile.lte.three.com.hk",
       "authtype": 1,
       "carrier_id": 760,
@@ -170,7 +177,10 @@
     {
       "apn": "share.three.com.hk",
       "authtype": 1,
-      "name": "3 Share",
+      "carrier_id": 760,
+      "name": "Hutchison HK Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ]
@@ -178,10 +188,7 @@
     {
       "apn": "share.three.com.hk",
       "authtype": 1,
-      "carrier_id": 760,
-      "name": "Hutchison HK Share",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "share.three.com.hk",
       "types": [
         "dun"
       ]
@@ -461,6 +468,35 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "IMS",
+      "mvno_match_data": "8985302,8985307,898603,898611",
+      "mvno_type": "iccid",
+      "name": "China Telecomm (IMS)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "mvno_match_data": "8985302,8985307,898603,898611",
+      "mvno_type": "iccid",
+      "name": "CTNET",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user": "ctnet@mycdma.cn"
     },
     {
       "apn": "ctnet",

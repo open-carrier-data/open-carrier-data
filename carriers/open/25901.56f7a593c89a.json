@@ -17,12 +17,13 @@
   },
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "Orange IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "mms.orange.md",
+      "mmsc": "http://mms/mms",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.127.125",
+      "name": "Orange MMS",
       "types": [
-        "ims"
+        "mms"
       ]
     },
     {
@@ -31,21 +32,12 @@
       "types": [
         "default"
       ]
-    },
-    {
-      "apn": "xcap",
-      "name": "Orange XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

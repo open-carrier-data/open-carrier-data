@@ -261,6 +261,15 @@
     },
     {
       "apn": "inet.es",
+      "mvno_match_data": "893434",
+      "mvno_type": "iccid",
+      "name": "Airenetworks",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "inet.es",
       "mvno_match_data": "214050104xxxxxx",
       "mvno_type": "imsi",
       "name": "INET Roaming",
@@ -271,6 +280,37 @@
         "hipri",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "internetand",
+      "mvno_match_data": "Andorra Telecom",
+      "mvno_type": "spn",
+      "name": "internetand",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.ono.com",
+      "mvno_match_data": "ONO",
+      "mvno_type": "spn",
+      "name": "ONO",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.ono.com",
+      "mmsc": "http://mms.ono.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.126.0.50",
+      "mvno_match_data": "ONO",
+      "mvno_type": "spn",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -319,30 +359,63 @@
     },
     {
       "apn": "tuenti.com",
-      "mvno_match_data": "Tuenti",
-      "mvno_type": "spn",
-      "name": "Tuenti Internet",
-      "password": "tuenti",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "tuenti"
-    },
-    {
-      "apn": "tuenti.com",
       "authtype": 1,
       "mmsc": "http://tuenti.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.43",
       "mvno_match_data": "Tuenti",
       "mvno_type": "spn",
-      "name": "Tuenti MMS",
+      "name": "tuenti.com",
       "password": "tuenti",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "tuenti"
+    },
+    {
+      "apn": "gprs.pepephone.com",
+      "authtype": 1,
+      "mmsc": "http://www.pepephone.com/",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.43",
+      "mvno_match_data": "pepephone",
+      "mvno_type": "spn",
+      "name": "Internet Pepephone",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.telecable.es",
+      "authtype": 1,
+      "mvno_match_data": "telecable",
+      "mvno_type": "spn",
+      "name": "telecable Internet",
+      "password": "telecable",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "mms.telecable.es",
+      "authtype": 1,
+      "mmsc": "http://mms.telecable.es/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "212.89.0.84",
+      "mvno_match_data": "telecable",
+      "mvno_type": "spn",
+      "name": "telecable MMS",
+      "password": "telecable",
       "types": [
         "mms"
       ],
-      "user": "tuenti"
+      "user": "telecable"
     }
   ],
   "android_carrier_config": {

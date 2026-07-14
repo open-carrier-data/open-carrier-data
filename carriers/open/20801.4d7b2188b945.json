@@ -110,7 +110,8 @@
       "types": [
         "ims"
       ],
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "internet-entreprise",
@@ -207,19 +208,7 @@
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
-        "dun"
-      ],
-      "user": "orange",
-      "user_editable": false
-    },
-    {
-      "apn": "orange",
-      "authtype": 1,
-      "mmsc": "http://mms.orange.fr",
-      "name": "orange",
-      "password": "orange",
-      "protocol": "IPV6",
-      "types": [
+        "dun",
         "mms",
         "xcap"
       ],
@@ -452,6 +441,17 @@
       "user": "orange"
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "4E",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ofnew.fr",
       "authtype": 1,
       "carrier_id": 2005,
@@ -494,6 +494,60 @@
       "user": "orange"
     },
     {
+      "apn": "ofnew.fr",
+      "authtype": 1,
+      "mvno_match_data": "4E524A31",
+      "mvno_type": "gid",
+      "name": "RSO WEB",
+      "password": "orange",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange.acte",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "mvno_match_data": "4E524A31",
+      "mvno_type": "gid",
+      "name": "RSO MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange",
+      "mvno_match_data": "4d433031",
+      "mvno_type": "gid",
+      "name": "Monaco Telecom",
+      "password": "orange",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange.acte",
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "mvno_match_data": "4d433031",
+      "mvno_type": "gid",
+      "name": "Monaco Telecom MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "internet",
       "mmsc": "http://mms.monaco-telecom.mc",
       "mvno_match_data": "4d433032",
@@ -501,6 +555,7 @@
       "name": "Monaco Telecom",
       "types": [
         "default",
+        "dun",
         "ia",
         "mms",
         "supl"
@@ -544,6 +599,28 @@
         "default",
         "dun",
         "ia"
+      ]
+    },
+    {
+      "apn": "coriolis",
+      "mvno_match_data": "893327",
+      "mvno_type": "iccid",
+      "name": "Coriolis",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmscoriolis",
+      "mmsc": "http://mms.coriolis.fr",
+      "mmsport": 9028,
+      "mmsproxy": "10.12.0.1",
+      "mvno_match_data": "893327",
+      "mvno_type": "iccid",
+      "name": "Coriolis MMS",
+      "types": [
+        "mms"
       ]
     },
     {

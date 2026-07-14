@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
     },
     "ims": {
@@ -60,18 +61,6 @@
       "protocol": "IP",
       "types": [
         "default"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mtu": 1300,
-      "mvno_match_data": "0C",
-      "mvno_type": "gid",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
       ]
     },
     {

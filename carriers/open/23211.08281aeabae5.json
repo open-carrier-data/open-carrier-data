@@ -60,14 +60,16 @@
     },
     {
       "apn": "bob.at",
-      "authtype": 1,
-      "carrier_enabled": true,
+      "authtype": 3,
       "name": "data.bob",
       "password": "ppp",
+      "port": 8001,
       "protocol": "IPV4V6",
+      "proxy": "194.48.124.7",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "hipri",
+        "xcap"
       ],
       "user": "data@bob.at"
     },
@@ -95,6 +97,16 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "name": "Bob IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",

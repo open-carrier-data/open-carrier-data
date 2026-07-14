@@ -1,13 +1,30 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "salam",
-      "name": "salam mobile",
+      "name": "salam",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IP",
+      "types": [
+        "xcap"
       ]
     }
   ],

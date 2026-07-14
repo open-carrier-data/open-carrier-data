@@ -1,10 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "emergency_dial_call_style": "EndPreviousCall"
-    },
     "ims": {
-      "contacts_operator_style": "VOD",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -265,6 +261,27 @@
       ]
     },
     {
+      "apn": "UK.LEBARA.MOBI",
+      "authtype": 1,
+      "carrier_id": 2309,
+      "mmsc": "http://mms.lebara.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "mvno_match_data": "90",
+      "mvno_type": "gid",
+      "name": "Lebara Data",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "wap",
+      "user_editable": false
+    },
+    {
       "apn": "asdamobiles.co.uk",
       "authtype": 1,
       "mmsc": "http://mms.asdamobiles.co.uk/servlets/mms",
@@ -282,6 +299,26 @@
         "supl"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "MY.INTERNET",
+      "authtype": 1,
+      "mmsc": "http://mms.ad.vodafone.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "mvno_match_data": "A1",
+      "mvno_type": "gid",
+      "name": "ASDA Mobile Data",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "wap",
+      "user_editable": false
     },
     {
       "apn": "btmobile.bt.com",
@@ -326,9 +363,10 @@
       "mmsproxy": "212.183.137.12",
       "mvno_match_data": "C1",
       "mvno_type": "gid",
-      "name": "Talkmob WAP",
+      "name": "talkmobile.co.uk",
       "password": "wap",
       "port": 8799,
+      "protocol": "IPV4V6",
       "proxy": "212.183.137.12",
       "types": [
         "default",
@@ -336,7 +374,8 @@
         "mms",
         "supl"
       ],
-      "user": "wap"
+      "user": "wap",
+      "user_editable": false
     },
     {
       "apn": "btmobile.bt.com",

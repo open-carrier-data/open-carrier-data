@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "TIGO IMS",
       "protocol": "IPV4V6",
@@ -72,10 +81,10 @@
       "apn": "web.colombiamovil.com.co",
       "authtype": 1,
       "name": "web.colombiamovil.com.co",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "default"
       ]
     },
     {
@@ -92,12 +101,33 @@
     },
     {
       "apn": "web.colombiamovil.com.co",
+      "authtype": 1,
+      "name": "web.colombiamovil.com.co",
+      "types": [
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.colombiamovil.com.co",
       "carrier_id": 624,
       "name": "Tigo Web",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ia"
+      ]
+    },
+    {
+      "apn": "internetmovil.etb.net.co",
+      "authtype": 1,
+      "mvno_match_data": "ETB 4G",
+      "mvno_type": "spn",
+      "name": "ETB LTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
       ]
     },
     {
@@ -127,6 +157,16 @@
         "ia"
       ],
       "user": "etb"
+    },
+    {
+      "apn": "movilexito.net.co",
+      "authtype": 1,
+      "mvno_match_data": "Movil Exito",
+      "mvno_type": "spn",
+      "name": "Internet \u00c9xito",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "une4glte.net.co",

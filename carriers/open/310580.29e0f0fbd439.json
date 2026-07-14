@@ -190,6 +190,16 @@
       ]
     },
     {
+      "apn": "fast.t-mobile.com",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "fast.t-mobile.com",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "hos",
       "bearer_bitmask": "18",
       "mmsc": "http://mms.inland3g.com/inland/mms.php",
@@ -223,8 +233,9 @@
     },
     {
       "apn": "ims",
-      "name": "Inland IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
@@ -317,6 +328,18 @@
       "user_visible": false
     },
     {
+      "apn": "pcweb.tmobile.com",
+      "mtu": 1440,
+      "name": "T-Mobile US 580 DUN",
+      "password": "none",
+      "protocol": "IP",
+      "server": "*",
+      "types": [
+        "dun"
+      ],
+      "user": "none"
+    },
+    {
       "apn": "fast.metropcs.com",
       "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
       "mvno_match_data": "6D",
@@ -406,6 +429,32 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "fota"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer": 13,
+      "mvno_match_data": "inland",
+      "mvno_type": "spn",
+      "name": "Inland IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer": 14,
+      "mvno_match_data": "inland",
+      "mvno_type": "spn",
+      "name": "Inland IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
       ]
     },
     {

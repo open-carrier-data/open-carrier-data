@@ -1,16 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "IMS",
-      "name": "KDDI JP IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "a.rmobile.jp",
       "authtype": 3,
       "carrier_id": 2109,
@@ -26,7 +16,7 @@
     {
       "apn": "a.rmobile.jp",
       "authtype": 3,
-      "name": "Rakuten mobile",
+      "name": "a.rmobile.jp",
       "password": "0000",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -34,6 +24,17 @@
         "default",
         "ia",
         "supl"
+      ],
+      "user": "rakuten@vdm"
+    },
+    {
+      "apn": "a.rmobile.jp",
+      "authtype": 3,
+      "name": "\u697d\u5929\u30e2\u30d0\u30a4\u30eb(a.rmobile.jp)",
+      "password": "0000",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ],
       "user": "rakuten@vdm"
     },
@@ -307,9 +308,7 @@
       "types": [
         "cbs",
         "fota",
-        "hipri",
-        "ia",
-        "mms"
+        "ia"
       ],
       "user": "au@uad5gn.au-net.ne.jp"
     },
@@ -321,11 +320,21 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "dun"
       ],
       "user": "au@uad5gn.au-net.ne.jp"
+    },
+    {
+      "apn": "uad5gntrg.au-net.ne.jp",
+      "authtype": 2,
+      "name": "5G NET",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "X36yN3Dhe9UjPhzm@uad5gntrg.au-net.ne.jp",
+      "user_visible": false
     },
     {
       "apn": "unitrg.au-net.ne.jp",
@@ -344,6 +353,18 @@
       "user_visible": false
     },
     {
+      "apn": "unitrg.au-net.ne.jp",
+      "authtype": 2,
+      "name": "LTE NET",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "X36yN3Dhe9UjPhzm@unitrg.au-net.ne.jp",
+      "user_visible": false
+    },
+    {
       "apn": "uno.au-net.ne.jp",
       "authtype": 2,
       "name": "au(LTE NET)",
@@ -354,6 +375,21 @@
         "fota",
         "hipri",
         "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "685840734641020@uno.au-net.ne.jp"
+    },
+    {
+      "apn": "unod.au-net.ne.jp",
+      "authtype": 2,
+      "name": "LTE NET",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "hipri",
         "mms",
         "supl"
       ],

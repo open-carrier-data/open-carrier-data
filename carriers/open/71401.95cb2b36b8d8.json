@@ -9,6 +9,7 @@
       "network_type_capability": "EUR-LTN-GSM-EUR"
     },
     "operator_display": {
+      "indicator_icon_branding": "LTE",
       "refer_eons_without_lac": true
     }
   },
@@ -18,6 +19,16 @@
       "name": "Wap",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "apn02.cwpanama.com.pa",
+      "mmsc": "http://mms.zonamovil.com.pa",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.3.5",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -35,7 +46,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

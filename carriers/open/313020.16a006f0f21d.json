@@ -1,0 +1,77 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-gsmumtsapn",
+        "-gsmumtscarriersel",
+        "+cdmaapn",
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hos",
+      "name": "rinawireless XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "rinawireless IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "name": "rinawireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "rinawireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "rinawireless",
+  "match": {
+    "mccmnc": [
+      "313020"
+    ],
+    "spn": [
+      "rinawireless"
+    ]
+  },
+  "profile_id": "open.313020.16a006f0f21d",
+  "schema_version": 1
+}

@@ -1,8 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "UseMobileVoiceRegState"
+      "e911_routing_policy": "auto"
     },
     "ims": {
       "contacts_operator_style": "PHN",
@@ -11,19 +10,21 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
-      "five_g_icon_configuration": [
-        "connected_mmwave:5G",
-        "connected:5G",
-        "not_restricted_rrc_idle:NONE",
-        "not_restricted_rrc_con:NONE"
-      ],
+      "five_g_icon_branding": "5GAvailable,UseDisplayTimer",
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC",
+        "WFC_DT"
+      ],
       "show_vowifi_end_call": true
     }
   },
@@ -47,6 +48,15 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "smartsites.t-mobile",
       "name": "Internet",
       "protocol": "IPV4V6",
@@ -58,8 +68,7 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "enabledMMS": false,
-    "smsToMmsTextThreshold": 10
+    "enabledMMS": false
   },
   "capabilities": {
     "esim": "unknown",

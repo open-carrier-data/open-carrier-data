@@ -29,6 +29,17 @@
       "user_editable": false
     },
     {
+      "apn": "fast.t-mobile.com",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "T-Mobile LTE",
+      "protocol": "IPV6",
+      "types": [
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -59,6 +70,17 @@
       "bearer_bitmask": "18",
       "mtu": 1440,
       "name": "T-Mobile US IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "mmsc": "epdg",
+      "name": "ims",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
@@ -104,11 +126,28 @@
       ]
     },
     {
-      "apn": "pcweb.tmobile.com",
-      "name": "T-Mobile Tethering",
-      "protocol": "IPV6",
+      "apn": "internet.metropcs",
+      "authtype": 0,
+      "mmsc": "http://mms.metropcs.net:3128/mmsc",
+      "name": "MetroPCS DEFAULT",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "hipri",
+        "mms"
+      ]
+    },
+    {
+      "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
       ],
       "user_visible": false
     }

@@ -1,6 +1,15 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mmssfr",
       "mmsc": "http://mms1",
       "mmsport": 8080,
@@ -53,6 +62,31 @@
         "default",
         "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "authtype": 1,
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "mvno_match_data": "F SFR",
+      "mvno_type": "spn",
+      "name": "SFR webphone",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "websfr",
+      "authtype": 1,
+      "mvno_match_data": "F SFR",
+      "mvno_type": "spn",
+      "name": "SFR option modem",
+      "types": [
+        "dun"
       ]
     }
   ],

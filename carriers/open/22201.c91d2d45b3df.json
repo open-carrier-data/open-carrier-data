@@ -176,31 +176,6 @@
       ]
     },
     {
-      "apn": "wap.tim.it",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "wap.tim.it",
-      "password": "WAPTIM",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "WAPTIM"
-    },
-    {
-      "apn": "wap.tim.it",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "wap.tim.it",
-      "password": "WAPTIM",
-      "types": [
-        "dun"
-      ],
-      "user": "WAPTIM"
-    },
-    {
       "apn": "xcap.tim.it",
       "carrier_id": 33,
       "name": "TIM UT",
@@ -224,6 +199,43 @@
       "user_visible": false
     },
     {
+      "apn": "internet.coopvoce.it",
+      "authtype": 1,
+      "mvno_match_data": "434F4F50FFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "WEB CoopVoce",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "message.coopvoce.it",
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "434F4F50FFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "MMS CoopVoce",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.freedommobile.ca",
+      "mvno_match_data": "FFFFFF00",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.windmobile.ca",
       "carrier_id": 1895,
       "mvno_match_data": "FFFFFF00",
@@ -244,6 +256,18 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms.freedommobile.ca",
+      "mmsc": "http://mms.freedommobile.ca",
+      "mmsport": 8080,
+      "mmsproxy": "74.115.197.70",
+      "mvno_match_data": "FFFFFF00",
+      "mvno_type": "gid",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -287,11 +311,129 @@
       "apn": "jionet",
       "mvno_match_data": "8991840,8991854,8991855,8991856,8991857,8991858,8991859,899186,                        8991870,8991871,8991872,8991873,8",
       "mvno_type": "iccid",
-      "name": "Jio 4G",
+      "name": "jionet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet.btitalia.it",
+      "mvno_match_data": "BT Enia",
+      "mvno_type": "spn",
+      "name": "BT Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.btitalia.it",
+      "mmsc": "http://mms.tim.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "BT Enia",
+      "mvno_type": "spn",
+      "name": "BT MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.btitalia.it",
+      "mvno_match_data": "BT Italia",
+      "mvno_type": "spn",
+      "name": "BT Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.btitalia.it",
+      "mmsc": "http://mms.tim.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "BT Italia",
+      "mvno_type": "spn",
+      "name": "BT MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.coopvoce.it",
+      "authtype": 1,
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "COOP",
+      "mvno_type": "spn",
+      "name": "CoopVoce MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.coopvoce.it",
+      "authtype": 1,
+      "mvno_match_data": "COOP",
+      "mvno_type": "spn",
+      "name": "CoopVoce WEB",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.coopvoce.it",
+      "authtype": 1,
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "COOP MOBILE",
+      "mvno_type": "spn",
+      "name": "CoopVoce MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.coopvoce.it",
+      "authtype": 1,
+      "mvno_match_data": "COOP MOBILE",
+      "mvno_type": "spn",
+      "name": "CoopVoce WEB",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.coopvoce.it",
+      "authtype": 1,
+      "mmsc": "http://mms.coop.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "COOP \u00a1OBILE",
+      "mvno_type": "spn",
+      "name": "CoopVoce MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.coopvoce.it",
+      "authtype": 1,
+      "mvno_match_data": "COOP \u00a1OBILE",
+      "mvno_type": "spn",
+      "name": "CoopVoce WEB",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -350,6 +492,29 @@
       "types": [
         "default",
         "ia"
+      ]
+    },
+    {
+      "apn": "unico.tim.it",
+      "mmsc": "http://mms.tim.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "I TIM",
+      "mvno_type": "spn",
+      "name": "iTIM",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.tim.it",
+      "authtype": 0,
+      "mvno_match_data": "I TIM",
+      "mvno_type": "spn",
+      "name": "WAP TIM",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -449,6 +614,28 @@
       "name": "Internet",
       "types": [
         "ia"
+      ]
+    },
+    {
+      "apn": "mms.kenamobile.it",
+      "mmsc": "http://mms.kenamobile.it/",
+      "mmsport": 80,
+      "mmsproxy": "10.248.1.12",
+      "mvno_match_data": "KENA MOBILE R",
+      "mvno_type": "spn",
+      "name": "Kena Mobile MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.kenamobile.it",
+      "mvno_match_data": "KENA MOBILE R",
+      "mvno_type": "spn",
+      "name": "Kena Mobile Web",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -587,6 +774,28 @@
       "name": "Internet",
       "types": [
         "ia"
+      ]
+    },
+    {
+      "apn": "tiscalimobileinternet",
+      "mvno_match_data": "tiscali mobile",
+      "mvno_type": "spn",
+      "name": "Tiscali INTERNET",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tiscalimobilemms",
+      "mmsc": "http://mms.tiscali.mobi/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "213.230.130.89",
+      "mvno_match_data": "tiscali mobile",
+      "mvno_type": "spn",
+      "name": "Tiscali MMS",
+      "types": [
+        "mms"
       ]
     }
   ],

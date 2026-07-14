@@ -6,10 +6,19 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-LTN-GSM-EUR"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "indicator_icon_branding": "TCE",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
     }
   },
   "android_apns": [
@@ -44,6 +53,9 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -51,7 +63,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

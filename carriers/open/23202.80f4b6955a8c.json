@@ -9,6 +9,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -25,16 +28,16 @@
   "android_apns": [
     {
       "apn": "A1.net",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "A1.net",
+      "authtype": 3,
+      "name": "A1",
       "password": "ppp",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "supl"
+        "hipri",
+        "xcap"
       ],
-      "user": "ppp@a1plus.at"
+      "user": "ppp@A1plus.at"
     },
     {
       "apn": "IMS",
@@ -44,6 +47,16 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "SOS",
+      "authtype": 0,
+      "name": "A1 Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -85,6 +98,16 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "name": "A1 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",

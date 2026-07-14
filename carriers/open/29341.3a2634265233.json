@@ -9,9 +9,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "DisplayRatInfoForManualSearch"
@@ -30,9 +27,23 @@
     {
       "apn": "IMS",
       "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "Internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "Mobilni Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "mobitel"
     },
     {
       "apn": "hos",

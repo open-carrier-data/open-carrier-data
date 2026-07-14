@@ -1,10 +1,10 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
     },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -66,18 +66,20 @@
       ]
     },
     {
-      "apn": "tescomobile.liffeytelecom.com",
+      "apn": "48months.liffeytelecom.com",
+      "authtype": 1,
       "mmsc": "http://mmc1/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "10.1.11.19",
-      "mvno_match_data": "0A",
-      "mvno_type": "gid",
-      "name": "Tesco",
+      "mvno_match_data": "48",
+      "mvno_type": "spn",
+      "name": "48 Internet",
       "types": [
         "default",
         "mms",
         "supl"
-      ]
+      ],
+      "user": "User"
     }
   ],
   "android_carrier_config": {

@@ -6,6 +6,10 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+autoSwitchNr5gMode",
+        "disableAutoSwitchNr5gMode"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-LTN-GSM-EUR",
       "voice_network_setting_style": "SupportDualDataRoam"
@@ -28,7 +32,18 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "igprs.claro.com.py",
+      "mmsc": "http://mms.claro.com.py",
+      "name": "igprs.claro.com.py",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -39,13 +54,21 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
-    "rcs": "unknown",
+    "mms": "supported",
+    "rcs": "unsupported",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
     "volte": "unknown",

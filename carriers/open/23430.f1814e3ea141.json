@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
     },
     "ims": {
@@ -36,16 +37,6 @@
       "types": [
         "xcap"
       ]
-    },
-    {
-      "apn": "SOS",
-      "authtype": 1,
-      "name": "EE Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
     },
     {
       "apn": "eezone",
@@ -184,6 +175,18 @@
       "user": "user"
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "28",
+      "mvno_type": "gid",
+      "name": "Virgin IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.btonephone.com",
       "carrier_id": 2103,
       "mvno_match_data": "B2",
@@ -194,6 +197,28 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.btonephone.com",
+      "mvno_match_data": "B2",
+      "mvno_type": "gid",
+      "name": "BT One Phone Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.btonephone.com",
+      "mmsc": "http://MMSC/",
+      "mmsport": 8080,
+      "mmsproxy": "proxy.btonephone.com",
+      "mvno_match_data": "B2",
+      "mvno_type": "gid",
+      "name": "BT One Phone MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -210,18 +235,6 @@
       ]
     },
     {
-      "apn": "SOS",
-      "authtype": 1,
-      "mvno_match_data": "B3",
-      "mvno_type": "gid",
-      "name": "BT Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "eezone",
       "authtype": 1,
       "carrier_id": 2102,
@@ -245,7 +258,7 @@
       "mmsproxy": "149.254.201.135",
       "mvno_match_data": "B3",
       "mvno_type": "gid",
-      "name": "BT MMS",
+      "name": "eezone",
       "password": "secure",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -274,22 +287,6 @@
     {
       "apn": "everywhere",
       "authtype": 1,
-      "mvno_match_data": "B3",
-      "mvno_type": "gid",
-      "name": "BT Internet",
-      "password": "secure",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "eesecure",
-      "user_editable": false
-    },
-    {
-      "apn": "everywhere",
-      "authtype": 1,
       "carrier_id": 2102,
       "mvno_match_data": "B3",
       "mvno_type": "gid",
@@ -300,29 +297,6 @@
         "ia"
       ],
       "user": "eesecure"
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "B3",
-      "mvno_type": "gid",
-      "name": "BT IMS",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "SOS",
-      "authtype": 1,
-      "mvno_match_data": "C3",
-      "mvno_type": "gid",
-      "name": "BT Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
     },
     {
       "apn": "eezone",
@@ -348,7 +322,7 @@
       "mmsproxy": "149.254.201.135",
       "mvno_match_data": "C3",
       "mvno_type": "gid",
-      "name": "BT MMS",
+      "name": "eezone",
       "password": "secure",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -377,22 +351,6 @@
     {
       "apn": "everywhere",
       "authtype": 1,
-      "mvno_match_data": "C3",
-      "mvno_type": "gid",
-      "name": "BT Internet",
-      "password": "secure",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "eesecure",
-      "user_editable": false
-    },
-    {
-      "apn": "everywhere",
-      "authtype": 1,
       "carrier_id": 2101,
       "mvno_match_data": "C3",
       "mvno_type": "gid",
@@ -405,29 +363,6 @@
       "user": "eesecure"
     },
     {
-      "apn": "ims",
-      "mvno_match_data": "C3",
-      "mvno_type": "gid",
-      "name": "BT IMS",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "SOS",
-      "authtype": 1,
-      "mvno_match_data": "EE",
-      "mvno_type": "gid",
-      "name": "EE Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "eezone",
       "authtype": 1,
       "mmsc": "http://mms/",
@@ -435,7 +370,7 @@
       "mmsproxy": "149.254.201.135",
       "mvno_match_data": "EE",
       "mvno_type": "gid",
-      "name": "EE MMS",
+      "name": "eezone",
       "password": "secure",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -453,26 +388,25 @@
       "name": "EE Internet",
       "password": "secure",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "eesecure",
-      "user_editable": false
-    },
-    {
-      "apn": "everywhere",
-      "authtype": 1,
-      "mvno_match_data": "EE",
-      "mvno_type": "gid",
-      "name": "EE Internet",
-      "password": "secure",
-      "protocol": "IPV4V6",
       "types": [
         "ia"
       ],
       "user": "eesecure"
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "894443",
+      "mvno_type": "iccid",
+      "name": "Virgin Mobile",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "user"
     },
     {
       "apn": "eezone",

@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -48,6 +49,71 @@
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "jn",
+      "mvno_match_data": "f005",
+      "mvno_type": "gid",
+      "name": "Free Pro",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mmsjn",
+      "mmsc": "http://mms.freepro.fr",
+      "mvno_match_data": "f005",
+      "mvno_type": "gid",
+      "name": "Free Pro MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.telco.re",
+      "mmsc": "http://mms.telco.re",
+      "mvno_match_data": "f006",
+      "mvno_type": "gid",
+      "name": "Telco OI Re",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "free.gp",
+      "mmsc": "http://mms.free.gp",
+      "mvno_match_data": "f007",
+      "mvno_type": "gid",
+      "name": "Free Caraibes Guadeloupe",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "free.mq",
+      "mmsc": "http://mms.free.mq",
+      "mvno_match_data": "f008",
+      "mvno_type": "gid",
+      "name": "Free Caraibes Martinique Guyanne",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "free.re",
+      "mmsc": "http://mms.free.re",
+      "mvno_match_data": "f2330002",
+      "mvno_type": "gid",
+      "name": "Free Re",
+      "types": [
+        "default",
+        "mms"
       ]
     }
   ],

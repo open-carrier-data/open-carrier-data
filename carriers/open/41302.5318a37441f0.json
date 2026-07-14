@@ -38,7 +38,9 @@
       "protocol": "IPV4V6",
       "server": "dialog",
       "types": [
-        "default"
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -51,18 +53,6 @@
       ]
     },
     {
-      "apn": "dialogbb",
-      "mmsc": "http://mms.dialog.lk:3130/mmsc",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.122.2",
-      "name": "dialogbb",
-      "server": "dialog",
-      "types": [
-        "mms",
-        "supl"
-      ]
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -72,6 +62,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ppwap",

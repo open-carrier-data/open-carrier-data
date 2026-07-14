@@ -2,7 +2,7 @@
   "android_apns": [
     {
       "apn": "ims",
-      "name": "Nextel IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -26,6 +26,8 @@
       "mmsport": 8080,
       "mmsproxy": "129.192.129.104",
       "name": "mms.attmex.mx",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],
@@ -55,16 +57,6 @@
       ]
     },
     {
-      "apn": "modem.attmex.mx",
-      "name": "modem.attmex.mx",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ],
-      "user_editable": false
-    },
-    {
       "apn": "modem.nexteldata.com.mx",
       "authtype": 0,
       "carrier_id": 1912,
@@ -79,6 +71,16 @@
       "name": "modem.nexteldata.com.mx",
       "types": [
         "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "supl.attmex.mx",
+      "name": "Location",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "supl"
       ],
       "user_visible": false
     },

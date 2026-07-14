@@ -214,16 +214,6 @@
     },
     {
       "apn": "internet.mts",
-      "mvno_match_data": "2C",
-      "mvno_type": "gid",
-      "name": "MTS Tethering",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet.mts",
       "carrier_id": 578,
       "mvno_match_data": "2C",
       "mvno_type": "gid",
@@ -234,6 +224,32 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "internet.mts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "sp.mts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
     },
     {
       "apn": "sp.mts",
@@ -262,8 +278,6 @@
       "name": "MTS Internet",
       "protocol": "IPV4V6",
       "types": [
-        "default",
-        "mms",
         "supl"
       ]
     },
@@ -374,7 +388,9 @@
       "apn": "ltedata.apn",
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido Tethering LTE",
+      "name": "ltedata.apn",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "dun"
       ]

@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
     },
     "ims": {
@@ -47,6 +48,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "move.dataxs.mobi",
       "authtype": 0,
       "carrier_enabled": true,
@@ -60,7 +71,7 @@
     },
     {
       "apn": "move.dataxs.mobi",
-      "name": "TCL MOVE",
+      "name": "move.dataxs.mobi",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

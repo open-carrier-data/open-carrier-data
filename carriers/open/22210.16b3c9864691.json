@@ -373,12 +373,14 @@
       ]
     },
     {
-      "apn": "internet.ho-mobile.it",
+      "apn": "ims",
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
-      "name": "Tethering Internet",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "ims"
       ]
     },
     {
@@ -387,6 +389,16 @@
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
       "name": "ho. (Tethering)",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.ho-mobile.it",
+      "authtype": 0,
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "internet.ho-mobile.it",
       "types": [
         "dun"
       ]
@@ -407,9 +419,10 @@
     },
     {
       "apn": "web.ho-mobile.it",
+      "authtype": 0,
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
-      "name": "Accesso Internet da Cellulare",
+      "name": "web.ho-mobile.it",
       "types": [
         "default",
         "supl"

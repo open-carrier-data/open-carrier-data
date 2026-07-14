@@ -1,6 +1,15 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "China Telecomm (IMS)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ctnet",
       "authtype": 3,
       "name": "ctnet",
@@ -18,7 +27,7 @@
       "apn": "ctnet",
       "authtype": 3,
       "bearer_bitmask": "6|7|8|12",
-      "name": "APN_NAME_CTNET",
+      "name": "ctnet",
       "password": "vnet.mobi",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -33,7 +42,7 @@
     {
       "apn": "ctnet",
       "bearer": 19,
-      "bearer_bitmask": "13|14",
+      "bearer_bitmask": "13|14|20",
       "name": "APN_NAME_CTNET",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -46,8 +55,8 @@
     {
       "apn": "ctnet",
       "bearer": 19,
-      "bearer_bitmask": "13|14|20",
-      "name": "APN_NAME_CTNET",
+      "bearer_bitmask": "13|14",
+      "name": "ctnet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -68,19 +77,30 @@
       ]
     },
     {
-      "apn": "ctwap",
+      "apn": "ctnet",
       "bearer": 19,
       "bearer_bitmask": "13|14",
-      "mmsc": "http://mmsc.vnet.mobi",
-      "mmsport": 80,
-      "mmsproxy": "10.0.0.200",
-      "name": "APN_NAME_CTMMS",
+      "name": "CTNET",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "bearer_bitmask": "6|7|8|12",
+      "name": "CTNET",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl",
+        "xcap"
       ],
-      "user_editable": false
+      "user": "ctnet@mycdma.cn"
     },
     {
       "apn": "ctwap",
@@ -99,12 +119,27 @@
     },
     {
       "apn": "ctwap",
+      "bearer": 19,
+      "bearer_bitmask": "13|14",
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "ctwap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ctwap",
       "authtype": 3,
       "bearer_bitmask": "6|7|8|12",
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
       "mmsproxy": "10.0.0.200",
-      "name": "APN_NAME_CTMMS",
+      "name": "ctwap",
       "password": "vnet.mobi",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",

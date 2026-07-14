@@ -2,7 +2,7 @@
   "android_apns": [
     {
       "apn": "IMS",
-      "name": "APN_NAME_CTIMS",
+      "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -66,21 +66,6 @@
     },
     {
       "apn": "ctnet",
-      "authtype": 3,
-      "name": "ctnet",
-      "password": "vnet.mobi",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "fota",
-        "hipri",
-        "supl",
-        "xcap"
-      ],
-      "user": "ctnet@mycdma.cn"
-    },
-    {
-      "apn": "ctnet",
       "carrier_id": 2237,
       "mtu": 1400,
       "name": "ctnet",
@@ -125,6 +110,22 @@
     },
     {
       "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctnet",
       "bearer": 20,
       "bearer_bitmask": "14|18|19|20",
       "name": "APN_NAME_CTNET",
@@ -165,6 +166,17 @@
       ],
       "user": "ctnet@mycdma.cn",
       "user_editable": false
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user": "ctnet@mycdma.cn"
     },
     {
       "apn": "ctnet",
@@ -361,6 +373,20 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "ctexcel",
+      "mvno_match_data": "8985231",
+      "mvno_type": "iccid",
+      "name": "CTExcel",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "xcap"
       ]
     }
   ],

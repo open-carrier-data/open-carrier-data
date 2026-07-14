@@ -42,6 +42,18 @@
       "user_editable": false
     },
     {
+      "apn": "fast.t-mobile.com",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "T-Mobile LTE",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -80,6 +92,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "mmsc": "epdg",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.curiosity.sprint.com",
       "carrier_id": 1788,
       "name": "Sprint",
@@ -101,11 +124,15 @@
       "user_visible": false
     },
     {
-      "apn": "pcweb.tmobile.com",
-      "name": "T-Mobile Tethering",
-      "protocol": "IPV6",
+      "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
       "types": [
-        "dun"
+        "mms",
+        "xcap"
       ],
       "user_visible": false
     }

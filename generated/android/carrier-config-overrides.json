@@ -472,8 +472,7 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true,
-        "smsToMmsTextThreshold": 14
+        "carrier_volte_available_bool": true
       },
       "display_name": "3",
       "match": {
@@ -1112,6 +1111,22 @@
         "carrier_volte_available_bool": true,
         "smsToMmsTextThreshold": 13
       },
+      "display_name": "WIND GR",
+      "match": {
+        "mccmnc": [
+          "20210"
+        ],
+        "spn": [
+          "WIND GR"
+        ]
+      },
+      "profile_id": "open.20210.2cdb31065adf"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 13
+      },
       "display_name": "NOVA GR",
       "match": {
         "mccmnc": [
@@ -1200,6 +1215,21 @@
         ]
       },
       "profile_id": "open.20402.69449330bd89"
+    },
+    {
+      "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "Tele2",
+      "match": {
+        "mccmnc": [
+          "20402"
+        ],
+        "spn": [
+          "Tele2"
+        ]
+      },
+      "profile_id": "open.20402.80b129cb63e4"
     },
     {
       "android_carrier_config": {
@@ -2913,7 +2943,7 @@
       "android_carrier_config": {
         "read_only_apn_types_string_array": []
       },
-      "display_name": "Tcl Nl",
+      "display_name": "Carrier 20407",
       "match": {
         "mccmnc": [
           "20407"
@@ -3239,6 +3269,23 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false,
+        "smsToMmsTextThreshold": 13
+      },
+      "display_name": "Tele2 NL",
+      "match": {
+        "mccmnc": [
+          "20416"
+        ],
+        "spn": [
+          "Tele2 NL"
+        ]
+      },
+      "profile_id": "open.20416.8a1ef9ab5f8d"
+    },
+    {
+      "android_carrier_config": {
         "carrier_default_wfc_ims_enabled_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
         "carrier_default_wfc_ims_roaming_mode_int": 1,
@@ -3300,6 +3347,21 @@
     },
     {
       "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "Tele2",
+      "match": {
+        "mccmnc": [
+          "20416"
+        ],
+        "spn": [
+          "Tele2"
+        ]
+      },
+      "profile_id": "open.20416.b1dd93a6264e"
+    },
+    {
+      "android_carrier_config": {
         "carrier_default_wfc_ims_enabled_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
         "carrier_default_wfc_ims_roaming_mode_int": 1,
@@ -3324,8 +3386,7 @@
     {
       "android_carrier_config": {
         "carrier_volte_available_bool": true,
-        "enabledMMS": false,
-        "smsToMmsTextThreshold": 10
+        "enabledMMS": false
       },
       "display_name": "T-Mobile NL",
       "match": {
@@ -7360,7 +7421,7 @@
         "editable_enhanced_4g_lte_bool": false,
         "enhanced_4g_lte_on_by_default_bool": false
       },
-      "display_name": "LineageOS 20829",
+      "display_name": "Carrier 20829",
       "match": {
         "mccmnc": [
           "20829"
@@ -7409,7 +7470,7 @@
         "carrier_wfc_ims_available_bool": true,
         "enhanced_4g_lte_on_by_default_bool": true
       },
-      "display_name": "LineageOS 20835",
+      "display_name": "Carrier 20835",
       "match": {
         "mccmnc": [
           "20835"
@@ -7661,7 +7722,7 @@
         "editable_enhanced_4g_lte_bool": false,
         "enhanced_4g_lte_on_by_default_bool": false
       },
-      "display_name": "LineageOS 20891",
+      "display_name": "Carrier 20891",
       "match": {
         "mccmnc": [
           "20891"
@@ -9277,6 +9338,21 @@
       "android_carrier_config": {
         "carrier_volte_available_bool": true
       },
+      "display_name": "Avatel",
+      "match": {
+        "mccmnc": [
+          "21405"
+        ],
+        "spn": [
+          "AVATEL"
+        ]
+      },
+      "profile_id": "open.21405.e5b1fa5d4a67"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
       "display_name": "DIGI Spain",
       "match": {
         "imsi_prefix_patterns": [
@@ -9677,7 +9753,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "T-2",
       "match": {
@@ -10131,7 +10208,7 @@
         "carrier_volte_available_bool": true,
         "carrier_wfc_ims_available_bool": true
       },
-      "display_name": "LineageOS 21411",
+      "display_name": "Carrier 21411",
       "match": {
         "mccmnc": [
           "21411"
@@ -10798,7 +10875,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "HT Eronet",
       "match": {
@@ -10852,7 +10930,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "m:tel",
       "match": {
@@ -10880,7 +10959,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "BH Mobile",
       "match": {
@@ -11034,6 +11114,7 @@
         "carrier_supports_ss_over_ut_bool": true,
         "carrier_volte_available_bool": true,
         "carrier_wfc_ims_available_bool": true,
+        "enabledMMS": false,
         "hide_enhanced_4g_lte_bool": true,
         "rtt_supported_bool": true,
         "rtt_supported_while_roaming_bool": true,
@@ -11132,7 +11213,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "TM HR",
       "match": {
@@ -11169,7 +11251,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "A1 HR",
       "match": {
@@ -11392,6 +11475,7 @@
         "carrier_supports_ss_over_ut_bool": true,
         "carrier_volte_available_bool": true,
         "carrier_wfc_ims_available_bool": true,
+        "enabledMMS": false,
         "hide_enhanced_4g_lte_bool": true,
         "rtt_supported_bool": true,
         "rtt_supported_while_roaming_bool": true,
@@ -11447,7 +11531,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "Yettel SRB",
       "match": {
@@ -11477,7 +11562,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "mt:s",
       "match": {
@@ -11524,7 +11610,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "A1 SRB",
       "match": {
@@ -11539,7 +11626,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "VALA",
       "match": {
@@ -11582,7 +11670,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "IPKO",
       "match": {
@@ -12664,6 +12753,22 @@
         ]
       },
       "profile_id": "open.22236.4922286bf45b"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
+      "display_name": "Digi Mobile",
+      "match": {
+        "mccmnc": [
+          "22236"
+        ],
+        "spn": [
+          "Digi.Mobil"
+        ]
+      },
+      "profile_id": "open.22236.a42baf4c62fe"
     },
     {
       "android_carrier_config": {
@@ -14256,7 +14361,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 3
       },
       "display_name": "T-Mobile CZ",
       "match": {
@@ -14333,7 +14439,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "carrier_wfc_ims_available_bool": true
       },
       "display_name": "O2.CZ",
       "match": {
@@ -15174,6 +15281,38 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
+      "display_name": "HoT_799",
+      "match": {
+        "mccmnc": [
+          "23207"
+        ],
+        "spn": [
+          "HoT_799"
+        ]
+      },
+      "profile_id": "open.23207.127a01542d9f"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
+      "display_name": "HoT_718",
+      "match": {
+        "mccmnc": [
+          "23207"
+        ],
+        "spn": [
+          "HoT_718"
+        ]
+      },
+      "profile_id": "open.23207.22f838209aaf"
+    },
+    {
+      "android_carrier_config": {
         "carrier_use_ims_first_for_emergency_bool": true,
         "enableGroupMms": false,
         "enableMMSDeliveryReports": false,
@@ -15445,6 +15584,22 @@
         "carrier_volte_available_bool": true,
         "smsToMmsTextThreshold": 10
       },
+      "display_name": "HoT_76",
+      "match": {
+        "mccmnc": [
+          "23207"
+        ],
+        "spn": [
+          "HoT_76"
+        ]
+      },
+      "profile_id": "open.23207.f97880e4711e"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
       "display_name": "A1",
       "match": {
         "mccmnc": [
@@ -15660,6 +15815,22 @@
         ]
       },
       "profile_id": "open.23210.bf14d32543b6"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
+      "display_name": "eety",
+      "match": {
+        "mccmnc": [
+          "23210"
+        ],
+        "spn": [
+          "eety"
+        ]
+      },
+      "profile_id": "open.23210.e3b59c4d2580"
     },
     {
       "android_carrier_config": {
@@ -16122,8 +16293,7 @@
         "carrier_volte_available_bool": true,
         "enabledMMS": true,
         "maxMessageSize": 307200,
-        "recipientLimit": 10,
-        "smsToMmsTextThreshold": 5
+        "recipientLimit": 10
       },
       "display_name": "Carrier 23223",
       "match": {
@@ -16366,7 +16536,8 @@
         "carrier_wfc_ims_available_bool": true,
         "enabledMMS": true,
         "imssms.sms_over_ims_supported_bool": true,
-        "maxMessageSize": 307200
+        "maxMessageSize": 307200,
+        "smsToMmsTextThreshold": 10
       },
       "display_name": "Carrier 23408",
       "match": {
@@ -18015,8 +18186,7 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true,
-        "smsToMmsTextThreshold": 14
+        "carrier_volte_available_bool": true
       },
       "display_name": "3",
       "match": {
@@ -19535,6 +19705,22 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true,
+        "smsToMmsTextThreshold": 10
+      },
+      "display_name": "Manx Telecom Contract",
+      "match": {
+        "gid1_prefixes": [
+          "519F"
+        ],
+        "mccmnc": [
+          "23458"
+        ]
+      },
+      "profile_id": "open.23458.221ff785415a"
+    },
+    {
+      "android_carrier_config": {
         "carrier_metered_apn_types_strings": [
           "default",
           "dun",
@@ -19771,7 +19957,7 @@
         "enhanced_4g_lte_on_by_default_bool": true,
         "hide_enhanced_4g_lte_bool": false
       },
-      "display_name": "LineageOS 23501",
+      "display_name": "Carrier 23501",
       "match": {
         "mccmnc": [
           "23501"
@@ -19790,7 +19976,7 @@
         "enhanced_4g_lte_on_by_default_bool": true,
         "hide_enhanced_4g_lte_bool": false
       },
-      "display_name": "LineageOS 23502",
+      "display_name": "Carrier 23502",
       "match": {
         "mccmnc": [
           "23502"
@@ -19820,8 +20006,7 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true,
-        "smsToMmsTextThreshold": 14
+        "carrier_volte_available_bool": true
       },
       "display_name": "3",
       "match": {
@@ -22247,7 +22432,7 @@
       "android_carrier_config": {
         "carrier_volte_available_bool": true
       },
-      "display_name": "ice",
+      "display_name": "Carrier 24206",
       "match": {
         "mccmnc": [
           "24206"
@@ -24432,7 +24617,7 @@
         "iwlan.epdg_static_address_string": "epdg.epc.mnc015.mcc259.pub.3gppnetwork.org",
         "read_only_apn_types_string_array": []
       },
-      "display_name": "Idc Md",
+      "display_name": "Carrier 25915",
       "match": {
         "mccmnc": [
           "25915"
@@ -28683,7 +28868,6 @@
         "maxMessageSize": 307200,
         "rtt_supported_bool": true,
         "rtt_supported_while_roaming_bool": true,
-        "smsToMmsTextThreshold": 5,
         "wfc_data_spn_format_idx_int": 1,
         "wfc_spn_format_idx_int": 1
       },
@@ -29412,7 +29596,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "Telekom.al",
       "match": {
@@ -30515,7 +30700,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "HoT",
       "match": {
@@ -30530,7 +30716,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "A1 SI",
       "match": {
@@ -30596,7 +30783,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "Mobitel",
       "match": {
@@ -30611,7 +30799,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "T-2",
       "match": {
@@ -30644,7 +30833,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "Telemach",
       "match": {
@@ -30683,6 +30873,7 @@
     {
       "android_carrier_config": {
         "carrier_volte_available_bool": true,
+        "enabledMMS": false,
         "smsToMmsTextThreshold": 2
       },
       "display_name": "Telekom MK",
@@ -30843,7 +31034,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "A1 MK",
       "match": {
@@ -31040,7 +31232,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "One",
       "match": {
@@ -31090,7 +31283,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "Telekom.me",
       "match": {
@@ -31119,7 +31313,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "enabledMMS": false
       },
       "display_name": "m:tel MNE",
       "match": {
@@ -32039,7 +32234,7 @@
         "maxMessageSize": 614400,
         "recipientLimit": 20
       },
-      "display_name": "TELUS",
+      "display_name": "Carrier 302222",
       "match": {
         "mccmnc": [
           "302222"
@@ -49866,6 +50061,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO 5G",
+      "match": {
+        "mccmnc": [
+          "310280"
+        ],
+        "spn": [
+          "ATT MVNO 5G"
+        ]
+      },
+      "profile_id": "open.310280.02b96d1261ab"
+    },
+    {
+      "android_carrier_config": {
         "allow_hold_call_during_emergency_bool": false,
         "allow_merging_rtt_calls_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
@@ -50320,6 +50530,21 @@
       "android_carrier_config": {
         "carrier_volte_available_bool": true
       },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310280"
+        ],
+        "spn": [
+          "ATT MVNO"
+        ]
+      },
+      "profile_id": "open.310280.42fdfc489f3a"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
       "display_name": "ATT",
       "match": {
         "mccmnc": [
@@ -50330,6 +50555,21 @@
         ]
       },
       "profile_id": "open.310280.436c964f960b"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Tracfone ATT",
+      "match": {
+        "mccmnc": [
+          "310280"
+        ],
+        "spn": [
+          "Tracfone ATT"
+        ]
+      },
+      "profile_id": "open.310280.4447a0b8ea26"
     },
     {
       "android_carrier_config": {
@@ -51077,6 +51317,21 @@
         ]
       },
       "profile_id": "open.310280.c564776e78b1"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310280"
+        ],
+        "spn": [
+          "ATT MVNO LTE"
+        ]
+      },
+      "profile_id": "open.310280.c73ce5faa8a8"
     },
     {
       "android_carrier_config": {
@@ -52549,6 +52804,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO 5G",
+      "match": {
+        "mccmnc": [
+          "310410"
+        ],
+        "spn": [
+          "ATT MVNO 5G"
+        ]
+      },
+      "profile_id": "open.310410.1e1172f69c3a"
+    },
+    {
+      "android_carrier_config": {
         "allow_hold_call_during_emergency_bool": false,
         "allow_merging_rtt_calls_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
@@ -52616,6 +52886,21 @@
         ]
       },
       "profile_id": "open.310410.27a86ddc84c4"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Tracfone ATT",
+      "match": {
+        "mccmnc": [
+          "310410"
+        ],
+        "spn": [
+          "Tracfone ATT"
+        ]
+      },
+      "profile_id": "open.310410.31d0f93c7531"
     },
     {
       "android_carrier_config": {
@@ -54319,6 +54604,36 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310410"
+        ],
+        "spn": [
+          "ATT MVNO"
+        ]
+      },
+      "profile_id": "open.310410.da9f36dc9a4b"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310410"
+        ],
+        "spn": [
+          "ATT MVNO LTE"
+        ]
+      },
+      "profile_id": "open.310410.e10be1af2af8"
+    },
+    {
+      "android_carrier_config": {
         "enableSMSDeliveryReports": false,
         "maxImageHeight": 1944,
         "maxImageWidth": 2592,
@@ -55213,7 +55528,8 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
+        "carrier_volte_available_bool": true,
+        "carrier_wfc_ims_available_bool": true
       },
       "display_name": "Inland",
       "match": {
@@ -57435,6 +57751,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Comcast",
+      "match": {
+        "mccmnc": [
+          "310599"
+        ],
+        "spn": [
+          "Comcast"
+        ]
+      },
+      "profile_id": "open.310599.b3e7dcced2e9"
+    },
+    {
+      "android_carrier_config": {
         "allow_add_call_during_video_call": false,
         "allow_hold_in_ims_call": false,
         "allow_merge_wifi_calls_when_vowifi_off_bool": false,
@@ -59146,6 +59477,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO 5G",
+      "match": {
+        "mccmnc": [
+          "310950"
+        ],
+        "spn": [
+          "ATT MVNO 5G"
+        ]
+      },
+      "profile_id": "open.310950.4d516d74abf9"
+    },
+    {
+      "android_carrier_config": {
         "enabledMMS": true,
         "maxMessageSize": 1048576,
         "recipientLimit": 20
@@ -59483,6 +59829,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310950"
+        ],
+        "spn": [
+          "ATT MVNO"
+        ]
+      },
+      "profile_id": "open.310950.8739a7d9a89c"
+    },
+    {
+      "android_carrier_config": {
         "allow_hold_call_during_emergency_bool": false,
         "allow_merging_rtt_calls_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
@@ -59699,6 +60060,21 @@
         ]
       },
       "profile_id": "open.310950.b16feb2e5726"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Tracfone ATT",
+      "match": {
+        "mccmnc": [
+          "310950"
+        ],
+        "spn": [
+          "Tracfone ATT"
+        ]
+      },
+      "profile_id": "open.310950.b2bbc41bbf5e"
     },
     {
       "android_carrier_config": {
@@ -60155,6 +60531,21 @@
         ]
       },
       "profile_id": "open.310950.f4057ba28bbd"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "310950"
+        ],
+        "spn": [
+          "ATT MVNO LTE"
+        ]
+      },
+      "profile_id": "open.310950.f57e14a795bd"
     },
     {
       "android_carrier_config": {
@@ -61175,6 +61566,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "311180"
+        ],
+        "spn": [
+          "ATT MVNO"
+        ]
+      },
+      "profile_id": "open.311180.64b4ccd3d9f4"
+    },
+    {
+      "android_carrier_config": {
         "allow_hold_call_during_emergency_bool": false,
         "allow_merging_rtt_calls_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
@@ -61227,6 +61633,21 @@
         ]
       },
       "profile_id": "open.311180.675925281ac7"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO",
+      "match": {
+        "mccmnc": [
+          "311180"
+        ],
+        "spn": [
+          "ATT MVNO LTE"
+        ]
+      },
+      "profile_id": "open.311180.6d7c57bbeb9b"
     },
     {
       "android_carrier_config": {
@@ -61425,6 +61846,21 @@
         ]
       },
       "profile_id": "open.311180.8734724a7db4"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "ATT MVNO 5G",
+      "match": {
+        "mccmnc": [
+          "311180"
+        ],
+        "spn": [
+          "ATT MVNO 5G"
+        ]
+      },
+      "profile_id": "open.311180.8f060590d4fe"
     },
     {
       "android_carrier_config": {
@@ -62492,6 +62928,21 @@
         ]
       },
       "profile_id": "open.311180.dbf1dc8208bc"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Tracfone ATT",
+      "match": {
+        "mccmnc": [
+          "311180"
+        ],
+        "spn": [
+          "Tracfone ATT"
+        ]
+      },
+      "profile_id": "open.311180.e3503ddbc9da"
     },
     {
       "android_carrier_config": {
@@ -71578,7 +72029,7 @@
         ],
         "wfc_spn_format_idx_int": 1
       },
-      "display_name": "Tmobile Us",
+      "display_name": "Carrier 312250",
       "match": {
         "mccmnc": [
           "312250"
@@ -71850,6 +72301,21 @@
         ]
       },
       "profile_id": "open.312290.d54115fe0c2f"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "rinawireless",
+      "match": {
+        "mccmnc": [
+          "312380"
+        ],
+        "spn": [
+          "rinawireless"
+        ]
+      },
+      "profile_id": "open.312380.3b9a14efbe53"
     },
     {
       "android_carrier_config": {
@@ -76023,7 +76489,7 @@
         "carrier_volte_available_bool": true,
         "enabledMMS": false
       },
-      "display_name": "Oxio Us",
+      "display_name": "Carrier 314720",
       "match": {
         "mccmnc": [
           "314720"
@@ -76307,6 +76773,21 @@
         ]
       },
       "profile_id": "open.33402.ab5b14db2185"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "TELCEL",
+      "match": {
+        "mccmnc": [
+          "334020"
+        ],
+        "spn": [
+          "TELCEL"
+        ]
+      },
+      "profile_id": "open.334020.292c0824781e"
     },
     {
       "android_carrier_config": {
@@ -76725,7 +77206,7 @@
         "carrier_wfc_ims_available_bool": true,
         "imssms.sms_over_ims_supported_bool": true
       },
-      "display_name": "Att ius MX",
+      "display_name": "Carrier 334070",
       "match": {
         "mccmnc": [
           "334070"
@@ -77330,7 +77811,7 @@
         "smsToMmsTextThreshold": 5,
         "wfc_spn_format_idx_int": 1
       },
-      "display_name": "Izziatt Mx",
+      "display_name": "Carrier 334160",
       "match": {
         "mccmnc": [
           "334160"
@@ -77343,7 +77824,7 @@
         "carrier_volte_available_bool": true,
         "enabledMMS": false
       },
-      "display_name": "Oxio Us",
+      "display_name": "Carrier 334170",
       "match": {
         "mccmnc": [
           "334170"
@@ -80513,6 +80994,21 @@
         ]
       },
       "profile_id": "open.37002.ded18e6e365d"
+    },
+    {
+      "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "Claro_DR",
+      "match": {
+        "mccmnc": [
+          "37002"
+        ],
+        "spn": [
+          "Claro_DR"
+        ]
+      },
+      "profile_id": "open.37002.fc79e2905d0b"
     },
     {
       "android_carrier_config": {
@@ -89095,21 +89591,6 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true
-      },
-      "display_name": "Alfa",
-      "match": {
-        "mccmnc": [
-          "41501"
-        ],
-        "spn": [
-          "Alfa"
-        ]
-      },
-      "profile_id": "open.41501.5ebf8d991fdb"
-    },
-    {
-      "android_carrier_config": {
         "carrier_metered_apn_types_strings": [
           "default",
           "dun",
@@ -90952,7 +91433,7 @@
       "android_carrier_config": {
         "carrier_volte_available_bool": true
       },
-      "display_name": "LineageOS 42707",
+      "display_name": "Carrier 42707",
       "match": {
         "mccmnc": [
           "42707"
@@ -101427,6 +101908,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Zain Nigeria",
+      "match": {
+        "mccmnc": [
+          "62120"
+        ],
+        "spn": [
+          "Zain Nigeria"
+        ]
+      },
+      "profile_id": "open.62120.af6acd2670c6"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true,
         "carrier_vt_available_bool": true,
         "enhanced_4g_lte_on_by_default_bool": true
@@ -102615,6 +103111,21 @@
         ]
       },
       "profile_id": "open.64503.49fd3b258276"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Vodafone Zambia",
+      "match": {
+        "mccmnc": [
+          "64505"
+        ],
+        "spn": [
+          "Vodafone Zambia"
+        ]
+      },
+      "profile_id": "open.64505.1da627443d77"
     },
     {
       "android_carrier_config": {
@@ -104765,6 +105276,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Digicel_SV",
+      "match": {
+        "mccmnc": [
+          "70602"
+        ],
+        "spn": [
+          "Digicel_SV"
+        ]
+      },
+      "profile_id": "open.70602.dca400482097"
+    },
+    {
+      "android_carrier_config": {
         "enabledMMS": true,
         "maxMessageSize": 2196608,
         "recipientLimit": 10
@@ -105073,6 +105599,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "movistar_NI",
+      "match": {
+        "mccmnc": [
+          "710300"
+        ],
+        "spn": [
+          "movistar_NI"
+        ]
+      },
+      "profile_id": "open.710300.3e0197231860"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true,
         "enabledMMS": true,
         "imssms.sms_over_ims_supported_bool": true,
@@ -105354,6 +105895,21 @@
     },
     {
       "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "Tigo_PA",
+      "match": {
+        "mccmnc": [
+          "714020"
+        ],
+        "spn": [
+          "Tigo_PA"
+        ]
+      },
+      "profile_id": "open.714020.2ca592f7f59a"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true
       },
       "display_name": "tigo_PA",
@@ -105430,6 +105986,21 @@
         ]
       },
       "profile_id": "open.71404.0391047acdc3"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": true
+      },
+      "display_name": "Digicel",
+      "match": {
+        "mccmnc": [
+          "71404"
+        ],
+        "spn": [
+          "Digicel"
+        ]
+      },
+      "profile_id": "open.71404.0b590c60ca95"
     },
     {
       "android_carrier_config": {
@@ -106583,6 +107154,7 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": false,
         "enabledMMS": false
       },
       "display_name": "ENTEL",
@@ -106719,6 +107291,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": false
+      },
+      "display_name": "VTR",
+      "match": {
+        "mccmnc": [
+          "73008"
+        ],
+        "spn": [
+          "VTR"
+        ]
+      },
+      "profile_id": "open.73008.4ec9739f7a48"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true,
         "enabledMMS": true,
         "imssms.sms_over_ims_supported_bool": true,
@@ -106754,6 +107341,21 @@
     },
     {
       "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "WOM",
+      "match": {
+        "mccmnc": [
+          "73009"
+        ],
+        "spn": [
+          "WOM"
+        ]
+      },
+      "profile_id": "open.73009.cb80e7b5656d"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true,
         "carrier_wfc_ims_available_bool": true,
         "smsToMmsTextThreshold": 10
@@ -106768,6 +107370,7 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": false,
         "enabledMMS": false
       },
       "display_name": "ENTEL",
@@ -106783,11 +107386,26 @@
     },
     {
       "android_carrier_config": {
+        "enabledMMS": false
+      },
+      "display_name": "WOM",
+      "match": {
+        "mccmnc": [
+          "73021"
+        ],
+        "spn": [
+          "WOM"
+        ]
+      },
+      "profile_id": "open.73021.556cbb33a16f"
+    },
+    {
+      "android_carrier_config": {
         "carrier_default_wfc_ims_enabled_bool": true,
         "carrier_default_wfc_ims_mode_int": 1,
         "editable_wfc_mode_bool": false
       },
-      "display_name": "LineageOS 73023",
+      "display_name": "Carrier 73023",
       "match": {
         "mccmnc": [
           "73023"
@@ -107328,6 +107946,21 @@
     },
     {
       "android_carrier_config": {
+        "carrier_volte_available_bool": false
+      },
+      "display_name": "entel movil",
+      "match": {
+        "mccmnc": [
+          "73602"
+        ],
+        "spn": [
+          "entel movil"
+        ]
+      },
+      "profile_id": "open.73602.776af043bbd8"
+    },
+    {
+      "android_carrier_config": {
         "carrier_volte_available_bool": true,
         "carrier_vt_available_bool": true,
         "enabledMMS": true,
@@ -107341,6 +107974,21 @@
         ]
       },
       "profile_id": "open.73603.3b67171b9d2d"
+    },
+    {
+      "android_carrier_config": {
+        "carrier_volte_available_bool": false
+      },
+      "display_name": "Tigo",
+      "match": {
+        "mccmnc": [
+          "73603"
+        ],
+        "spn": [
+          "Tigo"
+        ]
+      },
+      "profile_id": "open.73603.9d181d73fc00"
     },
     {
       "android_carrier_config": {
@@ -107781,8 +108429,7 @@
     },
     {
       "android_carrier_config": {
-        "carrier_volte_available_bool": true,
-        "smsToMmsTextThreshold": 13
+        "carrier_volte_available_bool": true
       },
       "display_name": "Carrier 90140",
       "match": {
@@ -107826,7 +108473,7 @@
       "android_carrier_config": {
         "read_only_apn_types_string_array": []
       },
-      "display_name": "Teleena Zz",
+      "display_name": "Carrier 90154",
       "match": {
         "mccmnc": [
           "90154"
@@ -107856,7 +108503,7 @@
         "carrier_vt_available_bool": true,
         "carrier_wfc_ims_available_bool": true
       },
-      "display_name": "MOBILY SA",
+      "display_name": "Carrier 96654",
       "match": {
         "mccmnc": [
           "96654"
@@ -107870,7 +108517,7 @@
         "carrier_vt_available_bool": true,
         "carrier_wfc_ims_available_bool": true
       },
-      "display_name": "MOBILY SA",
+      "display_name": "Carrier 96656",
       "match": {
         "mccmnc": [
           "96656"

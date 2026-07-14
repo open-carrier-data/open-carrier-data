@@ -353,16 +353,31 @@
       ]
     },
     {
-      "apn": "tmus",
-      "bearer_bitmask": "18",
-      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "name": "EPDG MMS/XCAP",
+      "apn": "asw.data",
+      "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "Assurance LTE",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "asw.tether",
+      "authtype": 0,
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "Assurance Tethering",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
-        "xcap"
+        "dun"
       ],
-      "user_editable": false
+      "user_visible": false
     },
     {
       "apn": "fast.metropcs.com",
@@ -413,10 +428,27 @@
       "mvno_type": "gid",
       "name": "Assurance Emergency",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
       ],
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "tmus",
@@ -489,6 +521,38 @@
       ]
     },
     {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mvno_match_data": "354D",
+      "mvno_type": "gid",
+      "name": "Ultra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mvno_match_data": "364D",
+      "mvno_type": "gid",
+      "name": "Ultra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "ims",
       "mvno_match_data": "4153",
       "mvno_type": "gid",
@@ -501,14 +565,14 @@
     {
       "apn": "wholesale",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 80,
+      "mmsport": 8080,
       "mvno_match_data": "4153",
       "mvno_type": "gid",
       "name": "Ultra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
-        "mms",
-        "supl"
+        "ia"
       ]
     },
     {
@@ -642,6 +706,22 @@
       "user_editable": false
     },
     {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mvno_match_data": "554D",
+      "mvno_type": "gid",
+      "name": "Ultra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "multibrand",
       "mmsc": "http://uvm.mmsmvno.com/mms/wapenc",
       "mvno_match_data": "554d",
@@ -663,6 +743,22 @@
       "types": [
         "default",
         "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mvno_match_data": "6132",
+      "mvno_type": "gid",
+      "name": "Ultra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
         "mms",
         "supl"
       ]
@@ -878,10 +974,27 @@
       "mvno_type": "gid",
       "name": "MetroPCS Emergency",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
       ],
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "tmus",
@@ -906,6 +1019,22 @@
       "name": "ZIP SIM",
       "types": [
         "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mvno_match_data": "756D",
+      "mvno_type": "gid",
+      "name": "Mint",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
         "mms",
         "supl"
       ]

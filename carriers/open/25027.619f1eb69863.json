@@ -1,24 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.letai.ru",
       "authtype": 1,
       "name": "internet.letai.ru",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
     {
-      "apn": "mms",
+      "apn": "internet.letai.ru",
       "authtype": 1,
-      "mmsc": "http://mmsc:8002",
-      "mmsport": 8080,
-      "mmsproxy": "mmsc",
-      "name": "Letai MMS",
+      "name": "Letai Internet",
       "types": [
-        "mms"
+        "ia"
       ]
     }
   ],

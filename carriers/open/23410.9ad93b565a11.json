@@ -1,5 +1,8 @@
 {
   "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "csprefer"
+    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -79,6 +82,19 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "name": "O2 Pay monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs"
+      ],
+      "user": "o2"
     },
     {
       "apn": "mobile.o2.co.uk",
@@ -178,6 +194,17 @@
       ]
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "0A",
+      "mvno_type": "gid",
+      "name": "Tesco-IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "prepay.tesco-mobile.com",
       "authtype": 1,
       "carrier_id": 2093,
@@ -244,6 +271,17 @@
       "user": "giffgaff"
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "508",
+      "mvno_type": "gid",
+      "name": "giffgaff",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "wbdata",
       "mvno_match_data": "536E617065",
       "mvno_type": "gid",
@@ -257,6 +295,26 @@
     },
     {
       "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mvno_match_data": "61",
+      "mvno_type": "gid",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
       "carrier_id": 10002,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
       "mvno_match_data": "61",
@@ -267,6 +325,26 @@
       "types": [
         "default",
         "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mvno_match_data": "67",
+      "mvno_type": "gid",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "hipri",
         "mms",
         "supl"
       ],
@@ -291,6 +369,26 @@
     },
     {
       "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mvno_match_data": "85",
+      "mvno_type": "gid",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
       "carrier_id": 10002,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
       "mvno_match_data": "85",
@@ -301,6 +399,26 @@
       "types": [
         "default",
         "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mvno_match_data": "99",
+      "mvno_type": "gid",
+      "name": "O2 Pay As You Go",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "hipri",
         "mms",
         "supl"
       ],

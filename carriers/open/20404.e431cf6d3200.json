@@ -1,10 +1,9 @@
 {
   "addons": {
     "emergency_calling": {
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
-      "contacts_operator_style": "VDF",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -18,12 +17,6 @@
       "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
-      "five_g_icon_configuration": [
-        "connected_mmwave:5G",
-        "connected:5G",
-        "not_restricted_rrc_idle:5G",
-        "not_restricted_rrc_con:5G"
-      ],
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -248,6 +241,68 @@
       ]
     },
     {
+      "apn": "pda.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "mvno_match_data": "3D",
+      "mvno_type": "gid",
+      "name": "Browser",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "pda.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "mvno_match_data": "3E",
+      "mvno_type": "gid",
+      "name": "Browser",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.davewireless.com",
+      "mmsc": "http://mms.mobilicity.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.100.3.4",
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "MOMMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.davewireless.com",
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "MOWAP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "mmsc": "http://media.videotron.com",
+      "mvno_match_data": "53",
+      "mvno_type": "gid",
+      "name": "Videotron",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "ims",
       "carrier_id": 2143,
       "mvno_match_data": "547275554B3030656E",
@@ -320,6 +375,102 @@
       ]
     },
     {
+      "apn": "VZWADMIN",
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Roaming FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Roaming CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Roaming IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Roaming",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "COMCAST.RSLR.VZWENTP",
+      "mvno_match_data": "BA01450000000000",
+      "mvno_type": "gid",
+      "name": "XFINITY Mobile Roaming",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "mvno_match_data": "BA01450000000000",
+      "mvno_type": "gid",
+      "name": "XFINITY Mobile Roaming IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "mvno_match_data": "BA01450000000000",
+      "mvno_type": "gid",
+      "name": "XFINITY Mobile Roaming FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "mvno_match_data": "BA01450000000000",
+      "mvno_type": "gid",
+      "name": "XFINITY Mobile Roaming CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "cbs"
+      ]
+    },
+    {
       "apn": "IMS",
       "bearer": 13,
       "max_conns": 1023,
@@ -361,7 +512,7 @@
       "modem_cognitive": true,
       "mvno_match_data": "BAE0000000000000",
       "mvno_type": "gid",
-      "name": "LTE - VZW Roaming IMS",
+      "name": "IMS",
       "profile_id": 2,
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -442,7 +593,7 @@
       "modem_cognitive": true,
       "mvno_match_data": "BAE0000000000000",
       "mvno_type": "gid",
-      "name": "LTE - VZW Roaming FOTA",
+      "name": "VZWADMIN",
       "profile_id": 3,
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -615,7 +766,7 @@
       "modem_cognitive": true,
       "mvno_match_data": "BAE0000000000000",
       "mvno_type": "gid",
-      "name": "LTE - VZW Roaming Internet",
+      "name": "VZWINTERNET",
       "profile_id": 0,
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -643,6 +794,70 @@
       ]
     },
     {
+      "apn": "admin.cs4glte.com",
+      "mtu": 1428,
+      "mvno_match_data": "890123",
+      "mvno_type": "iccid",
+      "name": "CSpire Fota",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "ims.cs4glte.com",
+      "mtu": 1428,
+      "mvno_match_data": "890123",
+      "mvno_type": "iccid",
+      "name": "CSpire IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "mmsc": "http://pix.cspire.com/servlets/mms",
+      "mtu": 1428,
+      "mvno_match_data": "890123",
+      "mvno_type": "iccid",
+      "name": "CSpire Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sos",
+      "mtu": 1428,
+      "mvno_match_data": "890123",
+      "mvno_type": "iccid",
+      "name": "CSpire Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "mtu": 1428,
+      "mvno_match_data": "890123",
+      "mvno_type": "iccid",
+      "name": "CSpire Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "ctnet",
       "authtype": 3,
       "mvno_match_data": "898603",
@@ -654,6 +869,52 @@
         "supl"
       ],
       "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "IMS",
+      "mvno_match_data": "898603,898611,8985231,8985302,8985307",
+      "mvno_type": "iccid",
+      "name": "China Telecomm (IMS)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "mvno_match_data": "898603,898611,8985231,8985302,8985307",
+      "mvno_type": "iccid",
+      "name": "CTNET",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctwap",
+      "authtype": 3,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "mvno_match_data": "898603,898611,8985231,8985302,8985307",
+      "mvno_type": "iccid",
+      "name": "CTMMS",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "ctwap@mycdma.cn"
     },
     {
       "apn": "ctnet",
@@ -842,13 +1103,23 @@
     },
     {
       "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
       "mvno_match_data": "204043914",
       "mvno_type": "imsi",
       "name": "Truphone",
       "types": [
         "default",
-        "dun",
+        "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mvno_match_data": "204043914",
+      "mvno_type": "imsi",
+      "name": "Truphone",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -978,13 +1249,23 @@
     },
     {
       "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
       "mvno_match_data": "20404794",
       "mvno_type": "imsi",
       "name": "Truphone",
       "types": [
         "default",
-        "dun",
+        "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mvno_match_data": "20404794",
+      "mvno_type": "imsi",
+      "name": "Truphone",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -999,6 +1280,18 @@
       "types": [
         "fota"
       ]
+    },
+    {
+      "apn": "admin.cs4glte.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Admin",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user": "Uniroam@inet.cs.com"
     },
     {
       "apn": "internet.cs4glte.com",
@@ -1032,6 +1325,16 @@
       ]
     },
     {
+      "apn": "tethering.cs4glte.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "mms.hotm",
       "carrier_id": 1991,
       "mmsc": "http://mms.hotmobile.co.il",
@@ -1060,6 +1363,16 @@
       "apn": "mobiledata",
       "authtype": 0,
       "carrier_id": 2138,
+      "mvno_match_data": "Jump",
+      "mvno_type": "spn",
+      "name": "Jump Roam",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mobiledata",
+      "authtype": 0,
       "mvno_match_data": "Jump",
       "mvno_type": "spn",
       "name": "Jump Roam",

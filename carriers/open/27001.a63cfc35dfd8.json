@@ -17,6 +17,15 @@
   },
   "android_apns": [
     {
+      "apn": "HOS",
+      "mmsc": "http://post.lu",
+      "name": "POST XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "hos",
       "carrier_id": 895,
       "name": "Post UT",
@@ -38,17 +47,6 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "POST IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "carrier_id": 895,
       "name": "Post IMS",
       "protocol": "IPV4V6",
@@ -65,24 +63,6 @@
       "mmsproxy": "194.154.192.88",
       "name": "mms.pt.lu",
       "password": "mms",
-      "types": [
-        "mms"
-      ],
-      "user": "mms"
-    },
-    {
-      "apn": "mms.pt.lu",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mmsc.pt.lu",
-      "mmsport": 8080,
-      "mmsproxy": "194.154.192.88",
-      "name": "mms.pt.lu",
-      "password": "mms",
-      "port": 8080,
-      "protocol": "IP",
-      "proxy": "194.154.192.88",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -125,26 +105,33 @@
     },
     {
       "apn": "web.pt.lu",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "web.pt.lu",
-      "password": "web",
-      "port": 8080,
-      "protocol": "IP",
-      "proxy": "194.154.192.88",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "web"
-    },
-    {
-      "apn": "web.pt.lu",
       "name": "web.pt.lu",
       "types": [
         "dun",
         "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "join",
+      "mvno_match_data": "6",
+      "mvno_type": "gid",
+      "name": "Join Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "joinmms",
+      "authtype": 1,
+      "mmsc": "http://joinmms",
+      "mmsport": 8080,
+      "mmsproxy": "joinproxy",
+      "mvno_match_data": "6",
+      "mvno_type": "gid",
+      "name": "Join MMS",
+      "types": [
         "mms"
       ]
     }

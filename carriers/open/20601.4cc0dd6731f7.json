@@ -73,21 +73,6 @@
       "user": "mms"
     },
     {
-      "apn": "event.proximus.be",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mmsc.proximus.be/mms",
-      "mmsport": 8080,
-      "mmsproxy": "10.55.14.75",
-      "name": "event.proximus.be",
-      "password": "mms",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ],
-      "user": "mms"
-    },
-    {
       "apn": "hos",
       "bearer": 14,
       "name": "Proximus XCAP",
@@ -147,17 +132,6 @@
       ]
     },
     {
-      "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet.bmbpartner.be",
       "name": "Scarlet Internet",
       "types": [
@@ -170,18 +144,6 @@
       "authtype": 1,
       "carrier_id": 1365,
       "name": "Proximus Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.proximus.be",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "internet.proximus.be",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -362,7 +324,19 @@
       ]
     },
     {
+      "apn": "internet.ch.upcmobile.com",
+      "mvno_match_data": "75636831",
+      "mvno_type": "gid",
+      "name": "upcnet",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
       "apn": "mms.ch.upcmobile.com",
+      "authtype": 1,
       "mmsc": "http://mms.ch.upcmobile.com:8080/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "62.179.127.18",
@@ -416,6 +390,22 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "894443",
+      "mvno_type": "iccid",
+      "name": "Virgin Mobile",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "user"
     },
     {
       "apn": "em",

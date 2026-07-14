@@ -1,0 +1,136 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.manxpronto.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.manxpronto.net:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "195.010.099.046",
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms.prontogo.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.manxpronto.net:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "195.010.099.041",
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "MMS",
+      "password": "mmsgo",
+      "types": [
+        "mms"
+      ],
+      "user": "mmsgo"
+    },
+    {
+      "apn": "web.prontogo.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "519F",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "webgo",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "webgo"
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Manx Telecom Contract",
+  "match": {
+    "gid1_prefixes": [
+      "519F"
+    ],
+    "mccmnc": [
+      "23458"
+    ]
+  },
+  "profile_id": "open.23458.221ff785415a",
+  "schema_version": 1
+}

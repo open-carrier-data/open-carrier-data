@@ -3,23 +3,46 @@
     "emergency_calling": {
       "e911_routing_policy": "auto"
     },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
       "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-LTN-GSM-EUR"
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
+      "indicator_icon_branding": "TEF",
       "refer_eons_without_lac": true
     }
   },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Tuenti IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "internet.movil",
       "name": "Servicio_WEB",
       "protocol": "IPV4V6",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "internet.tuenti",
+      "name": "Internet_TUENTI",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
       ]
     }
   ],

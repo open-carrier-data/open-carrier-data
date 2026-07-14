@@ -135,18 +135,6 @@
     },
     {
       "apn": "admin.cs4glte.com",
-      "mmsc": "http://pix.cspire.com/servlets/mms",
-      "mmsport": 80,
-      "mmsproxy": "66.175.144.91",
-      "name": "EHRPD ADMIN",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "fota"
-      ]
-    },
-    {
-      "apn": "admin.cs4glte.com",
       "bearer": 14,
       "mmsc": "http://pix.cspire.com/servlets/mms",
       "mmsport": 80,
@@ -217,11 +205,25 @@
     {
       "apn": "internet.cs4glte.com",
       "mmsc": "http://pix.cspire.com/servlets/mms",
-      "name": "C Spire Internet",
+      "mtu": 1428,
+      "name": "internet.cs4glte.com",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "mms"
+        "ia",
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sos",
+      "mtu": 1428,
+      "name": "CSpire Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -233,6 +235,16 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "mtu": 1428,
+      "name": "CSpire Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "tethering.cs4glte.com",

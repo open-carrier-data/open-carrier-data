@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
     },
     "ims": {
@@ -36,16 +37,6 @@
       "types": [
         "xcap"
       ]
-    },
-    {
-      "apn": "SOS",
-      "authtype": 1,
-      "name": "EE Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ],
-      "user_visible": false
     },
     {
       "apn": "consumerbroadband",
@@ -236,6 +227,63 @@
       "user_visible": false
     },
     {
+      "apn": "SOS",
+      "authtype": 1,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "MMS",
+      "password": "secure",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "eezone",
       "authtype": 1,
       "mmsc": "http://mms/",
@@ -277,6 +325,22 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "894443",
+      "mvno_type": "iccid",
+      "name": "Virgin Mobile",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "user"
     },
     {
       "apn": "eezone",

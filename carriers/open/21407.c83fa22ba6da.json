@@ -196,9 +196,10 @@
       "mmsproxy": "172.20.18.137",
       "mvno_match_data": "2140759577xxxxx",
       "mvno_type": "imsi",
-      "name": "T-2",
+      "name": "internet.t-2.net",
       "types": [
         "default",
+        "ims",
         "mms",
         "supl"
       ]
@@ -243,9 +244,38 @@
       "name": "T-2",
       "types": [
         "default",
+        "ims",
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "Empresa",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "telefonica.es",
+      "authtype": 1,
+      "mmsc": "http://mms.movistar.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.5",
+      "mvno_match_data": "Empresa",
+      "mvno_type": "spn",
+      "name": "Movistar",
+      "password": "telefonica",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "telefonica"
     },
     {
       "apn": "jazzinternet",
@@ -294,6 +324,21 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "tuenti.com",
+      "mmsc": "http://tuenti.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.43",
+      "mvno_match_data": "Tuenti",
+      "mvno_type": "spn",
+      "name": "Tuenti",
+      "password": "tuenti",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "tuenti"
     }
   ],
   "android_carrier_config": {

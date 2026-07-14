@@ -181,17 +181,43 @@
       "user": "wap@wap"
     },
     {
+      "apn": "euskaltelmms.euskaltel.mobi",
+      "authtype": 1,
+      "mmsc": "http://mms.euskaltel.mobi",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.18.74",
+      "mvno_match_data": "0008",
+      "mvno_type": "gid",
+      "name": "Euskaltel MMS",
+      "password": "EUSKALTEL",
+      "types": [
+        "mms"
+      ],
+      "user": "MMS"
+    },
+    {
       "apn": "internet.euskaltel.mobi",
       "authtype": 1,
       "mvno_match_data": "0008",
       "mvno_type": "gid",
-      "name": "Euskaltel Internet",
+      "name": "internet.euskaltel.mobi",
       "password": "EUSKALTEL",
       "types": [
         "default",
         "supl"
       ],
       "user": "CLIENTE"
+    },
+    {
+      "apn": "fi.omv.es",
+      "mvno_match_data": "2140606",
+      "mvno_type": "imsi",
+      "name": "FI",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
     },
     {
       "apn": "gprs.eroskimovil.es",
@@ -330,6 +356,19 @@
       "user": "telecable"
     },
     {
+      "apn": "internet.telecable.es",
+      "authtype": 1,
+      "mvno_match_data": "2140613",
+      "mvno_type": "imsi",
+      "name": "telecable Internet",
+      "password": "telecable",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telecable"
+    },
+    {
       "apn": "mms.telecable.es",
       "authtype": 1,
       "carrier_id": 2112,
@@ -339,6 +378,21 @@
       "mvno_match_data": "2140613",
       "mvno_type": "imsi",
       "name": "TeleCable MMS",
+      "password": "telecable",
+      "types": [
+        "mms"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "mms.telecable.es",
+      "authtype": 1,
+      "mmsc": "http://mms.telecable.es/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "212.89.0.84",
+      "mvno_match_data": "2140613",
+      "mvno_type": "imsi",
+      "name": "telecable MMS",
       "password": "telecable",
       "types": [
         "mms"
@@ -438,6 +492,29 @@
       ]
     },
     {
+      "apn": "lowi.private.omv.es",
+      "mvno_match_data": "LOWI",
+      "mvno_type": "spn",
+      "name": "LOWI_data",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.lowi.omv.es",
+      "mmsc": "http://mms.lowi.omv.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "mvno_match_data": "LOWI",
+      "mvno_type": "spn",
+      "name": "LOWI_MMS",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
+    },
+    {
       "apn": "gprsmov.lebaramobile.es",
       "mvno_match_data": "Lebara",
       "mvno_type": "spn",
@@ -488,6 +565,60 @@
       "user": "wap@wap"
     },
     {
+      "apn": "conexion.neosky.omv.es",
+      "mvno_match_data": "Neo-Sky",
+      "mvno_type": "spn",
+      "name": "Neo Internet Otros",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "empresas.neosky.omv.es",
+      "mvno_match_data": "Neo-Sky",
+      "mvno_type": "spn",
+      "name": "Neo Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.neosky.omv.es",
+      "mmsc": "http://mms.neosky.omv.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "mvno_match_data": "Neo-Sky",
+      "mvno_type": "spn",
+      "name": "Neo MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "datos",
+      "mvno_match_data": "PTV",
+      "mvno_type": "spn",
+      "name": "PTV Telecom V",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "PTV",
+      "mvno_type": "spn",
+      "name": "PTV IMS V",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "gprsmov.pepephone.com",
       "mvno_match_data": "Pepephone",
       "mvno_type": "spn",
@@ -510,6 +641,28 @@
         "mms"
       ],
       "user": "wap@wap"
+    },
+    {
+      "apn": "internet.racc.net",
+      "mvno_match_data": "RACC",
+      "mvno_type": "spn",
+      "name": "RACC Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.racc.net",
+      "mmsc": "http://mms.racc.net",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.18.74",
+      "mvno_match_data": "RACC",
+      "mvno_type": "spn",
+      "name": "RACC MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "internet.telecable.es",
@@ -564,6 +717,30 @@
       "user": "wap@wap"
     },
     {
+      "apn": "internet.mundo-r.com",
+      "authtype": 1,
+      "mvno_match_data": "mobilR",
+      "mvno_type": "spn",
+      "name": "Internet R",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.mundo-r.com",
+      "authtype": 1,
+      "mmsc": "http://mms.mundo-r.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.157.169",
+      "mvno_match_data": "mobilR",
+      "mvno_type": "spn",
+      "name": "MMS R",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "gprs.pepephone.com",
       "authtype": 0,
       "mvno_match_data": "pepephone",
@@ -599,6 +776,33 @@
         "ia",
         "supl"
       ]
+    },
+    {
+      "apn": "gprsmov.pepephone.com",
+      "authtype": 0,
+      "mvno_match_data": "pepephone",
+      "mvno_type": "spn",
+      "name": "Pepephone Internet",
+      "types": [
+        "default",
+        "fota",
+        "supl"
+      ]
+    },
+    {
+      "apn": "http://mms.pepephone.com",
+      "authtype": 0,
+      "mmsc": "http://mms.pepephone.com/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "mvno_match_data": "pepephone",
+      "mvno_type": "spn",
+      "name": "Pepephone MMS",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
     },
     {
       "apn": "mms.pepephone.com",

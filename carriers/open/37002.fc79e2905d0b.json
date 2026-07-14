@@ -1,12 +1,22 @@
 {
   "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-LTN-GSM-EUR"
     },
     "operator_display": {
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
     }
   },
   "android_apns": [
@@ -28,12 +38,27 @@
         "default",
         "xcap"
       ]
+    },
+    {
+      "apn": "mms.ideasclaro.com.do",
+      "mmsc": "http://mms.ideasclaro.com.do/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "190.80.147.8",
+      "name": "CLARO MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": false
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

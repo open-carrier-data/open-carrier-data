@@ -9,6 +9,10 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+autoSwitchNr5gMode",
+        "disableAutoSwitchNr5gMode"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-LTN-GSM-EUR",
       "voice_network_setting_style": "SupportDualDataRoam"
@@ -36,6 +40,16 @@
       ]
     },
     {
+      "apn": "igprs.claro.com.ar",
+      "mmsc": "http://mms.claro.com.ar",
+      "name": "igprs.claro.com.ar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "IMS",
       "protocol": "IPV6",
@@ -51,7 +65,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

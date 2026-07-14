@@ -9,15 +9,11 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-preferrednetworkmode"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-LTN-GSM-EUR",
       "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
-      "indicator_icon_branding": "AMX",
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -34,7 +30,8 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "xcap"
       ]
     },
     {
@@ -43,6 +40,15 @@
       "protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     }
   ],

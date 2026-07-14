@@ -9,6 +9,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "DisplayRatInfoForManualSearch"
@@ -123,6 +126,7 @@
       "port": 8080,
       "protocol": "IPV4V6",
       "proxy": "172.17.88.198",
+      "roaming_protocol": "IPV4V6",
       "server": "http://m.mondo.rs",
       "types": [
         "supl"
@@ -149,14 +153,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "mt:s",
-      "protocol": "IP",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "mms",

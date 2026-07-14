@@ -23,8 +23,11 @@
     },
     {
       "apn": "hinternet",
-      "name": "True H+ Internet",
+      "authtype": 0,
+      "name": "hinternet",
       "password": "TRUE",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ],
@@ -159,6 +162,17 @@
       "user": "true"
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "01",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "carrier_id": 2336,
@@ -187,6 +201,7 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
       "mvno_match_data": "5200019",
       "mvno_type": "imsi",
       "name": "my",

@@ -2,14 +2,6 @@
   "android_apns": [
     {
       "apn": "ims",
-      "name": "HOT mobile",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -31,6 +23,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.hotm",
       "carrier_id": 1991,
       "mmsc": "http://mms.hotmobile.co.il",
@@ -39,15 +39,6 @@
       "name": "MMS HOT mobile",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "net.hotm",
-      "name": "net.hotm",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default"
       ]
     },
     {
@@ -64,6 +55,7 @@
       "apn": "net.hotm",
       "name": "net.hotm",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "supl"
       ]

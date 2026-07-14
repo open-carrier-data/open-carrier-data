@@ -31,6 +31,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ntwap",
       "name": "Nepal Telecom WAP",
       "port": 8000,
@@ -42,9 +51,12 @@
     },
     {
       "apn": "web",
+      "authtype": 0,
       "name": "web",
       "port": 8080,
+      "protocol": "IPV4V6",
       "proxy": "192.168.19.15",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"

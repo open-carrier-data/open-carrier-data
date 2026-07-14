@@ -9,6 +9,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "DisplayRatInfoForManualSearch"
@@ -24,17 +27,6 @@
     }
   },
   "android_apns": [
-    {
-      "apn": "hos",
-      "carrier_enabled": true,
-      "mtu": 1358,
-      "name": "hos",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -52,17 +44,6 @@
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "carrier_enabled": true,
-      "mtu": 1358,
-      "name": "ims",
-      "protocol": "IPV4V6",
       "types": [
         "ims"
       ],
@@ -89,7 +70,7 @@
     },
     {
       "apn": "internet",
-      "name": "A1 Internet",
+      "name": "internet",
       "types": [
         "supl"
       ]

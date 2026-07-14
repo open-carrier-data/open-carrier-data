@@ -1,13 +1,14 @@
 {
   "android_apns": [
     {
-      "apn": "broadband.tigo.gt",
-      "name": "broadband.tigo.gt",
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
-      ]
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "broadband.tigo.gt",
@@ -19,6 +20,23 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "broadband.tigo.gt",
+      "authtype": 1,
+      "name": "broadband.tigo.gt",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "broadband.tigo.gt",
+      "name": "TIGO",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -44,10 +62,12 @@
     },
     {
       "apn": "mms.tigo.gt",
+      "authtype": 1,
       "mmsc": "http://mms",
       "mmsport": 8888,
       "mmsproxy": "10.16.17.12",
       "name": "mms.tigo.gt",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ]

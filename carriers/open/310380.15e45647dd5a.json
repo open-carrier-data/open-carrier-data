@@ -32,16 +32,6 @@
     },
     {
       "apn": "ims",
-      "name": "ATT IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -50,6 +40,16 @@
         "ims"
       ],
       "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
       "user_visible": false
     },
     {
@@ -79,6 +79,22 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "phone",
+      "bearer_bitmask": "1|2|3|9|10|11",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ATT Phone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "proxy",

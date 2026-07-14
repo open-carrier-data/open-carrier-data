@@ -69,16 +69,6 @@
     },
     {
       "apn": "ims",
-      "authtype": 1,
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "carrier_id": 742,
       "name": "Orange IMS Cara\u00efbe",
       "protocol": "IPV4V6",
@@ -89,12 +79,13 @@
       "user_visible": false
     },
     {
-      "apn": "orangeut",
+      "apn": "ims",
       "authtype": 1,
-      "name": "HOS",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "xcap"
+        "ims"
       ]
     },
     {
@@ -105,6 +96,15 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "orangeut",
+      "authtype": 1,
+      "name": "orangeut",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "orangewap",
@@ -177,6 +177,15 @@
       ],
       "user": "orange",
       "user_editable": false
+    },
+    {
+      "apn": "sos",
+      "name": "sos",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {

@@ -212,6 +212,19 @@
     },
     {
       "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "tmus",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
       "name": "EPDG MMS/XCAP",
       "protocol": "IPV6",
@@ -350,10 +363,27 @@
       "mvno_type": "gid",
       "name": "MetroPCS Emergency",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
       ],
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "tmus",
+      "bearer_bitmask": "18",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "EPDG MMS/XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "tmus",

@@ -1,21 +1,69 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+    },
+    "ims": {
+      "contacts_operator_style": "BTU",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "Xcap",
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "Xcap",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet.btonephone.com",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet.btonephone.com",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
     {
       "apn": "internet.btonephone.com",
       "name": "BT-OP",
       "types": [
-        "default",
         "dun"
-      ]
-    },
-    {
-      "apn": "mms.btonephone.com",
-      "mmsc": "http://mmsc/",
-      "mmsport": 8080,
-      "mmsproxy": "proxy.btonephone.com",
-      "name": "BT-OP",
-      "types": [
-        "mms"
       ]
     },
     {
@@ -99,7 +147,8 @@
     "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true,
-    "maxMessageSize": 307200
+    "maxMessageSize": 307200,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

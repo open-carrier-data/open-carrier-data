@@ -6,6 +6,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
       "network_type_capability": "EUR-LTN-GSM-EUR"
     },
     "operator_display": {
@@ -13,6 +16,17 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "apnmms.movistar.com.uy",
+      "mmsc": "http://mmsc.movistar.com.uy",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.2.29",
+      "name": "Movistar MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "ims",
       "name": "IMS APN",
@@ -34,7 +48,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
