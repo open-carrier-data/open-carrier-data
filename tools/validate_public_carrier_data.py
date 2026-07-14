@@ -876,8 +876,12 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
             for key, values in scope.items():
                 validate_canonical_list(path, values, f"profiles[{index}].observed_scope.{key}")
                 for value in values:
-                    if not isinstance(value, str) or not re.fullmatch(
-                        r"[A-Za-z0-9._+-]{1,120}", value
+                    if (
+                        not isinstance(value, str)
+                        or value != value.strip()
+                        or not re.fullmatch(
+                            r"[A-Za-z0-9][A-Za-z0-9._+() -]{0,119}", value
+                        )
                     ):
                         raise ValidationError(
                             f"{path}: profiles[{index}].observed_scope.{key} is unsafe"
