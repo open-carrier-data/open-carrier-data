@@ -1,23 +1,26 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
+      "contacts_operator_style": "VDH",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "network_type_capability": "EUR-EUR-GSM-EUR"
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
-      "five_g_icon_configuration": [
-        "connected_mmwave:5G",
-        "connected:5G",
-        "not_restricted_rrc_idle:NONE",
-        "not_restricted_rrc_con:NONE"
-      ],
+      "five_g_icon_branding": "5GAvailable,UseOneShapedIcon",
+      "indicator_icon_branding": "OVF",
       "refer_eons_without_lac": true
     }
   },
@@ -51,7 +54,8 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,0 +1,61 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam,DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Movistar IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.movistar.com.ec",
+      "name": "Movistar INTERNET",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "movistar_EC",
+  "match": {
+    "mccmnc": [
+      "74000"
+    ],
+    "spn": [
+      "movistar_EC"
+    ]
+  },
+  "profile_id": "open.74000.c5e8245604f7",
+  "schema_version": 1
+}

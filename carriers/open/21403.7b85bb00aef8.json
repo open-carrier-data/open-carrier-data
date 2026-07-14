@@ -1,9 +1,11 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
     },
     "ims": {
+      "contacts_operator_style": "AMO",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -20,7 +22,16 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
+      "indicator_icon_branding": "ORANGE",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -45,7 +56,8 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

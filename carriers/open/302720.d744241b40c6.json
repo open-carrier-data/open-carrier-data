@@ -1,7 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "emergency_dial_call_style": "NoWaitInSvcE911"
+      "e911_routing_policy": "auto"
     },
     "network_policy": {
       "display_antenna_limited": true,
@@ -13,38 +13,6 @@
       "refer_eons_without_lac": true
     }
   },
-  "android_apns": [
-    {
-      "apn": "ltedata.apn",
-      "name": "Ztar Tethering",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "ltemobile.apn",
-      "name": "Ztar Internet",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "ltemobile.apn",
-      "mmsc": "http://mms.gprs.rogers.com",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.rogers.com",
-      "name": "Ztar MMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    }
-  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true
   },

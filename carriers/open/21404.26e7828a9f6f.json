@@ -1,9 +1,11 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
     },
     "ims": {
+      "contacts_operator_style": "AMO",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -19,7 +21,16 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
+      "indicator_icon_branding": "ORANGE",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -67,6 +78,16 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://www.google.com/m?client={CID}&source=android-home",
+      "mmsport": 80,
+      "mmsproxy": "193.209.134.141",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -75,12 +96,13 @@
     "enabledMMS": false,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unsupported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

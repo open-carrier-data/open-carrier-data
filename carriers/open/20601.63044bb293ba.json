@@ -1,0 +1,57 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet",
+      "name": "MobiCom Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "name": "MobiCom MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "MobiCom",
+  "match": {
+    "mccmnc": [
+      "20601"
+    ],
+    "spn": [
+      "MobiCom"
+    ]
+  },
+  "profile_id": "open.20601.63044bb293ba",
+  "schema_version": 1
+}

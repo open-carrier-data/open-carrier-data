@@ -3,6 +3,9 @@
     "emergency_calling": {
       "e911_routing_policy": "auto"
     },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
@@ -32,12 +35,13 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": false
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "unsupported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

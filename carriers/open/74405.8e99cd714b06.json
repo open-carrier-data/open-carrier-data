@@ -1,0 +1,89 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Personal IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Personal Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.192.7",
+      "name": "Personal MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Personal SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ut",
+      "name": "Personal UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Personal",
+  "match": {
+    "mccmnc": [
+      "74405"
+    ],
+    "spn": [
+      "Personal"
+    ]
+  },
+  "profile_id": "open.74405.8e99cd714b06",
+  "schema_version": 1
+}

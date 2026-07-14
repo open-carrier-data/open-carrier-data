@@ -1,17 +1,21 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
+      "contacts_operator_style": "AVF",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
-      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+      "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
       "five_g_icon_configuration": [
@@ -49,12 +53,14 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "enabledMMS": false,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "unsupported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

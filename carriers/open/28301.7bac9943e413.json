@@ -1,0 +1,67 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "internet.beeline.am",
+      "name": "Beeline Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.beeline.am",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "10.3.2.205",
+      "name": "Beeline MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Beeline AM",
+  "match": {
+    "mccmnc": [
+      "28301"
+    ],
+    "spn": [
+      "Beeline AM"
+    ]
+  },
+  "profile_id": "open.28301.7bac9943e413",
+  "schema_version": 1
+}

@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -74,6 +75,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",

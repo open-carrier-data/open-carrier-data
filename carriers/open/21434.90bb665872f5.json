@@ -1,0 +1,89 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable,UseOneShapedIcon",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "893434",
+      "mvno_type": "iccid",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "inet.es",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "893434",
+      "mvno_type": "iccid",
+      "name": "Internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "893434",
+      "mvno_type": "iccid",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "unknown",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Airenetworks",
+  "match": {
+    "iccid_prefixes": [
+      "893434"
+    ],
+    "mccmnc": [
+      "21434"
+    ]
+  },
+  "profile_id": "open.21434.90bb665872f5",
+  "schema_version": 1
+}

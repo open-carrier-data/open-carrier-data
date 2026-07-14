@@ -1,0 +1,83 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "contacts_operator_style": "CYV",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "cytamobile",
+      "name": "CYTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "cytamobile",
+      "mmsc": "http://mmsc.cyta.com.cy",
+      "name": "CYTA MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "CYTA XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "CYTA IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "smsToMmsTextThreshold": 10
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "CytaVoda",
+  "match": {
+    "mccmnc": [
+      "28001"
+    ],
+    "spn": [
+      "CytaVoda"
+    ]
+  },
+  "profile_id": "open.28001.b655e4261526",
+  "schema_version": 1
+}

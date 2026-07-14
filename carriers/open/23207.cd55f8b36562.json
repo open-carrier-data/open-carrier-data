@@ -1,0 +1,86 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "WLAN-Call",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC",
+        "WFC_DT"
+      ]
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://relay.mms.telering.at",
+      "mmsport": 80,
+      "mmsproxy": "212.095.031.050",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "web",
+      "name": "tele.ring web",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 5
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "tele.ring",
+  "match": {
+    "mccmnc": [
+      "23207"
+    ],
+    "spn": [
+      "tele.ring"
+    ]
+  },
+  "profile_id": "open.23207.cd55f8b36562",
+  "schema_version": 1
+}
