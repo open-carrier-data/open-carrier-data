@@ -10,6 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import generate_android_outputs
+import validate_device_catalog
 import validate_public_carrier_data
 from carrier_config_types import expected_config_type
 
@@ -40,6 +41,26 @@ def assert_true(condition: bool, message: str) -> None:
 
 
 def main() -> int:
+    exact_device_id = "android:" + "a" * 20
+    observation = {
+        "matched_identifiers": [exact_device_id],
+        "profile_count": 1,
+        "sources": ["synthetic_source"],
+    }
+    validate_device_catalog.validate_observations(
+        Path("synthetic-device-catalog.json"), exact_device_id, observation
+    )
+    try:
+        validate_device_catalog.validate_observations(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            {**observation, "matched_identifiers": ["ambiguous_alias"]},
+        )
+    except validate_device_catalog.ValidationError:
+        pass
+    else:
+        raise AssertionError("bare alias bypassed exact device observation validation")
+
     schema = load_json(
         Path(__file__).resolve().parents[1] / "schemas/carrier-profile.schema.json"
     )
@@ -273,12 +294,13 @@ def main() -> int:
             {
                 "schema_version": 1,
                 "description": "Safe source and scope summaries for neutral carrier profiles.",
+                "model_source_provenance": "complete",
                 "source_snapshots": [],
                 "profiles": [
                     {
                         "profile_id": profile_id,
                         "observation_count": 1,
-                        "sources": ["lineageos"],
+                        "sources": ["aosp", "lineageos"],
                         "fact_sources": [
                             {
                                 "section": "match",

@@ -696,10 +696,18 @@ def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: 
 def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    if set(data) != {"schema_version", "description", "source_snapshots", "profiles"}:
+    if set(data) != {
+        "schema_version",
+        "description",
+        "model_source_provenance",
+        "source_snapshots",
+        "profiles",
+    }:
         raise ValidationError(f"{path}: evidence index has invalid keys")
     if data.get("schema_version") != 1:
         raise ValidationError(f"{path}: schema_version must be 1")
+    if data.get("model_source_provenance") != "complete":
+        raise ValidationError(f"{path}: model source provenance is incomplete")
     validate_string(path, data.get("description"), "description", 400)
     source_snapshots = data.get("source_snapshots")
     require_type(path, source_snapshots, list, "source_snapshots")
@@ -906,15 +914,17 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
                 validate_canonical_list(path, model_sources, f"{group_label}.sources")
                 if not models or not model_sources or not set(model_sources) <= set(sources):
                     raise ValidationError(f"{path}: {group_label} is empty or unscoped")
+                if model_sources == sources:
+                    raise ValidationError(f"{path}: {group_label} is a redundant override")
                 grouped_models.extend(models)
                 group_sort_keys.append((tuple(model_sources), tuple(models)))
             scoped_models = scope.get("models", []) if isinstance(scope, dict) else []
             if (
                 len(grouped_models) != len(set(grouped_models))
-                or sorted(grouped_models) != scoped_models
+                or not set(grouped_models) <= set(scoped_models)
             ):
                 raise ValidationError(
-                    f"{path}: {label} must cover each observed model exactly once"
+                    f"{path}: {label} repeats or scopes an unobserved model"
                 )
             if group_sort_keys != sorted(group_sort_keys):
                 raise ValidationError(f"{path}: {label} must be canonically sorted")

@@ -1,0 +1,77 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,EndPreviousCall,E911Wificall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "-voltecall"
+      ],
+      "network_type_capability": "TMO-DSH-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,AutoSelectionWhenBootup,CdmaSubscriptionEnable,SupportDataPopup,SupportInternationalRoamingNotification,NetworkSetting_TMO"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "DSH"
+    },
+    "wifi_calling": {
+      "operator_branding": "T-Mobile"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "tethering.dish.com",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "wireless.dish.com",
+      "name": "wireless.dish.com",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "wireless.dish.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Dish MVNO",
+  "match": {
+    "mccmnc": [
+      "99999"
+    ],
+    "spn": [
+      "Dish MVNO"
+    ]
+  },
+  "profile_id": "open.99999.e7f9e1094231",
+  "schema_version": 1
+}

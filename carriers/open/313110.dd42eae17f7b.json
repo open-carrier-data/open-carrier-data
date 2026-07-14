@@ -7,17 +7,22 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "network_type_capability": "ATT-ATT-GSM-USA",
-      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_ATT"
-    },
-    "operator_display": {
-      "indicator_icon_branding": "ATT"
+      "network_type_capability": "ATT-ATT-GSM-USA"
     },
     "wifi_calling": {
       "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "firstnet-broadband",
+      "name": "DPAC FirstNet-Broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "firstnet-phone",
       "name": "DPAC FirstNet",

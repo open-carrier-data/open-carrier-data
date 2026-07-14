@@ -133,7 +133,8 @@ without turning a device name into a carrier setting.
   when safely publishable;
 - Google Pixel device codenames, Android version, firmware build, and whether
   the observation came from a firmware baseline or a newer network delta;
-- canonical model groups tied to the exact source families that named them;
+- compact model-source overrides when a model was named by fewer source
+  families than its merged carrier profile as a whole;
 - conflicts and quality gates that caused a value to become conditional or be
   omitted.
 
@@ -147,8 +148,9 @@ source and merge policy.
 
 - `present` means a maintained source currently lists the device identity;
 - `historical` means the identity was listed before but is absent now;
-- `carrier_observations` means current carrier evidence named that exact model
-  or device code;
+- `carrier_observations` means current carrier evidence named a model or device
+  code that a maintained artifact/discovery source uniquely binds to the stable
+  `device_id`; `matched_identifiers` contains that exact ID;
 - an Apple `product_family` artifact match means Apple's current index has
   carrier artifacts for that family, not that every carrier feature was tested
   on every model;
