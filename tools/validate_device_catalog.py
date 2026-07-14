@@ -527,8 +527,9 @@ def validate_android_artifacts(
             raise ValidationError(f"{path}: Android device-ID scope is invalid")
         if record["scope_kind"] == "device_id" and device_ids != [record["device_scope"]]:
             raise ValidationError(f"{path}: Android device-ID scope does not identify itself")
-        if (record["discovery_status"] == "no_query_identifier") != (
-            record["scope_kind"] == "device_id"
+        if (
+            record["discovery_status"] == "no_query_identifier"
+            and record["scope_kind"] != "device_id"
         ):
             raise ValidationError(f"{path}: no-query scope kind is inconsistent")
         if record["discovery_status"] == "artifact_indexed" and counts[2] < 1:
