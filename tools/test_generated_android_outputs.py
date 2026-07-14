@@ -297,6 +297,9 @@ def main() -> int:
                             "firmware_regions": ["TST"],
                             "firmware_builds": ["TESTXX1"],
                         },
+                        "observed_model_source_groups": [
+                            {"models": ["SM-TEST"], "sources": ["lineageos"]}
+                        ],
                     }
                     for profile_id in profile_ids
                 ],

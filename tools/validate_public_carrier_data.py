@@ -775,6 +775,7 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
         "fact_sources",
         "reviewed_range",
         "observed_scope",
+        "observed_model_source_groups",
         "conflicts",
         "quality_gates",
     }
@@ -886,6 +887,37 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
                         raise ValidationError(
                             f"{path}: profiles[{index}].observed_scope.{key} is unsafe"
                         )
+        model_source_groups = evidence.get("observed_model_source_groups")
+        if model_source_groups is not None:
+            label = f"profiles[{index}].observed_model_source_groups"
+            require_type(path, model_source_groups, list, label)
+            if not model_source_groups:
+                raise ValidationError(f"{path}: {label} is empty")
+            grouped_models: list[str] = []
+            group_sort_keys: list[tuple[tuple[str, ...], tuple[str, ...]]] = []
+            for group_index, group in enumerate(model_source_groups):
+                group_label = f"{label}[{group_index}]"
+                require_type(path, group, dict, group_label)
+                if set(group) != {"models", "sources"}:
+                    raise ValidationError(f"{path}: {group_label} has invalid keys")
+                models = group.get("models")
+                model_sources = group.get("sources")
+                validate_canonical_list(path, models, f"{group_label}.models")
+                validate_canonical_list(path, model_sources, f"{group_label}.sources")
+                if not models or not model_sources or not set(model_sources) <= set(sources):
+                    raise ValidationError(f"{path}: {group_label} is empty or unscoped")
+                grouped_models.extend(models)
+                group_sort_keys.append((tuple(model_sources), tuple(models)))
+            scoped_models = scope.get("models", []) if isinstance(scope, dict) else []
+            if (
+                len(grouped_models) != len(set(grouped_models))
+                or sorted(grouped_models) != scoped_models
+            ):
+                raise ValidationError(
+                    f"{path}: {label} must cover each observed model exactly once"
+                )
+            if group_sort_keys != sorted(group_sort_keys):
+                raise ValidationError(f"{path}: {label} must be canonically sorted")
         if "conflicts" in evidence:
             validate_resolution_items(
                 path, evidence["conflicts"], "conflict", f"profiles[{index}].conflicts"

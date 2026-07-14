@@ -133,6 +133,7 @@ without turning a device name into a carrier setting.
   when safely publishable;
 - Google Pixel device codenames, Android version, firmware build, and whether
   the observation came from a firmware baseline or a newer network delta;
+- canonical model groups tied to the exact source families that named them;
 - conflicts and quality gates that caused a value to become conditional or be
   omitted.
 
