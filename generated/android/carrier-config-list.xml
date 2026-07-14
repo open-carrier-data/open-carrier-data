@@ -1055,6 +1055,7 @@
     </string-array>
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMultipartSMS" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="ims_conference_size_limit_int" value="4" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc007.mcc214.pub.3gppnetwork.org</string>
@@ -1094,7 +1095,6 @@
     </string-array>
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMultipartSMS" value="true" />
-    <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="4" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc007.mcc214.pub.3gppnetwork.org</string>
@@ -1145,16 +1145,17 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21418.36b4bfe2f463 -->
   <carrier_config mcc="214" mnc="18" name="Carrier 21418">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21421.a8026648bb07 -->
   <carrier_config mcc="214" mnc="21" name="Carrier 21421">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
-    <boolean name="enabledMMS" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
@@ -1175,6 +1176,7 @@
   <carrier_config mcc="214" mnc="27" name="Carrier 21427">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.21438.76a7015204bd -->
@@ -18548,6 +18550,7 @@
   <!-- open.21303.4a6129bb171e -->
   <carrier_config mcc="213" mnc="03" name="Andorra Telecom" spn="\QAndorra Telecom\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.214001.47d57ee06fa7 -->
   <carrier_config mcc="214" mnc="001" name="GCF" spn="\QGCF\E">
@@ -18609,6 +18612,7 @@
   <!-- open.21403.a5e3c38d6a8c -->
   <carrier_config mcc="214" mnc="03" name="Carrefour" spn="\QCarrefour\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21403.0f3d6937d5da -->
@@ -18630,6 +18634,7 @@
   <!-- open.21403.7b85bb00aef8 -->
   <carrier_config mcc="214" mnc="03" name="Ibercom" spn="\QIbercom\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21403.456b3c62fa2c -->
@@ -18650,6 +18655,7 @@
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
@@ -18665,6 +18671,7 @@
   <!-- open.21403.6e26a6df3c03 -->
   <carrier_config mcc="214" mnc="03" name="MASMovil" spn="\QMASMovil\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21403.a31048fe537a -->
   <carrier_config mcc="214" mnc="03" name="Avatel" spn="\QMI OPERADOR\E">
@@ -18688,6 +18695,7 @@
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -18695,6 +18703,7 @@
   <!-- open.21403.5c47ff23a1f1 -->
   <carrier_config mcc="214" mnc="03" name="PTV Telecom" spn="\QPTV Telecom\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -18714,6 +18723,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21403.5320ec5aa697 -->
@@ -18734,6 +18744,7 @@
   <!-- open.21403.80b51e4769c3 -->
   <carrier_config mcc="214" mnc="03" name="Virgin telco" spn="\QVirgin telco\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21403.8e1a2456eb01 -->
   <carrier_config mcc="214" mnc="03" name="LineageOS 21403" spn="\Qamena\E">
@@ -18775,6 +18786,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="2">
       <item value="510|Call completed elsewhere|1014" />
       <item value="*|Call is dropped due to Wi-Fi signal is degraded|1407" />
@@ -19006,10 +19018,12 @@
   <!-- open.21405.e680dc64d908 -->
   <carrier_config imsi="44474553[0-9]*" mcc="214" mnc="05" name="DIGI Spain">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21405.e5b1fa5d4a67 -->
   <carrier_config mcc="214" mnc="05" name="Avatel" spn="\QAVATEL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21405.6b8bbc534b83 -->
   <carrier_config mcc="214" mnc="05" name="Avatel" spn="\QAvatel\E">
@@ -19030,6 +19044,7 @@
   <!-- open.21405.25df6ac4e633 -->
   <carrier_config mcc="214" mnc="05" name="ONO" spn="\QONO\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21405.3a54df58c073 -->
@@ -19041,11 +19056,13 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21405.dd1edfbbd2d5 -->
   <carrier_config mcc="214" mnc="05" name="PepephoneNEW" spn="\Qpepephone\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21405.531e04e8f6bf -->
   <carrier_config mcc="214" mnc="05" name="telecable" spn="\Qtelecable\E">
@@ -19056,6 +19073,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21405.13abb3c19cd6 -->
   <carrier_config cid="34" mcc="214" mnc="05" name="Movistar">
@@ -19079,6 +19097,7 @@
   <!-- open.21406.c2db29713ee4 -->
   <carrier_config mcc="214" mnc="06" name="EUSKALTEL" spn="\QEUSKALTEL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21406.26f7283f9fa4 -->
@@ -19094,6 +19113,7 @@
   <!-- open.21406.649a42ebec87 -->
   <carrier_config mcc="214" mnc="06" name="Hits" spn="\QHits\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21406.72e737e0d00a -->
   <carrier_config mcc="214" mnc="06" name="LOWI" spn="\QLOWI\E">
@@ -19104,6 +19124,7 @@
   <!-- open.21406.5df65bd66aeb -->
   <carrier_config mcc="214" mnc="06" name="Lebara" spn="\QLebara\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21406.01f709dec84b -->
   <carrier_config mcc="214" mnc="06" name="LOWI" spn="\QLowi\E">
@@ -19124,6 +19145,7 @@
   <!-- open.21406.78c3f8f90999 -->
   <carrier_config mcc="214" mnc="06" name="Neo" spn="\QNeo-Sky\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21406.ab16e4422892 -->
   <carrier_config mcc="214" mnc="06" name="Neo" spn="\QNeo\E">
@@ -19144,6 +19166,7 @@
   <!-- open.21406.c5a8204496fe -->
   <carrier_config mcc="214" mnc="06" name="RACC" spn="\QRACC\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21406.df661e860f11 -->
@@ -19167,6 +19190,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21406.174835adb784 -->
   <carrier_config mcc="214" mnc="06" name="telecable" spn="\Qtelecable\E">
@@ -19192,6 +19216,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -19214,6 +19239,7 @@
   <!-- open.21407.b3c0c908eed8 -->
   <carrier_config mcc="214" mnc="07" name="Tuenti" spn="\QTuenti\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21405.13abb3c19cd6 -->
   <carrier_config cid="34" mcc="214" mnc="07" name="Movistar">
@@ -19232,16 +19258,19 @@
   <!-- open.21408.a5362f90f2c8 -->
   <carrier_config mcc="214" mnc="08" name="EUSKALTEL" spn="\QEUSKALTEL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21408.3779d85cbb97 -->
   <carrier_config mcc="214" mnc="08" name="RACC" spn="\QRACC\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21408.3f943562a37b -->
   <carrier_config mcc="214" mnc="08" name="Virgin telco" spn="\QVirgin telco\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21408.d935be7c96e4 -->
   <carrier_config mcc="214" mnc="08" name="mobil R" spn="\Qmobil R\E">
@@ -19250,6 +19279,7 @@
   <!-- open.21408.d84cde367949 -->
   <carrier_config mcc="214" mnc="08" name="mobil R" spn="\QmobilR\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21415.4417dba508d7 -->
   <carrier_config mcc="214" mnc="15" name="PTV Telecom" spn="\QPTV Telecom\E">
@@ -19276,6 +19306,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="2">
       <item value="510|Call completed elsewhere|1014" />
@@ -19327,10 +19358,12 @@
   <!-- open.21432.79dff5a8d767 -->
   <carrier_config mcc="214" mnc="32" name="Tuenti" spn="\QTuenti\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21434.35d081694484 -->
   <carrier_config mcc="214" mnc="34" name="Airenetworks" spn="\QAirenetworks\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.21438.55609309afe6 -->
   <carrier_config mcc="214" mnc="38" name="Movistar" spn="\QMovistar\E">
@@ -19898,6 +19931,7 @@
   <!-- open.22605.fd3edc5fa58f -->
   <carrier_config imsi="44474553[0-9]*" mcc="226" mnc="05" name="DIGI Spain">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.22605.d14122705d40 -->
   <carrier_config mcc="226" mnc="05" name="DIGI Spain" spn="\QDIGI Spain\E">
@@ -20134,6 +20168,10 @@
   </carrier_config>
   <!-- open.23103.21c90d23c096 -->
   <carrier_config mcc="231" mnc="03" name="4KA SK" spn="\Q4KA SK\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.23104.439343f3eef6 -->
+  <carrier_config mcc="231" mnc="04" name="T-Mobile SK" spn="\QT-Mobile SK\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.23105.8b0a5e80ac80 -->
@@ -20668,6 +20706,10 @@
   <carrier_config mcc="234" mnc="33" name="GCF_EEUK" spn="\QGCF_EEUK\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
+  <!-- open.23433.03ac47d71925 -->
+  <carrier_config mcc="234" mnc="33" name="LIFE Mobile" spn="\QLIFE Mobile\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.23433.0b65c6fd5056 -->
   <carrier_config mcc="234" mnc="33" name="23433Spn=Life" spn="\QLIFE\E">
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -20776,6 +20818,10 @@
   <carrier_config mcc="234" mnc="58" name="Manx Telecom PrePay" spn="\QManx Telecom PrePay\E">
     <boolean name="carrier_volte_available_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
+  </carrier_config>
+  <!-- open.23486.46d1ddfa21b4 -->
+  <carrier_config mcc="234" mnc="86" name="Orange UK" spn="\QOrange UK\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.23430.33373e6c5919 -->
   <carrier_config cid="718" mcc="234" mnc="86" name="EE">
@@ -22152,6 +22198,10 @@
   </carrier_config>
   <!-- open.28403.55ea57359c3d -->
   <carrier_config mcc="284" mnc="03" name="vivacom" spn="\Qvivacom\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.28405.4084faad05b3 -->
+  <carrier_config mcc="284" mnc="05" name="Telenor BG" spn="\QTelenor BG\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.28405.782547e9440f -->
@@ -34696,6 +34746,22 @@
   <carrier_config mcc="400" mnc="06" name="Naxtel" spn="\QNaxtel\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
+  <!-- open.40101.5c8929444332 -->
+  <carrier_config mcc="401" mnc="01" name="Beeline" spn="\QBeeline\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.40102.69a8fbda48af -->
+  <carrier_config mcc="401" mnc="02" name="Kcell" spn="\QKcell\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.40107.c309f1cfa29f -->
+  <carrier_config mcc="401" mnc="07" name="ALTEL" spn="\QALTEL\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.40177.09ac14b06eb7 -->
+  <carrier_config mcc="401" mnc="77" name="Tele2" spn="\QTele2\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.40400.56a163f521ce -->
   <carrier_config mcc="404" mnc="00" name="DSA" spn="\QDSA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -34703,6 +34769,7 @@
   <!-- open.40401.7a83011dd21b -->
   <carrier_config mcc="404" mnc="01" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="01" name="Vi">
@@ -34731,6 +34798,7 @@
   <!-- open.40404.322614699869 -->
   <carrier_config mcc="404" mnc="04" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="04" name="Vi">
@@ -34739,6 +34807,7 @@
   <!-- open.40405.3766b8b7eb1b -->
   <carrier_config mcc="404" mnc="05" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="05" name="Vi">
@@ -34747,6 +34816,7 @@
   <!-- open.40407.90a0a86d822a -->
   <carrier_config mcc="404" mnc="07" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="07" name="Vi">
@@ -34769,6 +34839,7 @@
   <!-- open.40411.2b8a9a5e49d1 -->
   <carrier_config mcc="404" mnc="11" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="11" name="Vi">
@@ -34777,6 +34848,7 @@
   <!-- open.40412.12f6b3b1b64b -->
   <carrier_config mcc="404" mnc="12" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="12" name="Vi">
@@ -34785,6 +34857,7 @@
   <!-- open.40413.62417348f6f3 -->
   <carrier_config mcc="404" mnc="13" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="13" name="Vi">
@@ -34793,6 +34866,7 @@
   <!-- open.40414.eb93a60fedae -->
   <carrier_config mcc="404" mnc="14" name="IDEA Punjab" spn="\QIDEA Punjab\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="14" name="Vi">
@@ -34801,6 +34875,7 @@
   <!-- open.40415.65d6e6d77e06 -->
   <carrier_config mcc="404" mnc="15" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="15" name="Vi">
@@ -34827,6 +34902,7 @@
   <!-- open.40419.b79ea62ea30a -->
   <carrier_config mcc="404" mnc="19" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="19" name="Vi">
@@ -34835,6 +34911,7 @@
   <!-- open.40420.7725a3d4f0f6 -->
   <carrier_config mcc="404" mnc="20" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="20" name="Vi">
@@ -34847,6 +34924,7 @@
   <!-- open.40422.129672f37930 -->
   <carrier_config mcc="404" mnc="22" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="22" name="Vi">
@@ -34855,6 +34933,7 @@
   <!-- open.40424.ba6bc113486e -->
   <carrier_config mcc="404" mnc="24" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="24" name="Vi">
@@ -34867,6 +34946,7 @@
   <!-- open.40427.3f378925282b -->
   <carrier_config mcc="404" mnc="27" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="27" name="Vi">
@@ -34883,6 +34963,7 @@
   <!-- open.40430.6fea14429119 -->
   <carrier_config mcc="404" mnc="30" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="30" name="Vi">
@@ -34947,6 +35028,7 @@
   <!-- open.40443.b8a56470e352 -->
   <carrier_config mcc="404" mnc="43" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="43" name="Vi">
@@ -34955,6 +35037,7 @@
   <!-- open.40444.4e343b0a068a -->
   <carrier_config mcc="404" mnc="44" name="IDEA Karnataka" spn="\QIDEA Karnataka\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="44" name="Vi">
@@ -34973,6 +35056,7 @@
   <!-- open.40446.66454ef83187 -->
   <carrier_config mcc="404" mnc="46" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="46" name="Vi">
@@ -35015,6 +35099,7 @@
   <!-- open.40456.640864dc2c51 -->
   <carrier_config mcc="404" mnc="56" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="56" name="Vi">
@@ -35035,6 +35120,7 @@
   <!-- open.40460.4caedfbedf35 -->
   <carrier_config mcc="404" mnc="60" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="60" name="Vi">
@@ -35109,6 +35195,7 @@
   <!-- open.40478.17a04e765858 -->
   <carrier_config mcc="404" mnc="78" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="78" name="Vi">
@@ -35129,6 +35216,7 @@
   <!-- open.40482.fcb266588763 -->
   <carrier_config mcc="404" mnc="82" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="82" name="Vi">
@@ -35141,6 +35229,7 @@
   <!-- open.40484.cd92d776e61b -->
   <carrier_config mcc="404" mnc="84" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="84" name="Vi">
@@ -35153,6 +35242,7 @@
   <!-- open.40486.b3272c977d6c -->
   <carrier_config mcc="404" mnc="86" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="86" name="Vi">
@@ -35161,6 +35251,7 @@
   <!-- open.40487.b141d00a2d53 -->
   <carrier_config mcc="404" mnc="87" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="87" name="Vi">
@@ -35169,6 +35260,7 @@
   <!-- open.40488.aaf6b8e04de0 -->
   <carrier_config mcc="404" mnc="88" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="404" mnc="88" name="Vi">
@@ -35177,6 +35269,7 @@
   <!-- open.40489.a334060c996b -->
   <carrier_config mcc="404" mnc="89" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="404" mnc="89" name="Vi">
@@ -35185,6 +35278,7 @@
   <!-- open.404891.96f187006a59 -->
   <carrier_config mcc="404" mnc="891" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40490.c960c3e9ffd6 -->
   <carrier_config mcc="404" mnc="90" name="Airtel" spn="\QAirtel\E">
@@ -35513,6 +35607,7 @@
   <!-- open.40566.03f0e408e4f9 -->
   <carrier_config mcc="405" mnc="66" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="66" name="Vi">
@@ -35521,6 +35616,7 @@
   <!-- open.40567.e9c519c6c147 -->
   <carrier_config mcc="405" mnc="67" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="67" name="Vi">
@@ -35529,6 +35625,7 @@
   <!-- open.40570.8bb82048a868 -->
   <carrier_config mcc="405" mnc="70" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="70" name="Vi">
@@ -35537,6 +35634,7 @@
   <!-- open.405750.36d0d9668a35 -->
   <carrier_config mcc="405" mnc="750" name="Vodafone Jammu" spn="\QVodafone Jammu\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="750" name="Vi">
@@ -35545,6 +35643,7 @@
   <!-- open.405751.371391cb3e2f -->
   <carrier_config mcc="405" mnc="751" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="751" name="Vi">
@@ -35553,6 +35652,7 @@
   <!-- open.405752.ea53d122e3f0 -->
   <carrier_config mcc="405" mnc="752" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="752" name="Vi">
@@ -35561,6 +35661,7 @@
   <!-- open.405753.56595d349a0a -->
   <carrier_config mcc="405" mnc="753" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="753" name="Vi">
@@ -35569,6 +35670,7 @@
   <!-- open.405754.e4d330c959e4 -->
   <carrier_config mcc="405" mnc="754" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="754" name="Vi">
@@ -35577,6 +35679,7 @@
   <!-- open.405755.a56e20eab1b7 -->
   <carrier_config mcc="405" mnc="755" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="755" name="Vi">
@@ -35585,6 +35688,7 @@
   <!-- open.405756.2de11252f08b -->
   <carrier_config mcc="405" mnc="756" name="Vodafone IN" spn="\QVodafone IN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.53e6b3e02885 -->
   <carrier_config cid="2378" mcc="405" mnc="756" name="Vi">
@@ -35601,6 +35705,7 @@
   <!-- open.405799.a8ca24a2690f -->
   <carrier_config mcc="405" mnc="799" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="799" name="Vi">
@@ -35802,6 +35907,7 @@
   <!-- open.405845.701c83ce98ff -->
   <carrier_config mcc="405" mnc="845" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="845" name="Vi">
@@ -35810,6 +35916,7 @@
   <!-- open.405846.a86d20bd44a4 -->
   <carrier_config mcc="405" mnc="846" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="846" name="Vi">
@@ -35818,6 +35925,7 @@
   <!-- open.405847.bc08fbb503ae -->
   <carrier_config mcc="405" mnc="847" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="847" name="Vi">
@@ -35826,6 +35934,7 @@
   <!-- open.405848.09bb642b8d08 -->
   <carrier_config mcc="405" mnc="848" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="848" name="Vi">
@@ -35834,6 +35943,7 @@
   <!-- open.405849.92cae8d5682c -->
   <carrier_config mcc="405" mnc="849" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="849" name="Vi">
@@ -35842,6 +35952,7 @@
   <!-- open.405850.f7c825eb8641 -->
   <carrier_config mcc="405" mnc="850" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="850" name="Vi">
@@ -35850,6 +35961,7 @@
   <!-- open.405851.10d42379d53f -->
   <carrier_config mcc="405" mnc="851" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="851" name="Vi">
@@ -35858,6 +35970,7 @@
   <!-- open.405852.3124bd41a089 -->
   <carrier_config mcc="405" mnc="852" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="852" name="Vi">
@@ -35866,6 +35979,7 @@
   <!-- open.405853.cb796c5431ed -->
   <carrier_config mcc="405" mnc="853" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="853" name="Vi">
@@ -36199,6 +36313,7 @@
   <!-- open.405908.8df4f0d34ab5 -->
   <carrier_config mcc="405" mnc="908" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="908" name="Vi">
@@ -36207,6 +36322,7 @@
   <!-- open.405909.9b06bfab22a1 -->
   <carrier_config mcc="405" mnc="909" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="909" name="Vi">
@@ -36215,6 +36331,7 @@
   <!-- open.405910.f9d1209719d3 -->
   <carrier_config mcc="405" mnc="910" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="910" name="Vi">
@@ -36223,6 +36340,7 @@
   <!-- open.405911.08214d10e050 -->
   <carrier_config mcc="405" mnc="911" name="IDEA" spn="\QIDEA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40404.c7bb666c0e99 -->
   <carrier_config cid="802" mcc="405" mnc="911" name="Vi">
@@ -36615,8 +36733,76 @@
   <carrier_config mcc="427" mnc="07" name="MOD" spn="\QMOD\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
+  <!-- open.42806.9a01976148fa -->
+  <carrier_config mcc="428" mnc="06" name="G-Mobile" spn="\QG-Mobile\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.42888.5a4e298d916f -->
+  <carrier_config mcc="428" mnc="88" name="Unitel" spn="\QUnitel\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.42899.859f59cc54e5 -->
+  <carrier_config mcc="428" mnc="99" name="MobiCom" spn="\QMobiCom\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.42902.9adc9cb42fdd -->
   <carrier_config mcc="429" mnc="02" name="NCELL" spn="\QNCELL\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43404.a497ef3f2f14 -->
+  <carrier_config mcc="434" mnc="04" name="BEELINE UZ" spn="\QBEELINE UZ\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43405.b8065810c0e6 -->
+  <carrier_config mcc="434" mnc="05" name="UCELL" spn="\QUCELL\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43407.b2ac4c062957 -->
+  <carrier_config mcc="434" mnc="07" name="UMS" spn="\QUMS\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43408.2c5df939f3c7 -->
+  <carrier_config mcc="434" mnc="08" name="UzMobile" spn="\QUzMobile\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43601.4c6663dbc306 -->
+  <carrier_config mcc="436" mnc="01" name="Tcell" spn="\QTcell\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43602.79e8209daa3a -->
+  <carrier_config mcc="436" mnc="02" name="Tcell" spn="\QTcell\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43604.bf7078e6f3f5 -->
+  <carrier_config mcc="436" mnc="04" name="Babylon-Mobile" spn="\QBabylon-Mobile\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43605.af2606196c92 -->
+  <carrier_config mcc="436" mnc="05" name="Beeline TJ" spn="\QBeeline TJ\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43701.8eef56ca6635 -->
+  <carrier_config mcc="437" mnc="01" name="Beeline KG" spn="\QBeeline KG\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43705.d33a798d631e -->
+  <carrier_config mcc="437" mnc="05" name="Megacom" spn="\QMegacom\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43709.dfb330ea55a8 -->
+  <carrier_config mcc="437" mnc="09" name="O!" spn="\QO!\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43710.ad6cd6f79789 -->
+  <carrier_config mcc="437" mnc="10" name="Saima4G" spn="\QSaima4G\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43801.c7af63b8893d -->
+  <carrier_config mcc="438" mnc="01" name="MTS-TM" spn="\QMTS-TM\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.43802.9a8c8401ce8f -->
+  <carrier_config mcc="438" mnc="02" name="TMCELL" spn="\QTMCELL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.44000.3c9f5d9cb8ec -->

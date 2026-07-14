@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "auto",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -12,6 +13,13 @@
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -20,28 +28,18 @@
   },
   "android_apns": [
     {
-      "apn": "XCAP",
-      "name": "ALTEL XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "eezone",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "MMS",
       "types": [
-        "xcap"
+        "mms"
       ]
     },
     {
-      "apn": "ims",
-      "name": "ALTEL IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "ALTEL",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "everywhere",
+      "name": "Internet",
       "types": [
         "default"
       ]
@@ -53,7 +51,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -62,15 +60,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "ALTEL",
+  "display_name": "Orange UK",
   "match": {
     "mccmnc": [
-      "40107"
+      "23486"
     ],
     "spn": [
-      "ALTEL"
+      "Orange UK"
     ]
   },
-  "profile_id": "open.40107.c309f1cfa29f",
+  "profile_id": "open.23486.46d1ddfa21b4",
   "schema_version": 1
 }

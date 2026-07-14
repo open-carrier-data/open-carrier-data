@@ -1,7 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -13,35 +13,29 @@
     },
     "operator_display": {
       "refer_eons_without_lac": true
-    },
-    "wifi_calling": {
-      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
     {
-      "apn": "XCAP",
-      "name": "ALTEL XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
       "apn": "ims",
-      "name": "ALTEL IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "Telenor IMS",
       "types": [
         "ims"
       ]
     },
     {
-      "apn": "internet",
-      "name": "ALTEL",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "mms",
+      "mmsc": "http://mmsc",
+      "mmsport": 8004,
+      "mmsproxy": "192.168.087.011",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "telenorbg",
+      "name": "Telenor Internet",
       "types": [
         "default"
       ]
@@ -53,7 +47,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -62,15 +56,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "ALTEL",
+  "display_name": "Telenor BG",
   "match": {
     "mccmnc": [
-      "40107"
+      "28405"
     ],
     "spn": [
-      "ALTEL"
+      "Telenor BG"
     ]
   },
-  "profile_id": "open.40107.c309f1cfa29f",
+  "profile_id": "open.28405.4084faad05b3",
   "schema_version": 1
 }

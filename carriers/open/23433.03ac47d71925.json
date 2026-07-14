@@ -1,6 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "auto",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -12,6 +13,13 @@
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -20,28 +28,18 @@
   },
   "android_apns": [
     {
-      "apn": "XCAP",
-      "name": "ALTEL XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "tslmms",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "193.35.133.194",
+      "name": "LIFE Mobile MMS",
       "types": [
-        "xcap"
+        "mms"
       ]
     },
     {
-      "apn": "ims",
-      "name": "ALTEL IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "ALTEL",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "tslpaygnet",
+      "name": "LIFE Mobile Data",
       "types": [
         "default"
       ]
@@ -53,7 +51,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -62,15 +60,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "ALTEL",
+  "display_name": "LIFE Mobile",
   "match": {
     "mccmnc": [
-      "40107"
+      "23433"
     ],
     "spn": [
-      "ALTEL"
+      "LIFE Mobile"
     ]
   },
-  "profile_id": "open.40107.c309f1cfa29f",
+  "profile_id": "open.23433.03ac47d71925",
   "schema_version": 1
 }
