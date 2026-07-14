@@ -1,6 +1,24 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "carrier_id": 1309,
+      "name": "MTN IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1309,
+      "name": "MTN XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "MTN",
       "types": [
@@ -18,11 +36,47 @@
     {
       "apn": "myMTN",
       "authtype": 1,
+      "carrier_id": 1309,
+      "name": "myMTN",
+      "password": "mtnwap",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "mtnwap"
+    },
+    {
+      "apn": "myMTN",
+      "carrier_id": 1309,
+      "name": "myMTN",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "myMTN",
+      "authtype": 1,
+      "carrier_id": 1309,
       "mmsc": "http://mms.mtn.co.za/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "196.11.240.241",
       "name": "MTN MMS",
       "password": "mtnmms",
+      "types": [
+        "mms"
+      ],
+      "user": "mtnmms"
+    },
+    {
+      "apn": "myMTN",
+      "authtype": 1,
+      "mmsc": "http://mms.mtn.co.za/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "196.11.240.241",
+      "name": "MTN MMS",
+      "password": "mtnmms",
+      "port": 8080,
+      "proxy": "196.11.240.241",
       "types": [
         "mms"
       ],

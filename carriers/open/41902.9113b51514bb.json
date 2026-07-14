@@ -2,10 +2,13 @@
   "android_apns": [
     {
       "apn": "IMS",
-      "name": "Zain KW",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false
     },
     {
       "apn": "SOS",
@@ -47,6 +50,21 @@
     },
     {
       "apn": "pps",
+      "authtype": 3,
+      "carrier_id": 1585,
+      "name": "pps",
+      "password": "pps",
+      "port": 8080,
+      "proxy": "10.43.4.5",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "pps"
+    },
+    {
+      "apn": "pps",
       "mmsc": "http://mms.zain",
       "mmsport": 8080,
       "mmsproxy": "176.0.0.65",
@@ -56,6 +74,20 @@
         "dun"
       ],
       "user": "pps"
+    },
+    {
+      "apn": "pps",
+      "authtype": 3,
+      "carrier_id": 1585,
+      "mmsc": "http://mms.zain",
+      "mmsport": 8080,
+      "mmsproxy": "176.0.0.65",
+      "name": "MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "xcap",

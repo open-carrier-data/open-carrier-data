@@ -1,6 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "3 HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms-g.three.com.hk",
       "mmsc": "http://10.30.15.51:10021/mmsc",
       "mmsport": 8080,
@@ -8,6 +27,32 @@
       "name": "3-DB-MMS",
       "types": [
         "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "Hutchison HK",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "name": "Hutchison HK Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -18,7 +63,8 @@
       "types": [
         "default",
         "supl"
-      ]
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {

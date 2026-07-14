@@ -33,6 +33,14 @@
   "android_apns": [
     {
       "apn": "hos",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -63,6 +71,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "types": [
@@ -72,12 +88,26 @@
     },
     {
       "apn": "internet.vodafone.gr",
-      "name": "internet.vodafone.gr",
+      "carrier_id": 2399,
+      "name": "Vf Mobile Internet",
       "password": "pass",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 1,
+      "carrier_id": 2399,
+      "mmsc": "http://mms.vodafone.gr",
+      "mmsport": 5080,
+      "mmsproxy": "213.249.19.49",
+      "name": "Vf MMS",
+      "password": "pass",
+      "types": [
+        "mms"
       ],
       "user": "user"
     }

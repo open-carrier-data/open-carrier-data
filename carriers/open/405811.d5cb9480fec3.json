@@ -2,6 +2,18 @@
   "android_apns": [
     {
       "apn": "aircelgprs",
+      "carrier_id": 1551,
+      "name": "Aircel-GPRS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "aircelgprs",
       "name": "aircelgprs",
       "protocol": "IPV4V6",
       "types": [
@@ -10,11 +22,38 @@
       ]
     },
     {
+      "apn": "aircelmms",
+      "carrier_id": 1551,
+      "mmsc": "http://10.50.1.166/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.17.83.69",
+      "name": "Aircel-MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "aircelnet",
       "name": "AIRCEL",
       "types": [
         "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "aircelwap",
+      "carrier_id": 1551,
+      "name": "Pocket Internet",
+      "port": 8080,
+      "protocol": "IPV4V6",
+      "proxy": "172.17.83.69",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {

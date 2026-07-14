@@ -1,8 +1,31 @@
 {
+  "android_apns": [
+    {
+      "apn": "internet.letai.ru",
+      "authtype": 1,
+      "name": "internet.letai.ru",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc:8002",
+      "mmsport": 8080,
+      "mmsproxy": "mmsc",
+      "name": "Letai MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -11,7 +34,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Letai",
+  "display_name": "Carrier 25027",
   "match": {
     "mccmnc": [
       "25027"

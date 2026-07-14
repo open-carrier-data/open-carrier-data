@@ -33,6 +33,17 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 958,
+      "name": "Telenor Ut",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "hos",
@@ -40,6 +51,18 @@
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 958,
+      "name": "Telenor IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ],
       "user_visible": false
     },
@@ -75,6 +98,19 @@
       "user": "phonero"
     },
     {
+      "apn": "telenor",
+      "carrier_id": 958,
+      "mmsc": "http://mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.11",
+      "name": "Telenor",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "telenor.apple",
       "name": "Telenor",
       "types": [
@@ -84,13 +120,26 @@
     },
     {
       "apn": "telenor.mms",
+      "carrier_id": 958,
       "mmsc": "http://mmsc",
       "mmsport": 8080,
       "mmsproxy": "mms-proxy.telenor.no",
-      "name": "telenor.mms",
-      "protocol": "IP",
+      "name": "Telenor MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "telenor.smart",
+      "carrier_id": 958,
+      "name": "Telenor Smart",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -135,6 +184,33 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "internet.ventelo.no",
+      "carrier_id": 2333,
+      "mvno_match_data": "24201700xxxxxxx",
+      "mvno_type": "imsi",
+      "name": "Ventelo Internett",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.ventelo.no",
+      "authtype": 1,
+      "carrier_id": 2333,
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.11",
+      "mvno_match_data": "24201700xxxxxxx",
+      "mvno_type": "imsi",
+      "name": "Ventelo MMS",
+      "password": "1111",
+      "types": [
+        "mms"
+      ],
+      "user": "ventelo"
     },
     {
       "apn": "mms.ventelo.no",

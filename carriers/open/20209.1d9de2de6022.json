@@ -24,6 +24,33 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "myq",
       "authtype": 0,
       "carrier_enabled": true,
@@ -32,6 +59,15 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "myq",
+      "carrier_id": 749,
+      "name": "Q Internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -45,12 +81,59 @@
     },
     {
       "apn": "q-mms.myq.gr",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.myq.gr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.80.134",
+      "name": "Q MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "q-mms.myq.gr",
+      "carrier_id": 749,
+      "mmsc": "http://mms.myq.gr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.80.134",
+      "name": "Q-Telecom MMS GPRS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "q-mms.myq.gr",
       "authtype": 0,
       "carrier_enabled": true,
       "mmsc": "http://mms.myq.gr",
       "mmsport": 8080,
       "mmsproxy": "192.168.80.134",
       "name": "q-mms.myq.gr",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "myq",
+      "carrier_id": 749,
+      "mvno_match_data": "Q-Telcom",
+      "mvno_type": "spn",
+      "name": "Q Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "q-mms.myq.gr",
+      "carrier_id": 749,
+      "mmsc": "http://mms.myq.gr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.80.134",
+      "mvno_match_data": "Q-Telcom",
+      "mvno_type": "spn",
+      "name": "Q-Telecom MMS GPRS",
       "types": [
         "mms"
       ]

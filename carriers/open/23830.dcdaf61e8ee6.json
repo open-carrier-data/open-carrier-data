@@ -1,12 +1,36 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "TELIA",
+      "apn": "hos",
+      "carrier_id": 656,
+      "name": "Telia Ut",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "Telia XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 656,
+      "name": "Telia IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -32,6 +56,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mmssp",
       "mmsc": "http://mms.telia.dk",
       "mmsport": 8080,
@@ -39,6 +73,14 @@
       "name": "Siminn MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "web.orange.dk",
+      "carrier_id": 656,
+      "name": "Orange DE",
+      "types": [
+        "default"
       ]
     },
     {
@@ -55,6 +97,18 @@
       "proxy": "62.44.158.29",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.internet.mtelia.dk",
+      "carrier_id": 656,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ]
     },
@@ -77,14 +131,29 @@
       ]
     },
     {
+      "apn": "www.mms.mtelia.dk",
+      "carrier_id": 656,
+      "mmsc": "http://mms.telia.dk",
+      "mmsport": 8080,
+      "mmsproxy": "193.209.134.131",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "hos",
       "mvno_match_data": "TELIA DK",
       "mvno_type": "spn",
       "name": "Telia XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -92,9 +161,11 @@
       "mvno_type": "spn",
       "name": "Telia IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "www.internet.mtelia.dk",
@@ -102,6 +173,7 @@
       "mvno_type": "spn",
       "name": "Telia DK",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -116,6 +188,7 @@
       "mvno_type": "spn",
       "name": "Telia MMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

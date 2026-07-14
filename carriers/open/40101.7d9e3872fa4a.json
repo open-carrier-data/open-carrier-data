@@ -2,9 +2,32 @@
   "android_apns": [
     {
       "apn": "internet.beeline.kz",
+      "authtype": 1,
+      "carrier_id": 1588,
+      "name": "Beeline Internet",
+      "password": "beeline",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "@internet.beeline"
+    },
+    {
+      "apn": "internet.beeline.kz",
       "name": "Beeline",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet.dos.kz",
+      "carrier_id": 1588,
+      "name": "DOS Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -18,6 +41,7 @@
     {
       "apn": "mms.beeline.kz",
       "authtype": 1,
+      "carrier_id": 1588,
       "mmsc": "http://mms.beeline.kz/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.27.6.93",
@@ -27,6 +51,18 @@
         "mms"
       ],
       "user": "@mms.beeline"
+    },
+    {
+      "apn": "izi.me",
+      "carrier_id": 2436,
+      "mvno_match_data": "40101568",
+      "mvno_type": "imsi",
+      "name": "izi",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {

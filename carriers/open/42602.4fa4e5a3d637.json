@@ -49,10 +49,12 @@
     {
       "apn": "internet",
       "authtype": 0,
-      "name": "internet",
+      "carrier_id": 2014,
+      "name": "Zain BH Internet",
       "password": "internet",
       "types": [
         "default",
+        "ia",
         "supl"
       ],
       "user": "internet"
@@ -65,6 +67,35 @@
       ]
     },
     {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_id": 2014,
+      "mmsc": "http://172.18.83.129:80/",
+      "mmsport": 80,
+      "mmsproxy": "172.18.85.34",
+      "name": "Zain BH MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "wap",
+      "authtype": 0,
+      "carrier_id": 2014,
+      "name": "Zain BH WAP",
+      "password": "wap",
+      "port": 80,
+      "proxy": "172.18.85.33",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "wap"
+    },
+    {
       "apn": "wap",
       "authtype": 0,
       "name": "Zain BH WAP",
@@ -72,7 +103,6 @@
       "port": 80,
       "proxy": "172.18.85.33",
       "types": [
-        "default",
         "supl"
       ],
       "user": "wap"

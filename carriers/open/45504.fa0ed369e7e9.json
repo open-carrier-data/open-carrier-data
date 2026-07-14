@@ -2,11 +2,32 @@
   "android_apns": [
     {
       "apn": "XCAP",
+      "carrier_id": 1614,
       "name": "CTM XCAP",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "XCAP",
+      "name": "CTM XCAP",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ctm-mobile",
+      "carrier_id": 1614,
+      "name": "CTM Data",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
     },
     {
       "apn": "ctm-mobile",
@@ -29,6 +50,19 @@
     },
     {
       "apn": "ctmmms",
+      "carrier_id": 1614,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctmmms",
       "mmsc": "http://mms.wap.ctm.net:8002",
       "mmsport": 8080,
       "mmsproxy": "192.168.99.3",
@@ -37,6 +71,22 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ctmprepaid",
+      "carrier_id": 1614,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM (Prepaid)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -52,6 +102,16 @@
         "ia",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1614,
+      "name": "CTM IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {

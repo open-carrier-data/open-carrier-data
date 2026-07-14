@@ -14,6 +14,20 @@
     {
       "apn": "entel.pe",
       "authtype": 0,
+      "carrier_id": 1930,
+      "name": "Entel PE",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "entel.pe",
+      "authtype": 0,
       "name": "Entel Internet",
       "types": [
         "supl"
@@ -23,6 +37,16 @@
       "apn": "ims",
       "name": "Entel",
       "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1930,
+      "name": "Entel PE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -41,12 +65,37 @@
     {
       "apn": "location.entel.pe",
       "authtype": 0,
+      "carrier_id": 1930,
       "name": "Entel Location",
       "port": 7275,
       "protocol": "IP",
       "server": "http://location.entel.pe",
       "types": [
         "supl"
+      ]
+    },
+    {
+      "apn": "location.entel.pe",
+      "authtype": 0,
+      "name": "Entel Location",
+      "port": 7275,
+      "protocol": "IP",
+      "server": "http://location.entel.pe",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.entel.pe",
+      "authtype": 0,
+      "carrier_id": 1930,
+      "mmsc": "http://mms.entel.pe",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.215.74",
+      "name": "Entel MMS",
+      "protocol": "IP",
+      "types": [
+        "mms"
       ]
     }
   ],

@@ -17,6 +17,16 @@
   },
   "android_apns": [
     {
+      "apn": "3g.kyivstar.net",
+      "carrier_id": 1747,
+      "name": "Kyivstar Internet 3G",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "hos",
       "carrier_id": 1747,
       "name": "HOS",
@@ -88,12 +98,25 @@
       ]
     },
     {
+      "apn": "mms.djuice.com.ua",
+      "authtype": 1,
+      "mmsc": "http://mms.kyivstar.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "name": "Djuice MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "djuice"
+    },
+    {
       "apn": "mms.kyivstar.net",
       "authtype": 1,
       "mmsc": "http://mms.kyivstar.net",
       "mmsport": 8080,
       "mmsproxy": "10.10.10.10",
-      "name": "Kyivstar MMS",
+      "name": "mms.kyivstar.net",
       "password": "mms",
       "types": [
         "mms"
@@ -101,16 +124,71 @@
       "user": "mms"
     },
     {
-      "apn": "mms.kyivstar.net",
-      "authtype": 0,
-      "carrier_id": 1747,
-      "mmsc": "http://mms.kyivstar.net",
-      "mmsport": 8080,
-      "mmsproxy": "10.10.10.10",
-      "name": "UA-KYIVSTAR MMS",
+      "apn": "wap.ab.kyivstar.net",
+      "name": "wap.ab.kyivstar.net",
+      "port": 8080,
+      "proxy": "10.10.10.10",
       "types": [
-        "mms"
+        "default"
       ]
+    },
+    {
+      "apn": "wap.djuice.com.ua",
+      "name": "Djuice HTTP",
+      "port": 8080,
+      "proxy": "10.10.10.10",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "wap.kyivstar.net",
+      "name": "Kyivstar HTTP",
+      "port": 8080,
+      "proxy": "10.10.10.10",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "www.ab.kyivstar.net",
+      "carrier_id": 1747,
+      "name": "Kyivstar Internet Prepaid",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.ab.kyivstar.net",
+      "name": "www.ab.kyivstar.net",
+      "password": "internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "igprs"
+    },
+    {
+      "apn": "www.djuice.com.ua",
+      "name": "www.djuice.com.ua",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.kyivstar.net",
+      "authtype": 1,
+      "carrier_id": 1747,
+      "name": "Kyivstar Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "igprs"
     },
     {
       "apn": "www.kyivstar.net",
@@ -122,6 +200,40 @@
         "supl"
       ],
       "user": "igprs"
+    },
+    {
+      "apn": "www.kyivstar.net",
+      "carrier_id": 1747,
+      "name": "Kyivstar Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "xl.kyivstar.net",
+      "carrier_id": 1747,
+      "name": "Kyivstar Internet XL",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.djuice.com.ua",
+      "authtype": 1,
+      "carrier_id": 2331,
+      "mmsc": "http://mms.kyivstar.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "mvno_match_data": "DJUICE",
+      "mvno_type": "spn",
+      "name": "Djuice MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "djuice"
     },
     {
       "apn": "mms.djuice.com.ua",
@@ -136,6 +248,18 @@
         "mms"
       ],
       "user": "djuice"
+    },
+    {
+      "apn": "www.djuice.com.ua",
+      "carrier_id": 2331,
+      "mvno_match_data": "DJUICE",
+      "mvno_type": "spn",
+      "name": "Djuice Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
     },
     {
       "apn": "www.djuice.com.ua",

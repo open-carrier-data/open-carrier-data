@@ -62,10 +62,39 @@
     },
     {
       "apn": "internet.batelco.com",
-      "name": "internet.batelco.com",
-      "password": "wap",
+      "carrier_id": 1372,
+      "name": "Batelco Internet",
       "types": [
         "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.batelco.com",
+      "authtype": 0,
+      "carrier_id": 1372,
+      "mmsc": "http://192.168.36.10/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "192.168.1.2",
+      "name": "Batelco MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "wap.batelco.com",
+      "authtype": 0,
+      "carrier_id": 1372,
+      "name": "Batelco WAP",
+      "password": "wap",
+      "port": 80,
+      "proxy": "192.168.1.2",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ],
       "user": "wap"
@@ -78,7 +107,6 @@
       "port": 80,
       "proxy": "192.168.1.2",
       "types": [
-        "default",
         "supl"
       ],
       "user": "wap"

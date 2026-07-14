@@ -2,11 +2,33 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 959,
+      "name": "Telia Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 959,
+      "name": "Telia IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ],
       "user_visible": false
     },
@@ -20,6 +42,55 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mm",
+      "mmsport": 8080,
+      "mmsproxy": "212.169.66.4",
+      "name": "Telia MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 959,
+      "mmsc": "http://mm/",
+      "mmsport": 8080,
+      "mmsproxy": "212.169.66.4",
+      "name": "Telia MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "netcom",
+      "carrier_id": 959,
+      "mmsc": "http://mm/",
+      "mmsport": 8080,
+      "mmsproxy": "212.169.66.4",
+      "name": "NetCom",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "netcom",
@@ -50,12 +121,13 @@
     },
     {
       "apn": "telia",
-      "authtype": 0,
-      "name": "telia",
+      "carrier_id": 959,
+      "name": "Telia",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
         "supl"
       ]
     },
@@ -68,6 +140,7 @@
     },
     {
       "apn": "netcom",
+      "carrier_id": 2334,
       "mvno_match_data": "2420256xxxxxxxx",
       "mvno_type": "imsi",
       "name": "Chess Internett",
@@ -75,6 +148,32 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "netcom",
+      "mvno_match_data": "2420256xxxxxxxx",
+      "mvno_type": "imsi",
+      "name": "Chess Internett",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "netcom",
+      "authtype": 1,
+      "carrier_id": 2334,
+      "mmsc": "http://mm/",
+      "mmsport": 8080,
+      "mmsproxy": "212.169.66.4",
+      "mvno_match_data": "2420256xxxxxxxx",
+      "mvno_type": "imsi",
+      "name": "Chess MMS",
+      "password": "netcom",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "netcom",

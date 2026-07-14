@@ -26,15 +26,28 @@
     {
       "apn": "A1.net",
       "authtype": 1,
-      "carrier_enabled": true,
-      "name": "A1.net",
+      "carrier_id": 14,
+      "name": "live!",
       "password": "ppp",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
+        "ia",
         "supl"
       ],
       "user": "ppp@a1plus.at"
+    },
+    {
+      "apn": "A1.net",
+      "name": "A1",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "hipri",
+        "xcap"
+      ],
+      "user": "ppp@A1plus.at"
     },
     {
       "apn": "IMS",
@@ -44,6 +57,15 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "SOS",
+      "name": "A1 Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -58,6 +80,20 @@
         "mms"
       ],
       "user": "ppp@A1plus.at"
+    },
+    {
+      "apn": "free.A1.net",
+      "authtype": 1,
+      "carrier_id": 14,
+      "mmsc": "http://mmsc.a1.net",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.71",
+      "name": "A1 MMS",
+      "password": "ppp",
+      "types": [
+        "mms"
+      ],
+      "user": "ppp@a1plus.at"
     },
     {
       "apn": "free.a1.net",
@@ -75,6 +111,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 14,
+      "name": "A1 HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1500,
@@ -88,12 +134,13 @@
     },
     {
       "apn": "ims",
-      "name": "A1",
-      "password": "ppp",
+      "carrier_id": 14,
+      "name": "A1 IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ],
-      "user": "ppp@A1plus.at"
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -115,6 +162,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ],
+      "user": "ppp@A1plus.at"
     },
     {
       "apn": "mms.aon.at",

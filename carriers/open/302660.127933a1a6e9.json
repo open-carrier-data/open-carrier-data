@@ -12,6 +12,7 @@
     {
       "apn": "internet.mts",
       "name": "internet.mts",
+      "protocol": "IPV4V6",
       "types": [
         "dun"
       ],
@@ -35,12 +36,21 @@
     {
       "apn": "sp.mts",
       "mmsc": "http://mmsc2.mts.net/",
-      "mmsport": 9401,
-      "mmsproxy": "wapgw1.mts.net",
       "name": "MTS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
         "supl"
       ]
     },
@@ -62,9 +72,181 @@
       "mmsproxy": "wapgw1.mts.net",
       "mvno_match_data": "2C",
       "mvno_type": "gid",
-      "name": "MTS",
+      "name": "sp.mts",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "MTS",
+      "mvno_type": "spn",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "MTS",
+      "mvno_type": "spn",
+      "name": "sp.mts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "MTS",
+      "mvno_type": "spn",
+      "name": "MTS Wap",
       "types": [
         "default",
         "mms",

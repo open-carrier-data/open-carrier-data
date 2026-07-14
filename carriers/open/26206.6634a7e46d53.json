@@ -37,6 +37,21 @@
   },
   "android_apns": [
     {
+      "apn": "HOS",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "Telekom EPDG",
+      "password": "telekom",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
       "apn": "IMS",
       "authtype": 0,
       "carrier_enabled": true,
@@ -46,6 +61,23 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_id": 3,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -83,12 +115,25 @@
     },
     {
       "apn": "ims",
-      "name": "Telekom.de",
+      "carrier_id": 3,
+      "name": "Telekom IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
-      "user": "0"
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "0",
+      "user_visible": false
     },
     {
       "apn": "internet.t-mobile",
@@ -112,6 +157,20 @@
       "types": [
         "default",
         "mms"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_id": 3,
+      "name": "Telekom Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ],
       "user": "telekom"
     },

@@ -2,6 +2,16 @@
   "android_apns": [
     {
       "apn": "ims",
+      "carrier_id": 2160,
+      "name": "Pine Belt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "Pine Belt",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -21,12 +31,47 @@
       "user_visible": false
     },
     {
+      "apn": "lte.internet.pinebelt.net",
+      "carrier_id": 2160,
+      "mmsc": "http://mmsc.pinebelt.net:6672/",
+      "name": "Pine Belt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "lte.ota.pinebelt.net",
+      "carrier_id": 2160,
+      "name": "Pine Belt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
       "apn": "lte.ota.pinebelt.net",
       "name": "lte.ota.pinebelt.net",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "fota"
+      ]
+    },
+    {
+      "apn": "lte.tether.pinebelt.net",
+      "carrier_id": 2160,
+      "mmsc": "http://mmsc.pinebelt.net:6672/",
+      "name": "Pine Belt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -43,6 +88,21 @@
       "apn": "CdmaNai",
       "bearer": 6,
       "carrier_enabled": false,
+      "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "pinebelt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "CdmaNai",
+      "bearer_bitmask": "6",
+      "carrier_enabled": false,
+      "carrier_id": 2160,
       "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
       "mvno_match_data": "pinebelt",
       "mvno_type": "spn",
@@ -104,6 +164,60 @@
       ]
     },
     {
+      "apn": "VZWADMIN",
+      "bearer_bitmask": "13",
+      "carrier_id": 2160,
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "bearer_bitmask": "14",
+      "carrier_id": 2160,
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer_bitmask": "13",
+      "carrier_id": 2160,
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer_bitmask": "14",
+      "carrier_id": 2160,
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
       "apn": "VZWINTERNET",
       "bearer": 13,
       "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
@@ -122,6 +236,40 @@
     {
       "apn": "VZWINTERNET",
       "bearer": 14,
+      "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "13",
+      "carrier_id": 2160,
+      "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
+      "mvno_match_data": "pinebelt",
+      "mvno_type": "spn",
+      "name": "Pinebelt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "14",
+      "carrier_id": 2160,
       "mmsc": "http://mmsc.pinebelt.csky.us:6672/",
       "mvno_match_data": "pinebelt",
       "mvno_type": "spn",

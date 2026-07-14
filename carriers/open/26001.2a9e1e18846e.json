@@ -71,6 +71,27 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Plus IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "carrier_enabled": true,
@@ -92,12 +113,13 @@
     },
     {
       "apn": "mms",
-      "authtype": 0,
-      "carrier_enabled": true,
+      "carrier_id": 1658,
       "mmsc": "http://mms.plusgsm.pl:8002",
       "mmsport": 8080,
       "mmsproxy": "212.2.96.16",
-      "name": "mms",
+      "name": "Plus MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -144,13 +166,14 @@
     },
     {
       "apn": "plus",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "plus",
+      "carrier_id": 1658,
+      "name": "Plus Internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -160,15 +183,6 @@
       "roaming_protocol": "IP",
       "types": [
         "dun"
-      ]
-    },
-    {
-      "apn": "plus",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "plus",
-      "types": [
-        "supl"
       ]
     },
     {

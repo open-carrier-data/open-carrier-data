@@ -7,7 +7,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "supl"
+        "supl",
+        "xcap"
       ]
     },
     {
@@ -25,14 +26,29 @@
     },
     {
       "apn": "cmwap",
+      "authtype": 1,
       "mmsc": "http://mmsc.monternet.com",
-      "name": "CMCC MMS",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "cmwap",
+      "password": "wap",
       "port": 80,
       "protocol": "IPV4V6",
       "proxy": "10.0.0.172",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {

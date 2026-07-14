@@ -1,4 +1,190 @@
 {
+  "android_apns": [
+    {
+      "apn": "VZWADMIN",
+      "bearer_bitmask": "13|14",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Test FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Test FOTA",
+      "network_type_bitmask": "13|14",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "bearer_bitmask": "13|14",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Test CBS",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Test CBS",
+      "network_type_bitmask": "13|14",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer_bitmask": "13",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Test IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWIMS",
+      "bearer_bitmask": "14",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Test IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "13",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Test Internet",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "14",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Test Internet",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 3,
+      "bearer_bitmask": "6",
+      "carrier_enabled": false,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Test Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Test Internet",
+      "network_type_bitmask": "13",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "max_conns": 1023,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Test Internet",
+      "network_type_bitmask": "14",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 3,
+      "carrier_enabled": false,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Test Internet",
+      "network_type_bitmask": "7",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "allow_hold_call_during_emergency_bool": true,
     "carrier_volte_available_bool": true,
@@ -8,7 +194,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -17,7 +203,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 001010",
+  "display_name": "Carrier 001010",
   "match": {
     "mccmnc": [
       "001010"

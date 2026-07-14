@@ -1,4 +1,35 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Cosmote Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://195.167.65.220:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "Cosmote MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true
@@ -6,7 +37,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -15,7 +46,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 20202",
+  "display_name": "Carrier 20202",
   "match": {
     "mccmnc": [
       "20202"

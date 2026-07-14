@@ -32,8 +32,10 @@
     },
     {
       "apn": "ims",
-      "name": "Telcel",
-      "protocol": "IPV6",
+      "carrier_id": 1913,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -42,13 +44,15 @@
       "apn": "internet.itelcel.com",
       "authtype": 1,
       "carrier_id": 1913,
-      "name": "Telcel Internet",
+      "name": "internet.itelcel.com",
       "password": "webgprs2002",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "supl"
+        "ia",
+        "supl",
+        "xcap"
       ],
       "user": "webgprs"
     },
@@ -104,7 +108,20 @@
       "types": [
         "mms"
       ],
-      "user": "mmsgprs"
+      "user": "mmsgprs",
+      "user_editable": false
+    },
+    {
+      "apn": "internet.mvne1.com",
+      "authtype": 1,
+      "mvno_match_data": "03",
+      "mvno_type": "imsi",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {

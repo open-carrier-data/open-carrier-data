@@ -1,4 +1,35 @@
 {
+  "android_apns": [
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "supl",
+        "xcap"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctwap",
+      "authtype": 3,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "ctwap",
+      "password": "vnet.mobi",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "ctwap@mycdma.cn"
+    }
+  ],
   "android_carrier_config": {
     "carrier_allow_transfer_ims_call_bool": false,
     "carrier_default_wfc_ims_mode_int": 1,
@@ -14,7 +45,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "conditional",

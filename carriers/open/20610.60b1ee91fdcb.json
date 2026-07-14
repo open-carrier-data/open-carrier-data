@@ -53,14 +53,34 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "mtu": 1300,
+      "carrier_id": 1366,
       "name": "Orange B IMS",
-      "protocol": "IP",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.be",
+      "name": "internet.be",
+      "password": "mobistar",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "mobistar"
+    },
+    {
+      "apn": "mms.be",
+      "carrier_id": 1366,
+      "mmsc": "http://mmsc.mobistar.be",
+      "mmsport": 8080,
+      "mmsproxy": "212.65.63.143",
+      "name": "mms.be",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -76,7 +96,18 @@
       "types": [
         "mms"
       ],
-      "user": "mobistar"
+      "user": "mobistar",
+      "user_editable": false
+    },
+    {
+      "apn": "mworld.be",
+      "carrier_id": 1366,
+      "name": "mworld.be",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
     },
     {
       "apn": "telenetwap.be",
@@ -86,6 +117,34 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "netgprs.com",
+      "carrier_id": 2271,
+      "mvno_match_data": "BB00",
+      "mvno_type": "gid",
+      "name": "netgprs.com",
+      "password": "tsl",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "tsl"
+    },
+    {
+      "apn": "netgprs.com",
+      "carrier_id": 2271,
+      "mvno_match_data": "BE-Transatel",
+      "mvno_type": "spn",
+      "name": "netgprs.com",
+      "password": "tsl",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "tsl"
     }
   ],
   "android_carrier_config": {

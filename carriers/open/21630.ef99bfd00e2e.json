@@ -43,13 +43,49 @@
     },
     {
       "apn": "hos",
+      "authtype": 1,
       "bearer_bitmask": "18",
       "mmsc": "http://mms.t-mobile.hu/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "212.51.126.10",
       "name": "HOS",
       "types": [
-        "mms",
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2401,
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.51.126.10",
+      "name": "HOS",
+      "network_type_bitmask": "18",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.51.126.10",
+      "name": "HOS",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.51.126.10",
+      "name": "HOS",
+      "types": [
         "xcap"
       ],
       "user_visible": false
@@ -66,7 +102,6 @@
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
-        "mms",
         "xcap"
       ]
     },
@@ -94,6 +129,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 2401,
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 3,
       "name": "internet",
@@ -107,6 +152,24 @@
       "name": "Telekom HU",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet.telekom",
+      "authtype": 1,
+      "carrier_id": 2401,
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.51.126.10",
+      "name": "Telekom HU NET",
+      "network_type_bitmask": "1|2|3|4|5|6|7|8|9|10|12|13|14|15|17|20",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl",
+        "xcap"
       ]
     },
     {
@@ -128,18 +191,12 @@
     {
       "apn": "internet.telekom",
       "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "212.051.126.010",
-      "name": "internet.telekom",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "carrier_id": 2401,
+      "name": "T-Mobile H",
       "types": [
         "default",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "internet.telekom",
@@ -162,15 +219,24 @@
     {
       "apn": "internet.telekom",
       "authtype": 1,
-      "carrier_enabled": true,
+      "carrier_id": 2401,
       "mmsc": "http://mms.t-mobile.hu/servlets/mms",
       "mmsport": 8080,
-      "mmsproxy": "212.051.126.010",
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "mmsproxy": "212.51.126.10",
+      "name": "T-Mobile H MMS",
       "types": [
-        "xcap"
+        "mms"
+      ]
+    },
+    {
+      "apn": "wnw",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.51.126.10",
+      "name": "wnw",
+      "types": [
+        "default"
       ]
     },
     {
@@ -180,7 +246,6 @@
       "mmsproxy": "212.51.126.10",
       "name": "wnw",
       "types": [
-        "default",
         "supl"
       ]
     }

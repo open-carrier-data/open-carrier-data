@@ -18,6 +18,16 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -41,8 +51,10 @@
     },
     {
       "apn": "ims",
-      "name": "Partner Israel",
-      "protocol": "IPV6",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -78,6 +90,8 @@
       "apn": "uinternet",
       "authtype": 3,
       "mmsc": "http://192.168.220.15/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.118.11.55",
       "name": "uinternet",
       "password": "mobile54",
       "protocol": "IPV4V6",
@@ -93,13 +107,30 @@
       "apn": "uinternet",
       "authtype": 3,
       "mmsc": "http://192.168.220.15/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.118.11.55",
       "name": "uinternet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun",
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "uwap.orange.co.il",
+      "carrier_id": 796,
+      "mmsc": "http://192.168.220.15/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.118.11.55",
+      "name": "3G Portal",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "uwap.orange.co.il",

@@ -17,6 +17,15 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_id": 895,
+      "name": "Post UT",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -39,6 +48,29 @@
       ]
     },
     {
+      "apn": "ims",
+      "carrier_id": 895,
+      "name": "Post IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.pt.lu",
+      "authtype": 1,
+      "carrier_id": 895,
+      "mmsc": "http://mmsc.pt.lu",
+      "mmsport": 8080,
+      "mmsproxy": "194.154.192.88",
+      "name": "mms.pt.lu",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "mms.pt.lu",
       "authtype": 1,
       "carrier_enabled": true,
@@ -58,6 +90,19 @@
     },
     {
       "apn": "wap.pt.lu",
+      "carrier_id": 895,
+      "name": "LUXGSM WAP",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "194.154.192.98",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.pt.lu",
       "name": "LUXGSM WAP",
       "password": "wap",
       "port": 8080,
@@ -70,9 +115,20 @@
     },
     {
       "apn": "web.pt.lu",
+      "carrier_id": 895,
+      "name": "Post Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.pt.lu",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "web.pt.lu",
+      "password": "web",
       "port": 8080,
       "protocol": "IP",
       "proxy": "194.154.192.88",
@@ -80,7 +136,8 @@
       "types": [
         "default",
         "supl"
-      ]
+      ],
+      "user": "web"
     },
     {
       "apn": "web.pt.lu",

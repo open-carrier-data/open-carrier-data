@@ -3,11 +3,50 @@
     {
       "apn": "etisalat",
       "authtype": 1,
+      "carrier_id": 451,
+      "name": "Weyak Wap",
+      "port": 8080,
+      "proxy": "10.12.0.32",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "etisalat",
+      "authtype": 1,
       "name": "etisalat",
       "port": 8080,
       "proxy": "10.12.0.32",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "etisalat",
+      "authtype": 1,
+      "carrier_id": 451,
+      "mmsc": "http://mms/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.32",
+      "name": "Etisalat MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "etisalat.ae",
+      "authtype": 1,
+      "carrier_id": 451,
+      "mmsc": "http://mms/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.32",
+      "name": "Etisalat Data Package",
+      "types": [
+        "default",
+        "ia",
+        "mms",
         "supl"
       ]
     },
@@ -35,6 +74,15 @@
       ],
       "user": "etisalat.ae",
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 451,
+      "name": "Etisalat IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -69,11 +117,33 @@
     },
     {
       "apn": "ut",
+      "carrier_id": 451,
+      "name": "Etisalat Ut",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ut",
       "name": "Etisalat XCAP",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "wbdata",
+      "mvno_match_data": "536E617065",
+      "mvno_type": "gid",
+      "name": "Webbing",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
     }
   ],
   "android_carrier_config": {

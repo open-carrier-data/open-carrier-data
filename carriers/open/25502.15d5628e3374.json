@@ -2,10 +2,31 @@
   "android_apns": [
     {
       "apn": "internet.beeline.ua",
+      "carrier_id": 12,
+      "name": "Beeline-internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.beeline.ua",
       "name": "internet.beeline.ua",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms.beeline.ua",
+      "carrier_id": 12,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "172.29.18.192",
+      "name": "Beeline MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -26,6 +47,15 @@
       "name": "Beeline UA MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "wap.beeline.ua",
+      "name": "Beeline HTTP",
+      "port": 8080,
+      "proxy": "10.11.8.18",
+      "types": [
+        "default"
       ]
     },
     {

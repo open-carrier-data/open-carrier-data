@@ -24,6 +24,19 @@
   "android_apns": [
     {
       "apn": "KPN4G.nl",
+      "carrier_id": 1644,
+      "mmsc": "http://mp.mobiel.kpn/mmsc",
+      "mmsport": 5080,
+      "mmsproxy": "10.10.100.20",
+      "name": "KPN/Hi 4G LTE Mobiel internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "KPN4G.nl",
       "mmsc": "http://mp.mobiel.kpn/mmsc",
       "mmsport": 5080,
       "mmsproxy": "10.10.100.20",
@@ -35,6 +48,24 @@
       ]
     },
     {
+      "apn": "basic.internet.ben.data",
+      "name": "Ben internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -44,6 +75,28 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1644,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1644,
+      "name": "KPN Mobiel Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia"
+      ]
     },
     {
       "apn": "internet",
@@ -140,6 +193,19 @@
     },
     {
       "apn": "portalmmm.nl",
+      "carrier_id": 1644,
+      "mmsc": "http://mp.mobiel.kpn/mmsc",
+      "mmsport": 5080,
+      "mmsproxy": "10.10.100.20",
+      "name": "KPN/Hi Mobiel Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "portalmmm.nl",
       "authtype": 1,
       "mmsc": "http://mp.mobiel.kpn/mmsc",
       "mmsport": 5080,
@@ -161,6 +227,17 @@
     },
     {
       "apn": "ut",
+      "carrier_id": 1644,
+      "name": "UT-Interface",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ut",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "ut",
@@ -169,6 +246,62 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "54727555533030656E",
+      "mvno_type": "gid",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mvno.mobi",
+      "authtype": 1,
+      "carrier_id": 2149,
+      "mvno_match_data": "204080950",
+      "mvno_type": "imsi",
+      "name": "MVNO NL",
+      "password": "mvno",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "mvno"
     },
     {
       "apn": "internet.mvno.mobi",
@@ -185,12 +318,37 @@
     },
     {
       "apn": "rabo",
+      "carrier_id": 2406,
+      "mvno_match_data": "Rabo Mobiel",
+      "mvno_type": "spn",
+      "name": "Rabo Mobiel Int.",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "rabo",
       "mvno_match_data": "Rabo Mobiel",
       "mvno_type": "spn",
       "name": "Rabo Mobiel Int.",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "rabo",
+      "carrier_id": 2406,
+      "mmsc": "http://mp.mobiel.kpn/mmsc",
+      "mmsport": 5080,
+      "mmsproxy": "10.10.100.10",
+      "mvno_match_data": "Rabo Mobiel",
+      "mvno_type": "spn",
+      "name": "Rabo Mobiel MMS",
+      "types": [
+        "mms"
       ]
     },
     {

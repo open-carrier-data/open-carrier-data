@@ -31,12 +31,37 @@
   },
   "android_apns": [
     {
+      "apn": "Click",
+      "name": "Click",
+      "port": 8080,
+      "proxy": "192.168.151.2",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "Click",
+      "name": "Orange Internet prepaid",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "click",
       "name": "click",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1414,
+      "name": "Salt Ut",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "hos",
@@ -73,6 +98,17 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 1414,
+      "name": "Salt IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "ims",
@@ -80,6 +116,17 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1414,
+      "name": "internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -104,6 +151,8 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1414,
       "mmsc": "http://192.168.151.3:8002",
       "mmsport": 8080,
       "mmsproxy": "192.168.151.2",
@@ -111,6 +160,53 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://192.168.151.3:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.151.2",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap",
+      "name": "Orange HTTP postpaid",
+      "port": 8080,
+      "proxy": "192.168.151.2",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "netgprs.com",
+      "carrier_id": 2271,
+      "mvno_match_data": "BB00",
+      "mvno_type": "gid",
+      "name": "netgprs.com",
+      "password": "tsl",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "tsl"
+    },
+    {
+      "apn": "netgprs.com",
+      "carrier_id": 2271,
+      "mvno_match_data": "CH-Transatel",
+      "mvno_type": "spn",
+      "name": "netgprs.com",
+      "password": "tsl",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "tsl"
     }
   ],
   "android_carrier_config": {

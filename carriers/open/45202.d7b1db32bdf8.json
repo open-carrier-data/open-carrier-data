@@ -24,11 +24,13 @@
     },
     {
       "apn": "ims",
-      "name": "VinaPhone",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "m3-card",
@@ -40,13 +42,41 @@
       "user": "mms"
     },
     {
+      "apn": "m3-mms",
+      "authtype": 1,
+      "carrier_id": 1300,
+      "mmsc": "http://mms.vinaphone.com.vn",
+      "mmsport": 8000,
+      "mmsproxy": "10.1.10.46",
+      "name": "Vina-gprs-mms",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "m3-world",
+      "authtype": 1,
+      "carrier_id": 1300,
+      "name": "Vina-wap-gprs",
+      "password": "mms",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "m3-world",
       "authtype": 1,
       "name": "m3-world",
       "password": "mms",
       "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "supl"
       ],
       "user": "mms"
     },
@@ -59,16 +89,6 @@
       ]
     },
     {
-      "apn": "m3-world",
-      "authtype": 1,
-      "name": "m3-world",
-      "password": "mms",
-      "types": [
-        "supl"
-      ],
-      "user": "mms"
-    },
-    {
       "apn": "sos",
       "bearer_bitmask": "14|20",
       "name": "SOS",
@@ -76,6 +96,16 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
       ],
       "user_visible": false
     }

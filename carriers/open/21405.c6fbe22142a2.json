@@ -30,6 +30,14 @@
   "android_apns": [
     {
       "apn": "XCAP",
+      "name": "Movistar XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "XCAP",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "name": "XCAP",
       "protocol": "IPV4V6",
@@ -82,6 +90,16 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 34,
+      "name": "Movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_enabled": true,
       "name": "ims",
       "protocol": "IPV4V6",
@@ -103,6 +121,23 @@
       ],
       "user": "movistar",
       "user_visible": false
+    },
+    {
+      "apn": "telefonica.es",
+      "authtype": 1,
+      "carrier_id": 34,
+      "mmsc": "http://mms.movistar.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.5",
+      "name": "Movistar",
+      "password": "telefonica",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "telefonica"
     },
     {
       "apn": "telefonica.es",
@@ -143,6 +178,20 @@
     {
       "apn": "tuenti.com",
       "authtype": 1,
+      "carrier_id": 34,
+      "mmsc": "http://tuenti.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.43",
+      "name": "Tuenti",
+      "password": "tuenti",
+      "types": [
+        "default"
+      ],
+      "user": "tuenti"
+    },
+    {
+      "apn": "tuenti.com",
+      "authtype": 1,
       "mmsc": "http://tuenti.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.43",
@@ -156,6 +205,61 @@
       "user": "tuenti"
     },
     {
+      "apn": "xcap",
+      "carrier_id": 34,
+      "name": "Movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet.digimobil.es",
+      "carrier_id": 2442,
+      "mvno_match_data": "44474553",
+      "mvno_type": "gid",
+      "name": "DIGI Spain",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.digimobil.es",
+      "mvno_match_data": "44474553",
+      "mvno_type": "gid",
+      "name": "DIGI Spain",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "digi.mobile",
+      "carrier_id": 2443,
+      "mvno_match_data": "44474954",
+      "mvno_type": "gid",
+      "name": "DIGI Italy",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "digi.mobile",
+      "mvno_match_data": "44474954",
+      "mvno_type": "gid",
+      "name": "DIGI Italy",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "inet.es",
       "mvno_match_data": "214050104xxxxxx",
       "mvno_type": "imsi",
@@ -165,8 +269,53 @@
         "default",
         "fota",
         "hipri",
+        "ia",
         "supl"
       ]
+    },
+    {
+      "apn": "internet.telecable.es",
+      "carrier_id": 2112,
+      "mvno_match_data": "TeleCable",
+      "mvno_type": "spn",
+      "name": "TeleCable Internet",
+      "password": "telecable",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "mms.telecable.es",
+      "carrier_id": 2112,
+      "mmsc": "http://mms.telecable.es/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "212.89.0.84",
+      "mvno_match_data": "TeleCable",
+      "mvno_type": "spn",
+      "name": "TeleCable MMS",
+      "password": "telecable",
+      "types": [
+        "mms"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "tuenti.com",
+      "authtype": 1,
+      "carrier_id": 2357,
+      "mvno_match_data": "Tuenti",
+      "mvno_type": "spn",
+      "name": "Tuenti",
+      "password": "tuenti",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "tuenti"
     },
     {
       "apn": "tuenti.com",

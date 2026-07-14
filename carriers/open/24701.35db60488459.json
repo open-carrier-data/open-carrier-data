@@ -35,6 +35,16 @@
       ]
     },
     {
+      "apn": "IMS",
+      "carrier_id": 898,
+      "name": "LMT IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "hos",
       "bearer_bitmask": "18",
       "mmsc": "http://mmsc.lmt.lv/mmsc",
@@ -48,10 +58,9 @@
     },
     {
       "apn": "hos",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "hos",
-      "protocol": "IPV4V6",
+      "carrier_id": 898,
+      "name": "LMT Ut",
+      "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
@@ -82,11 +91,14 @@
     },
     {
       "apn": "ims",
-      "name": "LMT",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "internet.lmt.lv",
@@ -103,6 +115,20 @@
         "default"
       ],
       "user": "lmt"
+    },
+    {
+      "apn": "internet.lmt.lv",
+      "carrier_id": 898,
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "name": "internet.lmt.lv",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "internet.lmt.lv",

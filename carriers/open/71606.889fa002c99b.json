@@ -13,11 +13,27 @@
     },
     {
       "apn": "ims",
-      "name": "movistar",
-      "protocol": "IP",
+      "carrier_id": 1929,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "mms.movistar.pe",
+      "authtype": 1,
+      "carrier_id": 1929,
+      "mmsc": "http://mmsc.telefonicamovistar.com.pe:8088/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "200.4.196.118",
+      "name": "Movistar MMS",
+      "password": "movistar",
+      "types": [
+        "mms"
+      ],
+      "user": "movistar@mms"
     },
     {
       "apn": "mms.movistar.pe",
@@ -35,6 +51,22 @@
     {
       "apn": "movistar.pe",
       "authtype": 1,
+      "carrier_id": 1929,
+      "name": "Movistar INTERNET",
+      "password": "movistar",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user": "movistar@datos"
+    },
+    {
+      "apn": "movistar.pe",
+      "authtype": 1,
       "name": "movistar.pe",
       "password": "movistar",
       "protocol": "IPV4V6",
@@ -47,10 +79,11 @@
     },
     {
       "apn": "movistar.pe",
-      "name": "movistar",
+      "name": "movistar.pe",
       "password": "movistar",
       "types": [
-        "dun"
+        "dun",
+        "hipri"
       ],
       "user": "movistar@datos"
     },

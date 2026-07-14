@@ -103,7 +103,7 @@
     },
     {
       "apn": "VZWEMERGENCY",
-      "name": "Verizon Emergency",
+      "name": "VZWEMERGENCY",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -145,6 +145,17 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "Verizon IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 3,
       "bearer_bitmask": "4|5|6|7|8|12",
@@ -160,6 +171,35 @@
         "supl"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "vzwadmin",
+      "name": "Verizon Admin",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "vzwapp",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mmsport": 80,
+      "name": "Verizon APP",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "vzwinternet",
+      "name": "Verizon Wireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {

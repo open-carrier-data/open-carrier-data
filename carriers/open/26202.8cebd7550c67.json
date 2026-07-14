@@ -62,6 +62,17 @@
     },
     {
       "apn": "event.vodafone.de",
+      "carrier_id": 2397,
+      "mmsc": "http://139.7.24.1/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "139.7.29.17",
+      "name": "Vodafone DE-MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "event.vodafone.de",
       "authtype": 2,
       "mmsc": "http://139.7.24.1/servlets/mms",
       "mmsport": 80,
@@ -76,6 +87,17 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 2397,
+      "name": "Vodafone DE-IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -86,21 +108,25 @@
       "user_visible": false
     },
     {
-      "apn": "wap.vodafone.de",
-      "name": "VF DE live!",
-      "port": 80,
-      "protocol": "IPV4V6",
-      "proxy": "139.007.029.001",
-      "types": [
-        "default"
-      ]
-    },
-    {
       "apn": "web.vodafone.de",
       "authtype": 3,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "mtu": 1340,
       "name": "VF DE Web",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "web.vodafone.de",
+      "authtype": 3,
+      "carrier_id": 2397,
+      "name": "web.vodafone.de",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -128,6 +154,230 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "event.vodafone.de",
+      "mmsc": "http://139.7.24.1/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "139.7.29.17",
+      "mvno_match_data": "1&1",
+      "mvno_type": "spn",
+      "name": "1&1 MMS (Vodafone)",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "1&1",
+      "mvno_type": "spn",
+      "name": "1&1 Internet (Vodafone)",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "D3 Mobile",
+      "mvno_type": "spn",
+      "name": "D3 Mobile",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "EDEKA mobil",
+      "mvno_type": "spn",
+      "name": "EDEKA mobil",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "KabelDeutschland",
+      "mvno_type": "spn",
+      "name": "KabelDeutschland",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "M2M",
+      "mvno_type": "spn",
+      "name": "M2M",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "ROSSMANN mobil",
+      "mvno_type": "spn",
+      "name": "ROSSMANN mobil",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "Talkline",
+      "mvno_type": "spn",
+      "name": "Talkline",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "Tele2",
+      "mvno_type": "spn",
+      "name": "Tele2",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "TomTom",
+      "mvno_type": "spn",
+      "name": "TomTom",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "live.vodafone.com",
+      "authtype": 1,
+      "mvno_match_data": "VNR mode",
+      "mvno_type": "spn",
+      "name": "Vodafone Internet",
+      "password": "vodafone",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "vodafone"
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "WILLKOMMEN",
+      "mvno_type": "spn",
+      "name": "WILLKOMMEN",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "Willkommen",
+      "mvno_type": "spn",
+      "name": "Willkommen",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "atg Mobile",
+      "mvno_type": "spn",
+      "name": "atg Mobile",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "callmobile.de",
+      "mvno_type": "spn",
+      "name": "callmobile.de",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "ewe.de",
+      "mvno_type": "spn",
+      "name": "ewe.de",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "klarmobil",
+      "mvno_type": "spn",
+      "name": "klarmobil",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "mobi",
+      "mvno_type": "spn",
+      "name": "mobi",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "mobilcom-debitel",
+      "mvno_type": "spn",
+      "name": "mobilcom-debitel",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "mvno_match_data": "otelo",
+      "mvno_type": "spn",
+      "name": "otelo",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     }
   ],

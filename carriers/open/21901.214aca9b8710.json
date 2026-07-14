@@ -50,18 +50,26 @@
     {
       "apn": "hos",
       "authtype": 1,
-      "carrier_enabled": true,
+      "carrier_id": 2365,
       "mmsc": "http://mms.t-mobile.hr/servlets/mms",
       "mmsport": 8080,
-      "mmsproxy": "010.012.000.004",
-      "mtu": 1280,
+      "mmsproxy": "10.12.0.4",
       "name": "HOS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "mms",
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2365,
+      "name": "T-Mobile UT",
+      "protocol": "IPV4V6",
+      "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -70,6 +78,17 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2365,
+      "name": "T-Mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet.ht.hr",
@@ -86,9 +105,35 @@
     {
       "apn": "internet.ht.hr",
       "authtype": 1,
+      "carrier_id": 2365,
       "name": "internet.ht.hr",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.ht.hr",
+      "authtype": 1,
+      "name": "internet.ht.hr",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "supl"
+      ]
+    },
+    {
+      "apn": "mms.htgprs",
+      "authtype": 1,
+      "carrier_id": 2365,
+      "mmsc": "http://mms.t-mobile.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.4",
+      "name": "T-Mobile MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -113,12 +158,55 @@
     {
       "apn": "www.htgprs.hr",
       "authtype": 1,
-      "name": "TM HR WAP",
+      "name": "www.htgprs.hr",
       "port": 8080,
       "proxy": "10.12.0.3",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.4",
+      "mvno_match_data": "bonbon",
+      "mvno_type": "spn",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.ht.hr",
+      "authtype": 1,
+      "mvno_match_data": "bonbon",
+      "mvno_type": "spn",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.htgprs",
+      "authtype": 1,
+      "carrier_id": 2091,
+      "mmsc": "http://mms.bonbon.com.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.4",
+      "mvno_match_data": "bonbon",
+      "mvno_type": "spn",
+      "name": "bonbon MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -132,6 +220,21 @@
       "name": "bonbon MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "web.htgprs",
+      "authtype": 1,
+      "carrier_id": 2091,
+      "mvno_match_data": "bonbon",
+      "mvno_type": "spn",
+      "name": "bonbon Internet",
+      "types": [
+        "default",
+        "dun",
+        "fota",
+        "ia",
+        "supl"
       ]
     }
   ],

@@ -37,6 +37,21 @@
   },
   "android_apns": [
     {
+      "apn": "HOS",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "Telekom EPDG",
+      "password": "telekom",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
       "apn": "IMS",
       "authtype": 0,
       "carrier_enabled": true,
@@ -51,6 +66,23 @@
       "apn": "hos",
       "authtype": 1,
       "bearer_bitmask": "18",
+      "carrier_id": 2395,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "Telekom Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "bearer_bitmask": "18",
       "mmsc": "http://mms.t-mobile.de/servlets/mms",
       "mmsport": 8008,
       "mmsproxy": "109.237.176.193",
@@ -60,6 +92,23 @@
       "types": [
         "mms",
         "supl"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_id": 3,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
       ],
       "user": "telekom",
       "user_visible": false
@@ -90,6 +139,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 3,
       "name": "Telekom IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -153,22 +213,163 @@
     {
       "apn": "internet.telekom",
       "authtype": 1,
-      "name": "internet.telekom",
+      "carrier_id": 2395,
+      "name": "Telekom Internet",
       "password": "telekom",
       "protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
         "supl"
       ],
       "user": "telekom"
     },
     {
       "apn": "internet.telekom",
-      "name": "Telekom.de",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
+      "carrier_id": 2395,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "Telekom Internet",
       "password": "telekom",
       "protocol": "IPV4V6",
       "types": [
         "mms"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.telekom",
+      "authtype": 1,
+      "mmsc": "http://mms-t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "172.28.23.131",
+      "name": "internet.telekom",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_id": 3,
+      "name": "Telekom Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "HOS",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "password": "telekom",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_id": 2092,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Congstar HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2092,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Congstar IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.telekom",
+      "authtype": 1,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "congstar Internet",
+      "password": "cs",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "congstar"
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_id": 2092,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Congstar Internet",
+      "password": "cs",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "congstar"
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "telekom"
     },
@@ -187,6 +388,23 @@
         "supl"
       ],
       "user": "t-mobile"
+    },
+    {
+      "apn": "internet.telekom",
+      "authtype": 1,
+      "carrier_id": 2310,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "172.28.23.131",
+      "mvno_match_data": "debitel",
+      "mvno_type": "spn",
+      "name": "Telekom Internet",
+      "password": "telekom",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "telekom"
     },
     {
       "apn": "internet.telekom",

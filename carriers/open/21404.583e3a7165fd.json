@@ -59,13 +59,11 @@
     },
     {
       "apn": "internet",
-      "authtype": 0,
-      "carrier_enabled": true,
+      "carrier_id": 679,
       "name": "internet",
-      "port": 8080,
-      "proxy": "010.008.000.036",
       "types": [
         "default",
+        "ia",
         "supl"
       ]
     },
@@ -86,7 +84,19 @@
       ]
     },
     {
+      "apn": "internet.telecable.es",
+      "authtype": 1,
+      "name": "telecable Internet",
+      "password": "telecable",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telecable"
+    },
+    {
       "apn": "mms",
+      "carrier_id": 679,
       "mmsc": "http://mmss/",
       "mmsport": 80,
       "mmsproxy": "193.209.134.141",
@@ -94,6 +104,47 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms.telecable.es",
+      "authtype": 1,
+      "mmsc": "http://mms.telecable.es/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "212.89.0.84",
+      "name": "telecable MMS",
+      "password": "telecable",
+      "types": [
+        "mms"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "internet.telecable.es",
+      "authtype": 1,
+      "mvno_match_data": "21404520xxxxxxx",
+      "mvno_type": "imsi",
+      "name": "telecable Internet",
+      "password": "telecable",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telecable"
+    },
+    {
+      "apn": "mms.telecable.es",
+      "authtype": 1,
+      "mmsc": "http://mms.telecable.es/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "212.89.0.84",
+      "mvno_match_data": "21404520xxxxxxx",
+      "mvno_type": "imsi",
+      "name": "telecable MMS",
+      "password": "telecable",
+      "types": [
+        "mms"
+      ],
+      "user": "telecable"
     }
   ],
   "android_carrier_config": {

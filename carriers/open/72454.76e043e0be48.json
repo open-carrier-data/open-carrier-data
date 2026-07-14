@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "ims",
+      "carrier_id": 1385,
+      "name": "TIM IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "TIM IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -21,6 +30,36 @@
       "user_editable": false
     },
     {
+      "apn": "portoconecta.br",
+      "authtype": 0,
+      "carrier_id": 2215,
+      "name": "Porto Seguro Conecta",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
+    },
+    {
+      "apn": "timbrasil.br",
+      "authtype": 1,
+      "carrier_id": 1385,
+      "mmsc": "http://mms.tim.br",
+      "mmsport": 8080,
+      "mmsproxy": "189.40.191.96",
+      "name": "TIM Connect",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user": "tim"
+    },
+    {
       "apn": "timbrasil.br",
       "authtype": 1,
       "mmsc": "http://mms.tim.br",
@@ -38,6 +77,18 @@
         "xcap"
       ],
       "user": "tim"
+    },
+    {
+      "apn": "wbdata",
+      "mvno_match_data": "536E617065",
+      "mvno_type": "gid",
+      "name": "Webbing",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
     }
   ],
   "android_carrier_config": {

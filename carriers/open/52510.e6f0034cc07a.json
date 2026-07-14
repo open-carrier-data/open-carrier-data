@@ -14,6 +14,26 @@
       ]
     },
     {
+      "apn": "TPGMMS",
+      "mmsc": "http://mms.tpgtelecom.com.sg",
+      "mmsport": 8080,
+      "mmsproxy": "10.184.80.200",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "hos",
       "name": "HOS",
       "protocol": "IPV4V6",
@@ -46,6 +66,18 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "name": "SIMBA",
       "protocol": "IPV4V6",
@@ -60,12 +92,31 @@
     },
     {
       "apn": "tpg",
+      "name": "tpg",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tpg",
       "name": "SIMBA",
       "protocol": "IPV4V6",
       "types": [
-        "default",
-        "ia",
-        "supl"
+        "ia"
+      ]
+    },
+    {
+      "apn": "tpgmms",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.tpgtelecom.com.sg",
+      "mmsport": 8080,
+      "mmsproxy": "10.184.80.200",
+      "name": "TPG MMS",
+      "types": [
+        "mms"
       ]
     }
   ],
@@ -85,7 +136,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unsupported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "supported",

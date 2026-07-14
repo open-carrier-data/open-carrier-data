@@ -56,7 +56,7 @@
       "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
       "mmsport": 80,
       "mmsproxy": "74.49.0.18",
-      "name": "Koodo SP",
+      "name": "sp.koodo.com",
       "port": 80,
       "proxy": "74.49.0.18",
       "types": [
@@ -146,6 +146,19 @@
       "user_visible": false
     },
     {
+      "apn": "services.koodo.com",
+      "authtype": 0,
+      "mtu": 1440,
+      "mvno_match_data": "4B4F",
+      "mvno_type": "gid",
+      "name": "Koodo Services",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "sos",
       "carrier_id": 2020,
       "mvno_match_data": "4B4F",
@@ -157,6 +170,18 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "authtype": 0,
+      "mvno_match_data": "4B4F",
+      "mvno_type": "gid",
+      "name": "SOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "sp.koodo.com",
@@ -176,6 +201,50 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sp.koodo.com",
+      "authtype": 0,
+      "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "4B4F",
+      "mvno_type": "gid",
+      "name": "Koodo SP",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sp.koodo.com",
+      "carrier_id": 2020,
+      "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "4B4F",
+      "mvno_type": "gid",
+      "name": "Koodo",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sp.koodo.com",
+      "carrier_id": 2020,
+      "mvno_match_data": "4B4F",
+      "mvno_type": "gid",
+      "name": "Koodo Tether",
+      "protocol": "IP",
+      "server": "*",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "ccp-services.telus.com",
@@ -275,10 +344,20 @@
     },
     {
       "apn": "isp.mb.com",
+      "authtype": 0,
+      "mvno_match_data": "4D4F",
+      "mvno_type": "gid",
+      "name": "Tethered Mobile Internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.mb.com",
       "carrier_id": 2089,
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "Public Mobile Tethered",
+      "name": "isp.mb.com",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
@@ -321,7 +400,7 @@
       "mmsproxy": "mmscproxy.mobility.ca",
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "Public Mobile",
+      "name": "sp.mb.com",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
@@ -335,6 +414,21 @@
       "user_editable": false
     },
     {
+      "apn": "sp.mb.com",
+      "authtype": 0,
+      "mmsc": "http://aliasredirect.net/proxy/mb/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "4D4F",
+      "mvno_type": "gid",
+      "name": "Mobile Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "isp.mb.com",
       "carrier_id": 10006,
       "mvno_match_data": "5043",
@@ -344,6 +438,33 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "isp.mb.com",
+      "carrier_id": 2053,
+      "mvno_match_data": "5043",
+      "mvno_type": "gid",
+      "name": "Tethered Mobile Internet",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mb.com",
+      "carrier_id": 2053,
+      "mmsc": "http://aliasredirect.net/proxy/mb/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "5043",
+      "mvno_type": "gid",
+      "name": "Mobile Internet",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "sp.mb.com",
@@ -379,12 +500,23 @@
     },
     {
       "apn": "isp.telus.com",
+      "authtype": 0,
+      "mvno_match_data": "5455",
+      "mvno_type": "gid",
+      "name": "TELUS ISP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.telus.com",
       "carrier_id": 1404,
       "mvno_match_data": "5455",
       "mvno_type": "gid",
-      "name": "TELUS Tethered",
+      "name": "isp.telus.com",
       "protocol": "IP",
       "roaming_protocol": "IP",
+      "server": "*",
       "types": [
         "dun"
       ],
@@ -423,6 +555,31 @@
       "user_visible": false
     },
     {
+      "apn": "services.telus.com",
+      "authtype": 0,
+      "mtu": 1440,
+      "mvno_match_data": "5455",
+      "mvno_type": "gid",
+      "name": "TELUS Services",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sos",
+      "authtype": 0,
+      "mvno_match_data": "5455",
+      "mvno_type": "gid",
+      "name": "SOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
       "apn": "sos",
       "carrier_id": 1404,
       "mvno_match_data": "5455",
@@ -455,6 +612,37 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sp.telus.com",
+      "carrier_id": 1404,
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "5455",
+      "mvno_type": "gid",
+      "name": "TELUS",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "authtype": 0,
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "5455",
+      "mvno_type": "gid",
+      "name": "Telus SP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {

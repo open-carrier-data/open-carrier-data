@@ -2,10 +2,32 @@
   "android_apns": [
     {
       "apn": "internet",
+      "carrier_id": 1994,
+      "name": "Vietnamobile_GPRS3",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "internet",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1994,
+      "mmsc": "http://10.10.128.58/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.128.44",
+      "name": "Vietnamobile_MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -16,6 +38,18 @@
       "name": "mms",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "wap",
+      "carrier_id": 1994,
+      "name": "wap",
+      "port": 8080,
+      "proxy": "10.10.128.44",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {

@@ -2,6 +2,23 @@
   "android_apns": [
     {
       "apn": "globaldata",
+      "carrier_id": 10031,
+      "mmsc": "http://mms.mobileuc.global/",
+      "mmsport": 8008,
+      "mmsproxy": "37.18.129.98",
+      "name": "MobileUC",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "globaldata",
       "mmsc": "http://mms.mobileuc.global/",
       "mmsport": 8008,
       "mmsproxy": "37.18.129.98",
@@ -17,6 +34,15 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "globalhotspot",
+      "carrier_id": 10031,
+      "name": "MobileUC Hotspot",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
     },
     {
       "apn": "globalhotspot",
@@ -43,6 +69,17 @@
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 10031,
+      "name": "MobileUC IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

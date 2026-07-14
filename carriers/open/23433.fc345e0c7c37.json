@@ -58,16 +58,60 @@
     {
       "apn": "eezone",
       "authtype": 1,
+      "carrier_id": 718,
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
       "name": "EE MMS",
       "password": "secure",
       "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "MMS",
+      "password": "secure",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "eezone",
+      "password": "secure",
+      "types": [
         "xcap"
       ],
       "user": "eesecure",
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 718,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "everywhere",
@@ -76,6 +120,17 @@
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "nowmobilenet",
@@ -143,6 +198,92 @@
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "EE",
+      "mvno_type": "gid",
+      "name": "EE MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "mvno_match_data": "EE",
+      "mvno_type": "gid",
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "mvno_match_data": "EE",
+      "mvno_type": "gid",
+      "name": "EE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
       "mvno_match_data": "EE",
       "mvno_type": "spn",
       "name": "EE MMS",
@@ -166,6 +307,22 @@
         "supl"
       ],
       "user": "eesecure"
+    },
+    {
+      "apn": "tslmms",
+      "authtype": 1,
+      "carrier_id": 2283,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "193.35.133.194",
+      "mvno_match_data": "LIFE",
+      "mvno_type": "spn",
+      "name": "MMS",
+      "password": "wap",
+      "types": [
+        "mms"
+      ],
+      "user": "wap"
     },
     {
       "apn": "tslpaygnet",

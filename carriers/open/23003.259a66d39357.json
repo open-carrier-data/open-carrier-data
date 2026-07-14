@@ -62,10 +62,32 @@
     },
     {
       "apn": "ims",
-      "name": "VF CZ",
+      "carrier_id": 2398,
+      "name": "IMS",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 2398,
+      "name": "Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
     },
     {
       "apn": "internet",
@@ -77,6 +99,15 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "dun",
+        "xcap"
       ]
     },
     {
@@ -86,6 +117,35 @@
         "default",
         "dun"
       ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 2398,
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.11.10.111",
+      "name": "MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms",
+      "user_editable": false
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.11.10.111",
+      "name": "Vodafone MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "mms",

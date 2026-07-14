@@ -12,6 +12,28 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 2018,
+      "name": "Reliance Jio IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "jionet",
+      "carrier_id": 2018,
+      "name": "Reliance Jio",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "jionet",
       "name": "jionet",
       "protocol": "IPV4V6",
@@ -28,6 +50,20 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "mizone",
+      "carrier_enabled": true,
+      "carrier_id": 2018,
+      "mmsc": "http://mms.loopmobile.in:8080/",
+      "mmsport": 9401,
+      "mmsproxy": "10.0.0.10",
+      "name": "Loop MMS (405864)",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     }
   ],
@@ -48,7 +84,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "conditional",

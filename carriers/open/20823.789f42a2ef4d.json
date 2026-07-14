@@ -2,14 +2,35 @@
   "android_apns": [
     {
       "apn": "virgin-mobile.fr",
-      "mmsc": "http://virginmms.fr",
-      "mmsport": 8080,
-      "mmsproxy": "10.6.10.1",
-      "name": "virgin-mobile.fr",
+      "carrier_id": 1984,
+      "name": "Virgin mobile",
       "port": 8080,
       "proxy": "10.6.10.1",
       "types": [
-        "default"
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "virgin-mobile.fr",
+      "mmsc": "http://virginmms.fr",
+      "mmsport": 8080,
+      "mmsproxy": "10.6.10.1",
+      "name": "Virgin",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "virgin-mobile.fr",
+      "carrier_id": 1984,
+      "mmsc": "http://virginmms.fr",
+      "mmsport": 8080,
+      "mmsproxy": "10.6.10.1",
+      "name": "VM MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -18,8 +39,9 @@
       "mmsport": 8080,
       "mmsproxy": "10.6.10.1",
       "name": "virgin-mobile.fr",
+      "proxy": "ignorer",
+      "server": "ignorer",
       "types": [
-        "dun",
         "mms"
       ]
     },

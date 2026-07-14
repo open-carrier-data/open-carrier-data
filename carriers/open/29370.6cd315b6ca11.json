@@ -67,6 +67,16 @@
     },
     {
       "apn": "internet",
+      "mmsc": "http://mms.telemach.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "name": "INTERNET",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.telemach.net:8002",
@@ -75,7 +85,20 @@
       "name": "internet",
       "types": [
         "supl"
-      ]
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet.tusmobil.si",
+      "authtype": 1,
+      "carrier_id": 1712,
+      "name": "Tusmobil Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "tusmobil"
     },
     {
       "apn": "internet.tusmobil.si",
@@ -85,6 +108,20 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "tusmobil"
+    },
+    {
+      "apn": "mms.tusmobil.si",
+      "authtype": 1,
+      "carrier_id": 1712,
+      "mmsc": "http://mms.tusmobil.si:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "name": "Tusmobil MMS",
+      "password": "mms",
+      "types": [
+        "mms"
       ],
       "user": "tusmobil"
     },
@@ -109,6 +146,21 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "telemach.net",
+      "carrier_id": 2327,
+      "mmsc": "http://mms.telemach.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "mvno_match_data": "29370029xxxxxxx",
+      "mvno_type": "imsi",
+      "name": "Telemach Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     }
   ],

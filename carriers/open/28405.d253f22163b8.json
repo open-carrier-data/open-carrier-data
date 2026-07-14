@@ -54,6 +54,7 @@
       "carrier_enabled": true,
       "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -76,11 +77,25 @@
       ]
     },
     {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1371,
+      "mmsc": "http://mmsc",
+      "mmsport": 8004,
+      "mmsproxy": "192.168.87.11",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "mms.globul.bg",
       "mmsc": "http://mmsc1.mms.globul.bg:8002",
       "mmsport": 8004,
       "mmsproxy": "192.168.87.11",
       "name": "mms.globul.bg",
+      "password": "mms",
       "types": [
         "mms"
       ],
@@ -109,11 +124,73 @@
     {
       "apn": "telenorbg",
       "authtype": 0,
+      "carrier_id": 1371,
       "name": "Telenor Internet",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "telenorbg",
+      "authtype": 0,
+      "name": "Telenor Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1371,
+      "mvno_match_data": "Yettel BG",
+      "mvno_type": "spn",
+      "name": "Yettel BG_IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1371,
+      "mvno_match_data": "Yettel BG",
+      "mvno_type": "spn",
+      "name": "Yettel Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1371,
+      "mmsc": "http://mmsc",
+      "mmsport": 8004,
+      "mmsproxy": "192.168.87.11",
+      "mvno_match_data": "Yettel BG",
+      "mvno_type": "spn",
+      "name": "Yettel MMS",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1371,
+      "mvno_match_data": "Yettel BG",
+      "mvno_type": "spn",
+      "name": "Yettel BG_Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {

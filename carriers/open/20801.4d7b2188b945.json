@@ -1,6 +1,18 @@
 {
   "android_apns": [
     {
+      "apn": "Internet-entreprise",
+      "authtype": 1,
+      "name": "Internet Entreprise",
+      "password": "orange",
+      "types": [
+        "dun"
+      ],
+      "user": "orange",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "apn": "Orange.acte",
       "mmsc": "http://mms.orange.fr",
       "mmsport": 8080,
@@ -19,6 +31,19 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "Orange F IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -68,12 +93,24 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 32,
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "name": "Orange World IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false
     },
     {
       "apn": "internet-entreprise",
@@ -135,14 +172,45 @@
     },
     {
       "apn": "orange",
-      "name": "Orange France",
+      "carrier_id": 32,
+      "mmsc": "http://mms.orange.fr",
+      "name": "Orange World",
+      "network_type_bitmask": "1|2|3|4|5|6|7|8|9|10|12|13|14|15|17|20",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "orange",
+      "authtype": 1,
+      "carrier_id": 32,
+      "name": "Orange World",
+      "password": "orange",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.fr",
+      "name": "orange",
       "password": "orange",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
       ],
-      "user": "orange"
+      "user": "orange",
+      "user_editable": false
     },
     {
       "apn": "orange",
@@ -173,12 +241,71 @@
       "user_editable": false
     },
     {
+      "apn": "orange-mib",
+      "authtype": 2,
+      "carrier_id": 32,
+      "name": "orange-mib",
+      "password": "orange",
+      "port": 8000,
+      "proxy": "172.16.2.8",
+      "types": [
+        "default"
+      ],
+      "user": "orange",
+      "user_editable": false
+    },
+    {
+      "apn": "orange-mib",
+      "carrier_id": 32,
+      "name": "Orange Entreprises",
+      "types": [
+        "ia",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "orange-teamconnect",
+      "carrier_id": 32,
+      "name": "Orange MCX",
+      "types": [
+        "cbs",
+        "mcx"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "orange.acte",
+      "authtype": 1,
+      "carrier_id": 32,
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "name": "Orange MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "orange.fr",
       "name": "Orange Internet",
       "password": "orange",
       "types": [
-        "default",
-        "supl"
+        "default"
+      ],
+      "user": "orange",
+      "user_editable": false
+    },
+    {
+      "apn": "orange.fr",
+      "authtype": 0,
+      "carrier_id": 32,
+      "name": "Orange Internet",
+      "password": "orange",
+      "types": [
+        "dun"
       ],
       "user": "orange"
     },
@@ -195,24 +322,58 @@
       "user_visible": false
     },
     {
+      "apn": "orange.fr",
+      "name": "Orange Internet",
+      "password": "orange",
+      "types": [
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "vowifiorange",
+      "authtype": 1,
       "bearer_bitmask": "18",
       "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
       "name": "vowifiorange",
+      "password": "orange",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ],
+      "user": "orange",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "vowifiorange",
+      "carrier_id": 32,
+      "mmsc": "http://mms.orange.fr",
+      "name": "Orange WiFi MMS",
+      "network_type_bitmask": "18",
+      "types": [
+        "mms",
+        "xcap"
       ],
       "user_visible": false
     },
     {
       "apn": "vowifiorange",
+      "authtype": 1,
       "bearer_bitmask": "18",
       "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
       "name": "vowifiorange",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -223,6 +384,23 @@
       "proxy": "192.168.10.100",
       "types": [
         "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "ofnew.fr",
+      "authtype": 1,
+      "carrier_id": 2133,
+      "mvno_match_data": "33",
+      "mvno_type": "gid",
+      "name": "ofnew.fr",
+      "password": "orange",
+      "port": 8080,
+      "proxy": "192.168.10.100",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ],
       "user": "orange"
@@ -245,6 +423,22 @@
     {
       "apn": "orange.acte",
       "authtype": 1,
+      "carrier_id": 2133,
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "mvno_match_data": "33",
+      "mvno_type": "gid",
+      "name": "Carrefour MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange.acte",
+      "authtype": 1,
       "mmsc": "http://mms.orange.fr",
       "mmsport": 8080,
       "mmsproxy": "192.168.10.200",
@@ -260,6 +454,7 @@
     {
       "apn": "ofnew.fr",
       "authtype": 1,
+      "carrier_id": 2005,
       "mvno_match_data": "4E",
       "mvno_type": "gid",
       "name": "NRJWEB",
@@ -271,8 +466,21 @@
       "user": "orange"
     },
     {
+      "apn": "ofnew.fr",
+      "authtype": 0,
+      "mvno_match_data": "4E",
+      "mvno_type": "gid",
+      "name": "RSO WEB",
+      "password": "orange",
+      "types": [
+        "ia"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "orange.acte",
       "authtype": 1,
+      "carrier_id": 2005,
       "mmsc": "http://mms.orange.fr",
       "mmsport": 8080,
       "mmsproxy": "192.168.10.200",
@@ -284,6 +492,19 @@
         "mms"
       ],
       "user": "orange"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.monaco-telecom.mc",
+      "mvno_match_data": "4d433032",
+      "mvno_type": "gid",
+      "name": "Monaco Telecom",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "ofnew.fr",
@@ -314,6 +535,132 @@
       "user": "orange"
     },
     {
+      "apn": "wbdata",
+      "mvno_match_data": "536E617065",
+      "mvno_type": "gid",
+      "name": "Webbing",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.1und1-mobilfunk.de/",
+      "mmsport": 80,
+      "mmsproxy": "2a00:0fbc:2200:c999:0109:1f87:2:1",
+      "mvno_match_data": "894936",
+      "mvno_type": "iccid",
+      "name": "mms",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rakuten.jp",
+      "mvno_match_data": "8981090",
+      "mvno_type": "iccid",
+      "name": "\u697d\u5929(rakuten.jp)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia"
+      ],
+      "user_visible": true
+    },
+    {
+      "apn": "rakuten.jp",
+      "mvno_match_data": "8981090",
+      "mvno_type": "iccid",
+      "name": "\u697d\u5929(rakuten.jp)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "coriolis",
+      "carrier_id": 2135,
+      "mvno_match_data": "208011511",
+      "mvno_type": "imsi",
+      "name": "Coriolis",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmscoriolis",
+      "carrier_id": 2135,
+      "mmsc": "http://mms.coriolis.fr",
+      "mmsport": 9028,
+      "mmsproxy": "10.12.0.1",
+      "mvno_match_data": "208011511",
+      "mvno_type": "imsi",
+      "name": "Coriolis MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ofnew.fr",
+      "authtype": 1,
+      "mvno_match_data": "4E",
+      "mvno_type": "spn",
+      "name": "NRJWEB",
+      "password": "orange",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orange.acte",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
+      "mvno_match_data": "4E",
+      "mvno_type": "spn",
+      "name": "NRJMMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "orange",
       "mvno_match_data": "Breizh Mobile",
       "mvno_type": "spn",
@@ -332,24 +679,48 @@
       "authtype": 1,
       "mvno_match_data": "C le mobile",
       "mvno_type": "spn",
-      "name": "C le WEB",
+      "name": "ofnew.fr",
+      "password": "orange",
       "types": [
         "default",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "coriolis",
+      "authtype": 1,
+      "mvno_match_data": "Coriolis",
+      "mvno_type": "spn",
+      "name": "Coriolis",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ]
     },
     {
-      "apn": "orange.acte",
-      "authtype": 1,
-      "mmsc": "http://mms.orange.fr/",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.10.200",
-      "mvno_match_data": "C le mobile",
+      "apn": "mmscoriolis",
+      "mmsc": "http://mms.coriolis.fr",
+      "mmsport": 9028,
+      "mmsproxy": "10.12.0.1",
+      "mvno_match_data": "Coriolis",
       "mvno_type": "spn",
-      "name": "C le MMS",
-      "password": "orange",
+      "name": "Coriolis MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "orange",
+      "authtype": 1,
+      "mvno_match_data": "Digimium",
+      "mvno_type": "spn",
+      "name": "Orange World",
+      "password": "orange",
+      "types": [
+        "default",
+        "ia"
       ],
       "user": "orange"
     },

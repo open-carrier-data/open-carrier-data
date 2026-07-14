@@ -23,6 +23,26 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1735,
+      "name": "Turkcell IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1735,
+      "name": "TURKCELL INTERNET",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "name": "internet",
@@ -47,6 +67,21 @@
     {
       "apn": "mms",
       "authtype": 1,
+      "carrier_id": 1735,
+      "mmsc": "http://mms.turkcell.com.tr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.252.169.217",
+      "name": "TURKCELL MMS",
+      "password": "mms",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mms.turkcell.com.tr/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "212.252.169.217",
@@ -56,6 +91,18 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "wap",
+      "authtype": 1,
+      "name": "Turkcell HTTP",
+      "password": "gprs",
+      "port": 8080,
+      "proxy": "212.252.234.168",
+      "types": [
+        "default"
+      ],
+      "user": "gprs"
     },
     {
       "apn": "cepten.kktcell",

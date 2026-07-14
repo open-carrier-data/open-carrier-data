@@ -1,11 +1,48 @@
 {
+  "android_apns": [
+    {
+      "apn": "cmnet",
+      "name": "\u4e2d\u56fd\u5e7f\u7535 (CBN) NET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "cmwap",
+      "mmsc": "http://mmsc.monternet.com",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "\u4e2d\u56fd\u5e7f\u7535 (CBN) NET MMS",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "proxy": "10.0.0.172",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "\u4e2d\u56fd\u5e7f\u7535 (CBN) NET IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -14,7 +51,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 46060",
+  "display_name": "Carrier 46060",
   "match": {
     "mccmnc": [
       "46060"

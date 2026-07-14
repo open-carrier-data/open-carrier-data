@@ -9,8 +9,23 @@
       "protocol": "IP",
       "server": "*",
       "types": [
+        "cbs"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "carrier_id": 2237,
+      "name": "CTNET",
+      "password": "vnet.mobi",
+      "port": 80,
+      "protocol": "IP",
+      "server": "*",
+      "types": [
         "cbs",
-        "fota"
+        "fota",
+        "hipri"
       ],
       "user": "ctnet@mycdma.cn"
     },
@@ -25,7 +40,52 @@
         "ia",
         "supl"
       ],
+      "user": "ctnet@mycdma.cn",
+      "user_editable": false
+    },
+    {
+      "apn": "ctnet",
+      "carrier_id": 2237,
+      "name": "\u4e2d\u56fd\u7535\u4fe1 (China Telecom) NET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
       "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctwap",
+      "authtype": 3,
+      "carrier_id": 2237,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "CTWAP",
+      "password": "vnet.mobi",
+      "port": 80,
+      "protocol": "IP",
+      "server": "*",
+      "types": [
+        "cbs",
+        "default",
+        "fota",
+        "hipri",
+        "supl"
+      ],
+      "user": "ctwap@mycdma.cn"
     },
     {
       "apn": "ctwap",
@@ -52,6 +112,27 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2237,
+      "name": "\u4e2d\u56fd\u7535\u4fe1 (China Telecom) NET IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 2237,
+      "name": "\u4e2d\u56fd\u7535\u4fe1 (China Telecom) SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {

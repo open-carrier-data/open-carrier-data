@@ -38,12 +38,24 @@
       "mmsport": 8799,
       "mmsproxy": "213.94.78.133",
       "mtu": 1500,
-      "name": "Planet3",
+      "name": "drei.at",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "server": "http://mobile.drei.at",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "drei.at",
+      "mmsc": "http://mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "213.94.78.133",
+      "name": "Planet 3",
+      "types": [
+        "ia",
+        "xcap"
       ]
     },
     {
@@ -61,6 +73,17 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 1344,
+      "name": "Planet 3 ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "mtu": 1500,
       "name": "ims",
@@ -70,18 +93,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "mtu": 1500,
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
     }
   ],
   "android_carrier_config": {

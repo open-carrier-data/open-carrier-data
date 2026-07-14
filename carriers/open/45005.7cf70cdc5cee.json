@@ -1,6 +1,29 @@
 {
   "android_apns": [
     {
+      "apn": "5g.sktelecom.com",
+      "mmsc": "http://omms.nate.com:9082/oma_mms",
+      "mmsport": 9093,
+      "mmsproxy": "lteoma.nate.com",
+      "name": "SK Telecom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "carrier_id": 1891,
+      "name": "SKT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "IMS",
       "name": "SKT IMS",
       "protocol": "IPV4V6",
@@ -22,7 +45,7 @@
     },
     {
       "apn": "ims",
-      "name": "SKT IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "types": [
         "ims"
@@ -39,6 +62,37 @@
         "cbs",
         "default",
         "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "lte-roaming.sktelecom.com",
+      "carrier_id": 1891,
+      "mmsc": "http://omms.nate.com:9082/oma_mms",
+      "mmsport": 9093,
+      "mmsproxy": "smart.nate.com",
+      "name": "SKT LTE Roaming",
+      "server": "*",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "lte.sktelecom.com",
+      "carrier_id": 1891,
+      "mmsc": "http://omms.nate.com:9082/oma_mms",
+      "mmsport": 9093,
+      "mmsproxy": "smart.nate.com",
+      "name": "SKT LTE INTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "server": "*",
+      "types": [
+        "cbs",
+        "default",
+        "fota",
+        "ia",
         "mms",
         "supl"
       ]
@@ -65,6 +119,34 @@
       "mmsport": 9093,
       "mmsproxy": "smart.nate.com",
       "name": "SKT 3G Roaming",
+      "server": "*",
+      "types": [
+        "cbs",
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "roaming.sktelecom.com",
+      "carrier_id": 1891,
+      "mmsc": "http://omms.nate.com:9082/oma_mms",
+      "mmsport": 9093,
+      "mmsproxy": "smart.nate.com",
+      "name": "SKT 3G Roaming",
+      "server": "*",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "web.sktelecom.com",
+      "carrier_id": 1891,
+      "mmsc": "http://omms.nate.com:9082/oma_mms",
+      "mmsport": 9093,
+      "mmsproxy": "smart.nate.com",
+      "name": "SKT 3G INTERNET",
       "server": "*",
       "types": [
         "cbs",

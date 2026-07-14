@@ -53,6 +53,7 @@
       "types": [
         "dun"
       ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -64,6 +65,28 @@
       "types": [
         "ims"
       ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1187,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -87,11 +110,28 @@
     },
     {
       "apn": "nxtgenphone",
+      "carrier_id": 1187,
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ATT Nextgenphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "nxtgenphone",
       "mmsc": "http://mmsc.mobile.att.net",
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
       "mtu": 1410,
-      "name": "ATT Nextgenphone",
+      "name": "nxtgenphone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -112,6 +152,23 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "phone",
+      "carrier_id": 1187,
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ATT Phone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "phone",
@@ -167,17 +224,18 @@
       ]
     },
     {
-      "apn": "ereseller",
-      "mmsc": "http://mmsc.mobile.att.net",
-      "mmsport": 80,
-      "mmsproxy": "proxy.mobile.att.net",
-      "mvno_match_data": "20FF",
-      "mvno_type": "gid",
-      "name": "US Mobile",
+      "apn": "wap.cingular",
+      "carrier_id": 1187,
+      "mmsc": "http://mmsc.cingular.com/",
+      "mmsproxy": "wireless.cingular.com",
+      "name": "ATT WAP",
+      "port": 80,
       "protocol": "IPV4V6",
+      "proxy": "wireless.cingular.com",
+      "roaming_protocol": "IPV4V6",
+      "server": "cingulargprs.com",
       "types": [
         "default",
-        "fota",
         "mms",
         "supl"
       ]
@@ -187,9 +245,9 @@
       "mmsc": "http://mmsc.mobile.att.net",
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
-      "mvno_match_data": "3432",
+      "mvno_match_data": "2001",
       "mvno_type": "gid",
-      "name": "Boost Mobile",
+      "name": "ereseller",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -198,7 +256,1128 @@
         "mms",
         "supl",
         "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "2001",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "2001",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "2002",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "2002",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "2002",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "20FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "20FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "20FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "21FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "21FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "21FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "22FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "22FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "22FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "23FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "23FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "23FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "24FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "24FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "24FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "25FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "25FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "25FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "26FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "26FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "26FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "27FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "27FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "27FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "28FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "28FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "28FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "29FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "29FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "29FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "2AC9",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "2AC9",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "2AC9",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "reseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "2ac9",
+      "mvno_type": "gid",
+      "name": "reseller",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "30FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "30FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "30FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3430",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3430",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3430",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3432",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3432",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3432",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3434",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3434",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3434",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3436",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3436",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3436",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3438",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3438",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3438",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3440",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3440",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3440",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3442",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3442",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3442",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3444",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3444",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3444",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3446",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3446",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3446",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "3448",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "3448",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "3448",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "4102",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "4102",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "4102",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "PRODATA",
@@ -213,6 +1392,96 @@
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "4201",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "4201",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "4201",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "44FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "44FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "44FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "prodata",
@@ -231,6 +1500,19 @@
       ]
     },
     {
+      "apn": "hotspot",
+      "mvno_match_data": "52FF",
+      "mvno_type": "gid",
+      "name": "ATT Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "3|9|10|11|14|15|18|20",
@@ -243,6 +1525,20 @@
       "types": [
         "ims"
       ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mvno_match_data": "52FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -279,6 +1575,24 @@
       "user_visible": false
     },
     {
+      "apn": "nxtgenphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "52FF",
+      "mvno_type": "gid",
+      "name": "ATT Nxtgenphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "enhancedphone",
       "carrier_id": 1187,
       "mmsc": "http://mmsc.mobile.att.net",
@@ -298,6 +1612,24 @@
     },
     {
       "apn": "enhancedphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "53FF",
+      "mvno_type": "gid",
+      "name": "ATT Enhancedphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "enhancedphone",
       "carrier_id": 1187,
       "mvno_match_data": "53FF",
       "mvno_type": "gid",
@@ -307,6 +1639,19 @@
       "types": [
         "xcap"
       ],
+      "user_visible": false
+    },
+    {
+      "apn": "hotspot",
+      "mvno_match_data": "53FF",
+      "mvno_type": "gid",
+      "name": "ATT Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -321,6 +1666,20 @@
       "types": [
         "ims"
       ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mvno_match_data": "53FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -342,6 +1701,7 @@
     },
     {
       "apn": "PRODATA",
+      "carrier_id": 2029,
       "mmsc": "http://mmsc.mobile.att.net",
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
@@ -356,11 +1716,273 @@
       ]
     },
     {
+      "apn": "PRODATA",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "60FF",
+      "mvno_type": "gid",
+      "name": "Defense Mobile",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "62FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "62FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "62FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "69FF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "69FF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "69FF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "DDFF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "DDFF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "DDFF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ereseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "DEFF",
+      "mvno_type": "gid",
+      "name": "ereseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "DEFF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "resellermht",
+      "mvno_match_data": "DEFF",
+      "mvno_type": "gid",
+      "name": "resellermht",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "FFFF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "nxtgenphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "mvno_match_data": "FFFF",
+      "mvno_type": "gid",
+      "name": "ATT Nextgenphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tfdata",
+      "carrier_id": 2022,
+      "mmsc": "http://mms-tf.net",
+      "mmsport": 80,
+      "mmsproxy": "mms3.tracfone.com",
+      "mvno_match_data": "ddff",
+      "mvno_type": "gid",
+      "name": "TFDATA",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "tfdata",
       "mmsc": "http://mms-tf.net",
       "mmsport": 80,
       "mmsproxy": "mms3.tracfone.com",
       "mvno_match_data": "ddff",
+      "mvno_type": "gid",
+      "name": "TFDATA",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tfdata",
+      "carrier_id": 2022,
+      "mmsc": "http://mms-tf.net",
+      "mmsport": 80,
+      "mmsproxy": "mms3.tracfone.com",
+      "mvno_match_data": "deff",
       "mvno_type": "gid",
       "name": "TFDATA",
       "protocol": "IP",

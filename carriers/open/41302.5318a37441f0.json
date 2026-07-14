@@ -2,6 +2,16 @@
   "android_apns": [
     {
       "apn": "default",
+      "carrier_id": 1599,
+      "name": "Dialog",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "default",
       "bearer_bitmask": "14|20",
       "name": "Dialog",
       "protocol": "IPV4V6",
@@ -65,12 +75,13 @@
     },
     {
       "apn": "ppwap",
+      "mmsc": "http://mms.dialog.lk:3130/mmsc",
       "mmsport": 8080,
-      "name": "Dialog WAP Prepaid",
+      "mmsproxy": "192.168.122.2",
+      "name": "ppwap",
       "proxy": "192.168.122.2",
       "types": [
-        "default",
-        "supl"
+        "default"
       ]
     },
     {
@@ -81,6 +92,15 @@
       "name": "ppwap",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ppwap",
+      "mmsport": 8080,
+      "name": "Dialog WAP Prepaid",
+      "proxy": "192.168.122.2",
+      "types": [
+        "supl"
       ]
     },
     {

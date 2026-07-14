@@ -69,6 +69,26 @@
       ]
     },
     {
+      "apn": "inet-gprs.mtel.bg",
+      "carrier_id": 1370,
+      "name": "MTel",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.a1.bg",
+      "authtype": 0,
+      "carrier_id": 1370,
+      "name": "A1",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.a1.bg",
       "authtype": 0,
       "carrier_enabled": true,
@@ -87,10 +107,26 @@
     },
     {
       "apn": "mms-gprs.mtel.bg",
+      "authtype": 1,
+      "carrier_id": 1370,
       "mmsc": "http://mmsc/",
       "mmsport": 8080,
       "mmsproxy": "10.150.0.33",
-      "name": "mms-gprs.mtel.bg",
+      "name": "MTel MMS",
+      "password": "mtel",
+      "types": [
+        "mms"
+      ],
+      "user": "mtel"
+    },
+    {
+      "apn": "mms.a1.bg",
+      "authtype": 0,
+      "carrier_id": 1370,
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "10.150.0.33",
+      "name": "A1 MMS",
       "password": "mtel",
       "types": [
         "mms"

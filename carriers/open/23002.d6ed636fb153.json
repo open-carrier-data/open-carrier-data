@@ -54,6 +54,27 @@
     {
       "apn": "ims",
       "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "O2 VoLTE Hlas",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1449,
+      "name": "O2 VoLTE Hlas",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
       "carrier_enabled": true,
       "name": "ims",
       "protocol": "IPV6",
@@ -64,11 +85,48 @@
     },
     {
       "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1449,
+      "name": "O2 internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "mms",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "O2 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1449,
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "O2 MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -97,13 +155,35 @@
     {
       "apn": "xcap",
       "authtype": 1,
-      "carrier_enabled": true,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
       "name": "O2 VoLTE",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1449,
+      "name": "O2 VoLTE",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "O2 VoLTE",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {

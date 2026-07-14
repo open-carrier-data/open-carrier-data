@@ -53,11 +53,13 @@
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1400,
-      "name": "Vivacom IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "internet.vivacom.bg",
@@ -69,6 +71,41 @@
       "user": "VIVACOM"
     },
     {
+      "apn": "internet.vivacom.bg",
+      "authtype": 0,
+      "carrier_id": 1999,
+      "name": "VIVACOM Internet",
+      "password": "vivacom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia"
+      ],
+      "user": "vivacom"
+    },
+    {
+      "apn": "internet.vivatel.bg",
+      "name": "internet.vivatel.bg",
+      "password": "vivatel",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "vivatel"
+    },
+    {
+      "apn": "mms.vivatel.bg",
+      "mmsc": "http://mmsc.vivatel.bg",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.123.123",
+      "name": "VivaTel MMS postpaid",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "wap.vivacom.bg",
       "name": "Vivacom WAP",
       "password": "wap",
@@ -77,6 +114,17 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.vivatel.bg",
+      "name": "VivaTel HTTP postpaid",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "192.168.123.123",
+      "types": [
+        "default"
       ],
       "user": "wap"
     }

@@ -25,11 +25,33 @@
   "android_apns": [
     {
       "apn": "apn.fastweb.it",
+      "carrier_id": 2416,
+      "name": "FW WEB",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia"
+      ]
+    },
+    {
+      "apn": "apn.fastweb.it",
       "name": "Fastweb",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "apn.fastweb.it",
+      "carrier_id": 2416,
+      "mmsc": "http://mms.fastweb.it/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "85.18.189.217",
+      "name": "FW MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -110,7 +132,9 @@
       "mmsproxy": "85.18.189.217",
       "mvno_match_data": "FASTWEB",
       "mvno_type": "spn",
-      "name": "Fastweb 4G",
+      "name": "apn.fastweb.it",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "mms",

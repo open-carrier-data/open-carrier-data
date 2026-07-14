@@ -3,6 +3,18 @@
     {
       "apn": "Internet",
       "authtype": 1,
+      "carrier_id": 1659,
+      "name": "Orange Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "Internet",
+      "authtype": 1,
       "name": "Orange Internet",
       "password": "internet",
       "types": [
@@ -35,6 +47,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 1659,
+      "name": "Orange PL Ut",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -55,6 +77,28 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "Orange IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1659,
+      "name": "Orange IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 3,
       "name": "internet",
@@ -63,7 +107,51 @@
         "fota",
         "supl"
       ],
+      "user": "internet",
+      "user_editable": false
+    },
+    {
+      "apn": "internetipv6",
+      "authtype": 0,
+      "carrier_id": 1659,
+      "name": "Orange Internet",
+      "password": "internet",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
       "user": "internet"
+    },
+    {
+      "apn": "internetipv6",
+      "authtype": 3,
+      "name": "Orange Internet",
+      "password": "internet",
+      "protocol": "IPV6",
+      "types": [
+        "dun",
+        "fota",
+        "ia"
+      ],
+      "user": "internet",
+      "user_editable": false
+    },
+    {
+      "apn": "mms",
+      "authtype": 3,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.orange.pl",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.6.104",
+      "name": "Orange MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms",
+      "user_editable": false
     },
     {
       "apn": "mni.internet",
@@ -99,7 +187,8 @@
         "fota",
         "supl"
       ],
-      "user": "wap"
+      "user": "wap",
+      "user_editable": false
     }
   ],
   "android_carrier_config": {

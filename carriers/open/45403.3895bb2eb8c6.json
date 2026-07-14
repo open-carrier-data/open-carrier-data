@@ -1,12 +1,33 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_id": 760,
+      "name": "3 HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "imobile.three.com.hk",
       "name": "3",
       "types": [
         "default",
         "dun"
       ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_id": 760,
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -31,6 +52,38 @@
       "user_visible": false
     },
     {
+      "apn": "ims.lte.three.com.hk",
+      "bearer_bitmask": "14|19",
+      "name": "3 IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims.lte.three.com.hk",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mobile.lte.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3 LTE",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "mobile.lte.three.com.hk",
       "authtype": 1,
       "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
@@ -42,11 +95,371 @@
       ]
     },
     {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "mobile.three.com.hk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|16|19",
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "bearer": 18,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|15|16|17|20",
+      "name": "3",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|15|16|17|20",
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3 MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "share.lte.three.com.hk",
       "authtype": 1,
       "name": "3 Share",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "name": "3 Share",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "name": "Hutchison HK Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sos.lte.three.com.hk",
+      "name": "3 emergency",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "vas.wlan.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3 EPDG MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "vas.wlan.three.com.hk",
+      "bearer_bitmask": "18",
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "3 IWLAN MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "mvno_match_data": "0009",
+      "mvno_type": "gid",
+      "name": "HKBN IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0009",
+      "mvno_type": "gid",
+      "name": "HKBN",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0009",
+      "mvno_type": "gid",
+      "name": "HKBN",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "mvno_match_data": "0009",
+      "mvno_type": "gid",
+      "name": "share.three.com.hk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "vas.wlan.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0009",
+      "mvno_type": "gid",
+      "name": "HKBN IMS VAS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims.lte.three.com.hk",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "Hutchison HK",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|16|19",
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "3 Share",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 760,
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "Hutchison HK Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "vas.wlan.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0404",
+      "mvno_type": "gid",
+      "name": "3 EPDG MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims.lte.three.com.hk",
+      "authtype": 1,
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|9|10|11|14|15|16|19",
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "vas.wlan.three.com.hk",
+      "authtype": 1,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "mvno_match_data": "0405",
+      "mvno_type": "gid",
+      "name": "Mo EPDG MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -63,7 +476,8 @@
         "hipri",
         "ia"
       ],
-      "user": "ctnet@mycdma.cn"
+      "user": "ctnet@mycdma.cn",
+      "user_editable": false
     },
     {
       "apn": "ims",
@@ -74,7 +488,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {

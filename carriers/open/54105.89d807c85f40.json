@@ -2,10 +2,31 @@
   "android_apns": [
     {
       "apn": "default",
+      "carrier_id": 2219,
       "name": "Digicel",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "default",
+      "name": "Digicel",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap",
+      "authtype": 1,
+      "carrier_id": 2219,
+      "mmsc": "http://wapdigicel.com",
+      "name": "Vanatu:Digicel:Modem",
+      "port": 8080,
+      "proxy": "172.16.7.12",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -19,6 +40,18 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "wap",
+      "authtype": 1,
+      "carrier_id": 2219,
+      "mmsc": "http://mms.digicelgroup.com",
+      "mmsport": 9201,
+      "mmsproxy": "172.16.7.12",
+      "name": "Vanatu:Digicel:Mms",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "wap",
@@ -38,6 +71,15 @@
         "default",
         "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.digicelpacific.com",
+      "carrier_id": 2219,
+      "name": "Digicel",
+      "types": [
+        "default",
+        "ia"
       ]
     }
   ],

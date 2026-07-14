@@ -2,6 +2,20 @@
   "android_apns": [
     {
       "apn": "cmhk",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms.hk.chinamobile.com/mms",
+      "name": "CMHK Data",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "cmhk",
       "mmsc": "http://mms.hk.chinamobile.com/mms",
       "name": "cmhk",
       "types": [
@@ -12,12 +26,44 @@
       ]
     },
     {
+      "apn": "cmhk",
+      "carrier_id": 767,
+      "name": "CMHK Data",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "cmhk",
+      "carrier_id": 767,
+      "mmsc": "http://mms.hk.chinamobile.com/mms",
+      "name": "CMHK MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "ims",
       "max_conns": 1023,
       "max_conns_time": 300,
       "modem_cognitive": true,
       "name": "CMHK IMS",
       "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "CMHK IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -43,6 +89,28 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 767,
+      "name": "CMHK UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ],
       "user_visible": false
     }

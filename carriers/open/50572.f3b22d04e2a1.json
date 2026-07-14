@@ -30,6 +30,17 @@
   "android_apns": [
     {
       "apn": "Telstra.mms",
+      "carrier_id": 1345,
+      "mmsc": "http://mmsc.telstra.com:8002",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.180",
+      "name": "Telstra MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "Telstra.mms",
       "mmsc": "http://mmsc.telstra.com:8002",
       "mmsport": 80,
       "mmsproxy": "10.1.1.180",
@@ -40,10 +51,29 @@
     },
     {
       "apn": "Telstra.wap",
+      "carrier_id": 1345,
       "name": "Telstra Internet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "Telstra.wap",
+      "name": "Telstra Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1345,
+      "name": "Telstra HOS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
       ]
     },
     {
@@ -70,6 +100,16 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 1345,
+      "name": "Telstra IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "mtu": 1358,
       "name": "ims",
@@ -83,6 +123,16 @@
     },
     {
       "apn": "telstra.internet",
+      "carrier_id": 1345,
+      "name": "Telstra Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "telstra.internet",
       "authtype": 0,
       "mtu": 1460,
       "name": "telstra.internet",
@@ -90,6 +140,31 @@
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "telstra.mms",
+      "carrier_id": 1345,
+      "mmsc": "http://mmsc.telstra.com:8002/",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.180",
+      "name": "Telstra MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "telstra.wap",
+      "carrier_id": 1345,
+      "name": "Telstra Internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {

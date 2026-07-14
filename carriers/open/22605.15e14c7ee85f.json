@@ -26,6 +26,26 @@
   },
   "android_apns": [
     {
+      "apn": "Internet",
+      "authtype": 1,
+      "name": "RDS Internet postpaid",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_id": 1959,
+      "name": "Digi.Mobil",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -59,9 +79,33 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "carrier_id": 1959,
+      "name": "Digi.Mobil",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
       "name": "internet",
       "types": [
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1959,
+      "mmsc": "http://10.10.3.133:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.3.130",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -74,6 +118,30 @@
       "name": "MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "internet.digimobil.es",
+      "carrier_id": 2442,
+      "mvno_match_data": "44474553",
+      "mvno_type": "gid",
+      "name": "DIGI Spain",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "digi.mobile",
+      "carrier_id": 2443,
+      "mvno_match_data": "44474954",
+      "mvno_type": "gid",
+      "name": "DIGI Italy",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     }
   ],

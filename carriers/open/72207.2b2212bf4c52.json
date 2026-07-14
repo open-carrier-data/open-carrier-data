@@ -19,21 +19,22 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "carrier_id": 1337,
-      "name": "Movistar IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet",
       "name": "movistar",
       "password": "internet",
       "types": [
         "default",
+        "dun"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet.gprs.unifon.com.ar",
+      "authtype": 1,
+      "carrier_id": 1337,
+      "name": "Argentina:Movistar:INTERNET",
+      "password": "internet",
+      "types": [
         "dun"
       ],
       "user": "internet"
@@ -57,6 +58,8 @@
       "mmsproxy": "200.68.32.239",
       "name": "Movistar MMS",
       "password": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -76,6 +79,21 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "wap.gprs.unifon.com.ar",
+      "authtype": 1,
+      "carrier_id": 1337,
+      "name": "wap.gprs.unifon.com.ar",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "wap"
     },
     {
       "apn": "wap.gprs.unifon.com.ar",

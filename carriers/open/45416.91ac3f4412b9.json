@@ -1,11 +1,85 @@
 {
   "android_apns": [
     {
+      "apn": "HOS",
+      "carrier_id": 769,
+      "name": "csl UT",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 769,
+      "name": "csl IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "csl IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "mobile",
+      "authtype": 3,
+      "carrier_id": 769,
+      "mmsc": "http://mms.hkcsl.com:8080",
+      "mmsport": 8080,
+      "mmsproxy": "10.140.14.10",
+      "name": "csl",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile",
+      "authtype": 3,
+      "mmsc": "http://mms.hkcsl.com:8080",
+      "mmsport": 8080,
+      "mmsproxy": "10.140.14.10",
+      "name": "mobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms"
+      ]
+    },
+    {
       "apn": "mobile",
       "name": "csl.",
       "types": [
-        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "pccw",
+      "authtype": 1,
+      "carrier_id": 769,
+      "mmsc": "http://3gmms.pccwmobile.com:8080/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.140.14.10",
+      "name": "PCCW-HKT",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {

@@ -1,4 +1,38 @@
 {
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "LMT IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "LMT Ut",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.lmt.lv",
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "name": "LMT Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "hide_enhanced_4g_lte_bool": false
@@ -6,7 +40,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -15,7 +49,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 24710",
+  "display_name": "Carrier 24710",
   "match": {
     "mccmnc": [
       "24710"

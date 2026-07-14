@@ -68,6 +68,7 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://192.168.180.100/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "10.0.5.19",
@@ -94,7 +95,20 @@
     {
       "apn": "tmcg-4g",
       "authtype": 1,
-      "name": "T-Mobile ME Internet",
+      "carrier_id": 2363,
+      "name": "T-Mobile Internet",
+      "password": "38267",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "tmcg-4g",
+      "authtype": 1,
+      "name": "tmcg-4g",
       "password": "38267",
       "protocol": "IPV4V6",
       "types": [
@@ -104,6 +118,7 @@
     },
     {
       "apn": "tmcg-wnw",
+      "authtype": 1,
       "name": "tmcg-wnw",
       "password": "38267",
       "port": 8080,
@@ -120,6 +135,49 @@
       "password": "38267",
       "types": [
         "dun"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "tmcg-wnw",
+      "authtype": 1,
+      "mmsc": "http://192.168.180.100/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "010.000.005.019",
+      "name": "T-Mobile MMS",
+      "password": "38267",
+      "types": [
+        "mms"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 2088,
+      "mmsc": "http://192.168.180.100/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.5.19",
+      "mvno_match_data": "Telekom.me",
+      "mvno_type": "spn",
+      "name": "T-Mobile MMS",
+      "password": "38267",
+      "types": [
+        "mms"
+      ],
+      "user": "38267"
+    },
+    {
+      "apn": "tmcg-wnw",
+      "carrier_id": 2088,
+      "mvno_match_data": "Telekom.me",
+      "mvno_type": "spn",
+      "name": "T-Mobile Internet",
+      "password": "38267",
+      "port": 8080,
+      "proxy": "10.0.5.19",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "38267"
     }

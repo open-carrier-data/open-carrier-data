@@ -2,6 +2,18 @@
   "android_apns": [
     {
       "apn": "3gnet",
+      "carrier_id": 1436,
+      "name": "3gnet",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "3gnet",
       "name": "\u4e2d\u56fd\u8054\u901a",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -11,12 +23,13 @@
     },
     {
       "apn": "3gnet",
-      "name": "3gnet",
-      "port": 80,
+      "carrier_id": 1436,
+      "name": "\u4e2d\u56fd\u8054\u901a (China Unicom) NET",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "supl"
+        "ia",
+        "xcap"
       ]
     },
     {
@@ -26,6 +39,19 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "3gwap",
+      "carrier_id": 1436,
+      "mmsc": "http://mmsc.myuni.com.cn",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "China Unicom wap",
+      "port": 80,
+      "proxy": "10.0.0.172",
+      "types": [
+        "default"
       ]
     },
     {
@@ -42,6 +68,7 @@
     },
     {
       "apn": "3gwap",
+      "carrier_id": 1436,
       "mmsc": "http://mmsc.myuni.com.cn",
       "mmsport": 80,
       "mmsproxy": "10.0.0.172",
@@ -52,6 +79,31 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "3gwap",
+      "mmsc": "http://mmsc.myuni.com.cn",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "3gwap",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "proxy": "10.0.0.172",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1436,
+      "name": "\u4e2d\u56fd\u8054\u901a (China Unicom) NET IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     }
   ],

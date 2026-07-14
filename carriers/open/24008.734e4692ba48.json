@@ -54,6 +54,48 @@
       ]
     },
     {
+      "apn": "hos",
+      "carrier_id": 1695,
+      "name": "HOS",
+      "types": [
+        "supl"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1695,
+      "name": "Telenor Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1695,
+      "name": "Telenor IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -81,14 +123,11 @@
     },
     {
       "apn": "mms",
-      "authtype": 1,
-      "carrier_enabled": true,
+      "carrier_id": 1695,
       "mmsc": "http://mms",
       "mmsport": 8799,
       "mmsproxy": "172.30.253.241",
       "name": "Telenor MMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]
@@ -117,6 +156,18 @@
     },
     {
       "apn": "services.telenor.se",
+      "carrier_id": 1695,
+      "name": "Telenor Mobilsurf",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
       "name": "services.telenor.se",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -138,6 +189,30 @@
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "IMS",
+      "mvno_match_data": "24008",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "mvno_match_data": "24008",
+      "mvno_type": "imsi",
+      "name": "hos",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "mms",

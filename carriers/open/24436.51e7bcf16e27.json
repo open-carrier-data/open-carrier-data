@@ -1,11 +1,52 @@
 {
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dna.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "hide_enhanced_4g_lte_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -14,7 +55,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 24436",
+  "display_name": "Carrier 24436",
   "match": {
     "mccmnc": [
       "24436"

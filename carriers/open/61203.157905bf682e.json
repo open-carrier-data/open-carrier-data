@@ -2,6 +2,19 @@
   "android_apns": [
     {
       "apn": "orangecimms",
+      "carrier_id": 1421,
+      "mmsc": "http://172.20.6.1/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.4.33",
+      "name": "Omms CI",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "orangecimms",
       "mmsc": "http://172.20.6.1/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "172.20.4.33",
@@ -11,6 +24,19 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "orangeciwap",
+      "carrier_id": 1421,
+      "name": "OWORLD CI",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "172.20.4.33",
+      "types": [
+        "default",
+        "ia"
+      ],
+      "user": "wap"
     },
     {
       "apn": "orangeciwap",
@@ -31,6 +57,18 @@
       "types": [
         "default",
         "dun"
+      ],
+      "user": "web"
+    },
+    {
+      "apn": "orangeciweb",
+      "authtype": 1,
+      "carrier_id": 1421,
+      "name": "Oweb",
+      "password": "web",
+      "types": [
+        "default",
+        "ia"
       ],
       "user": "web"
     }

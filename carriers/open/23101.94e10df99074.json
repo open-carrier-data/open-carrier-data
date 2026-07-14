@@ -24,15 +24,36 @@
     },
     {
       "apn": "ims",
-      "name": "Orange Slovensko",
+      "carrier_id": 1713,
+      "name": "Orange IMS",
       "protocol": "IPV4V6",
       "types": [
         "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1713,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
       "apn": "internet",
-      "name": "Orange Slovensko",
+      "name": "internet",
       "types": [
         "dun"
       ]
@@ -46,12 +67,64 @@
       ]
     },
     {
+      "apn": "mms",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://imms.orange.sk",
+      "mmsport": 8799,
+      "mmsproxy": "213.151.208.145",
+      "name": "Orange MMS",
+      "password": "wap",
+      "types": [
+        "mms"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1713,
+      "mmsc": "http://imms.orange.sk",
+      "mmsport": 8799,
+      "mmsproxy": "213.151.208.145",
+      "name": "mms",
+      "password": "wap",
+      "types": [
+        "mms"
+      ],
+      "user": "wap",
+      "user_editable": false
+    },
+    {
+      "apn": "orangewap",
+      "authtype": 1,
+      "carrier_id": 1713,
+      "name": "Orange World",
+      "password": "wap",
+      "port": 8799,
+      "proxy": "213.151.208.156",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
+    },
+    {
       "apn": "sos",
       "name": "Orange Slovensko",
       "protocol": "IPV4V6",
       "types": [
         "emergency"
       ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1713,
+      "name": "Orange UT",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "xcap",

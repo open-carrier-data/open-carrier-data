@@ -32,6 +32,26 @@
   },
   "android_apns": [
     {
+      "apn": "Internet",
+      "name": "Elisa Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1475,
+      "name": "Elisa IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -55,6 +75,18 @@
     },
     {
       "apn": "internet",
+      "carrier_id": 1475,
+      "name": "Elisa Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "internet",
@@ -74,6 +106,19 @@
     },
     {
       "apn": "mms",
+      "carrier_id": 1475,
+      "mmsc": "http://mms.elisa.fi",
+      "mmsport": 80,
+      "mmsproxy": "213.161.41.57",
+      "name": "Elisa MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.elisa.fi",
@@ -82,6 +127,42 @@
       "name": "mms",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1475,
+      "name": "Elisa Ut",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.saunalahti",
+      "carrier_id": 1479,
+      "mvno_match_data": "2440541",
+      "mvno_type": "imsi",
+      "name": "Saunalahti Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.saunalahti.fi",
+      "carrier_id": 1479,
+      "mmsc": "http://mms.saunalahti.fi:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "62.142.4.197",
+      "mvno_match_data": "2440541",
+      "mvno_type": "imsi",
+      "name": "Saunalahti MMS",
       "types": [
         "mms"
       ]

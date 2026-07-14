@@ -2,6 +2,17 @@
   "android_apns": [
     {
       "apn": "data",
+      "authtype": 1,
+      "carrier_id": 1675,
+      "name": "Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data",
       "name": "Ooredoo",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -11,22 +22,13 @@
     },
     {
       "apn": "data",
+      "carrier_id": 1675,
       "mmsc": "http://mmsr.ooredoomms.qa",
       "mmsport": 8080,
       "mmsproxy": "10.23.8.3",
       "name": "MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "data",
-      "authtype": 1,
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "supl"
       ]
     },
     {
@@ -54,16 +56,9 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "Ooredoo",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "web.qtel",
-      "name": "Q-tel",
+      "authtype": 1,
+      "name": "web.qtel",
       "password": "gprs",
       "types": [
         "default",

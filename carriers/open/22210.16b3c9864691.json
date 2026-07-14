@@ -62,6 +62,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 29,
+      "name": "IMS Vodafone",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "Vodafone IT",
       "types": [
@@ -84,6 +93,26 @@
       "name": "UNO Mobile MMS GPRS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.it",
+      "carrier_id": 29,
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "name": "MMS Vodafone",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.vodafone.it",
+      "carrier_id": 29,
+      "name": "Acc. Internet da cell",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -143,6 +172,28 @@
       ]
     },
     {
+      "apn": "ims",
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "HO IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.ho-mobile.it",
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "HO-Mobile Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.ho-mobile.it",
       "mvno_match_data": "20",
       "mvno_type": "gid",
@@ -154,14 +205,88 @@
       ]
     },
     {
-      "apn": "web.ho-mobile.it",
+      "apn": "mms.vodafone.it",
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
       "mvno_match_data": "20",
       "mvno_type": "gid",
-      "name": "ho.mobile Internet",
+      "name": "HO-Mobile MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.ho-mobile.it",
+      "authtype": 3,
+      "mmsport": 80,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "web.ho-mobile.it",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.ho-mobile.it",
+      "authtype": 3,
+      "mmsport": 80,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "HO-Mobile WEB",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "wap.dtm.it",
+      "mvno_match_data": "222101306xxxxxx",
+      "mvno_type": "imsi",
+      "name": "DailyTelecomWAP",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.dtm.it",
+      "mvno_match_data": "222101406xxxxxx",
+      "mvno_type": "imsi",
+      "name": "DailyTelecomWAP",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.dtm.it",
+      "carrier_id": 2438,
+      "mvno_match_data": "Daily Telecom",
+      "mvno_type": "spn",
+      "name": "DailyTelecomWAP",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.erg.it",
+      "carrier_id": 2304,
+      "mvno_match_data": "ERG",
+      "mvno_type": "spn",
+      "name": "ErgMobile WAP",
+      "types": [
+        "default",
+        "dun",
+        "fota",
+        "ia",
         "supl"
       ]
     },
@@ -178,11 +303,36 @@
     {
       "apn": "internet.postemobile.it",
       "authtype": 0,
+      "carrier_id": 2303,
       "mvno_match_data": "PosteMobile",
       "mvno_type": "spn",
       "name": "PosteMobile (DUN)",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet.postemobile.it",
+      "authtype": 0,
+      "mvno_match_data": "PosteMobile",
+      "mvno_type": "spn",
+      "name": "PosteMobile (DUN)",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.postemobile.it",
+      "authtype": 0,
+      "carrier_id": 2303,
+      "mmsc": "http://mms.postemobile.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "mvno_match_data": "PosteMobile",
+      "mvno_type": "spn",
+      "name": "PosteMobile MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -202,7 +352,64 @@
       "apn": "wap.postemobile.it",
       "mvno_match_data": "PosteMobile",
       "mvno_type": "spn",
-      "name": "PosteMobile WAP",
+      "name": "wap.postemobile.it",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.postemobile.it",
+      "carrier_id": 2303,
+      "mvno_match_data": "PosteMobile",
+      "mvno_type": "spn",
+      "name": "PosteMobile",
+      "types": [
+        "default",
+        "fota",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.ho-mobile.it",
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "Tethering Internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.ho-mobile.it",
+      "carrier_id": 2455,
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "ho. (Tethering)",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.ho-mobile.it",
+      "carrier_id": 2455,
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "ho.",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.ho-mobile.it",
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "Accesso Internet da Cellulare",
       "types": [
         "default",
         "supl"

@@ -1,16 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "fido-core-appl1.apn",
-      "mmsc": "http://mms.fido.ca",
-      "mmsport": 80,
-      "mmsproxy": "205.151.11.13",
-      "name": "Fido Default",
-      "types": [
-        "supl"
-      ]
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1962,
@@ -33,6 +23,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1962,
+      "name": "Rogers IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.fido.ca",
       "name": "Fido Internet",
       "types": [
@@ -42,7 +42,7 @@
     },
     {
       "apn": "internet.mts",
-      "name": "MTS-Roaming",
+      "name": "internet.mts",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -105,20 +105,6 @@
         "supl"
       ],
       "user_editable": false
-    },
-    {
-      "apn": "ltemobile.apn",
-      "mmsc": "http://mms.fido.ca",
-      "mmsport": 80,
-      "mmsproxy": "205.151.11.13",
-      "name": "ltemobile.apn",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
     },
     {
       "apn": "netsvcs",
@@ -207,13 +193,19 @@
       "user_visible": false
     },
     {
-      "apn": "sp.mts",
+      "apn": "wap.fido.ca",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
       "mmsc": "http://mmsc2.mts.net/",
-      "mmsport": 9401,
-      "mmsproxy": "209.4.229.90",
-      "name": "MTS-Roaming",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS Wap",
       "types": [
         "default",
         "mms",
@@ -222,10 +214,22 @@
     },
     {
       "apn": "internet.mts",
-      "carrier_id": 578,
       "mvno_match_data": "2C",
       "mvno_type": "gid",
       "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "carrier_id": 578,
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "internet.mts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "dun"
       ],
@@ -249,6 +253,101 @@
       ]
     },
     {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "2C",
+      "mvno_type": "gid",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "4D",
+      "mvno_type": "gid",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "4D",
+      "mvno_type": "gid",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "4D",
+      "mvno_type": "gid",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "carrier_id": 1962,
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1962,
@@ -263,16 +362,22 @@
       "user_visible": false
     },
     {
-      "apn": "ltedata.apn",
-      "carrier_id": 1962,
+      "apn": "isp.fido.apn",
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido Tethering",
-      "protocol": "IPV6",
+      "name": "Fido Tethering 3G",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -294,6 +399,52 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "carrier_id": 1962,
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "netsvcs",
@@ -340,14 +491,787 @@
       "user_visible": false
     },
     {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "DD",
+      "mvno_type": "gid",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370397",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302370497",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x0",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x1",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x2",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x3",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x4",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x5",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x6",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x7",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fido-core-appl1.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.fido.apn",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.fido.ca",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.13",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.fido.ca",
+      "mvno_match_data": "302370x8",
+      "mvno_type": "imsi",
+      "name": "Fido Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.mts",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "302660",
+      "mvno_type": "imsi",
+      "name": "MTS Wap",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.mts",
       "mvno_match_data": "MTS",
       "mvno_type": "spn",
-      "name": "MTS Tethering S",
+      "name": "internet.mts",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "MTS",
+      "mvno_type": "spn",
+      "name": "sp.mts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -359,9 +1283,20 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
-        "default",
         "fota",
-        "hipri",
+        "hipri"
+      ]
+    },
+    {
+      "apn": "wap.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "mvno_match_data": "MTS",
+      "mvno_type": "spn",
+      "name": "MTS Wap",
+      "types": [
+        "default",
         "mms",
         "supl"
       ]

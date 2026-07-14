@@ -1,14 +1,39 @@
 {
   "android_apns": [
     {
+      "apn": "chatrisp.apn",
+      "name": "Chatr Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "chatrweb.apn",
       "mmsc": "http://mms.chatrwireless.com",
       "mmsport": 80,
       "mmsproxy": "205.151.11.11",
       "name": "Chatr Internet",
+      "protocol": "IPV4V6",
       "types": [
         "default",
-        "mms"
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "name": "goam.com",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "goam.com",
+      "name": "goam.com",
+      "types": [
+        "supl"
       ]
     },
     {
@@ -24,9 +49,45 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1403,
+      "name": "Rogers IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.com",
-      "name": "Rogers WAP",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "name": "internet.com",
       "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "name": "internet.com",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "name": "Rogers Tethering",
       "types": [
         "default",
         "supl"
@@ -35,10 +96,10 @@
     {
       "apn": "isp.apn",
       "name": "isp.apn",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "dun"
       ]
     },
     {
@@ -51,6 +112,22 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "bearer_bitmask": "13|19|20",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "name": "Rogers LTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -91,7 +168,24 @@
     },
     {
       "apn": "ltemobile.apn",
+      "carrier_id": 1403,
       "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers LTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
       "mmsproxy": "mmsproxy.rogers.com",
       "name": "ltemobile.apn",
       "protocol": "IPV4V6",
@@ -100,6 +194,31 @@
         "default",
         "mms"
       ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "ltemobile.apn",
+      "protocol": "IPV4V6",
+      "types": [
+        "hipri",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "name": "media.com",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
     },
     {
       "apn": "netsvcs",
@@ -168,9 +287,13 @@
       "mmsport": 80,
       "mmsproxy": "10.128.1.69",
       "name": "Rogers",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "supl"
-      ]
+        "fota"
+      ],
+      "user": "wapuser1"
     },
     {
       "apn": "sos",
@@ -290,6 +413,16 @@
       "user_visible": false
     },
     {
+      "apn": "goam.com",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 2090,
@@ -304,12 +437,32 @@
       "user_visible": false
     },
     {
+      "apn": "internet.com",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "ltedata.apn",
       "carrier_id": 2090,
       "mvno_match_data": "BA",
       "mvno_type": "gid",
       "name": "Tbaytel Tethering",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "dun"
       ]
@@ -318,7 +471,7 @@
       "apn": "ltedata.apn",
       "mvno_match_data": "BA",
       "mvno_type": "gid",
-      "name": "Tbaytel Tethering",
+      "name": "ltedata.apn",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
@@ -343,6 +496,50 @@
         "hipri",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "carrier_id": 2090,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Wap MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -378,6 +575,119 @@
       "user_visible": false
     },
     {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "BA",
+      "mvno_type": "gid",
+      "name": "Tbaytel Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Wap 3G",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "carrier_id": 2057,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "CC",
+      "mvno_type": "gid",
+      "name": "Cityfone Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "EMERGENCY",
       "carrier_id": 2055,
       "mvno_match_data": "D2",
@@ -411,12 +721,10 @@
       "mvno_match_data": "D2",
       "mvno_type": "gid",
       "name": "Chatr Internet",
-      "protocol": "IPV6",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "mms",
-        "supl"
+        "ia"
       ]
     },
     {
@@ -471,6 +779,1334 @@
       "name": "Ztar Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "carrier_id": 2056,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "D4",
+      "mvno_type": "gid",
+      "name": "Ztar Internet",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Chatr Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.11",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "isp.apn",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "FF",
+      "mvno_type": "gid",
+      "name": "rogers-core-appl1.apn",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720392",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
+      "mvno_match_data": "302720394",
+      "mvno_type": "imsi",
+      "name": "Chatr Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.11",
+      "mvno_match_data": "302720394",
+      "mvno_type": "imsi",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap 3G",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720397",
+      "mvno_type": "imsi",
+      "name": "Cityfone Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720398",
+      "mvno_type": "imsi",
+      "name": "Ztar Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720398",
+      "mvno_type": "imsi",
+      "name": "Ztar Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
+      "mvno_match_data": "302720494",
+      "mvno_type": "imsi",
+      "name": "Chatr Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.11",
+      "mvno_match_data": "302720494",
+      "mvno_type": "imsi",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720498",
+      "mvno_type": "imsi",
+      "name": "Ztar Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720498",
+      "mvno_type": "imsi",
+      "name": "Ztar Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720592",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap 3G",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720597",
+      "mvno_type": "imsi",
+      "name": "Cityfone Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x0",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x1",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x2",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x3",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x4",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x5",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x6",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x7",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x8",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -676,6 +2312,23 @@
       ]
     },
     {
+      "apn": "ltemobile.apn",
+      "carrier_id": 2090,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x92",
+      "mvno_type": "imsi",
+      "name": "Tbaytel Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
       "carrier_id": 2090,
@@ -722,18 +2375,6 @@
     },
     {
       "apn": "chatrisp.apn",
-      "carrier_id": 2055,
-      "mvno_match_data": "302720x94",
-      "mvno_type": "imsi",
-      "name": "Chatr Tethering",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "chatrisp.apn",
       "mvno_match_data": "302720x94",
       "mvno_type": "imsi",
       "name": "Chatr Tethering",
@@ -741,23 +2382,6 @@
       "roaming_protocol": "IP",
       "types": [
         "dun"
-      ]
-    },
-    {
-      "apn": "chatrweb.apn",
-      "carrier_id": 2055,
-      "mmsc": "http://mms.chatrwireless.com",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.chatrwireless.com",
-      "mvno_match_data": "302720x94",
-      "mvno_type": "imsi",
-      "name": "Chatr Internet",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "mms",
-        "supl"
       ]
     },
     {
@@ -776,6 +2400,21 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "carrier_id": 2055,
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "mvno_match_data": "302720x94",
+      "mvno_type": "imsi",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -805,6 +2444,110 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x96",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "carrier_id": 2057,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x97",
+      "mvno_type": "imsi",
+      "name": "Cityfone Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -837,7 +2580,140 @@
       ]
     },
     {
+      "apn": "rogers-core-appl1.apn",
+      "carrier_id": 2056,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x98",
+      "mvno_type": "imsi",
+      "name": "Ztar Internet",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "ltedata.apn",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "302720x99",
+      "mvno_type": "imsi",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Wap 3G",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "carrier_id": 2057,
       "mvno_match_data": "CITYFONE",
       "mvno_type": "spn",
       "name": "Cityfone Tethering",
@@ -849,13 +2725,336 @@
     },
     {
       "apn": "ltedata.apn",
-      "mvno_match_data": "ROGERS",
+      "mvno_match_data": "CITYFONE",
       "mvno_type": "spn",
-      "name": "Rogers Tethering",
+      "name": "ltedata.apn",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "CITYFONE",
+      "mvno_type": "spn",
+      "name": "Cityfone Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "ltedata.apn",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "ROGERS",
+      "mvno_type": "spn",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Wap",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Wap Tethering",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "wapuser1"
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Tethering 3G",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Tethering LTE",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Phone LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "authtype": 1,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Wap MMS",
+      "password": "mda01",
+      "types": [
+        "mms"
+      ],
+      "user": "media"
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "ROGERS AT&T",
+      "mvno_type": "spn",
+      "name": "Rogers Phone 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "goam.com",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Wap",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.com",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Wap Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "isp.apn",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Tethering 3G",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Tethering LTE",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Internet LTE phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.com",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Wap MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "mvno_match_data": "Tbaytel / Rogers",
+      "mvno_type": "spn",
+      "name": "Tbaytel Internet 3G phone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
+      "mvno_match_data": "chatr",
+      "mvno_type": "spn",
+      "name": "Chatr Tethering",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "205.151.11.11",
+      "mvno_match_data": "chatr",
+      "mvno_type": "spn",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     }
   ],

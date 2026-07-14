@@ -1,6 +1,20 @@
 {
   "android_apns": [
     {
+      "apn": "#777",
+      "authtype": 3,
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9401,
+      "mmsproxy": "209.4.229.90",
+      "name": "MTS internet",
+      "password": "MTS",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet@internet.mtsindia.in"
+    },
+    {
       "apn": "MMS",
       "authtype": 3,
       "name": "MTS MMS",
@@ -33,8 +47,52 @@
       "user": "wap@wap.mtsindia.in"
     },
     {
+      "apn": "airtelgprs.com",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "airtelmms.com",
+      "mmsc": "http://100.1.201.171:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "100.1.201.172",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "india",
       "name": "India",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9401,
+      "mmsproxy": "209.4.229.90",
+      "name": "MTS1",
       "types": [
         "default",
         "mms",

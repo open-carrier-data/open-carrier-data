@@ -2,39 +2,49 @@
   "android_apns": [
     {
       "apn": "e-ideas",
+      "carrier_id": 31,
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "165.21.42.84",
-      "name": "e-ideas",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "SingTel (PostPaid)",
       "types": [
         "default",
+        "mms",
         "supl"
       ]
     },
     {
-      "apn": "e-ideas",
+      "apn": "e-ideas(s)",
+      "authtype": 1,
+      "name": "SingTel HTTP prepaid",
+      "password": "ideas",
+      "port": 8080,
+      "proxy": "165.21.42.84",
+      "types": [
+        "default"
+      ],
+      "user": "65ideas"
+    },
+    {
+      "apn": "e-ideas(s)",
+      "authtype": 1,
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "165.21.42.84",
-      "name": "e-ideas",
-      "password": "IDEAS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "e-ideas(s)",
+      "password": "ideas",
       "types": [
         "mms"
       ],
-      "user": "65IDEAS"
+      "user": "65ideas"
     },
     {
       "apn": "hicard",
+      "carrier_id": 31,
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "165.21.42.84",
-      "name": "hicard",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "SingTel (PrePaid)",
       "types": [
         "default",
         "mms",
@@ -54,11 +64,22 @@
     },
     {
       "apn": "ims",
-      "name": "Singtel ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "stm-ut",

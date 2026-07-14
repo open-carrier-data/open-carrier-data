@@ -1,13 +1,33 @@
 {
   "android_apns": [
     {
+      "apn": "Ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "Web.gci",
+      "name": "GCI WEB",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "hos.gci",
       "mmsc": "http://mmsc.gci.net",
       "mmsport": 9201,
       "mmsproxy": "24.237.158.34",
       "name": "HOS",
       "port": 9201,
+      "protocol": "IP",
       "proxy": "24.237.158.34",
+      "roaming_protocol": "IP",
       "types": [
         "mms",
         "xcap"
@@ -24,6 +44,38 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "mms.gci",
+      "carrier_id": 1843,
+      "mmsc": "http://mmsc.gci.net",
+      "mmsport": 9201,
+      "mmsproxy": "24.237.158.34",
+      "name": "GCI MMS",
+      "port": 9201,
+      "proxy": "24.237.158.34",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Emergency",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "web.gci",
+      "carrier_id": 1843,
+      "name": "GCI WEB",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
     },
     {
       "apn": "web.gci",

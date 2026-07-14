@@ -2,7 +2,18 @@
   "android_apns": [
     {
       "apn": "hos",
-      "name": "xcap",
+      "carrier_id": 656,
+      "name": "Telia Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -12,11 +23,14 @@
     },
     {
       "apn": "ims",
-      "name": "TELIA",
+      "carrier_id": 656,
+      "name": "Telia IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -42,6 +56,27 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "websp",
       "authtype": 3,
       "name": "websp",
@@ -49,6 +84,18 @@
       "proxy": "62.44.158.29",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.internet.mtelia.dk",
+      "carrier_id": 656,
+      "name": "www.internet.mtelia.dk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ]
     },
@@ -68,6 +115,19 @@
       "name": "TELIA",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "www.mms.mtelia.dk",
+      "carrier_id": 656,
+      "mmsc": "http://mms.telia.dk",
+      "mmsport": 8080,
+      "mmsproxy": "193.209.134.131",
+      "name": "www.mms.mtelia.dk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -107,13 +167,65 @@
     },
     {
       "apn": "hos",
+      "mvno_match_data": "2382089",
+      "mvno_type": "imsi",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "2382089",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mmssp",
+      "mmsc": "http://mms.telia.dk",
+      "mmsport": 8080,
+      "mmsproxy": "193.209.134.131",
+      "mvno_match_data": "2382089",
+      "mvno_type": "imsi",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "websp",
+      "mvno_match_data": "2382089",
+      "mvno_type": "imsi",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
       "mvno_match_data": "Call me",
       "mvno_type": "spn",
       "name": "Call me XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -121,8 +233,23 @@
       "mvno_type": "spn",
       "name": "Call me IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mmsSP",
+      "carrier_id": 2285,
+      "mmsc": "http://mms.telia.dk",
+      "mmsport": 8080,
+      "mmsproxy": "193.209.134.131",
+      "mvno_match_data": "Call me",
+      "mvno_type": "spn",
+      "name": "Call me MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -135,8 +262,20 @@
       "mvno_type": "spn",
       "name": "Call me MMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "webSP",
+      "carrier_id": 2285,
+      "mvno_match_data": "Call me",
+      "mvno_type": "spn",
+      "name": "Call me Internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -146,6 +285,31 @@
       "mvno_type": "spn",
       "name": "Call me Internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmsSP",
+      "carrier_id": 2286,
+      "mmsc": "http://mms.telia.dk",
+      "mmsport": 8080,
+      "mmsproxy": "193.209.134.131",
+      "mvno_match_data": "DLG Tele",
+      "mvno_type": "spn",
+      "name": "DLG Tele MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "webSP",
+      "carrier_id": 2286,
+      "mvno_match_data": "DLG Tele",
+      "mvno_type": "spn",
+      "name": "DLG Tele GPRS",
       "types": [
         "default",
         "supl"
@@ -201,9 +365,11 @@
       "mvno_type": "spn",
       "name": "Mit Tele XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -211,9 +377,11 @@
       "mvno_type": "spn",
       "name": "Mit Tele IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "mmssp",
@@ -224,6 +392,7 @@
       "mvno_type": "spn",
       "name": "Mit Tele",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -234,6 +403,7 @@
       "mvno_type": "spn",
       "name": "Mit Tele",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -245,9 +415,11 @@
       "mvno_type": "spn",
       "name": "Telia XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -255,16 +427,32 @@
       "mvno_type": "spn",
       "name": "Telia IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mvno_match_data": "TELIA DK",
+      "mvno_type": "spn",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "www.internet.mtelia.dk",
       "mvno_match_data": "TELIA DK",
       "mvno_type": "spn",
-      "name": "Telia DK",
+      "name": "www.internet.mtelia.dk",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -277,8 +465,9 @@
       "mmsproxy": "193.209.134.131",
       "mvno_match_data": "TELIA DK",
       "mvno_type": "spn",
-      "name": "Telia MMS",
+      "name": "www.mms.mtelia.dk",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -289,9 +478,11 @@
       "mvno_type": "spn",
       "name": "XCAP",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -299,9 +490,11 @@
       "mvno_type": "spn",
       "name": "IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_visible": false
     },
     {
       "apn": "mmssp",
@@ -312,6 +505,7 @@
       "mvno_type": "spn",
       "name": "MMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -322,6 +516,7 @@
       "mvno_type": "spn",
       "name": "Internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"

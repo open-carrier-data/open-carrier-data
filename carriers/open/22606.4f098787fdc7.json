@@ -41,6 +41,15 @@
     },
     {
       "apn": "broadband",
+      "carrier_id": 1010,
+      "name": "Telekom Romania Mobil",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "broadband",
       "name": "broadband",
       "types": [
         "dun",
@@ -80,7 +89,21 @@
       ]
     },
     {
+      "apn": "mms",
+      "carrier_id": 1010,
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "Telekom Romania MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "wnw",
+      "authtype": 3,
       "name": "web'n'walk",
       "password": "wnw",
       "port": 8080,

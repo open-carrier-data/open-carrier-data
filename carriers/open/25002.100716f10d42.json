@@ -1,6 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "carrier_id": 1016,
+      "name": "Megafon IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1016,
+      "name": "Megafon Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "name": "internet",
@@ -21,6 +42,20 @@
     {
       "apn": "mms",
       "authtype": 1,
+      "carrier_id": 1016,
+      "mmsc": "http://mmsc:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "name": "Megafon MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mmsc:8002",
       "mmsport": 8080,
       "mmsproxy": "10.10.10.10",
@@ -30,6 +65,18 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "wap",
+      "authtype": 1,
+      "name": "Megafon HTTP",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "10.10.10.10",
+      "types": [
+        "default"
+      ],
+      "user": "wap"
     }
   ],
   "android_carrier_config": {

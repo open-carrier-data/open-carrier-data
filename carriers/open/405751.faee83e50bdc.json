@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "WWW",
+      "name": "Vodafone IN internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -32,6 +42,20 @@
     },
     {
       "apn": "portalnmms",
+      "carrier_id": 2378,
+      "name": "Vodafone live",
+      "port": 9401,
+      "protocol": "IPV4V6",
+      "proxy": "10.10.1.100",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "portalnmms",
       "mmsc": "http://mms1.live.vodafone.in/mms/",
       "mmsport": 9401,
       "mmsproxy": "10.10.1.100",
@@ -43,6 +67,31 @@
       "types": [
         "default",
         "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "portalnmms",
+      "carrier_id": 2378,
+      "mmsc": "http://mms1.live.vodafone.in/mms/",
+      "mmsport": 9401,
+      "mmsproxy": "10.10.1.100",
+      "name": "Vodafone_MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "www",
+      "carrier_id": 2378,
+      "name": "Vodafonemobileconnect",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ]
     },

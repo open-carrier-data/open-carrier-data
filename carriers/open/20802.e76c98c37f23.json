@@ -1,6 +1,18 @@
 {
   "android_apns": [
     {
+      "apn": "Internet-entreprise",
+      "authtype": 1,
+      "name": "Internet Entreprise",
+      "password": "orange",
+      "types": [
+        "dun"
+      ],
+      "user": "orange",
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "apn": "gprs-service-fr.net",
       "authtype": 3,
       "name": "Simyo Web",
@@ -10,6 +22,19 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "Orange F IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -58,6 +83,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Orange World IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "ofnew.fr",
       "name": "NRJWEB",
       "types": [
@@ -102,14 +137,17 @@
     },
     {
       "apn": "orange",
-      "name": "Orange France",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.fr",
+      "name": "orange",
       "password": "orange",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
       ],
-      "user": "orange"
+      "user": "orange",
+      "user_editable": false
     },
     {
       "apn": "orange",
@@ -158,14 +196,16 @@
     {
       "apn": "orange-mib",
       "authtype": 1,
-      "name": "Orange enterprises",
+      "name": "orange-mib",
       "password": "orange",
       "port": 8000,
       "proxy": "172.16.2.8",
       "types": [
-        "default"
+        "default",
+        "supl"
       ],
-      "user": "orange"
+      "user": "orange",
+      "user_editable": false
     },
     {
       "apn": "orange.fr",
@@ -189,23 +229,19 @@
     },
     {
       "apn": "vowifiorange",
+      "authtype": 1,
       "bearer_bitmask": "18",
       "mmsc": "http://mms.orange.fr",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.10.200",
       "name": "vowifiorange",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "vowifiorange",
-      "bearer_bitmask": "18",
-      "mmsc": "http://mms.orange.fr",
-      "name": "vowifiorange",
-      "types": [
+        "mms",
         "xcap"
       ],
+      "user_editable": false,
       "user_visible": false
     }
   ],

@@ -64,11 +64,25 @@
     {
       "apn": "gprs.base.be",
       "authtype": 1,
+      "carrier_id": 1367,
+      "name": "gprs.base.be",
+      "password": "base",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "base"
+    },
+    {
+      "apn": "gprs.base.be",
+      "authtype": 1,
       "name": "gprs.base.be",
       "password": "base",
       "port": 5080,
       "protocol": "IPV4V6",
       "proxy": "172.31.198.37",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -108,6 +122,20 @@
         "mms"
       ],
       "user": "BASE"
+    },
+    {
+      "apn": "mms.base.be",
+      "authtype": 1,
+      "carrier_id": 1367,
+      "mmsc": "http://mmsc.base.be",
+      "mmsport": 8080,
+      "mmsproxy": "217.72.235.1",
+      "name": "BASE MMS",
+      "password": "base",
+      "types": [
+        "mms"
+      ],
+      "user": "base"
     },
     {
       "apn": "mms.base.be",
@@ -153,6 +181,24 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "carrier_id": 717,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "28",
+      "mvno_type": "gid",
+      "name": "Virgin Mobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {

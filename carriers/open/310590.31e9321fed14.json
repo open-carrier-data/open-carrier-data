@@ -127,7 +127,7 @@
     },
     {
       "apn": "VZWEMERGENCY",
-      "name": "Verizon Emergency",
+      "name": "VZWEMERGENCY",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -166,6 +166,17 @@
         "default",
         "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "cellular1wap",
+      "carrier_id": 1,
+      "mmsc": "http://mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "172.23.1.252",
+      "name": "CellularOne MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -210,6 +221,21 @@
     },
     {
       "apn": "fast.t-mobile.com",
+      "carrier_id": 1,
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "mtu": 1440,
+      "name": "T-Mobile US 590",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fast.t-mobile.com",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
       "mtu": 1440,
       "name": "fast.t-mobile.com",
@@ -239,6 +265,16 @@
       "roaming_protocol": "IP",
       "types": [
         "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "name": "Verizon IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -289,15 +325,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "T-Mobile US IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet",
       "authtype": 3,
       "bearer_bitmask": "4|5|6|7|8|12",
@@ -313,6 +340,19 @@
         "supl"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "pcweb.tmobile.com",
+      "carrier_id": 1,
+      "mtu": 1440,
+      "name": "T-Mobile US 590 DUN",
+      "password": "none",
+      "protocol": "IP",
+      "server": "*",
+      "types": [
+        "dun"
+      ],
+      "user": "none"
     },
     {
       "apn": "sos",
@@ -334,9 +374,66 @@
       ]
     },
     {
+      "apn": "vzwadmin",
+      "name": "Verizon Admin",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "vzwapp",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mmsport": 80,
+      "name": "Verizon APP",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "vzwinternet",
+      "name": "Verizon Wireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "carrier_id": 1949,
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D",
+      "mvno_type": "gid",
+      "name": "MetroPCS 590",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "fast.metropcs.com",
       "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
       "mvno_match_data": "6D",
+      "mvno_type": "gid",
+      "name": "MetroPCS 590",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D38",
       "mvno_type": "gid",
       "name": "MetroPCS 590",
       "protocol": "IPV4V6",

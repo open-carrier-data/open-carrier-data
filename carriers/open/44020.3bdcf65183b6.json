@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "IMS",
+      "carrier_id": 1894,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
       "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
@@ -93,11 +102,12 @@
     {
       "apn": "line.me",
       "authtype": 3,
-      "name": "LINE\u30e2\u30d0\u30a4\u30eb(S)",
+      "name": "line.me",
       "password": "line",
       "types": [
         "cbs",
         "default",
+        "dun",
         "fota",
         "hipri",
         "ia",
@@ -114,6 +124,7 @@
       "types": [
         "cbs",
         "default",
+        "dun",
         "fota",
         "hipri",
         "ia",
@@ -132,14 +143,41 @@
       "password": "4g",
       "types": [
         "cbs",
-        "default",
         "fota",
+        "ia"
+      ],
+      "user": "plus"
+    },
+    {
+      "apn": "plus.4g",
+      "authtype": 2,
+      "mmsc": "http://mms-s",
+      "mmsport": 8080,
+      "mmsproxy": "andmms.plusacs.ne.jp",
+      "name": "SoftBank 4G\uff0f5G \u30b7\u30f3\u30d7\u30eb\u30b9\u30bf\u30a4\u30eb",
+      "password": "4g",
+      "types": [
+        "dun"
+      ],
+      "user": "plus"
+    },
+    {
+      "apn": "plus.acs.jp",
+      "authtype": 2,
+      "carrier_id": 1894,
+      "mmsc": "http://mms-s",
+      "mmsport": 8080,
+      "mmsproxy": "andmms.plusacs.ne.jp",
+      "name": "Application",
+      "password": "ym",
+      "types": [
+        "default",
         "hipri",
         "ia",
         "mms",
         "supl"
       ],
-      "user": "plus"
+      "user": "ym"
     },
     {
       "apn": "plus.acs.jp.v6",
@@ -152,11 +190,7 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "hipri",
-        "ia",
-        "mms",
-        "supl"
+        "ia"
       ],
       "user": "ym",
       "user_editable": false
@@ -173,6 +207,19 @@
       ],
       "user": "ym",
       "user_visible": false
+    },
+    {
+      "apn": "ratel.com",
+      "authtype": 3,
+      "carrier_id": 1894,
+      "name": "RATEL",
+      "password": "ratel",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "ratel@ratel.com"
     },
     {
       "apn": "sb.mvno",

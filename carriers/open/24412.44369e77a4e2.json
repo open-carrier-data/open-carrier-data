@@ -32,6 +32,33 @@
   },
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "Internet",
+      "name": "DNA Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "dnapro.fi",
+      "authtype": 1,
+      "carrier_id": 1904,
+      "name": "DNA Pro Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "dnapro.fi",
       "authtype": 1,
       "name": "DNA Pro Internet",
@@ -42,6 +69,17 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 1904,
+      "name": "DNA ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "hos",
@@ -49,6 +87,18 @@
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1904,
+      "name": "DNA IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ],
       "user_visible": false
     },
@@ -88,6 +138,16 @@
     {
       "apn": "inet.tdc.fi",
       "authtype": 1,
+      "carrier_id": 1904,
+      "name": "TDC Internet Finland",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "inet.tdc.fi",
+      "authtype": 1,
       "name": "inet.tdc.fi",
       "types": [
         "default",
@@ -96,20 +156,20 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "carrier_id": 1904,
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "carrier_enabled": true,
       "name": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "supl"
+        "dun"
       ]
     },
     {
@@ -177,6 +237,17 @@
       ]
     },
     {
+      "apn": "mms",
+      "carrier_id": 1904,
+      "mmsc": "http://mmsc.dna.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "mms.aina.fi",
       "mmsc": "http://mmsc.aina.fi",
       "mmsport": 8080,
@@ -202,6 +273,18 @@
       "mmsport": 8080,
       "mmsproxy": "10.1.1.15",
       "name": "mms.dicame.fi",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.dnapro.fi",
+      "authtype": 1,
+      "carrier_id": 1904,
+      "mmsc": "http://mmsc.dnapro.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.21",
+      "name": "DNA Pro MMS",
       "types": [
         "mms"
       ]
@@ -258,6 +341,18 @@
     {
       "apn": "mms.tdc.fi",
       "authtype": 1,
+      "carrier_id": 1904,
+      "mmsc": "http://mmsc.tdc.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.12.2",
+      "name": "TDC MMS Finland",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.tdc.fi",
+      "authtype": 1,
       "mmsc": "http://mmsc.tdc.fi",
       "mmsport": 8080,
       "mmsproxy": "10.1.12.2",
@@ -284,6 +379,28 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.aina.fi",
+      "mvno_match_data": "24412400",
+      "mvno_type": "imsi",
+      "name": "Aina internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.aina.fi",
+      "mmsc": "http://mmsc.aina.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "mvno_match_data": "24412400",
+      "mvno_type": "imsi",
+      "name": "Aina mms",
+      "types": [
+        "mms"
       ]
     }
   ],

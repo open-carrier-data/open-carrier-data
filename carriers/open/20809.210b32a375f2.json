@@ -2,6 +2,18 @@
   "android_apns": [
     {
       "apn": "ims",
+      "carrier_id": 27,
+      "modem_cognitive": true,
+      "name": "SFR IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "name": "SFR IMS",
       "protocol": "IPV6",
       "types": [
@@ -17,6 +29,23 @@
       "name": "SFR MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "carrier_id": 27,
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl",
+        "xcap"
       ]
     },
     {
@@ -62,6 +91,87 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "54727555533030656E",
+      "mvno_type": "gid",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "pda.newcomobile.com",
+      "carrier_id": 2130,
+      "mmsc": "http://mms.bealiv.com",
+      "mvno_match_data": "208090021",
+      "mvno_type": "imsi",
+      "name": "Be Aliv",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "coriolis",
+      "authtype": 1,
+      "carrier_id": 2135,
+      "mvno_match_data": "208090036",
+      "mvno_type": "imsi",
+      "name": "Coriolis",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmscoriolis",
+      "carrier_id": 2135,
+      "mmsc": "http://mms.coriolis.fr",
+      "mmsport": 9028,
+      "mmsproxy": "10.12.0.1",
+      "mvno_match_data": "208090036",
+      "mvno_type": "imsi",
+      "name": "Coriolis MMS",
+      "types": [
+        "mms"
       ]
     }
   ],

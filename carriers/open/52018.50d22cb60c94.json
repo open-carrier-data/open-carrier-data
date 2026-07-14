@@ -1,12 +1,80 @@
 {
   "android_apns": [
     {
+      "apn": "XCAP",
+      "carrier_id": 1896,
+      "name": "dtac UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1896,
+      "name": "dtac IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1896,
+      "mmsc": "http://mms.dtac.co.th:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "203.155.200.133",
+      "name": "dtac MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.djuice.co.th",
+      "name": "DTAC HTTP",
+      "port": 9201,
+      "proxy": "203.155.200.133",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "www.dtac.co.th",
+      "carrier_id": 1896,
+      "name": "dtac Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.dtac.co.th",
+      "authtype": 1,
       "name": "www.dtac.co.th",
       "types": [
         "default",
-        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "www.dtac.co.th",
+      "name": "dtac",
+      "types": [
+        "dun"
       ]
     }
   ],

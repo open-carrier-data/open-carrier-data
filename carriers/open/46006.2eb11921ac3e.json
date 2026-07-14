@@ -6,9 +6,21 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl",
         "xcap"
+      ]
+    },
+    {
+      "apn": "3gwap",
+      "mmsc": "http://mmsc.myuni.com.cn",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
+      "name": "3gwap",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "proxy": "10.0.0.172",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -18,7 +30,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {
@@ -38,7 +51,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "supported",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "conditional",

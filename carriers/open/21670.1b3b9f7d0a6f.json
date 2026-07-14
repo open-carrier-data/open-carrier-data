@@ -56,6 +56,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1535,
+      "name": "Vodafone HU IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "name": "internet",
@@ -73,12 +83,68 @@
       ]
     },
     {
+      "apn": "internet.vodafone.net",
+      "carrier_id": 1535,
+      "name": "Vodafone Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet.vodafone.net",
+      "name": "Vodafone Internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "carrier_id": 1535,
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "Vodafone MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "vitamax.internet.vodafone.net",
       "name": "vitamax.internet.vodafone.net",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "vitamax.wap.vodafone.net",
+      "authtype": 1,
+      "name": "Vodafone HTTP prepaid",
+      "password": "vodawap",
+      "port": 8080,
+      "proxy": "10.9.8.7",
+      "types": [
+        "default"
+      ],
+      "user": "vodawap"
+    },
+    {
+      "apn": "wap.vodafone.net",
+      "authtype": 1,
+      "name": "Vodafone HTTP postpaid",
+      "password": "vodawap",
+      "port": 8080,
+      "proxy": "10.9.8.7",
+      "types": [
+        "default"
+      ],
+      "user": "vodawap"
     },
     {
       "apn": "mms.vodafone.net",
@@ -99,6 +165,8 @@
       "name": "Vodafone Internet VitaMAX",
       "types": [
         "default",
+        "dun",
+        "ia",
         "supl"
       ]
     },
@@ -125,7 +193,34 @@
       "name": "Vodafone Internet",
       "types": [
         "default",
+        "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.net",
+      "authtype": 0,
+      "carrier_id": 1535,
+      "mvno_match_data": "21670xx2xxx",
+      "mvno_type": "imsi",
+      "name": "Vodafone Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 0,
+      "carrier_id": 1535,
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "mvno_match_data": "21670xx2xxx",
+      "mvno_type": "imsi",
+      "name": "Vodafone MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -140,6 +235,22 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "wap.vodafone.net",
+      "authtype": 1,
+      "carrier_id": 1535,
+      "mvno_match_data": "21670xx2xxx",
+      "mvno_type": "imsi",
+      "name": "Vodafone Live!",
+      "password": "vodawap",
+      "port": 8080,
+      "proxy": "10.9.8.7",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "vodawap"
     },
     {
       "apn": "wap.vodafone.net",

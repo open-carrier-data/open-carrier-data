@@ -1,12 +1,51 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "carrier_id": 493,
+      "name": "SETAR IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet.setar.aw",
       "name": "SETAR",
       "types": [
         "default",
         "dun"
       ]
+    },
+    {
+      "apn": "internet.setar.aw",
+      "carrier_id": 493,
+      "name": "SETAR Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "fota",
+        "supl",
+        "xcap"
+      ],
+      "user_editable": true
+    },
+    {
+      "apn": "mms.setar.aw",
+      "carrier_id": 493,
+      "mmsc": "http://mms.setar.aw",
+      "mmsport": 8081,
+      "mmsproxy": "201.229.65.204",
+      "name": "SETAR MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
     },
     {
       "apn": "wap.setar.aw",

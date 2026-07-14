@@ -2,10 +2,34 @@
   "android_apns": [
     {
       "apn": "hos",
+      "authtype": 1,
+      "carrier_id": 2386,
+      "name": "HOS",
+      "password": "tmobilemms",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "tmobilemms",
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "name": "HOS",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2386,
+      "name": "T-Mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ],
       "user_visible": false
     },
@@ -43,12 +67,48 @@
       "user_visible": false
     },
     {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 2386,
+      "name": "T-Mobile Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet.mobiel",
       "authtype": 1,
       "name": "Internet",
       "protocol": "IPV4V6",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 2386,
+      "mmsc": "http://t-mobilemms",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.11",
+      "name": "T-Mobile MMS",
+      "password": "tmobilemms",
+      "types": [
+        "mms"
+      ],
+      "user": "tmobilemms"
+    },
+    {
+      "apn": "smartsites.t-mobile",
+      "authtype": 1,
+      "carrier_id": 2386,
+      "name": "T-Mobile Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
         "supl"
       ]
     },

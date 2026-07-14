@@ -14,6 +14,19 @@
     },
     {
       "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1707,
       "name": "SH IMS",
       "protocol": "IPV4V6",
@@ -28,15 +41,6 @@
       "apn_set_id": -1,
       "bearer_bitmask": "14|18|20",
       "name": "SH ims",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "ims",
-      "protocol": "IP",
       "types": [
         "ims"
       ],
@@ -61,6 +65,17 @@
     {
       "apn": "shmms",
       "apn_set_id": 1,
+      "mmsc": "http://mms.starhubgee.com.sg:8002/",
+      "mmsport": 80,
+      "mmsproxy": "10.12.1.80",
+      "name": "SH MMS Postpaid",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "shmms",
+      "carrier_id": 1707,
       "mmsc": "http://mms.starhubgee.com.sg:8002/",
       "mmsport": 80,
       "mmsproxy": "10.12.1.80",
@@ -102,7 +117,25 @@
     },
     {
       "apn": "shppd",
+      "name": "shppd",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "shppd",
       "apn_set_id": 2,
+      "mmsc": "http://mms.starhubgee.com.sg:8002/",
+      "mmsport": 80,
+      "mmsproxy": "10.12.1.80",
+      "name": "SH MMS Prepaid",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "shppd",
       "mmsc": "http://mms.starhubgee.com.sg:8002/",
       "mmsport": 80,
       "mmsproxy": "10.12.1.80",
@@ -189,6 +222,26 @@
     },
     {
       "apn": "gtnet",
+      "mvno_match_data": "0A",
+      "mvno_type": "gid",
+      "name": "GT Roaming",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mvno_match_data": "0A",
+      "mvno_type": "gid",
+      "name": "ims",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "gtnet",
       "mvno_match_data": "0affffffffffffff",
       "mvno_type": "gid",
       "name": "GT (Roaming)",
@@ -212,6 +265,31 @@
       "mvno_match_data": "525053096x",
       "mvno_type": "imsi",
       "name": "GT (Roaming)",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "giga",
+      "carrier_id": 2434,
+      "mvno_match_data": "giga",
+      "mvno_type": "spn",
+      "name": "giga",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "giga",
+      "authtype": 1,
+      "mvno_match_data": "giga",
+      "mvno_type": "spn",
+      "name": "giga",
       "types": [
         "default",
         "supl"

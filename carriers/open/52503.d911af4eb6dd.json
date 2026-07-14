@@ -36,6 +36,31 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "carrier_id": 1706,
+      "name": "M1 hos",
+      "network_type_bitmask": "1|2|3|4|5|6|7|8|9|10|12|13|14|15|17|20",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "M1 IMS",
@@ -59,7 +84,7 @@
     },
     {
       "apn": "ims",
-      "name": "M1 IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -82,21 +107,10 @@
       "mmsc": "http://mmsgw:8002",
       "mmsport": 8080,
       "mmsproxy": "172.16.14.10",
-      "name": "M1 MMS",
+      "name": "miworld",
       "password": "user123",
       "types": [
         "mms"
-      ],
-      "user": "65"
-    },
-    {
-      "apn": "sunsurf",
-      "name": "sunsurf",
-      "password": "65",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
       ],
       "user": "65"
     },
@@ -123,7 +137,9 @@
     },
     {
       "apn": "sunsurf",
+      "authtype": 1,
       "name": "sunsurf",
+      "password": "user123",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -133,7 +149,7 @@
     },
     {
       "apn": "xcap",
-      "name": "M1 XCAP",
+      "name": "xcap",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

@@ -21,8 +21,19 @@
     },
     {
       "apn": "ims",
-      "name": "Viettel",
+      "carrier_id": 1899,
+      "name": "Viettel IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -38,8 +49,40 @@
     },
     {
       "apn": "v-internet",
+      "carrier_id": 1899,
       "name": "v-internet",
       "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "v-internet",
+      "name": "v-internet",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "v-mms",
+      "carrier_id": 1899,
+      "mmsc": "http://mms.viettelmobile.com.vn/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.233.10",
+      "name": "v-mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "v-wap",
+      "carrier_id": 1899,
+      "name": "Viettel-wap-gprs 2",
+      "port": 8080,
+      "proxy": "192.168.233.10",
+      "types": [
+        "default",
         "supl"
       ]
     },
@@ -51,6 +94,25 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1899,
+      "name": "Viettel Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

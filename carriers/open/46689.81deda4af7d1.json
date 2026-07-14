@@ -1,6 +1,28 @@
 {
   "android_apns": [
     {
+      "apn": "Internet",
+      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (Internet)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "Internet",
+      "mmsc": "http://mms.vibo.net.tw",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.128.36",
+      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (MMS)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
@@ -18,6 +40,15 @@
       "user_editable": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1886,
+      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (IMS)",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "mmsc": "http://mms.vibo.net.tw",
       "mmsport": 8080,
@@ -31,12 +62,35 @@
     },
     {
       "apn": "internet",
+      "carrier_id": 1886,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "mmsc": "http://mms.vibo.net.tw",
       "mmsport": 8080,
       "mmsproxy": "172.24.128.36",
       "name": "\u53f0\u7063\u4e4b\u661f",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1886,
+      "mmsc": "http://mms.vibo.net.tw",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.128.36",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -63,7 +117,25 @@
     },
     {
       "apn": "vibo",
+      "carrier_id": 1886,
+      "name": "VIBO-vibo",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "vibo",
       "name": "vibo",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "viboone",
+      "carrier_id": 1886,
+      "name": "VIBOONE",
       "types": [
         "default",
         "supl"

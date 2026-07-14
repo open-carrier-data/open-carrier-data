@@ -49,6 +49,20 @@
     {
       "apn": "hos",
       "authtype": 1,
+      "carrier_id": 2385,
+      "mmsc": "http://mmsc.telekom.sk",
+      "name": "HOS",
+      "password": "mms",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "mms",
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mmsc.telekom.sk",
       "mtu": 1500,
@@ -86,6 +100,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 2385,
+      "name": "T-Mobile IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
@@ -95,6 +119,18 @@
       "roaming_protocol": "IP",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 2385,
+      "name": "T-Mobile internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -113,6 +149,32 @@
       "types": [
         "supl"
       ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 2385,
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.1.1",
+      "name": "T-Mobile MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "wap",
+      "authtype": 1,
+      "name": "T-Mobile HTTP",
+      "password": "wap",
+      "port": 8080,
+      "proxy": "192.168.1.1",
+      "types": [
+        "default"
+      ],
+      "user": "wap"
     }
   ],
   "android_carrier_config": {

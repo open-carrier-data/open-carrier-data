@@ -53,6 +53,21 @@
     },
     {
       "apn": "fast.t-mobile.com",
+      "carrier_id": 1,
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "mtu": 1440,
+      "name": "T-Mobile US 300",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fast.t-mobile.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
       "mtu": 1440,
@@ -180,6 +195,19 @@
       "user_visible": false
     },
     {
+      "apn": "pcweb.tmobile.com",
+      "carrier_id": 1,
+      "mtu": 1440,
+      "name": "T-Mobile US 300 DUN",
+      "password": "none",
+      "protocol": "IP",
+      "server": "*",
+      "types": [
+        "dun"
+      ],
+      "user": "none"
+    },
+    {
       "apn": "sos",
       "name": "T-Mobile US SOS",
       "protocol": "IPV6",
@@ -200,10 +228,64 @@
     },
     {
       "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
       "name": "Truphone",
       "types": [
         "default",
         "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "carrier_id": 2143,
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "Truphone",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "carrier_id": 1949,
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D",
+      "mvno_type": "gid",
+      "name": "MetroPCS 300",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
         "supl"
       ]
     },
@@ -219,7 +301,23 @@
         "default",
         "mms",
         "supl"
-      ]
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "MetroPCS 300",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {

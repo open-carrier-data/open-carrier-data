@@ -1,6 +1,26 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "Nextel IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "location.nexteldata.com.mx",
+      "authtype": 0,
+      "carrier_id": 1912,
+      "name": "Localizaci\u00f3n",
+      "port": 7275,
+      "server": "http://supl.nexteldata.com.mx",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "mms.attmex.mx",
       "mmsc": "http://mms.att.com.mx",
       "mmsport": 8080,
@@ -10,6 +30,18 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "mms.nexteldata.com.mx",
+      "authtype": 0,
+      "carrier_id": 1912,
+      "mmsc": "http://3gmms.nexteldata.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.nexteldata.com.mx",
@@ -35,6 +67,15 @@
     {
       "apn": "modem.nexteldata.com.mx",
       "authtype": 0,
+      "carrier_id": 1912,
+      "name": "Internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "modem.nexteldata.com.mx",
+      "authtype": 0,
       "name": "modem.nexteldata.com.mx",
       "types": [
         "dun"
@@ -54,10 +95,76 @@
     {
       "apn": "wap.nexteldata.com.mx",
       "authtype": 0,
+      "carrier_id": 1912,
+      "name": "Navegaci\u00f3n",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "wap.nexteldata.com.mx",
+      "authtype": 0,
       "name": "wap.nexteldata.com.mx",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms.attmex.mx",
+      "authtype": 0,
+      "carrier_id": 1912,
+      "mmsc": "http://mms.att.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "mvno_match_data": "334090x",
+      "mvno_type": "imsi",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "modem.attmex.mx",
+      "authtype": 0,
+      "mvno_match_data": "334090x",
+      "mvno_type": "imsi",
+      "name": "Modem",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "supl.attmex.mx",
+      "authtype": 0,
+      "carrier_id": 1912,
+      "mvno_match_data": "334090x",
+      "mvno_type": "imsi",
+      "name": "Location",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "http://supl.iusacell.com",
+      "types": [
+        "supl"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "wap.attmex.mx",
+      "authtype": 0,
+      "carrier_id": 1912,
+      "mvno_match_data": "334090x",
+      "mvno_type": "imsi",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia"
       ]
     }
   ],

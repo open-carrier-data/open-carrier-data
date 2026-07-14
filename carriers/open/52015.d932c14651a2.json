@@ -1,12 +1,55 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "carrier_id": 1723,
+      "name": "TOT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1723,
+      "name": "TOT 3G Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "types": [
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1723,
+      "mmsc": "http://mms.tot3g.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.0.72",
+      "name": "TOT 3G MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1723,
+      "name": "TOT UT",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {

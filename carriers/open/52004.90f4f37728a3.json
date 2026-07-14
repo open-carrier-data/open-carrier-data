@@ -1,6 +1,20 @@
 {
   "android_apns": [
     {
+      "apn": "hmms",
+      "authtype": 1,
+      "carrier_id": 1997,
+      "mmsc": "http://mms.trueh.com:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "10.4.7.39",
+      "name": "TRUE-H MMS",
+      "password": "true",
+      "types": [
+        "mms"
+      ],
+      "user": "true"
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -23,6 +37,30 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 1997,
+      "name": "TRUE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1997,
+      "name": "TRUE-H INTERNET",
+      "password": "true",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "true"
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "name": "internet",
@@ -41,6 +79,37 @@
         "dun"
       ],
       "user": "true"
+    },
+    {
+      "apn": "true",
+      "name": "xcap",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wap",
+      "name": "TRUE HTTP",
+      "password": "true",
+      "port": 8080,
+      "proxy": "10.4.4.4",
+      "types": [
+        "default"
+      ],
+      "user": "true"
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1997,
+      "name": "TRUE UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {

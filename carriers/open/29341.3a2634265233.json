@@ -59,25 +59,46 @@
     },
     {
       "apn": "ims",
-      "name": "mobitel",
+      "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false,
+      "user_visible": false
     },
     {
       "apn": "internet",
       "authtype": 1,
-      "carrier_enabled": true,
+      "carrier_id": 1710,
+      "mmsc": "http://mms.mobitel.si/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.229.249.40",
+      "name": "Mobilni Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "bearer_bitmask": "18",
       "mmsc": "http://mms.telekom.si",
       "mmsport": 8080,
       "mmsproxy": "213.229.249.40",
-      "name": "internet",
+      "name": "hos",
       "password": "internet",
       "types": [
-        "dun",
-        "hipri"
+        "mms",
+        "xcap"
       ],
-      "user": "mobitel"
+      "user": "mobitel",
+      "user_visible": false
     },
     {
       "apn": "internet",

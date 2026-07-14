@@ -24,6 +24,28 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_id": 667,
+      "name": "EMT Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 667,
+      "name": "EMT IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -46,14 +68,15 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "ims",
-      "protocol": "IPV6",
+      "apn": "internet.emt.ee",
+      "carrier_id": 667,
+      "name": "EMT Internet",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ims"
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -78,6 +101,19 @@
     },
     {
       "apn": "mms.emt.ee",
+      "carrier_id": 667,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "name": "EMT MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.emt.ee",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.emt.ee/servlets/mms",
@@ -92,11 +128,94 @@
     },
     {
       "apn": "wap.emt.ee",
+      "carrier_id": 667,
       "name": "EMT WAP",
       "port": 8080,
       "proxy": "217.71.32.236",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.emt.ee",
+      "name": "EMT WAP",
+      "port": 8080,
+      "proxy": "217.71.32.236",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "send.ee",
+      "carrier_id": 2332,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "mvno_match_data": "2480101601",
+      "mvno_type": "imsi",
+      "name": "Send",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "send.ee",
+      "carrier_id": 2332,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "mvno_match_data": "248010241",
+      "mvno_type": "imsi",
+      "name": "Send",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "send.ee",
+      "carrier_id": 2332,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "mvno_match_data": "2480104",
+      "mvno_type": "imsi",
+      "name": "Send",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "send.ee",
+      "carrier_id": 2332,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "mvno_match_data": "248010x2",
+      "mvno_type": "imsi",
+      "name": "Send",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
         "supl"
       ]
     },
@@ -110,6 +229,24 @@
       "name": "Send",
       "types": [
         "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "send.ee",
+      "carrier_id": 2332,
+      "mmsc": "http://mms.emt.ee/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "mvno_match_data": "248010x3",
+      "mvno_type": "imsi",
+      "name": "Send",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
         "mms",
         "supl"
       ]

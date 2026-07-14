@@ -1,11 +1,53 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_id": 1960,
+      "name": "3 HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "imobile.three.com.hk",
       "name": "3",
       "types": [
         "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_id": 1960,
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims.lte.three.com.hk",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "3 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms-g.three.com.hk",
+      "carrier_id": 1960,
+      "mmsc": "http://10.30.15.51:10021/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.30.15.53",
+      "name": "3(2G) MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -18,6 +60,44 @@
         "default",
         "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "mobile.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 1960,
+      "mmsc": "http://mms.um.three.com.hk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.com.hk",
+      "name": "Hutchison HK",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "share.three.com.hk",
+      "authtype": 1,
+      "carrier_id": 1960,
+      "name": "Hutchison HK Share",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web-g.three.com.hk",
+      "carrier_id": 1960,
+      "name": "3(2G) GPRS",
+      "port": 8080,
+      "proxy": "10.30.3.151",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -34,7 +114,8 @@
         "hipri",
         "ia"
       ],
-      "user": "ctnet@mycdma.cn"
+      "user": "ctnet@mycdma.cn",
+      "user_editable": false
     },
     {
       "apn": "ims",
@@ -45,7 +126,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ]
+      ],
+      "user_editable": false
     }
   ],
   "android_carrier_config": {

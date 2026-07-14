@@ -1,4 +1,24 @@
 {
+  "android_apns": [
+    {
+      "apn": "internet",
+      "name": "TOT 3G Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.tot3g.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.218.24.83",
+      "name": "TOT 3G MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_default_wfc_ims_mode_int": 2,
@@ -8,7 +28,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -17,7 +37,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "LineageOS 52017",
+  "display_name": "Carrier 52017",
   "match": {
     "mccmnc": [
       "52017"

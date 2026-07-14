@@ -70,6 +70,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_id": 576,
+      "name": "Bell Mobility IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "inet.bell.ca",
       "mmsc": "http://mms.bell.ca/mms/wapenc",
       "name": "inet.bell.ca",
@@ -115,10 +125,26 @@
     },
     {
       "apn": "pda.bell.ca",
+      "authtype": 2,
+      "carrier_id": 576,
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "pda.bell.ca",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "pda.bell.ca",
       "mmsc": "http://mms.bell.ca/mms/wapenc",
       "mmsport": 80,
       "mmsproxy": "web.wireless.bell.ca",
       "name": "pda.bell.ca",
+      "port": 80,
+      "proxy": "web.wireless.bell.ca",
       "types": [
         "default",
         "mms",
@@ -365,6 +391,22 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "pda.bell.ca",
+      "authtype": 2,
+      "carrier_id": 2122,
+      "mmsc": "http://mms.luckymobile.ca/mms/wapenc",
+      "mvno_match_data": "42",
+      "mvno_type": "gid",
+      "name": "Lucky Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "sos",

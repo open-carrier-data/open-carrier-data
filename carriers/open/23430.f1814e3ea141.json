@@ -50,16 +50,61 @@
     {
       "apn": "eezone",
       "authtype": 1,
+      "carrier_id": 718,
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
       "name": "EE MMS",
       "password": "secure",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "MMS",
+      "password": "secure",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "eezone",
+      "password": "secure",
       "types": [
         "xcap"
       ],
       "user": "eesecure",
-      "user_editable": false
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 718,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "everywhere",
@@ -68,6 +113,18 @@
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 718,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "ia"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "everywhere",
@@ -81,6 +138,34 @@
         "mms"
       ],
       "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "carrier_id": 717,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "28",
+      "mvno_type": "gid",
+      "name": "Virgin Media Mobile Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "user"
     },
     {
       "apn": "goto.virginmobile.uk",
@@ -99,6 +184,32 @@
       "user": "user"
     },
     {
+      "apn": "internet.btonephone.com",
+      "carrier_id": 2103,
+      "mvno_match_data": "B2",
+      "mvno_type": "gid",
+      "name": "internet.btonephone.com",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.btonephone.com",
+      "carrier_id": 2103,
+      "mmsc": "http://MMSC/",
+      "mmsport": 8080,
+      "mmsproxy": "proxy.btonephone.com",
+      "mvno_match_data": "B2",
+      "mvno_type": "gid",
+      "name": "mms.btonephone.com",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "SOS",
       "authtype": 1,
       "mvno_match_data": "B3",
@@ -109,6 +220,22 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "carrier_id": 2102,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "eezone",
@@ -125,6 +252,23 @@
       "types": [
         "mms"
       ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2102,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
       "user": "eesecure"
     },
     {
@@ -139,6 +283,21 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2102,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "BT Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "ia"
       ],
       "user": "eesecure"
     },
@@ -168,6 +327,22 @@
     {
       "apn": "eezone",
       "authtype": 1,
+      "carrier_id": 2101,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "BT MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
@@ -179,6 +354,23 @@
       "roaming_protocol": "IP",
       "types": [
         "mms"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2101,
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "BT Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "eesecure"
     },
@@ -194,6 +386,21 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2101,
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "BT Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "ia"
       ],
       "user": "eesecure"
     },
@@ -235,7 +442,8 @@
       "types": [
         "mms"
       ],
-      "user": "eesecure"
+      "user": "eesecure",
+      "user_editable": false
     },
     {
       "apn": "everywhere",
@@ -250,18 +458,21 @@
         "default",
         "supl"
       ],
-      "user": "eesecure"
+      "user": "eesecure",
+      "user_editable": false
     },
     {
-      "apn": "ims",
+      "apn": "everywhere",
+      "authtype": 1,
       "mvno_match_data": "EE",
       "mvno_type": "gid",
-      "name": "EE IMS",
-      "protocol": "IPV6",
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
       "types": [
-        "ims"
+        "ia"
       ],
-      "user_visible": false
+      "user": "eesecure"
     },
     {
       "apn": "eezone",

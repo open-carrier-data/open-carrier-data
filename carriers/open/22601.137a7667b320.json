@@ -52,6 +52,27 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 2391,
+      "name": "Vodafone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "carrier_enabled": true,
       "name": "ims",
       "protocol": "IPV4V6",
@@ -84,6 +105,19 @@
     {
       "apn": "live.pre.vodafone.com",
       "authtype": 0,
+      "carrier_id": 2391,
+      "name": "Vodafone live!PRE",
+      "password": "vodafone",
+      "port": 8080,
+      "proxy": "193.230.161.231",
+      "types": [
+        "default"
+      ],
+      "user": "live"
+    },
+    {
+      "apn": "live.pre.vodafone.com",
+      "authtype": 0,
       "name": "live.pre.vodafone.com",
       "password": "vodafone",
       "port": 8080,
@@ -107,6 +141,23 @@
     {
       "apn": "live.vodafone.com",
       "authtype": 1,
+      "carrier_id": 2391,
+      "name": "Vodafone live!",
+      "password": "vodafone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ],
+      "user": "live",
+      "user_editable": false
+    },
+    {
+      "apn": "live.vodafone.com",
+      "authtype": 1,
       "carrier_enabled": true,
       "name": "live.vodafone.com",
       "password": "vodafone",
@@ -121,6 +172,20 @@
       "mmsport": 8080,
       "mmsproxy": "193.230.161.231",
       "name": "mms.pre.vodafone.ro",
+      "password": "vodafone",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms.vodafone.ro",
+      "authtype": 1,
+      "carrier_id": 2391,
+      "mmsc": "http://multimedia/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "193.230.161.231",
+      "name": "Vodafone MMS",
       "password": "vodafone",
       "types": [
         "mms"

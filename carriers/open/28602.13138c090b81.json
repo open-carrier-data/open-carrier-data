@@ -1,6 +1,25 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_id": 1736,
+      "name": "Vodafone Ut",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_id": 1736,
+      "name": "Vodafone IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
@@ -22,10 +41,37 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1736,
+      "name": "Vodafone internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "VODAFONE TR",
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1736,
+      "mmsc": "http://217.31.233.18:6001/MM1Servlet",
+      "mmsport": 9401,
+      "mmsproxy": "217.31.233.18",
+      "name": "Vodafone MMS",
+      "password": "vodafone",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "vodafone"
     }
   ],
   "android_carrier_config": {

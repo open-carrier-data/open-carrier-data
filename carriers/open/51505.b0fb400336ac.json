@@ -2,7 +2,16 @@
   "android_apns": [
     {
       "apn": "fbband",
+      "carrier_id": 1655,
       "name": "Sun SBW",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "fbband",
+      "name": "fbband",
       "types": [
         "default",
         "supl"
@@ -18,11 +27,32 @@
     },
     {
       "apn": "minternet",
+      "carrier_id": 1655,
+      "name": "minternet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "minternet",
       "mmsc": "http://wap.suncellular.com.ph",
       "name": "minternet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1655,
+      "mmsc": "http://mmscenter.suncellular.com.ph",
+      "mmsport": 8080,
+      "mmsproxy": "202.138.159.78",
+      "name": "SUN MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -37,11 +67,21 @@
     },
     {
       "apn": "wap",
+      "carrier_id": 1655,
       "name": "SUN WAP GPRS",
       "port": 8080,
       "proxy": "202.138.159.78",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap",
+      "name": "SUN WAP GPRS",
+      "port": 8080,
+      "proxy": "202.138.159.78",
+      "types": [
         "supl"
       ]
     }
