@@ -529,11 +529,14 @@ def validate_android_artifacts(
     previous_key = ("", "")
     seen_coverage: set[tuple[str, str]] = set()
     allowed_statuses = {
+        "carrier_data_not_applicable",
         "discovery_in_progress",
         "no_artifact_found",
         "no_query_identifier",
         "artifact_indexed",
+        "platform_out_of_scope",
         "source_extracted",
+        "source_terms_restrict_extraction",
     }
     for record in scope_coverage:
         if not isinstance(record, dict) or set(record) != expected_coverage:
