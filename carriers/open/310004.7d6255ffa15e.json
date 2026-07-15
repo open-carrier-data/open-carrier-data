@@ -417,7 +417,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "ia"
       ]
     },
     {
@@ -528,6 +529,24 @@
       "types": [
         "default",
         "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "profile_id": 1,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "ia",
+        "mms",
         "supl"
       ]
     },
@@ -657,23 +676,6 @@
       "bearer_bitmask": "4|5|6|7|8|12",
       "mmsc": "http://mms.vtext.com/servlets/mms",
       "name": "Verizon",
-      "profile_id": 1,
-      "protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "default",
-        "dun",
-        "fota",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 3,
-      "bearer_bitmask": "4|5|6|7|8|12",
-      "mmsc": "http://mms.vtext.com/servlets/mms",
-      "name": "Verizon",
       "protocol": "IPV4V6",
       "types": [
         "cbs",
@@ -713,6 +715,17 @@
         "supl"
       ],
       "user": "*"
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "ia"
+      ]
     }
   ],
   "android_carrier_config": {

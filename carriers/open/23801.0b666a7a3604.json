@@ -87,8 +87,9 @@
     },
     {
       "apn": "internet",
+      "authtype": 0,
       "carrier_id": 1463,
-      "name": "TDC Internet",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -104,6 +105,16 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1463,
+      "name": "DK TDC",
+      "types": [
+        "dun",
+        "fota"
       ]
     },
     {
@@ -233,6 +244,15 @@
       ]
     },
     {
+      "apn": "internet",
+      "mvno_match_data": "2380101xxxxxxxx",
+      "mvno_type": "imsi",
+      "name": "TDC Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "Internet.no",
       "mvno_match_data": "2380171xxxxxxxx",
       "mvno_type": "imsi",
@@ -262,6 +282,7 @@
       "name": "Telmore Internet",
       "types": [
         "default",
+        "ia",
         "supl"
       ]
     },
@@ -291,7 +312,6 @@
     {
       "apn": "wap",
       "authtype": 0,
-      "carrier_id": 2284,
       "mvno_match_data": "TELMORE",
       "mvno_type": "spn",
       "name": "TELMORE WAP",
@@ -304,13 +324,15 @@
     {
       "apn": "wap",
       "authtype": 0,
+      "carrier_id": 2284,
       "mvno_match_data": "TELMORE",
       "mvno_type": "spn",
       "name": "TELMORE WAP",
       "port": 8080,
       "proxy": "194.182.251.15",
       "types": [
-        "default"
+        "default",
+        "ia"
       ]
     }
   ],
