@@ -100,7 +100,17 @@
           "additionalProperties": false,
           "required": ["matched_identifiers", "profile_count", "sources"],
           "properties": {
-            "matched_identifiers": { "$ref": "#/$defs/strings" },
+            "matched_identifiers": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "uniqueItems": true,
+              "description": "The stable device_id uniquely bound to this observation.",
+              "items": {
+                "type": "string",
+                "pattern": "^(android|apple):[a-z0-9-]{3,80}$"
+              }
+            },
             "profile_count": { "type": "integer", "minimum": 1 },
             "sources": { "$ref": "#/$defs/strings" }
           }

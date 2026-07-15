@@ -111,7 +111,13 @@ def validate_observations(path: Path, device_id: str, value: Any) -> None:
     expected = {"matched_identifiers", "profile_count", "sources"}
     if not isinstance(value, dict) or set(value) != expected:
         raise ValidationError(f"{path}: invalid carrier observations for {device_id}")
-    validate_string_array(path, "matched_identifiers", value["matched_identifiers"])
+    matched = validate_string_array(
+        path, "matched_identifiers", value["matched_identifiers"]
+    )
+    if matched != [device_id]:
+        raise ValidationError(
+            f"{path}: carrier observations are not bound to exact device ID {device_id}"
+        )
     validate_string_array(path, "sources", value["sources"])
     if not isinstance(value["profile_count"], int) or value["profile_count"] < 1:
         raise ValidationError(f"{path}: invalid profile count for {device_id}")
