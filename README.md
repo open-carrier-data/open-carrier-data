@@ -166,7 +166,14 @@ source and merge policy.
 - `source_checked_no_artifact` means the configured vendor scope was checked
   completely without finding a current artifact;
 - `carrier_data_not_applicable` is reserved for explicitly classified
-  non-cellular Apple product families and is not an extraction claim.
+  non-cellular Apple product families or exact Android variants backed by an
+  official connectivity source, and is not an extraction claim;
+- `platform_out_of_scope` identifies an exact inventory record, such as a
+  ChromeOS or emulator target, that is outside this Android phone/watch carrier
+  extraction system; it does not claim that the hardware lacks cellular radio;
+- `source_terms_restrict_extraction` means an exact official firmware source is
+  known but its published terms do not permit this project to inspect it for
+  carrier data. It is not a claim that the device lacks cellular support.
 
 Failed downloads and digest mismatches are quarantined. They are counted in the
 small coverage summary but are not published as usable artifacts or imported

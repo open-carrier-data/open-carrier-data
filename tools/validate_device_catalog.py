@@ -45,6 +45,8 @@ DATA_COVERAGE_STATUSES = {
     "source_discovery_in_progress",
     "source_checked_no_artifact",
     "source_not_queryable",
+    "platform_out_of_scope",
+    "source_terms_restrict_extraction",
     "inventory_only",
 }
 APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
@@ -192,18 +194,21 @@ def validate_data_coverage(path: Path, device_id: str, record: dict[str, Any]) -
     if status not in DATA_COVERAGE_STATUSES:
         raise ValidationError(f"{path}: invalid carrier data coverage for {device_id}")
     sources = validate_string_array(path, "coverage sources", value["sources"])
-    empty_source_statuses = {"carrier_data_not_applicable", "inventory_only"}
-    if status in empty_source_statuses and sources:
-        raise ValidationError(f"{path}: uncovered device has carrier sources")
-    if status not in empty_source_statuses and not sources:
+    if status == "inventory_only" and sources:
+        raise ValidationError(f"{path}: inventory-only device has carrier sources")
+    if status not in {"inventory_only", "carrier_data_not_applicable"} and not sources:
         raise ValidationError(f"{path}: covered device has no carrier sources")
-    if status == "carrier_data_not_applicable" and (
-        record.get("platform") != "apple"
-        or record.get("family") not in APPLE_NON_CELLULAR_FAMILIES
-    ):
-        raise ValidationError(
-            f"{path}: not-applicable coverage is not an approved non-cellular Apple family"
+    if status == "carrier_data_not_applicable":
+        approved_apple = (
+            record.get("platform") == "apple"
+            and record.get("family") in APPLE_NON_CELLULAR_FAMILIES
+            and not sources
         )
+        evidenced_android = record.get("platform") == "android" and bool(sources)
+        if not approved_apple and not evidenced_android:
+            raise ValidationError(
+                f"{path}: not-applicable coverage lacks approved exact evidence"
+            )
     if status == "exact_carrier_data_observed" and "carrier_observations" not in record:
         raise ValidationError(f"{path}: observed coverage has no observations")
     if status == "exact_source_extracted" and not any(
@@ -231,6 +236,26 @@ def validate_data_coverage(path: Path, device_id: str, record: dict[str, Any]) -
         "no_query_identifier"
     }:
         raise ValidationError(f"{path}: not-queryable coverage is inconsistent")
+    for terminal_status in (
+        "carrier_data_not_applicable",
+        "platform_out_of_scope",
+        "source_terms_restrict_extraction",
+    ):
+        if status == terminal_status and record.get("platform") == "android":
+            terminal_sources = sorted(
+                item["source"]
+                for item in record.get("carrier_source_discovery") or []
+                if terminal_status in item["status_counts"]
+            )
+            if set(discovery_statuses) != {terminal_status} or sources != terminal_sources:
+                raise ValidationError(
+                    f"{path}: {terminal_status} coverage lacks exact terminal evidence"
+                )
+    if (
+        status in {"platform_out_of_scope", "source_terms_restrict_extraction"}
+        and record.get("platform") != "android"
+    ):
+        raise ValidationError(f"{path}: {status} is only valid for Android inventory")
 
 
 def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
@@ -242,7 +267,10 @@ def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
         "no_artifact_found",
         "no_query_identifier",
         "artifact_indexed",
+        "carrier_data_not_applicable",
+        "platform_out_of_scope",
         "source_extracted",
+        "source_terms_restrict_extraction",
     }
     for item in value:
         expected = {"source", "matched_identifiers", "scope_count", "status_counts"}
@@ -501,11 +529,14 @@ def validate_android_artifacts(
     previous_key = ("", "")
     seen_coverage: set[tuple[str, str]] = set()
     allowed_statuses = {
+        "carrier_data_not_applicable",
         "discovery_in_progress",
         "no_artifact_found",
         "no_query_identifier",
         "artifact_indexed",
+        "platform_out_of_scope",
         "source_extracted",
+        "source_terms_restrict_extraction",
     }
     for record in scope_coverage:
         if not isinstance(record, dict) or set(record) != expected_coverage:

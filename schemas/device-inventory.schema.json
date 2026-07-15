@@ -176,7 +176,10 @@
                   "no_artifact_found": { "type": "integer", "minimum": 1 },
                   "no_query_identifier": { "type": "integer", "minimum": 1 },
                   "artifact_indexed": { "type": "integer", "minimum": 1 },
-                  "source_extracted": { "type": "integer", "minimum": 1 }
+                  "carrier_data_not_applicable": { "type": "integer", "minimum": 1 },
+                  "platform_out_of_scope": { "type": "integer", "minimum": 1 },
+                  "source_extracted": { "type": "integer", "minimum": 1 },
+                  "source_terms_restrict_extraction": { "type": "integer", "minimum": 1 }
                 }
               }
             }
@@ -199,6 +202,8 @@
                 "source_discovery_in_progress",
                 "source_checked_no_artifact",
                 "source_not_queryable",
+                "platform_out_of_scope",
+                "source_terms_restrict_extraction",
                 "inventory_only"
               ]
             },

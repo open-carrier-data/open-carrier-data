@@ -7,6 +7,7 @@ import json
 import re
 import tempfile
 import xml.etree.ElementTree as ET
+from datetime import date
 from pathlib import Path
 
 import generate_android_outputs
@@ -60,6 +61,98 @@ def main() -> int:
         pass
     else:
         raise AssertionError("bare alias bypassed exact device observation validation")
+
+    for terminal_status in (
+        "carrier_data_not_applicable",
+        "platform_out_of_scope",
+        "source_terms_restrict_extraction",
+    ):
+        discovery = [
+            {
+                "source": "synthetic_source",
+                "matched_identifiers": [exact_device_id],
+                "scope_count": 1,
+                "status_counts": {terminal_status: 1},
+            }
+        ]
+        record = {
+            "device_id": exact_device_id,
+            "platform": "android",
+            "carrier_source_discovery": discovery,
+            "carrier_data_coverage": {
+                "status": terminal_status,
+                "sources": ["synthetic_source"],
+            },
+        }
+        validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"), exact_device_id, discovery
+        )
+        validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"), exact_device_id, record
+        )
+
+    with tempfile.TemporaryDirectory() as raw_tmp:
+        registry_path = Path(raw_tmp) / "android-carrier-artifacts.json"
+        terminal_statuses = (
+            "carrier_data_not_applicable",
+            "platform_out_of_scope",
+            "source_terms_restrict_extraction",
+        )
+        registry_path.write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "registry_id": "android_carrier_source_artifacts",
+                    "description": "Synthetic exact terminal coverage.",
+                    "sources": [
+                        {
+                            "name": "synthetic_source",
+                            "url": "https://example.com/source",
+                            "revision": "0" * 64,
+                            "revision_date": date.today().isoformat(),
+                            "checked_at": date.today().isoformat(),
+                        }
+                    ],
+                    "scope_coverage": [
+                        {
+                            "source": "synthetic_source",
+                            "device_scope": "android:" + marker * 20,
+                            "scope_kind": "device_id",
+                            "device_ids": ["android:" + marker * 20],
+                            "discovery_status": status,
+                            "region_seed_count": 0,
+                            "probed_region_count": 0,
+                            "available_region_count": 0,
+                            "extracted_artifact_count": 0,
+                        }
+                        for marker, status in zip("abc", terminal_statuses, strict=True)
+                    ],
+                    "artifacts": [],
+                },
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        validate_device_catalog.validate_android_artifacts(registry_path)
+    try:
+        validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            {
+                "device_id": exact_device_id,
+                "platform": "android",
+                "carrier_data_coverage": {
+                    "status": "carrier_data_not_applicable",
+                    "sources": ["synthetic_source"],
+                },
+            },
+        )
+    except validate_device_catalog.ValidationError:
+        pass
+    else:
+        raise AssertionError("Android not-applicable claim passed without exact evidence")
 
     schema = load_json(
         Path(__file__).resolve().parents[1] / "schemas/carrier-profile.schema.json"
