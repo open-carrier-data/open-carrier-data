@@ -49,6 +49,7 @@ DATA_COVERAGE_STATUSES = {
     "source_checked_no_artifact",
     "source_not_queryable",
     "platform_out_of_scope",
+    "source_authentication_required",
     "source_transport_untrusted",
     "source_terms_restrict_extraction",
     "inventory_only",
@@ -62,8 +63,13 @@ ANDROID_DISCOVERY_STATUSES = {
     "artifact_indexed",
     "platform_out_of_scope",
     "source_extracted",
+    "source_authentication_required",
     "source_transport_untrusted",
     "source_terms_restrict_extraction",
+}
+EXACT_ZERO_ARTIFACT_TERMINAL_STATUSES = {
+    "source_authentication_required",
+    "source_transport_untrusted",
 }
 APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
 CARRIER_RELEVANCE_STATUSES = {
@@ -485,6 +491,7 @@ def validate_data_coverage(
     for terminal_status in (
         "carrier_data_not_applicable",
         "platform_out_of_scope",
+        "source_authentication_required",
         "source_transport_untrusted",
         "source_terms_restrict_extraction",
     ):
@@ -502,6 +509,7 @@ def validate_data_coverage(
         status
         in {
             "platform_out_of_scope",
+            "source_authentication_required",
             "source_transport_untrusted",
             "source_terms_restrict_extraction",
         }
@@ -540,6 +548,13 @@ def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
             or any(not is_json_integer(count) or count < 1 for count in counts.values())
         ):
             raise ValidationError(f"{path}: source discovery counts are invalid")
+        if (
+            "source_authentication_required" in counts
+            and not ANDROID_DEVICE_ID_RE.fullmatch(device_id)
+        ):
+            raise ValidationError(
+                f"{path}: authentication-required discovery is Android-only"
+            )
         if (
             not is_json_integer(item["scope_count"])
             or item["scope_count"] != sum(counts.values())
@@ -854,29 +869,30 @@ def validate_android_artifacts(
             raise ValidationError(f"{path}: indexed scope has no available artifact")
         if record["discovery_status"] == "source_extracted" and counts[3] < 1:
             raise ValidationError(f"{path}: extracted scope has no extracted artifact")
-        if record["discovery_status"] == "source_transport_untrusted" and (
+        if record["discovery_status"] in EXACT_ZERO_ARTIFACT_TERMINAL_STATUSES and (
             record["scope_kind"] != "device_id" or counts != [0, 0, 0, 0]
         ):
             raise ValidationError(
-                f"{path}: transport-untrusted scope must be exact and artifact-free"
+                f"{path}: {record['discovery_status']} scope must be exact and "
+                "artifact-free"
             )
         seen_coverage.add(key)
         previous_key = key
-    transport_keys = {
+    exact_terminal_keys = {
         (record["source"], record["device_scope"])
         for record in scope_coverage
-        if record["discovery_status"] == "source_transport_untrusted"
+        if record["discovery_status"] in EXACT_ZERO_ARTIFACT_TERMINAL_STATUSES
     }
     artifact_keys = {
         (record["source"], device_id)
         for record in artifacts
         for device_id in record["device_ids"]
     }
-    conflicting_artifacts = sorted(transport_keys & artifact_keys)
+    conflicting_artifacts = sorted(exact_terminal_keys & artifact_keys)
     if conflicting_artifacts:
         source, device_id = conflicting_artifacts[0]
         raise ValidationError(
-            f"{path}: transport-untrusted scope has artifact evidence for "
+            f"{path}: exact artifact-free terminal scope has artifact evidence for "
             f"{source}/{device_id}"
         )
     positive_scope_keys = {
@@ -894,40 +910,52 @@ def validate_android_artifacts(
         )
         for device_id in record["device_ids"]
     }
-    conflicting_scopes = sorted(transport_keys & positive_scope_keys)
+    conflicting_scopes = sorted(exact_terminal_keys & positive_scope_keys)
     if conflicting_scopes:
         source, device_id = conflicting_scopes[0]
         raise ValidationError(
-            f"{path}: transport-untrusted scope has positive scope evidence for "
+            f"{path}: exact artifact-free terminal scope has positive scope evidence for "
             f"{source}/{device_id}"
         )
     return sources, artifacts, scope_coverage
 
 
-def validate_android_transport_links(
+def validate_android_exact_terminal_links(
     path: Path,
     android_devices: list[dict[str, Any]],
     android_scope_coverage: list[dict[str, Any]],
+    terminal_status: str,
 ) -> None:
-    """Join every transport-terminal scope to its exact public device summary."""
+    """Join one exact artifact-free terminal to its public device summaries."""
+
+    if terminal_status not in EXACT_ZERO_ARTIFACT_TERMINAL_STATUSES:
+        raise ValidationError(f"{path}: unknown exact Android terminal status")
 
     devices_by_id = {record["device_id"]: record for record in android_devices}
     expected: Counter[tuple[str, str]] = Counter()
     for scope in android_scope_coverage:
-        if scope["discovery_status"] != "source_transport_untrusted":
+        if scope["discovery_status"] != terminal_status:
             continue
         device_id = scope["device_scope"]
         if device_id not in devices_by_id:
             raise ValidationError(
-                f"{path}: transport-untrusted scope references unknown device {device_id}"
+                f"{path}: {terminal_status} scope references unknown device {device_id}"
             )
         expected[(scope["source"], device_id)] += 1
 
     actual: Counter[tuple[str, str]] = Counter()
     for device_id, record in devices_by_id.items():
         for discovery in record.get("carrier_source_discovery") or []:
-            count = discovery["status_counts"].get("source_transport_untrusted", 0)
+            count = discovery["status_counts"].get(terminal_status, 0)
             if count:
+                if (
+                    (record.get("carrier_data_coverage") or {}).get("status")
+                    != terminal_status
+                ):
+                    raise ValidationError(
+                        f"{path}: {terminal_status} discovery has mismatched device "
+                        f"coverage for {device_id}"
+                    )
                 actual[(discovery["source"], device_id)] += count
         catalog_sources = {
             item["source"] for item in record.get("carrier_source_catalogs") or []
@@ -939,7 +967,7 @@ def validate_android_transport_links(
         )
         if conflicting_catalogs:
             raise ValidationError(
-                f"{path}: transport-untrusted scope has device artifact catalog evidence "
+                f"{path}: {terminal_status} scope has device artifact catalog evidence "
                 f"for {conflicting_catalogs[0]}/{device_id}"
             )
 
@@ -949,14 +977,44 @@ def validate_android_transport_links(
         if missing_summaries:
             source, device_id = missing_summaries[0]
             raise ValidationError(
-                f"{path}: transport-untrusted scope lacks device summary for "
+                f"{path}: {terminal_status} scope lacks device summary for "
                 f"{source}/{device_id}"
             )
         source, device_id = orphan_summaries[0]
         raise ValidationError(
-            f"{path}: transport-untrusted device summary lacks exact scope for "
+            f"{path}: {terminal_status} device summary lacks exact scope for "
             f"{source}/{device_id}"
         )
+
+
+def validate_android_transport_links(
+    path: Path,
+    android_devices: list[dict[str, Any]],
+    android_scope_coverage: list[dict[str, Any]],
+) -> None:
+    """Join every transport-terminal scope to its exact public device summary."""
+
+    validate_android_exact_terminal_links(
+        path,
+        android_devices,
+        android_scope_coverage,
+        "source_transport_untrusted",
+    )
+
+
+def validate_android_authentication_links(
+    path: Path,
+    android_devices: list[dict[str, Any]],
+    android_scope_coverage: list[dict[str, Any]],
+) -> None:
+    """Join every authentication terminal to one exact artifact-free scope."""
+
+    validate_android_exact_terminal_links(
+        path,
+        android_devices,
+        android_scope_coverage,
+        "source_authentication_required",
+    )
 
 
 def validate_index(
@@ -1183,6 +1241,7 @@ def main(argv: list[str]) -> int:
         root / "android-carrier-artifacts.json"
     )
     validate_android_transport_links(root, android_devices, android_scope_coverage)
+    validate_android_authentication_links(root, android_devices, android_scope_coverage)
     if artifact_source not in apple_sources:
         raise ValidationError("Apple device and artifact sources do not match")
     validate_index(

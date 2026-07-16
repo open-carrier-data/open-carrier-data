@@ -173,6 +173,11 @@ source and merge policy.
 - `platform_out_of_scope` identifies an exact inventory record, such as a
   ChromeOS or emulator target, that is outside this Android phone/watch carrier
   extraction system; it does not claim that the hardware lacks cellular radio;
+- `source_authentication_required` means an exact official per-device Android
+  source is known, but anonymous discovery or extraction stops at an
+  authentication gate. It requires matching exact, artifact-free source and
+  device scopes; it is not evidence of device support, cellular relevance,
+  carrier data, or artifact availability;
 - `source_terms_restrict_extraction` means an exact official firmware source is
   known but its published terms do not permit this project to inspect it for
   carrier data. It is not a claim that the device lacks cellular support.

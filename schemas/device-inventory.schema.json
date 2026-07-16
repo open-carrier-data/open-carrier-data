@@ -246,6 +246,7 @@
                   "carrier_data_not_applicable": { "type": "integer", "minimum": 1 },
                   "platform_out_of_scope": { "type": "integer", "minimum": 1 },
                   "source_extracted": { "type": "integer", "minimum": 1 },
+                  "source_authentication_required": { "type": "integer", "minimum": 1 },
                   "source_transport_untrusted": { "type": "integer", "minimum": 1 },
                   "source_terms_restrict_extraction": { "type": "integer", "minimum": 1 }
                 },
@@ -272,6 +273,7 @@
                 "source_checked_no_artifact",
                 "source_not_queryable",
                 "platform_out_of_scope",
+                "source_authentication_required",
                 "source_transport_untrusted",
                 "source_terms_restrict_extraction",
                 "inventory_only"
@@ -524,6 +526,68 @@
             "properties": {
               "platform": { "const": "android" }
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "carrier_source_discovery": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "status_counts": {
+                      "type": "object",
+                      "required": ["source_authentication_required"]
+                    }
+                  },
+                  "required": ["status_counts"]
+                }
+              }
+            },
+            "required": ["carrier_source_discovery"]
+          },
+          "then": {
+            "properties": {
+              "platform": { "const": "android" },
+              "carrier_data_coverage": {
+                "properties": {
+                  "status": { "const": "source_authentication_required" }
+                },
+                "required": ["status"]
+              }
+            },
+            "required": ["carrier_data_coverage"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "carrier_data_coverage": {
+                "properties": {
+                  "status": { "const": "source_authentication_required" }
+                },
+                "required": ["status"]
+              }
+            },
+            "required": ["carrier_data_coverage"]
+          },
+          "then": {
+            "properties": {
+              "platform": { "const": "android" },
+              "carrier_source_discovery": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "status_counts": {
+                      "type": "object",
+                      "required": ["source_authentication_required"]
+                    }
+                  },
+                  "required": ["status_counts"]
+                }
+              }
+            },
+            "required": ["carrier_source_discovery"]
           }
         },
         {

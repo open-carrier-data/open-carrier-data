@@ -91,6 +91,7 @@
               "artifact_indexed",
               "platform_out_of_scope",
               "source_extracted",
+              "source_authentication_required",
               "source_transport_untrusted",
               "source_terms_restrict_extraction"
             ]
@@ -105,6 +106,37 @@
             "if": {
               "properties": {
                 "discovery_status": { "const": "source_transport_untrusted" }
+              },
+              "required": ["discovery_status"]
+            },
+            "then": {
+              "properties": {
+                "scope_kind": { "const": "device_id" },
+                "device_scope": {
+                  "type": "string",
+                  "pattern": "^android:[a-z0-9-]{3,80}$"
+                },
+                "device_ids": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^android:[a-z0-9-]{3,80}$"
+                  }
+                },
+                "region_seed_count": { "const": 0 },
+                "probed_region_count": { "const": 0 },
+                "available_region_count": { "const": 0 },
+                "extracted_artifact_count": { "const": 0 }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "discovery_status": { "const": "source_authentication_required" }
               },
               "required": ["discovery_status"]
             },

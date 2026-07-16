@@ -105,6 +105,27 @@ def main() -> int:
             transport_properties[count_field] == {"const": 0},
             f"Transport-untrusted schema must force {count_field} to zero",
         )
+    authentication_rule = next(
+        rule
+        for rule in scope_schema["allOf"]
+        if rule["if"]["properties"]["discovery_status"].get("const")
+        == "source_authentication_required"
+    )
+    authentication_properties = authentication_rule["then"]["properties"]
+    assert_true(
+        authentication_properties["scope_kind"] == {"const": "device_id"},
+        "Authentication-required schema must require exact device scope",
+    )
+    for count_field in (
+        "region_seed_count",
+        "probed_region_count",
+        "available_region_count",
+        "extracted_artifact_count",
+    ):
+        assert_true(
+            authentication_properties[count_field] == {"const": 0},
+            f"Authentication-required schema must force {count_field} to zero",
+        )
     inventory_schema = load_json(
         Path(__file__).resolve().parents[1] / "schemas/device-inventory.schema.json"
     )
@@ -124,6 +145,50 @@ def main() -> int:
     assert_true(
         schema_status_count_keys == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
         "Device schema and validator discovery count statuses must match",
+    )
+    authentication_platform_rule = next(
+        rule
+        for rule in inventory_schema["$defs"]["device"]["allOf"]
+        if rule.get("if", {})
+        .get("properties", {})
+        .get("carrier_data_coverage", {})
+        .get("properties", {})
+        .get("status", {})
+        .get("const")
+        == "source_authentication_required"
+    )
+    assert_true(
+        authentication_platform_rule["then"]["properties"]["platform"]
+        == {"const": "android"},
+        "Authentication-required device coverage must be Android-only",
+    )
+    assert_true(
+        authentication_platform_rule["then"].get("required")
+        == ["carrier_source_discovery"]
+        and authentication_platform_rule["then"]["properties"][
+            "carrier_source_discovery"
+        ]["contains"]["properties"]["status_counts"]["required"]
+        == ["source_authentication_required"],
+        "Authentication-required coverage must require matching discovery evidence",
+    )
+    authentication_discovery_rule = next(
+        rule
+        for rule in inventory_schema["$defs"]["device"]["allOf"]
+        if rule.get("if", {})
+        .get("properties", {})
+        .get("carrier_source_discovery", {})
+        .get("contains", {})
+        .get("properties", {})
+        .get("status_counts", {})
+        .get("required")
+        == ["source_authentication_required"]
+    )
+    assert_true(
+        authentication_discovery_rule["then"]["properties"][
+            "carrier_data_coverage"
+        ]["properties"]["status"]
+        == {"const": "source_authentication_required"},
+        "Authentication discovery evidence must require matching device coverage",
     )
     discovery_identifiers = device_properties["carrier_source_discovery"]["items"][
         "properties"
@@ -155,6 +220,7 @@ def main() -> int:
     for terminal_status in (
         "carrier_data_not_applicable",
         "platform_out_of_scope",
+        "source_authentication_required",
         "source_transport_untrusted",
         "source_terms_restrict_extraction",
     ):
@@ -244,6 +310,7 @@ def main() -> int:
         terminal_statuses = (
             "carrier_data_not_applicable",
             "platform_out_of_scope",
+            "source_authentication_required",
             "source_transport_untrusted",
             "source_terms_restrict_extraction",
         )
@@ -273,7 +340,7 @@ def main() -> int:
                         "available_region_count": 0,
                         "extracted_artifact_count": 0,
                     }
-                    for marker, status in zip("abcd", terminal_statuses, strict=True)
+                    for marker, status in zip("abcde", terminal_statuses, strict=True)
                 ],
                 {
                     "source": "synthetic_source",
@@ -390,6 +457,92 @@ def main() -> int:
             "transport-untrusted scope accepted same-source/device positive scope evidence",
         )
 
+        authentication_scope = next(
+            item
+            for item in registry["scope_coverage"]
+            if item["discovery_status"] == "source_authentication_required"
+        )
+        authentication_registry = deepcopy(registry)
+        authentication_registry["scope_coverage"] = [deepcopy(authentication_scope)]
+        for count_field in (
+            "region_seed_count",
+            "probed_region_count",
+            "available_region_count",
+            "extracted_artifact_count",
+        ):
+            nonzero_authentication = deepcopy(authentication_registry)
+            nonzero_authentication["scope_coverage"][0][count_field] = 1
+            assert_registry_rejected(
+                nonzero_authentication,
+                f"authentication-required scope accepted nonzero {count_field}",
+            )
+            boolean_authentication = deepcopy(authentication_registry)
+            boolean_authentication["scope_coverage"][0][count_field] = False
+            assert_registry_rejected(
+                boolean_authentication,
+                f"authentication-required scope accepted boolean {count_field}",
+            )
+
+        loose_authentication = deepcopy(authentication_registry)
+        loose_authentication["scope_coverage"][0]["scope_kind"] = "model"
+        loose_authentication["scope_coverage"][0]["device_scope"] = "synthetic-model"
+        assert_registry_rejected(
+            loose_authentication,
+            "authentication-required terminal accepted a non-device scope",
+        )
+
+        apple_authentication = deepcopy(authentication_registry)
+        apple_device_id = "apple:" + "b" * 20
+        apple_authentication["scope_coverage"][0]["device_scope"] = apple_device_id
+        apple_authentication["scope_coverage"][0]["device_ids"] = [apple_device_id]
+        assert_registry_rejected(
+            apple_authentication,
+            "Android authentication-required scope accepted an Apple device ID",
+        )
+
+        artifact_authentication = deepcopy(authentication_registry)
+        authentication_device_id = artifact_authentication["scope_coverage"][0][
+            "device_scope"
+        ]
+        artifact_authentication["artifacts"] = [
+            {
+                "artifact_id": "android:" + "2" * 24,
+                "source": "synthetic_source",
+                "device_scopes": [authentication_device_id],
+                "device_ids": [authentication_device_id],
+                "regions": ["global"],
+                "build_versions": ["1"],
+                "verification": "indexed",
+                "checked_at": date.today().isoformat(),
+            }
+        ]
+        assert_registry_rejected(
+            artifact_authentication,
+            "authentication-required scope accepted artifact evidence",
+        )
+
+        positive_scope_authentication = deepcopy(authentication_registry)
+        positive_scope_authentication["scope_coverage"].append(
+            {
+                "source": "synthetic_source",
+                "device_scope": "api_device_id:authentication-conflict",
+                "scope_kind": "source_api_row",
+                "device_ids": [authentication_device_id],
+                "discovery_status": "artifact_indexed",
+                "region_seed_count": 1,
+                "probed_region_count": 1,
+                "available_region_count": 1,
+                "extracted_artifact_count": 0,
+            }
+        )
+        positive_scope_authentication["scope_coverage"].sort(
+            key=lambda item: (item["source"], item["device_scope"])
+        )
+        assert_registry_rejected(
+            positive_scope_authentication,
+            "authentication-required scope accepted positive scope evidence",
+        )
+
         boolean_schema = deepcopy(transport_registry)
         boolean_schema["schema_version"] = True
         assert_registry_rejected(
@@ -481,6 +634,156 @@ def main() -> int:
             f"source catalog accepted boolean {count_field}",
         )
 
+    exact_authentication_discovery = [
+        {
+            "source": "synthetic_source",
+            "matched_identifiers": [exact_device_id],
+            "scope_count": 1,
+            "status_counts": {"source_authentication_required": 1},
+        }
+    ]
+    authentication_scope = {
+        **transport_scope,
+        "discovery_status": "source_authentication_required",
+    }
+    authentication_device = {
+        "device_id": exact_device_id,
+        "platform": "android",
+        "carrier_source_discovery": deepcopy(exact_authentication_discovery),
+        "carrier_data_coverage": {
+            "status": "source_authentication_required",
+            "sources": ["synthetic_source"],
+        },
+    }
+    validate_device_catalog.validate_source_discovery(
+        Path("synthetic-device-catalog.json"),
+        exact_device_id,
+        exact_authentication_discovery,
+    )
+    validate_device_catalog.validate_data_coverage(
+        Path("synthetic-device-catalog.json"),
+        exact_device_id,
+        authentication_device,
+    )
+    validate_device_catalog.validate_android_authentication_links(
+        Path("synthetic-device-catalog"),
+        [authentication_device],
+        [authentication_scope],
+    )
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"), [authentication_device], []
+        ),
+        "authentication-required summary passed without an exact registry scope",
+    )
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"),
+            [scope_without_summary_device],
+            [authentication_scope],
+        ),
+        "authentication-required scope passed without a matching device summary",
+    )
+    wrong_source_authentication = deepcopy(authentication_scope)
+    wrong_source_authentication["source"] = "other_source"
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"),
+            [authentication_device],
+            [wrong_source_authentication],
+        ),
+        "authentication-required scope accepted a mismatched source",
+    )
+    counted_twice_authentication = deepcopy(authentication_device)
+    counted_twice_authentication["carrier_source_discovery"][0]["scope_count"] = 2
+    counted_twice_authentication["carrier_source_discovery"][0]["status_counts"][
+        "source_authentication_required"
+    ] = 2
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"),
+            [counted_twice_authentication],
+            [authentication_scope],
+        ),
+        "authentication-required summary accepted a non-singleton scope count",
+    )
+    authentication_catalog_conflict = deepcopy(authentication_device)
+    authentication_catalog_conflict["carrier_source_catalogs"] = deepcopy(
+        catalog_conflict_device["carrier_source_catalogs"]
+    )
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"),
+            [authentication_catalog_conflict],
+            [authentication_scope],
+        ),
+        "authentication-required scope accepted source catalog evidence",
+    )
+
+    mixed_authentication = deepcopy(authentication_device)
+    mixed_authentication["carrier_source_discovery"][0]["scope_count"] = 2
+    mixed_authentication["carrier_source_discovery"][0]["status_counts"][
+        "source_terms_restrict_extraction"
+    ] = 1
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            mixed_authentication,
+        ),
+        "authentication-required coverage accepted mixed discovery statuses",
+    )
+    mismatched_authentication_sources = deepcopy(authentication_device)
+    mismatched_authentication_sources["carrier_data_coverage"]["sources"] = [
+        "other_source"
+    ]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            mismatched_authentication_sources,
+        ),
+        "authentication-required coverage accepted mismatched sources",
+    )
+    boolean_authentication_count = deepcopy(exact_authentication_discovery)
+    boolean_authentication_count[0]["status_counts"][
+        "source_authentication_required"
+    ] = True
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            boolean_authentication_count,
+        ),
+        "authentication-required discovery accepted a boolean count",
+    )
+    dangling_authentication = deepcopy(authentication_device)
+    dangling_authentication["carrier_data_coverage"] = {
+        "status": "inventory_only",
+        "sources": [],
+    }
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_authentication_links(
+            Path("synthetic-device-catalog"),
+            [dangling_authentication],
+            [authentication_scope],
+        ),
+        "authentication discovery passed with non-authentication device coverage",
+    )
+    apple_authentication_id = "apple:" + "c" * 20
+    apple_authentication_discovery = deepcopy(exact_authentication_discovery)
+    apple_authentication_discovery[0]["matched_identifiers"] = [
+        apple_authentication_id
+    ]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"),
+            apple_authentication_id,
+            apple_authentication_discovery,
+        ),
+        "Apple source discovery accepted authentication-required evidence",
+    )
+
     apple_device_id = "apple:" + "a" * 20
     apple_transport_discovery = deepcopy(exact_transport_discovery)
     apple_transport_discovery[0]["matched_identifiers"] = [apple_device_id]
@@ -499,6 +802,24 @@ def main() -> int:
             },
         ),
         "Apple inventory accepted source_transport_untrusted coverage",
+    )
+    apple_authentication_discovery = deepcopy(exact_authentication_discovery)
+    apple_authentication_discovery[0]["matched_identifiers"] = [apple_device_id]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"),
+            apple_device_id,
+            {
+                "device_id": apple_device_id,
+                "platform": "apple",
+                "carrier_source_discovery": apple_authentication_discovery,
+                "carrier_data_coverage": {
+                    "status": "source_authentication_required",
+                    "sources": ["synthetic_source"],
+                },
+            },
+        ),
+        "Apple inventory accepted source_authentication_required coverage",
     )
 
     with tempfile.TemporaryDirectory() as raw_tmp:
@@ -629,14 +950,16 @@ def main() -> int:
         }
         index_path = temporary_root / "index.json"
 
-        def validate_synthetic_index(value: dict) -> None:
+        def validate_synthetic_index(
+            value: dict, android_devices: list[dict] | None = None
+        ) -> None:
             index_path.write_text(
                 json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8"
             )
             validate_device_catalog.validate_index(
                 index_path,
                 [android_source],
-                index_android_devices,
+                android_devices if android_devices is not None else index_android_devices,
                 [apple_source],
                 [],
                 apple_source,
@@ -646,6 +969,21 @@ def main() -> int:
             )
 
         validate_synthetic_index(index)
+        authentication_index_devices = deepcopy(index_android_devices)
+        authentication_index_devices[0]["carrier_source_discovery"][0][
+            "status_counts"
+        ] = {"source_authentication_required": 1}
+        authentication_index_devices[0]["carrier_data_coverage"]["status"] = (
+            "source_authentication_required"
+        )
+        authentication_index = deepcopy(index)
+        authentication_index["platforms"]["android"][
+            "carrier_data_coverage_counts"
+        ] = {"source_authentication_required": 1}
+        authentication_index["platforms"]["android"][
+            "carrier_data_coverage_counts_by_brand"
+        ] = {"Synthetic": {"source_authentication_required": 1}}
+        validate_synthetic_index(authentication_index, authentication_index_devices)
         boolean_coverage_index = deepcopy(index)
         boolean_coverage_index["platforms"]["android"]["carrier_data_coverage_counts"][
             "source_transport_untrusted"
