@@ -19,8 +19,8 @@ Files:
 - `apple.json`: current and historical Apple product types from Apple's carrier
   index;
 - `apple-carrier-artifacts.json`: current public-safe Apple artifact metadata.
-- `android-carrier-artifacts.json`: current public-safe Pixel CarrierSettings
-  and Samsung firmware artifact metadata plus Samsung discovery progress.
+- `android-carrier-artifacts.json`: current public-safe Android artifact metadata
+  plus exact source-discovery and terminal scope records.
 
 The index includes coverage-state counts per retail brand. This makes missing
 OEM adapters visible without opening tens of thousands of device records.
@@ -35,10 +35,13 @@ For Android, `indexed` means an exact vendor query confirmed a current artifact.
 integrity-checked. Discovery states distinguish work in progress, a completed
 check with no artifact, and identities that lack a usable vendor query key.
 
-`carrier_data_not_applicable` is reserved for explicitly classified
-non-cellular Apple product families. It is a terminal result, not a successful
-carrier extraction. Unrecognized present or future families remain
-`inventory_only` until evidence classifies them.
+`carrier_data_not_applicable` is reserved for explicitly classified non-cellular
+Apple product families or exact Android variants backed by an official
+connectivity source. `source_transport_untrusted` records an exact Android
+source whose archive transport does not meet unattended integrity requirements;
+it has no artifacts and is not a successful carrier extraction. Unrecognized
+present or future identities remain `inventory_only` until evidence classifies
+them.
 
 One device can be listed by more than one maintained inventory. Such records
 merge only when their canonical device ID is identical, and

@@ -66,6 +66,26 @@ def main() -> int:
         == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
         "Android artifact schema and validator discovery statuses must match",
     )
+    inventory_schema = load_json(
+        Path(__file__).resolve().parents[1] / "schemas/device-inventory.schema.json"
+    )
+    device_properties = inventory_schema["$defs"]["device"]["properties"]
+    schema_coverage_statuses = set(
+        device_properties["carrier_data_coverage"]["properties"]["status"]["enum"]
+    )
+    assert_true(
+        schema_coverage_statuses == validate_device_catalog.DATA_COVERAGE_STATUSES,
+        "Device schema and validator coverage statuses must match",
+    )
+    schema_status_count_keys = set(
+        device_properties["carrier_source_discovery"]["items"]["properties"][
+            "status_counts"
+        ]["properties"]
+    )
+    assert_true(
+        schema_status_count_keys == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
+        "Device schema and validator discovery count statuses must match",
+    )
     observation = {
         "matched_identifiers": [exact_device_id],
         "profile_count": 1,
@@ -88,6 +108,7 @@ def main() -> int:
     for terminal_status in (
         "carrier_data_not_applicable",
         "platform_out_of_scope",
+        "source_transport_untrusted",
         "source_terms_restrict_extraction",
     ):
         discovery = [
@@ -119,6 +140,7 @@ def main() -> int:
         terminal_statuses = (
             "carrier_data_not_applicable",
             "platform_out_of_scope",
+            "source_transport_untrusted",
             "source_terms_restrict_extraction",
         )
         registry_path.write_text(
@@ -150,7 +172,7 @@ def main() -> int:
                                 "extracted_artifact_count": 0,
                             }
                             for marker, status in zip(
-                                "abc", terminal_statuses, strict=True
+                                "abcd", terminal_statuses, strict=True
                             )
                         ],
                         {
@@ -174,6 +196,24 @@ def main() -> int:
             encoding="utf-8",
         )
         validate_device_catalog.validate_android_artifacts(registry_path)
+        invalid_transport = load_json(registry_path)
+        transport_scope = next(
+            item
+            for item in invalid_transport["scope_coverage"]
+            if item["discovery_status"] == "source_transport_untrusted"
+        )
+        transport_scope["region_seed_count"] = 1
+        invalid_path = Path(raw_tmp) / "invalid-transport.json"
+        invalid_path.write_text(
+            json.dumps(invalid_transport, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        try:
+            validate_device_catalog.validate_android_artifacts(invalid_path)
+        except validate_device_catalog.ValidationError:
+            pass
+        else:
+            raise AssertionError("transport-untrusted scope accepted artifact activity")
     try:
         validate_device_catalog.validate_data_coverage(
             Path("synthetic-device-catalog.json"),

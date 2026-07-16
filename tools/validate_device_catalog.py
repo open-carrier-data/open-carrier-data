@@ -46,6 +46,7 @@ DATA_COVERAGE_STATUSES = {
     "source_checked_no_artifact",
     "source_not_queryable",
     "platform_out_of_scope",
+    "source_transport_untrusted",
     "source_terms_restrict_extraction",
     "inventory_only",
 }
@@ -58,6 +59,7 @@ ANDROID_DISCOVERY_STATUSES = {
     "artifact_indexed",
     "platform_out_of_scope",
     "source_extracted",
+    "source_transport_untrusted",
     "source_terms_restrict_extraction",
 }
 APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
@@ -250,6 +252,7 @@ def validate_data_coverage(path: Path, device_id: str, record: dict[str, Any]) -
     for terminal_status in (
         "carrier_data_not_applicable",
         "platform_out_of_scope",
+        "source_transport_untrusted",
         "source_terms_restrict_extraction",
     ):
         if status == terminal_status and record.get("platform") == "android":
@@ -263,7 +266,12 @@ def validate_data_coverage(path: Path, device_id: str, record: dict[str, Any]) -
                     f"{path}: {terminal_status} coverage lacks exact terminal evidence"
                 )
     if (
-        status in {"platform_out_of_scope", "source_terms_restrict_extraction"}
+        status
+        in {
+            "platform_out_of_scope",
+            "source_transport_untrusted",
+            "source_terms_restrict_extraction",
+        }
         and record.get("platform") != "android"
     ):
         raise ValidationError(f"{path}: {status} is only valid for Android inventory")
@@ -574,6 +582,12 @@ def validate_android_artifacts(
             raise ValidationError(f"{path}: indexed scope has no available artifact")
         if record["discovery_status"] == "source_extracted" and counts[3] < 1:
             raise ValidationError(f"{path}: extracted scope has no extracted artifact")
+        if record["discovery_status"] == "source_transport_untrusted" and (
+            record["scope_kind"] != "device_id" or counts != [0, 0, 0, 0]
+        ):
+            raise ValidationError(
+                f"{path}: transport-untrusted scope must be exact and artifact-free"
+            )
         seen_coverage.add(key)
         previous_key = key
     return sources, artifacts, scope_coverage
