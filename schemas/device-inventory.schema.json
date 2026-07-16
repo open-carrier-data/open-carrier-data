@@ -28,6 +28,44 @@
       "items": { "$ref": "#/$defs/device" }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "platform": { "const": "android" } },
+        "required": ["platform"]
+      },
+      "then": {
+        "properties": {
+          "devices": {
+            "items": {
+              "properties": {
+                "platform": { "const": "android" },
+                "device_id": { "pattern": "^android:[a-z0-9-]{3,80}$" }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "platform": { "const": "apple" } },
+        "required": ["platform"]
+      },
+      "then": {
+        "properties": {
+          "devices": {
+            "items": {
+              "properties": {
+                "platform": { "const": "apple" },
+                "device_id": { "pattern": "^apple:[a-z0-9-]{3,80}$" }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "source": {
       "type": "object",
@@ -166,7 +204,16 @@
             "required": ["source", "matched_identifiers", "scope_count", "status_counts"],
             "properties": {
               "source": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_]{1,63}$" },
-              "matched_identifiers": { "$ref": "#/$defs/strings" },
+              "matched_identifiers": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(android|apple):[a-z0-9-]{3,80}$"
+                }
+              },
               "scope_count": { "type": "integer", "minimum": 1 },
               "status_counts": {
                 "type": "object",
@@ -181,7 +228,8 @@
                   "source_extracted": { "type": "integer", "minimum": 1 },
                   "source_transport_untrusted": { "type": "integer", "minimum": 1 },
                   "source_terms_restrict_extraction": { "type": "integer", "minimum": 1 }
-                }
+                },
+                "minProperties": 1
               }
             }
           }
@@ -212,7 +260,49 @@
             "sources": { "$ref": "#/$defs/strings" }
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "platform": { "const": "android" } },
+            "required": ["platform"]
+          },
+          "then": {
+            "properties": {
+              "device_id": { "pattern": "^android:[a-z0-9-]{3,80}$" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "platform": { "const": "apple" } },
+            "required": ["platform"]
+          },
+          "then": {
+            "properties": {
+              "device_id": { "pattern": "^apple:[a-z0-9-]{3,80}$" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "carrier_data_coverage": {
+                "properties": {
+                  "status": { "const": "source_transport_untrusted" }
+                },
+                "required": ["status"]
+              }
+            },
+            "required": ["carrier_data_coverage"]
+          },
+          "then": {
+            "properties": {
+              "platform": { "const": "android" }
+            }
+          }
+        }
+      ]
     }
   }
 }

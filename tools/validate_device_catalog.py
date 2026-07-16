@@ -14,6 +14,8 @@ from typing import Any
 
 HASH_RE = re.compile(r"^[0-9a-f]{64}$")
 DEVICE_ID_RE = re.compile(r"^(?:android|apple):[a-z0-9-]{3,80}$")
+ANDROID_DEVICE_ID_RE = re.compile(r"^android:[a-z0-9-]{3,80}$")
+APPLE_DEVICE_ID_RE = re.compile(r"^apple:[a-z0-9-]{3,80}$")
 APPLE_ARTIFACT_ID_RE = re.compile(r"^apple:[0-9a-f]{24}$")
 ANDROID_ARTIFACT_ID_RE = re.compile(r"^android:[0-9a-f]{24}$")
 SOURCE_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9_]{1,63}$")
@@ -67,6 +69,25 @@ APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
 
 class ValidationError(Exception):
     pass
+
+
+def is_json_integer(value: Any) -> bool:
+    """Return true only for JSON integers, never Python booleans."""
+
+    return type(value) is int
+
+
+def validate_nonnegative_count_tree(path: Path, label: str, value: Any) -> None:
+    """Reject booleans, negative counts, and non-count leaves in nested summaries."""
+
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if not isinstance(key, str) or not key:
+                raise ValidationError(f"{path}: {label} count keys are invalid")
+            validate_nonnegative_count_tree(path, f"{label}.{key}", child)
+        return
+    if not is_json_integer(value) or value < 0:
+        raise ValidationError(f"{path}: {label} must contain non-negative integer counts")
 
 
 def load_object(path: Path) -> dict[str, Any]:
@@ -134,7 +155,7 @@ def validate_observations(path: Path, device_id: str, value: Any) -> None:
             f"{path}: carrier observations are not bound to exact device ID {device_id}"
         )
     validate_string_array(path, "sources", value["sources"])
-    if not isinstance(value["profile_count"], int) or value["profile_count"] < 1:
+    if not is_json_integer(value["profile_count"]) or value["profile_count"] < 1:
         raise ValidationError(f"{path}: invalid profile count for {device_id}")
 
 
@@ -154,9 +175,9 @@ def validate_artifact_scope(path: Path, device_id: str, value: Any) -> None:
         raise ValidationError(f"{path}: invalid artifact source for {device_id}")
     validate_string_array(path, "artifact scopes", value["scopes"])
     if (
-        not isinstance(value["artifact_count"], int)
+        not is_json_integer(value["artifact_count"])
         or value["artifact_count"] < 1
-        or not isinstance(value["verified_artifact_count"], int)
+        or not is_json_integer(value["verified_artifact_count"])
         or not 0 <= value["verified_artifact_count"] <= value["artifact_count"]
     ):
         raise ValidationError(f"{path}: invalid artifact counts for {device_id}")
@@ -192,7 +213,7 @@ def validate_source_catalogs(path: Path, device_id: str, value: Any) -> None:
             item["indexed_artifact_count"],
             item["extracted_artifact_count"],
         ]
-        if any(not isinstance(count, int) or count < 0 for count in counts):
+        if any(not is_json_integer(count) or count < 0 for count in counts):
             raise ValidationError(f"{path}: invalid source artifact counts for {device_id}")
         if counts[0] < 1 or counts[1] + counts[2] != counts[0]:
             raise ValidationError(f"{path}: inconsistent source artifact counts for {device_id}")
@@ -292,16 +313,25 @@ def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
             or source <= previous_source
         ):
             raise ValidationError(f"{path}: source discovery is invalid or unsorted")
-        validate_string_array(path, "source discovery identifiers", item["matched_identifiers"])
+        matched = validate_string_array(
+            path, "source discovery identifiers", item["matched_identifiers"]
+        )
+        if matched != [device_id]:
+            raise ValidationError(
+                f"{path}: source discovery is not bound to exact device ID {device_id}"
+            )
         counts = item["status_counts"]
         if (
             not isinstance(counts, dict)
             or not counts
             or not set(counts) <= ANDROID_DISCOVERY_STATUSES
-            or any(not isinstance(count, int) or count < 1 for count in counts.values())
+            or any(not is_json_integer(count) or count < 1 for count in counts.values())
         ):
             raise ValidationError(f"{path}: source discovery counts are invalid")
-        if not isinstance(item["scope_count"], int) or item["scope_count"] != sum(counts.values()):
+        if (
+            not is_json_integer(item["scope_count"])
+            or item["scope_count"] != sum(counts.values())
+        ):
             raise ValidationError(f"{path}: source discovery scope count is inconsistent")
         previous_source = source
 
@@ -311,7 +341,11 @@ def validate_inventory(
 ) -> tuple[list[dict[str, str]], list[dict[str, Any]]]:
     value = load_object(path)
     expected = {"schema_version", "inventory_id", "platform", "description", "sources", "devices"}
-    if set(value) != expected or value.get("schema_version") != 1:
+    if (
+        set(value) != expected
+        or not is_json_integer(value.get("schema_version"))
+        or value.get("schema_version") != 1
+    ):
         raise ValidationError(f"{path}: inventory keys are invalid")
     if value.get("platform") != platform:
         raise ValidationError(f"{path}: expected {platform} platform")
@@ -344,6 +378,11 @@ def validate_inventory(
             raise ValidationError(f"{path}: duplicate, invalid, or unsorted device ID")
         if record.get("platform") != platform:
             raise ValidationError(f"{path}: platform mismatch for {device_id}")
+        platform_device_id_re = (
+            ANDROID_DEVICE_ID_RE if platform == "android" else APPLE_DEVICE_ID_RE
+        )
+        if not platform_device_id_re.fullmatch(device_id):
+            raise ValidationError(f"{path}: device ID prefix does not match {platform} platform")
         if record.get("inventory_status") not in {"present", "historical"}:
             raise ValidationError(f"{path}: invalid inventory status for {device_id}")
         if not isinstance(record.get("identity_basis"), str) or not record["identity_basis"]:
@@ -399,7 +438,11 @@ def validate_inventory(
 def validate_artifacts(path: Path) -> tuple[dict[str, str], list[dict[str, Any]]]:
     value = load_object(path)
     expected = {"schema_version", "registry_id", "description", "source", "artifacts"}
-    if set(value) != expected or value.get("schema_version") != 1:
+    if (
+        set(value) != expected
+        or not is_json_integer(value.get("schema_version"))
+        or value.get("schema_version") != 1
+    ):
         raise ValidationError(f"{path}: artifact registry keys are invalid")
     if not isinstance(value.get("registry_id"), str) or not value["registry_id"]:
         raise ValidationError(f"{path}: registry ID is invalid")
@@ -463,7 +506,11 @@ def validate_android_artifacts(
         "scope_coverage",
         "artifacts",
     }
-    if set(value) != expected or value.get("schema_version") != 1:
+    if (
+        set(value) != expected
+        or not is_json_integer(value.get("schema_version"))
+        or value.get("schema_version") != 1
+    ):
         raise ValidationError(f"{path}: Android artifact registry keys are invalid")
     if value.get("registry_id") != "android_carrier_source_artifacts":
         raise ValidationError(f"{path}: Android artifact registry ID is invalid")
@@ -511,7 +558,9 @@ def validate_android_artifacts(
         device_ids = validate_string_array(
             path, f"{artifact_id}.device_ids", record.get("device_ids")
         )
-        if not device_ids or any(not DEVICE_ID_RE.fullmatch(item) for item in device_ids):
+        if not device_ids or any(
+            not ANDROID_DEVICE_ID_RE.fullmatch(item) for item in device_ids
+        ):
             raise ValidationError(f"{path}: Android artifact device IDs are invalid")
         if record.get("verification") not in {"indexed", "extracted"}:
             raise ValidationError(f"{path}: Android artifact verification is invalid")
@@ -556,7 +605,7 @@ def validate_android_artifacts(
             record.get("available_region_count"),
             record.get("extracted_artifact_count"),
         ]
-        if any(not isinstance(count, int) or count < 0 for count in counts):
+        if any(not is_json_integer(count) or count < 0 for count in counts):
             raise ValidationError(f"{path}: Android scope coverage counts are invalid")
         if counts[1] > counts[0] or counts[2] > counts[1]:
             raise ValidationError(f"{path}: Android scope coverage counts are inconsistent")
@@ -565,9 +614,11 @@ def validate_android_artifacts(
             f"{record['source']}.{record['device_scope']}.device_ids",
             record.get("device_ids"),
         )
-        if not device_ids or any(not DEVICE_ID_RE.fullmatch(item) for item in device_ids):
+        if not device_ids or any(
+            not ANDROID_DEVICE_ID_RE.fullmatch(item) for item in device_ids
+        ):
             raise ValidationError(f"{path}: Android scope coverage device IDs are invalid")
-        if record["scope_kind"] == "device_id" and not DEVICE_ID_RE.fullmatch(
+        if record["scope_kind"] == "device_id" and not ANDROID_DEVICE_ID_RE.fullmatch(
             record["device_scope"]
         ):
             raise ValidationError(f"{path}: Android device-ID scope is invalid")
@@ -590,7 +641,101 @@ def validate_android_artifacts(
             )
         seen_coverage.add(key)
         previous_key = key
+    transport_keys = {
+        (record["source"], record["device_scope"])
+        for record in scope_coverage
+        if record["discovery_status"] == "source_transport_untrusted"
+    }
+    artifact_keys = {
+        (record["source"], device_id)
+        for record in artifacts
+        for device_id in record["device_ids"]
+    }
+    conflicting_artifacts = sorted(transport_keys & artifact_keys)
+    if conflicting_artifacts:
+        source, device_id = conflicting_artifacts[0]
+        raise ValidationError(
+            f"{path}: transport-untrusted scope has artifact evidence for "
+            f"{source}/{device_id}"
+        )
+    positive_scope_keys = {
+        (record["source"], device_id)
+        for record in scope_coverage
+        if record["discovery_status"] in {"artifact_indexed", "source_extracted"}
+        or any(
+            record[field] > 0
+            for field in (
+                "region_seed_count",
+                "probed_region_count",
+                "available_region_count",
+                "extracted_artifact_count",
+            )
+        )
+        for device_id in record["device_ids"]
+    }
+    conflicting_scopes = sorted(transport_keys & positive_scope_keys)
+    if conflicting_scopes:
+        source, device_id = conflicting_scopes[0]
+        raise ValidationError(
+            f"{path}: transport-untrusted scope has positive scope evidence for "
+            f"{source}/{device_id}"
+        )
     return sources, artifacts, scope_coverage
+
+
+def validate_android_transport_links(
+    path: Path,
+    android_devices: list[dict[str, Any]],
+    android_scope_coverage: list[dict[str, Any]],
+) -> None:
+    """Join every transport-terminal scope to its exact public device summary."""
+
+    devices_by_id = {record["device_id"]: record for record in android_devices}
+    expected: Counter[tuple[str, str]] = Counter()
+    for scope in android_scope_coverage:
+        if scope["discovery_status"] != "source_transport_untrusted":
+            continue
+        device_id = scope["device_scope"]
+        if device_id not in devices_by_id:
+            raise ValidationError(
+                f"{path}: transport-untrusted scope references unknown device {device_id}"
+            )
+        expected[(scope["source"], device_id)] += 1
+
+    actual: Counter[tuple[str, str]] = Counter()
+    for device_id, record in devices_by_id.items():
+        for discovery in record.get("carrier_source_discovery") or []:
+            count = discovery["status_counts"].get("source_transport_untrusted", 0)
+            if count:
+                actual[(discovery["source"], device_id)] += count
+        catalog_sources = {
+            item["source"] for item in record.get("carrier_source_catalogs") or []
+        }
+        conflicting_catalogs = sorted(
+            source
+            for source in catalog_sources
+            if (source, device_id) in expected
+        )
+        if conflicting_catalogs:
+            raise ValidationError(
+                f"{path}: transport-untrusted scope has device artifact catalog evidence "
+                f"for {conflicting_catalogs[0]}/{device_id}"
+            )
+
+    if actual != expected:
+        missing_summaries = sorted((expected - actual).elements())
+        orphan_summaries = sorted((actual - expected).elements())
+        if missing_summaries:
+            source, device_id = missing_summaries[0]
+            raise ValidationError(
+                f"{path}: transport-untrusted scope lacks device summary for "
+                f"{source}/{device_id}"
+            )
+        source, device_id = orphan_summaries[0]
+        raise ValidationError(
+            f"{path}: transport-untrusted device summary lacks exact scope for "
+            f"{source}/{device_id}"
+        )
 
 
 def validate_index(
@@ -613,7 +758,11 @@ def validate_index(
         "platforms",
         "artifact_registries",
     }
-    if set(value) != expected or value.get("schema_version") != 1:
+    if (
+        set(value) != expected
+        or not is_json_integer(value.get("schema_version"))
+        or value.get("schema_version") != 1
+    ):
         raise ValidationError(f"{path}: catalog index keys are invalid")
     validate_date(path, "generated_from_checks_through", value["generated_from_checks_through"])
     expected_sources = sorted(
@@ -637,6 +786,7 @@ def validate_index(
     platforms = value.get("platforms")
     if not isinstance(platforms, dict) or set(platforms) != {"android", "apple"}:
         raise ValidationError(f"{path}: platform summaries are invalid")
+    validate_nonnegative_count_tree(path, "platforms", platforms)
     android_observed = sum("carrier_observations" in item for item in android_devices)
     apple_observed = sum("carrier_observations" in item for item in apple_devices)
     apple_exact = sum(
@@ -716,17 +866,18 @@ def validate_index(
     registries = value.get("artifact_registries")
     if not isinstance(registries, dict):
         raise ValidationError(f"{path}: artifact registries must be an object")
+    validate_nonnegative_count_tree(path, "artifact_registries", registries)
     apple_registry = registries.get("apple_carrier_bundles")
     if not isinstance(apple_registry, dict):
         raise ValidationError(f"{path}: Apple artifact registry summary is missing")
     quarantined_count = apple_registry.get("quarantined_count")
-    if not isinstance(quarantined_count, int) or quarantined_count < 0:
+    if not is_json_integer(quarantined_count) or quarantined_count < 0:
         raise ValidationError(f"{path}: quarantined artifact count is invalid")
     android_registry = registries.get("android_carrier_source_artifacts")
     if not isinstance(android_registry, dict):
         raise ValidationError(f"{path}: Android artifact registry summary is missing")
     android_quarantined_count = android_registry.get("quarantined_count")
-    if not isinstance(android_quarantined_count, int) or android_quarantined_count < 0:
+    if not is_json_integer(android_quarantined_count) or android_quarantined_count < 0:
         raise ValidationError(f"{path}: Android quarantined artifact count is invalid")
     expected_registries = {
         "apple_carrier_bundles": {
@@ -753,9 +904,10 @@ def main(argv: list[str]) -> int:
     android_sources, android_devices = validate_inventory(root / "android.json", "android")
     apple_sources, apple_devices = validate_inventory(root / "apple.json", "apple")
     artifact_source, artifacts = validate_artifacts(root / "apple-carrier-artifacts.json")
-    android_artifact_sources, android_artifacts, _android_scope_coverage = validate_android_artifacts(
+    android_artifact_sources, android_artifacts, android_scope_coverage = validate_android_artifacts(
         root / "android-carrier-artifacts.json"
     )
+    validate_android_transport_links(root, android_devices, android_scope_coverage)
     if artifact_source not in apple_sources:
         raise ValidationError("Apple device and artifact sources do not match")
     validate_index(

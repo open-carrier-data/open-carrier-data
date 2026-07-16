@@ -99,7 +99,40 @@
           "probed_region_count": { "type": "integer", "minimum": 0 },
           "available_region_count": { "type": "integer", "minimum": 0 },
           "extracted_artifact_count": { "type": "integer", "minimum": 0 }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "discovery_status": { "const": "source_transport_untrusted" }
+              },
+              "required": ["discovery_status"]
+            },
+            "then": {
+              "properties": {
+                "scope_kind": { "const": "device_id" },
+                "device_scope": {
+                  "type": "string",
+                  "pattern": "^android:[a-z0-9-]{3,80}$"
+                },
+                "device_ids": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "pattern": "^android:[a-z0-9-]{3,80}$"
+                  }
+                },
+                "region_seed_count": { "const": 0 },
+                "probed_region_count": { "const": 0 },
+                "available_region_count": { "const": 0 },
+                "extracted_artifact_count": { "const": 0 }
+              }
+            }
+          }
+        ]
       }
     }
   },
@@ -116,7 +149,7 @@
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "pattern": "^(android|apple):[a-z0-9-]{3,80}$"
+        "pattern": "^android:[a-z0-9-]{3,80}$"
       }
     }
   }

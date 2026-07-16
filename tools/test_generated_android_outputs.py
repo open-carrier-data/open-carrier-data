@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import re
 import tempfile
 import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
+from typing import Callable
 
 import generate_android_outputs
 import validate_device_catalog
@@ -41,6 +43,14 @@ def assert_true(condition: bool, message: str) -> None:
         raise AssertionError(message)
 
 
+def assert_validation_error(action: Callable[[], object], message: str) -> None:
+    try:
+        action()
+    except validate_device_catalog.ValidationError:
+        return
+    raise AssertionError(message)
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -66,6 +76,35 @@ def main() -> int:
         == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
         "Android artifact schema and validator discovery statuses must match",
     )
+    android_device_id_pattern = artifact_schema["$defs"]["device_ids"]["items"][
+        "pattern"
+    ]
+    assert_true(
+        android_device_id_pattern.startswith("^android:"),
+        "Android artifact schema must reject Apple device IDs",
+    )
+    scope_schema = artifact_schema["properties"]["scope_coverage"]["items"]
+    transport_rule = next(
+        rule
+        for rule in scope_schema["allOf"]
+        if rule["if"]["properties"]["discovery_status"].get("const")
+        == "source_transport_untrusted"
+    )
+    transport_properties = transport_rule["then"]["properties"]
+    assert_true(
+        transport_properties["scope_kind"] == {"const": "device_id"},
+        "Transport-untrusted schema must require exact device scope",
+    )
+    for count_field in (
+        "region_seed_count",
+        "probed_region_count",
+        "available_region_count",
+        "extracted_artifact_count",
+    ):
+        assert_true(
+            transport_properties[count_field] == {"const": 0},
+            f"Transport-untrusted schema must force {count_field} to zero",
+        )
     inventory_schema = load_json(
         Path(__file__).resolve().parents[1] / "schemas/device-inventory.schema.json"
     )
@@ -85,6 +124,14 @@ def main() -> int:
     assert_true(
         schema_status_count_keys == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
         "Device schema and validator discovery count statuses must match",
+    )
+    discovery_identifiers = device_properties["carrier_source_discovery"]["items"][
+        "properties"
+    ]["matched_identifiers"]
+    assert_true(
+        discovery_identifiers.get("maxItems") == 1
+        and discovery_identifiers["items"]["pattern"].startswith("^(android|apple):"),
+        "Device schema must require one exact platform device identifier",
     )
     observation = {
         "matched_identifiers": [exact_device_id],
@@ -135,6 +182,63 @@ def main() -> int:
             Path("synthetic-device-catalog.json"), exact_device_id, record
         )
 
+    exact_transport_discovery = [
+        {
+            "source": "synthetic_source",
+            "matched_identifiers": [exact_device_id],
+            "scope_count": 1,
+            "status_counts": {"source_transport_untrusted": 1},
+        }
+    ]
+    alias_discovery = deepcopy(exact_transport_discovery)
+    alias_discovery[0]["matched_identifiers"] = ["SM-NOT-AN-EXACT-DEVICE-ID"]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"), exact_device_id, alias_discovery
+        ),
+        "source discovery accepted a non-device alias",
+    )
+    boolean_scope_count = deepcopy(exact_transport_discovery)
+    boolean_scope_count[0]["scope_count"] = True
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"), exact_device_id, boolean_scope_count
+        ),
+        "source discovery accepted a boolean scope count",
+    )
+    boolean_status_count = deepcopy(exact_transport_discovery)
+    boolean_status_count[0]["status_counts"]["source_transport_untrusted"] = True
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_source_discovery(
+            Path("synthetic-device-catalog.json"), exact_device_id, boolean_status_count
+        ),
+        "source discovery accepted a boolean status count",
+    )
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_observations(
+            Path("synthetic-device-catalog.json"),
+            exact_device_id,
+            {**observation, "profile_count": True},
+        ),
+        "carrier observations accepted a boolean profile count",
+    )
+    artifact_scope = {
+        "artifact_count": 1,
+        "match_kind": "exact_product_type",
+        "scopes": [exact_device_id],
+        "source": "apple_carrier_bundles",
+        "verified_artifact_count": 1,
+    }
+    for count_field in ("artifact_count", "verified_artifact_count"):
+        boolean_artifact_scope = deepcopy(artifact_scope)
+        boolean_artifact_scope[count_field] = True
+        assert_validation_error(
+            lambda value=boolean_artifact_scope: validate_device_catalog.validate_artifact_scope(
+                Path("synthetic-device-catalog.json"), exact_device_id, value
+            ),
+            f"artifact catalog accepted boolean {count_field}",
+        )
+
     with tempfile.TemporaryDirectory() as raw_tmp:
         registry_path = Path(raw_tmp) / "android-carrier-artifacts.json"
         terminal_statuses = (
@@ -143,77 +247,436 @@ def main() -> int:
             "source_transport_untrusted",
             "source_terms_restrict_extraction",
         )
-        registry_path.write_text(
-            json.dumps(
+        registry = {
+            "schema_version": 1,
+            "registry_id": "android_carrier_source_artifacts",
+            "description": "Synthetic exact terminal coverage.",
+            "sources": [
                 {
-                    "schema_version": 1,
-                    "registry_id": "android_carrier_source_artifacts",
-                    "description": "Synthetic exact terminal coverage.",
-                    "sources": [
-                        {
-                            "name": "synthetic_source",
-                            "url": "https://example.com/source",
-                            "revision": "0" * 64,
-                            "revision_date": date.today().isoformat(),
-                            "checked_at": date.today().isoformat(),
-                        }
-                    ],
-                    "scope_coverage": [
-                        *[
-                            {
-                                "source": "synthetic_source",
-                                "device_scope": "android:" + marker * 20,
-                                "scope_kind": "device_id",
-                                "device_ids": ["android:" + marker * 20],
-                                "discovery_status": status,
-                                "region_seed_count": 0,
-                                "probed_region_count": 0,
-                                "available_region_count": 0,
-                                "extracted_artifact_count": 0,
-                            }
-                            for marker, status in zip(
-                                "abcd", terminal_statuses, strict=True
-                            )
-                        ],
-                        {
-                            "source": "synthetic_source",
-                            "device_scope": "api_device_id:101",
-                            "scope_kind": "source_api_row",
-                            "device_ids": [exact_device_id],
-                            "discovery_status": "artifact_indexed",
-                            "region_seed_count": 1,
-                            "probed_region_count": 1,
-                            "available_region_count": 1,
-                            "extracted_artifact_count": 0,
-                        },
-                    ],
-                    "artifacts": [],
+                    "name": "synthetic_source",
+                    "url": "https://example.com/source",
+                    "revision": "0" * 64,
+                    "revision_date": date.today().isoformat(),
+                    "checked_at": date.today().isoformat(),
+                }
+            ],
+            "scope_coverage": [
+                *[
+                    {
+                        "source": "synthetic_source",
+                        "device_scope": "android:" + marker * 20,
+                        "scope_kind": "device_id",
+                        "device_ids": ["android:" + marker * 20],
+                        "discovery_status": status,
+                        "region_seed_count": 0,
+                        "probed_region_count": 0,
+                        "available_region_count": 0,
+                        "extracted_artifact_count": 0,
+                    }
+                    for marker, status in zip("abcd", terminal_statuses, strict=True)
+                ],
+                {
+                    "source": "synthetic_source",
+                    "device_scope": "api_device_id:101",
+                    "scope_kind": "source_api_row",
+                    "device_ids": [exact_device_id],
+                    "discovery_status": "artifact_indexed",
+                    "region_seed_count": 1,
+                    "probed_region_count": 1,
+                    "available_region_count": 1,
+                    "extracted_artifact_count": 0,
                 },
-                indent=2,
-                sort_keys=True,
-            )
-            + "\n",
-            encoding="utf-8",
+            ],
+            "artifacts": [],
+        }
+        registry_path.write_text(
+            json.dumps(registry, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
         validate_device_catalog.validate_android_artifacts(registry_path)
-        invalid_transport = load_json(registry_path)
+
         transport_scope = next(
             item
-            for item in invalid_transport["scope_coverage"]
+            for item in registry["scope_coverage"]
             if item["discovery_status"] == "source_transport_untrusted"
         )
-        transport_scope["region_seed_count"] = 1
+        transport_registry = deepcopy(registry)
+        transport_registry["scope_coverage"] = [deepcopy(transport_scope)]
         invalid_path = Path(raw_tmp) / "invalid-transport.json"
-        invalid_path.write_text(
-            json.dumps(invalid_transport, indent=2, sort_keys=True) + "\n",
+
+        def assert_registry_rejected(value: dict, message: str) -> None:
+            invalid_path.write_text(
+                json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            assert_validation_error(
+                lambda: validate_device_catalog.validate_android_artifacts(invalid_path),
+                message,
+            )
+
+        for count_field in (
+            "region_seed_count",
+            "probed_region_count",
+            "available_region_count",
+            "extracted_artifact_count",
+        ):
+            invalid_transport = deepcopy(transport_registry)
+            invalid_transport["scope_coverage"][0][count_field] = 1
+            assert_registry_rejected(
+                invalid_transport,
+                f"transport-untrusted scope accepted nonzero {count_field}",
+            )
+            boolean_transport = deepcopy(transport_registry)
+            boolean_transport["scope_coverage"][0][count_field] = False
+            assert_registry_rejected(
+                boolean_transport,
+                f"transport-untrusted scope accepted boolean {count_field}",
+            )
+
+        for scope_kind in ("model", "source_api_row"):
+            invalid_transport = deepcopy(transport_registry)
+            invalid_transport["scope_coverage"][0]["scope_kind"] = scope_kind
+            invalid_transport["scope_coverage"][0]["device_scope"] = "synthetic-scope"
+            assert_registry_rejected(
+                invalid_transport,
+                f"transport-untrusted scope accepted {scope_kind} scope",
+            )
+
+        apple_transport = deepcopy(transport_registry)
+        apple_device_id = "apple:" + "a" * 20
+        apple_transport["scope_coverage"][0]["device_scope"] = apple_device_id
+        apple_transport["scope_coverage"][0]["device_ids"] = [apple_device_id]
+        assert_registry_rejected(
+            apple_transport,
+            "Android transport-untrusted scope accepted an Apple device ID",
+        )
+
+        artifact_transport = deepcopy(transport_registry)
+        transport_device_id = artifact_transport["scope_coverage"][0]["device_scope"]
+        artifact_transport["artifacts"] = [
+            {
+                "artifact_id": "android:" + "1" * 24,
+                "source": "synthetic_source",
+                "device_scopes": [transport_device_id],
+                "device_ids": [transport_device_id],
+                "regions": ["global"],
+                "build_versions": ["1"],
+                "verification": "indexed",
+                "checked_at": date.today().isoformat(),
+            }
+        ]
+        assert_registry_rejected(
+            artifact_transport,
+            "transport-untrusted scope accepted same-source/device artifact evidence",
+        )
+
+        positive_scope_transport = deepcopy(transport_registry)
+        positive_scope_transport["scope_coverage"].append(
+            {
+                "source": "synthetic_source",
+                "device_scope": "api_device_id:transport-conflict",
+                "scope_kind": "source_api_row",
+                "device_ids": [transport_device_id],
+                "discovery_status": "artifact_indexed",
+                "region_seed_count": 1,
+                "probed_region_count": 1,
+                "available_region_count": 1,
+                "extracted_artifact_count": 0,
+            }
+        )
+        positive_scope_transport["scope_coverage"].sort(
+            key=lambda item: (item["source"], item["device_scope"])
+        )
+        assert_registry_rejected(
+            positive_scope_transport,
+            "transport-untrusted scope accepted same-source/device positive scope evidence",
+        )
+
+        boolean_schema = deepcopy(transport_registry)
+        boolean_schema["schema_version"] = True
+        assert_registry_rejected(
+            boolean_schema,
+            "Android artifact registry accepted a boolean schema version",
+        )
+
+    transport_scope = {
+        "source": "synthetic_source",
+        "device_scope": exact_device_id,
+        "scope_kind": "device_id",
+        "device_ids": [exact_device_id],
+        "discovery_status": "source_transport_untrusted",
+        "region_seed_count": 0,
+        "probed_region_count": 0,
+        "available_region_count": 0,
+        "extracted_artifact_count": 0,
+    }
+    transport_device = {
+        "device_id": exact_device_id,
+        "platform": "android",
+        "carrier_source_discovery": deepcopy(exact_transport_discovery),
+        "carrier_data_coverage": {
+            "status": "source_transport_untrusted",
+            "sources": ["synthetic_source"],
+        },
+    }
+    validate_device_catalog.validate_android_transport_links(
+        Path("synthetic-device-catalog"), [transport_device], [transport_scope]
+    )
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_transport_links(
+            Path("synthetic-device-catalog"), [transport_device], []
+        ),
+        "transport-untrusted device summary passed without an exact registry scope",
+    )
+    scope_without_summary_device = {
+        "device_id": exact_device_id,
+        "platform": "android",
+        "carrier_data_coverage": {"status": "inventory_only", "sources": []},
+    }
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_transport_links(
+            Path("synthetic-device-catalog"),
+            [scope_without_summary_device],
+            [transport_scope],
+        ),
+        "transport-untrusted registry scope passed without a device summary",
+    )
+    unknown_scope = deepcopy(transport_scope)
+    unknown_scope["device_scope"] = "android:" + "b" * 20
+    unknown_scope["device_ids"] = [unknown_scope["device_scope"]]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_transport_links(
+            Path("synthetic-device-catalog"), [transport_device], [unknown_scope]
+        ),
+        "transport-untrusted scope accepted an unknown Android device ID",
+    )
+    catalog_conflict_device = deepcopy(transport_device)
+    catalog_conflict_device["carrier_source_catalogs"] = [
+        {
+            "source": "synthetic_source",
+            "match_kind": "exact_device_id",
+            "matched_identifiers": [exact_device_id],
+            "artifact_count": 1,
+            "indexed_artifact_count": 1,
+            "extracted_artifact_count": 0,
+        }
+    ]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_android_transport_links(
+            Path("synthetic-device-catalog"),
+            [catalog_conflict_device],
+            [transport_scope],
+        ),
+        "transport-untrusted scope accepted same-source/device catalog evidence",
+    )
+    for count_field in (
+        "artifact_count",
+        "indexed_artifact_count",
+        "extracted_artifact_count",
+    ):
+        boolean_catalog = deepcopy(catalog_conflict_device["carrier_source_catalogs"])
+        boolean_catalog[0][count_field] = True
+        assert_validation_error(
+            lambda value=boolean_catalog: validate_device_catalog.validate_source_catalogs(
+                Path("synthetic-device-catalog.json"), exact_device_id, value
+            ),
+            f"source catalog accepted boolean {count_field}",
+        )
+
+    apple_device_id = "apple:" + "a" * 20
+    apple_transport_discovery = deepcopy(exact_transport_discovery)
+    apple_transport_discovery[0]["matched_identifiers"] = [apple_device_id]
+    assert_validation_error(
+        lambda: validate_device_catalog.validate_data_coverage(
+            Path("synthetic-device-catalog.json"),
+            apple_device_id,
+            {
+                "device_id": apple_device_id,
+                "platform": "apple",
+                "carrier_source_discovery": apple_transport_discovery,
+                "carrier_data_coverage": {
+                    "status": "source_transport_untrusted",
+                    "sources": ["synthetic_source"],
+                },
+            },
+        ),
+        "Apple inventory accepted source_transport_untrusted coverage",
+    )
+
+    with tempfile.TemporaryDirectory() as raw_tmp:
+        temporary_root = Path(raw_tmp)
+        today = date.today().isoformat()
+        synthetic_source = {
+            "name": "synthetic_source",
+            "url": "https://example.com/source",
+            "revision": "0" * 64,
+            "revision_date": today,
+            "checked_at": today,
+        }
+        inventory = {
+            "schema_version": 1,
+            "inventory_id": "synthetic_inventory",
+            "platform": "android",
+            "description": "Synthetic inventory.",
+            "sources": [synthetic_source],
+            "devices": [
+                {
+                    "device_id": apple_device_id,
+                    "platform": "android",
+                    "identity_basis": "synthetic",
+                    "brands": [],
+                    "device_names": [],
+                    "models": [],
+                    "marketing_names": [],
+                    "inventory_status": "present",
+                    "inventory_sources": [
+                        {
+                            "source": "synthetic_source",
+                            "status": "present",
+                            "first_seen_revision": "0" * 64,
+                            "last_changed_revision": "0" * 64,
+                        }
+                    ],
+                    "carrier_data_coverage": {
+                        "status": "inventory_only",
+                        "sources": [],
+                    },
+                }
+            ],
+        }
+        inventory_path = temporary_root / "inventory.json"
+        inventory_path.write_text(
+            json.dumps(inventory, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        assert_validation_error(
+            lambda: validate_device_catalog.validate_inventory(inventory_path, "android"),
+            "Android inventory accepted an Apple-prefixed device ID",
+        )
+        boolean_inventory = deepcopy(inventory)
+        boolean_inventory["schema_version"] = True
+        boolean_inventory["devices"][0]["device_id"] = exact_device_id
+        inventory_path.write_text(
+            json.dumps(boolean_inventory, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
-        try:
-            validate_device_catalog.validate_android_artifacts(invalid_path)
-        except validate_device_catalog.ValidationError:
-            pass
-        else:
-            raise AssertionError("transport-untrusted scope accepted artifact activity")
+        assert_validation_error(
+            lambda: validate_device_catalog.validate_inventory(inventory_path, "android"),
+            "device inventory accepted a boolean schema version",
+        )
+
+        android_source = {**synthetic_source, "name": "synthetic_android"}
+        apple_source = {**synthetic_source, "name": "synthetic_apple"}
+        index_android_devices = [
+            {
+                "inventory_status": "present",
+                "brands": ["Synthetic"],
+                "carrier_source_discovery": deepcopy(exact_transport_discovery),
+                "carrier_data_coverage": {
+                    "status": "source_transport_untrusted",
+                    "sources": ["synthetic_source"],
+                },
+            }
+        ]
+        index = {
+            "schema_version": 1,
+            "description": "Synthetic index.",
+            "generated_from_checks_through": today,
+            "sources": sorted(
+                [android_source, apple_source], key=lambda item: item["name"]
+            ),
+            "platforms": {
+                "android": {
+                    "carrier_observation_match_count": 0,
+                    "carrier_artifact_match_count": 0,
+                    "carrier_source_discovery_match_count": 1,
+                    "carrier_data_coverage_counts": {
+                        "source_transport_untrusted": 1
+                    },
+                    "carrier_data_coverage_counts_by_brand": {
+                        "Synthetic": {"source_transport_untrusted": 1}
+                    },
+                    "device_count": 1,
+                    "historical_device_count": 0,
+                    "present_device_count": 1,
+                    "present_device_count_by_brand": {"Synthetic": 1},
+                },
+                "apple": {
+                    "carrier_observation_match_count": 0,
+                    "carrier_data_coverage_counts": {},
+                    "carrier_data_coverage_counts_by_brand": {},
+                    "device_count": 0,
+                    "exact_artifact_scope_match_count": 0,
+                    "family_artifact_scope_match_count": 0,
+                    "historical_device_count": 0,
+                    "present_device_count": 0,
+                    "present_device_count_by_brand": {},
+                },
+            },
+            "artifact_registries": {
+                "apple_carrier_bundles": {
+                    "artifact_count": 0,
+                    "indexed_count": 0,
+                    "verified_count": 0,
+                    "failed_count": 0,
+                    "quarantined_count": 0,
+                },
+                "android_carrier_source_artifacts": {
+                    "artifact_count": 0,
+                    "indexed_count": 0,
+                    "extracted_count": 0,
+                    "failed_count": 0,
+                    "quarantined_count": 0,
+                },
+            },
+        }
+        index_path = temporary_root / "index.json"
+
+        def validate_synthetic_index(value: dict) -> None:
+            index_path.write_text(
+                json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            validate_device_catalog.validate_index(
+                index_path,
+                [android_source],
+                index_android_devices,
+                [apple_source],
+                [],
+                apple_source,
+                [],
+                [android_source],
+                [],
+            )
+
+        validate_synthetic_index(index)
+        boolean_coverage_index = deepcopy(index)
+        boolean_coverage_index["platforms"]["android"]["carrier_data_coverage_counts"][
+            "source_transport_untrusted"
+        ] = True
+        assert_validation_error(
+            lambda: validate_synthetic_index(boolean_coverage_index),
+            "device index accepted a boolean transport coverage count",
+        )
+        boolean_brand_coverage_index = deepcopy(index)
+        boolean_brand_coverage_index["platforms"]["android"][
+            "carrier_data_coverage_counts_by_brand"
+        ]["Synthetic"]["source_transport_untrusted"] = True
+        assert_validation_error(
+            lambda: validate_synthetic_index(boolean_brand_coverage_index),
+            "device index accepted a nested boolean transport coverage count",
+        )
+        boolean_registry_index = deepcopy(index)
+        boolean_registry_index["artifact_registries"][
+            "android_carrier_source_artifacts"
+        ]["quarantined_count"] = False
+        assert_validation_error(
+            lambda: validate_synthetic_index(boolean_registry_index),
+            "device index accepted a boolean artifact-registry count",
+        )
+        boolean_schema_index = deepcopy(index)
+        boolean_schema_index["schema_version"] = True
+        assert_validation_error(
+            lambda: validate_synthetic_index(boolean_schema_index),
+            "device index accepted a boolean schema version",
+        )
+
     try:
         validate_device_catalog.validate_data_coverage(
             Path("synthetic-device-catalog.json"),
