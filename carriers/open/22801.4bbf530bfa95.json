@@ -32,19 +32,6 @@
   "android_apns": [
     {
       "apn": "event.swisscom.ch",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
-      "mmsc": "http://mms.natel.ch:8079",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.210.002",
-      "name": "Swisscom MMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "event.swisscom.ch",
       "carrier_id": 2366,
       "mmsc": "http://mms.natel.ch:8079",
       "mmsport": 8080,
@@ -58,10 +45,9 @@
       "apn": "gprs.swisscom.ch",
       "carrier_id": 2366,
       "name": "Swisscom Services",
-      "port": 8080,
-      "proxy": "192.168.210.1",
       "types": [
         "default",
+        "ia",
         "supl"
       ]
     },
@@ -73,14 +59,6 @@
         "dun"
       ],
       "user": "username"
-    },
-    {
-      "apn": "gprs.swisscom.ch",
-      "carrier_id": 2366,
-      "name": "Swisscom Services",
-      "types": [
-        "ia"
-      ]
     },
     {
       "apn": "hos",
@@ -123,58 +101,6 @@
         "emergency"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "apn.fastweb.it",
-      "mvno_match_data": "D8FFFFFFFFFFFFFF",
-      "mvno_type": "gid",
-      "name": "FW WEB",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "apn.fastweb.it",
-      "mmsc": "http://mms.fastweb.it/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "85.18.189.217",
-      "mvno_match_data": "D8FFFFFFFFFFFFFF",
-      "mvno_type": "gid",
-      "name": "FW MMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "apn.fastweb.it",
-      "mvno_match_data": "FASTWEB",
-      "mvno_type": "spn",
-      "name": "FW WEB",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "apn.fastweb.it",
-      "mmsc": "http://mms.fastweb.it/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "85.18.189.217",
-      "mvno_match_data": "FASTWEB",
-      "mvno_type": "spn",
-      "name": "FW MMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
     }
   ],
   "android_carrier_config": {

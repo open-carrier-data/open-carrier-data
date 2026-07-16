@@ -17,24 +17,6 @@
   },
   "android_apns": [
     {
-      "apn": "HOS",
-      "mmsc": "http://post.lu",
-      "name": "POST XCAP",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
-      "apn": "hos",
-      "carrier_id": 895,
-      "name": "Post UT",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -47,21 +29,22 @@
     },
     {
       "apn": "ims",
-      "carrier_id": 895,
-      "name": "Post IMS",
-      "protocol": "IPV4V6",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "POST IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
     },
     {
       "apn": "mms.pt.lu",
-      "authtype": 1,
       "carrier_id": 895,
       "mmsc": "http://mmsc.pt.lu",
       "mmsport": 8080,
       "mmsproxy": "194.154.192.88",
-      "name": "mms.pt.lu",
+      "name": "POST MMS",
       "password": "mms",
       "types": [
         "mms"
@@ -69,37 +52,44 @@
       "user": "mms"
     },
     {
-      "apn": "wap.pt.lu",
-      "carrier_id": 895,
-      "name": "LUXGSM WAP",
-      "password": "wap",
+      "apn": "mms.pt.lu",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.pt.lu",
+      "mmsport": 8080,
+      "mmsproxy": "194.154.192.88",
+      "name": "mms.pt.lu",
+      "password": "mms",
       "port": 8080,
-      "proxy": "194.154.192.98",
+      "protocol": "IP",
+      "proxy": "194.154.192.88",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "mms"
       ],
-      "user": "wap"
-    },
-    {
-      "apn": "wap.pt.lu",
-      "name": "LUXGSM WAP",
-      "password": "wap",
-      "port": 8080,
-      "proxy": "194.154.192.98",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "wap"
+      "user": "mms"
     },
     {
       "apn": "web.pt.lu",
       "carrier_id": 895,
-      "name": "web.pt.lu",
+      "name": "POST Internet",
       "types": [
         "default",
         "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.pt.lu",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "web.pt.lu",
+      "port": 8080,
+      "protocol": "IP",
+      "proxy": "194.154.192.88",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
         "supl"
       ]
     },
@@ -109,29 +99,6 @@
       "types": [
         "dun",
         "ia",
-        "mms"
-      ]
-    },
-    {
-      "apn": "join",
-      "mvno_match_data": "6",
-      "mvno_type": "gid",
-      "name": "Join Internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "joinmms",
-      "authtype": 1,
-      "mmsc": "http://joinmms",
-      "mmsport": 8080,
-      "mmsproxy": "joinproxy",
-      "mvno_match_data": "6",
-      "mvno_type": "gid",
-      "name": "Join MMS",
-      "types": [
         "mms"
       ]
     }

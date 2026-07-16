@@ -1,15 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "IMS",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "WAPSOUTH.CELLONE.IN",
       "name": "BSNL WAP",
       "password": "PPP123",
@@ -60,6 +51,19 @@
       ]
     },
     {
+      "apn": "bsnlmms",
+      "mmsc": "http://bsnlmmsc.in:8514",
+      "mmsport": 8080,
+      "mmsproxy": "10.210.10.11",
+      "name": "bsnlmms",
+      "port": 8080,
+      "protocol": "IPV4V6",
+      "proxy": "10.210.10.11",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "bsnlnet",
       "carrier_id": 1549,
       "name": "bsnlnet",
@@ -87,16 +91,6 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",

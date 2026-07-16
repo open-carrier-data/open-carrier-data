@@ -2,23 +2,12 @@
   "android_apns": [
     {
       "apn": "gprs.amazoniacelular.com.br",
-      "authtype": 1,
       "mmsc": "null",
-      "name": "gprs.amazoniacelular.com.br",
+      "name": "Amazonia GPRS",
       "password": "celular",
       "types": [
         "default",
         "supl"
-      ],
-      "user": "celular"
-    },
-    {
-      "apn": "gprs.amazoniacelular.com.br",
-      "authtype": 1,
-      "name": "gprs.amazoniacelular.com.br",
-      "password": "celular",
-      "types": [
-        "dun"
       ],
       "user": "celular"
     },
@@ -31,7 +20,9 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "dun",
+        "ia"
       ],
       "user": "oi"
     },
@@ -59,28 +50,32 @@
       "user": "oi"
     },
     {
-      "apn": "gprs.oi.com.br",
-      "authtype": 0,
-      "carrier_id": 1389,
-      "name": "Oi Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ]
-    },
-    {
       "apn": "mmsgprs.amazoniacelular.com.br",
-      "authtype": 1,
       "mmsc": "http://mms.amazoniacelular.com.br",
       "mmsport": 8080,
       "mmsproxy": "200.192.230.142",
-      "name": "mmsgprs.amazoniacelular.com.br",
+      "name": "Amazonia MMS",
       "password": "celular",
       "types": [
         "mms"
       ],
       "user": "celular"
+    },
+    {
+      "apn": "mmsgprs.oi.com.br",
+      "authtype": 1,
+      "carrier_id": 1389,
+      "mmsc": "http://200.222.42.204:8002",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "Oi:MMS:2",
+      "password": "oioioi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
     },
     {
       "apn": "wapgprs.oi.com.br",

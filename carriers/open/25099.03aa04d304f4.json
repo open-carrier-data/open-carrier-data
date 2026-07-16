@@ -12,14 +12,6 @@
       "user": "beeline"
     },
     {
-      "apn": "ims",
-      "name": "ims",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "internet.beeline.ru",
       "authtype": 1,
       "carrier_id": 1681,
@@ -37,8 +29,6 @@
       "authtype": 1,
       "name": "internet.beeline.ru",
       "password": "beeline",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -55,22 +45,18 @@
       "user": "beeline"
     },
     {
-      "apn": "wap.beeline.ru",
-      "name": "BeeLine HTTP",
+      "apn": "mms.beeline.ru",
+      "authtype": 1,
+      "carrier_id": 1681,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.94.23",
+      "name": "Beeline MMS",
       "password": "beeline",
-      "port": 8080,
-      "proxy": "192.168.17.1",
       "types": [
-        "default"
+        "mms"
       ],
       "user": "beeline"
-    },
-    {
-      "apn": "xcap.beeline.ru",
-      "name": "Beeline XCAP",
-      "types": [
-        "xcap"
-      ]
     }
   ],
   "android_carrier_config": {

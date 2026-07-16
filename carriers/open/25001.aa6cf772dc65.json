@@ -1,26 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1678,
-      "name": "MTS IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "internet.mts.ru",
       "authtype": 1,
       "carrier_id": 1678,
@@ -40,7 +20,6 @@
       "authtype": 1,
       "name": "internet.mts.ru",
       "password": "mts",
-      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -57,6 +36,20 @@
       "user": "mts"
     },
     {
+      "apn": "mms.etk.ru",
+      "mmsc": "http://mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.30.60",
+      "name": "ETK",
+      "password": "mms",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "mms.mts.ru",
       "authtype": 1,
       "carrier_id": 1678,
@@ -64,6 +57,19 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.192.192",
       "name": "MTS MMS",
+      "password": "mts",
+      "types": [
+        "mms"
+      ],
+      "user": "mts"
+    },
+    {
+      "apn": "mms.mts.ru",
+      "authtype": 1,
+      "mmsc": "http://mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.192.192",
+      "name": "mms.mts.ru",
       "password": "mts",
       "types": [
         "mms"

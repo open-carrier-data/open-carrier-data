@@ -38,9 +38,7 @@
       "protocol": "IPV4V6",
       "server": "dialog",
       "types": [
-        "default",
-        "mms",
-        "supl"
+        "default"
       ]
     },
     {
@@ -50,6 +48,18 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "dialogbb",
+      "mmsc": "http://mms.dialog.lk:3130/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.122.2",
+      "name": "dialogbb",
+      "server": "dialog",
+      "types": [
+        "mms",
+        "supl"
       ]
     },
     {
@@ -64,23 +74,13 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "ppwap",
-      "mmsc": "http://mms.dialog.lk:3130/mmsc",
       "mmsport": 8080,
-      "mmsproxy": "192.168.122.2",
-      "name": "ppwap",
+      "name": "Dialog WAP Prepaid",
       "proxy": "192.168.122.2",
       "types": [
-        "default"
+        "default",
+        "supl"
       ]
     },
     {
@@ -91,15 +91,6 @@
       "name": "ppwap",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "ppwap",
-      "mmsport": 8080,
-      "name": "Dialog WAP Prepaid",
-      "proxy": "192.168.122.2",
-      "types": [
-        "supl"
       ]
     },
     {

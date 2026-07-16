@@ -102,28 +102,10 @@
       "mmsc": "http://mms.talktalk.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.12",
-      "name": "mobile.talktalk.co.uk",
+      "name": "TalkTalk",
       "port": 8799,
-      "proxy": "212.183.137.012",
       "types": [
         "default"
-      ]
-    },
-    {
-      "apn": "mobile.talktalk.co.uk",
-      "mmsc": "http://mms.talktalk.co.uk/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
-      "name": "TalkTalk MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mobile.talktalk.co.uk",
-      "name": "TalkTalk Internet",
-      "types": [
-        "supl"
       ]
     },
     {
@@ -225,25 +207,6 @@
     },
     {
       "apn": "wap.vodafone.co.uk",
-      "authtype": 1,
-      "carrier_id": 28,
-      "mmsc": "http://mms.vodafone.co.uk/servlets/mms*",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.12",
-      "name": "Vodafone UK Data",
-      "password": "*wap",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "wap",
-      "user_editable": false
-    },
-    {
-      "apn": "wap.vodafone.co.uk",
       "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.012",
@@ -267,16 +230,6 @@
       ],
       "user": "wap",
       "user_editable": false
-    },
-    {
-      "apn": "xcap",
-      "carrier_id": 28,
-      "name": "Vodafone UK UT",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
     },
     {
       "apn": "xcap",
@@ -305,27 +258,6 @@
       ]
     },
     {
-      "apn": "UK.LEBARA.MOBI",
-      "authtype": 1,
-      "carrier_id": 2309,
-      "mmsc": "http://mms.lebara.co.uk/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.12",
-      "mvno_match_data": "90",
-      "mvno_type": "gid",
-      "name": "Lebara Data",
-      "password": "wap",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "wap",
-      "user_editable": false
-    },
-    {
       "apn": "asdamobiles.co.uk",
       "authtype": 1,
       "mmsc": "http://mms.asdamobiles.co.uk/servlets/mms",
@@ -344,41 +276,6 @@
         "supl"
       ],
       "user": "wap"
-    },
-    {
-      "apn": "MY.INTERNET",
-      "authtype": 1,
-      "mmsc": "http://mms.ad.vodafone.co.uk/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.12",
-      "mvno_match_data": "A1",
-      "mvno_type": "gid",
-      "name": "ASDA Mobile Data",
-      "password": "wap",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "wap",
-      "user_editable": false
-    },
-    {
-      "apn": "btmobile.bt.com",
-      "authtype": 1,
-      "mmsc": "http://mms.bt.com/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.12",
-      "mvno_match_data": "B3",
-      "mvno_type": "gid",
-      "name": "BT Mobile",
-      "password": "bt",
-      "types": [
-        "default"
-      ],
-      "user": "bt"
     },
     {
       "apn": "payg.talkmobile.co.uk",
@@ -408,10 +305,9 @@
       "mmsproxy": "212.183.137.12",
       "mvno_match_data": "C1",
       "mvno_type": "gid",
-      "name": "talkmobile.co.uk",
+      "name": "Talkmob WAP",
       "password": "wap",
       "port": 8799,
-      "protocol": "IPV4V6",
       "proxy": "212.183.137.12",
       "types": [
         "default",
@@ -419,8 +315,7 @@
         "mms",
         "supl"
       ],
-      "user": "wap",
-      "user_editable": false
+      "user": "wap"
     },
     {
       "apn": "btmobile.bt.com",
@@ -485,6 +380,7 @@
     {
       "apn": "uk.lebara.mobi",
       "authtype": 1,
+      "carrier_id": 2309,
       "mmsc": "http://mms.lebara.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.012",
@@ -493,9 +389,25 @@
       "name": "Lebara Internet",
       "password": "wap",
       "types": [
-        "mms"
+        "default",
+        "ia",
+        "mms",
+        "supl"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "uk.lebara.mobi",
+      "authtype": 1,
+      "mvno_match_data": "Lebara",
+      "mvno_type": "spn",
+      "name": "UK - Lebara Web",
+      "password": "web",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "web"
     },
     {
       "apn": "ovivomobile.com",
@@ -537,23 +449,11 @@
     },
     {
       "apn": "payg.mobilebysainsburys.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mms.mobilebysainsburys.co.uk/servlets/mms",
-      "mmsport": 8799,
-      "mmsproxy": "212.183.137.12",
-      "mvno_match_data": "Sainsbury's",
-      "mvno_type": "spn",
-      "name": "payg.mobilebysainsburys.co.uk",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "payg.mobilebysainsburys.co.uk",
       "mvno_match_data": "Sainsbury's",
       "mvno_type": "spn",
       "name": "Sainsbury's Internet",
       "types": [
+        "default",
         "supl"
       ]
     },

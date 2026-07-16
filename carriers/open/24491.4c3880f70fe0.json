@@ -20,13 +20,13 @@
     },
     {
       "apn": "hos",
-      "carrier_id": 1480,
-      "name": "Telia Ut",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "hos",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "xcap"
       ],
+      "user_editable": false,
       "user_visible": false
     },
     {
@@ -53,34 +53,28 @@
     },
     {
       "apn": "ims",
-      "carrier_id": 1480,
-      "name": "Telia IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "Telia FI",
       "types": [
         "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet",
       "carrier_id": 1480,
+      "name": "SONERA Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -93,58 +87,12 @@
       ]
     },
     {
-      "apn": "internet",
-      "name": "Telia Internet",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "mms",
-      "carrier_id": 1480,
-      "mmsc": "http://mms/",
-      "mmsport": 8080,
-      "mmsproxy": "195.156.25.33",
-      "name": "Telia MMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "wap.sonera.net",
       "carrier_id": 1480,
       "mmsc": "http://mms.sonera.fi:8002",
       "mmsport": 80,
       "mmsproxy": "195.156.25.33",
       "name": "SONERA MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "internet.aina.fi",
-      "authtype": 1,
-      "mvno_match_data": "2449192",
-      "mvno_type": "imsi",
-      "name": "Aina Internet (S)",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mediapiste",
-      "authtype": 1,
-      "mmsc": "http://mms.sonera.fi:8002/",
-      "mmsport": 80,
-      "mmsproxy": "195.156.25.33",
-      "mvno_match_data": "2449192",
-      "mvno_type": "imsi",
-      "name": "Aina MMS (S)",
       "types": [
         "mms"
       ]

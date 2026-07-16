@@ -1,19 +1,8 @@
 {
   "android_apns": [
     {
-      "apn": "IMS",
-      "carrier_id": 24,
-      "name": "Vodacom",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "ims",
-      "name": "ims",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "name": "Vodacom",
       "types": [
         "ims"
       ]
@@ -30,19 +19,20 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet",
       "authtype": 3,
       "name": "internet",
       "port": 8080,
       "proxy": "196.6.128.12",
       "types": [
+        "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Vodacom",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -65,11 +55,7 @@
     },
     {
       "apn": "lte.vodacom.za",
-      "mmsc": "http://mmsc.vodacom4me.co.za",
-      "mmsport": 8080,
-      "mmsproxy": "196.006.128.013",
       "name": "lte.vodacom.za",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -78,6 +64,16 @@
     {
       "apn": "lte.vodacom.za",
       "carrier_id": 24,
+      "mmsc": "http://mmsc.vodacom4me.co.za",
+      "mmsport": 8080,
+      "mmsproxy": "196.6.128.13",
+      "name": "MMS.Vodacom",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "lte.vodacom.za",
       "mmsc": "http://mmsc.vodacom4me.co.za",
       "mmsport": 8080,
       "mmsproxy": "196.6.128.13",
@@ -96,15 +92,6 @@
       "types": [
         "mms"
       ]
-    },
-    {
-      "apn": "xcap",
-      "carrier_id": 24,
-      "name": "Vodacom",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
     }
   ],
   "android_carrier_config": {

@@ -1,15 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "IMS",
-      "name": "China Telecomm (IMS)",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "ctnet",
       "authtype": 3,
       "name": "ctnet",
@@ -18,25 +9,21 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "hipri",
-        "ia"
+        "dun",
+        "supl"
       ],
-      "user": "ctnet@mycdma.cn",
-      "user_editable": false
+      "user": "ctnet@mycdma.cn"
     },
     {
       "apn": "ctnet",
       "authtype": 3,
-      "name": "ctnet",
-      "password": "vnet.mobi",
+      "name": "\u4e2d\u570b\u96fb\u4fe1(China Telecom) NET",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun",
-        "supl",
+        "ia",
         "xcap"
-      ],
-      "user": "ctnet@mycdma.cn"
+      ]
     },
     {
       "apn": "ctwap",
@@ -50,7 +37,8 @@
       "proxy": "10.0.0.200",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "supl"
       ],
       "user": "ctwap@mycdma.cn"
     },
@@ -67,11 +55,9 @@
       "proxy": "10.0.0.200",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "mms",
-        "supl"
+        "mms"
       ],
-      "user": "ctwap@mycdma.cn",
-      "user_editable": false
+      "user": "ctwap@mycdma.cn"
     },
     {
       "apn": "ims",
@@ -83,6 +69,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "name": "\u4e2d\u570b\u96fb\u4fe1(China Telecom) IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {

@@ -44,7 +44,6 @@
       "carrier_enabled": true,
       "name": "A1 SRB Internet",
       "password": "internet",
-      "protocol": "IP",
       "types": [
         "default"
       ],
@@ -64,7 +63,6 @@
       "mmsc": "http://mms.a1.rs",
       "name": "mms",
       "password": "mms",
-      "protocol": "IP",
       "types": [
         "mms"
       ],
@@ -72,14 +70,12 @@
     },
     {
       "apn": "vipmobile",
-      "authtype": 1,
       "carrier_id": 1014,
       "name": "Vip GPRS",
       "password": "vipmobile",
-      "port": 8080,
-      "proxy": "212.15.182.82",
       "types": [
         "default",
+        "ia",
         "supl"
       ],
       "user": "vipmobile"
@@ -107,12 +103,13 @@
       "user": "vipmobile"
     },
     {
-      "apn": "vipmobile",
+      "apn": "vipmobile.mms",
       "carrier_id": 1014,
-      "name": "Vip GPRS",
+      "mmsc": "http://mms.vipmobile.rs",
+      "name": "Vip MMS",
       "password": "vipmobile",
       "types": [
-        "ia"
+        "mms"
       ],
       "user": "vipmobile"
     }

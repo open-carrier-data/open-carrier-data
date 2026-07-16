@@ -34,13 +34,12 @@
       "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "ims",
+      "name": "Vodafone IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet.vodafone.pt",
@@ -54,19 +53,28 @@
     },
     {
       "apn": "net2.vodafone.pt",
-      "authtype": 1,
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "Vodafone Net2",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "net2.vodafone.pt",
+      "authtype": 0,
+      "carrier_enabled": true,
       "mmsc": "http://mms.vodafone.pt/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "iproxy.vodafone.pt",
-      "name": "Vodafone Net2",
-      "password": "vodafone",
+      "name": "Vodafone MMS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
-      ],
-      "user": "vodafone",
-      "user_editable": false
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {

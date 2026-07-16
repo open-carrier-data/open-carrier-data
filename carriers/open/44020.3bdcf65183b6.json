@@ -35,27 +35,14 @@
     {
       "apn": "cmn.mgx",
       "authtype": 1,
-      "mtu": 1422,
       "name": "Closed Networks[Enterprise]",
       "password": "mgx",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
         "supl"
-      ],
-      "user": "cmn@mgx",
-      "user_editable": false
-    },
-    {
-      "apn": "cmn.mgx",
-      "authtype": 1,
-      "name": "Closed Networks[Enterprise]",
-      "password": "mgx",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ia"
       ],
       "user": "cmn@mgx",
       "user_editable": false
@@ -141,12 +128,11 @@
     {
       "apn": "line.me",
       "authtype": 3,
-      "name": "line.me",
+      "name": "LINE\u30e2\u30d0\u30a4\u30eb(S)",
       "password": "line",
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -162,7 +148,7 @@
       "password": "mineo",
       "types": [
         "cbs",
-        "dun",
+        "default",
         "fota",
         "hipri",
         "ia",
@@ -191,25 +177,16 @@
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "andmms.softbank.ne.jp",
-      "name": "SoftBank(4G/5G)",
+      "name": "plus.4g",
       "password": "4g",
       "types": [
         "cbs",
+        "default",
         "fota",
-        "ia"
-      ],
-      "user": "plus"
-    },
-    {
-      "apn": "plus.4g",
-      "authtype": 2,
-      "mmsc": "http://mms-s",
-      "mmsport": 8080,
-      "mmsproxy": "andmms.plusacs.ne.jp",
-      "name": "SoftBank 4G\uff0f5G \u30b7\u30f3\u30d7\u30eb\u30b9\u30bf\u30a4\u30eb",
-      "password": "4g",
-      "types": [
-        "dun"
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
       ],
       "user": "plus"
     },
@@ -242,7 +219,11 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
       ],
       "user": "ym",
       "user_editable": false

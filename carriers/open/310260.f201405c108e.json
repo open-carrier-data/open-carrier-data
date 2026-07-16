@@ -91,21 +91,6 @@
     },
     {
       "apn": "fast.t-mobile.com",
-      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "mtu": 1440,
-      "name": "fast.t-mobile.com",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "fast.t-mobile.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "carrier_id": 1,
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
@@ -151,25 +136,28 @@
     },
     {
       "apn": "fast.t-mobile.com",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|19|20",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "name": "T-Mobile US LTE",
+      "mtu": 1440,
+      "name": "fast.t-mobile.com",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "mms",
+        "ia",
         "supl"
-      ]
+      ],
+      "user_editable": false
     },
     {
       "apn": "fast.t-mobile.com",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "name": "T-Mobile LTE",
+      "mtu": 1440,
+      "name": "T-Mobile US LTE",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "xcap"
-      ],
-      "user_editable": false
+        "mms"
+      ]
     },
     {
       "apn": "h2g2",
@@ -233,6 +221,15 @@
       "apn": "ims",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
       "carrier_id": 1,
+      "modem_cognitive": true,
+      "name": "T-Mobile IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "modem_cognitive": true,
       "name": "T-Mobile IMS",
       "protocol": "IPV6",
@@ -314,28 +311,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
-      "name": "ims",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mmsc": "epdg",
-      "modem_cognitive": true,
-      "name": "ims",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
       "apn": "pcweb.tmobile.com",
       "carrier_id": 1,
       "name": "T-Mobile Tethering",
@@ -401,17 +376,6 @@
       "user_visible": false
     },
     {
-      "apn": "tmus",
-      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
-      ]
-    },
-    {
       "apn": "wap.cellular1.net",
       "authtype": 0,
       "mmsc": "http://mms.cellular1.net/ecit/mms.php",
@@ -437,118 +401,6 @@
         "mms",
         "supl"
       ]
-    },
-    {
-      "apn": "asw.data",
-      "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "Assurance LTE",
-      "protocol": "IPV6",
-      "types": [
-        "default",
-        "mms",
-        "supl",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "asw.tether",
-      "authtype": 0,
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "Assurance Tethering",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "dun"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "fast.metropcs.com",
-      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "Assurance LTE",
-      "protocol": "IPV6",
-      "types": [
-        "default",
-        "mms",
-        "supl",
-        "xcap"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "ims",
-      "mmsc": "epdg",
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "ims",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
-      "apn": "pcweb.metropcs.com",
-      "authtype": 0,
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "Assurance Tethering",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "dun"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "sos",
-      "authtype": 0,
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "Assurance Emergency",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "emergency"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
-      "apn": "tmus",
-      "bearer_bitmask": "18",
-      "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "tmus",
-      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      "mvno_match_data": "1A53",
-      "mvno_type": "gid",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_editable": false
     },
     {
       "apn": "wholesale",
@@ -579,76 +431,6 @@
         "hipri",
         "mms",
         "supl"
-      ]
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 80,
-      "mvno_match_data": "2AC9",
-      "mvno_type": "gid",
-      "name": "Consumer Cellular",
-      "types": [
-        "default",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "354D",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "364D",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "4153",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "4153",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "ia"
       ]
     },
     {
@@ -717,19 +499,6 @@
       ]
     },
     {
-      "apn": "qlink",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "514C",
-      "mvno_type": "gid",
-      "name": "Qlink",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "carrier_id": 2078,
@@ -779,44 +548,11 @@
     {
       "apn": "simple",
       "mmsc": "http://smpl.mms.msg.eng.t-mobile.com/mms/wapenc",
-      "mvno_match_data": "534D",
-      "mvno_type": "gid",
-      "name": "SIMPLE",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "fota",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "simple",
-      "mmsc": "http://smpl.mms.msg.eng.t-mobile.com/mms/wapenc",
       "mvno_match_data": "534d",
       "mvno_type": "gid",
       "name": "Simple",
       "types": [
         "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "554D",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "ia",
         "mms",
         "supl"
       ]
@@ -849,22 +585,6 @@
     },
     {
       "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "6132",
-      "mvno_type": "gid",
-      "name": "Ultra",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wholesale",
       "carrier_id": 2080,
       "mvno_match_data": "6135",
       "mvno_type": "gid",
@@ -876,19 +596,6 @@
         "dun",
         "fota",
         "hipri",
-        "supl"
-      ]
-    },
-    {
-      "apn": "tello",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6941",
-      "mvno_type": "gid",
-      "name": "Tello",
-      "types": [
-        "default",
-        "ia",
-        "mms",
         "supl"
       ]
     },
@@ -908,25 +615,12 @@
       ]
     },
     {
-      "apn": "iwireless",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6957",
-      "mvno_type": "gid",
-      "name": "iWireless",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
       "apn": "fast.metropcs.com",
       "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
       "mtu": 1440,
       "mvno_match_data": "6D",
       "mvno_type": "gid",
-      "name": "fast.metropcs.com",
+      "name": "MetroPCS 260",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
@@ -949,65 +643,15 @@
       ]
     },
     {
-      "apn": "fast.metropcs.com",
-      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6D",
-      "mvno_type": "gid",
-      "name": "MetroPCS",
-      "protocol": "IPV6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
       "apn": "ims",
-      "mmsc": "epdg",
       "mtu": 1440,
       "mvno_match_data": "6D",
       "mvno_type": "gid",
-      "name": "ims",
+      "name": "MetroPCS 260 IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "pcweb.metropcs.com",
-      "authtype": 0,
-      "mvno_match_data": "6D",
-      "mvno_type": "gid",
-      "name": "MetroPCS Tethering",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "dun"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "sos",
-      "authtype": 0,
-      "mvno_match_data": "6D",
-      "mvno_type": "gid",
-      "name": "MetroPCS Emergency",
-      "protocol": "IPV6",
-      "types": [
-        "emergency"
-      ]
-    },
-    {
-      "apn": "tmus",
-      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6D",
-      "mvno_type": "gid",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
       ]
     },
     {
@@ -1026,91 +670,6 @@
       ]
     },
     {
-      "apn": "fast.metropcs.com",
-      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "MetroPCS",
-      "protocol": "IPV6",
-      "types": [
-        "default",
-        "mms",
-        "supl",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mmsc": "epdg",
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "ims",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
-      "apn": "pcweb.metropcs.com",
-      "authtype": 0,
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "MetroPCS Tethering",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "dun"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
-      "apn": "sos",
-      "authtype": 0,
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "MetroPCS Emergency",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "emergency"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
-      "apn": "tmus",
-      "bearer_bitmask": "18",
-      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "tmus",
-      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
-      "mvno_match_data": "6D38",
-      "mvno_type": "gid",
-      "name": "EPDG MMS/XCAP",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_editable": false
-    },
-    {
       "apn": "wholesale",
       "carrier_id": 2071,
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
@@ -1119,22 +678,6 @@
       "name": "ZIP SIM",
       "types": [
         "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wholesale",
-      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "mmsport": 8080,
-      "mvno_match_data": "756D",
-      "mvno_type": "gid",
-      "name": "Mint",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "ia",
         "mms",
         "supl"
       ]
@@ -1288,27 +831,17 @@
       ]
     },
     {
-      "apn": "h2g2",
-      "carrier_id": 1989,
-      "mmsc": "http://mmsc1.g-mms.com/mms/wapenc",
-      "mvno_match_data": "31026097",
-      "mvno_type": "imsi",
-      "name": "Google Fi - Tm",
-      "password": "none",
-      "protocol": "IPV6",
-      "roaming_protocol": "IP",
-      "server": "*",
+      "apn": "wap.tracfone",
+      "mmsc": "http://mms.tracfone.com",
+      "mvno_match_data": "deff",
+      "mvno_type": "gid",
+      "name": "Straight Talk",
+      "port": 8080,
       "types": [
-        "cbs",
         "default",
-        "fota",
-        "ia",
         "mms",
         "supl"
-      ],
-      "user": "none",
-      "user_editable": false,
-      "user_visible": false
+      ]
     },
     {
       "apn": "h2g2",
@@ -1316,28 +849,25 @@
       "mvno_match_data": "31026097",
       "mvno_type": "imsi",
       "name": "Project Fi - T",
+      "password": "none",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
       "types": [
-        "cbs",
-        "fota",
-        "supl"
-      ]
+        "default"
+      ],
+      "user": "none"
     },
     {
-      "apn": "ims",
-      "carrier_id": 1989,
+      "apn": "h2g2",
       "mvno_match_data": "31026097",
       "mvno_type": "imsi",
-      "name": "Google Fi - Tm",
-      "network_type_bitmask": "13|20",
-      "protocol": "IPV6",
-      "roaming_protocol": "IP",
+      "name": "Project Fi - T",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
+        "ia"
+      ]
     }
   ],
   "android_carrier_config": {

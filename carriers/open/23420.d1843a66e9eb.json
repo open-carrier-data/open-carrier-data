@@ -33,6 +33,16 @@
       "name": "3 Hotspot",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "3hotspot",
+      "authtype": 0,
+      "mtu": 1440,
+      "name": "3hotspot",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ],
       "user_visible": false
     },
@@ -96,6 +106,18 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1440,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "sos",
       "name": "Three",
       "types": [
@@ -113,8 +135,7 @@
         "default",
         "ia",
         "mms",
-        "supl",
-        "xcap"
+        "supl"
       ]
     },
     {
@@ -159,18 +180,6 @@
     {
       "apn": "three.co.uk",
       "authtype": 0,
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "name": "3",
-      "protocol": "IPV4V6",
-      "types": [
-        "hipri"
-      ]
-    },
-    {
-      "apn": "three.co.uk",
-      "authtype": 0,
       "carrier_enabled": true,
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
       "mmsport": 8799,
@@ -183,222 +192,6 @@
         "xcap"
       ],
       "user_editable": false
-    },
-    {
-      "apn": "3hotspot",
-      "authtype": 0,
-      "mvno_match_data": "0303",
-      "mvno_type": "gid",
-      "name": "3 Hotspot",
-      "types": [
-        "dun"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "0303",
-      "mvno_type": "gid",
-      "name": "3 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "three.co.uk",
-      "authtype": 0,
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "0303",
-      "mvno_type": "gid",
-      "name": "3",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "hipri",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "id",
-      "mmsc": "http://mms.um.idmobile.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.idmobile.co.uk",
-      "mvno_match_data": "0305",
-      "mvno_type": "gid",
-      "name": "iD Mobile",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "id",
-      "authtype": 0,
-      "mvno_match_data": "0305",
-      "mvno_type": "gid",
-      "name": "iD Mobile Ut",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "0305",
-      "mvno_type": "gid",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "0309",
-      "mvno_type": "gid",
-      "name": "SMARTY IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "mob.asm.net",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "0309",
-      "mvno_type": "gid",
-      "name": "SMARTY",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mob.asm.net",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "0309",
-      "mvno_type": "gid",
-      "name": "SMARTY",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "mob.asm.net",
-      "authtype": 0,
-      "mvno_match_data": "0309",
-      "mvno_type": "gid",
-      "name": "SMARTY Ut",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "gamma",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "030B",
-      "mvno_type": "gid",
-      "name": "GAMMA",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "gamma",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "030B",
-      "mvno_type": "gid",
-      "name": "GAMMA",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "030B",
-      "mvno_type": "gid",
-      "name": "GAMMA IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "0310",
-      "mvno_type": "gid",
-      "name": "Superdrug IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "superdrug.net",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "0310",
-      "mvno_type": "gid",
-      "name": "Superdrug",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "superdrug.net",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mvno_match_data": "0310",
-      "mvno_type": "gid",
-      "name": "Superdrug",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "superdrug.net",
-      "authtype": 0,
-      "mvno_match_data": "0310",
-      "mvno_type": "gid",
-      "name": "Superdrug Ut",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
     },
     {
       "apn": "giffgaff.com",

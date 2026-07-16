@@ -58,6 +58,17 @@
       ]
     },
     {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "62.169.66.5",
+      "name": "NOS MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "modem",
       "carrier_id": 1668,
       "name": "Optimus HotSpot",
@@ -75,14 +86,30 @@
     },
     {
       "apn": "umts",
-      "carrier_id": 1668,
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "62.169.66.5",
       "name": "umts",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "umts",
+      "carrier_id": 1668,
+      "mmsc": "http://mmsc:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "62.169.66.5",
+      "name": "PortalOptimus",
+      "types": [
+        "default",
         "ia",
         "mms",
         "supl"

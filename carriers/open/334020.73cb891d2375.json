@@ -1,14 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ba.amx",
-      "authtype": 1,
-      "name": "Micro SIM",
-      "types": [
-        "default"
-      ]
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -32,10 +24,8 @@
     },
     {
       "apn": "ims",
-      "carrier_id": 1913,
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "Telcel",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -50,9 +40,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
-        "supl",
-        "xcap"
+        "supl"
       ],
       "user": "webgprs"
     },
@@ -76,6 +64,17 @@
       "password": "webgprs2002",
       "types": [
         "dun"
+      ],
+      "user": "webgprs"
+    },
+    {
+      "apn": "internet.itelcel.com",
+      "authtype": 1,
+      "carrier_id": 1913,
+      "name": "Internet",
+      "password": "webgprs2002",
+      "types": [
+        "ia"
       ],
       "user": "webgprs"
     },
@@ -108,86 +107,7 @@
       "types": [
         "mms"
       ],
-      "user": "mmsgprs",
-      "user_editable": false
-    },
-    {
-      "apn": "internet.mvne1.com",
-      "authtype": 1,
-      "mvno_match_data": "03",
-      "mvno_type": "imsi",
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.alo.mx",
-      "mvno_match_data": "Alo",
-      "mvno_type": "spn",
-      "name": "Alo",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.mvne1.com",
-      "mvno_match_data": "Bueno Cell",
-      "mvno_type": "spn",
-      "name": "Bueno Cell",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.mvne1.com",
-      "mvno_match_data": "FreedomPop",
-      "mvno_type": "spn",
-      "name": "FreedomPop",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.mvne1.com",
-      "mvno_match_data": "OUI",
-      "mvno_type": "spn",
-      "name": "OUI m\u00f3vil",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.mvne1.com",
-      "mvno_match_data": "Oxxo Cel",
-      "mvno_type": "spn",
-      "name": "Oxxo Cel",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.soriana.mx",
-      "mvno_match_data": "Soriana M\u00f3vil",
-      "mvno_type": "spn",
-      "name": "Soriana M\u00f3vil",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
+      "user": "mmsgprs"
     }
   ],
   "android_carrier_config": {

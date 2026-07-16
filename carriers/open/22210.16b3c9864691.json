@@ -131,22 +131,14 @@
     },
     {
       "apn": "web.omnitel.it",
-      "authtype": 3,
-      "mmsport": 80,
-      "name": "web.omnitel.it",
-      "types": [
-        "supl"
-      ]
-    },
-    {
-      "apn": "web.omnitel.it",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1350,
-      "name": "Internet",
+      "name": "web.omnitel.it",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
         "xcap"
       ]
     },
@@ -166,28 +158,6 @@
       ]
     },
     {
-      "apn": "ims",
-      "mvno_match_data": "20",
-      "mvno_type": "gid",
-      "name": "HO IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "internet.ho-mobile.it",
-      "mvno_match_data": "20",
-      "mvno_type": "gid",
-      "name": "HO-Mobile Internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "internet.ho-mobile.it",
       "mvno_match_data": "20",
       "mvno_type": "gid",
@@ -199,61 +169,14 @@
       ]
     },
     {
-      "apn": "mms.vodafone.it",
-      "mmsc": "http://mms.vodafone.it/servlets/mms",
-      "mmsport": 80,
-      "mmsproxy": "10.128.224.10",
-      "mvno_match_data": "20",
-      "mvno_type": "gid",
-      "name": "HO-Mobile MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "web.ho-mobile.it",
-      "authtype": 3,
-      "mmsport": 80,
       "mvno_match_data": "20",
       "mvno_type": "gid",
-      "name": "web.ho-mobile.it",
+      "name": "ho.mobile Internet",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "web.ho-mobile.it",
-      "authtype": 3,
-      "mmsport": 80,
-      "mvno_match_data": "20",
-      "mvno_type": "gid",
-      "name": "HO-Mobile WEB",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "wap.dtm.it",
-      "mvno_match_data": "222101306xxxxxx",
-      "mvno_type": "imsi",
-      "name": "DailyTelecomWAP",
-      "types": [
-        "default",
-        "dun",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wap.dtm.it",
-      "mvno_match_data": "222101406xxxxxx",
-      "mvno_type": "imsi",
-      "name": "DailyTelecomWAP",
-      "types": [
-        "default",
-        "dun",
         "supl"
       ]
     },
@@ -296,7 +219,6 @@
     },
     {
       "apn": "internet.postemobile.it",
-      "authtype": 0,
       "carrier_id": 2303,
       "mvno_match_data": "PosteMobile",
       "mvno_type": "spn",
@@ -306,18 +228,7 @@
       ]
     },
     {
-      "apn": "internet.postemobile.it",
-      "authtype": 0,
-      "mvno_match_data": "PosteMobile",
-      "mvno_type": "spn",
-      "name": "PosteMobile (DUN)",
-      "types": [
-        "dun"
-      ]
-    },
-    {
       "apn": "mms.postemobile.it",
-      "authtype": 0,
       "carrier_id": 2303,
       "mmsc": "http://mms.postemobile.it/servlets/mms",
       "mmsport": 80,
@@ -331,7 +242,6 @@
     },
     {
       "apn": "mms.postemobile.it",
-      "authtype": 0,
       "mmsc": "http://mms.postemobile.it/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "10.128.224.10",
@@ -340,17 +250,6 @@
       "name": "PosteMobile MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "wap.postemobile.it",
-      "mvno_match_data": "PosteMobile",
-      "mvno_type": "spn",
-      "name": "wap.postemobile.it",
-      "types": [
-        "default",
-        "dun",
-        "supl"
       ]
     },
     {
@@ -367,14 +266,13 @@
       ]
     },
     {
-      "apn": "ims",
-      "mvno_match_data": "ho.",
+      "apn": "wap.postemobile.it",
+      "mvno_match_data": "PosteMobile",
       "mvno_type": "spn",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "PosteMobile WAP",
       "types": [
-        "ims"
+        "default",
+        "supl"
       ]
     },
     {
@@ -383,16 +281,6 @@
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
       "name": "ho. (Tethering)",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet.ho-mobile.it",
-      "authtype": 0,
-      "mvno_match_data": "ho.",
-      "mvno_type": "spn",
-      "name": "internet.ho-mobile.it",
       "types": [
         "dun"
       ]
@@ -408,17 +296,6 @@
         "fota",
         "hipri",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "web.ho-mobile.it",
-      "authtype": 0,
-      "mvno_match_data": "ho.",
-      "mvno_type": "spn",
-      "name": "web.ho-mobile.it",
-      "types": [
-        "default",
         "supl"
       ]
     }

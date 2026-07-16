@@ -1,15 +1,34 @@
 {
   "android_apns": [
     {
-      "apn": "services",
+      "apn": "data.tre.se",
+      "carrier_id": 1693,
       "mmsc": "http://mms.tre.se",
       "mmsport": 8799,
       "mmsproxy": "mmsproxy.tre.se",
-      "name": "services",
+      "name": "3",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "mms"
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.tre.se",
+      "authtype": 0,
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
+      "name": "data.tre.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -30,20 +49,6 @@
       "name": "Telenor MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "services.telenor.se",
-      "mmsc": "http://mms",
-      "mmsport": 8799,
-      "mmsproxy": "172.30.253.241",
-      "mvno_match_data": "Telenor SE",
-      "mvno_type": "spn",
-      "name": "Telenor SE",
-      "types": [
-        "default",
-        "mms",
-        "supl"
       ]
     }
   ],

@@ -30,14 +30,6 @@
   "android_apns": [
     {
       "apn": "XCAP",
-      "name": "Movistar XCAP",
-      "protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ]
-    },
-    {
-      "apn": "XCAP",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "name": "XCAP",
       "protocol": "IPV4V6",
@@ -57,9 +49,6 @@
     },
     {
       "apn": "gprs.pepephone.com",
-      "mmsc": "http://www.pepephone.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.138.255.43",
       "name": "Pepephone 4G Internet",
       "types": [
         "default",
@@ -72,7 +61,7 @@
       "mmsc": "http://www.pepephone.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.43",
-      "name": "gprs.pepephone.com",
+      "name": "Pepephone 4G MMS",
       "types": [
         "mms"
       ]
@@ -177,21 +166,6 @@
     },
     {
       "apn": "tuenti.com",
-      "authtype": 1,
-      "carrier_id": 34,
-      "mmsc": "http://tuenti.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.138.255.43",
-      "name": "Tuenti",
-      "password": "tuenti",
-      "types": [
-        "default"
-      ],
-      "user": "tuenti"
-    },
-    {
-      "apn": "tuenti.com",
-      "authtype": 1,
       "mmsc": "http://tuenti.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.43",
@@ -212,8 +186,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "internet.digimobil.es",
@@ -224,16 +197,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.digimobil.es",
-      "mvno_match_data": "44474553",
-      "mvno_type": "gid",
-      "name": "DIGI Spain",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -250,25 +213,6 @@
       ]
     },
     {
-      "apn": "digi.mobile",
-      "mvno_match_data": "44474954",
-      "mvno_type": "gid",
-      "name": "DIGI Italy",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "inet.es",
-      "mvno_match_data": "893434",
-      "mvno_type": "iccid",
-      "name": "Airenetworks",
-      "types": [
-        "default"
-      ]
-    },
-    {
       "apn": "inet.es",
       "mvno_match_data": "214050104xxxxxx",
       "mvno_type": "imsi",
@@ -281,66 +225,6 @@
         "ia",
         "supl"
       ]
-    },
-    {
-      "apn": "internetand",
-      "mvno_match_data": "Andorra Telecom",
-      "mvno_type": "spn",
-      "name": "internetand",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.ono.com",
-      "mvno_match_data": "ONO",
-      "mvno_type": "spn",
-      "name": "ONO",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mms.ono.com",
-      "mmsc": "http://mms.ono.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.126.0.50",
-      "mvno_match_data": "ONO",
-      "mvno_type": "spn",
-      "name": "MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "internet.telecable.es",
-      "carrier_id": 2112,
-      "mvno_match_data": "TeleCable",
-      "mvno_type": "spn",
-      "name": "TeleCable Internet",
-      "password": "telecable",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ],
-      "user": "telecable"
-    },
-    {
-      "apn": "mms.telecable.es",
-      "carrier_id": 2112,
-      "mmsc": "http://mms.telecable.es/mms/",
-      "mmsport": 8080,
-      "mmsproxy": "212.89.0.84",
-      "mvno_match_data": "TeleCable",
-      "mvno_type": "spn",
-      "name": "TeleCable MMS",
-      "password": "telecable",
-      "types": [
-        "mms"
-      ],
-      "user": "telecable"
     },
     {
       "apn": "tuenti.com",
@@ -363,63 +247,30 @@
     },
     {
       "apn": "tuenti.com",
+      "mvno_match_data": "Tuenti",
+      "mvno_type": "spn",
+      "name": "Tuenti Internet",
+      "password": "tuenti",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "tuenti"
+    },
+    {
+      "apn": "tuenti.com",
       "authtype": 1,
       "mmsc": "http://tuenti.com",
       "mmsport": 8080,
       "mmsproxy": "10.138.255.43",
       "mvno_match_data": "Tuenti",
       "mvno_type": "spn",
-      "name": "tuenti.com",
+      "name": "Tuenti MMS",
       "password": "tuenti",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "tuenti"
-    },
-    {
-      "apn": "gprs.pepephone.com",
-      "authtype": 1,
-      "mmsc": "http://www.pepephone.com/",
-      "mmsport": 8080,
-      "mmsproxy": "10.138.255.43",
-      "mvno_match_data": "pepephone",
-      "mvno_type": "spn",
-      "name": "Internet Pepephone",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.telecable.es",
-      "authtype": 1,
-      "mvno_match_data": "telecable",
-      "mvno_type": "spn",
-      "name": "telecable Internet",
-      "password": "telecable",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "telecable"
-    },
-    {
-      "apn": "mms.telecable.es",
-      "authtype": 1,
-      "mmsc": "http://mms.telecable.es/mms/",
-      "mmsport": 8080,
-      "mmsproxy": "212.89.0.84",
-      "mvno_match_data": "telecable",
-      "mvno_type": "spn",
-      "name": "telecable MMS",
-      "password": "telecable",
       "types": [
         "mms"
       ],
-      "user": "telecable"
+      "user": "tuenti"
     }
   ],
   "android_carrier_config": {

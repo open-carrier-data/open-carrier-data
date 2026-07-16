@@ -1,17 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "AirtelMMS",
-      "mmsc": "http://mmsc/",
-      "mmsport": 8080,
-      "mmsproxy": "10.200.184.86",
-      "name": "Airtel MMS",
-      "server": "mms.airtel.lk",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "airteldata",
       "name": "Airtel Postpaid",
       "types": [
@@ -25,20 +14,16 @@
       "mmsport": 8080,
       "mmsproxy": "10.200.252.57",
       "name": "airtellive",
-      "server": "wap.airtel.lk",
       "types": [
         "default",
-        "supl"
+        "dun"
       ]
     },
     {
       "apn": "airtellive",
-      "mmsc": "http://mmscvip/",
-      "mmsport": 8080,
-      "mmsproxy": "10.200.252.57",
-      "name": "airtel",
+      "name": "Airtel Prepaid",
       "types": [
-        "dun"
+        "supl"
       ]
     },
     {
@@ -70,15 +55,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
     }
   ],
   "android_carrier_config": {

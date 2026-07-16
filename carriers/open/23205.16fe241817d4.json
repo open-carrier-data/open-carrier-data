@@ -55,11 +55,8 @@
       "apn": "drei.at",
       "authtype": 0,
       "carrier_enabled": true,
-      "mmsc": "http://mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "213.94.78.133",
       "mtu": 1500,
-      "name": "drei.at",
+      "name": "Planet3",
       "types": [
         "xcap"
       ]
@@ -86,6 +83,16 @@
     },
     {
       "apn": "ims",
+      "carrier_id": 1344,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "mtu": 1500,
       "name": "ims",
@@ -94,18 +101,6 @@
       "types": [
         "ims"
       ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1344,
-      "name": "ims",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false,
       "user_visible": false
     },
     {
@@ -125,7 +120,7 @@
       "mmsc": "http://mmsc.orange.at/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "194.24.128.118",
-      "name": "orange.mms",
+      "name": "Orange AT-MMS",
       "password": "mms",
       "server": "*",
       "types": [
@@ -135,24 +130,11 @@
     },
     {
       "apn": "orange.smartphone",
-      "name": "orange.smartphone",
-      "password": "web",
+      "name": "Orange Web",
       "types": [
         "default",
         "supl"
-      ],
-      "user": "web"
-    },
-    {
-      "apn": "orange.web",
-      "authtype": 3,
-      "name": "Orange WEB",
-      "password": "web",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "web"
+      ]
     }
   ],
   "android_carrier_config": {

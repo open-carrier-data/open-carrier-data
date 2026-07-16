@@ -2,11 +2,8 @@
   "android_apns": [
     {
       "apn": "ims",
-      "carrier_id": 27,
-      "modem_cognitive": true,
       "name": "SFR IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ],
@@ -20,6 +17,22 @@
       "name": "SFR MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "carrier_id": 27,
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "ia",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -47,31 +60,6 @@
       ]
     },
     {
-      "apn": "sl2sfr",
-      "carrier_id": 27,
-      "mmsc": "http://mms1",
-      "mmsport": 8080,
-      "mmsproxy": "10.151.0.1",
-      "name": "SFR webphone",
-      "protocol": "IP",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
-      "carrier_id": 27,
-      "mmsc": "http://mms1",
-      "mmsport": 8080,
-      "mmsproxy": "10.151.0.1",
-      "name": "SFR webphone",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
       "apn": "wapsfr",
       "name": "SFR WAP",
       "password": "none",
@@ -93,25 +81,12 @@
       ]
     },
     {
-      "apn": "fnetnrj",
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "NRJWEB",
+      "apn": "websfr",
+      "carrier_id": 27,
+      "name": "SFR option modem",
+      "protocol": "IP",
       "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mmsnrj",
-      "mmsc": "http://mmsnrj",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.5",
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "NRJMMS",
-      "types": [
-        "mms"
+        "dun"
       ]
     },
     {
@@ -142,107 +117,19 @@
       ]
     },
     {
-      "apn": "truphone.com",
-      "carrier_id": 2143,
-      "mmsc": "http://mmsc.truphone.com:1981/mm1",
-      "mvno_match_data": "54727555533030656E",
-      "mvno_type": "gid",
-      "name": "Truphone",
-      "types": [
-        "default",
-        "dun",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "coriolis",
-      "mvno_match_data": "893327",
-      "mvno_type": "iccid",
-      "name": "Coriolis",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mmscoriolis",
-      "mmsc": "http://mms.coriolis.fr",
-      "mmsport": 9028,
-      "mmsproxy": "10.12.0.1",
-      "mvno_match_data": "893327",
-      "mvno_type": "iccid",
-      "name": "Coriolis MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms.hotm",
-      "mmsc": "http://mms.hotmobile.co.il",
-      "mmsport": 80,
-      "mmsproxy": "80.246.131.99",
-      "mvno_match_data": "8997207",
-      "mvno_type": "iccid",
-      "name": "MMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "net.hotm",
-      "mvno_match_data": "8997207",
-      "mvno_type": "iccid",
-      "name": "Net",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "pc.hotm",
-      "mvno_match_data": "8997207",
-      "mvno_type": "iccid",
-      "name": "PC",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
       "apn": "pda.newcomobile.com",
       "carrier_id": 2130,
-      "mmsc": "http://mms.bealiv.com",
       "mvno_match_data": "208090021",
       "mvno_type": "imsi",
       "name": "Be Aliv",
       "types": [
         "default",
         "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "truphone.com",
-      "mmsc": "http://mmsc.truphone.com:1981/mm1",
-      "mvno_match_data": "208090022",
-      "mvno_type": "imsi",
-      "name": "Truphone",
-      "types": [
-        "default",
-        "dun",
-        "mms",
         "supl"
       ]
     },
     {
       "apn": "coriolis",
-      "authtype": 1,
       "carrier_id": 2135,
       "mvno_match_data": "208090036",
       "mvno_type": "imsi",

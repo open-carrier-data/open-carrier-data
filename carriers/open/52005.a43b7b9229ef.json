@@ -1,17 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "XCAP",
-      "carrier_id": 1897,
-      "name": "dtac UT",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -34,17 +23,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "carrier_id": 1897,
-      "name": "dtac IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "mms",
       "carrier_id": 1897,
       "mmsc": "http://mms2.dtac.co.th:8002/",
@@ -56,12 +34,12 @@
       ]
     },
     {
-      "apn": "wap.djuice.co.th",
-      "name": "DTAC HTTP",
-      "port": 9201,
-      "proxy": "203.155.200.133",
+      "apn": "www.dtac.co.th",
+      "name": "www.dtac.co.th",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -72,22 +50,6 @@
         "default",
         "ia",
         "supl"
-      ]
-    },
-    {
-      "apn": "www.dtac.co.th",
-      "name": "dtac",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "xcap",
-      "name": "xcap",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
       ]
     }
   ],

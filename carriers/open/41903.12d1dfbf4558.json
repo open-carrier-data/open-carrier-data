@@ -2,14 +2,20 @@
   "android_apns": [
     {
       "apn": "IMS",
-      "name": "IMS",
+      "name": "Ooredoo",
       "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
         "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
+      ]
+    },
+    {
+      "apn": "action.ooredoo.com",
+      "authtype": 0,
+      "name": "action.ooredoo.com",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "action.ooredoo.com",
@@ -30,11 +36,20 @@
       ]
     },
     {
+      "apn": "action.ooredoo.com",
+      "authtype": 0,
+      "name": "action.ooredoo.com",
+      "types": [
+        "supl"
+      ]
+    },
+    {
       "apn": "action.wataniya.com",
-      "name": "Wataniya Internet",
+      "name": "action.wataniya.com",
       "types": [
         "bip",
         "cbs",
+        "default",
         "dun",
         "emergency",
         "enterprise",
@@ -45,17 +60,9 @@
         "mcx",
         "mms",
         "rcs",
+        "supl",
         "vsim",
         "xcap"
-      ]
-    },
-    {
-      "apn": "action.wataniya.com",
-      "authtype": 0,
-      "name": "action.wataniya.com",
-      "types": [
-        "default",
-        "supl"
       ]
     },
     {
@@ -70,15 +77,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "mms.ooredoo.com",
       "authtype": 1,
       "carrier_id": 1586,
@@ -88,7 +86,17 @@
       "name": "Ooredoo MMS",
       "types": [
         "default",
-        "ia",
+        "ia"
+      ]
+    },
+    {
+      "apn": "mms.ooredoo.com",
+      "authtype": 0,
+      "mmsc": "http://action.ooredoo.com",
+      "mmsport": 8080,
+      "mmsproxy": "194.126.53.64",
+      "name": "mms.ooredoo.com",
+      "types": [
         "mms"
       ]
     }

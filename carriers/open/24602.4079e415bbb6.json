@@ -44,16 +44,6 @@
     },
     {
       "apn": "internet",
-      "carrier_id": 893,
-      "name": "Bite Internet",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
       "name": "Bite",
       "protocol": "IP",
       "types": [
@@ -62,41 +52,28 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 893,
       "mmsc": "http://mmsc/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "192.168.150.2",
-      "name": "Bite LT Internet",
+      "name": "Bite MMS",
       "password": "mms",
       "types": [
         "mms"
       ],
       "user": "mms@mms"
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mmsc/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.150.2",
-      "name": "internet",
-      "password": "mms",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ],
-      "user": "mms@mms"
-    },
-    {
-      "apn": "wap",
-      "name": "wap",
-      "port": 8080,
-      "proxy": "213.226.131.133",
-      "server": "213.226.131.133",
-      "types": [
-        "default"
-      ]
     },
     {
       "apn": "wap",
@@ -113,6 +90,7 @@
       "name": "wap",
       "server": "213.226.131.133",
       "types": [
+        "default",
         "supl"
       ]
     }

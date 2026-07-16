@@ -64,16 +64,6 @@
     },
     {
       "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "mtu": 1500,
@@ -144,6 +134,16 @@
       "user": "T"
     },
     {
+      "apn": "mmsaut",
+      "mmsc": "http://mmsaut.at/send",
+      "mmsport": 80,
+      "mmsproxy": "212.95.31.50",
+      "name": "HoT MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "web",
       "authtype": 1,
       "mmsc": "http://relay.mms.telering.at",
@@ -159,23 +159,24 @@
       "user": "web@telering.at"
     },
     {
-      "apn": "web",
-      "mmsc": "http://relay.mms.telering.at",
-      "mmsport": 80,
-      "mmsproxy": "212.095.031.050",
-      "name": "telering mms",
-      "password": "web",
-      "types": [
-        "mms"
-      ],
-      "user": "web@telering.at"
-    },
-    {
       "apn": "webaut",
       "name": "webaut",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mmsaut",
+      "authtype": 1,
+      "mmsc": "http://mmsaut.at/send",
+      "mmsport": 80,
+      "mmsproxy": "212.095.031.050",
+      "mvno_match_data": "23207718",
+      "mvno_type": "imsi",
+      "name": "0677 mms",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -195,22 +196,12 @@
       "authtype": 1,
       "mmsc": "http://mmsaut.at/send",
       "mmsport": 80,
-      "mmsproxy": "212.95.31.50",
-      "mvno_match_data": "23207718xxxxxxx",
+      "mmsproxy": "212.095.031.050",
+      "mvno_match_data": "23207761",
       "mvno_type": "imsi",
-      "name": "0677 mms",
+      "name": "HoT MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "webaut",
-      "authtype": 1,
-      "mvno_match_data": "23207718xxxxxxx",
-      "mvno_type": "imsi",
-      "name": "0677 web",
-      "types": [
-        "default"
       ]
     },
     {
@@ -230,22 +221,12 @@
       "authtype": 1,
       "mmsc": "http://mmsaut.at/send",
       "mmsport": 80,
-      "mmsproxy": "212.95.31.50",
-      "mvno_match_data": "2320776xxxxxxxx",
+      "mmsproxy": "212.095.031.050",
+      "mvno_match_data": "23207799",
       "mvno_type": "imsi",
       "name": "0677 mms",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "webaut",
-      "authtype": 1,
-      "mvno_match_data": "2320776xxxxxxxx",
-      "mvno_type": "imsi",
-      "name": "0677 web",
-      "types": [
-        "default"
       ]
     },
     {
@@ -258,29 +239,6 @@
         "default",
         "ia",
         "supl"
-      ]
-    },
-    {
-      "apn": "mmsaut",
-      "authtype": 1,
-      "mmsc": "http://mmsaut.at/send",
-      "mmsport": 80,
-      "mmsproxy": "212.95.31.50",
-      "mvno_match_data": "23207799xxxxxxx",
-      "mvno_type": "imsi",
-      "name": "0677 mms",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "webaut",
-      "authtype": 1,
-      "mvno_match_data": "23207799xxxxxxx",
-      "mvno_type": "imsi",
-      "name": "0677 web",
-      "types": [
-        "default"
       ]
     }
   ],

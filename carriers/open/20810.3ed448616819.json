@@ -37,18 +37,6 @@
       ]
     },
     {
-      "apn": "ims",
-      "carrier_id": 27,
-      "modem_cognitive": true,
-      "name": "SFR IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "internet68",
       "authtype": 0,
       "name": "internet68",
@@ -143,7 +131,7 @@
       "mmsc": "http://mms1",
       "mmsport": 8080,
       "mmsproxy": "10.151.0.1",
-      "name": "mmssfr",
+      "name": "SFR MMS",
       "types": [
         "mms"
       ]
@@ -155,13 +143,11 @@
       "mmsport": 8080,
       "mmsproxy": "10.151.0.1",
       "name": "SFR webphone",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "ia",
         "mms",
-        "supl",
-        "xcap"
+        "supl"
       ]
     },
     {
@@ -194,17 +180,6 @@
       "protocol": "IPV4V6",
       "types": [
         "hipri"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
-      "carrier_id": 27,
-      "mmsc": "http://mms1",
-      "mmsport": 8080,
-      "mmsproxy": "10.151.0.1",
-      "name": "SFR webphone",
-      "types": [
-        "ia"
       ]
     },
     {
@@ -317,15 +292,12 @@
       "authtype": 0,
       "carrier_id": 27,
       "name": "SFR option Modem",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ]
     },
     {
       "apn": "websfr",
-      "authtype": 0,
       "name": "websfr",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -342,19 +314,6 @@
       ]
     },
     {
-      "apn": "coriolis",
-      "authtype": 1,
-      "carrier_id": 2135,
-      "mvno_match_data": "12",
-      "mvno_type": "gid",
-      "name": "Coriolis",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
       "apn": "fnetcoriolis",
       "carrier_id": 2135,
       "mvno_match_data": "12",
@@ -363,16 +322,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "fnetcoriolis",
-      "mvno_match_data": "12",
-      "mvno_type": "gid",
-      "name": "fnetcoriolis",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -393,6 +342,7 @@
     },
     {
       "apn": "mmscoriolis",
+      "carrier_id": 2135,
       "mmsc": "http://mmscoriolis",
       "mmsport": 8080,
       "mmsproxy": "10.143.156.6",
@@ -417,18 +367,6 @@
       ]
     },
     {
-      "apn": "mms68",
-      "mmsc": "http://mms68",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.11",
-      "mvno_match_data": "44",
-      "mvno_type": "gid",
-      "name": "Darty MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "wap68",
       "carrier_id": 2275,
       "mvno_match_data": "44",
@@ -440,28 +378,6 @@
         "default",
         "ia",
         "supl"
-      ]
-    },
-    {
-      "apn": "wap68",
-      "mvno_match_data": "44",
-      "mvno_type": "gid",
-      "name": "Darty Surf&Mails",
-      "port": 8080,
-      "proxy": "192.168.21.11",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "4C",
-      "mvno_type": "gid",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
       ]
     },
     {
@@ -479,22 +395,6 @@
     },
     {
       "apn": "sl2sfr",
-      "mmsc": "http://mmsdebitel",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.3",
-      "mvno_match_data": "4C",
-      "mvno_type": "gid",
-      "name": "sl2sfr",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "dun",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
       "carrier_id": 2274,
       "mmsc": "http://mms1",
       "mmsport": 8080,
@@ -503,7 +403,10 @@
       "mvno_type": "gid",
       "name": "4G La Poste Mobile",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -533,40 +436,9 @@
       ]
     },
     {
-      "apn": "fnetnrj",
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "NRJWEB",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internetnrj",
       "authtype": 0,
       "carrier_id": 2005,
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "INTERNET NRJ",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internetnrj",
-      "authtype": 0,
       "mvno_match_data": "4E",
       "mvno_type": "gid",
       "name": "INTERNET NRJ",
@@ -583,63 +455,13 @@
       "mvno_match_data": "4E",
       "mvno_type": "gid",
       "name": "NRJMMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mmsnrj",
-      "mmsc": "http://mmsnrj",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.5",
-      "mvno_match_data": "4E",
-      "mvno_type": "gid",
-      "name": "NRJMMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
-      "authtype": 0,
-      "mmsc": "http://mms1",
-      "mmsport": 8080,
-      "mmsproxy": "10.151.0.1",
-      "mvno_match_data": "53",
-      "mvno_type": "gid",
-      "name": "Internet Joe",
-      "types": [
-        "default",
-        "fota",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "websfr",
-      "authtype": 0,
-      "mvno_match_data": "53",
-      "mvno_type": "gid",
-      "name": "Modem Joe",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "mms65",
-      "carrier_id": 2272,
-      "mmsc": "http://mms65",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.8",
-      "mvno_match_data": "A MOBILE",
-      "mvno_type": "spn",
-      "name": "Auchan MMS",
       "types": [
         "mms"
       ]
     },
     {
       "apn": "mms65",
+      "carrier_id": 2272,
       "mmsc": "http://mms65",
       "mmsport": 8080,
       "mmsproxy": "10.143.156.8",
@@ -659,16 +481,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wap65",
-      "mvno_match_data": "A MOBILE",
-      "mvno_type": "spn",
-      "name": "Auchan WAP",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -697,32 +509,6 @@
       "mmsport": 8080,
       "mmsproxy": "10.143.156.6",
       "mvno_match_data": "CORIOLIS",
-      "mvno_type": "spn",
-      "name": "Coriolis MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "coriolis",
-      "authtype": 1,
-      "carrier_id": 2135,
-      "mvno_match_data": "Coriolis",
-      "mvno_type": "spn",
-      "name": "Coriolis",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mmscoriolis",
-      "carrier_id": 2135,
-      "mmsc": "http://mms.coriolis.fr",
-      "mmsport": 9028,
-      "mmsproxy": "10.12.0.1",
-      "mvno_match_data": "Coriolis",
       "mvno_type": "spn",
       "name": "Coriolis MMS",
       "types": [
@@ -792,35 +578,9 @@
       ]
     },
     {
-      "apn": "internet68",
-      "authtype": 0,
-      "mvno_match_data": "Keyyo Mobile",
-      "mvno_type": "spn",
-      "name": "Keyyo Mobile Internet",
-      "types": [
-        "default",
-        "dun",
-        "fota",
-        "supl"
-      ]
-    },
-    {
       "apn": "mms68",
       "authtype": 0,
       "carrier_id": 2276,
-      "mmsc": "http://mms68",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.11",
-      "mvno_match_data": "Keyyo Mobile",
-      "mvno_type": "spn",
-      "name": "Keyyo Mobile MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms68",
-      "authtype": 0,
       "mmsc": "http://mms68",
       "mmsport": 8080,
       "mmsproxy": "10.143.156.11",
@@ -844,20 +604,6 @@
         "default",
         "fota",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wap68",
-      "authtype": 0,
-      "mvno_match_data": "Keyyo Mobile",
-      "mvno_type": "spn",
-      "name": "Keyyo Mobile Wap",
-      "port": 8080,
-      "proxy": "192.168.21.11",
-      "types": [
-        "default",
-        "fota",
         "supl"
       ]
     },
@@ -899,18 +645,6 @@
       ]
     },
     {
-      "apn": "mms66",
-      "mmsc": "http://mms66",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.9",
-      "mvno_match_data": "LeclercMobile",
-      "mvno_type": "spn",
-      "name": "MMS LeclercMobile",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "wap66",
       "carrier_id": 2273,
       "mvno_match_data": "LeclercMobile",
@@ -921,18 +655,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "wap66",
-      "mvno_match_data": "LeclercMobile",
-      "mvno_type": "spn",
-      "name": "WAP LeclercMobile",
-      "port": 8080,
-      "proxy": "192.168.21.9",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -975,19 +697,6 @@
       ]
     },
     {
-      "apn": "mms66",
-      "authtype": 0,
-      "mmsc": "http://mms66",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.9",
-      "mvno_match_data": "RegloMobile",
-      "mvno_type": "spn",
-      "name": "MMS RegloMobile",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "wap66",
       "authtype": 0,
       "carrier_id": 2273,
@@ -1005,21 +714,6 @@
       ]
     },
     {
-      "apn": "wap66",
-      "authtype": 0,
-      "mvno_match_data": "RegloMobile",
-      "mvno_type": "spn",
-      "name": "WAP RegloMobile",
-      "port": 8080,
-      "proxy": "192.168.21.9",
-      "types": [
-        "default",
-        "dun",
-        "fota",
-        "supl"
-      ]
-    },
-    {
       "apn": "internet68",
       "authtype": 0,
       "carrier_id": 2277,
@@ -1035,35 +729,9 @@
       ]
     },
     {
-      "apn": "internet68",
-      "authtype": 0,
-      "mvno_match_data": "ZERO FORFAIT",
-      "mvno_type": "spn",
-      "name": "Zero forfait",
-      "types": [
-        "default",
-        "dun",
-        "fota",
-        "supl"
-      ]
-    },
-    {
       "apn": "mms68",
       "authtype": 0,
       "carrier_id": 2277,
-      "mmsc": "http://mms68",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.11",
-      "mvno_match_data": "ZERO FORFAIT",
-      "mvno_type": "spn",
-      "name": "Zero forfait MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms68",
-      "authtype": 0,
       "mmsc": "http://mms68",
       "mmsport": 8080,
       "mmsproxy": "10.143.156.11",

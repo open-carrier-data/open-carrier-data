@@ -39,16 +39,6 @@
   },
   "android_apns": [
     {
-      "apn": "event.vodafone.de",
-      "mmsc": "http://139.7.24.1/servlets/mms",
-      "mmsport": 80,
-      "mmsproxy": "139.7.29.17",
-      "name": "Vodafone DE-MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "ims.testnetz-vd2.de",
       "authtype": 0,
       "carrier_enabled": true,
@@ -83,16 +73,6 @@
       "apn": "ims32.testnetz-vd2.de",
       "bearer_bitmask": "14|18|20",
       "name": "VF DE IMS Lab 32",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims32.testnetz-vd2.de",
-      "carrier_id": 2147,
-      "name": "Vodafone DE IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -156,14 +136,6 @@
       ]
     },
     {
-      "apn": "web.vodafone.de",
-      "name": "web.vodafone.de",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "web31.testnetz-vd2.de",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "name": "VF DE Web Lab 31",
@@ -192,19 +164,6 @@
       "carrier_enabled": true,
       "mtu": 1500,
       "name": "VF DE Web",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "web32.testnetz-vd2.de",
-      "authtype": 3,
-      "carrier_id": 2147,
-      "name": "Vodafone DE Web",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -257,7 +216,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "conditional",
+    "mms": "unsupported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unsupported",

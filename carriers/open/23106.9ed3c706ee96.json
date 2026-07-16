@@ -61,6 +61,18 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "o2 mms",
       "mmsc": "http://mms.o2world.sk:8002",
       "mmsport": 8080,
@@ -133,15 +145,6 @@
       ]
     },
     {
-      "apn": "o2wap",
-      "name": "O2 HTTP",
-      "port": 8080,
-      "proxy": "10.97.1.11",
-      "types": [
-        "default"
-      ]
-    },
-    {
       "apn": "sos",
       "name": "O2 - SK",
       "types": [
@@ -169,8 +172,7 @@
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     }
   ],
   "android_carrier_config": {

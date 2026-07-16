@@ -1,6 +1,16 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "KDDI JP IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "a.rmobile.jp",
       "authtype": 3,
       "carrier_id": 2109,
@@ -16,7 +26,7 @@
     {
       "apn": "a.rmobile.jp",
       "authtype": 3,
-      "name": "a.rmobile.jp",
+      "name": "Rakuten mobile",
       "password": "0000",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -24,17 +34,6 @@
         "default",
         "ia",
         "supl"
-      ],
-      "user": "rakuten@vdm"
-    },
-    {
-      "apn": "a.rmobile.jp",
-      "authtype": 3,
-      "name": "\u697d\u5929\u30e2\u30d0\u30a4\u30eb(a.rmobile.jp)",
-      "password": "0000",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
       ],
       "user": "rakuten@vdm"
     },
@@ -88,23 +87,11 @@
       "password": "au",
       "types": [
         "cbs",
+        "default",
         "fota",
         "hipri",
         "ia",
-        "mms"
-      ],
-      "user": "user@au5g.au-net.ne.jp"
-    },
-    {
-      "apn": "au5g.au-net.ne.jp",
-      "authtype": 2,
-      "name": "au5g.au-net.ne.jp",
-      "password": "au",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "dun",
+        "mms",
         "supl"
       ],
       "user": "user@au5g.au-net.ne.jp"
@@ -128,12 +115,11 @@
     {
       "apn": "biglobe.jp",
       "authtype": 3,
-      "name": "biglobe.jp",
+      "name": "BIGLOBE\u30e2\u30d0\u30a4\u30eb(\u30bf\u30a4\u30d7A)",
       "password": "0000",
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -145,12 +131,11 @@
     {
       "apn": "i-aeonmobile.com",
       "authtype": 3,
-      "name": "i-aeonmobile.com",
+      "name": "AEON MOBILE",
       "password": "0000",
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -162,12 +147,11 @@
     {
       "apn": "iijmio.jp",
       "authtype": 3,
-      "name": "iijmio.jp",
+      "name": "IIJmio(\u30bf\u30a4\u30d7A)",
       "password": "iij",
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -217,12 +201,11 @@
     {
       "apn": "line.me",
       "authtype": 3,
-      "name": "line.me",
+      "name": "LINE\u30e2\u30d0\u30a4\u30eb(A)",
       "password": "line",
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -234,14 +217,16 @@
     {
       "apn": "mineo.jp",
       "authtype": 2,
-      "name": "mineo(au\u30d7\u30e9\u30f3)",
+      "name": "mineo.jp",
       "password": "mineo",
       "types": [
         "cbs",
+        "default",
         "fota",
         "hipri",
         "ia",
-        "mms"
+        "mms",
+        "supl"
       ],
       "user": "mineo@k-opti.com"
     },
@@ -252,7 +237,6 @@
       "types": [
         "cbs",
         "default",
-        "dun",
         "fota",
         "hipri",
         "ia",
@@ -292,8 +276,7 @@
     },
     {
       "apn": "sos",
-      "authtype": 3,
-      "name": "sos",
+      "name": "KDDI JP Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -308,34 +291,14 @@
       "password": "au",
       "types": [
         "cbs",
+        "default",
         "fota",
-        "ia"
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
       ],
       "user": "au@uad5gn.au-net.ne.jp"
-    },
-    {
-      "apn": "uad5gn.au-net.ne.jp",
-      "authtype": 2,
-      "name": "uad5gn.au-net.ne.jp",
-      "password": "au",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ],
-      "user": "au@uad5gn.au-net.ne.jp"
-    },
-    {
-      "apn": "uad5gntrg.au-net.ne.jp",
-      "authtype": 2,
-      "name": "5G NET",
-      "password": "KpyrR6BP",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ],
-      "user": "X36yN3Dhe9UjPhzm@uad5gntrg.au-net.ne.jp",
-      "user_visible": false
     },
     {
       "apn": "unitrg.au-net.ne.jp",
@@ -354,18 +317,6 @@
       "user_visible": false
     },
     {
-      "apn": "unitrg.au-net.ne.jp",
-      "authtype": 2,
-      "name": "LTE NET",
-      "password": "KpyrR6BP",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ],
-      "user": "X36yN3Dhe9UjPhzm@unitrg.au-net.ne.jp",
-      "user_visible": false
-    },
-    {
       "apn": "uno.au-net.ne.jp",
       "authtype": 2,
       "name": "au(LTE NET)",
@@ -376,21 +327,6 @@
         "fota",
         "hipri",
         "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "685840734641020@uno.au-net.ne.jp"
-    },
-    {
-      "apn": "unod.au-net.ne.jp",
-      "authtype": 2,
-      "name": "LTE NET",
-      "password": "KpyrR6BP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "hipri",
         "mms",
         "supl"
       ],
@@ -427,19 +363,6 @@
         "ia",
         "mms",
         "supl"
-      ],
-      "user": "uq@uqmobile.jp"
-    },
-    {
-      "apn": "uqmobile.jp",
-      "authtype": 2,
-      "mmsc": "http://mms.ezweb.ne.jp/MMS",
-      "mmsport": 80,
-      "name": "UQ mobile",
-      "password": "uq",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
       ],
       "user": "uq@uqmobile.jp"
     }

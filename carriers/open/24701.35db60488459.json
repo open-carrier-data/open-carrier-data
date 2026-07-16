@@ -35,16 +35,6 @@
       ]
     },
     {
-      "apn": "IMS",
-      "carrier_id": 898,
-      "name": "LMT IMS",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "hos",
       "bearer_bitmask": "18",
       "mmsc": "http://mmsc.lmt.lv/mmsc",
@@ -58,9 +48,10 @@
     },
     {
       "apn": "hos",
-      "carrier_id": 898,
-      "name": "LMT Ut",
-      "protocol": "IPV6",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "hos",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
@@ -91,14 +82,11 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
+      "name": "LMT",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet.lmt.lv",
@@ -119,14 +107,10 @@
     {
       "apn": "internet.lmt.lv",
       "carrier_id": 898,
-      "mmsc": "http://mmsc.lmt.lv/mmsc",
-      "name": "internet.lmt.lv",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "LMT Internet",
       "types": [
         "default",
         "ia",
-        "mms",
         "supl"
       ]
     },
@@ -158,6 +142,15 @@
     },
     {
       "apn": "internet.lmt.lv",
+      "carrier_id": 898,
+      "mmsc": "http://mmsc.lmt.lv/mmsc",
+      "name": "LMT MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.lmt.lv",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mmsc.lmt.lv/mmsc",
@@ -167,20 +160,6 @@
       "types": [
         "supl"
       ]
-    },
-    {
-      "apn": "mms.lmt.lv",
-      "mmsc": "http://mmsc.lmt.lv/mmsc",
-      "mmsport": 80,
-      "mmsproxy": "212.93.97.201",
-      "name": "LMT MMS",
-      "password": "lmt",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ],
-      "user": "lmt"
     }
   ],
   "android_carrier_config": {

@@ -65,17 +65,6 @@
     },
     {
       "apn": "ims",
-      "carrier_id": 1463,
-      "name": "TDC IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV6",
@@ -86,14 +75,25 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "carrier_id": 1463,
-      "name": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "DK TDC",
       "types": [
         "default",
+        "dun",
+        "fota",
         "ia",
         "supl"
       ]
@@ -105,16 +105,6 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 0,
-      "carrier_id": 1463,
-      "name": "DK TDC",
-      "types": [
-        "dun",
-        "fota"
       ]
     },
     {
@@ -149,6 +139,18 @@
       "proxy": "62.135.173.214",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_id": 1463,
+      "mmsc": "http://192.168.241.114:8002",
+      "mmsport": 8080,
+      "mmsproxy": "194.182.251.15",
+      "name": "DK TDC mms",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -201,17 +203,6 @@
     },
     {
       "apn": "xcap",
-      "carrier_id": 1463,
-      "name": "TDC Ut",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "xcap",
       "name": "XCAP",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
@@ -221,22 +212,11 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "mvno_match_data": "2380101xxxxxxxx",
-      "mvno_type": "imsi",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet",
       "authtype": 1,
       "mvno_match_data": "2380101xxxxxxxx",
       "mvno_type": "imsi",
-      "name": "internet",
+      "name": "TDC Internet",
       "proxy": "62.135.173.214",
       "types": [
         "default",
@@ -253,23 +233,14 @@
       ]
     },
     {
-      "apn": "Internet.no",
-      "mvno_match_data": "2380171xxxxxxxx",
-      "mvno_type": "imsi",
-      "name": "Internet.no",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mmsc.tdc.dk:8002",
       "mmsport": 8080,
-      "mmsproxy": "inetproxy.tdc.dk",
-      "mvno_match_data": "2380171xxxxxxxx",
+      "mmsproxy": "194.182.251.15",
+      "mvno_match_data": "2380101xxxxxxxx",
       "mvno_type": "imsi",
-      "name": "MMS",
+      "name": "TDC MMS",
       "types": [
         "mms"
       ]
@@ -287,16 +258,6 @@
       ]
     },
     {
-      "apn": "internet",
-      "mvno_match_data": "TELMORE",
-      "mvno_type": "spn",
-      "name": "internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "mms",
       "carrier_id": 2284,
       "mmsc": "http://192.168.241.114:8002",
@@ -307,18 +268,6 @@
       "name": "Telmore MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "wap",
-      "authtype": 0,
-      "mvno_match_data": "TELMORE",
-      "mvno_type": "spn",
-      "name": "TELMORE WAP",
-      "port": 8080,
-      "proxy": "194.182.251.15",
-      "types": [
-        "default"
       ]
     },
     {

@@ -1,15 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "Beeline IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet.beeline.kz",
       "authtype": 1,
       "carrier_id": 1588,
@@ -51,6 +42,19 @@
       "apn": "mms.beeline.kz",
       "authtype": 1,
       "carrier_id": 1588,
+      "mmsc": "http://mms.beeline.kz/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "172.27.6.93",
+      "name": "Beeline MMS",
+      "password": "beeline",
+      "types": [
+        "mms"
+      ],
+      "user": "@mms.beeline"
+    },
+    {
+      "apn": "mms.beeline.kz",
+      "authtype": 1,
       "mmsc": "http://mms.beeline.kz/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.27.6.93",

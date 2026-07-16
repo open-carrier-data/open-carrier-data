@@ -65,15 +65,24 @@
     },
     {
       "apn": "sl2sfr",
-      "carrier_id": 1008,
-      "mmsc": "http://mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms1",
       "mmsport": 8080,
-      "mmsproxy": "10.0.224.145",
+      "mmsproxy": "10.151.0.1",
       "name": "sl2sfr",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "carrier_id": 1008,
+      "name": "Full Internet SRR",
       "types": [
         "default",
-        "hipri",
-        "mms",
+        "ia",
         "supl"
       ]
     },
@@ -90,20 +99,12 @@
     },
     {
       "apn": "sl2sfr",
-      "mmsc": "http://mms",
+      "mmsc": "http://mms1",
       "mmsport": 8080,
-      "mmsproxy": "10.0.224.145",
-      "name": "SFR webphone",
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR",
       "types": [
-        "hipri"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
-      "carrier_id": 1008,
-      "name": "Full Internet SRR",
-      "types": [
-        "ia"
+        "mms"
       ]
     },
     {
@@ -144,14 +145,6 @@
     },
     {
       "apn": "websfr",
-      "carrier_id": 1008,
-      "name": "SFR option modem",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "websfr",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "websfr",
@@ -179,30 +172,8 @@
       ]
     },
     {
-      "apn": "fnetcoriolis",
-      "mvno_match_data": "12",
-      "mvno_type": "gid",
-      "name": "Coriolis WAP",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "mmscoriolis",
       "carrier_id": 2135,
-      "mmsc": "http://mmscoriolis",
-      "mmsport": 8080,
-      "mmsproxy": "10.143.156.6",
-      "mvno_match_data": "12",
-      "mvno_type": "gid",
-      "name": "Coriolis MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mmscoriolis",
       "mmsc": "http://mmscoriolis",
       "mmsport": 8080,
       "mmsproxy": "10.143.156.6",

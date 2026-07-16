@@ -30,14 +30,6 @@
   "android_apns": [
     {
       "apn": "XCAP",
-      "name": "Movistar XCAP",
-      "protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ]
-    },
-    {
-      "apn": "XCAP",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "name": "XCAP",
       "protocol": "IPV4V6",
@@ -75,29 +67,6 @@
       "types": [
         "ims"
       ]
-    },
-    {
-      "apn": "movistar.es",
-      "authtype": 1,
-      "name": "movistar.es",
-      "password": "movistar",
-      "port": 8080,
-      "proxy": "10.138.255.133",
-      "types": [
-        "default"
-      ],
-      "user": "movistar"
-    },
-    {
-      "apn": "movistar.es",
-      "authtype": 1,
-      "carrier_id": 34,
-      "name": "Conexi\u00f3ompartida",
-      "password": "MOVISTAR",
-      "types": [
-        "dun"
-      ],
-      "user": "MOVISTAR"
     },
     {
       "apn": "telefonica.es",
@@ -138,16 +107,6 @@
     {
       "apn": "telefonica.es",
       "authtype": 1,
-      "name": "Conexi\u00f3n Compartida",
-      "password": "telefonica",
-      "types": [
-        "dun"
-      ],
-      "user": "telefonica"
-    },
-    {
-      "apn": "telefonica.es",
-      "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.movistar.com",
       "mmsport": 8080,
@@ -170,129 +129,13 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "internet.t-2.net",
-      "carrier_id": 2281,
-      "mmsc": "http://www.mms.t-2.net:8002",
-      "mmsport": 8080,
-      "mmsproxy": "172.20.18.137",
-      "mvno_match_data": "2140759577xxxxx",
-      "mvno_type": "imsi",
-      "name": "T-2",
-      "types": [
-        "default",
-        "ims",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.t-2.net",
-      "mmsc": "http://www.mms.t-2.net:8002",
-      "mmsport": 8080,
-      "mmsproxy": "172.20.18.137",
-      "mvno_match_data": "2140759577xxxxx",
-      "mvno_type": "imsi",
-      "name": "internet.t-2.net",
-      "types": [
-        "default",
-        "ims",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.t-2.net",
-      "mmsc": "http://www.mms.t-2.net:8002",
-      "mmsport": 8080,
-      "mmsproxy": "172.20.18.137",
-      "mvno_match_data": "2140759917xxxxx",
-      "mvno_type": "imsi",
-      "name": "T-2",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.t-2.net",
-      "carrier_id": 2281,
-      "mmsc": "http://www.mms.t-2.net:8002",
-      "mmsport": 8080,
-      "mmsproxy": "172.20.18.137",
-      "mvno_match_data": "2140796692xxxxx",
-      "mvno_type": "imsi",
-      "name": "T-2",
-      "types": [
-        "default",
-        "ims",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.t-2.net",
-      "mmsc": "http://www.mms.t-2.net:8002",
-      "mmsport": 8080,
-      "mmsproxy": "172.20.18.137",
-      "mvno_match_data": "2140796692xxxxx",
-      "mvno_type": "imsi",
-      "name": "T-2",
-      "types": [
-        "default",
-        "ims",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "Empresa",
-      "mvno_type": "spn",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "telefonica.es",
-      "authtype": 1,
-      "mmsc": "http://mms.movistar.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.138.255.5",
-      "mvno_match_data": "Empresa",
-      "mvno_type": "spn",
-      "name": "Movistar",
-      "password": "telefonica",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "telefonica"
-    },
-    {
-      "apn": "jazzinternet",
-      "carrier_id": 1974,
-      "mvno_match_data": "JAZZTEL",
-      "mvno_type": "spn",
-      "name": "Jazztel Internet",
-      "types": [
-        "default",
-        "supl"
       ]
     },
     {
       "apn": "jazzinternet",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "jazzinternet",
+      "name": "Jazztel",
       "types": [
         "default",
         "supl"
@@ -300,8 +143,6 @@
     },
     {
       "apn": "jazzmms",
-      "authtype": 1,
-      "carrier_id": 1974,
       "mmsc": "http://jazztelmms.com/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "37.132.0.10",
@@ -311,34 +152,6 @@
       "types": [
         "mms"
       ]
-    },
-    {
-      "apn": "jazzmms",
-      "authtype": 1,
-      "mmsc": "http://jazztelmms.com/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "37.132.0.10",
-      "mvno_match_data": "JAZZTEL",
-      "mvno_type": "spn",
-      "name": "Jazztel MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "tuenti.com",
-      "mmsc": "http://tuenti.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.138.255.43",
-      "mvno_match_data": "Tuenti",
-      "mvno_type": "spn",
-      "name": "Tuenti",
-      "password": "tuenti",
-      "types": [
-        "default",
-        "mms"
-      ],
-      "user": "tuenti"
     }
   ],
   "android_carrier_config": {

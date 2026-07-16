@@ -28,6 +28,17 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "mtu": 1358,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -50,6 +61,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "mtu": 1358,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
@@ -69,24 +90,6 @@
       ]
     },
     {
-      "apn": "internet",
-      "name": "internet",
-      "types": [
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.bob.si",
-      "authtype": 2,
-      "name": "Bob internet",
-      "password": "internet",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "bob"
-    },
-    {
       "apn": "internet.simobil.si",
       "authtype": 1,
       "carrier_id": 1709,
@@ -100,17 +103,31 @@
       "user": "simobil"
     },
     {
-      "apn": "mms.bob.si",
-      "authtype": 2,
-      "mmsc": "http://mmc",
+      "apn": "internet.simobil.si",
+      "authtype": 1,
+      "name": "internet.simobil.si",
+      "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "simobil"
+    },
+    {
+      "apn": "mms.simobil.si",
+      "authtype": 1,
+      "carrier_id": 1709,
+      "mmsc": "http://mmc/",
       "mmsport": 9201,
       "mmsproxy": "80.95.224.46",
-      "name": "Bob MMS",
+      "name": "Si.mobil MMS",
       "password": "internet",
       "types": [
         "mms"
       ],
-      "user": "bob"
+      "user": "simobil"
     },
     {
       "apn": "mmssi",
@@ -132,29 +149,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mmssi",
-      "mmsc": "http://mms.hot.si",
-      "mmsport": 8080,
-      "mmsproxy": "80.95.224.47",
-      "mvno_match_data": "293400130xxxxxx",
-      "mvno_type": "imsi",
-      "name": "mmssi",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "websi",
-      "authtype": 1,
-      "mvno_match_data": "293400130xxxxxx",
-      "mvno_type": "imsi",
-      "name": "websi",
-      "types": [
-        "default",
         "supl"
       ]
     }

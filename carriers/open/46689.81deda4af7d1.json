@@ -1,28 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "Internet",
-      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (Internet)",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "Internet",
-      "mmsc": "http://mms.vibo.net.tw",
-      "mmsport": 8080,
-      "mmsproxy": "172.24.128.36",
-      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (MMS)",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "aurorawap",
       "mmsc": "http://auroramms",
       "mmsport": 8080,
@@ -42,31 +20,20 @@
     },
     {
       "apn": "ims",
+      "name": "T Star-IMS",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "types": [
         "ims"
       ],
       "user_editable": false
-    },
-    {
-      "apn": "ims",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1886,
-      "name": "\u53f0\u7063\u5927\u54e5\u5927TS (IMS)",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
     },
     {
       "apn": "internet",
@@ -84,8 +51,7 @@
     {
       "apn": "internet",
       "carrier_id": 1886,
-      "name": "internet",
-      "protocol": "IPV4V6",
+      "name": "T Star-internet",
       "types": [
         "default",
         "ia",
@@ -108,8 +74,7 @@
       "mmsc": "http://mms.vibo.net.tw",
       "mmsport": 8080,
       "mmsproxy": "172.24.128.36",
-      "name": "internet",
-      "protocol": "IPV4V6",
+      "name": "T Star-MMS",
       "types": [
         "mms"
       ]

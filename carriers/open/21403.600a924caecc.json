@@ -40,6 +40,18 @@
       ]
     },
     {
+      "apn": "euskaltelmms.euskaltel.mobi",
+      "mmsc": "http://mms.euskaltel.mobi",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.18.74",
+      "name": "Euskaltel MMS",
+      "password": "EUSKALTEL",
+      "types": [
+        "mms"
+      ],
+      "user": "MMS"
+    },
+    {
       "apn": "i.euskaltel.mobi",
       "name": "Euskaltel Internet",
       "password": "EUSKALTEL",
@@ -84,6 +96,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Orange Espa\u00f1a",
+      "password": "orange",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ],
+      "user": "orange"
+    },
+    {
       "apn": "inet.es",
       "name": "Suop",
       "types": [
@@ -107,37 +129,10 @@
       "name": "Euskaltel",
       "password": "EUSKALTEL",
       "types": [
+        "default",
         "dun"
       ],
       "user": "CLIENTE"
-    },
-    {
-      "apn": "internet.euskaltel.mobi",
-      "authtype": 1,
-      "name": "Internet Euskaltel",
-      "password": "CLIENTE",
-      "types": [
-        "supl"
-      ],
-      "user": "EUSKALTEL"
-    },
-    {
-      "apn": "jazzinternet",
-      "name": "Internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "jazzmms",
-      "mmsc": "http://jazztelmms.com:8081",
-      "mmsport": 8081,
-      "mmsproxy": "217.18.32.183",
-      "name": "MMS",
-      "types": [
-        "mms"
-      ]
     },
     {
       "apn": "moreinternet",
@@ -211,40 +206,20 @@
       ]
     },
     {
-      "apn": "CARREFOURINTERNET",
-      "authtype": 1,
-      "mvno_match_data": "2140352xxxxxxxx",
-      "mvno_type": "imsi",
-      "name": "CARREFOUR INTERNET",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "CARREFOURMMS",
       "authtype": 1,
+      "carrier_id": 2133,
       "mmsc": "http://mms.orange.es",
       "mmsport": 8080,
-      "mmsproxy": "172.22.188.25",
+      "mmsproxy": "172.022.188.025",
       "mvno_match_data": "2140352xxxxxxxx",
       "mvno_type": "imsi",
-      "name": "CARREFOUR MMS",
+      "name": "Carrefour MMS",
       "password": "CARREFOUR",
       "types": [
         "mms"
       ],
       "user": "CARREFOUR"
-    },
-    {
-      "apn": "youinternet",
-      "mvno_match_data": "2140356",
-      "mvno_type": "imsi",
-      "name": "youmobile",
-      "types": [
-        "default",
-        "supl"
-      ]
     },
     {
       "apn": "euskaltelmms.euskaltel.mobi",
@@ -288,16 +263,6 @@
       ]
     },
     {
-      "apn": "internettph",
-      "mvno_match_data": "CABLE movil",
-      "mvno_type": "spn",
-      "name": "Internet TPH",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "CARREFOURINTERNET",
       "mvno_match_data": "Carrefour",
       "mvno_type": "spn",
@@ -322,50 +287,6 @@
       "user": "carrefour"
     },
     {
-      "apn": "euskaltelmms.euskaltel.mobi",
-      "authtype": 1,
-      "mmsc": "http://mms.euskaltel.mobi",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.18.74",
-      "mvno_match_data": "EUSKALTEL",
-      "mvno_type": "spn",
-      "name": "Euskaltel MMS",
-      "password": "EUSKALTEL",
-      "server": "Sin definir",
-      "types": [
-        "mms"
-      ],
-      "user": "MMS"
-    },
-    {
-      "apn": "internet.euskaltel.mobi",
-      "authtype": 1,
-      "carrier_id": 1909,
-      "mvno_match_data": "EUSKALTEL",
-      "mvno_type": "spn",
-      "name": "Euskaltel Internet",
-      "password": "EUSKALTEL",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ],
-      "user": "CLIENTE"
-    },
-    {
-      "apn": "internet.euskaltel.mobi",
-      "authtype": 1,
-      "mvno_match_data": "EUSKALTEL",
-      "mvno_type": "spn",
-      "name": "Euskaltel Internet",
-      "password": "EUSKALTEL",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "CLIENTE"
-    },
-    {
       "apn": "internettph",
       "carrier_id": 2297,
       "mvno_match_data": "Happy",
@@ -374,16 +295,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internettph",
-      "mvno_match_data": "Happy",
-      "mvno_type": "spn",
-      "name": "Happy Internet",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -400,53 +311,37 @@
       ]
     },
     {
-      "apn": "ibercominternet",
-      "mvno_match_data": "Ibercom",
+      "apn": "jazzinternet",
+      "carrier_id": 1974,
+      "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "Ibercom",
+      "name": "jazzinternet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "jazzinternet",
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "Jazztel",
       "types": [
         "default",
         "supl"
       ]
     },
     {
-      "apn": "ims",
-      "authtype": 1,
-      "carrier_id": 1974,
+      "apn": "jazzmms",
+      "mmsc": "http://jazztelmms.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "37.132.0.10",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "JAZZTEL IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "Jazztel MMS",
       "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "jazzinternet",
-      "carrier_id": 1974,
-      "mvno_match_data": "JAZZTEL",
-      "mvno_type": "spn",
-      "name": "jazzinternet",
-      "types": [
-        "default",
-        "dun",
-        "ia",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "jazzinternet",
-      "authtype": 0,
-      "mvno_match_data": "JAZZTEL",
-      "mvno_type": "spn",
-      "name": "jazzinternet",
-      "types": [
-        "default",
-        "dun",
-        "supl"
+        "mms"
       ]
     },
     {
@@ -458,84 +353,10 @@
       "mmsproxy": "37.132.0.10",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "jazzmms",
-      "types": [
-        "mms"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "jazzmms",
-      "authtype": 1,
-      "mmsc": "http://jazztelmms.com/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "37.132.0.10",
-      "mvno_match_data": "JAZZTEL",
-      "mvno_type": "spn",
-      "name": "jazzmms",
+      "name": "MMS",
       "types": [
         "mms"
       ]
-    },
-    {
-      "apn": "lcrinternet",
-      "mvno_match_data": "LCR",
-      "mvno_type": "spn",
-      "name": "LCR",
-      "types": [
-        "default",
-        "dun",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "moreinternet",
-      "authtype": 1,
-      "mvno_match_data": "LlamaYA",
-      "mvno_type": "spn",
-      "name": "moreinternet",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "moreinternet",
-      "mvno_match_data": "LlamaYA",
-      "mvno_type": "spn",
-      "name": "Llamaya Internet",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "internetmas",
-      "carrier_id": 2300,
-      "mvno_match_data": "MASMOVIL",
-      "mvno_type": "spn",
-      "name": "MASMOVIL",
-      "types": [
-        "default",
-        "dun",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "masvidamms",
-      "authtype": 2,
-      "carrier_id": 2300,
-      "mmsc": "http://mms.orange.es",
-      "mmsport": 8080,
-      "mmsproxy": "172.22.188.25",
-      "mvno_match_data": "MASMOVIL",
-      "mvno_type": "spn",
-      "name": "MMS MASMOVIL",
-      "password": "MMSmasvida",
-      "types": [
-        "mms"
-      ],
-      "user": "masvidamms"
     },
     {
       "apn": "internetmas",
@@ -546,16 +367,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internetmas",
-      "mvno_match_data": "MASMovil",
-      "mvno_type": "spn",
-      "name": "MASMovil",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -594,71 +405,6 @@
       "user": "masvidamms"
     },
     {
-      "apn": "internet.mundo-r.com",
-      "carrier_id": 2113,
-      "mvno_match_data": "Mobil R",
-      "mvno_type": "spn",
-      "name": "Internet R",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "diainternet",
-      "mvno_match_data": "MovilDIA",
-      "mvno_type": "spn",
-      "name": "diainternet",
-      "types": [
-        "default",
-        "dun",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "diamms",
-      "mmsc": "http://mms.orange.es",
-      "mmsport": 8080,
-      "mmsproxy": "172.22.188.25",
-      "mvno_match_data": "MovilDIA",
-      "mvno_type": "spn",
-      "name": "diamms",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "ims",
-      "authtype": 1,
-      "carrier_id": 678,
-      "mvno_match_data": "Orange",
-      "mvno_type": "spn",
-      "name": "Orange IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "carrier_id": 678,
-      "mvno_match_data": "Orange",
-      "mvno_type": "spn",
-      "name": "Orange Internet PC",
-      "password": "orange",
-      "types": [
-        "dun"
-      ],
-      "user": "orange",
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
       "apn": "orangemms",
       "authtype": 1,
       "carrier_id": 678,
@@ -672,8 +418,7 @@
       "types": [
         "mms"
       ],
-      "user": "orange",
-      "user_editable": false
+      "user": "orange"
     },
     {
       "apn": "orangeworld",
@@ -685,22 +430,9 @@
       "password": "orange",
       "types": [
         "default",
-        "ia",
-        "supl"
+        "ia"
       ],
-      "user": "orange",
-      "user_editable": false
-    },
-    {
-      "apn": "datos",
-      "authtype": 0,
-      "mvno_match_data": "PTV Telecom",
-      "mvno_type": "spn",
-      "name": "PTV Telecom",
-      "types": [
-        "default",
-        "supl"
-      ]
+      "user": "orange"
     },
     {
       "apn": "internet.racc.net",
@@ -712,19 +444,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ],
-      "user": "CLIENTERACC"
-    },
-    {
-      "apn": "internet.racc.net",
-      "authtype": 1,
-      "mvno_match_data": "RACC",
-      "mvno_type": "spn",
-      "name": "RACC INTERNET",
-      "password": "RACC",
-      "types": [
-        "default",
         "supl"
       ],
       "user": "CLIENTERACC"
@@ -745,139 +464,6 @@
       "user": "MMS"
     },
     {
-      "apn": "mms.racc.net",
-      "authtype": 1,
-      "mmsc": "http://mms.racc.net",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.18.74",
-      "mvno_match_data": "RACC",
-      "mvno_type": "spn",
-      "name": "RACC MMS",
-      "password": "RACC",
-      "types": [
-        "mms"
-      ],
-      "user": "MMS"
-    },
-    {
-      "apn": "i.virgintelco.es",
-      "authtype": 1,
-      "mvno_match_data": "Virgin telco",
-      "mvno_type": "spn",
-      "name": "i.virgintelco.es",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "i.virgintelco.es",
-      "mvno_match_data": "Virgin telco",
-      "mvno_type": "spn",
-      "name": "Virgin TELCO Internet",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "x",
-      "authtype": 1,
-      "mvno_match_data": "X",
-      "mvno_type": "spn",
-      "name": "x",
-      "types": [
-        "default",
-        "dun",
-        "ia"
-      ]
-    },
-    {
-      "apn": "youinternet",
-      "mvno_match_data": "YOU Mobile",
-      "mvno_type": "spn",
-      "name": "youmobile",
-      "types": [
-        "default",
-        "dun",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.mundo-r.com",
-      "authtype": 1,
-      "mvno_match_data": "mobil R",
-      "mvno_type": "spn",
-      "name": "Internet R",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mms.mundo-r.com",
-      "authtype": 1,
-      "mmsc": "http://mms.mundo-r.com",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.18.74",
-      "mvno_match_data": "mobil R",
-      "mvno_type": "spn",
-      "name": "MMS R",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "internet.mundo-r.com",
-      "carrier_id": 2113,
-      "mvno_match_data": "mobilR",
-      "mvno_type": "spn",
-      "name": "Internet R",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.mundo-r.com",
-      "authtype": 1,
-      "mvno_match_data": "mobilR",
-      "mvno_type": "spn",
-      "name": "Internet R",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mms.mundo-r.com",
-      "authtype": 1,
-      "mmsc": "http://mms.mundo-r.com",
-      "mmsport": 8080,
-      "mmsproxy": "172.16.18.74",
-      "mvno_match_data": "mobilR",
-      "mvno_type": "spn",
-      "name": "MMS R",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "ims",
-      "authtype": 1,
-      "carrier_id": 2125,
-      "mvno_match_data": "simyo",
-      "mvno_type": "spn",
-      "name": "simyo IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "orangemms",
       "authtype": 1,
       "carrier_id": 2125,
@@ -891,21 +477,7 @@
       "types": [
         "mms"
       ],
-      "user": "orange",
-      "user_editable": false
-    },
-    {
-      "apn": "orangemms",
-      "authtype": 1,
-      "mmsc": "http://mms.orange.es",
-      "mmsport": 8080,
-      "mmsproxy": "172.22.188.25",
-      "mvno_match_data": "simyo",
-      "mvno_type": "spn",
-      "name": "simyo MMS",
-      "types": [
-        "mms"
-      ]
+      "user": "orange"
     },
     {
       "apn": "orangeworld",
@@ -917,23 +489,7 @@
       "password": "orange",
       "types": [
         "default",
-        "dun",
         "ia",
-        "supl"
-      ],
-      "user": "orange",
-      "user_editable": false
-    },
-    {
-      "apn": "orangeworld",
-      "authtype": 1,
-      "mvno_match_data": "simyo",
-      "mvno_type": "spn",
-      "name": "internet simyo",
-      "password": "orange",
-      "types": [
-        "default",
-        "dun",
         "supl"
       ],
       "user": "orange"

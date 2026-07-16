@@ -1,32 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "HOS",
-      "carrier_id": 765,
-      "name": "csl UT",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "hkcsl",
-      "authtype": 3,
-      "carrier_id": 765,
-      "mmsc": "http://192.168.58.171:8002",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.59.51",
-      "name": "hkcsl",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "hipri",
-        "ia",
-        "mms"
-      ]
-    },
-    {
       "apn": "hkcsl",
       "authtype": 3,
       "mmsc": "http://192.168.58.171:8002",
@@ -34,7 +8,10 @@
       "mmsproxy": "192.168.59.51",
       "name": "csl",
       "types": [
-        "hipri"
+        "default",
+        "hipri",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -46,27 +23,10 @@
       "mmsproxy": "192.168.59.51",
       "name": "one2free",
       "types": [
+        "default",
+        "ia",
+        "mms",
         "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 765,
-      "name": "csl IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
       ]
     },
     {

@@ -23,27 +23,6 @@
   },
   "android_apns": [
     {
-      "apn": "IMS",
-      "name": "Vivacom IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "Internet.vivacom.bg",
-      "name": "VIVACOM Internet",
-      "password": "vivacom",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "vivacom"
-    },
-    {
       "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
@@ -74,13 +53,24 @@
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1400,
-      "name": "ims",
+      "name": "Vivacom IMS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet.vivacom.bg",
+      "authtype": 1,
+      "carrier_id": 1999,
+      "name": "VIVACOM Internet",
+      "password": "vivacom",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ],
-      "user_visible": false
+      "user": "vivacom"
     },
     {
       "apn": "internet.vivacom.bg",
@@ -92,49 +82,18 @@
       "user": "VIVACOM"
     },
     {
-      "apn": "internet.vivatel.bg",
-      "name": "internet.vivatel.bg",
-      "password": "vivatel",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "vivatel"
-    },
-    {
-      "apn": "mms.vivatel.bg",
-      "mmsc": "http://mmsc.vivatel.bg",
+      "apn": "mms.vivacom.bg",
+      "authtype": 1,
+      "carrier_id": 1999,
+      "mmsc": "http://mmsc.vivacom.bg",
       "mmsport": 8080,
       "mmsproxy": "192.168.123.123",
-      "name": "VivaTel MMS postpaid",
+      "name": "Vivacom MMS",
       "password": "mms",
       "types": [
         "mms"
       ],
       "user": "mms"
-    },
-    {
-      "apn": "wap.vivacom.bg",
-      "name": "Vivacom WAP",
-      "password": "wap",
-      "port": 8080,
-      "proxy": "192.168.123.123",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "wap"
-    },
-    {
-      "apn": "wap.vivatel.bg",
-      "name": "VivaTel HTTP postpaid",
-      "password": "wap",
-      "port": 8080,
-      "proxy": "192.168.123.123",
-      "types": [
-        "default"
-      ],
-      "user": "wap"
     }
   ],
   "android_carrier_config": {

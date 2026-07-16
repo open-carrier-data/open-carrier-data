@@ -19,14 +19,11 @@
     },
     {
       "apn": "hos",
-      "authtype": 1,
       "name": "HOS",
-      "password": "tmobilemms",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
-      "user": "tmobilemms",
       "user_visible": false
     },
     {
@@ -75,13 +72,17 @@
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "carrier_id": 2386,
-      "name": "T-Mobile Internet",
+      "authtype": 3,
+      "mmsc": "http://mms.orange.nl:8002",
+      "mmsport": 5080,
+      "mmsproxy": "10.250.255.183",
+      "name": "internet",
+      "password": "orange",
       "types": [
         "default",
         "supl"
-      ]
+      ],
+      "user": "orange"
     },
     {
       "apn": "internet.mobiel",
@@ -92,20 +93,6 @@
         "default",
         "supl"
       ]
-    },
-    {
-      "apn": "mms",
-      "authtype": 1,
-      "carrier_id": 2386,
-      "mmsc": "http://t-mobilemms",
-      "mmsport": 8080,
-      "mmsproxy": "10.10.10.11",
-      "name": "T-Mobile MMS",
-      "password": "tmobilemms",
-      "types": [
-        "mms"
-      ],
-      "user": "tmobilemms"
     },
     {
       "apn": "smartsites.t-mobile",

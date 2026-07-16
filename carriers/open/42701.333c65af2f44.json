@@ -32,8 +32,27 @@
       ]
     },
     {
-      "apn": "gprs.qtel",
+      "apn": "data",
+      "mmsc": "http://mmsr.ooredoomms.qa",
+      "mmsport": 8080,
+      "mmsproxy": "10.23.8.3",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "data",
       "authtype": 1,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "gprs.qtel",
       "name": "gprs.qtel",
       "password": "gprs",
       "port": 8080,
@@ -56,9 +75,16 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Ooredoo",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "web.qtel",
-      "authtype": 1,
-      "name": "web.qtel",
+      "name": "Q-tel",
       "password": "gprs",
       "types": [
         "default",

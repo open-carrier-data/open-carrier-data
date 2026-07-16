@@ -1,16 +1,15 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "authtype": 0,
+      "apn": "internet.movistar.com.ec",
+      "authtype": 1,
       "carrier_id": 1472,
-      "name": "Movistar EC IMS",
+      "name": "Movistar INTERNET",
       "password": "movistar",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "ims",
-        "xcap"
+        "default",
+        "ia",
+        "supl"
       ],
       "user": "movistar"
     },
@@ -37,6 +36,20 @@
     {
       "apn": "mms.movistar.com.ec",
       "authtype": 1,
+      "carrier_id": 1472,
+      "mmsc": "http://mms.movistar.com.ec:8088/mms/",
+      "mmsport": 9001,
+      "mmsproxy": "10.3.5.50",
+      "name": "Movistar MMS",
+      "password": "movistar",
+      "types": [
+        "mms"
+      ],
+      "user": "movistar"
+    },
+    {
+      "apn": "mms.movistar.com.ec",
+      "authtype": 1,
       "mmsc": "http://mms.movistar.com.ec:8088/mms/",
       "mmsport": 9001,
       "mmsproxy": "10.3.5.50",
@@ -54,17 +67,6 @@
       "types": [
         "default",
         "dun"
-      ],
-      "user": "movistar"
-    },
-    {
-      "apn": "wap.movistar.com.ec",
-      "name": "Movistar WAP",
-      "password": "movistar",
-      "port": 9001,
-      "proxy": "10.3.5.50",
-      "types": [
-        "default"
       ],
       "user": "movistar"
     }

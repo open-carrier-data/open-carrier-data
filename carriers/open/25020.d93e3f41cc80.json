@@ -1,43 +1,13 @@
 {
   "android_apns": [
     {
-      "apn": "hos.tele2.ru",
-      "carrier_id": 1028,
-      "name": "HOS",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims.tele2.ru",
-      "carrier_id": 1028,
-      "name": "Tele2 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims.tele2.ru",
-      "name": "Tele2 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet.tele2.ru",
       "carrier_id": 1028,
-      "name": "internet.tele2.ru",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "TELE2 Internet",
       "types": [
         "default",
-        "ia"
+        "ia",
+        "supl"
       ]
     },
     {
@@ -51,18 +21,9 @@
     },
     {
       "apn": "internet.tele2.ru",
-      "name": "internet.tele2.ru",
+      "name": "Tele2",
       "types": [
-        "dun",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "internet.tele2.ru",
-      "carrier_id": 1028,
-      "name": "TELE2 Internet",
-      "types": [
-        "supl"
+        "dun"
       ]
     },
     {
@@ -71,20 +32,20 @@
       "mmsc": "http://mmsc.tele2.ru",
       "mmsport": 8080,
       "mmsproxy": "193.12.40.65",
-      "name": "mms.tele2.ru",
+      "name": "TELE2 MMS",
       "types": [
         "mms"
       ]
     },
     {
-      "apn": "internet.sberbank-tele.com",
-      "mvno_match_data": "FA3207FF",
-      "mvno_type": "gid",
-      "name": "Sberbank-Telecom Internet",
+      "apn": "mms.tele2.ru",
+      "authtype": 1,
+      "mmsc": "http://mmsc.tele2.ru",
+      "mmsport": 8080,
+      "mmsproxy": "193.12.40.65",
+      "name": "mms.tele2.ru",
       "types": [
-        "default",
-        "ia",
-        "supl"
+        "mms"
       ]
     }
   ],

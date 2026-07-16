@@ -2,6 +2,13 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "AT&T",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -23,27 +30,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "mms.attmex.mx",
-      "authtype": 0,
-      "mmsc": "http://mms.att.com.mx",
-      "mmsport": 8080,
-      "mmsproxy": "129.192.129.104",
-      "name": "MMS",
-      "protocol": "IP",
-      "types": [
-        "mms"
-      ]
-    },
-    {
       "apn": "mms.iusacellgsm.mx",
       "carrier_id": 1915,
       "mmsc": "http://mms.iusacell3g.com/",
@@ -55,37 +41,25 @@
       "user": "mmsiusacellgsm"
     },
     {
-      "apn": "modem.iusacellgsm.mx",
-      "authtype": 1,
-      "name": "modem.iusacellgsm.mx",
-      "password": "iusacellgsm",
+      "apn": "modem.attmex.mx",
+      "name": "Modem",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ],
+      "user_editable": false
+    },
+    {
+      "apn": "modem.iusacellgsm.mx",
+      "authtype": 1,
+      "name": "modem.iusacellgsm.mx",
+      "password": "iusacellgsm",
+      "types": [
+        "dun"
+      ],
       "user": "iusacellgsm",
       "user_visible": false
-    },
-    {
-      "apn": "supl.attmex.mx",
-      "authtype": 0,
-      "name": "Location",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "supl"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "supl.iusacellgsm.mx",
-      "name": "SUPL",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "supl"
-      ]
     },
     {
       "apn": "web.5g.attmex.mx",
@@ -96,6 +70,17 @@
         "default"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "web.iusacellgsm.mx",
+      "authtype": 0,
+      "name": "web.iusacellgsm.mx",
+      "password": "iusacellgsm",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "iusacellgsm"
     },
     {
       "apn": "web.iusacellgsm.mx",
@@ -112,81 +97,12 @@
     {
       "apn": "web.iusacellgsm.mx",
       "authtype": 0,
-      "name": "Iusacell Internet",
-      "password": "iusacellgsm",
-      "types": [
-        "dun"
-      ],
-      "user": "iusacellgsm"
-    },
-    {
-      "apn": "web.iusacellgsm.mx",
-      "authtype": 0,
       "name": "web.iusacellgsm.mx",
       "password": "iusacellgsm",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "supl"
       ],
       "user": "iusacellgsm"
-    },
-    {
-      "apn": "mms.attmex.mx",
-      "authtype": 0,
-      "carrier_id": 1915,
-      "mmsc": "http://mms.att.com.mx",
-      "mmsport": 8080,
-      "mmsproxy": "129.192.129.104",
-      "mvno_match_data": "334050x",
-      "mvno_type": "imsi",
-      "name": "MMS",
-      "protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "modem.attmex.mx",
-      "authtype": 0,
-      "carrier_id": 1915,
-      "mvno_match_data": "334050x",
-      "mvno_type": "imsi",
-      "name": "Modem",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "supl.attmex.mx",
-      "authtype": 0,
-      "carrier_id": 1915,
-      "mvno_match_data": "334050x",
-      "mvno_type": "imsi",
-      "name": "Location",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "server": "http://supl.iusacell.com",
-      "types": [
-        "supl"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "web.iusacellgsm.mx",
-      "authtype": 0,
-      "carrier_id": 1915,
-      "mvno_match_data": "334050x",
-      "mvno_type": "imsi",
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia"
-      ]
     }
   ],
   "android_carrier_config": {

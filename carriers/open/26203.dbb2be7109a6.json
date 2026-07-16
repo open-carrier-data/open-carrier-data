@@ -28,17 +28,6 @@
   "android_apns": [
     {
       "apn": "ims",
-      "carrier_id": 1453,
-      "name": "O2 DE IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "carrier_id": 1456,
       "name": "O2 DE IMS",
       "protocol": "IPV4V6",
@@ -58,22 +47,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "internet",
-      "carrier_id": 1453,
-      "mmsc": "http://10.81.0.7:8002",
-      "mmsport": 8080,
-      "mmsproxy": "82.113.100.5",
-      "name": "o2 Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
     },
     {
       "apn": "internet",
@@ -97,8 +70,7 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun",
-        "ia"
+        "dun"
       ]
     },
     {
@@ -114,18 +86,6 @@
       "types": [
         "xcap"
       ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 0,
-      "carrier_id": 1453,
-      "name": "o2 ut",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
     },
     {
       "apn": "internet.eplus.de",
@@ -155,6 +115,19 @@
       "user": "mms"
     },
     {
+      "apn": "mms.eplus.de",
+      "authtype": 1,
+      "mmsc": "http://mms/eplus/",
+      "mmsport": 5080,
+      "mmsproxy": "212.23.97.153",
+      "name": "mms.eplus.de",
+      "password": "eplus",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "ims",
       "carrier_id": 2536,
       "mvno_match_data": "26203293",
@@ -176,8 +149,6 @@
       "mvno_match_data": "26203293",
       "mvno_type": "imsi",
       "name": "1and1 Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "ia",
@@ -207,8 +178,6 @@
       "mvno_match_data": "26203330",
       "mvno_type": "imsi",
       "name": "1and1 Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "ia",

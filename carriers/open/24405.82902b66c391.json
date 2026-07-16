@@ -32,26 +32,6 @@
   },
   "android_apns": [
     {
-      "apn": "Internet",
-      "name": "Elisa Internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1475,
-      "name": "Elisa IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -74,14 +54,35 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "carrier_id": 1475,
       "name": "Elisa Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -99,22 +100,21 @@
       "mmsport": 80,
       "mmsproxy": "213.161.41.57",
       "name": "Elisa MMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
     },
     {
-      "apn": "xcap",
-      "carrier_id": 1475,
-      "name": "Elisa Ut",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.elisa.fi",
+      "mmsport": 80,
+      "mmsproxy": "213.161.41.57",
+      "name": "mms",
       "types": [
-        "xcap"
-      ],
-      "user_visible": false
+        "mms"
+      ]
     },
     {
       "apn": "internet.saunalahti",

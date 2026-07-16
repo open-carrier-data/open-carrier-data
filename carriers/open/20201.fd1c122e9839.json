@@ -49,15 +49,29 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 747,
+      "mmsc": "http://mmsc.cosmote.gr",
+      "mmsport": 8080,
+      "mmsproxy": "010.010.010.020",
+      "name": "HOS",
+      "network_type_bitmask": "18",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "bearer_bitmask": "18",
       "mmsc": "http://mmsc.cosmote.gr:8002",
       "mmsport": 8080,
       "mmsproxy": "10.10.10.20",
       "name": "hos",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "mms"
+        "mms",
+        "xcap"
       ],
       "user_visible": false
     },
@@ -76,19 +90,6 @@
         "mms",
         "xcap"
       ]
-    },
-    {
-      "apn": "hos",
-      "bearer_bitmask": "18",
-      "mmsc": "http://mmsc.cosmote.gr:8002",
-      "mmsport": 8080,
-      "mmsproxy": "10.10.10.20",
-      "name": "hos",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
     },
     {
       "apn": "ims",
@@ -111,16 +112,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "ims",
@@ -152,7 +143,7 @@
     {
       "apn": "internet",
       "carrier_id": 747,
-      "name": "internet",
+      "name": "Cosmote Internet",
       "protocol": "IPV4V6",
       "types": [
         "default",
@@ -179,18 +170,6 @@
       "mmsport": 8080,
       "mmsproxy": "10.10.10.20",
       "name": "Cosmote MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms",
-      "carrier_id": 747,
-      "mmsc": "http://mmsc.cosmote.gr:8002",
-      "mmsport": 8080,
-      "mmsproxy": "10.10.10.20",
-      "name": "Cosmote Mms",
-      "network_type_bitmask": "1|2|3|4|5|6|7|8|9|10|12|13|14|15|17|20",
       "types": [
         "mms"
       ]

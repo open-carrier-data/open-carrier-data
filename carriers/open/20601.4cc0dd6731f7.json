@@ -62,36 +62,17 @@
     {
       "apn": "event.proximus.be",
       "authtype": 1,
-      "carrier_id": 1365,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc.proximus.be/mms",
       "mmsport": 8080,
       "mmsproxy": "10.55.14.75",
-      "name": "Proximus MMS",
+      "name": "event.proximus.be",
       "password": "mms",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
       "user": "mms"
-    },
-    {
-      "apn": "hos",
-      "bearer": 14,
-      "name": "Proximus XCAP",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
-      "apn": "hos",
-      "authtype": 0,
-      "carrier_id": 1365,
-      "name": "Proximus XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
     },
     {
       "apn": "hos",
@@ -115,16 +96,8 @@
     },
     {
       "apn": "ims",
-      "bearer": 14,
-      "name": "Proximus IMS",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1365,
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "Proximus IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -142,9 +115,9 @@
     },
     {
       "apn": "internet.proximus.be",
-      "authtype": 1,
-      "carrier_id": 1365,
-      "name": "Proximus Internet",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "internet.proximus.be",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -209,18 +182,6 @@
       ]
     },
     {
-      "apn": "wap.proximus.be",
-      "authtype": 1,
-      "name": "Proximus HTTP",
-      "password": "wap",
-      "port": 80,
-      "proxy": "10.253.7.3",
-      "types": [
-        "default"
-      ],
-      "user": "wap"
-    },
-    {
       "apn": "web.iusacellgsm.mx",
       "authtype": 0,
       "name": "Iusacell Internet",
@@ -240,175 +201,6 @@
       ]
     },
     {
-      "apn": "tescomobile.liffeytelecom.com",
-      "mmsc": "http://mmc1/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "10.1.11.19",
-      "mvno_match_data": "0A",
-      "mvno_type": "gid",
-      "name": "Tesco Mobile Internet",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "goto.virginmobile.uk",
-      "authtype": 1,
-      "carrier_id": 717,
-      "mmsc": "http://mms.virginmobile.co.uk:8002",
-      "mmsport": 8080,
-      "mmsproxy": "193.30.166.2",
-      "mvno_match_data": "28",
-      "mvno_type": "gid",
-      "name": "Virgin Mobile",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "goto.virginmobile.uk",
-      "authtype": 1,
-      "mmsc": "http://mms.virginmobile.co.uk:8002",
-      "mmsport": 8080,
-      "mmsproxy": "193.30.166.2",
-      "mvno_match_data": "28",
-      "mvno_type": "gid",
-      "name": "Virgin Media Mobile Internet",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "user"
-    },
-    {
-      "apn": "virgin-mobile.fr",
-      "mvno_match_data": "52",
-      "mvno_type": "gid",
-      "name": "Virgin mobile",
-      "port": 8080,
-      "proxy": "10.6.10.1",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "virgin-mobile.fr",
-      "mmsc": "http://virginmms.fr",
-      "mmsport": 8080,
-      "mmsproxy": "10.6.10.1",
-      "mvno_match_data": "52",
-      "mvno_type": "gid",
-      "name": "VM MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "Internet.ch.upcmobile.com",
-      "mvno_match_data": "75636831",
-      "mvno_type": "gid",
-      "name": "upcnet",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.ch.upcmobile.com",
-      "mvno_match_data": "75636831",
-      "mvno_type": "gid",
-      "name": "upcnet",
-      "types": [
-        "default",
-        "supl",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "mms.ch.upcmobile.com",
-      "authtype": 1,
-      "mmsc": "http://mms.ch.upcmobile.com:8080/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "62.179.127.18",
-      "mvno_match_data": "75636831",
-      "mvno_type": "gid",
-      "name": "upcmms",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "Internet",
-      "mvno_match_data": "75696531",
-      "mvno_type": "gid",
-      "name": "Virgin Media IE",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.ziggo.nl",
-      "mvno_match_data": "7A696731",
-      "mvno_type": "gid",
-      "name": "Ziggo mobiel internet",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mms.mobi.eastlink.ca",
-      "mmsc": "http://mmss.mobi.eastlink.ca",
-      "mmsport": 8080,
-      "mmsproxy": "10.232.12.49",
-      "mvno_match_data": "B6",
-      "mvno_type": "gid",
-      "name": "MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "wisp.mobi.eastlink.ca",
-      "mvno_match_data": "B6",
-      "mvno_type": "gid",
-      "name": "Internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "goto.virginmobile.uk",
-      "authtype": 1,
-      "mmsc": "http://mms.virginmobile.co.uk:8002",
-      "mmsport": 8080,
-      "mmsproxy": "193.30.166.2",
-      "mvno_match_data": "894443",
-      "mvno_type": "iccid",
-      "name": "Virgin Mobile",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "user"
-    },
-    {
       "apn": "em",
       "carrier_id": 2326,
       "mvno_match_data": "206018",
@@ -417,51 +209,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.ch.upcmobile.com",
-      "mvno_match_data": "206018012",
-      "mvno_type": "imsi",
-      "name": "upcnet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mms.ch.upcmobile.com",
-      "authtype": 1,
-      "mmsc": "http://mms.ch.upcmobile.com:8080/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "62.179.127.18",
-      "mvno_match_data": "206018012",
-      "mvno_type": "imsi",
-      "name": "upcmms",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms.be",
-      "mmsc": "http://mmsc.telenet.be",
-      "mmsport": 80,
-      "mmsproxy": "195.130.149.100",
-      "mvno_match_data": "2060188",
-      "mvno_type": "imsi",
-      "name": "Telenet MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "telenetwap.be",
-      "mvno_match_data": "2060188",
-      "mvno_type": "imsi",
-      "name": "Telenet Internet",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -521,95 +268,6 @@
         "ia"
       ],
       "user": "vmobile@jp"
-    },
-    {
-      "apn": "mms.iusacellgsm.mx",
-      "authtype": 0,
-      "mmsc": "http://mms.iusacell3g.com/",
-      "mvno_match_data": "IUSACELL",
-      "mvno_type": "spn",
-      "name": "MMS",
-      "password": "mmsiusacellgsm",
-      "types": [
-        "mms"
-      ],
-      "user": "mmsiusacellgsm"
-    },
-    {
-      "apn": "modem.iusacellgsm.mx",
-      "authtype": 0,
-      "mvno_match_data": "IUSACELL",
-      "mvno_type": "spn",
-      "name": "MODEM",
-      "password": "iusacellgsm",
-      "types": [
-        "dun"
-      ],
-      "user": "iusacellgsm"
-    },
-    {
-      "apn": "web.iusacellgsm.mx",
-      "authtype": 0,
-      "mvno_match_data": "IUSACELL",
-      "mvno_type": "spn",
-      "name": "Internet",
-      "password": "iusacellgsm",
-      "types": [
-        "default"
-      ],
-      "user": "iusacellgsm"
-    },
-    {
-      "apn": "event.proximus.be",
-      "authtype": 0,
-      "mmsc": "http://mmsc.proximus.be/mms",
-      "mmsport": 8080,
-      "mmsproxy": "10.55.14.75",
-      "mvno_match_data": "NRJ Mobile",
-      "mvno_type": "spn",
-      "name": "NRJMMS",
-      "password": "mms",
-      "types": [
-        "mms"
-      ],
-      "user": "mms"
-    },
-    {
-      "apn": "mms.iusacellgsm.mx",
-      "authtype": 0,
-      "mmsc": "http://mms.iusacell3g.com/",
-      "mvno_match_data": "UNEFON",
-      "mvno_type": "spn",
-      "name": "MMS",
-      "password": "mmsiusacellgsm",
-      "types": [
-        "mms"
-      ],
-      "user": "mmsiusacellgsm"
-    },
-    {
-      "apn": "modem.iusacellgsm.mx",
-      "authtype": 0,
-      "mvno_match_data": "UNEFON",
-      "mvno_type": "spn",
-      "name": "MODEM",
-      "password": "iusacellgsm",
-      "types": [
-        "dun"
-      ],
-      "user": "iusacellgsm"
-    },
-    {
-      "apn": "web.iusacellgsm.mx",
-      "authtype": 0,
-      "mvno_match_data": "UNEFON",
-      "mvno_type": "spn",
-      "name": "Internet",
-      "password": "iusacellgsm",
-      "types": [
-        "default"
-      ],
-      "user": "iusacellgsm"
     }
   ],
   "android_carrier_config": {

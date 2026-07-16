@@ -17,14 +17,6 @@
   },
   "android_apns": [
     {
-      "apn": "Internet.be",
-      "name": "Mobile Internet (business)",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "iew.be",
       "name": "iew.be",
       "password": "mobistar",
@@ -53,24 +45,15 @@
     },
     {
       "apn": "ims",
-      "carrier_id": 1366,
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1300,
       "name": "Orange B IMS",
-      "protocol": "IPV4V6",
+      "protocol": "IP",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "internet.be",
-      "name": "internet.be",
-      "password": "mobistar",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "mobistar"
+      ]
     },
     {
       "apn": "mms.be",
@@ -78,7 +61,7 @@
       "mmsc": "http://mmsc.mobistar.be",
       "mmsport": 8080,
       "mmsproxy": "212.65.63.143",
-      "name": "mms.be",
+      "name": "Mobistar MMS",
       "types": [
         "mms"
       ]
@@ -96,13 +79,12 @@
       "types": [
         "mms"
       ],
-      "user": "mobistar",
-      "user_editable": false
+      "user": "mobistar"
     },
     {
       "apn": "mworld.be",
       "carrier_id": 1366,
-      "name": "mworld.be",
+      "name": "Mobistar Internet",
       "types": [
         "default",
         "ia",

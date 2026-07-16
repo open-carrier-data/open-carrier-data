@@ -1,15 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "Tele2 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet",
       "carrier_id": 1986,
       "name": "Tele2 Internet",
@@ -48,6 +39,16 @@
     {
       "apn": "mms",
       "carrier_id": 1986,
+      "mmsc": "http://mms.tele2.kz/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.26.10",
+      "name": "Tele2 MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mms.tele2.kz/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "10.1.26.10",

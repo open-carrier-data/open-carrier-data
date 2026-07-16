@@ -28,16 +28,6 @@
   },
   "android_apns": [
     {
-      "apn": "3gnet",
-      "name": "mts internet",
-      "password": "064",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "mts"
-    },
-    {
       "apn": "HOS",
       "carrier_enabled": true,
       "mtu": 1500,
@@ -62,22 +52,11 @@
       "authtype": 0,
       "name": "gprsinternet",
       "password": "064",
-      "port": 8080,
       "types": [
         "default",
-        "supl"
-      ],
-      "user": "mts",
-      "user_editable": false
-    },
-    {
-      "apn": "gprsinternet",
-      "authtype": 0,
-      "name": "MTS Internet RS",
-      "password": "064",
-      "types": [
         "dun",
-        "fota"
+        "fota",
+        "supl"
       ],
       "user": "mts",
       "user_editable": false
@@ -85,14 +64,27 @@
     {
       "apn": "gprswap",
       "authtype": 1,
-      "carrier_id": 1013,
+      "carrier_enabled": true,
       "name": "gprswap",
       "password": "064",
       "port": 8080,
+      "protocol": "IPV4V6",
       "proxy": "172.17.88.198",
+      "types": [
+        "default"
+      ],
+      "user": "mts"
+    },
+    {
+      "apn": "gprswap",
+      "authtype": 1,
+      "carrier_id": 1013,
+      "name": "MTS WAP",
+      "password": "064",
       "server": "http://m.mondo.rs",
       "types": [
         "default",
+        "ia",
         "supl"
       ],
       "user": "mts"
@@ -109,25 +101,11 @@
     {
       "apn": "gprswap",
       "authtype": 1,
-      "carrier_id": 1013,
-      "name": "MTS WAP",
-      "password": "064",
-      "server": "http://m.mondo.rs",
-      "types": [
-        "ia"
-      ],
-      "user": "mts"
-    },
-    {
-      "apn": "gprswap",
-      "authtype": 1,
       "name": "gprswap",
       "password": "064",
       "port": 8080,
       "protocol": "IPV4V6",
       "proxy": "172.17.88.198",
-      "roaming_protocol": "IPV4V6",
-      "server": "http://m.mondo.rs",
       "types": [
         "supl"
       ],
@@ -155,13 +133,21 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "mt:s",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms",
       "authtype": 1,
       "carrier_id": 1013,
       "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.17.85.131",
-      "name": "mms",
+      "name": "MTS MMS",
       "password": "064",
       "types": [
         "mms"

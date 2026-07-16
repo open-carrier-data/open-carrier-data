@@ -88,54 +88,43 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
+      "apn": "mobile.o2.co.uk",
       "carrier_id": 1492,
-      "name": "o2 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "O2 Mobile Web",
+      "password": "password",
       "types": [
-        "ims"
+        "default",
+        "ia",
+        "supl"
       ],
-      "user_visible": false
+      "user": "o2web"
     },
     {
       "apn": "mobile.o2.co.uk",
       "authtype": 1,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "name": "O2 Pay monthly",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "cbs"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "mobile.o2.co.uk",
-      "authtype": 1,
-      "carrier_id": 1492,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "name": "o2 Pay Monthly",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "mms",
-        "xcap"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "mobile.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "name": "mobile.o2.co.uk",
+      "name": "O2 Pay Monthly",
       "password": "p",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "hipri"
+      ],
+      "user": "o2",
+      "user_editable": false
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mtu": 1500,
+      "name": "O2 Pay Monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ],
       "user": "o2",
       "user_editable": false
@@ -155,6 +144,20 @@
         "ia",
         "mms",
         "supl"
+      ],
+      "user": "payandgo"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "O2 PAYG",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "hipri"
       ],
       "user": "payandgo"
     },
@@ -209,270 +212,25 @@
       ]
     },
     {
-      "apn": "ims",
-      "mvno_match_data": "0A",
-      "mvno_type": "gid",
-      "name": "Tesco-IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "prepay.tesco-mobile.com",
       "authtype": 1,
       "carrier_id": 2093,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
       "mvno_match_data": "0A",
       "mvno_type": "gid",
       "name": "TESCO",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user": "tm"
-    },
-    {
-      "apn": "prepay.tesco-mobile.com",
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "0a",
-      "mvno_type": "gid",
-      "name": "TESCO",
       "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
       "types": [
         "default",
-        "dun",
-        "hipri",
+        "ia",
         "mms",
         "supl"
       ],
       "user": "tescowap"
-    },
-    {
-      "apn": "prepay.tesco-mobile.com",
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mmsport": 8080,
-      "mmsproxy": "193.113.200.195",
-      "mvno_match_data": "0affffffffff544553434f202020202020202020",
-      "mvno_type": "gid",
-      "name": "Tesco WAP GPRS",
-      "password": "password",
-      "server": "193.113.200.195",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "tescowap"
-    },
-    {
-      "apn": "giffgaff.com",
-      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
-      "mvno_match_data": "508",
-      "mvno_type": "gid",
-      "name": "giffgaff",
-      "password": "password",
-      "types": [
-        "default",
-        "dun",
-        "hipri",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "giffgaff"
-    },
-    {
-      "apn": "ims",
-      "mvno_match_data": "508",
-      "mvno_type": "gid",
-      "name": "giffgaff",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "wbdata",
-      "mvno_match_data": "536E617065",
-      "mvno_type": "gid",
-      "name": "Webbing",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "dun",
-        "ia"
-      ]
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "61",
-      "mvno_type": "gid",
-      "name": "O2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "default",
-        "dun",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "carrier_id": 10002,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "61",
-      "mvno_type": "gid",
-      "name": "o2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "67",
-      "mvno_type": "gid",
-      "name": "O2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "default",
-        "dun",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "carrier_id": 10002,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "67",
-      "mvno_type": "gid",
-      "name": "o2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "85",
-      "mvno_type": "gid",
-      "name": "O2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "default",
-        "dun",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "carrier_id": 10002,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "85",
-      "mvno_type": "gid",
-      "name": "o2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "99",
-      "mvno_type": "gid",
-      "name": "O2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "cbs",
-        "default",
-        "dun",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "carrier_id": 10002,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "99",
-      "mvno_type": "gid",
-      "name": "o2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user": "o2"
-    },
-    {
-      "apn": "payandgo.o2.co.uk",
-      "authtype": 1,
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "mvno_match_data": "99,61,67,85",
-      "mvno_type": "gid",
-      "name": "O2 Pay As You Go",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "dun",
-        "hipri",
-        "mms",
-        "supl"
-      ],
-      "user": "o2",
-      "user_editable": false
     },
     {
       "apn": "mobiledata",
@@ -480,20 +238,26 @@
       "carrier_id": 2138,
       "mvno_match_data": "Jump",
       "mvno_type": "spn",
-      "name": "mobiledata",
+      "name": "Jump UK",
       "types": [
         "default"
       ]
     },
     {
-      "apn": "mobiledata",
-      "carrier_id": 2138,
-      "mvno_match_data": "Jump",
+      "apn": "giffgaff.com",
+      "authtype": 1,
+      "carrier_id": 2118,
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "mvno_match_data": "giffgaff",
       "mvno_type": "spn",
-      "name": "Jump",
+      "name": "giffgaff",
+      "password": "password",
       "types": [
-        "ia"
-      ]
+        "default"
+      ],
+      "user": "giffgaff"
     },
     {
       "apn": "giffgaff.com",
@@ -508,24 +272,6 @@
       "types": [
         "hipri",
         "ims"
-      ],
-      "user": "gg"
-    },
-    {
-      "apn": "giffgaff.com",
-      "authtype": 1,
-      "carrier_id": 2118,
-      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
-      "mvno_match_data": "giffgaff",
-      "mvno_type": "spn",
-      "name": "giffgaff",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "types": [
-        "ia",
-        "mms",
-        "supl",
-        "xcap"
       ],
       "user": "gg"
     }

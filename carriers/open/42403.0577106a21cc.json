@@ -24,9 +24,13 @@
     },
     {
       "apn": "du",
-      "name": "Du Internet",
+      "carrier_id": 1970,
+      "mmsc": "http://mms.du.ae:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.19.18.4",
+      "name": "du MMS",
       "types": [
-        "xcap"
+        "mms"
       ]
     },
     {
@@ -42,22 +46,9 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "du",
       "types": [
         "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "carrier_id": 1970,
-      "name": "du IMS",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims",
-        "xcap"
       ]
     },
     {
@@ -67,15 +58,6 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
-    },
-    {
-      "apn": "internet1",
-      "mvno_match_data": "42403022xxxxxxx",
-      "mvno_type": "imsi",
-      "name": "Virgin Mobile Data",
-      "types": [
-        "default"
       ]
     }
   ],

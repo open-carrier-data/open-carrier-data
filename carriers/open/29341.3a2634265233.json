@@ -27,23 +27,9 @@
     {
       "apn": "IMS",
       "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
-    },
-    {
-      "apn": "Internet",
-      "mmsc": "http://mms.telekom.si",
-      "name": "Mobilni Internet",
-      "password": "internet",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user": "mobitel"
     },
     {
       "apn": "hos",
@@ -70,14 +56,10 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "name": "mobitel",
       "types": [
         "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet",
@@ -98,18 +80,15 @@
     },
     {
       "apn": "internet",
-      "bearer_bitmask": "18",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.telekom.si",
-      "mmsport": 8080,
-      "mmsproxy": "213.229.249.40",
-      "name": "hos",
+      "name": "internet",
       "password": "internet",
       "types": [
-        "mms",
-        "xcap"
+        "dun"
       ],
-      "user": "mobitel",
-      "user_visible": false
+      "user": "mobitel"
     },
     {
       "apn": "internet",
@@ -118,6 +97,7 @@
       "name": "Mobilni Internet",
       "password": "internet",
       "types": [
+        "hipri",
         "rcs"
       ],
       "user": "mobitel"

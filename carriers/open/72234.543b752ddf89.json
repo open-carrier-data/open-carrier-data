@@ -3,21 +3,24 @@
     {
       "apn": "datos.personal.com",
       "authtype": 1,
-      "name": "Personal Datos",
-      "password": "adgj",
-      "types": [
-        "dun"
-      ],
-      "user": "gprs"
-    },
-    {
-      "apn": "datos.personal.com",
-      "authtype": 0,
       "carrier_id": 1341,
       "name": "Personal Datos",
       "password": "datos",
       "types": [
-        "xcap"
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "datos"
+    },
+    {
+      "apn": "datos.personal.com",
+      "authtype": 1,
+      "name": "datos.personal.com",
+      "password": "datos",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "datos"
     },
@@ -51,16 +54,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "carrier_id": 1341,
-      "name": "Personal IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "apn": "internet.personal.com",
       "authtype": 0,
       "carrier_id": 1341,
@@ -70,6 +63,31 @@
         "dun"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "internet.personal.com",
+      "authtype": 1,
+      "name": "internet.personal.com",
+      "password": "internet",
+      "types": [
+        "dun"
+      ],
+      "user": "internet",
+      "user_visible": false
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1341,
+      "mmsc": "http://mms.personal.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.7.31",
+      "name": "Personal MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     }
   ],
   "android_carrier_config": {

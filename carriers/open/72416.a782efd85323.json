@@ -2,11 +2,9 @@
   "android_apns": [
     {
       "apn": "gprs.oi.com.br",
-      "authtype": 0,
       "carrier_id": 540,
-      "name": "gprs.oi.com.br",
+      "name": "Oi GPRS Internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "ia",
@@ -23,6 +21,21 @@
         "ia"
       ],
       "user": "oi"
+    },
+    {
+      "apn": "mmsgprs.oi.com.br",
+      "authtype": 1,
+      "carrier_id": 540,
+      "mmsc": "http://200.222.42.204:8002",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "MMS GPRS",
+      "password": "oioioi",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
     },
     {
       "apn": "wapgprs.oi.com.br",

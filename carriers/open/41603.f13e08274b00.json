@@ -1,23 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "umniahinternet Postpaid",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "mms",
       "carrier_id": 1580,
       "mmsc": "http://mms.umniah.com/",
@@ -26,6 +9,15 @@
       "name": "Umniah MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "net",
+      "name": "net",
+      "types": [
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -39,23 +31,6 @@
       ]
     },
     {
-      "apn": "net",
-      "name": "net",
-      "port": 80,
-      "proxy": "0.0.0.0",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "net",
-      "name": "Umniah",
-      "types": [
-        "dun"
-      ]
-    },
-    {
       "apn": "wap",
       "carrier_id": 1580,
       "name": "Umniah WAP",
@@ -73,6 +48,7 @@
       "port": 8080,
       "proxy": "10.1.1.10",
       "types": [
+        "default",
         "supl"
       ]
     }
