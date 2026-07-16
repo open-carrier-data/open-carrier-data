@@ -56,6 +56,16 @@ def main() -> int:
         schema_scope_kinds == validate_device_catalog.ANDROID_SCOPE_KINDS,
         "Android artifact schema and validator scope kinds must match",
     )
+    schema_discovery_statuses = set(
+        artifact_schema["properties"]["scope_coverage"]["items"]["properties"][
+            "discovery_status"
+        ]["enum"]
+    )
+    assert_true(
+        schema_discovery_statuses
+        == validate_device_catalog.ANDROID_DISCOVERY_STATUSES,
+        "Android artifact schema and validator discovery statuses must match",
+    )
     observation = {
         "matched_identifiers": [exact_device_id],
         "profile_count": 1,

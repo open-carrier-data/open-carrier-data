@@ -50,6 +50,16 @@ DATA_COVERAGE_STATUSES = {
     "inventory_only",
 }
 ANDROID_SCOPE_KINDS = {"model", "device_id", "source_api_row"}
+ANDROID_DISCOVERY_STATUSES = {
+    "carrier_data_not_applicable",
+    "discovery_in_progress",
+    "no_artifact_found",
+    "no_query_identifier",
+    "artifact_indexed",
+    "platform_out_of_scope",
+    "source_extracted",
+    "source_terms_restrict_extraction",
+}
 APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
 
 
@@ -263,16 +273,6 @@ def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
     if not isinstance(value, list) or not value:
         raise ValidationError(f"{path}: invalid source discovery for {device_id}")
     previous_source = ""
-    allowed_statuses = {
-        "discovery_in_progress",
-        "no_artifact_found",
-        "no_query_identifier",
-        "artifact_indexed",
-        "carrier_data_not_applicable",
-        "platform_out_of_scope",
-        "source_extracted",
-        "source_terms_restrict_extraction",
-    }
     for item in value:
         expected = {"source", "matched_identifiers", "scope_count", "status_counts"}
         if not isinstance(item, dict) or set(item) != expected:
@@ -289,7 +289,7 @@ def validate_source_discovery(path: Path, device_id: str, value: Any) -> None:
         if (
             not isinstance(counts, dict)
             or not counts
-            or not set(counts) <= allowed_statuses
+            or not set(counts) <= ANDROID_DISCOVERY_STATUSES
             or any(not isinstance(count, int) or count < 1 for count in counts.values())
         ):
             raise ValidationError(f"{path}: source discovery counts are invalid")
@@ -529,16 +529,6 @@ def validate_android_artifacts(
     }
     previous_key = ("", "")
     seen_coverage: set[tuple[str, str]] = set()
-    allowed_statuses = {
-        "carrier_data_not_applicable",
-        "discovery_in_progress",
-        "no_artifact_found",
-        "no_query_identifier",
-        "artifact_indexed",
-        "platform_out_of_scope",
-        "source_extracted",
-        "source_terms_restrict_extraction",
-    }
     for record in scope_coverage:
         if not isinstance(record, dict) or set(record) != expected_coverage:
             raise ValidationError(f"{path}: Android scope coverage fields are invalid")
@@ -549,7 +539,7 @@ def validate_android_artifacts(
             or key in seen_coverage
             or key <= previous_key
             or record.get("scope_kind") not in ANDROID_SCOPE_KINDS
-            or record.get("discovery_status") not in allowed_statuses
+            or record.get("discovery_status") not in ANDROID_DISCOVERY_STATUSES
         ):
             raise ValidationError(f"{path}: Android scope coverage is invalid or unsorted")
         counts = [

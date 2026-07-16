@@ -84,11 +84,14 @@
           "device_ids": { "$ref": "#/$defs/device_ids" },
           "discovery_status": {
             "enum": [
+              "carrier_data_not_applicable",
               "discovery_in_progress",
               "no_artifact_found",
               "no_query_identifier",
               "artifact_indexed",
-              "source_extracted"
+              "platform_out_of_scope",
+              "source_extracted",
+              "source_terms_restrict_extraction"
             ]
           },
           "region_seed_count": { "type": "integer", "minimum": 0 },
