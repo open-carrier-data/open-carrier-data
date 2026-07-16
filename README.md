@@ -175,8 +175,9 @@ source and merge policy.
   known but its published terms do not permit this project to inspect it for
   carrier data. It is not a claim that the device lacks cellular support.
 - `source_transport_untrusted` means an exact official source record is known,
-  but the available archive transport lacks the integrity properties required
-  for unattended inspection, such as HTTPS plus a vendor-authenticated digest.
+  but the available archive or binary-package transport lacks the integrity
+  properties required for unattended inspection, such as HTTPS plus a
+  vendor-authenticated digest.
   The scope is artifact-free: it is not a claim that carrier data was found or
   that the device lacks cellular support.
 

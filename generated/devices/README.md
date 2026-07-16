@@ -38,10 +38,10 @@ check with no artifact, and identities that lack a usable vendor query key.
 `carrier_data_not_applicable` is reserved for explicitly classified non-cellular
 Apple product families or exact Android variants backed by an official
 connectivity source. `source_transport_untrusted` records an exact Android
-source whose archive transport does not meet unattended integrity requirements;
-it has no artifacts and is not a successful carrier extraction. Unrecognized
-present or future identities remain `inventory_only` until evidence classifies
-them.
+source whose archive or binary-package transport does not meet unattended
+integrity requirements; it has no artifacts and is not a successful carrier
+extraction. Unrecognized present or future identities remain `inventory_only`
+until evidence classifies them.
 
 One device can be listed by more than one maintained inventory. Such records
 merge only when their canonical device ID is identical, and
