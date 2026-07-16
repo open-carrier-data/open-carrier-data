@@ -71,6 +71,11 @@ EXACT_ZERO_ARTIFACT_TERMINAL_STATUSES = {
     "source_authentication_required",
     "source_transport_untrusted",
 }
+AUTHENTICATION_TERMINAL_CONFLICT_FIELDS = {
+    "carrier_observations",
+    "carrier_artifact_catalog",
+    "carrier_source_catalogs",
+}
 APPLE_NON_CELLULAR_FAMILIES = {"AppleTV", "AudioAccessory", "iPod"}
 CARRIER_RELEVANCE_STATUSES = {
     "evidence_confirmed_cellular",
@@ -434,6 +439,13 @@ def validate_data_coverage(
         raise ValidationError(f"{path}: inventory-only device has carrier sources")
     if status not in {"inventory_only", "carrier_data_not_applicable"} and not sources:
         raise ValidationError(f"{path}: covered device has no carrier sources")
+    if status == "source_authentication_required":
+        conflict_fields = sorted(AUTHENTICATION_TERMINAL_CONFLICT_FIELDS & set(record))
+        if conflict_fields:
+            raise ValidationError(
+                f"{path}: authentication-required coverage has carrier-bearing "
+                f"device evidence: {conflict_fields[0]}"
+            )
     if status == "carrier_data_not_applicable":
         if schema_version == 1:
             approved_apple = (
@@ -1005,9 +1017,10 @@ def validate_android_transport_links(
 def validate_android_authentication_links(
     path: Path,
     android_devices: list[dict[str, Any]],
+    android_artifacts: list[dict[str, Any]],
     android_scope_coverage: list[dict[str, Any]],
 ) -> None:
-    """Join every authentication terminal to one exact artifact-free scope."""
+    """Enforce device-global precedence for every authentication terminal."""
 
     validate_android_exact_terminal_links(
         path,
@@ -1015,6 +1028,70 @@ def validate_android_authentication_links(
         android_scope_coverage,
         "source_authentication_required",
     )
+    authentication_device_ids = {
+        record["device_id"]
+        for record in android_devices
+        if (record.get("carrier_data_coverage") or {}).get("status")
+        == "source_authentication_required"
+    }
+    for record in android_devices:
+        if record["device_id"] not in authentication_device_ids:
+            continue
+        conflict_fields = sorted(AUTHENTICATION_TERMINAL_CONFLICT_FIELDS & set(record))
+        if conflict_fields:
+            raise ValidationError(
+                f"{path}: authentication-required device has carrier-bearing evidence: "
+                f"{record['device_id']}/{conflict_fields[0]}"
+            )
+
+    scope_device_ids = {
+        (scope.get("source"), scope.get("device_scope")): set(
+            scope.get("device_ids") or []
+        )
+        for scope in android_scope_coverage
+    }
+    for artifact in android_artifacts:
+        matched_device_ids = set(artifact.get("device_ids") or []) | set(
+            artifact.get("device_scopes") or []
+        )
+        for device_scope in artifact.get("device_scopes") or []:
+            matched_device_ids.update(
+                scope_device_ids.get((artifact.get("source"), device_scope), set())
+            )
+        conflicting_device_ids = sorted(
+            authentication_device_ids & matched_device_ids
+        )
+        if conflicting_device_ids:
+            raise ValidationError(
+                f"{path}: authentication-required device has registry artifact "
+                f"evidence: {conflicting_device_ids[0]}"
+            )
+
+    positive_statuses = {"artifact_indexed", "source_extracted"}
+    count_fields = (
+        "region_seed_count",
+        "probed_region_count",
+        "available_region_count",
+        "extracted_artifact_count",
+    )
+    for scope in android_scope_coverage:
+        positive = scope.get("discovery_status") in positive_statuses or any(
+            is_json_integer(scope.get(field)) and scope[field] > 0
+            for field in count_fields
+        )
+        if not positive:
+            continue
+        matched_device_ids = set(scope.get("device_ids") or [])
+        if scope.get("device_scope") in authentication_device_ids:
+            matched_device_ids.add(scope["device_scope"])
+        conflicting_device_ids = sorted(
+            authentication_device_ids & matched_device_ids
+        )
+        if conflicting_device_ids:
+            raise ValidationError(
+                f"{path}: authentication-required device has positive registry "
+                f"scope evidence: {conflicting_device_ids[0]}"
+            )
 
 
 def validate_index(
@@ -1241,7 +1318,12 @@ def main(argv: list[str]) -> int:
         root / "android-carrier-artifacts.json"
     )
     validate_android_transport_links(root, android_devices, android_scope_coverage)
-    validate_android_authentication_links(root, android_devices, android_scope_coverage)
+    validate_android_authentication_links(
+        root,
+        android_devices,
+        android_artifacts,
+        android_scope_coverage,
+    )
     if artifact_source not in apple_sources:
         raise ValidationError("Apple device and artifact sources do not match")
     validate_index(

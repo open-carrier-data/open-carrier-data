@@ -587,7 +587,14 @@
                 }
               }
             },
-            "required": ["carrier_source_discovery"]
+            "required": ["carrier_source_discovery"],
+            "not": {
+              "anyOf": [
+                { "required": ["carrier_observations"] },
+                { "required": ["carrier_artifact_catalog"] },
+                { "required": ["carrier_source_catalogs"] }
+              ]
+            }
           }
         },
         {

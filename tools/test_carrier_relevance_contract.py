@@ -247,6 +247,7 @@ def main() -> int:
 
     inventory_source = source("inventory_source")
     other_source = source("other_source")
+    bundle_source = source("apple_carrier_bundles")
     with tempfile.TemporaryDirectory() as raw_tmp:
         tmp = Path(raw_tmp)
         base = device("android", ANDROID_ID, "inventory_source")
@@ -397,6 +398,124 @@ def main() -> int:
             "android",
         )
 
+        authentication_terminal = deepcopy(base)
+        authentication_terminal["inventory_sources"].append(
+            {
+                "source": "other_source",
+                "status": "present",
+                "first_seen_revision": "0" * 64,
+                "last_changed_revision": "0" * 64,
+            }
+        )
+        authentication_terminal["carrier_source_discovery"] = [
+            {
+                "source": "inventory_source",
+                "matched_identifiers": [ANDROID_ID],
+                "scope_count": 1,
+                "status_counts": {"source_authentication_required": 1},
+            }
+        ]
+        authentication_terminal["carrier_data_coverage"] = {
+            "status": "source_authentication_required",
+            "sources": ["inventory_source"],
+        }
+        authentication_terminal["carrier_relevance"] = {
+            "status": "evidence_confirmed_cellular",
+            "evidence": [
+                {
+                    "kind": "official_connectivity_specification",
+                    "source": "other_source",
+                }
+            ],
+        }
+        validate_inventory(
+            tmp,
+            inventory(
+                "android",
+                [authentication_terminal],
+                [inventory_source, other_source],
+            ),
+            "android",
+        )
+
+        for observation_source in ("inventory_source", "other_source"):
+            authentication_observed = deepcopy(authentication_terminal)
+            authentication_observed["carrier_observations"] = {
+                "matched_identifiers": [ANDROID_ID],
+                "profile_count": 1,
+                "sources": [observation_source],
+            }
+            authentication_observed["carrier_relevance"] = {
+                "status": "evidence_confirmed_cellular",
+                "evidence": [
+                    {
+                        "kind": "exact_carrier_observation",
+                        "source": observation_source,
+                    }
+                ],
+            }
+            assert_rejected(
+                lambda value=authentication_observed: validate_inventory(
+                    tmp,
+                    inventory(
+                        "android",
+                        [value],
+                        [inventory_source, other_source],
+                    ),
+                    "android",
+                ),
+                "schema-v2 authentication terminal accepted exact observation "
+                f"evidence from {observation_source}",
+            )
+
+        for authentication_source in (
+            "inventory_source",
+            "apple_carrier_bundles",
+        ):
+            authentication_artifact = device(
+                "android", ANDROID_ID, authentication_source
+            )
+            authentication_artifact["carrier_source_discovery"] = [
+                {
+                    "source": authentication_source,
+                    "matched_identifiers": [ANDROID_ID],
+                    "scope_count": 1,
+                    "status_counts": {"source_authentication_required": 1},
+                }
+            ]
+            authentication_artifact["carrier_data_coverage"] = {
+                "status": "source_authentication_required",
+                "sources": [authentication_source],
+            }
+            authentication_artifact["carrier_relevance"] = {
+                "status": "evidence_confirmed_cellular",
+                "evidence": [
+                    {
+                        "kind": "official_connectivity_specification",
+                        "source": authentication_source,
+                    }
+                ],
+            }
+            authentication_artifact["carrier_artifact_catalog"] = {
+                "artifact_count": 1,
+                "match_kind": "exact_product_type",
+                "scopes": ["Synthetic1,1"],
+                "source": "apple_carrier_bundles",
+                "verified_artifact_count": 1,
+            }
+            declared_sources = [bundle_source]
+            if authentication_source != "apple_carrier_bundles":
+                declared_sources.append(inventory_source)
+            assert_rejected(
+                lambda value=authentication_artifact, sources=declared_sources: validate_inventory(
+                    tmp,
+                    inventory("android", [value], sources),
+                    "android",
+                ),
+                "schema-v2 authentication terminal accepted an Apple artifact "
+                f"catalog with authentication source {authentication_source}",
+            )
+
         observed = deepcopy(base)
         observed["carrier_observations"] = {
             "matched_identifiers": [ANDROID_ID],
@@ -498,7 +617,6 @@ def main() -> int:
             "extracted relevance accepted a model-bound source catalog",
         )
 
-        bundle_source = source("apple_carrier_bundles")
         exact_bundle = device("apple", APPLE_ID, "apple_carrier_bundles")
         exact_bundle["carrier_artifact_catalog"] = {
             "artifact_count": 1,
