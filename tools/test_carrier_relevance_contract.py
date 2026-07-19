@@ -468,6 +468,32 @@ def main() -> int:
                 f"evidence from {observation_source}",
             )
 
+        for catalog_source in ("inventory_source", "other_source"):
+            authentication_cataloged = deepcopy(authentication_terminal)
+            authentication_cataloged["carrier_source_catalogs"] = [
+                {
+                    "source": catalog_source,
+                    "match_kind": "exact_device_id",
+                    "matched_identifiers": [ANDROID_ID],
+                    "artifact_count": 1,
+                    "indexed_artifact_count": 1,
+                    "extracted_artifact_count": 0,
+                }
+            ]
+            assert_rejected(
+                lambda value=authentication_cataloged: validate_inventory(
+                    tmp,
+                    inventory(
+                        "android",
+                        [value],
+                        [inventory_source, other_source],
+                    ),
+                    "android",
+                ),
+                "schema-v2 authentication terminal accepted source-catalog "
+                f"evidence from {catalog_source}",
+            )
+
         for authentication_source in (
             "inventory_source",
             "apple_carrier_bundles",
