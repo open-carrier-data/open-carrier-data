@@ -1,19 +1,11 @@
-# Candidate Claim Index
+# Candidate claim index
 
-This directory contains generated indexes for community claims that have enough
-evidence for opt-in testing.
+This directory holds the generated index of community claims that have enough evidence for opt-in testing. Candidate claims are not stable defaults. The stable snapshot is `generated/index.json`.
 
-Candidate claims are not stable phone defaults. They are a review and testing
-layer between broad community input and the stable maintained-source snapshot.
+| File | Meaning |
+| --- | --- |
+| `index.json` | `schema_version`, `description`, and a `claims` array of candidate claims |
 
-The stable carrier snapshot is:
+A claim lands here when the validator computes medium or low risk and enough confidence. The change type must be `add`, `confirm`, or `correct`, with no conflict against a stable profile. On 2026-09-23 the array is empty.
 
-```text
-generated/index.json
-```
-
-To refresh this index locally, run:
-
-```bash
-python3 tools/validate_community_claims.py --write-index
-```
+To refresh the index, run `python3 tools/validate_community_claims.py --write-index`.

@@ -1,13 +1,15 @@
-# Security And Privacy
+# Report a security or privacy problem
 
-Do not open a public issue containing credentials, signed vendor URLs, private
-carrier responses, account data, phone numbers, full IMSI or ICCID values,
-IMEI, serial numbers, raw logs, or raw bugreports.
+To report a security or privacy issue, use GitHub's private vulnerability reporting for this repo at `https://github.com/open-carrier-data/open-carrier-data/security/advisories/new`.
 
-For a security or privacy issue, use GitHub's private vulnerability reporting
-for this repository. For ordinary incorrect carrier data, use the guided public
-issue forms after removing private information.
+To report wrong carrier data, use the public issue forms after you strip private values.
 
-Carrier-data pull requests are treated as untrusted input. Validation checks
-the schema, blocks common private-data patterns, computes claim risk and stable
-conflicts, and prevents community claims from silently changing stable output.
+Never put these in a public issue:
+
+- credentials or signed vendor URLs
+- private carrier responses or account data
+- phone numbers
+- full IMSI or ICCID values, IMEI, or serial numbers
+- raw logs or raw bugreports
+
+Carrier-data pull requests are treated as untrusted input. Validation checks the schema, blocks common private-data patterns, computes claim risk and stable conflicts, and keeps community claims from changing stable output on their own.

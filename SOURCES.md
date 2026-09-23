@@ -1,204 +1,95 @@
-# Data Sources
+# Source families
 
-Open Carrier Data combines carrier facts from maintained sources. It does not
-publish raw vendor packages, credentials, signed URLs, device identifiers, or
-private logs.
+This page lists every source family that feeds the public data, what each one contributes, its terms, and how automation refreshes it. The exact revision and check date of each family sit in `generated/evidence-index.json` under `source_snapshots`.
 
-The exact public Git revisions or downloaded-content hashes used for the
-current snapshot are recorded in:
+## All source families at a glance
 
-```text
-generated/evidence-index.json
+The table has one row per source name as it appears in profile evidence. The snapshot column names the `source_snapshots` record when its name differs.
+
+| Source name in profiles | Snapshot record | Upstream | Contributes | Terms | Profiles |
+| --- | --- | --- | --- | --- | --- |
+| `aosp` | `aosp_carrier_config`, `aosp_carrier_ids` | AOSP `platform/packages/apps/CarrierConfig` and `platform/packages/providers/TelephonyProvider` | CarrierConfig values, Android carrier identity rules | Apache-2.0 | 235 |
+| `lineageos` | same | `LineageOS/android_vendor_apn` | APN rows and MVNO selectors | Apache-2.0 | 1,063 |
+| `lineageos_device_overlays` | `lineageos_device_carrier_overlays` | LineageOS device repos | device overlay carrier facts | NOASSERTION | 1,168 |
+| `mobile_broadband_provider_info` | same | GNOME `mobile-broadband-provider-info` | carrier and APN facts | CC-PD | 818 |
+| `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,901 |
+| `google_carriersettings` | same | `GrapheneOS/adevtool` plus Google's live endpoint | match rules, APNs, CarrierConfig, capabilities | MIT and NOASSERTION | 2,260 |
+| `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,236 |
+| `samsung_omc` | none | Samsung firmware OMC baselines and GRAS checks | APN, capability, CarrierConfig, add-on facts | none asserted | 2,604 |
+| `samsung_ims` | none | Samsung IMS maps in versioned firmware | positive IMS capability observations | none asserted | 629 |
+| `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
+| `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
+
+Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates, both 2026-07-20 on 2026-09-23, are in `generated/devices/index.json` under `sources`.
+
+To print the profile count per source name, run:
+
+```bash
+python3 -c 'print(__import__("collections").Counter(s for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"] for s in p["sources"]))'
 ```
 
-Every public-source record contains two dates:
+To print the snapshot names, revisions, and check dates, run:
 
-- `revision_date`: when the exact upstream commit or source revision was
-  published;
-- `checked_at`: when automation last fetched the source successfully.
+```bash
+python3 -c 'print(*[(s["source_name"], s["revision_date"], s["checked_at"]) for s in __import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]], sep="\n")'
+```
 
-Freshness uses `checked_at`, not `revision_date`. Unchanged source content can
-still be current when automation checked it recently. A source is quarantined
-when its recorded check is more than 180 days old.
+The refresh methods below, the AOSP branch name, and the Samsung scope rules come from the private importer configuration. They cannot be checked from this repo.
 
-## Current Source Families
+## Freshness uses checked_at, not revision_date
 
-### AOSP CarrierConfig and carrier IDs
+Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.
 
-- upstream: Android Open Source Project
-- data: Android CarrierConfig values and Android carrier identity rules
-- terms: Apache-2.0
-- update method: the current `android-latest-release` branch is fetched and
-  recorded by full Git commit ID
+Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined, and `tools/validate_public_carrier_data.py` lines 754 to 757 fail the run on an older snapshot. On 2026-09-23 the oldest check is 2026-07-13, so the validators fail from 2027-01-10 unless sources are re-checked. The runner is offline and the private schedules are disabled, so no check arrives by itself.
 
-### LineageOS APNs
+## AOSP contributes CarrierConfig values and carrier IDs
 
-- upstream: `LineageOS/android_vendor_apn`
-- data: Android APN and MVNO matching rows
-- terms: Apache-2.0, as declared by the upstream files
-- update method: scheduled Git import recorded by full commit ID
+Automation reads the `android-latest-release` branch of both AOSP repos and records the full commit ID. Terms are Apache-2.0, so redistribution is `permitted`.
 
-### Mobile Broadband Provider Info
+## LineageOS contributes APN rows and device overlays
 
-- upstream: GNOME `mobile-broadband-provider-info`
-- data: public carrier and APN facts
-- terms: Creative Commons Public Domain dedication (`CC-PD` in this project)
-- update method: scheduled Git import recorded by full commit ID
+The APN repo is imported by commit ID under Apache-2.0. Device overlays are read across LineageOS device repos and recorded as one content hash. The project asserts no license for overlay content beyond what each repo declares, so those facts are `transformed_facts_only`.
 
-### Apple carrier bundles
+## GNOME contributes public carrier and APN facts
 
-- upstream used by automation: Apple's official carrier index at
-  `itunes.apple.com/WebObjects/MZStore.woa/wa/com.apple.jingle.appserver.client.MZITunesClientCheck/version`
-- data: current Apple product types, current carrier-bundle selections, and
-  translated APN/MMS facts from verified IPCC packages
-- upstream license: `NOASSERTION`; this project makes no license claim for
-  Apple's bundle data
-- verification: the index is fetched over HTTPS; every selected IPCC must
-  match the SHA-1 or SHA-384 digest carried by that index before its facts are
-  imported
-- legacy transport: a current HTTPS index can still point to an old HTTP Apple
-  CDN URL; that package is accepted only when its full digest matches
-- public policy: raw Apple indexes, package URLs, package paths, selectors, and
-  IPCC files are not republished; only sanitized facts and small safe artifact
-  summaries are emitted
-- failure policy: unavailable packages and digest mismatches are quarantined,
-  excluded from carrier import, and retried by later scheduled runs
-- update method: scheduled direct check recorded by full index SHA-256 and last
-  successful check date; no third-party mirror is used
+The repo is imported by commit ID. Its dedication is public domain, recorded here as `CC-PD`.
 
-### Google Pixel CarrierSettings
+## Apple contributes APN and MMS facts from digest-checked bundles
 
-- maintained snapshot source: the newest numeric Android branch in
-  `GrapheneOS/adevtool`, which contains decoded CarrierSettings snapshots for
-  current supported Pixel devices
-- live update source: Google's per-device CarrierSettings update endpoint
-- data: safe carrier match rules, APNs, reviewed CarrierConfig values, and
-  feature observations
-- upstream terms: the GrapheneOS tooling is MIT; this project makes no license
-  claim for Google's CarrierSettings data
-- public policy: raw textproto/protobuf files, endpoint responses, download
-  URLs, and firmware material stay private; only narrow normalized facts and
-  safe scope summaries are published
-- update method: automation records the exact GrapheneOS revision, checks every
-  Pixel device against Google's live endpoint, and applies a delta only when
-  its internal version is newer than the firmware baseline
-- device differences: conflicting Pixel variants remain separate source
-  observations and become conditional or omitted during the neutral public
-  merge; identical variants are grouped with their observed device codenames
-- coverage: every current maintained snapshot codename produces an exact
-  extracted-artifact receipt after the live update checks succeed
+Automation reads Apple's carrier index over HTTPS and records its SHA-256. Every selected IPCC must match the SHA-1 or SHA-384 digest carried by the index before its facts are imported. An index can still point at an old HTTP CDN URL. Such a package is accepted only when its full digest matches.
 
-### Samsung OMC
+The public repo never contains raw indexes, package URLs, package paths, selectors, or IPCC files. Unavailable packages and digest mismatches are quarantined and retried later. Apple declares no license, so the record says `NOASSERTION`.
 
-- upstream: Samsung firmware OMC baselines and Samsung GRAS/OMC update checks
-- data: narrow translated APN, capability, carrier identity, CarrierConfig,
-  and neutral add-on facts
-- upstream license: no Samsung license is asserted by this project
-- public policy: raw Samsung firmware, OMC files, requests, responses, signed
-  URLs, and credentials remain private
-- freshness: live GRAS observations need a recent check and complete model,
-  CSC, sales-code, Android-version, OMC-revision, and OMC-version scope;
-  firmware observations need a real release date, not merely a recent import
-  date
-- coverage: Samsung identities and model aliases are discovered from the
-  maintained Android inventory, checked against FUS in bounded round-robin
-  batches, and selectively reduced to integrity-checked CSC carrier archives
+## Google Pixel CarrierSettings contributes match rules, APNs, and capabilities
 
-### Samsung IMS capability evidence
+The maintained snapshot is the newest numeric Android branch in `GrapheneOS/adevtool`, which holds decoded CarrierSettings for supported Pixels. Automation records that revision, then checks every Pixel against Google's live endpoint. It applies a delta only when the endpoint's version is newer than the firmware baseline. `TheMuppets` vendor snapshots add a second, hash-recorded Pixel source.
 
-- upstream: Samsung IMS carrier maps, service switches, and usable service
-  profiles from versioned Samsung firmware
-- data: positive, device-scoped VoLTE, Wi-Fi Calling, VoNR, video calling,
-  SMS-over-IMS, and RCS capability observations
-- public policy: raw Samsung IMS files and profile parameters remain private;
-  public evidence includes only neutral carrier matches, capabilities, and a
-  safe model/region/build scope summary
-- freshness: automation checks Samsung's current firmware metadata for the
-  exact model and region; a build mismatch triggers a narrowly scoped firmware
-  download and minimal index rebuild, while a failed rebuild cannot relabel old
-  observations as current
-- negative rule: a false or absent Samsung switch is not published as proof
-  that the carrier universally lacks a feature
+Raw textproto and protobuf files, endpoint responses, and download URLs stay private. Pixel variants that disagree stay separate observations and become conditional or omitted in the merge. The GrapheneOS tooling is MIT. The project asserts no license for Google's data.
 
-## Device Inventories And Artifact Coverage
+## Samsung contributes OMC facts and positive IMS observations
 
-Device discovery is separate from carrier-profile resolution. An inventory
-entry answers "which identity did this maintained source list?" It does not
-answer "does VoLTE work on this device?"
+OMC facts come from firmware baselines and from GRAS update checks. A live GRAS observation needs a recent check and a complete model, CSC, sales code, Android version, OMC revision, and OMC version scope. A firmware observation needs a real release date.
 
-### Android device inventory
+IMS facts are positive, device-scoped observations of VoLTE, Wi-Fi calling, VoNR, video calling, SMS over IMS, and RCS. A false or absent Samsung switch is never published as proof that a carrier lacks the feature. Raw firmware, OMC files, requests, responses, signed URLs, and credentials stay private. The project asserts no Samsung license.
 
-- upstream: Google's public Google Play supported-device CSV at
-  `storage.googleapis.com/play_public/supported_devices.csv`
-- identity rule: Google defines a device model by retail brand plus device;
-  model and marketing-name values are retained as aliases and variants
-- scope: Google Play supported devices, not a claim that every row has cellular
-  hardware and not a complete list of non-Google-Play Android devices
-- history: identities removed from a later source revision remain available as
-  `historical`; current aliases come only from the current revision
-- update method: scheduled direct check recorded by full CSV SHA-256
-- terms: `NOASSERTION`; only normalized factual identity fields are published
+## Fairphone and Sony contribute facts from public AOSP trees
 
-### Apple product and artifact inventory
+Both families are read from public AOSP-style manifests under Apache-2.0 and recorded by content hash. Only translated carrier facts are published.
 
-- upstream: the same official Apple carrier index used for carrier-bundle
-  import
-- product identity: Apple's exact product-type strings
-- artifact scope: exact product types where Apple publishes an override,
-  otherwise product-family scope such as iPhone, iPad, or Watch
-- verification states: `indexed` means the current official index lists the
-  artifact and digest; `verified` additionally means the downloaded package
-  matched that digest
+## Device inventories use their own sources
 
-### Android carrier-source artifacts
+The device catalog under `generated/devices/` uses its own sources. The broad Android inventory is Google's Play supported-devices CSV, recorded by SHA-256 and published as normalized identity fields under `NOASSERTION`. Identities that vanish from a later revision stay as `historical`. Apple product types come from the same carrier index as the bundles. LineageOS device repos and the carrier families above add exact model scope.
 
-`android-carrier-artifacts.json` currently records two exact source lanes:
+On 2026-09-23 the catalog's `index.json` lists 45 named sources. Print them with:
 
-- current Pixel CarrierSettings snapshots that were processed after successful
-  per-device live update checks;
-- current Samsung firmware confirmed by exact model/region FUS lookups, with
-  `indexed` and selectively `extracted` states kept separate.
+```bash
+python3 -c 'print(*sorted(s["name"] for s in __import__("json").load(open("generated/devices/index.json"))["sources"]), sep="\n")'
+```
 
-Every record carries canonical device IDs as well as source model strings. A
-model name alone cannot attach one OEM's artifact to another OEM's identity.
-Discovery gaps remain explicit as in-progress, checked with no artifact, or
-missing the identifier required to query the vendor service.
+## Artifact registries record what vendor indexes list
 
-### Exact carrier evidence
+`generated/devices/android-carrier-artifacts.json` and `apple-carrier-artifacts.json` record which carrier artifacts a vendor index listed at the last check, with `indexed`, `extracted`, or `verified` states. Failed downloads and digest mismatches are quarantined and never published as artifacts or imported as facts. A model string alone never binds one vendor's artifact to another vendor's device.
 
-`generated/evidence-index.json` can contain an `observed_scope.models` list for
-Samsung and Google CarrierSettings observations. The device catalog matches
-those exact values against Android device codes and model aliases. It does not
-guess from marketing names.
+## Suggest a source through the issue form
 
-The coverage files live under `generated/devices/`. Failed artifact checks are
-not included in the public artifact list.
-
-## Merge Rules
-
-Sources are observations, not public carrier identities.
-
-- One broad profile owns each MCC/MNC.
-- SPN, GID, ICCID-prefix, IMSI-prefix, and Android carrier-ID profiles remain
-  separate when they are genuinely more specific.
-- Agreement strengthens a fact.
-- Conflicting CarrierConfig and add-on values are omitted from stable output
-  and reported in `generated/evidence-index.json`.
-- APN rows with the same applicability selector but different operational
-  values are omitted instead of publishing several indistinguishable choices.
-- Conflicting capabilities become `conditional`.
-- Lower-confidence generic APNs require corroboration or a primary maintained
-  APN source.
-- Source names never become duplicate public carrier profiles.
-- `fact_sources` in the evidence index shows which source family supports each
-  exported fact; a profile-wide source list is not treated as proof for every
-  field.
-
-## Suggest A Source
-
-Use the maintained-source issue form:
-
-https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
-
-A useful source must be refreshable by automation, have a clear carrier-data
-scope, and be safe to translate without publishing private material.
+Use the `Maintained source suggestion` form under `.github/ISSUE_TEMPLATE/`. A usable source is refreshable by automation, has a clear carrier-data scope, and can be translated without publishing private material.
