@@ -4,10 +4,10 @@ The device catalog records which device identities maintained inventories list, 
 
 | File | Meaning |
 | --- | --- |
-| `index.json` | counts per platform, coverage status, brand, and relevance, plus the 45 named sources |
+| `index.json` | counts per platform, coverage status, brand, and relevance, plus the 17 named sources |
 | `android.json` | 42,259 Android device identities with coverage status, relevance, and inventory sources |
 | `apple.json` | 180 Apple product types from Apple's carrier index |
-| `android-carrier-artifacts.json` | 8,599 Android carrier source artifacts and 14,171 discovery scope records |
+| `android-carrier-artifacts.json` | 3,211 Android carrier source artifacts and 4,426 discovery scope records |
 | `apple-carrier-artifacts.json` | 1,331 Apple carrier bundle artifacts, all digest verified |
 
 Counts come from these commands:
