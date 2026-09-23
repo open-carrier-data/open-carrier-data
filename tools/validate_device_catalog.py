@@ -13,6 +13,7 @@ import re
 import sys
 from typing import Any
 
+import validate_public_carrier_data
 from validate_public_carrier_data import FRESHNESS_MODES, STALE_AFTER_DAYS, utc_today
 
 
@@ -1600,11 +1601,13 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("root", nargs="?", type=Path, default=Path("generated/devices"))
     parser.add_argument("--freshness", choices=FRESHNESS_MODES, default="warn")
+    parser.add_argument("--today", type=date.fromisoformat, default=None)
     return parser.parse_args(argv[1:])
 
 
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
+    validate_public_carrier_data.TODAY_OVERRIDE = args.today
     root = args.root
     (
         android_version,

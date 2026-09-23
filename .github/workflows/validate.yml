@@ -2,9 +2,13 @@ name: Validate carrier data
 
 on:
   workflow_dispatch:
+    inputs:
+      simulate_today:
+        description: "Run the freshness alarm as if today were this UTC date (YYYY-MM-DD). Empty means the real date."
+        required: false
+        default: ""
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
   schedule:
     - cron: "17 4 * * *"
@@ -14,38 +18,85 @@ permissions:
 
 jobs:
   validate:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-
-      - name: Validate public profiles
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Validate carrier profiles and the stable index
+        run: python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness warn
+      - name: Validate the device catalog
+        run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
+      - name: Test generated Android outputs
+        run: python3 tools/test_generated_android_outputs.py
+      - name: Test the carrier relevance contract
+        run: python3 tools/test_carrier_relevance_contract.py
+      - name: Test profile resolution
+        run: python3 tools/test_resolve_carrier_profiles.py
+      - name: Regenerate Android outputs and confirm nothing drifted
         run: |
-          python3 tools/validate_public_carrier_data.py \
-            carriers \
-            generated/index.json \
-            --freshness fail
-
-      - name: Validate device and artifact catalog
-        run: |
-          python3 tools/validate_device_catalog.py generated/devices --freshness fail
-
-      - name: Test Android output generator
-        run: |
-          python3 tools/test_generated_android_outputs.py
-
-      - name: Test carrier relevance contract
-        run: |
-          python3 tools/test_carrier_relevance_contract.py
-
-      - name: Test carrier profile resolver
-        run: |
-          python3 tools/test_resolve_carrier_profiles.py
-
-      - name: Check generated Android output
-        run: |
-          python3 tools/generate_android_outputs.py \
-            carriers \
-            generated \
-            --apn-version 8
+          python3 tools/generate_android_outputs.py carriers generated --apn-version 8
           git diff --exit-code -- generated
+
+  freshness-alarm:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SIMULATE_TODAY: ${{ inputs.simulate_today }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Validate with --freshness fail
+        id: strict
+        continue-on-error: true
+        shell: bash
+        run: |
+          today=()
+          if [ -n "$SIMULATE_TODAY" ]; then
+            today=(--today "$SIMULATE_TODAY")
+          fi
+          status=0
+          python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${today[@]}" 2>&1 | tee strict.log || status=1
+          python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
+          exit "$status"
+      - name: Open the stale-data issue when strict validation fails, close it when it passes again
+        shell: bash
+        run: |
+          run_date="$(date -u +%F)"
+          open_issue="$(gh issue list --label stale-data --state open --json number --jq '.[0].number // empty')"
+          if [ "${{ steps.strict.outcome }}" = "success" ]; then
+            if [ -n "$open_issue" ] && [ -z "$SIMULATE_TODAY" ]; then
+              gh issue close "$open_issue" --comment "Strict validation passed again on $run_date. Closed by the freshness alarm."
+              echo "Closed stale-data issue #$open_issue." >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "Strict validation passed on $run_date." >> "$GITHUB_STEP_SUMMARY"
+            fi
+            exit 0
+          fi
+          if [ -n "$open_issue" ]; then
+            echo "Strict validation failed on $run_date. Issue #$open_issue is already open." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          title="Stale data: strict validation failed on $run_date"
+          if [ -n "$SIMULATE_TODAY" ]; then
+            title="Freshness alarm test: strict validation failed for simulated date $SIMULATE_TODAY"
+          fi
+          {
+            echo "The scheduled strict validation failed on $run_date."
+            if [ -n "$SIMULATE_TODAY" ]; then
+              echo
+              echo "This run simulated the date $SIMULATE_TODAY through workflow_dispatch. The published data may still be fresh. The next scheduled run closes this issue when the real date passes."
+            fi
+            echo
+            echo "Pushes and pull requests keep passing, because their check runs the validators in warn mode. Consumers who run the validators with \`--freshness fail\` get the same error. Refresh the sources and publish a new snapshot, or read \`docs/consume.md\` for what a stale snapshot means."
+            echo
+            echo '```'
+            cat strict.log
+            echo '```'
+          } > issue-body.md
+          gh label create stale-data --description "Published data is past its stale_after date" --color B60205 --force
+          url="$(gh issue create --title "$title" --label stale-data --body-file issue-body.md)"
+          echo "Opened $url" >> "$GITHUB_STEP_SUMMARY"

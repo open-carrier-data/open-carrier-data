@@ -66,7 +66,7 @@ The sanitizer quarantines any observation whose `checked_at` is older than 180 d
 
 Stale is worse than missing. A missing APN row makes a phone fall back to its own defaults or ask the user. A stale row looks authoritative and sends the phone to a dead MMSC. Nobody notices until messages fail. So the project drops old data instead of keeping it.
 
-On 2026-09-23 `checks_through` is 2026-07-13 and `stale_after` is 2027-01-09. Past that date the validators warn by default and exit 0, so a clone keeps validating. The public CI passes `--freshness fail`, so the daily run turns red from 2027-01-10 until sources are re-checked. No new checks arrive by themselves, because the runner is offline and the schedules are disabled. The data does not change by itself. It stops passing CI. Run this command to see the window:
+On 2026-09-23 `checks_through` is 2026-07-13 and `stale_after` is 2027-01-09. Past that date the validators warn by default and exit 0, so a clone keeps validating. The daily public job passes `--freshness fail` and opens an issue labeled `stale-data` when the validators fail, so the first alarm opens on 2027-01-10 unless sources are re-checked before then. No new checks arrive by themselves, because the runner is offline and the schedules are disabled. The data does not change by itself. It stops passing the strict check. Run this command to see the window:
 
 ```bash
 python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
@@ -74,4 +74,4 @@ python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.jso
 
 ## What the public repo checks
 
-The workflow `Validate carrier data` in `.github/workflows/validate.yml` runs on push to `main`, on pull requests, daily at 04:17 UTC by cron, and on manual dispatch. It validates the profiles against the stable index and the device catalog with `--freshness fail`. It runs the three test scripts. It regenerates `generated/android/` to confirm nothing drifted. The required check on `main` is `validate`.
+The workflow `Validate carrier data` in `.github/workflows/validate.yml` has two jobs. `validate` runs on push to `main`, on pull requests, and on manual dispatch. It validates the profiles against the stable index and the device catalog in warn mode, runs the three test scripts, and regenerates `generated/android/` to confirm nothing drifted. It is the required check on `main`. `freshness-alarm` runs daily at 04:17 UTC by cron and on manual dispatch. It runs both validators with `--freshness fail`. When they fail it opens one issue labeled `stale-data` with the validator output, and it does not open a second while one is open. When they pass again it closes that issue. The dispatch input `simulate_today` passes `--today` to the validators, so the alarm can be rehearsed before the real date arrives.

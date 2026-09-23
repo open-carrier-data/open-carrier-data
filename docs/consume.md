@@ -115,7 +115,7 @@ Output on 2026-09-23:
 
 `checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
 
-The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail`, which the public CI passes, they exit 1 instead. With the oldest check at 2026-07-13, the public CI turns red from 2027-01-10 until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23.
+The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode and keep passing. With the oldest check at 2026-07-13, the first stale-data issue opens on 2027-01-10 unless sources are re-checked before then. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23.
 
 ## Validate a snapshot
 

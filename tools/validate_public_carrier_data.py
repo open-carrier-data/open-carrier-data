@@ -294,7 +294,12 @@ class FreshnessWindow(NamedTuple):
     stale_after: date
 
 
+TODAY_OVERRIDE: date | None = None
+
+
 def utc_today() -> date:
+    if TODAY_OVERRIDE is not None:
+        return TODAY_OVERRIDE
     return datetime.now(timezone.utc).date()
 
 
@@ -1089,11 +1094,14 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "index_path", nargs="?", type=Path, default=Path("generated/index.json")
     )
     parser.add_argument("--freshness", choices=FRESHNESS_MODES, default="warn")
+    parser.add_argument("--today", type=date.fromisoformat, default=None)
     return parser.parse_args(argv[1:])
 
 
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
+    global TODAY_OVERRIDE
+    TODAY_OVERRIDE = args.today
     carriers_dir = args.carriers_dir
     index_path = args.index_path
 

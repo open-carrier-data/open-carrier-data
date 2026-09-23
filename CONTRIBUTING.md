@@ -52,9 +52,11 @@ A correction reaches stable data in two ways. A maintained source publishes it a
 To check profiles and the device catalog, run from the repo root:
 
 ```bash
-python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
-python3 tools/validate_device_catalog.py generated/devices --freshness fail
+python3 tools/validate_public_carrier_data.py carriers generated/index.json
+python3 tools/validate_device_catalog.py generated/devices
 ```
+
+The pull request check runs the same commands. A snapshot past `stale_after` prints one warning and still passes. Only the daily `freshness-alarm` job runs them with `--freshness fail`.
 
 To run the tests the public workflow runs, execute:
 

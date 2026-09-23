@@ -516,8 +516,8 @@ def main() -> int:
                     "name": "synthetic_source",
                     "url": "https://example.com/source",
                     "revision": "0" * 64,
-                    "revision_date": date.today().isoformat(),
-                    "checked_at": date.today().isoformat(),
+                    "revision_date": validate_public_carrier_data.utc_today().isoformat(),
+                    "checked_at": validate_public_carrier_data.utc_today().isoformat(),
                 }
             ],
             "scope_coverage": [
@@ -620,7 +620,7 @@ def main() -> int:
                 "regions": ["global"],
                 "build_versions": ["1"],
                 "verification": "indexed",
-                "checked_at": date.today().isoformat(),
+                "checked_at": validate_public_carrier_data.utc_today().isoformat(),
             }
         ]
         assert_registry_rejected(
@@ -706,7 +706,7 @@ def main() -> int:
                 "regions": ["global"],
                 "build_versions": ["1"],
                 "verification": "indexed",
-                "checked_at": date.today().isoformat(),
+                "checked_at": validate_public_carrier_data.utc_today().isoformat(),
             }
         ]
         assert_registry_rejected(
@@ -1023,7 +1023,7 @@ def main() -> int:
                 "regions": ["global"],
                 "build_versions": ["1"],
                 "verification": "indexed",
-                "checked_at": date.today().isoformat(),
+                "checked_at": validate_public_carrier_data.utc_today().isoformat(),
             }
             assert_validation_error(
                 lambda value=registry_artifact: validate_device_catalog.validate_android_authentication_links(
@@ -1174,7 +1174,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory() as raw_tmp:
         temporary_root = Path(raw_tmp)
-        today = date.today().isoformat()
+        today = validate_public_carrier_data.utc_today().isoformat()
         synthetic_source = {
             "name": "synthetic_source",
             "url": "https://example.com/source",

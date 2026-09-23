@@ -11,6 +11,6 @@ The Android files under `generated/android/` are produced from the carrier profi
 
 The Android files come from `python3 tools/generate_android_outputs.py carriers generated --apn-version 8`. The profiles, the evidence index, and the device catalog are published from the private repo.
 
-`android/metadata.json` carries `checks_through` and `stale_after`. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which CI passes.
+`android/metadata.json` carries `checks_through` and `stale_after`. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
 
 Phones read these files after a ROM, app, or build has packaged them. Nothing here is served at runtime.
