@@ -40,7 +40,7 @@ The refresh methods below, the AOSP branch name, and the Samsung scope rules com
 
 Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.
 
-Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. On 2026-09-23 the oldest check is 2026-07-13, so `stale_after` is 2027-01-09. Past that date `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`, which the public CI passes. The runner is offline and the private schedules are disabled, so no check arrives by itself.
+Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. On 2026-09-23 the oldest check is 2026-07-13, so `stale_after` is 2027-01-09. Past that date `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. The runner is offline and the private schedules are disabled, so no check arrives by itself.
 
 ## AOSP contributes CarrierConfig values and carrier IDs
 
