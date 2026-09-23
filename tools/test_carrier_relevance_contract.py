@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import date
 import json
 from pathlib import Path
 import tempfile
@@ -27,7 +26,7 @@ def assert_rejected(action: Callable[[], object], message: str) -> None:
 
 
 def source(name: str) -> dict[str, str]:
-    today = date.today().isoformat()
+    today = catalog.utc_today().isoformat()
     return {
         "name": name,
         "url": f"https://example.com/{name}",
@@ -1387,7 +1386,7 @@ def main() -> int:
         index = {
             "schema_version": 2,
             "description": "Synthetic v2 carrier-relevance index.",
-            "generated_from_checks_through": date.today().isoformat(),
+            "generated_from_checks_through": catalog.utc_today().isoformat(),
             "sources": index_sources,
             "platforms": {
                 "android": platform_summary([index_android], android=True),
