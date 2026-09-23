@@ -1,7 +1,7 @@
 {
   "android_apns": [
     {
-      "apn": "IMS",
+      "apn": "ims",
       "name": "DITO IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -31,6 +31,24 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "mms.dito.ph",
+      "name": "DITO MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -46,7 +64,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "supported",
