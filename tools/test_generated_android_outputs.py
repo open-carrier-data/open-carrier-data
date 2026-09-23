@@ -1589,25 +1589,6 @@ def main() -> int:
                 ],
             },
         )
-        write_profile(
-            generated_dir / "community" / "index.json",
-            {
-                "schema_version": 1,
-                "description": "All valid non-expired community carrier-data claims.",
-                "claims": [],
-            },
-        )
-        write_profile(
-            generated_dir / "candidate" / "index.json",
-            {
-                "schema_version": 1,
-                "description": (
-                    "Community claims with enough evidence to test as candidate "
-                    "data. These are not stable defaults."
-                ),
-                "claims": [],
-            },
-        )
         profile_ids = sorted(
             load_json(path)["profile_id"] for path in carriers_dir.rglob("*.json")
         )

@@ -119,12 +119,11 @@ The validators apply the same window. `check_freshness` in `tools/validate_publi
 
 ## Validate a snapshot
 
-Run the three validators before you package anything. All three must exit 0. Pass `--freshness fail` to the first two so a snapshot past `stale_after` fails instead of warning.
+Run both validators before you package anything. Both must exit 0. Pass `--freshness fail` so a snapshot past `stale_after` fails instead of warning.
 
 ```bash
 python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
 python3 tools/validate_device_catalog.py generated/devices --freshness fail
-python3 tools/validate_community_claims.py community/claims generated/community --stable-dir carriers --evidence-index generated/evidence-index.json
 ```
 
 Output on 2026-09-23:
@@ -132,7 +131,6 @@ Output on 2026-09-23:
 ```text
 validated 6748 public carrier profile(s)
 validated 42259 Android devices, 180 Apple products, and 9930 carrier artifacts
-validated 0 community claim(s), 0 candidate, 0 expired and excluded
 ```
 
-The first validator also checks every source snapshot date. The third one confirms that no community claim conflicts with a stable profile without saying so.
+The first validator also checks every source snapshot date.

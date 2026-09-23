@@ -56,7 +56,7 @@ Grouping by exact match set has one visible consequence. An MVNO that no source 
 
 LIDL Connect runs on the Vodafone Germany network, `26202`. No source names it with an SPN, GID, or IMSI prefix. So no profile names it. A LIDL Connect SIM resolves the plain `26202` profile plus whichever `26202` SPN profile matches the SPN on the SIM. The result is Vodafone's data, which may or may not be right for that MVNO.
 
-The limit exists because the sanitizer only publishes what a source observed. It does not invent a selector. A community claim with a tested SPN or GID prefix is the way to add one.
+The limit exists because the sanitizer only publishes what a source observed. It does not invent a selector. A maintained source that publishes a tested SPN or GID prefix, or a maintainer-curated change, is the way to add one.
 
 ## Why stale data is dropped after 180 days
 
@@ -74,4 +74,4 @@ python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.jso
 
 ## What the public repo checks
 
-The workflow `Validate carrier data` in `.github/workflows/validate.yml` runs on push to `main`, on pull requests, daily at 04:17 UTC by cron, and on manual dispatch. It validates the profiles against the stable index and the device catalog with `--freshness fail`, and the community claims. It runs the five test scripts. It regenerates `generated/android/` to confirm nothing drifted. The required check on `main` is `validate`.
+The workflow `Validate carrier data` in `.github/workflows/validate.yml` runs on push to `main`, on pull requests, daily at 04:17 UTC by cron, and on manual dispatch. It validates the profiles against the stable index and the device catalog with `--freshness fail`. It runs the three test scripts. It regenerates `generated/android/` to confirm nothing drifted. The required check on `main` is `validate`.

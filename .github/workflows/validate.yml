@@ -30,20 +30,6 @@ jobs:
         run: |
           python3 tools/validate_device_catalog.py generated/devices --freshness fail
 
-      - name: Validate community claims
-        run: |
-          python3 tools/validate_community_claims.py \
-            community/claims \
-            generated/community
-
-      - name: Test community claim validator
-        run: |
-          python3 tools/test_community_claims.py
-
-      - name: Test claim issue conversion
-        run: |
-          python3 tools/test_issue_to_claim.py
-
       - name: Test Android output generator
         run: |
           python3 tools/test_generated_android_outputs.py

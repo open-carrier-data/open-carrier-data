@@ -1,5 +1,5 @@
 name: Wrong or missing carrier data
-description: Report a missing carrier or a carrier setting that looks wrong.
+description: Report a missing carrier, a carrier setting that looks wrong, or a fix you verified on a device. State the device, the setting, the result, and the date.
 title: "[carrier-data] "
 labels:
   - carrier-data
@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this for missing or incorrect APN, MMS, IMS, RCS, eSIM, tethering, XCAP, CarrierConfig, or matching data.
+        Use this for missing or incorrect APN, MMS, IMS, RCS, eSIM, tethering, XCAP, CarrierConfig, or matching data. If you verified a fix on a device, state the device, the setting you changed, the result, and the test date.
 
         Do not include phone numbers, account data, personal passwords, private vendor credentials, full IMSI values, full ICCID values, IMEI, serial numbers, raw logs, raw bugreports, raw firmware dumps, or private vendor responses. Public APN usernames/passwords are okay only when they are carrier settings, not private account credentials.
   - type: input
@@ -74,8 +74,8 @@ body:
     id: evidence
     attributes:
       label: Evidence
-      description: Public source links or a short safe test summary.
-      placeholder: Public help page URL, tested MMS send/receive on 2026-07-05.
+      description: Public source links or a short safe test summary. For a verified fix, state the setting you changed and the result.
+      placeholder: Public help page URL, set MMSC to the public value, tested MMS send/receive on 2026-07-05.
     validations:
       required: true
   - type: input
