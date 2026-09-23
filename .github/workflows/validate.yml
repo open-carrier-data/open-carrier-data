@@ -58,10 +58,10 @@ jobs:
           if [ -n "$SIMULATE_TODAY" ]; then
             today=(--today "$SIMULATE_TODAY")
           fi
-          {
-            python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${today[@]}"
-            python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}"
-          } 2>&1 | tee strict.log
+          status=0
+          python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${today[@]}" 2>&1 | tee strict.log || status=1
+          python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
+          exit "$status"
       - name: Open the stale-data issue when strict validation fails, close it when it passes again
         shell: bash
         run: |
