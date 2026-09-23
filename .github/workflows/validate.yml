@@ -23,11 +23,12 @@ jobs:
         run: |
           python3 tools/validate_public_carrier_data.py \
             carriers \
-            generated/index.json
+            generated/index.json \
+            --freshness fail
 
       - name: Validate device and artifact catalog
         run: |
-          python3 tools/validate_device_catalog.py generated/devices
+          python3 tools/validate_device_catalog.py generated/devices --freshness fail
 
       - name: Validate community claims
         run: |

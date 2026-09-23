@@ -62,16 +62,16 @@ The limit exists because the sanitizer only publishes what a source observed. It
 
 Every source snapshot carries two dates. `revision_date` says when the upstream revision was published. `checked_at` says when automation last confirmed that revision. Freshness uses `checked_at`. Unchanged upstream content stays fresh as long as automation keeps checking it.
 
-The sanitizer quarantines any observation whose `checked_at` is older than 180 days. `tools/validate_public_carrier_data.py` lines 754 to 757 fail the whole run when any snapshot record is older than 180 days. `tools/validate_device_catalog.py` line 195 does the same for the catalog.
+The sanitizer quarantines any observation whose `checked_at` is older than 180 days. The public side publishes the result as a window. `checks_through` is the oldest `checked_at` or `reviewed_range.oldest` behind the data. `stale_after` is `checks_through` plus 180 days. Both sit in `generated/android/metadata.json`. `tools/generate_android_outputs.py` copies them from `generated/evidence-index.json` when the sanitizer publishes them there and computes them otherwise. `tools/validate_public_carrier_data.py` checks that the pair agrees with every snapshot date, then compares the UTC date with `stale_after`. `tools/validate_device_catalog.py` does the same with `generated_from_checks_through` plus 180 days.
 
 Stale is worse than missing. A missing APN row makes a phone fall back to its own defaults or ask the user. A stale row looks authoritative and sends the phone to a dead MMSC. Nobody notices until messages fail. So the project drops old data instead of keeping it.
 
-On 2026-09-23 the oldest check in the public evidence index and in the private manifests is 2026-07-13. From 2027-01-10 the validators fail and the daily public CI turns red until sources are re-checked. No new checks arrive by themselves, because the runner is offline and the schedules are disabled. The data does not change by itself. It stops validating. Run this command to see the dates:
+On 2026-09-23 `checks_through` is 2026-07-13 and `stale_after` is 2027-01-09. Past that date the validators warn by default and exit 0, so a clone keeps validating. The public CI passes `--freshness fail`, so the daily run turns red from 2027-01-10 until sources are re-checked. No new checks arrive by themselves, because the runner is offline and the schedules are disabled. The data does not change by itself. It stops passing CI. Run this command to see the window:
 
 ```bash
-python3 -c 'print(sorted(s["checked_at"] for s in __import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'
+python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
 ```
 
 ## What the public repo checks
 
-The workflow `Validate carrier data` in `.github/workflows/validate.yml` runs on push to `main`, on pull requests, daily at 04:17 UTC by cron, and on manual dispatch. It validates the profiles against the stable index, the device catalog, and the community claims. It runs the five test scripts. It regenerates `generated/android/` to confirm nothing drifted. The required check on `main` is `validate`.
+The workflow `Validate carrier data` in `.github/workflows/validate.yml` runs on push to `main`, on pull requests, daily at 04:17 UTC by cron, and on manual dispatch. It validates the profiles against the stable index and the device catalog with `--freshness fail`, and the community claims. It runs the five test scripts. It regenerates `generated/android/` to confirm nothing drifted. The required check on `main` is `validate`.

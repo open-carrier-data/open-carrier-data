@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import date, timedelta
 import json
 import re
 import sys
@@ -12,6 +13,7 @@ from typing import Any
 from xml.sax.saxutils import escape
 
 from carrier_config_types import config_value_has_expected_type, expected_config_type
+from validate_public_carrier_data import STALE_AFTER_DAYS
 
 
 def load_json(path: Path) -> Any:
@@ -538,12 +540,37 @@ def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
     return len(blocks)
 
 
+def freshness_window(evidence_index_path: Path) -> dict[str, str]:
+    if not evidence_index_path.exists():
+        return {}
+    evidence = load_json(evidence_index_path)
+    if "checks_through" in evidence and "stale_after" in evidence:
+        return {
+            "checks_through": evidence["checks_through"],
+            "stale_after": evidence["stale_after"],
+        }
+    dates = [snapshot["checked_at"] for snapshot in evidence.get("source_snapshots", [])]
+    dates += [
+        profile["reviewed_range"]["oldest"]
+        for profile in evidence.get("profiles", [])
+        if profile.get("reviewed_range")
+    ]
+    if not dates:
+        return {}
+    checks_through = min(date.fromisoformat(value) for value in dates)
+    return {
+        "checks_through": checks_through.isoformat(),
+        "stale_after": (checks_through + timedelta(days=STALE_AFTER_DAYS)).isoformat(),
+    }
+
+
 def write_metadata(
     path: Path,
     profiles: list[dict[str, Any]],
     apn_version: int,
     apn_count: int,
     config_xml_count: int,
+    freshness: dict[str, str],
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -575,6 +602,7 @@ def write_metadata(
                 config_unrepresentable_ids
             ),
         },
+        **freshness,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -627,6 +655,7 @@ def main(argv: list[str]) -> int:
         args.apn_version,
         apn_count,
         config_xml_count,
+        freshness_window(generated_dir / "evidence-index.json"),
     )
     print(
         f"generated Android output for {len(profiles)} profile(s): "

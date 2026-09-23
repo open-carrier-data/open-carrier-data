@@ -7,17 +7,22 @@ run validation without dependency downloads.
 
 from __future__ import annotations
 
-from datetime import date
+import argparse
+from datetime import date, datetime, timedelta, timezone
 import json
 import hashlib
 import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 from carrier_config_types import config_value_has_expected_type, expected_config_type
 
+
+STALE_AFTER_DAYS = 180
+FRESHNESS_MODES = ("warn", "fail")
+FRESHNESS_KEYS = {"checks_through", "stale_after"}
 
 ALLOWED_CONFIG_KEYS = {
     "allow_add_call_during_video_call",
@@ -286,6 +291,51 @@ ADDON_KEY_RE = re.compile(r"^[a-z][a-z0-9_]{2,80}$")
 
 class ValidationError(Exception):
     pass
+
+
+class FreshnessWindow(NamedTuple):
+    checks_through: date
+    stale_after: date
+
+
+def utc_today() -> date:
+    return datetime.now(timezone.utc).date()
+
+
+def parse_freshness_window(path: Path, data: dict[str, Any]) -> FreshnessWindow | None:
+    present = FRESHNESS_KEYS & set(data)
+    if not present:
+        return None
+    if present != FRESHNESS_KEYS:
+        raise ValidationError(
+            f"{path}: checks_through and stale_after must be published together"
+        )
+    try:
+        window = FreshnessWindow(
+            date.fromisoformat(data["checks_through"]),
+            date.fromisoformat(data["stale_after"]),
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValidationError(f"{path}: checks_through or stale_after is invalid") from exc
+    if window.checks_through > utc_today():
+        raise ValidationError(f"{path}: checks_through is future-dated")
+    if not 1 <= (window.stale_after - window.checks_through).days <= 366:
+        raise ValidationError(
+            f"{path}: stale_after must be 1 to 366 days after checks_through"
+        )
+    return window
+
+
+def check_freshness(window: FreshnessWindow, mode: str) -> None:
+    if utc_today() <= window.stale_after:
+        return
+    message = (
+        f"snapshot is past stale_after {window.stale_after} "
+        f"(checks_through {window.checks_through})"
+    )
+    if mode == "fail":
+        raise ValidationError(message)
+    print(f"warning: {message}", file=sys.stderr)
 
 
 def load_json(path: Path) -> Any:
@@ -583,11 +633,14 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
 def validate_index(
     index_path: Path,
     profiles_by_path: dict[str, dict[str, Any]],
-) -> None:
+) -> FreshnessWindow | None:
     index = load_json(index_path)
     require_type(index_path, index, dict, "index root")
+    if set(index) - FRESHNESS_KEYS != {"schema_version", "profiles"}:
+        raise ValidationError(f"{index_path}: index has invalid keys")
     if index.get("schema_version") != 1:
         raise ValidationError(f"{index_path}: schema_version must be 1")
+    window = parse_freshness_window(index_path, index)
     profiles = index.get("profiles")
     require_type(index_path, profiles, list, "profiles")
 
@@ -648,6 +701,7 @@ def validate_index(
         )
     if actual_profile_ids != sorted(actual_profile_ids):
         raise ValidationError(f"{index_path}: profiles must be sorted by profile_id")
+    return window
 
 
 def validate_generated_files(generated_dir: Path) -> None:
@@ -693,10 +747,14 @@ def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: 
             raise ValidationError(f"{path}: {name}[{index}].resolution is invalid")
 
 
-def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
+def validate_evidence_index(
+    path: Path,
+    expected_profile_ids: set[str],
+    index_window: FreshnessWindow | None = None,
+) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    if set(data) != {
+    if set(data) - FRESHNESS_KEYS != {
         "schema_version",
         "description",
         "model_source_provenance",
@@ -709,6 +767,12 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
     if data.get("model_source_provenance") != "complete":
         raise ValidationError(f"{path}: model source provenance is incomplete")
     validate_string(path, data.get("description"), "description", 400)
+    window = parse_freshness_window(path, data)
+    if index_window is not None and window is not None and window != index_window:
+        raise ValidationError(f"{path}: freshness window does not match the stable index")
+    window = window or index_window
+    today = utc_today()
+    earliest: date | None = None
     source_snapshots = data.get("source_snapshots")
     require_type(path, source_snapshots, list, "source_snapshots")
     source_names: list[str] = []
@@ -751,11 +815,13 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
             raise ValidationError(
                 f"{path}: source_snapshots[{index}].checked_at is invalid"
             ) from exc
-        age = (date.today() - checked_at).days
-        if age < 0 or age > 180:
+        if checked_at > today:
+            raise ValidationError(f"{path}: source_snapshots[{index}] is future-dated")
+        if window is not None and checked_at < window.checks_through:
             raise ValidationError(
-                f"{path}: source_snapshots[{index}] is stale or future-dated"
+                f"{path}: source_snapshots[{index}].checked_at is before checks_through"
             )
+        earliest = checked_at if earliest is None else min(earliest, checked_at)
         validate_string(
             path,
             snapshot.get("license_expression"),
@@ -873,10 +939,15 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
                 ) from exc
             if oldest > newest:
                 raise ValidationError(f"{path}: profiles[{index}].reviewed_range is reversed")
-            if (date.today() - oldest).days > 180 or newest > date.today():
+            if newest > today:
                 raise ValidationError(
-                    f"{path}: profiles[{index}].reviewed_range is stale or future-dated"
+                    f"{path}: profiles[{index}].reviewed_range is future-dated"
                 )
+            if window is not None and oldest < window.checks_through:
+                raise ValidationError(
+                    f"{path}: profiles[{index}].reviewed_range is before checks_through"
+                )
+            earliest = oldest if earliest is None else min(earliest, oldest)
         scope = evidence.get("observed_scope")
         if scope is not None:
             require_type(path, scope, dict, f"profiles[{index}].observed_scope")
@@ -945,19 +1016,28 @@ def validate_evidence_index(path: Path, expected_profile_ids: set[str]) -> None:
         expected_profile_ids
     ):
         raise ValidationError(f"{path}: profile IDs do not match the stable database")
+    if window is None and earliest is not None:
+        window = FreshnessWindow(earliest, earliest + timedelta(days=STALE_AFTER_DAYS))
+    return window
 
 
 def validate_android_metadata(
     generated_dir: Path,
     expected_profile_ids: set[str],
+    window: FreshnessWindow | None = None,
 ) -> None:
     metadata_path = generated_dir / "android" / "metadata.json"
     metadata = load_json(metadata_path)
     require_type(metadata_path, metadata, dict, "metadata")
-    if set(metadata) != {"schema_version", "target", "output", "omissions"}:
+    if set(metadata) - FRESHNESS_KEYS != {"schema_version", "target", "output", "omissions"}:
         raise ValidationError(f"{metadata_path}: metadata has invalid keys")
     if metadata.get("schema_version") != 1:
         raise ValidationError(f"{metadata_path}: schema_version must be 1")
+    metadata_window = parse_freshness_window(metadata_path, metadata)
+    if metadata_window is not None and metadata_window != window:
+        raise ValidationError(
+            f"{metadata_path}: freshness window does not match the evidence index"
+        )
     target = metadata.get("target")
     require_type(metadata_path, target, dict, "target")
     version = target.get("apn_database_version")
@@ -1006,9 +1086,20 @@ def validate_android_metadata(
             raise ValidationError(f"{metadata_path}: omission profile IDs are invalid")
 
 
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("carriers_dir", nargs="?", type=Path, default=Path("carriers"))
+    parser.add_argument(
+        "index_path", nargs="?", type=Path, default=Path("generated/index.json")
+    )
+    parser.add_argument("--freshness", choices=FRESHNESS_MODES, default="warn")
+    return parser.parse_args(argv[1:])
+
+
 def main(argv: list[str]) -> int:
-    carriers_dir = Path(argv[1]) if len(argv) > 1 else Path("carriers")
-    index_path = Path(argv[2]) if len(argv) > 2 else Path("generated/index.json")
+    args = parse_args(argv)
+    carriers_dir = args.carriers_dir
+    index_path = args.index_path
 
     if not carriers_dir.exists():
         raise ValidationError(f"{carriers_dir}: missing carriers directory")
@@ -1042,10 +1133,14 @@ def main(argv: list[str]) -> int:
                     )
                 generic_network_profiles[mccmnc] = profile_id
 
-    validate_index(index_path, profiles_by_path)
+    index_window = validate_index(index_path, profiles_by_path)
     validate_generated_files(index_path.parent)
-    validate_evidence_index(index_path.parent / "evidence-index.json", seen_ids)
-    validate_android_metadata(index_path.parent, seen_ids)
+    window = validate_evidence_index(
+        index_path.parent / "evidence-index.json", seen_ids, index_window
+    )
+    validate_android_metadata(index_path.parent, seen_ids, window)
+    if window is not None:
+        check_freshness(window, args.freshness)
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0
 
