@@ -1,224 +1,101 @@
-# Contributing To Open Carrier Data
+# Contribute to Open Carrier Data
 
-Open Carrier Data is meant to be useful without asking contributors to know the
-whole automation system first.
+This guide shows the five ways to contribute and the checks to run before you submit. You do not need write access to the repo for any of them.
 
-This guide explains what to do when carrier data is missing, wrong, stale, or
-unclear.
+## Keep private data out
 
-## First Rule: Do Not Share Private Data
+Before you post anything, remove every private value. Never include:
 
-Do not post:
+- phone numbers, account numbers, or customer IDs
+- personal passwords, tokens, cookies, private URLs, or vendor credentials
+- full IMSI or ICCID values
+- IMEI, serial numbers, Android ID, or other device identifiers
+- raw modem logs, bugreports, vendor responses, or firmware dumps
 
-- phone numbers;
-- account numbers or customer IDs;
-- personal passwords, tokens, cookies, private URLs, or private vendor
-  credentials;
-- full IMSI values;
-- full ICCID values;
-- IMEI, serial numbers, Android ID, or other device identifiers;
-- raw modem logs, raw bugreports, raw vendor responses, or raw firmware dumps.
+Safe values are the carrier name, country, brand, MCC/MNC, and Android carrier ID. A shortened ICCID prefix is safe when it is already public. APN values from public docs or the phone's settings screen are safe. So is a feature result such as "MMS receive works". A public APN username or password is fine only when it is a shared carrier setting. When unsure, leave the value out and describe the problem without it.
 
-Safe examples:
+The claim validator blocks any digit run of 14 to 22 characters as a possible full IMSI or ICCID. The pattern is `BLOCK_PATTERNS` in `tools/validate_community_claims.py` line 43.
 
-- carrier name;
-- country;
-- public plan or brand name;
-- MCC/MNC, if known;
-- Android carrier ID, if known;
-- partial ICCID prefix only when it is already public or safely shortened;
-- tested APN values from public carrier docs or phone settings;
-- public APN username/password values when they are carrier settings, not
-  private account credentials;
-- feature result, such as "MMS receive works" or "Wi-Fi Calling menu is hidden".
+## Report wrong or missing carrier data
 
-If you are unsure whether something is private, do not include it. Open an
-issue and describe the problem without that value.
+Use this path when a carrier is missing, a setting looks wrong, or you cannot write JSON.
 
-## Which Path Should I Use?
+1. Open the `Wrong or missing carrier data` form at `https://github.com/open-carrier-data/open-carrier-data/issues/new/choose`.
+2. Give the carrier name, country, and whether it is a host network or an MVNO.
+3. Name the affected feature, what happens, and what you expected.
+4. Add safe match details such as MCC/MNC, SPN, a GID prefix, or an Android carrier ID.
+5. Add the device, OS, test date, and a public source link if you have them.
 
-### 1. I found missing or wrong carrier data
+## Suggest a maintained source
 
-Open an issue:
+Use this path when you know an upstream that automation could import.
 
-```text
-https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
+1. Open the `Maintained source suggestion` form.
+2. Name the source, its owner, and what carrier facts it holds.
+3. State its license or usage terms if known. A current source can still be unfit for redistribution.
+
+A good source is maintained by a carrier, OEM, OS project, or public data project. Automation can refresh it, and its facts can be translated without publishing private material.
+
+## Submit a tested fix as a claim
+
+Use this path when you tested an exact setting on a real SIM. Pick the issue form or the pull request.
+
+To submit through the issue form:
+
+1. Open the `Tested carrier-data change` form.
+2. Fill in the carrier, MCC/MNC, change type, the setting, the evidence type, the test result, and the evidence date.
+3. Tick the privacy check. Automation converts the issue into a claim file, validates it, and opens a pull request on `automation/community-claim-<issue number>`.
+4. If validation fails, automation comments on the issue. Edit the issue to retry.
+
+To submit through a pull request:
+
+1. Fork the repo and add one JSON file under `community/claims/` that follows `schemas/community-claim.schema.json`.
+2. Set `schema_version`, `claim_id`, `summary`, `status`, `carrier_match`, `change_type`, `changes`, `evidence`, and `last_verified`.
+3. Leave out `expires`. The validator computes it.
+4. Run the local checks below and open the pull request.
+
+Do not set your own risk or mark the claim verified. A reviewer still judges whether the evidence is credible.
+
+## Change a stable carrier profile
+
+Stable profiles come from maintained sources through the sanitizer. Do not edit `carriers/open/` or `generated/` by hand as a shortcut.
+
+1. Open an issue that names the profile and the wrong value.
+2. If a source is wrong, point at the source. The fix lands through the import path.
+3. A direct profile change is accepted only when it is narrow, reproducible, and backed by a maintained source.
+
+## Improve tooling or docs
+
+Open a pull request for schema, validator, generator, test, or documentation changes. Keep each change to one topic. To report a problem without a fix, use the `Documentation, schema, or tooling issue` form.
+
+## Run the local checks
+
+To check profiles, the device catalog, and claims, run from the repo root:
+
+```bash
+python3 tools/validate_public_carrier_data.py carriers generated/index.json
+python3 tools/validate_device_catalog.py generated/devices
+python3 tools/validate_community_claims.py community/claims generated/community --stable-dir carriers --evidence-index generated/evidence-index.json
 ```
 
-Use this when:
-
-- a carrier is missing;
-- a device identity is missing or named incorrectly in the coverage catalog;
-- mobile data, MMS, VoLTE, Wi-Fi Calling, RCS, eSIM, tethering, XCAP, or
-  conference calling looks wrong;
-- the generated Android files do not match a known-good source;
-- you are not sure how to write a JSON claim.
-
-Include:
-
-- carrier name and country;
-- whether this is a main carrier or MVNO/sub-brand;
-- affected feature;
-- what currently happens;
-- what you expected to happen;
-- device and OS, if you tested on a device;
-- test date;
-- public source link, if you have one;
-- safe SIM matching details, such as MCC/MNC, SPN, GID1/GID2 prefix, or Android
-  carrier ID.
-
-### 2. I know a maintained source we should import
-
-Open a source suggestion issue.
-
-Good source suggestions are:
-
-- maintained by a carrier, OEM, OS project, standards project, or public data
-  project;
-- refreshable by automation;
-- narrow enough that we can extract public carrier facts;
-- legal and safe to process privately when raw source material cannot be
-  published.
-
-Also include the source's license or usage terms when known. A source can be
-current and still be unsuitable for redistribution.
-
-Examples:
-
-- public APN database;
-- public Android CarrierConfig data;
-- public carrier support page with APN/MMS settings;
-- OEM carrier bundle source that can be handled privately and sanitized before
-  publishing.
-
-### 3. I have tested a specific fix
-
-If you do not have write access to this repository, you still have two normal
-ways to submit the claim:
-
-- open a guided tested-claim issue;
-- or fork the repository, add the claim file, and open a pull request.
-
-Use the issue path if you do not want to edit JSON or use Git. Use the pull
-request path if you are comfortable adding the claim file yourself.
-
-For pull requests, add the claim under:
-
-```text
-community/claims/
-```
-
-A claim is a structured report. It does not silently become default phone
-behavior. It is validated, indexed, and can be used for opt-in testing.
-
-You provide the facts and evidence. The validator calculates risk, overlap with
-stable profiles, conflicts, confidence, and the recommended channel. Do not add
-your own `conflicts_with_stable` value or claim a `maintainer_review` evidence
-type.
-
-Use a claim when you can say:
-
-- which carrier or MVNO it applies to;
-- exactly what should change;
-- how you tested it;
-- when you tested it.
-
-The validator computes confidence, risk, conflicts, and expiry. Do not mark
-your own claim verified or choose its risk level.
-
-After adding or changing a claim, run:
+To refresh the claim indexes after adding or changing a claim, run:
 
 ```bash
 python3 tools/validate_community_claims.py --write-index
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/validate_device_catalog.py generated/devices
 ```
 
-If you use the issue path, automation converts the form into JSON, validates
-it, and opens or updates a pull request. A reviewer still checks whether the
-evidence is credible; valid JSON cannot prove that a network test really
-happened.
-
-### 4. I want to change stable carrier profiles
-
-Do not directly edit stable generated output as a shortcut.
-
-Stable data should normally come from maintained sources through importers and
-the sanitizer. If a stable profile is wrong, open an issue first or update the
-source/importer path that produced it.
-
-Direct stable-profile changes may be accepted only when they are narrow,
-reviewable, reproducible, and backed by a maintained source.
-
-### 5. I want to improve tooling or docs
-
-Open a pull request.
-
-Good tooling and docs changes include:
-
-- clearer documentation;
-- schema improvements;
-- validator improvements;
-- generator fixes;
-- importer improvements;
-- tests for edge cases.
-
-Run the relevant checks before submitting:
+To run the tests the public workflow runs, execute:
 
 ```bash
-python3 tools/validate_community_claims.py community/claims generated/community
 python3 tools/test_community_claims.py
 python3 tools/test_issue_to_claim.py
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
 python3 tools/test_generated_android_outputs.py
+python3 tools/test_carrier_relevance_contract.py
 python3 tools/test_resolve_carrier_profiles.py
 ```
 
-## What Happens After I Report Something?
+## How a claim becomes stable
 
-The normal path is:
+A claim never becomes a stable profile on its own. The validator computes its risk from the match breadth, the changed fields, and the change type. Risk sets the expiry. `MAX_EXPIRY_DAYS` in `tools/validate_community_claims.py` lines 31 to 35 gives 365 days for low, 180 for medium, and 90 for high. `recommended_channel` at lines 680 to 702 picks the channel. `candidate` needs a risk below high, enough confidence, a change type of `add`, `confirm`, or `correct`, and no conflict with a stable profile. Everything else stays `community`.
 
-```text
-issue or claim
--> discussion and evidence check
--> importer/source/schema/tooling fix if needed
--> generated output update
--> validation
--> downstream projects can sync a new snapshot
-```
-
-Community claims may also appear in:
-
-```text
-generated/community/index.json
-generated/candidate/index.json
-```
-
-That does not mean they are stable defaults. It means they are structured data
-that downstream projects can inspect or test.
-
-When a claim expires, automation removes it from both generated indexes. The
-claim file may remain as history, but consumers no longer see it as current.
-
-## Good Reports Are Specific
-
-Good report:
-
-```text
-Carrier: Example Mobile Germany
-Type: MVNO
-Feature: MMS
-Problem: generated APN has no MMSC, MMS receive fails
-Expected: MMSC should be https://mms.example/mmsc
-Evidence: public carrier help page plus one device test on 2026-07-05
-Safe match details: MCC/MNC 26299, SPN "Example"
-```
-
-Weak report:
-
-```text
-My SIM does not work. Please fix it.
-```
-
-The weak report may still be real, but it does not give enough information to
-find the correct carrier entry without guessing.
+Valid claims appear in `generated/community/index.json`. Candidate claims also appear in `generated/candidate/index.json`. Expired claims drop out of both. A claim reaches `carriers/open/` only when a maintained source confirms it and the import path publishes it. On 2026-09-23 there are zero claims. Count them with `ls community/claims | wc -l`.

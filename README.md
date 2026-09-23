@@ -1,382 +1,122 @@
 # Open Carrier Data
 
-<p align="center">
-  <img src="https://open-carrier-data.github.io/assets/icon-192.png" alt="Open Carrier Data icon" width="96" height="96">
-</p>
+Open Carrier Data is a public database of mobile carrier settings. It stores neutral JSON carrier profiles in `carriers/open/` and turns them into Android APN and CarrierConfig files under `generated/`. It exists for ROM builders, carrier configuration apps, eSIM tools, and build systems. They can ship APN, MMS, IMS, RCS, and eSIM data locally instead of maintaining the same fixes alone. Phones read the packaged files at runtime. Nothing in this project is a network service.
 
-Open Carrier Data is a public database of mobile carrier settings for
-open-source phone systems.
+## Get the data
 
-It stores carrier facts in a neutral JSON format and generates Android-ready
-files from them. ROMs, carrier configuration apps, eSIM tools, and build
-systems can package those files locally so phones have better APN, MMS, IMS,
-RCS, eSIM, and CarrierConfig data without every project maintaining the same
-fixes alone.
+You can get the data in three ways. Each one works as of 2026-09-23.
 
-## Start Here
-
-- Documentation: https://open-carrier-data.github.io/
-- Report missing or wrong data: https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
-- Contribution guide: `CONTRIBUTING.md`
-- Stable snapshot: `generated/index.json`
-- Source revisions and merge evidence: `generated/evidence-index.json`
-- Device and carrier-artifact coverage: `generated/devices/index.json`
-- Android output: `generated/android/`
-- Data schema: `schemas/carrier-profile.schema.json`
-- Community claims: `community/`
-
-If you only want to use the database, start with `generated/index.json` or
-`generated/android/`.
-
-If something is missing or wrong, open a guided issue. You do not need write
-access to this repository.
-
-## The Simple Idea
-
-Carrier settings are small, but they matter. A wrong setting can break mobile
-data, MMS, VoLTE, Wi-Fi Calling, roaming, call forwarding, or carrier
-identification.
-
-Open Carrier Data keeps those settings in one public place:
-
-```text
-maintained sources
--> neutral carrier profiles
--> generated snapshots and Android files
--> ROMs/apps/build tools package the data locally
--> phones read local data at runtime
-```
-
-This project is not a live cloud service for phones. A phone should not need to
-call GitHub while loading a SIM, starting a call, sending MMS, registering IMS,
-or handling emergency service.
-
-## What Is In This Repo
-
-```text
-carriers/                 public neutral carrier profiles
-community/                public community claims
-generated/index.json      stable generated snapshot
-generated/evidence-index.json exact source revisions and resolution evidence
-generated/android/        generated Android APN, CarrierConfig, and lookup data
-generated/devices/        device discovery and carrier-artifact coverage
-generated/community/      generated index of valid community claims
-generated/candidate/      generated index of testable community claims
-schemas/                  JSON schemas
-tools/                    validators, generators, and tests
-```
-
-The neutral profiles in `carriers/` are the source data. Files under
-`generated/` are produced from that source data and should be regenerated when
-profiles or claims change.
-
-## Stable Data And Community Claims
-
-The stable database is built from maintained sources. Examples are public
-Android data, public APN databases, and sanitized facts imported from maintained
-vendor data.
-
-Stable data is not a dump of every file we have ever seen. Private vendor or
-OEM snapshots must be refreshed and carry a recent checked date before they can
-feed stable output. Private vendor/OEM checks older than about six months are
-treated as stale. If a source cannot be refreshed anymore, missing data is
-better than stale data that looks current.
-
-Community input is handled separately as claims:
-
-- a claim says what should change;
-- it includes evidence and a test date;
-- the validator calculates an expiry date from its risk;
-- it is validated and indexed;
-- it does not silently become default phone behavior.
-
-This gives the project two useful layers:
-
-```text
-generated/index.json              stable maintained-source snapshot
-generated/community/index.json    valid non-expired community claims
-generated/candidate/index.json    claims that are suitable for opt-in testing
-```
-
-Stable data is conservative. Community claims are faster and useful for edge
-cases, but downstream projects must choose whether to use them.
-
-The validator, not the claim author, calculates confidence, risk, expiry,
-overlap, and conflicts with stable data. A contributor cannot mark their own
-claim verified. Expired claims stay out of generated indexes without blocking
-the rest of the database.
-
-## Where The Data Comes From
-
-The current stable snapshot combines maintained AOSP, LineageOS, Mobile
-Broadband Provider Info, Apple carrier-bundle, Google Pixel CarrierSettings,
-Samsung OMC, and scoped Samsung IMS capability observations.
-Each source is translated into the same neutral profile model.
-
-Device discovery is tracked separately. The broad Android inventory comes from
-Google's current public Google Play supported-device list. Current Pixel
-CarrierSettings codenames add a second source-derived inventory and exact
-extraction receipts. Samsung firmware discovery records each inventory identity
-and its progress. Apple product types and carrier artifacts come directly from
-Apple's official carrier index. This separate catalog makes gaps visible
-without turning a device name into a carrier setting.
-
-`generated/evidence-index.json` records:
-
-- exact Git revisions or source-content hashes and their revision dates;
-- when automation last checked each public upstream, even if its revision did
-  not change;
-- declared source terms;
-- which source families support each exact capability, CarrierConfig key,
-  add-on, and APN fact;
-- Samsung model, firmware build/region, OMC, sales-code, and revision scope
-  when safely publishable;
-- Google Pixel device codenames, Android version, firmware build, and whether
-  the observation came from a firmware baseline or a newer network delta;
-- compact model-source overrides when a model was named by fewer source
-  families than its merged carrier profile as a whole;
-- conflicts and quality gates that caused a value to become conditional or be
-  omitted.
-
-Maintained source checks older than 180 days fail validation. Private vendor
-observations also need a recent checked date. Read `SOURCES.md` for the exact
-source and merge policy.
-
-## Device Coverage Does Not Mean Device Support
-
-`generated/devices/` keeps several claims separate:
-
-- `present` means a maintained source currently lists the device identity;
-- `historical` means the identity was listed before but is absent now;
-- `carrier_observations` means current carrier evidence named a model or device
-  code that a maintained artifact/discovery source uniquely binds to the stable
-  `device_id`; `matched_identifiers` contains that exact ID;
-- an Apple `product_family` artifact match means Apple's current index has
-  carrier artifacts for that family, not that every carrier feature was tested
-  on every model;
-- `indexed` means an artifact and digest are in the current official index;
-- `verified` also means automation downloaded the package and matched the
-  indexed digest;
-- Android `extracted` means automation obtained and integrity-checked the
-  device-scoped carrier source;
-- `source_discovery_in_progress` means scheduled vendor checks still have
-  model/region work left;
-- `source_not_queryable` means the maintained inventory has the identity but
-  does not provide the identifier needed by that vendor update service;
-- `source_checked_no_artifact` means the configured vendor scope was checked
-  completely without finding a current artifact;
-- `carrier_data_not_applicable` is reserved for explicitly classified
-  non-cellular Apple devices or exact Android variants backed by an official
-  connectivity source, and is not an extraction claim; schema version 2 pairs
-  this status with exact non-cellular relevance evidence on both platforms
-  instead of any family or coverage inference;
-- `platform_out_of_scope` identifies an exact inventory record, such as a
-  ChromeOS or emulator target, that is outside this Android phone/watch carrier
-  extraction system; it does not claim that the hardware lacks cellular radio;
-- `source_authentication_required` means an exact official per-device Android
-  source is known, but anonymous discovery or extraction stops at an
-  authentication gate. It requires matching exact, artifact-free source and
-  device scopes; it is not evidence of device support, cellular relevance,
-  carrier data, or artifact availability;
-- `source_terms_restrict_extraction` means an exact official firmware source is
-  known but its published terms do not permit this project to inspect it for
-  carrier data. It is not a claim that the device lacks cellular support.
-- `source_transport_untrusted` means an exact official source record is known,
-  but the available archive or binary-package transport lacks the integrity
-  properties required for unattended inspection, such as HTTPS plus a
-  vendor-authenticated digest.
-  The scope is artifact-free: it is not a claim that carrier data was found or
-  that the device lacks cellular support.
-
-Schema-version-2 device inventories add an independent `carrier_relevance`
-classification to every exact device ID. `evidence_confirmed_cellular` and
-`evidence_confirmed_non_cellular` require sorted, unique evidence tied to a
-declared source associated with that device; `not_established` requires an empty
-evidence list. The only evidence kinds are exact carrier observation, extracted
-carrier configuration, exact product-type carrier bundle, official connectivity
-specification, and official connectivity variant. Cellular observations,
-extracted configurations, and exact carrier bundles conflict with a
-non-cellular classification. In version 2, confirmed non-cellular relevance and
-`carrier_data_not_applicable` must occur together on both platforms.
-
-Exact observations and extracted configurations are Android-only evidence, and
-an extracted source catalog must be bound as `exact_device_id` to the enclosing
-Android ID. Exact product-type carrier bundles are Apple-only evidence. Official
-connectivity specifications and exact variants are valid for either platform;
-all evidence sources still have to be declared and associated with that exact
-device.
-
-An official connectivity source that contributes relevance only, and therefore
-must not masquerade as inventory, carrier coverage, discovery, or an artifact,
-is associated through the inventory root's optional
-`carrier_relevance_registries` array. Each registry contains sorted exact
-`device_id`/evidence-kind/source/classification bindings plus an exact binding
-count, a canonical binding SHA-256, and a newline-sorted device-ID-set SHA-256.
-The validator rejects undeclared sources, duplicate registries or bindings,
-wrong-platform IDs, count or hash drift, unused or orphan bindings, and any
-relevance-only source that also appears in a device's inventory, coverage,
-discovery, observation, or artifact association, or in either platform's
-carrier-artifact registry sources. Only the two official connectivity evidence
-kinds are eligible for this root binding; carrier
-observations, extracted configurations, and carrier bundles must retain their
-existing exact carrier-data backing.
-
-Device family, name, form factor, and carrier-data coverage are not relevance
-evidence. For example, an Apple TV or iPod label cannot establish non-cellular
-status, and `platform_out_of_scope` says nothing about whether the hardware has
-a cellular radio. Version-2 index summaries therefore report exact relevance
-totals and a complete coverage-by-relevance matrix. Existing version-1 device
-catalogs remain temporarily accepted while generated publication migrates, but
-version 1 cannot publish `carrier_relevance`.
-
-Failed downloads and digest mismatches are quarantined. They are counted in the
-small coverage summary but are not published as usable artifacts or imported
-as carrier facts.
-
-## If A Carrier Is Missing Or Wrong
-
-Use the path that matches what you know:
-
-1. If you only know that something is broken, open a guided issue.
-2. If you know a maintained source we should import, open a source suggestion.
-3. If you tested a specific fix, open a tested-claim issue. Automation converts
-   it into claim JSON, validates it, and opens a pull request.
-4. If you are comfortable with Git, fork the repo, add a claim under
-   `community/claims/`, and open a pull request.
-5. If you want to improve schemas, validators, generated output, or docs, open
-   a pull request.
-
-Normal users do not need direct write access. Issues and fork-based pull
-requests are the normal public contribution paths.
-
-Useful reports include:
-
-- carrier name and country;
-- whether it is a main carrier, MVNO, or sub-brand;
-- affected feature, such as data, MMS, VoLTE, Wi-Fi Calling, RCS, eSIM, or
-  call forwarding;
-- what happened;
-- what you expected;
-- public source links, if available;
-- safe SIM matching details, such as MCC/MNC, SPN, GID1/GID2 prefix, or Android
-  carrier ID;
-- test date and device/OS, if you tested it yourself.
-
-Never post phone numbers, account data, personal passwords, tokens, private
-vendor credentials, full IMSI values, full ICCID values, IMEI, serial numbers,
-raw logs, raw bugreports, raw firmware dumps, or private vendor responses.
-Public APN usernames or passwords are allowed only when they are carrier
-settings from public docs or visible phone configuration, not private account
-credentials.
-
-## Public Profile Shape
-
-A carrier profile can contain:
-
-- match rules, such as MCC/MNC, Android carrier ID, SPN, GID1/GID2 prefixes,
-  ICCID prefixes, and safe IMSI prefix patterns;
-- capabilities, such as MMS, VoLTE, Wi-Fi Calling, VoNR, RCS, eSIM, SMS over
-  IMS, video calling, and conference support;
-- Android APN rows for data, MMS, IMS, XCAP, emergency APN, and tethering;
-- reviewed Android CarrierConfig overrides;
-- optional neutral add-ons for facts that do not fit one Android key.
-
-Profiles are carrier-centered, not source-centered. The public database should
-say "this carrier has these settings", not "Samsung says this" or "Apple says
-this". When several sources describe the same carrier, the public result should
-be one neutral profile.
-
-## Use The Data
-
-Clone and validate:
+To take everything, including tools and schemas, clone the public repo:
 
 ```bash
 git clone https://github.com/open-carrier-data/open-carrier-data.git
-cd open-carrier-data
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/validate_device_catalog.py generated/devices
 ```
 
-Main files for consumers:
+To read the stable snapshot without a checkout, download the raw index:
+
+```bash
+curl -sL https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/generated/index.json | head -c 200
+```
+
+To package the Android files into a build, copy the whole directory:
+
+```bash
+cp -r generated/android/ /path/to/your/build/carrier-data/
+```
+
+Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8.
+
+## Resolve one SIM
+
+To find every profile that applies to one SIM, run the resolver with the SIM's facts:
+
+```bash
+python3 tools/resolve_carrier_profiles.py --mccmnc 26202 --spn Vodafone.de
+```
+
+The output starts like this:
 
 ```text
-generated/index.json
-generated/evidence-index.json
-generated/android/apns-conf.xml
-generated/android/lookup.json
-generated/android/mccmnc-index.json
-generated/android/carrier-id-index.json
-generated/android/carrier-config-overrides.json
-generated/android/carrier-config-list.xml
-generated/devices/index.json
-generated/devices/android.json
-generated/devices/apple.json
-generated/devices/android-carrier-artifacts.json
-generated/devices/apple-carrier-artifacts.json
+{
+  "profiles": [
+    {
+      "android_apn_count": 10,
+      "capabilities": {
+        "esim": "unknown",
+        "ims_conference": "unknown",
+        "mms": "conditional",
 ```
 
-Within one match list, any value may match. Between different match fields,
-every populated field must match. Resolve all matching profiles in
-generic-to-specific order; a more specific profile is an overlay, not a reason
-to ignore the generic profile. The generated indexes expose `specificity`, and
-`tools/resolve_carrier_profiles.py` implements these rules.
+Profiles come back in generic-to-specific order. Apply each one as an overlay on the previous one. With `--mccmnc` alone only the broad profile returns. SPN, GID, IMSI, and ICCID profiles need their own flags.
 
-Some match rules cannot be represented perfectly in every Android XML format.
-Those details stay in JSON and lookup indexes instead of being broadened into
-unsafe matches.
+## What is in this repository
 
-`generated/android/apns-conf.xml` currently targets APN database version 8.
-Android requires this number to match the target build's internal APN version.
-Use `--apn-version` when generating for a different target. Read
-`generated/android/metadata.json` before packaging XML output; it records the
-target version and every profile omitted because XML could not represent its
-match safely.
+| Path | Contents |
+| --- | --- |
+| `carriers/open/` | 6,748 carrier profiles, one JSON file per profile |
+| `generated/index.json` | stable snapshot, one entry per profile |
+| `generated/evidence-index.json` | source revisions, check dates, fact sources, conflicts |
+| `generated/android/` | APN XML, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
+| `generated/devices/` | the device catalog and carrier artifact registries |
+| `generated/community/` | index of valid community claims |
+| `generated/candidate/` | index of claims fit for opt-in testing |
+| `community/claims/` | community claim files |
+| `schemas/` | six JSON schemas |
+| `tools/` | validators, the Android generator, the resolver, tests |
+| `docs/` | data model, build explanation, consumer guide |
 
-## Validate Changes
+## Status on 2026-09-23
 
-For stable profile and generated-output checks:
+| Measure | Value |
+| --- | --- |
+| Carrier profiles | 6,748 |
+| Source names in profile evidence | 11 |
+| Source snapshot records | 10 |
+| Android devices in the device catalog | 42,259 |
+| Apple products in the device catalog | 180 |
+| Android identities with observed carrier data | 257 |
+| Observations verified on a device | 0 |
+| Community claims | 0 |
+
+Eleven source names appear in profiles but only ten snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and `samsung_omc` and `samsung_ims` have no snapshot record. Their check dates are in `generated/devices/index.json`.
+
+Counts come from these commands, run from the repo root:
 
 ```bash
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/test_generated_android_outputs.py
+ls carriers/open | wc -l
+python3 -c 'print(len({s for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"] for s in p["sources"]}))'
+python3 -c 'print(len(__import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'
+python3 -c 'print(len(__import__("json").load(open("generated/devices/android.json"))["devices"]))'
+python3 -c 'print(len(__import__("json").load(open("generated/devices/apple.json"))["devices"]))'
+python3 -c 'print(__import__("json").load(open("generated/devices/index.json"))["platforms"]["android"]["carrier_data_coverage_counts"]["exact_carrier_data_observed"])'
+python3 -c 'print(sum(p["verified_observation_count"] for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"]))'
+ls community/claims | wc -l
 ```
 
-For community claims:
+## Limits to read before you ship
 
-```bash
-python3 tools/validate_community_claims.py community/claims generated/community
-python3 tools/test_community_claims.py
-python3 tools/test_issue_to_claim.py
-python3 tools/test_resolve_carrier_profiles.py
+Read these before you depend on the data:
+
+- No profile has been verified on a phone. Every value comes from a maintained source, not from a test call.
+- An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
+- When sources disagree on a CarrierConfig key, add-on, or APN row, the value is omitted. The conflict is listed in `generated/evidence-index.json`.
+- A source check older than 180 days by `checked_at` fails validation. The oldest check in the public evidence index and in the private manifests is 2026-07-13. From 2027-01-10 the validators fail and the daily public CI turns red until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23. The data does not change by itself. It stops validating.
+- A device listed in `generated/devices/` is an inventory fact. It is not a support claim.
+
+## How it is built
+
+The pipeline runs in the private repo and publishes here:
+
+```text
+source families -> candidate observations -> the sanitizer -> carrier profiles -> generated files
 ```
 
-To regenerate community indexes while working locally:
+[docs/how-it-is-built.md](docs/how-it-is-built.md) explains the merge rules, why profiles are neutral, and the freshness policy.
 
-```bash
-python3 tools/validate_community_claims.py --write-index
-```
+## How to contribute
 
-## What This Is Not
+[CONTRIBUTING.md](CONTRIBUTING.md) lists the five ways to help. The issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) guide reports, source suggestions, and tested claims without Git.
 
-Open Carrier Data is not:
+## License
 
-- a runtime phone cloud service;
-- a replacement for Android telephony APIs;
-- a place to publish raw vendor files or private logs;
-- a manual list where any valid JSON automatically becomes stable data;
-- a guarantee that every carrier feature works on every device.
-
-It is shared source data and generated output that downstream projects can
-package, test, and ship through their own normal update process.
-
-## License And Source Terms
-
-Project software and documentation are Apache-2.0. The project's own rights in
-the neutral data compilation are waived under CC0, but upstream terms still
-apply. AOSP, LineageOS, and Mobile Broadband Provider Info have clear reusable
-terms. Apple declares no license, and this project does not assert a Google
-CarrierSettings or Samsung license; only narrow transformed facts are published
-from those sources.
-
-Read `DATA-LICENSE.md`, `SOURCES.md`, and the source snapshots in
-`generated/evidence-index.json` before redistribution.
+Software and documentation are Apache-2.0. The text is in [LICENSE](LICENSE). The project's own rights in the data are waived under CC0 1.0, subject to upstream terms. The details are in [DATA-LICENSE.md](DATA-LICENSE.md).

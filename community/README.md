@@ -1,84 +1,31 @@
-# Community Claims
+# Community claims
 
-Community claims are structured reports about carrier settings.
+A community claim is a structured report that one carrier setting should be added, confirmed, corrected, removed, or overridden. It carries the carrier match, the change, the evidence, and the date it was last verified. It lives as one JSON file under `community/claims/` and follows `schemas/community-claim.schema.json`.
 
-Use them when someone has evidence for a specific carrier-data change, but the
-change is not ready to become stable default data yet.
+## Why claims stay apart from stable data
 
-## What A Claim Is
+Carrier data changes phone behaviour. A wrong row can break data, MMS, VoLTE, Wi-Fi calling, or emergency routing. So a claim never overwrites a carrier profile. The validator checks it, computes its risk and expiry, and indexes it. Downstream projects then decide whether to test it.
 
-A claim says:
+Two generated indexes expose claims:
 
-- which carrier or MVNO it applies to;
-- what setting should be added, changed, or removed;
-- how the result was tested or sourced;
-- when it was last verified;
-- a computed expiry based on the change's risk.
+| Index | Contents |
+| --- | --- |
+| `generated/community/index.json` | every valid claim that has not expired |
+| `generated/candidate/index.json` | the subset with risk below high, enough confidence, change type `add`, `confirm`, or `correct`, and no stable conflict |
 
-A claim can help with edge cases faster than waiting for every maintained
-source to update. It still stays separate from the stable database until it is
-reviewed and handled through the normal source/import path.
+The stable snapshot stays `generated/index.json`. On 2026-09-23 there are zero claims. Count them with `ls community/claims | wc -l`.
 
-## How To Submit One
+## How the validator judges a claim
 
-You do not need write access to the main repo.
+You supply the facts and the evidence. The validator computes everything else:
 
-Use one of these paths:
+- risk from the match breadth, the changed fields, and the change type
+- expiry from risk, at 365, 180, or 90 days
+- overlap and conflicts with stable profiles
+- the channel, `community` or `candidate`
 
-- open a guided tested-claim issue:
-  https://github.com/open-carrier-data/open-carrier-data/issues/new/choose
-- or fork the repo, add a JSON claim under `community/claims/`, and open a pull
-  request.
+You cannot set your own risk or mark a claim verified.
 
-Use the issue path if you do not want to write JSON or use Git. Automation
-converts the form, validates it, and opens a pull request. Use the direct pull
-request path if you already know the exact structured change.
+## Submit a claim
 
-## Why Claims Are Separate
-
-Carrier data changes real phone behavior. A bad entry can break data, MMS,
-VoLTE, Wi-Fi Calling, roaming, call forwarding, or emergency-related behavior.
-
-That is why community claims are validated and indexed, but do not silently
-overwrite stable profiles.
-
-The generated claim indexes are:
-
-```text
-generated/community/index.json    valid non-expired claims
-generated/candidate/index.json    claims suitable for opt-in testing
-```
-
-The stable database remains:
-
-```text
-generated/index.json
-```
-
-## Claim Rules
-
-- Use public, non-personal facts.
-- Include evidence and a test date.
-- Keep the SIM match as specific as possible.
-- Let the validator compute expiry; higher-risk claims expire sooner.
-- Do not include phone numbers, account data, personal passwords, tokens,
-  private vendor credentials, full IMSI values, full ICCID values, IMEI, raw
-  logs, raw bugreports, raw firmware dumps, or private vendor responses.
-- Public APN usernames or passwords are acceptable only when they are carrier
-  settings from public docs or visible phone configuration, not private account
-  credentials.
-
-The validator computes confidence, risk, expiry, and stable-data conflicts.
-Claims never become stable automatically. A candidate is only an opt-in test
-input; maintained-source automation remains the only normal stable path.
-
-## Local Checks
-
-After adding or changing a claim, run:
-
-```bash
-python3 tools/validate_community_claims.py --write-index
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-```
-
-For the full contribution guide, read `../CONTRIBUTING.md`.
+Use the `Tested carrier-data change` issue form if you do not want to write JSON. Fork the repo and add a file under `community/claims/` if you do. [CONTRIBUTING.md](../CONTRIBUTING.md) has the steps for both paths, the private-data rule, and the local checks.
