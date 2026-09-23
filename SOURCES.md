@@ -80,7 +80,7 @@ Both families are read from public AOSP-style manifests under Apache-2.0 and rec
 
 The device catalog under `generated/devices/` uses its own sources. The broad Android inventory is Google's Play supported-devices CSV, recorded by SHA-256 and published as normalized identity fields under `NOASSERTION`. Identities that vanish from a later revision stay as `historical`. Apple product types come from the same carrier index as the bundles. LineageOS device repos and the carrier families above add exact model scope.
 
-On 2026-09-23 the catalog's `index.json` lists 45 named sources. Print them with:
+On 2026-09-23 the catalog's `index.json` lists 17 named sources. Print them with:
 
 ```bash
 python3 -c 'print(*sorted(s["name"] for s in __import__("json").load(open("generated/devices/index.json"))["sources"]), sep="\n")'

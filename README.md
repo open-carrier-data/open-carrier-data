@@ -73,7 +73,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | Stale after | 2027-01-09 |
 | Android devices in the device catalog | 42,259 |
 | Apple products in the device catalog | 180 |
-| Android identities with observed carrier data | 257 |
+| Android identities with observed carrier data | 262 |
 | Observations verified on a device | 0 |
 
 Eleven source names appear in profiles but only ten snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and `samsung_omc` and `samsung_ims` have no snapshot record. Their check dates are in `generated/devices/index.json`.
