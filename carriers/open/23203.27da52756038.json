@@ -50,7 +50,7 @@
       "authtype": 1,
       "mmsc": "http://mmsc.t-mobile.at/servlets/mms",
       "mmsport": 80,
-      "mmsproxy": "010.012.000.020",
+      "mmsproxy": "10.12.0.20",
       "name": "gprsinternet",
       "password": "tm",
       "types": [
@@ -58,6 +58,40 @@
         "supl"
       ],
       "user": "t-mobile"
+    },
+    {
+      "apn": "gprsmms",
+      "authtype": 1,
+      "mmsc": "http://mmsc.t-mobile.at/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.12.0.20",
+      "name": "gprsmms",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "t-mobile"
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "max_conns_time": 120,
+      "mmsc": "http://mmsc.t-mobile.at/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.12.0.20",
+      "mtu": 1500,
+      "name": "HOS",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "t-mobile",
+      "user_visible": false
     },
     {
       "apn": "ims",

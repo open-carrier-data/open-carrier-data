@@ -54,7 +54,7 @@
       "apn": "Internet",
       "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
       "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
+      "mmsproxy": "212.183.137.12",
       "name": "Vodafone UK Contract Internet",
       "password": "web",
       "server": "*",
@@ -196,7 +196,7 @@
       "apn": "uk.lebara.mobi",
       "mmsc": "http://mms.lebara.co.uk/servlets/mms",
       "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
+      "mmsproxy": "212.183.137.12",
       "name": "Lebara UK MMS",
       "password": "web",
       "server": "*",
@@ -207,9 +207,31 @@
     },
     {
       "apn": "wap.vodafone.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
       "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
+      "mmsproxy": "212.183.137.12",
+      "mtu": 1340,
+      "name": "wap.vodafone.co.uk",
+      "password": "wap",
+      "port": 8799,
+      "protocol": "IPV4V6",
+      "proxy": "212.183.137.12",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap",
+      "user_editable": false
+    },
+    {
+      "apn": "wap.vodafone.co.uk",
+      "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
       "name": "vodafone UK",
       "password": "wap",
       "types": [
@@ -227,6 +249,25 @@
       "password": "wap",
       "types": [
         "ia"
+      ],
+      "user": "wap",
+      "user_editable": false
+    },
+    {
+      "apn": "wap.vodafone.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "mtu": 1340,
+      "name": "wap.vodafone.co.uk",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "mms"
       ],
       "user": "wap",
       "user_editable": false
@@ -383,7 +424,7 @@
       "carrier_id": 2309,
       "mmsc": "http://mms.lebara.co.uk/servlets/mms",
       "mmsport": 8799,
-      "mmsproxy": "212.183.137.012",
+      "mmsproxy": "212.183.137.12",
       "mvno_match_data": "Lebara",
       "mvno_type": "spn",
       "name": "Lebara Internet",

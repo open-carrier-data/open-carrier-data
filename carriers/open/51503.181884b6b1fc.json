@@ -9,16 +9,6 @@
       ]
     },
     {
-      "apn": "Internet",
-      "name": "Smart Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
       "apn": "Smart1",
       "carrier_id": 1654,
       "name": "Smart GPRS",
@@ -64,11 +54,21 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
+      "carrier_id": 1654,
+      "name": "IMS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1654,
+      "name": "SMART INTERNET",
+      "types": [
+        "default"
       ]
     },
     {
@@ -84,20 +84,19 @@
     },
     {
       "apn": "internet",
-      "carrier_id": 1654,
-      "name": "SMART INTERNET",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
       "name": "SMART",
       "protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1654,
+      "name": "SMART INTERNET",
+      "types": [
+        "ia",
+        "supl"
       ]
     },
     {
@@ -111,11 +110,12 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
       "carrier_id": 1654,
       "mmsc": "http://10.102.61.238:8002",
       "mmsport": 8080,
       "mmsproxy": "10.102.61.46",
-      "name": "Smart MMS",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -130,12 +130,11 @@
     },
     {
       "apn": "smartlte",
+      "authtype": 1,
       "carrier_id": 1654,
-      "name": "SMARTLTE",
+      "name": "smartlte",
       "types": [
-        "default",
-        "ia",
-        "supl"
+        "default"
       ]
     },
     {
@@ -143,6 +142,15 @@
       "name": "SMARTLTE",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "smartlte",
+      "carrier_id": 1654,
+      "name": "SMARTLTE",
+      "types": [
+        "ia",
         "supl"
       ]
     }
