@@ -12,4 +12,4 @@ Never put these in a public issue:
 - full IMSI or ICCID values, IMEI, or serial numbers
 - raw logs or raw bugreports
 
-Carrier-data pull requests are treated as untrusted input. Validation checks the schema, blocks common private-data patterns, computes claim risk and stable conflicts, and keeps community claims from changing stable output on their own.
+Carrier-data pull requests are treated as untrusted input.

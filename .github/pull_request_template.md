@@ -1,11 +1,11 @@
 ## What Changed
 
-Describe the carrier data, claim, schema, tooling, generator, or documentation
-change.
+Describe the schema, tooling, generator, or documentation change. Carrier
+data changes are not accepted by hand. Report them through the issue forms.
 
 ## Why
 
-Explain the problem this fixes or the source/evidence behind the change.
+Explain the problem this fixes.
 
 ## Safety Check
 
@@ -15,18 +15,16 @@ Explain the problem this fixes or the source/evidence behind the change.
       responses.
 - [ ] If this changes carrier behavior, I included evidence or linked a
       maintained source.
-- [ ] If this adds community data, I used a community claim instead of silently
-      changing stable generated output.
+- [ ] I did not edit `carriers/open/` or `generated/` by hand.
 
 ## Checks
 
 Run the checks that apply:
 
 ```bash
-python3 tools/validate_community_claims.py community/claims generated/community
-python3 tools/test_community_claims.py
-python3 tools/test_issue_to_claim.py
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
+python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
+python3 tools/validate_device_catalog.py generated/devices --freshness fail
 python3 tools/test_generated_android_outputs.py
+python3 tools/test_carrier_relevance_contract.py
 python3 tools/test_resolve_carrier_profiles.py
 ```

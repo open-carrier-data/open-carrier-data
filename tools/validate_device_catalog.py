@@ -3,14 +3,17 @@
 
 from __future__ import annotations
 
+import argparse
 from collections import Counter
-from datetime import date
+from datetime import date, timedelta
 import hashlib
 import json
 from pathlib import Path
 import re
 import sys
 from typing import Any
+
+from validate_public_carrier_data import FRESHNESS_MODES, STALE_AFTER_DAYS, utc_today
 
 
 HASH_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -174,9 +177,19 @@ def validate_date(path: Path, field: str, value: Any) -> str:
         parsed = date.fromisoformat(value)
     except ValueError as exc:
         raise ValidationError(f"{path}: {field} must be an ISO date") from exc
-    if parsed > date.today():
+    if parsed > utc_today():
         raise ValidationError(f"{path}: {field} cannot be in the future")
     return value
+
+
+def check_freshness(checks_through: str, mode: str) -> None:
+    stale_after = date.fromisoformat(checks_through) + timedelta(days=STALE_AFTER_DAYS)
+    if utc_today() <= stale_after:
+        return
+    message = f"snapshot is past stale_after {stale_after} (checks_through {checks_through})"
+    if mode == "fail":
+        raise ValidationError(message)
+    print(f"warning: {message}", file=sys.stderr)
 
 
 def validate_source(path: Path, value: Any) -> dict[str, str]:
@@ -191,9 +204,6 @@ def validate_source(path: Path, value: Any) -> dict[str, str]:
         raise ValidationError(f"{path}: source revision is invalid")
     validate_date(path, "source.revision_date", value["revision_date"])
     validate_date(path, "source.checked_at", value["checked_at"])
-    checked_at = date.fromisoformat(value["checked_at"])
-    if (date.today() - checked_at).days > 180:
-        raise ValidationError(f"{path}: source check is stale")
     return value
 
 
@@ -1386,7 +1396,7 @@ def validate_index(
     android_artifacts: list[dict[str, Any]],
     *,
     inventory_schema_versions: tuple[int, int] | None = None,
-) -> None:
+) -> str:
     value = load_object(path)
     expected = {
         "schema_version",
@@ -1583,10 +1593,19 @@ def validate_index(
     }
     if registries != expected_registries:
         raise ValidationError(f"{path}: artifact counts do not match records")
+    return value["generated_from_checks_through"]
+
+
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("root", nargs="?", type=Path, default=Path("generated/devices"))
+    parser.add_argument("--freshness", choices=FRESHNESS_MODES, default="warn")
+    return parser.parse_args(argv[1:])
 
 
 def main(argv: list[str]) -> int:
-    root = Path(argv[1]) if len(argv) > 1 else Path("generated/devices")
+    args = parse_args(argv)
+    root = args.root
     (
         android_version,
         android_sources,
@@ -1630,7 +1649,7 @@ def main(argv: list[str]) -> int:
     )
     if artifact_source not in apple_sources:
         raise ValidationError("Apple device and artifact sources do not match")
-    validate_index(
+    checks_through = validate_index(
         root / "index.json",
         android_sources,
         android_devices,
@@ -1642,6 +1661,7 @@ def main(argv: list[str]) -> int:
         android_artifacts,
         inventory_schema_versions=(android_version, apple_version),
     )
+    check_freshness(checks_through, args.freshness)
     print(
         f"validated {len(android_devices)} Android devices, {len(apple_devices)} Apple "
         f"products, and {len(android_artifacts) + len(artifacts)} carrier artifacts"

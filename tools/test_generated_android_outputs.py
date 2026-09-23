@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import contextlib
 from copy import deepcopy
+import io
 import json
 import re
 import tempfile
@@ -49,6 +51,188 @@ def assert_validation_error(action: Callable[[], object], message: str) -> None:
     except validate_device_catalog.ValidationError:
         return
     raise AssertionError(message)
+
+
+def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
+    evidence_path = generated_dir / "evidence-index.json"
+    index_path = generated_dir / "index.json"
+    metadata_path = generated_dir / "android" / "metadata.json"
+    freshness_keys = {"checks_through", "stale_after"}
+    base_evidence = load_json(evidence_path)
+    base_evidence["source_snapshots"] = [
+        {
+            "schema_version": 2,
+            "source_name": "lineageos",
+            "upstream_url": "https://example.com/lineageos",
+            "revision": "0" * 40,
+            "revision_date": "2026-07-01",
+            "checked_at": "2026-07-13",
+            "license_expression": "Apache-2.0",
+            "redistribution": "permitted",
+        }
+    ]
+    base_evidence["profiles"][0]["reviewed_range"] = {
+        "oldest": "2026-07-20",
+        "newest": "2026-07-21",
+    }
+    base_index = load_json(index_path)
+    real_public_today = validate_public_carrier_data.utc_today
+    real_device_today = validate_device_catalog.utc_today
+
+    def set_today(value: str) -> None:
+        validate_public_carrier_data.utc_today = lambda: date.fromisoformat(value)
+        validate_device_catalog.utc_today = lambda: date.fromisoformat(value)
+
+    def write_evidence(**overrides: object) -> None:
+        evidence = deepcopy(base_evidence)
+        evidence.update(overrides)
+        write_profile(evidence_path, evidence)
+
+    def regenerate() -> dict:
+        result = generate_android_outputs.main(
+            ["generate_android_outputs.py", str(carriers_dir), str(generated_dir)]
+        )
+        assert_true(result == 0, "generator returned a non-zero status")
+        return load_json(metadata_path)
+
+    def validate(*extra: str) -> str:
+        stderr = io.StringIO()
+        with contextlib.redirect_stderr(stderr):
+            result = validate_public_carrier_data.main(
+                ["validate_public_carrier_data.py", str(carriers_dir), str(index_path), *extra]
+            )
+        assert_true(result == 0, "public validator returned a non-zero status")
+        return stderr.getvalue()
+
+    def assert_rejected(message: str, *extra: str, reason: str) -> None:
+        try:
+            validate(*extra)
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(reason in str(exc), f"{message}: unexpected error {exc}")
+            return
+        raise AssertionError(message)
+
+    try:
+        assert_true(
+            not freshness_keys & set(load_json(metadata_path)),
+            "metadata carried a freshness window without evidence dates",
+        )
+        write_evidence()
+        metadata = regenerate()
+        assert_true(
+            metadata["checks_through"] == "2026-07-13"
+            and metadata["stale_after"] == "2027-01-09",
+            "generator did not compute the freshness window from the evidence index",
+        )
+        set_today("2026-09-23")
+        assert_true(validate() == "", "fresh snapshot produced a warning")
+        assert_true(validate("--freshness", "fail") == "", "fresh snapshot failed in fail mode")
+        set_today("2027-01-09")
+        assert_true(validate("--freshness", "fail") == "", "snapshot failed on stale_after itself")
+        set_today("2027-01-10")
+        assert_true(
+            validate()
+            == "warning: snapshot is past stale_after 2027-01-09 (checks_through 2026-07-13)\n",
+            "warn mode did not print the stale warning",
+        )
+        assert_rejected(
+            "fail mode accepted a stale snapshot", "--freshness", "fail", reason="past stale_after"
+        )
+
+        write_evidence(checks_through="2026-07-10", stale_after="2027-01-06")
+        metadata = regenerate()
+        assert_true(
+            metadata["checks_through"] == "2026-07-10"
+            and metadata["stale_after"] == "2027-01-06",
+            "generator did not copy the published freshness window",
+        )
+        set_today("2026-09-23")
+        assert_true(validate() == "", "published window produced a warning")
+        set_today("2027-01-07")
+        assert_true(
+            validate()
+            == "warning: snapshot is past stale_after 2027-01-06 (checks_through 2026-07-10)\n",
+            "published window did not drive the warning",
+        )
+        assert_rejected(
+            "fail mode ignored the published window",
+            "--freshness",
+            "fail",
+            reason="past stale_after 2027-01-06",
+        )
+
+        set_today("2026-09-23")
+        write_evidence(checks_through="2026-07-10", stale_after="2027-07-20")
+        assert_rejected("stale_after more than 366 days out was accepted", reason="1 to 366 days")
+        write_evidence(checks_through="2026-07-10", stale_after="2026-07-10")
+        assert_rejected("stale_after equal to checks_through was accepted", reason="1 to 366 days")
+        write_evidence(checks_through="2026-07-10")
+        assert_rejected("checks_through without stale_after was accepted", reason="published together")
+        write_evidence(checks_through="2026-09-24", stale_after="2027-03-23")
+        assert_rejected("future-dated checks_through was accepted", reason="future-dated")
+        write_evidence(checks_through="2026-07-14", stale_after="2027-01-10")
+        assert_rejected(
+            "snapshot checked before checks_through was accepted",
+            reason="checked_at is before checks_through",
+        )
+        write_evidence(checks_through="2026-07-13", stale_after="2027-01-09")
+        stale_evidence = deepcopy(base_evidence)
+        stale_evidence["profiles"][0]["reviewed_range"]["oldest"] = "2026-07-12"
+        stale_evidence.update(checks_through="2026-07-13", stale_after="2027-01-09")
+        write_profile(evidence_path, stale_evidence)
+        assert_rejected(
+            "reviewed_range before checks_through was accepted",
+            reason="reviewed_range is before checks_through",
+        )
+
+        write_evidence(checks_through="2026-07-10", stale_after="2027-01-06")
+        write_profile(
+            index_path,
+            {**base_index, "checks_through": "2026-07-11", "stale_after": "2027-01-07"},
+        )
+        assert_rejected(
+            "index and evidence freshness windows disagreed but passed",
+            reason="does not match the stable index",
+        )
+        write_profile(
+            index_path,
+            {**base_index, "checks_through": "2026-07-10", "stale_after": "2027-01-06"},
+        )
+        assert_true(validate() == "", "matching index freshness window was rejected")
+        write_profile(index_path, {**base_index, "stale_after": "2027-01-06"})
+        assert_rejected(
+            "index stale_after without checks_through was accepted", reason="published together"
+        )
+        write_profile(index_path, base_index)
+
+        write_profile(metadata_path, {**metadata, "stale_after": "2027-01-05"})
+        assert_rejected(
+            "metadata freshness window disagreed with the evidence index",
+            reason="does not match the evidence index",
+        )
+        write_profile(metadata_path, {**metadata, "stale_after": "2027-01-06"})
+        assert_true(validate() == "", "matching metadata freshness window was rejected")
+
+        set_today("2027-01-19")
+        stderr = io.StringIO()
+        with contextlib.redirect_stderr(stderr):
+            validate_device_catalog.check_freshness("2026-07-23", "fail")
+        assert_true(stderr.getvalue() == "", "device catalog warned on stale_after itself")
+        set_today("2027-01-20")
+        with contextlib.redirect_stderr(stderr):
+            validate_device_catalog.check_freshness("2026-07-23", "warn")
+        assert_true(
+            stderr.getvalue()
+            == "warning: snapshot is past stale_after 2027-01-19 (checks_through 2026-07-23)\n",
+            "device catalog warn mode did not print the stale warning",
+        )
+        assert_validation_error(
+            lambda: validate_device_catalog.check_freshness("2026-07-23", "fail"),
+            "device catalog fail mode accepted a stale snapshot",
+        )
+    finally:
+        validate_public_carrier_data.utc_today = real_public_today
+        validate_device_catalog.utc_today = real_device_today
 
 
 def main() -> int:
@@ -1405,25 +1589,6 @@ def main() -> int:
                 ],
             },
         )
-        write_profile(
-            generated_dir / "community" / "index.json",
-            {
-                "schema_version": 1,
-                "description": "All valid non-expired community carrier-data claims.",
-                "claims": [],
-            },
-        )
-        write_profile(
-            generated_dir / "candidate" / "index.json",
-            {
-                "schema_version": 1,
-                "description": (
-                    "Community claims with enough evidence to test as candidate "
-                    "data. These are not stable defaults."
-                ),
-                "claims": [],
-            },
-        )
         profile_ids = sorted(
             load_json(path)["profile_id"] for path in carriers_dir.rglob("*.json")
         )
@@ -1469,6 +1634,7 @@ def main() -> int:
             ["validate_public_carrier_data.py", str(carriers_dir), str(generated_dir / "index.json")]
         )
         assert_true(validation == 0, "public validator returned a non-zero status")
+        check_freshness_rules(carriers_dir, generated_dir)
 
         apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
         assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")

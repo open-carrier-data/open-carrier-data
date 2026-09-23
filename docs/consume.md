@@ -101,28 +101,29 @@ Output on 2026-09-23:
 {'apn_database_version': 8, 'carrier_config_gid_matching': 'exact_only'}
 ```
 
-To read the oldest source check date, run:
+To read the freshness window, run:
 
 ```bash
-python3 -c 'print(min(s["checked_at"] for s in __import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'
+python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
 ```
 
 Output on 2026-09-23:
 
 ```text
-2026-07-13
+2026-07-13 2027-01-09
 ```
 
-The 180-day rule applies to that date. `tools/validate_public_carrier_data.py` lines 754 to 757 fail the whole run when any snapshot is older than 180 days by `checked_at`. `tools/validate_device_catalog.py` line 195 does the same for the catalog. With the oldest check at 2026-07-13, both validators fail from 2027-01-10 and the daily public CI turns red until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23. Use `checked_at`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it within the last 180 days.
+`checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
+
+The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail`, which the public CI passes, they exit 1 instead. With the oldest check at 2026-07-13, the public CI turns red from 2027-01-10 until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23.
 
 ## Validate a snapshot
 
-Run the three validators before you package anything. All three must exit 0.
+Run both validators before you package anything. Both must exit 0. Pass `--freshness fail` so a snapshot past `stale_after` fails instead of warning.
 
 ```bash
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/validate_device_catalog.py generated/devices
-python3 tools/validate_community_claims.py community/claims generated/community --stable-dir carriers --evidence-index generated/evidence-index.json
+python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
+python3 tools/validate_device_catalog.py generated/devices --freshness fail
 ```
 
 Output on 2026-09-23:
@@ -130,7 +131,6 @@ Output on 2026-09-23:
 ```text
 validated 6748 public carrier profile(s)
 validated 42259 Android devices, 180 Apple products, and 9930 carrier artifacts
-validated 0 community claim(s), 0 candidate, 0 expired and excluded
 ```
 
-The first validator also checks every source snapshot date. The third one confirms that no community claim conflicts with a stable profile without saying so.
+The first validator also checks every source snapshot date.

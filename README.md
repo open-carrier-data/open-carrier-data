@@ -58,10 +58,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, conflicts |
 | `generated/android/` | APN XML, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
 | `generated/devices/` | the device catalog and carrier artifact registries |
-| `generated/community/` | index of valid community claims |
-| `generated/candidate/` | index of claims fit for opt-in testing |
-| `community/claims/` | community claim files |
-| `schemas/` | six JSON schemas |
+| `schemas/` | five JSON schemas |
 | `tools/` | validators, the Android generator, the resolver, tests |
 | `docs/` | data model, build explanation, consumer guide |
 
@@ -72,11 +69,12 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | Carrier profiles | 6,748 |
 | Source names in profile evidence | 11 |
 | Source snapshot records | 10 |
+| Checks through | 2026-07-13 |
+| Stale after | 2027-01-09 |
 | Android devices in the device catalog | 42,259 |
 | Apple products in the device catalog | 180 |
 | Android identities with observed carrier data | 257 |
 | Observations verified on a device | 0 |
-| Community claims | 0 |
 
 Eleven source names appear in profiles but only ten snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and `samsung_omc` and `samsung_ims` have no snapshot record. Their check dates are in `generated/devices/index.json`.
 
@@ -86,11 +84,12 @@ Counts come from these commands, run from the repo root:
 ls carriers/open | wc -l
 python3 -c 'print(len({s for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"] for s in p["sources"]}))'
 python3 -c 'print(len(__import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'
+python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["checks_through"])'
+python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["stale_after"])'
 python3 -c 'print(len(__import__("json").load(open("generated/devices/android.json"))["devices"]))'
 python3 -c 'print(len(__import__("json").load(open("generated/devices/apple.json"))["devices"]))'
 python3 -c 'print(__import__("json").load(open("generated/devices/index.json"))["platforms"]["android"]["carrier_data_coverage_counts"]["exact_carrier_data_observed"])'
 python3 -c 'print(sum(p["verified_observation_count"] for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"]))'
-ls community/claims | wc -l
 ```
 
 ## Limits to read before you ship
@@ -100,7 +99,7 @@ Read these before you depend on the data:
 - No profile has been verified on a phone. Every value comes from a maintained source, not from a test call.
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - When sources disagree on a CarrierConfig key, add-on, or APN row, the value is omitted. The conflict is listed in `generated/evidence-index.json`.
-- A source check older than 180 days by `checked_at` fails validation. The oldest check in the public evidence index and in the private manifests is 2026-07-13. From 2027-01-10 the validators fail and the daily public CI turns red until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23. The data does not change by itself. It stops validating.
+- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. On 2026-09-23 they are 2026-07-13 and 2027-01-09. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. CI passes `--freshness fail`, so the daily public run turns red from 2027-01-10 until sources are re-checked. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23. The data does not change by itself. It stops passing CI.
 - A device listed in `generated/devices/` is an inventory fact. It is not a support claim.
 
 ## How it is built
@@ -115,7 +114,7 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 ## How to contribute
 
-[CONTRIBUTING.md](CONTRIBUTING.md) lists the five ways to help. The issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) guide reports, source suggestions, and tested claims without Git.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. There is no automated path for community carrier data yet. A correction reaches stable data only through a maintained source or a maintainer-curated change.
 
 ## License
 

@@ -155,7 +155,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 ## Provenance fields in the evidence index
 
-`generated/evidence-index.json` has `schema_version`, `description`, `model_source_provenance`, `source_snapshots`, and `profiles`. It never contains raw source material.
+`generated/evidence-index.json` has `schema_version`, `description`, `model_source_provenance`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes. It never contains raw source material.
 
 Each `source_snapshots` record describes one source family check.
 
