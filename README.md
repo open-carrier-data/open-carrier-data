@@ -100,7 +100,7 @@ Read these before you depend on the data:
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - When sources disagree on a CarrierConfig key, add-on, or APN row, the value is omitted. The conflict is listed in `generated/evidence-index.json`.
 - Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. On 2026-09-23 they are 2026-07-13 and 2027-01-09. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens on 2027-01-10 unless sources are re-checked before then. No new checks arrive by themselves. The private runner is offline and its 13 scheduled workflows were disabled on 2026-09-23. The data does not change by itself. It stops passing the strict check.
-- A device listed in `generated/devices/` is an inventory fact. It is not a support claim.
+- A device listed in `generated/devices/` is an inventory fact. It is not a support claim. A device is covered only when carrier evidence names that exact identity. `generated/devices/README.md` defines the rule and the one command that prints the number.
 
 ## How it is built
 
