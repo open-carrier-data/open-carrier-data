@@ -2,13 +2,30 @@
   "android_apns": [
     {
       "apn": "ims",
-      "name": "Tele Talk IMS",
+      "name": "TeleTalk IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "TeleTalk",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://10.5.4.22:38090/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.5.4.40",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "wap",

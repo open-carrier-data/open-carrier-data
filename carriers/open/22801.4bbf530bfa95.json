@@ -32,6 +32,13 @@
   "android_apns": [
     {
       "apn": "event.swisscom.ch",
+      "name": "event.swisscom.ch",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "event.swisscom.ch",
       "carrier_id": 2366,
       "mmsc": "http://mms.natel.ch:8079",
       "mmsport": 8080,
@@ -66,6 +73,7 @@
       "apn": "gprs.swisscom.ch",
       "name": "Swisscom",
       "password": "password",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
       ],
@@ -105,7 +113,7 @@
     },
     {
       "apn": "sos",
-      "name": "EIMS",
+      "name": "sos",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -123,10 +131,13 @@
     "editable_enhanced_4g_lte_bool": false,
     "enableMMSDeliveryReports": false,
     "enableSMSDeliveryReports": false,
+    "enabledMMS": false,
     "enhanced_4g_lte_on_by_default_bool": true,
+    "ims_conference_size_limit_int": 6,
     "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc001.mcc228.3gppnetwork.org",
+    "imsvoice.conference_subscribe_type_int": 0,
+    "is_ims_conference_size_enforced_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc001.mcc228.pub.3gppnetwork.org",
-    "maxMessageSize": 307200,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "show_wifi_calling_icon_in_status_bar_bool": true,

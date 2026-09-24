@@ -21,7 +21,7 @@ python3 -c 'print(len(__import__("json").load(open("generated/android/mccmnc-ind
 python3 -c 'print(len(__import__("json").load(open("generated/android/carrier-id-index.json"))["android_carrier_ids"]))'
 ```
 
-`metadata.json` also carries `checks_through`, the oldest source check behind the profiles, and `stale_after`, 180 days later. On 2026-09-23 they are 2026-07-13 and 2027-01-09. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
+`metadata.json` also carries `checks_through`, the oldest source check behind the profiles, and `stale_after`, 180 days later. On 2026-09-24 they are still 2026-07-13 and 2027-01-09, held by the Samsung observations. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
 
 Two limits apply. Profiles whose match uses GID or ICCID prefixes are left out of `carrier-config-list.xml`, because `config_filter_records` in `tools/generate_android_outputs.py` lines 409 to 414 skips them. On 2026-09-23 that is 985 GID-only, 300 ICCID-only, and 9 profiles with both. APN XML cannot express every match rule, so those profiles are left out of `apns-conf.xml`. Both lists are in `metadata.json`. The full facts stay in `lookup.json`.
 

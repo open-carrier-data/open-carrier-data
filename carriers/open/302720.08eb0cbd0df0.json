@@ -1,6 +1,27 @@
 {
   "android_apns": [
     {
+      "apn": "data.apn",
+      "name": "Rogers Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1403,
@@ -116,6 +137,24 @@
         "default",
         "mms"
       ]
+    },
+    {
+      "apn": "mobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
     },
     {
       "apn": "netsvcs",
@@ -985,7 +1024,6 @@
     "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
-    "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc720.mcc302.3gppnetwork.org",
     "imsvoice.conference_subscribe_type_int": 0,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc720.mcc302.pub.3gppnetwork.org",
     "maxImageHeight": 1944,

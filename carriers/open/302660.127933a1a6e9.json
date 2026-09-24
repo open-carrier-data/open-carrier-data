@@ -2,8 +2,7 @@
   "android_apns": [
     {
       "apn": "internet.mts",
-      "carrier_id": 578,
-      "name": "MTS Tethering",
+      "name": "MTS -Tethering",
       "types": [
         "dun"
       ],
@@ -11,7 +10,8 @@
     },
     {
       "apn": "internet.mts",
-      "name": "internet.mts",
+      "carrier_id": 578,
+      "name": "MTS Tethering",
       "types": [
         "dun"
       ],
@@ -35,22 +35,24 @@
     {
       "apn": "sp.mts",
       "mmsc": "http://mmsc2.mts.net/",
-      "name": "MTS",
-      "protocol": "IPV4V6",
-      "types": [
-        "ia"
-      ]
-    },
-    {
-      "apn": "sp.mts",
-      "mmsc": "http://mmsc2.mts.net/",
       "mmsport": 9401,
       "mmsproxy": "wapgw1.mts.net",
       "name": "MTS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
+        "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "name": "MTS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -92,9 +94,9 @@
     }
   ],
   "android_carrier_config": {
-    "enabledMMS": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
+    "maxMessageSize": 1048576,
     "maxSubjectLength": 80,
     "read_only_apn_types_string_array": [
       "default",
@@ -103,6 +105,7 @@
       "supl",
       "ims"
     ],
+    "recipientLimit": 20,
     "smsToMmsTextThreshold": 6
   },
   "capabilities": {

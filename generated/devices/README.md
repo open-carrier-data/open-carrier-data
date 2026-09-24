@@ -5,10 +5,10 @@ The device catalog records which device identities maintained inventories list, 
 | File | Meaning |
 | --- | --- |
 | `index.json` | counts per platform, coverage status, brand, and relevance, plus the 17 named sources |
-| `android.json` | 42,259 Android device identities with coverage status, relevance, and inventory sources |
-| `apple.json` | 180 Apple product types from Apple's carrier index |
-| `android-carrier-artifacts.json` | 3,211 Android carrier source artifacts and 4,426 discovery scope records |
-| `apple-carrier-artifacts.json` | 1,331 Apple carrier bundle artifacts, all digest verified |
+| `android.json` | 43,007 Android device identities with coverage status, relevance, and inventory sources |
+| `apple.json` | 183 Apple product types from Apple's carrier index |
+| `android-carrier-artifacts.json` | 3,217 Android carrier source artifacts and 4,458 discovery scope records |
+| `apple-carrier-artifacts.json` | 1,313 Apple carrier bundle artifacts, all digest verified |
 
 Counts come from these commands:
 
@@ -29,20 +29,20 @@ Print the two numbers with:
 python3 -c 'import json; c=json.load(open("generated/devices/index.json"))["platforms"]; print(c["android"]["carrier_data_coverage_counts"].get("exact_carrier_data_observed", 0), "of", c["android"]["device_count"], "Android identities;", c["apple"]["carrier_data_coverage_counts"].get("exact_source_verified", 0), "of", c["apple"]["device_count"], "Apple product types")'
 ```
 
-On 2026-09-24 it prints `262 of 42259 Android identities; 5 of 180 Apple product types`.
+On 2026-09-24 it prints `266 of 43007 Android identities; 5 of 183 Apple product types`.
 
 Every device carries `carrier_data_coverage.status`. The other statuses say how far a maintained source got, or why it stopped. They are steps, not fractions of coverage.
 
 | Status | Android | Apple | Meaning |
 | --- | --- | --- | --- |
-| `exact_carrier_data_observed` | 262 | 0 | covered, a published observation is scoped to the device |
+| `exact_carrier_data_observed` | 266 | 0 | covered, a published observation is scoped to the device |
 | `exact_source_verified` | 0 | 5 | covered, a digest-verified Apple bundle names the exact product type |
-| `exact_source_extracted` | 426 | 0 | a vendor index lists an artifact for the exact device and automation obtained it, but no published observation is scoped to the device |
+| `exact_source_extracted` | 435 | 0 | a vendor index lists an artifact for the exact device and automation obtained it, but no published observation is scoped to the device |
 | `exact_source_indexed` | 1,042 | 0 | a vendor index lists an artifact for the exact device that automation has not obtained |
-| `family_source_verified` | 0 | 163 | a digest-verified Apple bundle matched the product family, not the exact product type |
-| `source_checked_no_artifact` | 1,254 | 0 | a maintained source was queried for the device and listed nothing |
+| `family_source_verified` | 0 | 166 | a digest-verified Apple bundle matched the product family, not the exact product type |
+| `source_checked_no_artifact` | 1,264 | 0 | a maintained source was queried for the device and listed nothing |
 | `source_not_queryable` | 70 | 0 | the device lacks the identifier a maintained source needs for a query |
-| `inventory_only` | 39,205 | 12 | an inventory lists the device and no maintained source was queried |
+| `inventory_only` | 39,930 | 12 | an inventory lists the device and no maintained source was queried |
 
 The schema allows seven more statuses that no device carries on 2026-09-24. `family_source_indexed`, `source_discovery_in_progress`, `source_authentication_required`, `source_terms_restrict_extraction`, `source_transport_untrusted`, `platform_out_of_scope`, and `carrier_data_not_applicable` belonged to source lanes that were removed on 2026-09-23 or describe situations the maintained sources do not produce.
 
