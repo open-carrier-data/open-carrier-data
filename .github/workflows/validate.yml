@@ -32,6 +32,8 @@ jobs:
         run: python3 tools/test_carrier_relevance_contract.py
       - name: Test profile resolution
         run: python3 tools/test_resolve_carrier_profiles.py
+      - name: Test the apns-conf diff
+        run: python3 tools/test_diff_apns_conf.py
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8

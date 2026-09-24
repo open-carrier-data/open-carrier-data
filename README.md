@@ -59,7 +59,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `generated/android/` | APN XML, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
 | `generated/devices/` | the device catalog and carrier artifact registries |
 | `schemas/` | five JSON schemas |
-| `tools/` | validators, the Android generator, the resolver, tests |
+| `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
 | `docs/` | data model, build explanation, consumer guide |
 
 ## Status on 2026-09-24
