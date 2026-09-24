@@ -18,7 +18,7 @@ carrier profiles         neutral JSON in carriers/open/, one file per match set
 generated files          generated/index.json, evidence-index.json, android/, devices/
 ```
 
-The first three stages live in the private repo. Since 2026-09-24 a weekly GitHub-hosted job runs them for every source family except Samsung, whose lane needs firmware downloads and pinned image tools that only a self-hosted runner has. Since the same day that runner is back on the owner's machine as a user service, and the Samsung lane runs every Monday at 06:00 UTC in one bounded unit: 2,048 firmware update server probes and up to 20 selective CSC extractions, then a date refresh of every observation whose firmware build was confirmed current. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
+The first three stages live in the private repo. Since 2026-09-24 a weekly GitHub-hosted job runs them for every source family except Samsung, whose lane needs firmware downloads and pinned image tools that only a self-hosted runner has. Since the same day that runner is back on the owner's machine as a user service, and the Samsung lane runs daily at 02:00 UTC in one bounded unit: up to 2,048 firmware update server probes and 50 selective CSC extractions, then a date refresh of every observation whose firmware build was confirmed current. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
 
 ## Sources become candidate observations
 
