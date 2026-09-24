@@ -33,9 +33,17 @@
   "android_apns": [
     {
       "apn": "ice.net",
+      "name": "ice.net",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ice.net",
       "name": "Ice Norway",
       "protocol": "IP",
       "types": [
+        "default",
         "dun"
       ]
     },
@@ -44,6 +52,7 @@
       "name": "ice.net",
       "protocol": "IPV4V6",
       "types": [
+        "default",
         "ia"
       ]
     },
@@ -55,6 +64,7 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
         "supl"
       ]
     },
@@ -68,6 +78,80 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1300,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Ice Norway",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.ice.net",
+      "mmsc": "http://mms/",
+      "mmsport": 80,
+      "mmsproxy": "10.10.10.10",
+      "name": "Ice Norway",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.ice.net",
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.10.10.10",
+      "name": "ice.net MMS",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms.ice.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.10.10.10",
+      "name": "ice.net MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.ice.net",
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "185.83.167.222",
+      "name": "mms.ice.net",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -97,7 +181,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24214",
+  "display_name": "ice",
   "match": {
     "mccmnc": [
       "24214"

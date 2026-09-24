@@ -31,6 +31,13 @@
   "android_apns": [
     {
       "apn": "3services",
+      "name": "3",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "3services",
       "authtype": 0,
       "carrier_id": 1348,
       "mmsc": "http://mmsc.three.net.au:10021/mmsc",
@@ -49,7 +56,20 @@
       "mmsproxy": "mmscprox.three.net.au",
       "name": "3",
       "types": [
-        "dun"
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "3services",
+      "mmsc": "http://mmsc.three.net.au:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "10.176.57.25",
+      "name": "3 AU",
+      "types": [
+        "default",
+        "mms"
       ]
     },
     {
@@ -132,7 +152,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 50506",
+  "display_name": "Vodafone AU",
   "match": {
     "mccmnc": [
       "50506"

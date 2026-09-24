@@ -35,6 +35,37 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Virgin Mobile IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Virgin Mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 2,
+      "name": "Virgin Mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "pda.bell.ca",
       "authtype": 2,
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
@@ -58,7 +89,12 @@
       "name": "Virgin Mobile",
       "protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "dun",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
       ],
       "user_editable": false
     },
@@ -69,6 +105,11 @@
       "name": "Virgin Mobile",
       "protocol": "IPV6",
       "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl",
         "xcap"
       ],
       "user_editable": false
@@ -84,6 +125,35 @@
         "dun",
         "mms"
       ]
+    },
+    {
+      "apn": "sos",
+      "name": "Virgin Mobile SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Virgin Mobile SOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Virgin Mobile SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
@@ -118,7 +188,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Virgin",
+  "display_name": "Virgin Ca",
   "match": {
     "gid1_prefixes": [
       "3E"

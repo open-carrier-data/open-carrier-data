@@ -31,12 +31,29 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
-      ]
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "Lebara IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
     "smsToMmsTextThreshold": 10
   },
   "capabilities": {

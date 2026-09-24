@@ -2,6 +2,18 @@
   "android_apns": [
     {
       "apn": "du",
+      "mmsc": "http://mms.du.ae:8002",
+      "name": "du",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "du",
       "carrier_id": 1970,
       "name": "du",
       "port": 8080,
@@ -17,14 +29,66 @@
       "mmsc": "http://mms.du.ae:8002",
       "name": "du",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "du",
+      "mmsc": "http://mms.du.ae",
+      "mmsport": 9201,
+      "mmsproxy": "10.19.18.4",
+      "name": "du",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "du",
+      "name": "du",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "du",
+      "name": "du",
+      "port": 8080,
+      "proxy": "10.19.18.4",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "du",
+      "authtype": 1,
+      "mmsc": "http://mms.du.ae:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.19.18.4",
+      "name": "Du MMS",
+      "types": [
+        "mms"
       ]
     },
     {
       "apn": "du",
       "carrier_id": 1970,
+      "mmsc": "http://mms.du.ae:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.19.18.4",
+      "name": "du MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "du",
       "mmsc": "http://mms.du.ae:8002",
       "mmsport": 8080,
       "mmsproxy": "10.19.18.4",
@@ -85,7 +149,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 42403",
+  "display_name": "du",
   "match": {
     "mccmnc": [
       "42403"

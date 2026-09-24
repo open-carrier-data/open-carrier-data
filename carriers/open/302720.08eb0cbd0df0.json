@@ -24,6 +24,47 @@
     {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Rogers",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 1403,
       "name": "Rogers IMS",
       "protocol": "IPV6",
@@ -74,6 +115,26 @@
       "user_editable": false
     },
     {
+      "apn": "ltedata.apn",
+      "name": "Rogers Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "Rogers Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "ltemobile.apn",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
       "mmsc": "http://mms.gprs.rogers.com",
@@ -100,6 +161,42 @@
       "mmsproxy": "mmsproxy.rogers.com",
       "name": "Rogers Internet",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers Internet",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
@@ -214,13 +311,68 @@
       "apn": "rogers-core-appl1.apn",
       "name": "Rogers",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Petro-Canada Mobility",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "rogers-core-appl1.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "10.128.1.69",
+      "name": "Rogers",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Rogers",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
       ]
     },
     {
       "apn": "sos",
       "carrier_id": 1403,
       "name": "Rogers SOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -493,7 +645,27 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "carrier_id": 2055,
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "mvno_match_data": "D2",
+      "mvno_type": "gid",
+      "name": "Chatr Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -832,6 +1004,30 @@
     },
     {
       "apn": "chatrisp.apn",
+      "carrier_id": 2055,
+      "mvno_match_data": "302720x94",
+      "mvno_type": "imsi",
+      "name": "Chatr Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
+      "carrier_id": 2055,
+      "mvno_match_data": "302720x94",
+      "mvno_type": "imsi",
+      "name": "Chatr Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "chatrisp.apn",
       "mvno_match_data": "302720x94",
       "mvno_type": "imsi",
       "name": "Chatr Tethering",
@@ -839,6 +1035,41 @@
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "carrier_id": 2055,
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "mvno_match_data": "302720x94",
+      "mvno_type": "imsi",
+      "name": "Chatr Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "carrier_id": 2055,
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "mvno_match_data": "302720x94",
+      "mvno_type": "imsi",
+      "name": "Chatr Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -857,21 +1088,6 @@
         "default",
         "mms",
         "supl"
-      ]
-    },
-    {
-      "apn": "chatrweb.apn",
-      "carrier_id": 2055,
-      "mmsc": "http://mms.chatrwireless.com",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.chatrwireless.com",
-      "mvno_match_data": "302720x94",
-      "mvno_type": "imsi",
-      "name": "Chatr Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ia"
       ]
     },
     {
@@ -1046,7 +1262,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 302720",
+  "display_name": "Rogers",
   "match": {
     "mccmnc": [
       "302720"

@@ -47,10 +47,51 @@
     },
     {
       "apn": "zeopdata",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "zeopdata",
+      "name": "zeopdata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "zeopdata",
       "name": "Zeop",
       "protocol": "IP",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "zeopmms",
+      "mmsc": "http://10.10.198.22:80/mmsc/MMS",
+      "mmsport": 80,
+      "mmsproxy": "10.10.198.22",
+      "name": "Zeop",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "zeopmms",
+      "mmsc": "http://10.10.198.22/mmsc/MMS",
+      "mmsport": 80,
+      "mmsproxy": "10.10.198.22",
+      "name": "zeopmms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -82,7 +123,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 64704",
+  "display_name": "Zeop",
   "match": {
     "mccmnc": [
       "64704"

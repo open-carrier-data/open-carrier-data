@@ -73,8 +73,23 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_metered_roaming_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
     "carrier_volte_available_bool": true,
-    "smsToMmsTextThreshold": 10
+    "carrier_wfc_ims_available_bool": true,
+    "editable_wfc_mode_bool": false,
+    "read_only_apn_types_string_array": [
+      "ims",
+      "mms"
+    ]
   },
   "capabilities": {
     "esim": "unknown",
@@ -85,7 +100,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "RO Orange",

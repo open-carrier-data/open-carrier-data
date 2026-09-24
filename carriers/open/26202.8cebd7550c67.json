@@ -98,6 +98,14 @@
     },
     {
       "apn": "ims",
+      "name": "Vodafone.de",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -108,12 +116,63 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "web.vodafone.de",
+      "name": "Vodafone.de",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "web.vodafone.de",
       "carrier_id": 2397,
       "name": "Vodafone DE",
       "types": [
         "default",
         "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "authtype": 3,
+      "mtu": 1340,
+      "name": "VF DE Web",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "web.vodafone.de",
+      "authtype": 3,
+      "name": "Vodafone DE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "name": "web.vodafone.de",
+      "types": [
+        "default",
         "supl"
       ]
     },
@@ -134,14 +193,6 @@
     },
     {
       "apn": "web.vodafone.de",
-      "name": "Vodafone.de",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "web.vodafone.de",
       "authtype": 3,
       "carrier_enabled": true,
       "mtu": 1500,
@@ -149,6 +200,8 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
+        "supl",
         "xcap"
       ]
     }
@@ -197,7 +250,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 26202",
+  "display_name": "LineageOS 26202",
   "match": {
     "mccmnc": [
       "26202"

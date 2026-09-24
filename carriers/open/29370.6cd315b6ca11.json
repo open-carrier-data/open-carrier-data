@@ -52,20 +52,42 @@
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
-      "mmsc": "http://mms.telemach.net",
-      "name": "internet",
+      "name": "Telemach internet",
       "types": [
-        "dun"
+        "default",
+        "hipri",
+        "rcs"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telemach.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "name": "Internet",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telemach.net",
+      "name": "TELEMACH",
+      "types": [
+        "default",
+        "mms"
       ]
     },
     {
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "Telemach internet",
+      "mmsc": "http://mms.telemach.net",
+      "name": "internet",
       "types": [
-        "hipri",
-        "rcs"
+        "dun",
+        "mms"
       ]
     },
     {
@@ -77,6 +99,7 @@
       "mmsproxy": "91.185.221.85",
       "name": "internet",
       "types": [
+        "mms",
         "supl"
       ]
     },
@@ -182,7 +205,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 29370",
+  "display_name": "TELEMACH",
   "match": {
     "mccmnc": [
       "29370"

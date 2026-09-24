@@ -24,6 +24,28 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "EMT Xcap",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "Telia hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_editable": false,
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -58,6 +80,40 @@
     },
     {
       "apn": "internet.emt.ee",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "EMT Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.emt.ee",
+      "name": "Telia",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.emt.ee",
+      "name": "internet.emt.ee",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.emt.ee",
+      "name": "internet.emt.ee",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.emt.ee",
       "carrier_id": 667,
       "name": "EMT Internet",
       "types": [
@@ -68,21 +124,13 @@
     },
     {
       "apn": "internet.emt.ee",
-      "name": "Telia",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet.emt.ee",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "internet.emt.ee",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
         "supl"
       ]
     },
@@ -204,7 +252,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24801",
+  "display_name": "LineageOS 24801",
   "match": {
     "mccmnc": [
       "24801"

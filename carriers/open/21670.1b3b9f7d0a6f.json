@@ -57,6 +57,17 @@
     },
     {
       "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1535,
       "name": "Vodafone HU IMS",
       "protocol": "IPV4V6",
@@ -66,11 +77,28 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "vodafone HU",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "name": "internet",
       "types": [
-        "dun"
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -79,6 +107,8 @@
       "carrier_enabled": true,
       "name": "Internet",
       "types": [
+        "default",
+        "supl",
         "xcap"
       ]
     },
@@ -97,6 +127,35 @@
       "user_editable": false
     },
     {
+      "apn": "internet.vodafone.net",
+      "name": "internet.vodafone.net",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.net",
+      "authtype": 0,
+      "name": "Vodafone Internet",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Vodafone Internet",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
       "apn": "mms",
       "authtype": 1,
       "carrier_enabled": true,
@@ -110,7 +169,40 @@
     },
     {
       "apn": "mms.vodafone.net",
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "Vodafone HU MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
       "carrier_id": 1535,
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "Vodafone MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 0,
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "Vodafone MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.vodafone.hu/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "80.244.97.2",
@@ -180,7 +272,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 21670",
+  "display_name": "vodafone HU",
   "match": {
     "mccmnc": [
       "21670"

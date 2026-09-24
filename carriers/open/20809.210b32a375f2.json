@@ -13,6 +13,38 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "SFR IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "SFR IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "SFR IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "name": "SFR IMS",
       "protocol": "IPV6",
       "types": [
@@ -39,8 +71,11 @@
       "name": "SFR webphone",
       "protocol": "IPV4V6",
       "types": [
+        "default",
         "dun",
         "hipri",
+        "mms",
+        "supl",
         "xcap"
       ]
     },
@@ -52,20 +87,12 @@
       "name": "SFR webphone",
       "protocol": "IPV4V6",
       "types": [
+        "default",
         "dun",
         "hipri",
+        "mms",
+        "supl",
         "xcap"
-      ]
-    },
-    {
-      "apn": "sl2sfr",
-      "mmsc": "http://mms1",
-      "mmsport": 8080,
-      "mmsproxy": "10.151.0.1",
-      "name": "SFR webphone",
-      "protocol": "IP",
-      "types": [
-        "fota"
       ]
     },
     {
@@ -77,8 +104,46 @@
       "name": "SFR webphone",
       "protocol": "IP",
       "types": [
+        "default",
         "fota",
-        "ia"
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "name": "SFR",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -96,15 +161,33 @@
     },
     {
       "apn": "websfr",
-      "name": "SFR ACCESS DATA",
+      "name": "websfr",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
     {
       "apn": "websfr",
       "carrier_id": 27,
+      "name": "SFR option modem",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "websfr",
+      "name": "SFR option modem",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "websfr",
       "name": "SFR option modem",
       "protocol": "IP",
       "types": [
@@ -215,7 +298,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 20809",
+  "display_name": "LineageOS 20809",
   "match": {
     "mccmnc": [
       "20809"

@@ -2,6 +2,51 @@
   "android_apns": [
     {
       "apn": "3gnet",
+      "name": "3gnet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "3gnet",
+      "name": "China Unicom 3G",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "3gnet",
+      "name": "\u4e2d\u56fd\u8054\u901a",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "3gnet",
+      "authtype": 3,
+      "name": "\u4e2d\u56fd\u8054\u901a3g\u56e0\u7279\u7f51\u8bbe\u7f6e",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "3gnet",
+      "name": "\u4e2d\u56fd\u8054\u901a",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "3gnet",
       "carrier_id": 1436,
       "name": "\u6c833G\u8fde\u63a5\u4e92\u8054\u7f51 (China Unicom)",
       "types": [
@@ -12,11 +57,12 @@
     },
     {
       "apn": "3gnet",
-      "name": "\u4e2d\u56fd\u8054\u901a",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "name": "3gnet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "xcap"
       ]
     },
     {
@@ -30,15 +76,6 @@
         "supl"
       ],
       "user": "uninet"
-    },
-    {
-      "apn": "3gnet",
-      "name": "\u6c83\u5bbd\u5e26\u7528\u6237\u8fde\u63a5\u4e92\u8054\u7f51",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
     },
     {
       "apn": "3gwap",
@@ -85,6 +122,22 @@
       "name": "\u8054\u901a\u5f69\u4fe1 (China Unicom)",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "\u4e2d\u56fd\u8054\u901a",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "\u8054\u901aIMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -194,7 +247,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 46001",
+  "display_name": "LineageOS 46001",
   "match": {
     "mccmnc": [
       "46001"

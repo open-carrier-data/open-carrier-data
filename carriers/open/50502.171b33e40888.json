@@ -105,6 +105,26 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Optus IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "name": "Optus IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "types": [
@@ -114,7 +134,56 @@
     },
     {
       "apn": "mms",
+      "authtype": 3,
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Boost MMS",
+      "port": 8070,
+      "proxy": "61.88.190.10",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "carrier_id": 30,
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Optus MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Optus MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Optus MMS",
+      "password": "*",
+      "port": 8070,
+      "proxy": "202.139.83.152",
+      "server": "*",
+      "types": [
+        "mms"
+      ],
+      "user": "*"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mmsc.optus.com.au:8002/",
       "mmsport": 8070,
       "mmsproxy": "61.88.190.10",
@@ -187,6 +256,16 @@
     },
     {
       "apn": "yesinternet",
+      "authtype": 1,
+      "name": "Optus Yes Internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
       "carrier_id": 30,
       "name": "Optus Yes Internet",
       "types": [
@@ -197,10 +276,50 @@
     },
     {
       "apn": "yesinternet",
-      "authtype": 1,
-      "name": "Optus Yes Internet",
+      "authtype": 3,
+      "name": "Boost Mobile",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
+      "name": "Optus Internet",
+      "password": "*",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "*"
+    },
+    {
+      "apn": "yesinternet",
+      "name": "Optus Streaming",
+      "port": 554,
+      "proxy": "172.22.1.3",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
+      "name": "Optus Yes Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
+      "name": "yesinternet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -280,7 +399,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 50502",
+  "display_name": "LineageOS 50502",
   "match": {
     "mccmnc": [
       "50502"

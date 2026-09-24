@@ -13,12 +13,30 @@
     },
     {
       "apn": "ims",
+      "name": "TIM",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1385,
       "name": "TIM IMS",
       "protocol": "IPV6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "ims",
+      "name": "TIM IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "mms.tim.br",
@@ -46,6 +64,49 @@
     },
     {
       "apn": "timbrasil.br",
+      "name": "TIM",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "mmsc": "http://mms.tim.br",
+      "mmsport": 8080,
+      "mmsproxy": "189.40.191.96",
+      "name": "TIM",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "authtype": 1,
+      "mmsc": "http://mms.tim.br",
+      "mmsport": 8080,
+      "mmsproxy": "189.40.191.96",
+      "name": "TIM Connect",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
       "authtype": 1,
       "carrier_id": 1385,
       "mmsc": "http://mms.tim.br",
@@ -65,14 +126,17 @@
     },
     {
       "apn": "timbrasil.br",
+      "authtype": 1,
       "mmsc": "http://mms.tim.br",
       "mmsport": 8080,
       "mmsproxy": "189.40.191.96",
-      "name": "TIM",
+      "name": "TIM Connect",
       "password": "tim",
       "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "mms",
+        "supl"
       ],
       "user": "tim"
     },
@@ -81,13 +145,26 @@
       "authtype": 1,
       "mmsc": "http://mms.tim.br",
       "mmsport": 8080,
-      "mmsproxy": "189.40.191.96",
+      "mmsproxy": "200.179.66.242",
       "name": "TIM Connect",
       "password": "tim",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "authtype": 1,
+      "mmsc": "http://www.google.com.br",
+      "name": "TIM Connect FAST",
+      "password": "tim",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "tim"
     },
@@ -144,7 +221,7 @@
     "vowifi": "unsupported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 72402",
+  "display_name": "Tim Br",
   "match": {
     "mccmnc": [
       "72402"

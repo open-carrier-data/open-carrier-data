@@ -55,6 +55,34 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "ims",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.it",
+      "name": "WINDTRE",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet.it",
       "carrier_id": 1575,
       "name": "INTERNET",
@@ -66,10 +94,35 @@
     },
     {
       "apn": "internet.it",
-      "name": "WINDTRE",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "INTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "supl"
       ]
+    },
+    {
+      "apn": "internet.it",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet.it",
+      "name": "Internet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user_editable": false
     },
     {
       "apn": "mms.it",
@@ -96,9 +149,48 @@
     },
     {
       "apn": "tre.it",
-      "name": "3 ITA",
+      "name": "tre.it",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "tre.it",
+      "mmsc": "http://10.216.59.240:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "wsb.tre.it",
+      "name": "3",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tre.it",
+      "mmsc": "http://10.216.59.240:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "62.13.171.3",
+      "name": "3",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tre.it",
+      "mmsc": "http://10.216.59.240:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "wsb.treumts.it",
+      "name": "tre.it",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -179,7 +271,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 22299",
+  "display_name": "WINDTRE",
   "match": {
     "mccmnc": [
       "22299"

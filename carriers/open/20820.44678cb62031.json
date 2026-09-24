@@ -58,6 +58,25 @@
     },
     {
       "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Bouygues IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Bouygues Telecom",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "carrier_id": 1487,
       "name": "Bouygues Telecom IMS",
@@ -80,6 +99,26 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Bouygues Telecom IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
+      "name": "Bouygues Telecom",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
       "apn": "mmsbouygtel.com",
       "authtype": 1,
       "carrier_id": 1487,
@@ -96,11 +135,65 @@
     },
     {
       "apn": "mmsbouygtel.com",
+      "authtype": 1,
       "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
       "name": "Bouygues Telecom",
-      "roaming_protocol": "IP",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
+      "name": "Bouygues Telecom",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "mmsc": "http://wap.bouygtel.fr/",
+      "name": "Web",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "name": "mmsbouygtel.com",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Bouygues Telecom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "mmsbouygtel.com",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "xcap"
       ]
     },
     {
@@ -117,12 +210,54 @@
     {
       "apn": "mmsbouygtel.com",
       "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
+      "name": "Bouygues MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.bouyguestelecom.fr/mms/wapenc",
+      "name": "Bouygues MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
       "carrier_id": 1487,
       "name": "Bouygues XCAP",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "name": "Bouygues XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mmsbouygtel.com",
+      "authtype": 1,
+      "name": "Bouygues XCAP",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "b2b",
@@ -238,7 +373,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 20820",
+  "display_name": "LineageOS 20820",
   "match": {
     "mccmnc": [
       "20820"

@@ -39,6 +39,28 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -60,6 +82,41 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "KPN IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "KPN NL",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "internet",
       "carrier_id": 1644,
       "name": "KPN Mobiel Internet",
@@ -72,19 +129,45 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet",
       "mmsc": "http://mms",
       "mmsport": 8080,
       "name": "Telfort Internet",
       "types": [
-        "mms"
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "KPN GPRS",
+      "password": "gprs",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "kpn"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "KPN Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -288,7 +371,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 20408",
+  "display_name": "NL KPN",
   "match": {
     "mccmnc": [
       "20408"

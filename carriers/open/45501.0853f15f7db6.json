@@ -18,6 +18,15 @@
     },
     {
       "apn": "ctm-mobile",
+      "name": "CTM",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "ctm-mobile",
       "carrier_id": 1614,
       "name": "CTM Data",
       "types": [
@@ -28,20 +37,33 @@
     },
     {
       "apn": "ctm-mobile",
-      "name": "CTM",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "ctm-mobile",
       "authtype": 0,
       "name": "CTM Data",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctm-mobile",
+      "authtype": 3,
+      "name": "CTM Data",
+      "port": 8080,
+      "proxy": "192.168.99.2",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctm-mobile",
+      "name": "ctm-mobile",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -51,6 +73,40 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.99.3",
       "name": "CTM MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctmmms",
+      "authtype": 0,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctmmms",
+      "authtype": 3,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctmmms",
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "ctmmms",
       "types": [
         "mms"
       ]
@@ -79,8 +135,35 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
         "ia",
+        "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "ctmprepaid",
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM (Prepaid)",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctmprepaid",
+      "authtype": 3,
+      "mmsc": "http://mms.wap.ctm.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.99.3",
+      "name": "CTM Data (Prepaid)",
+      "port": 8080,
+      "proxy": "192.168.99.2",
+      "types": [
+        "default",
+        "mms"
       ]
     },
     {
@@ -129,7 +212,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 45501",
+  "display_name": "LineageOS 45501",
   "match": {
     "mccmnc": [
       "45501"
