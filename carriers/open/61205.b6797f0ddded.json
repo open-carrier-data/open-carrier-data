@@ -1,6 +1,47 @@
 {
   "android_apns": [
     {
+      "apn": "mms.mtn.ci",
+      "mmsc": "http://mms.mtn.ci/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.100.5",
+      "name": "MTN CI",
+      "password": "mms.mtn.ci",
+      "types": [
+        "mms"
+      ],
+      "user": "mms.mtn.ci"
+    },
+    {
+      "apn": "mms.mtn.ci",
+      "mmsc": "http://mms.mtn.ci/mms/wapenc",
+      "mmsport": 9201,
+      "mmsproxy": "172.16.100.5",
+      "name": "MTN CI MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.mtn.ci",
+      "name": "MTN Internet CI",
+      "password": "vide",
+      "types": [
+        "default"
+      ],
+      "user": "vide"
+    },
+    {
+      "apn": "web.mtn.ci",
+      "name": "MTN CI",
+      "password": "web.mtn.ci",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "web.mtn.ci"
+    },
+    {
       "apn": "web.mtn.ci",
       "carrier_id": 1423,
       "name": "MTN Internet CI",
@@ -14,17 +55,9 @@
     {
       "apn": "web.mtn.ci",
       "name": "MTN CI",
-      "password": "web.mtn.ci",
-      "types": [
-        "dun"
-      ],
-      "user": "web.mtn.ci"
-    },
-    {
-      "apn": "web.mtn.ci",
-      "name": "MTN CI",
       "server": "*",
       "types": [
+        "default",
         "supl"
       ]
     }
@@ -45,7 +78,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 61205",
+  "display_name": "61205",
   "match": {
     "mccmnc": [
       "61205"

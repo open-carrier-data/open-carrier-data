@@ -184,6 +184,24 @@
     },
     {
       "apn": "pcweb.tmobile.com",
+      "name": "T-Mobile Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "pcweb.tmobile.com",
+      "name": "T-Mobile Tethering",
+      "protocol": "IPV6",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "pcweb.tmobile.com",
       "carrier_id": 1,
       "name": "T-Mobile US 640 DUN",
       "password": "none",
@@ -193,6 +211,27 @@
         "dun"
       ],
       "user": "none"
+    },
+    {
+      "always_on": true,
+      "apn": "sos",
+      "name": "T-Mobile Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "T-Mobile Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
     },
     {
       "apn": "fast.metropcs.com",
@@ -205,8 +244,21 @@
       "roaming_protocol": "IP",
       "types": [
         "default",
+        "ia",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "carrier_id": 1949,
+      "mvno_match_data": "6D",
+      "mvno_type": "gid",
+      "name": "MetroPCS 640",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ia"
       ]
     }
   ],
@@ -260,7 +312,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 310640",
+  "display_name": "LineageOS 310640",
   "match": {
     "mccmnc": [
       "310640"

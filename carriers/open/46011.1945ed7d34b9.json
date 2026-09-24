@@ -37,9 +37,35 @@
       "server": "*",
       "types": [
         "cbs",
+        "default",
         "fota",
-        "hipri"
+        "hipri",
+        "supl"
       ]
+    },
+    {
+      "apn": "ctlte",
+      "authtype": 0,
+      "name": "ctlte",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctlte",
+      "authtype": 3,
+      "name": "\u4e2d\u56fd\u7535\u4fe1\u4e92\u8054\u7f51\u8bbe\u7f6eCTLTE",
+      "password": "vnet.mobi",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "ctlte@mycdma.cn"
     },
     {
       "apn": "ctlte",
@@ -92,9 +118,37 @@
       "proxy": "10.0.0.200",
       "types": [
         "default",
+        "mms",
         "supl"
       ],
       "user": "ctwap@mycdma.cn"
+    },
+    {
+      "apn": "ctwap",
+      "authtype": 0,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "CTWAP",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctwap",
+      "authtype": 0,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "CTWAP",
+      "port": 80,
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "ctwap",
@@ -160,7 +214,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 46011",
+  "display_name": "LineageOS 46011",
   "match": {
     "mccmnc": [
       "46011"

@@ -33,6 +33,43 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.nova.is",
+      "mmsc": "http://mmsc.nova.is",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.2.60",
+      "name": "Nova MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "net.nova.is",
+      "name": "Nova net",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1280,

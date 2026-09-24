@@ -32,6 +32,44 @@
       ]
     },
     {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "name": "Bite LT XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Bite",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "name": "Bite LT IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -44,9 +82,38 @@
     },
     {
       "apn": "internet",
+      "name": "Bite Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Bite LT Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Bite LT Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "Bite",
       "protocol": "IP",
       "types": [
+        "default",
         "dun"
       ]
     },
@@ -63,9 +130,60 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.150.2",
+      "name": "Bite",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms@mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.150.2",
+      "name": "Bite LT MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms@mms"
+    },
+    {
+      "apn": "mms",
       "authtype": 1,
       "carrier_id": 893,
       "mmsc": "http://mmsc/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.150.2",
+      "name": "Bite MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms@mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.150.2",
+      "name": "Bite MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms@mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc",
       "mmsport": 8080,
       "mmsproxy": "192.168.150.2",
       "name": "Bite MMS",
@@ -121,7 +239,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24602",
+  "display_name": "LT BITE",
   "match": {
     "mccmnc": [
       "24602"

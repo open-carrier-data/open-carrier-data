@@ -58,6 +58,28 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -77,13 +99,60 @@
     },
     {
       "apn": "internet",
+      "name": "Orange",
+      "password": "ppp",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "ppp"
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet",
       "authtype": 3,
       "name": "internet",
       "password": "internet",
       "types": [
+        "default",
         "supl"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "internetipv6",
+      "authtype": 1,
+      "name": "Orange Internet",
+      "password": "internet",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet",
+      "user_editable": false
+    },
+    {
+      "apn": "mms",
+      "authtype": 3,
+      "mmsc": "http://mms.orange.pl",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.6.104",
+      "name": "MMS Orange",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "mms",
@@ -93,6 +162,45 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.6.104",
       "name": "Orange MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.pl",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.6.104",
+      "name": "Orange MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms",
+      "user_editable": false
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.orange.pl",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.6.104",
+      "name": "Orange MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.orange.pl",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.6.104",
+      "name": "mms",
       "password": "mms",
       "types": [
         "mms"
@@ -166,7 +274,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 26003",
+  "display_name": "LineageOS 26003",
   "match": {
     "mccmnc": [
       "26003"

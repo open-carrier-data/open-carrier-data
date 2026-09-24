@@ -14,6 +14,27 @@
       "user": "gprs"
     },
     {
+      "apn": "gprs.tn",
+      "authtype": 1,
+      "name": "Internet Portail",
+      "password": "gprs",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "gprs"
+    },
+    {
+      "apn": "gprs.tn",
+      "name": "Tunisia Telecom Internet",
+      "password": "mobinet",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "mobinet"
+    },
+    {
       "apn": "internet.tn",
       "name": "internet.tn",
       "types": [
@@ -34,8 +55,41 @@
     },
     {
       "apn": "mms.tn",
+      "mmsc": "http://192.168.181.12:19090/was",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.154.199",
+      "name": "TUNTEL",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.tn",
+      "mmsc": "http://192.168.0.3:19090/was",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.0.2",
+      "name": "Tunisia Telecom MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.tn",
       "authtype": 1,
       "carrier_id": 1731,
+      "mmsc": "http://192.168.0.3:19090/was",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.0.2",
+      "name": "Tunisie Telecom MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms@tt1"
+    },
+    {
+      "apn": "mms.tn",
+      "authtype": 1,
       "mmsc": "http://192.168.0.3:19090/was",
       "mmsport": 8080,
       "mmsproxy": "192.168.0.2",
@@ -80,7 +134,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 60502",
+  "display_name": "60502",
   "match": {
     "mccmnc": [
       "60502"

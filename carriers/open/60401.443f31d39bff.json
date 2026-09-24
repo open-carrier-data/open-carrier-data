@@ -15,15 +15,26 @@
       "mmsc": "http://mms:8002",
       "mmsport": 8080,
       "mmsproxy": "10.16.35.50",
-      "name": "IAM MMS",
+      "name": "mmsiam",
       "types": [
         "default",
+        "mms",
         "supl"
       ]
     },
     {
       "apn": "mmsiam",
       "carrier_id": 903,
+      "mmsc": "http://mms:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "10.16.35.50",
+      "name": "MMS IAM",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mmsiam",
       "mmsc": "http://mms:8002/",
       "mmsport": 8080,
       "mmsproxy": "10.16.35.50",
@@ -106,7 +117,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 60401",
+  "display_name": "60401",
   "match": {
     "mccmnc": [
       "60401"

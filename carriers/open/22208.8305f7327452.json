@@ -25,13 +25,23 @@
   "android_apns": [
     {
       "apn": "apn.fastweb.it",
-      "carrier_id": 2416,
+      "authtype": 0,
+      "carrier_enabled": true,
       "name": "FW WEB",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
-        "ia"
+        "default"
+      ]
+    },
+    {
+      "apn": "apn.fastweb.it",
+      "mmsc": "http://mms.fastweb.it/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "85.18.189.217",
+      "name": "Fastweb",
+      "types": [
+        "default"
       ]
     },
     {
@@ -40,7 +50,19 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "apn.fastweb.it",
+      "carrier_id": 2416,
+      "name": "FW WEB",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia"
       ]
     },
     {
@@ -169,7 +191,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 22208",
+  "display_name": "FASTWEB1",
   "match": {
     "mccmnc": [
       "22208"

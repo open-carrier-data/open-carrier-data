@@ -96,6 +96,24 @@
     },
     {
       "apn": "internet",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "carrier_id": 1904,
       "name": "DNA Internet",
       "types": [
@@ -106,10 +124,55 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
       ]
+    },
+    {
+      "apn": "internet",
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "OP WAP GPRS",
+      "port": 9201,
+      "proxy": "157.124.248.60",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Telia WAP GPRS",
+      "password": "wap",
+      "port": 9201,
+      "proxy": "195.10.130.8",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     },
     {
       "apn": "internet.aina.fi",
@@ -134,6 +197,72 @@
       "mmsport": 8080,
       "mmsproxy": "10.1.1.2",
       "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dnafinland.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "dna"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dnafinland.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.10.2",
+      "name": "DNA MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "dna"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.dnafinland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dnafinland.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc:8002",
+      "mmsport": 9201,
+      "mmsproxy": "62.113.190.142",
+      "name": "Telia MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dna.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -178,6 +307,28 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "wap",
+      "name": "DNA WAP",
+      "port": 80,
+      "proxy": "10.1.1.1",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap",
+      "name": "Telia Online GPRS",
+      "password": "wap",
+      "port": 9201,
+      "proxy": "62.113.190.132",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     }
   ],
   "android_carrier_config": {
@@ -204,7 +355,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24403",
+  "display_name": "DNA",
   "match": {
     "mccmnc": [
       "24403"

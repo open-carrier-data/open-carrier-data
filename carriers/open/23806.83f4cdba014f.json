@@ -92,6 +92,27 @@
     },
     {
       "apn": "data.tre.dk",
+      "name": "3 DK",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
+      "mmsc": "http://mms.3.dk",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "data.tre.dk",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
       "carrier_id": 1466,
       "mmsc": "http://mms.3.dk/",
       "mmsport": 8799,
@@ -138,12 +159,25 @@
     },
     {
       "apn": "data.tre.dk",
-      "mmsc": "http://mms.3.dk",
+      "mmsc": "http://mms.3.dk/",
       "mmsport": 8799,
       "mmsproxy": "mmsproxy.3.dk",
-      "name": "3 DK",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
+      "authtype": 3,
+      "name": "3",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -154,7 +188,54 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
+        "supl",
         "xcap"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
+      "authtype": 3,
+      "mmsc": "http://mms",
+      "mmsport": 8799,
+      "mmsproxy": "172.16.1.25",
+      "name": "3MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.3.dk",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "3mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "3 DK",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1300,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -265,7 +346,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 23806",
+  "display_name": "LineageOS 23806",
   "match": {
     "mccmnc": [
       "23806"

@@ -93,6 +93,24 @@
     },
     {
       "apn": "ims",
+      "name": "COSMOTE",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "name": "Cosmote IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -176,11 +194,47 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "Cosmote MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "mtu": 1500,
+      "name": "Cosmote MMS",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "carrier_id": 747,
       "mmsc": "http://mmsc.cosmote.gr:8002",
       "mmsport": 8080,
       "mmsproxy": "10.10.10.20",
       "name": "Cosmote Mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -229,7 +283,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 20201",
+  "display_name": "LineageOS 20201",
   "match": {
     "mccmnc": [
       "20201"

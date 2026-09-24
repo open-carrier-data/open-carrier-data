@@ -35,10 +35,22 @@
   },
   "android_apns": [
     {
+      "apn": "gprs.pepephone.com",
+      "authtype": 0,
+      "name": "DUN",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "gprsmov.pepephone.com",
+      "authtype": 0,
       "name": "Internet",
       "types": [
-        "default"
+        "default",
+        "fota",
+        "supl"
       ]
     },
     {
@@ -50,6 +62,19 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms.pepephone.com",
+      "authtype": 0,
+      "mmsc": "http://mms.pepephone.com/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "name": "MMS",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
     }
   ],
   "android_carrier_config": {

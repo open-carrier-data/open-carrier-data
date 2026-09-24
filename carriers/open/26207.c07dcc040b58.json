@@ -39,6 +39,24 @@
     },
     {
       "apn": "ims",
+      "name": "O2 DE IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "O2 DE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -49,11 +67,93 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "o2 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "o2-de",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "name": "internet",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "o2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "O2 Internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "o2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -63,10 +163,11 @@
       "mmsc": "http://10.81.0.7:8002",
       "mmsport": 8080,
       "mmsproxy": "82.113.100.5",
-      "name": "o2 Internet",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
+        "mms",
         "xcap"
       ]
     },
@@ -534,7 +635,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 26207",
+  "display_name": "LineageOS 26207",
   "match": {
     "mccmnc": [
       "26207"

@@ -56,8 +56,46 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1350,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_id": 29,
       "name": "IMS Vodafone",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Vodafone IT",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Vodafone IT IMS",
       "protocol": "IPV4V6",
       "types": [
         "ims"
@@ -100,6 +138,67 @@
       ]
     },
     {
+      "apn": "mms.vodafone.it",
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "name": "MMS Vodafone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.it",
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "name": "MMS Vodafone",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "mtu": 1350,
+      "name": "MMS Vodafone",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "mtu": 1350,
+      "name": "MMS Vodafone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.it",
+      "mmsc": "http://mms.vodafone.it/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.128.224.10",
+      "name": "mms.vodafone.it",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "mobile.vodafone.it",
       "carrier_id": 29,
       "name": "Acc. Internet da cell",
@@ -111,11 +210,53 @@
     },
     {
       "apn": "mobile.vodafone.it",
+      "name": "Acc. Internet da cell",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.vodafone.it",
+      "name": "Acc. Internet da cell",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.vodafone.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1350,
+      "name": "Accesso a Internet da cellulare",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.vodafone.it",
+      "name": "mobile.vodafone.it",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.vodafone.it",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1350,
       "name": "Acc. Internet da cell",
       "types": [
+        "default",
+        "supl",
         "xcap"
       ]
     },
@@ -139,7 +280,51 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "dun",
         "xcap"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "name": "Tethering Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "name": "Tethering Internet",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "name": "Tethering Internet",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "web.omnitel.it",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1350,
+      "name": "Tethering Internet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "name": "web.omnitel.it",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -339,7 +524,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 22210",
+  "display_name": "LineageOS 22210",
   "match": {
     "mccmnc": [
       "22210"

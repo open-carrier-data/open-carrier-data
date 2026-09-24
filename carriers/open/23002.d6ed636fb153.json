@@ -75,6 +75,17 @@
     },
     {
       "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 0,
       "carrier_id": 1449,
       "name": "O2 internet",
@@ -88,11 +99,42 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "authtype": 3,
+      "name": "O2 CZ",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "O2 Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 3,
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "O2 CZ MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -102,6 +144,49 @@
       "mmsport": 8080,
       "mmsproxy": "160.218.160.218",
       "name": "O2 MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "O2 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "O2 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "name": "O2.CZ",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.o2active.cz:8002",
+      "mmsport": 8080,
+      "mmsproxy": "160.218.160.218",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -185,7 +270,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23002",
+  "display_name": "O2 Cz",
   "match": {
     "mccmnc": [
       "23002"

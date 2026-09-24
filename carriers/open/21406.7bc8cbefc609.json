@@ -29,10 +29,13 @@
   "android_apns": [
     {
       "apn": "fi.omv.es",
-      "name": "FINETWORK_Data",
+      "name": "fi.omv.es",
       "types": [
-        "default"
-      ]
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user_editable": false
     },
     {
       "apn": "hos",
@@ -51,14 +54,38 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "mms.fi.omv.es",
       "mmsc": "http://mms.fi.omv.es/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "212.73.32.10",
       "name": "FINETWORK_MMS",
+      "password": "wap125",
       "types": [
         "mms"
-      ]
+      ],
+      "user": "wap@wap"
     },
     {
       "apn": "fi.omv.es",
@@ -113,9 +140,14 @@
     }
   ],
   "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
     "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
     "enabledMMS": false,
-    "smsToMmsTextThreshold": 5
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 5,
+    "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
@@ -126,7 +158,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Finetwork",

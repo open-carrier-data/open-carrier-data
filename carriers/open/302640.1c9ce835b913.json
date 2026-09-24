@@ -48,6 +48,15 @@
     },
     {
       "apn": "ims",
+      "name": "Bell",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "carrier_id": 576,
       "name": "Bell Mobility IMS",
@@ -70,12 +79,47 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Bell Mobility IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Bell Mobility IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "pda.bell.ca",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
       "mmsc": "http://mms.bell.ca/mms/wapenc",
       "name": "Bell Mobility",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "pda.bell.ca",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell Mobility",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
@@ -108,19 +152,13 @@
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://mms.bell.ca/mms/wapenc",
       "name": "Bell Mobility",
-      "protocol": "IPV4V6",
-      "types": [
-        "ia"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "pda.bell.ca",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "mmsc": "http://mms.bell.ca/mms/wapenc",
-      "name": "Bell Mobility",
       "protocol": "IPV6",
       "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl",
         "xcap"
       ],
       "user_editable": false
@@ -132,7 +170,37 @@
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "pda2.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "pda2.bell.ca",
+      "mmsc": "http://mms.bell.ca/mms/wapenc",
+      "name": "Bell",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Bell",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -141,6 +209,35 @@
       "name": "Bell Mobility SOS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Bell Mobility SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Bell Mobility SOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Bell Mobility SOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "emergency"
       ],
@@ -383,7 +480,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 302640",
+  "display_name": "LineageOS 302640",
   "match": {
     "mccmnc": [
       "302640"

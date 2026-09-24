@@ -2,6 +2,20 @@
   "android_apns": [
     {
       "apn": "safaricom",
+      "mmsc": "http://mmsc.gprs.safaricom.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.2.38",
+      "name": "Safaricom",
+      "password": "data",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "saf"
+    },
+    {
+      "apn": "safaricom",
       "authtype": 1,
       "carrier_id": 865,
       "name": "safaricom GPRS",
@@ -17,20 +31,56 @@
     },
     {
       "apn": "safaricom",
-      "mmsc": "http://mmsc.gprs.safaricom.com",
-      "mmsport": 8080,
-      "mmsproxy": "172.22.2.38",
-      "name": "Safaricom",
-      "password": "data",
+      "authtype": 1,
+      "name": "Safaricom Live",
+      "port": 8080,
+      "proxy": "172.22.2.38",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "safaricom",
+      "authtype": 1,
+      "name": "safaricom GPRS",
+      "password": "data",
+      "port": 8080,
+      "proxy": "172.22.2.38",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "saf"
     },
     {
       "apn": "safaricom",
       "authtype": 1,
+      "mmsc": "http://mms.gprs.safaricom.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.2.38",
+      "name": "Safaricom MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "safaricom",
+      "authtype": 1,
       "carrier_id": 865,
+      "mmsc": "http://mms.gprs.safaricom.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.2.38",
+      "name": "safaricom mms",
+      "password": "data",
+      "types": [
+        "mms"
+      ],
+      "user": "saf"
+    },
+    {
+      "apn": "safaricom",
+      "authtype": 1,
       "mmsc": "http://mms.gprs.safaricom.com",
       "mmsport": 8080,
       "mmsproxy": "172.22.2.38",
@@ -76,7 +126,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 63902",
+  "display_name": "Safaricom KE",
   "match": {
     "mccmnc": [
       "63902"

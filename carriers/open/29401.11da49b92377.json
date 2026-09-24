@@ -41,6 +41,28 @@
       ]
     },
     {
+      "apn": "hos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "Telekom XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "IMS",
@@ -50,6 +72,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "password": "t-mobile",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user": "internet"
     },
     {
       "apn": "internet",
@@ -66,12 +99,71 @@
     },
     {
       "apn": "internet",
-      "name": "Telekom.mk",
+      "authtype": 1,
+      "name": "Internet",
       "password": "t-mobile",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "Internet",
+      "password": "t-mobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "name": "T-Mobile MK",
+      "password": "t-mobile",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.com.mk",
+      "mmsport": 8080,
+      "mmsproxy": "62.162.155.227",
+      "name": "MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.t-mobile.com.mk",
+      "mmsport": 8080,
+      "mmsproxy": "62.162.155.227",
+      "mtu": 1500,
+      "name": "MMS",
+      "password": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "mms",
@@ -81,6 +173,31 @@
       "mmsport": 8080,
       "mmsproxy": "62.162.155.227",
       "name": "T-Mobile MK MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 3,
+      "mmsc": "http://mms.t-mobile.com.mk",
+      "mmsport": 8080,
+      "mmsproxy": "62.162.155.227",
+      "name": "T-Mobile MK MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.t-mobile.com.mk",
+      "mmsport": 8080,
+      "mmsproxy": "62.162.155.227",
+      "name": "mms",
       "password": "mms",
       "types": [
         "mms"
@@ -125,7 +242,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 29401",
+  "display_name": "Telekom Mk",
   "match": {
     "mccmnc": [
       "29401"

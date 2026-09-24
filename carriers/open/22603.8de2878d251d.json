@@ -103,6 +103,96 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc1.mms.cosmote.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "Cosmote MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "MMS",
+      "password": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "TELEKOM.RO",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "Telekom MMS",
+      "password": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "mms",
       "authtype": 1,
       "carrier_id": 1010,
@@ -115,6 +205,30 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "wnw",
+      "authtype": 1,
+      "name": "web'n'walk",
+      "password": "wnw",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wnw"
+    },
+    {
+      "apn": "wnw",
+      "authtype": 3,
+      "name": "web'n'walk",
+      "password": "wnw",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wnw"
     }
   ],
   "android_carrier_config": {
@@ -157,7 +271,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 22603",
+  "display_name": "COSMOTE",
   "match": {
     "mccmnc": [
       "22603"

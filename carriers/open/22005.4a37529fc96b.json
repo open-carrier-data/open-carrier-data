@@ -28,6 +28,34 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "A1 SRB XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "hos",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "A1 SRB",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "A1 SRB IMS",
@@ -37,6 +65,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "carrier_enabled": true,
+      "mtu": 1358,
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "internet",
@@ -104,8 +142,54 @@
     },
     {
       "apn": "vipmobile.mms",
+      "mmsc": "http://mms.vipmobile.rs",
+      "name": "A1 SRB",
+      "password": "vipmobile",
+      "types": [
+        "mms"
+      ],
+      "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile.mms",
       "carrier_id": 1014,
       "mmsc": "http://mms.vipmobile.rs",
+      "name": "Vip MMS",
+      "password": "vipmobile",
+      "types": [
+        "mms"
+      ],
+      "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile.mms",
+      "authtype": 1,
+      "mmsc": "http://mms.vipmobile.rs",
+      "name": "Vip MMS",
+      "password": "vipmobile",
+      "types": [
+        "mms"
+      ],
+      "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile.mms",
+      "mmsc": "http://mmsc.vipmobile.rs",
+      "mmsport": 8080,
+      "mmsproxy": "212.15.182.82",
+      "name": "Vip MMS",
+      "password": "vipmobile",
+      "types": [
+        "mms"
+      ],
+      "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile.mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc.vipmobile.rs",
+      "mmsport": 8080,
+      "mmsproxy": "212.15.182.82",
       "name": "Vip MMS",
       "password": "vipmobile",
       "types": [
@@ -135,7 +219,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 22005",
+  "display_name": "A1 SRB",
   "match": {
     "mccmnc": [
       "22005"

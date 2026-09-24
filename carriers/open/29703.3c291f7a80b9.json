@@ -62,9 +62,21 @@
     },
     {
       "apn": "mtelinternet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Mtel internet",
+      "password": "068",
+      "types": [
+        "default"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "mtelinternet",
       "name": "Telekom Montenegro",
       "password": "068",
       "types": [
+        "default",
         "dun"
       ],
       "user": "internet"
@@ -75,9 +87,35 @@
       "name": "mtelinternet",
       "password": "068",
       "types": [
+        "default",
         "supl"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "mtelmms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mm.mmsmtel.com/",
+      "mmsproxy": "172.25.25.23",
+      "name": "Mtel MMS",
+      "password": "068",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mtelmms",
+      "mmsc": "http://mm.mmsmtel.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.25.23",
+      "name": "Telekom Montenegro",
+      "password": "068",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     }
   ],
   "android_carrier_config": {
@@ -97,7 +135,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 29703",
+  "display_name": "m:tel MNE",
   "match": {
     "mccmnc": [
       "29703"

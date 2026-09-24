@@ -23,6 +23,38 @@
     },
     {
       "apn": "aircelmms",
+      "mmsc": "http://172.17.83.67/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.17.83.69",
+      "name": "AIRCEL",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "aircelmms",
+      "mmsc": "http://172.17.83.67/servlets/mms/",
+      "mmsport": 8080,
+      "mmsproxy": "172.17.83.69",
+      "name": "Aircel MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "aircelmms",
+      "mmsc": "http://172.17.83.67//servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.17.83.69",
+      "name": "Aircel MMS",
+      "port": 8080,
+      "proxy": "172.17.83.69",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "aircelmms",
       "carrier_id": 1551,
       "mmsc": "http://mmsc/mmrelay.app",
       "mmsport": 8081,
@@ -30,6 +62,17 @@
       "name": "Aircel-MMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "aircelmms",
+      "mmsc": "http://mmsc/mmrelay.app",
+      "mmsport": 8081,
+      "mmsproxy": "192.168.35.196",
+      "name": "Aircel-MMS",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -55,6 +98,27 @@
         "ia",
         "supl"
       ]
+    },
+    {
+      "apn": "aircelwap",
+      "name": "Aircel GPRS",
+      "port": 8080,
+      "proxy": "172.17.83.69",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "aircelwap",
+      "name": "Pocket Internet",
+      "port": 8081,
+      "protocol": "IPV4V6",
+      "proxy": "192.168.35.201",
+      "types": [
+        "default",
+        "supl"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -73,7 +137,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 405801",
+  "display_name": "Airtel2 In",
   "match": {
     "mccmnc": [
       "405801"

@@ -47,6 +47,21 @@
     {
       "apn": "bob.at",
       "authtype": 1,
+      "carrier_enabled": true,
+      "name": "data.bob",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "bob.at",
+      "authtype": 1,
       "carrier_id": 14,
       "name": "data.bob",
       "password": "ppp",
@@ -60,14 +75,47 @@
     },
     {
       "apn": "bob.at",
-      "authtype": 1,
-      "carrier_enabled": true,
+      "name": "Bob",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "bob.at",
+      "name": "Bob",
+      "password": "ppp",
+      "server": "http://start.bob.at/",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "bob.at",
+      "authtype": 3,
       "name": "data.bob",
       "password": "ppp",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "bob.at",
+      "authtype": 1,
+      "name": "data.bob",
+      "password": "ppp",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "data@bob.at"
     },
@@ -109,12 +157,81 @@
     },
     {
       "apn": "mms.bob.at",
+      "mmsc": "http://mmsc.bob.at",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.7",
+      "name": "Bob MMS",
+      "password": "web",
+      "port": 8001,
+      "proxy": "194.48.124.7",
+      "server": "http://start.bob.at/",
+      "types": [
+        "mms"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "mms.bob.at",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.bob.at",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.7",
+      "name": "MMS",
+      "password": "ppp",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "mms.bob.at",
       "authtype": 1,
       "carrier_id": 14,
       "mmsc": "http://mmsc.bob.at",
       "mmsport": 8001,
       "mmsproxy": "194.48.124.7",
       "name": "data.bob MMS",
+      "password": "ppp",
+      "types": [
+        "mms"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "mms.bob.at",
+      "authtype": 3,
+      "mmsc": "http://mmsc.bob.at",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.7",
+      "name": "data.bob MMS",
+      "password": "ppp",
+      "types": [
+        "mms"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "mms.bob.at",
+      "authtype": 1,
+      "mmsc": "http://mmsc.bob.at",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.7",
+      "name": "data.bob MMS",
+      "password": "ppp",
+      "types": [
+        "mms"
+      ],
+      "user": "data@bob.at"
+    },
+    {
+      "apn": "mms.bob.at",
+      "mmsc": "http://mmsc.bob.at",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.7",
+      "name": "mms.bob.at",
       "password": "ppp",
       "types": [
         "mms"
@@ -170,7 +287,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 23211",
+  "display_name": "bob",
   "match": {
     "mccmnc": [
       "23211"
