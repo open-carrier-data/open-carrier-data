@@ -63,6 +63,16 @@ PY
 
 Those profiles stay available in `lookup.json`.
 
+## Compare with the APN list you ship today
+
+`tools/diff_apns_conf.py` takes your `apns-conf.xml`, or a directory of per-country files in the LineageOS layout, and compares it with `generated/android/apns-conf.xml`. Rows match on network code, MVNO selector, APN, and type set, ignoring case and type order.
+
+```bash
+python3 tools/diff_apns_conf.py /path/to/android_vendor_apn --json diff.json
+```
+
+The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-09-24, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
+
 ## Use the data in an app or tool
 
 Read the profiles directly when you need the full shape. `generated/index.json` lists every profile with its path. `generated/android/lookup.json` adds `match`, `capabilities`, and `specificity` per profile, so most tools never open the individual files.
