@@ -744,7 +744,7 @@ def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: 
         count = item["observed_value_count"]
         if not isinstance(count, int) or isinstance(count, bool) or count < 1:
             raise ValidationError(f"{path}: {name}[{index}].observed_value_count is invalid")
-        if item["resolution"] not in {"conditional", "omitted_from_stable"}:
+        if item["resolution"] not in {"conditional", "omitted_from_stable", "published_variants"}:
             raise ValidationError(f"{path}: {name}[{index}].resolution is invalid")
 
 

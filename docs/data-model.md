@@ -151,7 +151,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 `generated/index.json` has `schema_version` and a `profiles` array. Each entry has `profile_id`, `display_name`, and `path`. `path` is the profile file relative to the repo root.
 
-`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`.
+`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`. An entry whose sources carry a check date also has `checks_through` and `stale_after`, the freshness window of that one profile. The file-level window in `generated/android/metadata.json` is the oldest of these, so a consumer that keeps only some profiles can read the per-profile dates instead.
 
 ## Provenance fields in the evidence index
 

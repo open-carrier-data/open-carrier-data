@@ -34,11 +34,10 @@ def attr(name: str, value: Any) -> str:
 
 
 def label_text(profile: dict[str, Any], apn: dict[str, Any]) -> str:
-    display_name = str(profile["display_name"]).strip()
-    apn_name = str(apn["name"]).strip()
-    if display_name.lower() == apn_name.lower():
-        return display_name[:120]
-    return f"{display_name} {apn_name}"[:120]
+    apn_name = str(apn.get("name") or "").strip()
+    if apn_name:
+        return apn_name[:120]
+    return str(profile["display_name"]).strip()[:120]
 
 
 def profile_apn_mvnos(match: dict[str, Any]) -> list[tuple[str, str] | None]:
@@ -257,10 +256,57 @@ def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
     return len(records)
 
 
-def write_lookup(path: Path, carriers_dir: Path, profile_items: list[tuple[Path, dict[str, Any]]]) -> None:
+SNAPSHOTS_BY_PROFILE_SOURCE = {
+    "aosp": ("aosp_carrier_config", "aosp_carrier_ids"),
+    "lineageos_device_overlays": ("lineageos_device_carrier_overlays",),
+}
+
+
+def profile_windows(evidence_index_path: Path) -> dict[str, dict[str, str]]:
+    """The freshness window of each profile on its own: the oldest check behind
+    that profile's sources and observations, plus 180 days."""
+    if not evidence_index_path.exists():
+        return {}
+    evidence = load_json(evidence_index_path)
+    checked = {
+        snapshot["source_name"]: snapshot["checked_at"]
+        for snapshot in evidence.get("source_snapshots", [])
+        if isinstance(snapshot, dict) and snapshot.get("checked_at")
+    }
+    windows: dict[str, dict[str, str]] = {}
+    for profile in evidence.get("profiles", []):
+        dates: list[str] = []
+        for source in profile.get("sources", []):
+            for snapshot_name in SNAPSHOTS_BY_PROFILE_SOURCE.get(source, (source,)):
+                if snapshot_name in checked:
+                    dates.append(checked[snapshot_name])
+        reviewed = profile.get("reviewed_range")
+        if isinstance(reviewed, dict) and reviewed.get("oldest"):
+            dates.append(reviewed["oldest"])
+        if not dates:
+            continue
+        checks_through = min(date.fromisoformat(value) for value in dates)
+        windows[profile["profile_id"]] = {
+            "checks_through": checks_through.isoformat(),
+            "stale_after": (checks_through + timedelta(days=STALE_AFTER_DAYS)).isoformat(),
+        }
+    return windows
+
+
+def write_lookup(
+    path: Path,
+    carriers_dir: Path,
+    profile_items: list[tuple[Path, dict[str, Any]]],
+    windows: dict[str, dict[str, str]] | None = None,
+) -> None:
     profiles = []
     for profile_path, profile in profile_items:
-        profiles.append(lookup_record(carriers_dir, profile_path, profile))
+        record = lookup_record(carriers_dir, profile_path, profile)
+        window = (windows or {}).get(profile["profile_id"])
+        if window:
+            record["checks_through"] = window["checks_through"]
+            record["stale_after"] = window["stale_after"]
+        profiles.append(record)
     value = {
         "schema_version": 1,
         "resolution_order": "generic_to_specific",
@@ -630,7 +676,12 @@ def main(argv: list[str]) -> int:
         profiles,
         args.apn_version,
     )
-    write_lookup(generated_dir / "android" / "lookup.json", carriers_dir, profile_items)
+    write_lookup(
+        generated_dir / "android" / "lookup.json",
+        carriers_dir,
+        profile_items,
+        profile_windows(generated_dir / "evidence-index.json"),
+    )
     mccmnc_count = write_mccmnc_index(
         generated_dir / "android" / "mccmnc-index.json",
         carriers_dir,
