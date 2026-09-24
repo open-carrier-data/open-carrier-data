@@ -18,7 +18,7 @@ carrier profiles         neutral JSON in carriers/open/, one file per match set
 generated files          generated/index.json, evidence-index.json, android/, devices/
 ```
 
-The first three stages live in the private repo. Since 2026-09-24 a weekly GitHub-hosted job runs them for every source family except Samsung, whose lane needs firmware downloads and pinned image tools that only a self-hosted runner has. That runner is offline, so Samsung does not refresh by itself. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
+The first three stages live in the private repo. Since 2026-09-24 a weekly GitHub-hosted job runs them for every source family except Samsung, whose lane needs firmware downloads and pinned image tools that only a self-hosted runner has. Since the same day that runner is back on the owner's machine as a user service, and the Samsung lane runs every Monday, one bounded unit at a time. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
 
 ## Sources become candidate observations
 
@@ -30,9 +30,12 @@ A source family is one upstream. Examples are the LineageOS APN repo, Apple's ca
 
 The sanitizer groups observations and applies fixed rules. The rules are:
 
-- Grouping by exact match set. Observations with the same `mccmnc`, `spn`, `gid1_prefixes`, `gid2_prefixes`, `iccid_prefixes`, `imsi_prefix_patterns`, and `android_carrier_ids` form one profile. A different match set forms a different profile.
+- Grouping by exact match set. Observations with the same `mccmnc`, `spn`, `gid1_prefixes`, `gid2_prefixes`, `iccid_prefixes`, `imsi_prefix_patterns`, and `android_carrier_ids` form one profile. A different match set forms a different profile. The `spn` comparison ignores letter case, so `TELEKOM` and `Telekom` land in one profile, and the profile keeps the spelling most observations use.
+- Naming. A profile takes the operator name that the most observations agree on once words like `internet` or `mms` are stripped. Only a profile whose every observation carries a source fallback name gets the placeholder `Carrier <mccmnc>`.
 - Agreement. When every source that names a fact gives the same value, the value is published.
-- Conflict omission. When sources give different values for one CarrierConfig key, one add-on key, or one APN selector, the value is left out. The evidence index records the conflict with `resolution: omitted_from_stable`.
+- Conflict omission. When sources give different values for one CarrierConfig key or one add-on key, the value is left out. The evidence index records the conflict with `resolution: omitted_from_stable`.
+- APN variants. When sources disagree on one APN selector, every variant is published, primary sources first, because an APN list holds several rows per type by design. The evidence index records the conflict with `resolution: published_variants`.
+- Empty profiles are dropped. A profile left with no APN, no CarrierConfig, no add-on, and no known capability is not written. The sanitization report counts these as `empty_profile_count`.
 - Conditional capabilities. Capabilities are the one exception. A disagreement becomes `conditional` instead of an omission.
 - Corroboration for generic APNs. A low-confidence generic APN row needs a second source or a primary maintained APN source. Otherwise the `uncorroborated_generic_apn` gate drops it.
 - No source-branded duplicates. A source name never becomes its own profile. Samsung and Apple observations for the same match set land in the same neutral profile.

@@ -31,7 +31,7 @@ head -2 /tmp/ocd-out/android/apns-conf.xml
 The generator prints one summary line and the XML header shows the new version:
 
 ```text
-generated Android output for 6748 profile(s): 21900 APN row(s), 5119 CarrierConfig profile(s), 2158 MCC/MNC key(s), 179 Android carrier ID key(s), 4115 CarrierConfig XML block(s)
+generated Android output for 7765 profile(s): 24222 APN row(s), 6307 CarrierConfig profile(s), 3174 MCC/MNC key(s), 179 Android carrier ID key(s), 5264 CarrierConfig XML block(s)
 <?xml version="1.0" encoding="utf-8"?>
 <apns version="9">
 ```
@@ -83,7 +83,7 @@ The first lines of the output are:
       "capabilities": {
 ```
 
-The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
+The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. A capability of `unknown` in a later profile carries no information, so keep the known value from the earlier one. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
 
 ## Check freshness before you ship
 
@@ -129,8 +129,8 @@ python3 tools/validate_device_catalog.py generated/devices --freshness fail
 Output on 2026-09-23:
 
 ```text
-validated 6748 public carrier profile(s)
-validated 42259 Android devices, 180 Apple products, and 9930 carrier artifacts
+validated 7765 public carrier profile(s)
+validated 42401 Android devices, 183 Apple products, and 4642 carrier artifacts
 ```
 
 The first validator also checks every source snapshot date.
