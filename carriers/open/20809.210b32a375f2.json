@@ -2,6 +2,17 @@
   "android_apns": [
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 27,
+      "name": "SFR IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "SFR IMS",
       "protocol": "IPV6",
       "types": [
@@ -26,13 +37,11 @@
       "mmsport": 8080,
       "mmsproxy": "10.151.0.1",
       "name": "SFR webphone",
-      "protocol": "IP",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
-        "fota",
-        "ia",
-        "mms",
-        "supl"
+        "dun",
+        "hipri",
+        "xcap"
       ]
     },
     {
@@ -57,6 +66,19 @@
       "protocol": "IP",
       "types": [
         "fota"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "carrier_id": 27,
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "SFR webphone",
+      "protocol": "IP",
+      "types": [
+        "fota",
+        "ia"
       ]
     },
     {
@@ -168,6 +190,7 @@
     "editable_wfc_mode_bool": true,
     "editable_wfc_roaming_mode_bool": true,
     "enhanced_4g_lte_on_by_default_bool": true,
+    "imsvoice.conference_subscribe_type_int": -1,
     "is_ims_conference_size_enforced_bool": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,

@@ -41,11 +41,16 @@
     },
     {
       "apn": "free",
+      "authtype": 0,
       "carrier_id": 1958,
       "mmsc": "http://mms.free.fr",
       "name": "Free",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "dun",
+        "hipri",
         "ia",
         "mms",
         "supl"
@@ -62,6 +67,28 @@
         "hipri",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1958,
+      "mtu": 1280,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -142,6 +169,48 @@
       ]
     },
     {
+      "apn": "free.gp",
+      "mmsc": "http://mms.free.gp",
+      "mvno_match_data": "F007",
+      "mvno_type": "gid",
+      "name": "Free Gp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "free.mq",
+      "mmsc": "http://mms.free.mq",
+      "mvno_match_data": "F008",
+      "mvno_type": "gid",
+      "name": "Free Mq",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "free.re",
+      "carrier_id": 2127,
+      "mmsc": "http://mms.free.re",
+      "mvno_match_data": "F2330002",
+      "mvno_type": "gid",
+      "name": "free.re",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
       "apn": "free.re",
       "carrier_id": 2127,
       "mmsc": "http://mms.free.re",
@@ -149,17 +218,13 @@
       "mvno_type": "gid",
       "name": "Free Re Int",
       "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
+        "ia"
       ]
     }
   ],
   "android_carrier_config": {
     "always_play_remote_hold_tone_bool": true,
     "carrier_default_wfc_ims_roaming_mode_int": 2,
-    "carrier_supports_ss_over_ut_bool": false,
     "carrier_use_ims_first_for_emergency_bool": false,
     "carrier_vt_available_bool": false,
     "editable_wfc_roaming_mode_bool": true,

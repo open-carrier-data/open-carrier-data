@@ -50,11 +50,7 @@
     },
     {
       "apn": "internet",
-      "mmsc": "http://10.81.0.7:8002",
-      "mmsport": 8080,
-      "mmsproxy": "82.113.100.5",
       "name": "internet",
-      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
@@ -218,6 +214,8 @@
       "mvno_match_data": "262072",
       "mvno_type": "imsi",
       "name": "O2 DE Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -285,6 +283,8 @@
       "mvno_match_data": "2620739",
       "mvno_type": "imsi",
       "name": "O2 DE Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -487,7 +487,9 @@
       "mvno_type": "spn",
       "name": "Alice",
       "types": [
-        "default"
+        "default",
+        "mms",
+        "supl"
       ]
     }
   ],
@@ -508,9 +510,9 @@
     "hide_enhanced_4g_lte_bool": false,
     "hide_ims_apn_bool": true,
     "ignore_data_enabled_changed_for_video_calls": true,
-    "imsvoice.conference_factory_uri_string": "teleconferenceuri-factory@telefonica.de",
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
+    "maxMessageSize": 614400,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "show_ims_registration_status_bool": true,
