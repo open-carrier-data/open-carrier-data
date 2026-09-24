@@ -1,5 +1,48 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable,UseDisplayTimer",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC",
+        "WFC_DT"
+      ]
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "basic.internet.ben.data",
       "name": "Ben Internet PrePaid",
@@ -12,6 +55,7 @@
       "apn": "hos",
       "name": "HOS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
@@ -41,8 +85,17 @@
       "authtype": 1,
       "name": "Internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.mobiel",
+      "authtype": 1,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "types": [
         "supl"
       ]
     },
@@ -73,16 +126,18 @@
     "carrier_default_wfc_ims_mode_int": 1,
     "carrier_default_wfc_ims_roaming_mode_int": 1,
     "editable_wfc_roaming_mode_bool": true,
+    "enabledMMS": false,
     "hide_enhanced_4g_lte_bool": true,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc016.mcc204.pub.3gppnetwork.org",
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
+    "smsToMmsTextThreshold": 13,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "supported",
+    "mms": "conditional",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

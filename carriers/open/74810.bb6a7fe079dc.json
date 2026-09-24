@@ -1,6 +1,37 @@
 {
   "android_apns": [
     {
+      "apn": "gprs.claro.com.uy",
+      "name": "Claro UY",
+      "password": "ctigpr999",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "ctigpr"
+    },
+    {
+      "apn": "igprs.claro.com.uy",
+      "name": "Claro Internet",
+      "password": "ctigprs999",
+      "types": [
+        "default"
+      ],
+      "user": "ctigprs"
+    },
+    {
+      "apn": "igprs.claro.com.uy",
+      "mmsc": "http://mms.claro.com.uy",
+      "name": "CLARO Uruguay",
+      "password": "clarogprs999",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "clarogprs"
+    },
+    {
       "apn": "igprs.claro.com.uy",
       "authtype": 1,
       "carrier_id": 1864,
@@ -15,21 +46,11 @@
     },
     {
       "apn": "igprs.claro.com.uy",
-      "mmsc": "http://mms.claro.com.uy",
-      "name": "CLARO Uruguay",
-      "password": "clarogprs999",
-      "types": [
-        "dun",
-        "mms"
-      ],
-      "user": "clarogprs"
-    },
-    {
-      "apn": "igprs.claro.com.uy",
       "authtype": 1,
       "name": "igprs.claro.com.uy",
       "password": "ctigprs999",
       "types": [
+        "default",
         "supl"
       ],
       "user": "ctigprs"
@@ -44,8 +65,41 @@
     },
     {
       "apn": "mms.ctimovil.com.uy",
+      "mmsc": "http://mms.ctimovil.com.uy",
+      "name": "Claro MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.ctimovil.com.uy",
+      "mmsc": "http://mms.ctimovil.com.uy",
+      "mmsport": 9201,
+      "mmsproxy": "170.51.255.240",
+      "name": "Claro UY MMS",
+      "password": "ctimms999",
+      "types": [
+        "mms"
+      ],
+      "user": "ctimms"
+    },
+    {
+      "apn": "mms.ctimovil.com.uy",
       "authtype": 1,
       "carrier_id": 1864,
+      "mmsc": "http://mms.ctimovil.com.uy",
+      "mmsport": 8080,
+      "mmsproxy": "170.51.255.240",
+      "name": "MMS GPRS UY",
+      "password": "ctimms999",
+      "types": [
+        "mms"
+      ],
+      "user": "ctimms"
+    },
+    {
+      "apn": "mms.ctimovil.com.uy",
+      "authtype": 1,
       "mmsc": "http://mms.ctimovil.com.uy",
       "mmsport": 8080,
       "mmsproxy": "170.51.255.240",
@@ -82,7 +136,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 74810",
+  "display_name": "LineageOS 74810",
   "match": {
     "mccmnc": [
       "74810"

@@ -50,6 +50,29 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Yettel INTERNET",
+      "password": "gprs",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "yettel"
+    },
+    {
+      "apn": "internet",
+      "name": "Telenor",
+      "password": "gprs",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "telenor"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
       "carrier_id": 1012,
       "name": "Telenor internet",
       "password": "gprs",
@@ -62,12 +85,36 @@
     },
     {
       "apn": "internet",
-      "name": "Telenor",
+      "name": "Telenor RS",
       "password": "gprs",
+      "port": 8080,
+      "proxy": "217.65.192.33",
       "types": [
-        "dun"
+        "default",
+        "supl"
       ],
       "user": "telenor"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "Telenor internet",
+      "password": "gprs",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telenor"
+    },
+    {
+      "apn": "internet",
+      "name": "Yettel INTERNET",
+      "password": "gprs",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "yettel"
     },
     {
       "apn": "mms",
@@ -76,6 +123,40 @@
       "mmsport": 8080,
       "mmsproxy": "217.65.192.33",
       "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.yettel.rs/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.65.192.33",
+      "name": "Yettel MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.yettel.rs/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.65.192.33",
+      "name": "Yettel MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.telenor.rs/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.65.192.33",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -112,7 +193,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 22001",
+  "display_name": "Yettel SRB",
   "match": {
     "mccmnc": [
       "22001"

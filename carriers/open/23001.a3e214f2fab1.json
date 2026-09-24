@@ -56,6 +56,61 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "authtype": 1,
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.10",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.10",
+      "mtu": 1500,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.0.10",
+      "mtu": 1500,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
@@ -110,6 +165,22 @@
     },
     {
       "apn": "internet.t-mobile.cz",
+      "name": "T-Mobile CZ",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.t-mobile.cz",
+      "name": "internet.t-mobile.cz",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.t-mobile.cz",
       "authtype": 1,
       "carrier_id": 2394,
       "name": "T-Mobile CZ",
@@ -123,10 +194,50 @@
     },
     {
       "apn": "internet.t-mobile.cz",
-      "name": "T-Mobile CZ",
+      "authtype": 1,
+      "name": "Internet",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
       ]
+    },
+    {
+      "apn": "internet.t-mobile.cz",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.t-mobile.cz",
+      "authtype": 1,
+      "name": "T-Mobile CZ",
+      "password": "wap",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "internet.t-mobile.cz",
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.10",
+      "name": "T-Mobile CZ",
+      "password": "wap",
+      "server": "*",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
     },
     {
       "apn": "mms.t-mobile.cz",
@@ -194,7 +305,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23001",
+  "display_name": "LineageOS 23001",
   "match": {
     "mccmnc": [
       "23001"

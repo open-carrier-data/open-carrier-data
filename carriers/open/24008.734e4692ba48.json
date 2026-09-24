@@ -54,6 +54,27 @@
       ]
     },
     {
+      "apn": "hos",
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_enabled": true,
+      "mtu": 1300,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -128,6 +149,18 @@
     },
     {
       "apn": "services.telenor.se",
+      "name": "services.telenor.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
       "carrier_id": 1695,
       "name": "Telenor Mobilsurf",
       "types": [
@@ -138,12 +171,81 @@
     },
     {
       "apn": "services.telenor.se",
-      "name": "services.telenor.se",
+      "mmsc": "http://mms/",
+      "mmsport": 8799,
+      "mmsproxy": "172.30.253.241",
+      "name": "Cellip",
+      "port": 8799,
+      "proxy": "172.30.253.241",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "authtype": 0,
+      "mmsc": "http://mms",
+      "mmsport": 8799,
+      "mmsproxy": "172.30.253.241",
+      "name": "Telenor SE",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "authtype": 3,
+      "name": "Telenor Mobilsurf",
+      "port": 8799,
+      "proxy": "172.30.253.241",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Telenor Mobilsurf",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "dun",
-        "ia"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "name": "services.telenor.se",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "authtype": 3,
+      "mmsc": "http://mms",
+      "mmsport": 8799,
+      "mmsproxy": "172.30.253.241",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "mmsc": "http://mms",
+      "mmsport": 8799,
+      "mmsproxy": "172.30.253.241",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -217,7 +319,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24008",
+  "display_name": "Telenor Se",
   "match": {
     "mccmnc": [
       "24008"

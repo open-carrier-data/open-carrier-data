@@ -1,6 +1,26 @@
 {
   "android_apns": [
     {
+      "apn": "brt.br",
+      "name": "Oi",
+      "password": "brt",
+      "types": [
+        "default"
+      ],
+      "user": "brt"
+    },
+    {
+      "apn": "brt.br",
+      "mmsc": "null",
+      "name": "BrT Internet",
+      "password": "brt",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "brt"
+    },
+    {
       "apn": "gprs.oi.com.br",
       "carrier_id": 540,
       "name": "Oi GPRS Internet",
@@ -18,9 +38,56 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "supl"
       ],
       "user": "oi"
+    },
+    {
+      "apn": "gprs.oi.com.br",
+      "name": "Oi GPRS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "gprs.oi.com.br",
+      "authtype": 1,
+      "mmsc": "http://www.google.com.br",
+      "name": "Oi Velox",
+      "password": "oi",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "oi"
+    },
+    {
+      "apn": "mms.brt.br",
+      "mmsc": "http://mms.brasiltelecom.com.br/",
+      "mmsport": 8080,
+      "mmsproxy": "200.96.8.29",
+      "name": "BrT MMS",
+      "password": "brt",
+      "types": [
+        "mms"
+      ],
+      "user": "brt"
+    },
+    {
+      "apn": "mms.brt.br",
+      "mmsc": "mms.brasiltelecom.com.br",
+      "mmsport": 8080,
+      "mmsproxy": "200.96.8.29",
+      "name": "Oi",
+      "password": "brt",
+      "types": [
+        "mms"
+      ],
+      "user": "brt"
     },
     {
       "apn": "mmsgprs.oi.com.br",
@@ -38,6 +105,47 @@
       "user": "oimms"
     },
     {
+      "apn": "mmsgprs.oi.com.br",
+      "authtype": 1,
+      "mmsc": "http://200.222.42.204:8002",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "MMS GPRS",
+      "password": "oioioi",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
+    },
+    {
+      "apn": "mmsgprs.oi.com.br",
+      "mmsc": "http://200.222.42.204:8002/",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "Oi MMS",
+      "password": "oioioi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
+    },
+    {
+      "apn": "mmsgprs.oi.com.br",
+      "authtype": 1,
+      "mmsc": "http://200.222.42.204:8002/",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "Oi MMS",
+      "password": "oioioi",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
+    },
+    {
       "apn": "wapgprs.oi.com.br",
       "mmsc": "http://wap.oi.com.br",
       "name": "Oi WAP GPRS",
@@ -45,6 +153,7 @@
       "port": 3128,
       "proxy": "200.222.108.241",
       "types": [
+        "default",
         "supl"
       ],
       "user": "oiwap"
@@ -69,7 +178,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 72416",
+  "display_name": "Oi Br",
   "match": {
     "mccmnc": [
       "72416"

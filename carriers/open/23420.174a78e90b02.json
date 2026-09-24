@@ -28,6 +28,30 @@
   "android_apns": [
     {
       "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
       "mtu": 1500,
       "name": "ims",
       "protocol": "IPV6",
@@ -35,6 +59,39 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "id",
+      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.idmobile.co.uk",
+      "name": "iD",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "id",
+      "mmsc": "http://mms.um.idmobile.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.idmobile.co.uk",
+      "name": "iD",
+      "types": [
+        "default",
+        "mms"
+      ]
     },
     {
       "apn": "id",
@@ -65,22 +122,14 @@
     },
     {
       "apn": "id",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.idmobile.co.uk",
-      "name": "iD",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "id",
       "mmsc": "http://mms.um.idmobile.co.uk:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "mms.idmobile.co.uk",
       "name": "iD",
       "protocol": "IPV4V6",
       "types": [
+        "default",
+        "mms",
         "supl",
         "xcap"
       ]

@@ -12,6 +12,14 @@
     },
     {
       "apn": "ims",
+      "name": "OneCall",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -20,6 +28,25 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
     },
     {
       "apn": "internet",
@@ -33,9 +60,24 @@
     },
     {
       "apn": "internet",
-      "name": "OneCall",
+      "authtype": 0,
+      "name": "OneCall Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "OneCall Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -45,6 +87,42 @@
       "mmsport": 80,
       "mmsproxy": "188.149.250.10",
       "name": "NwN MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "mmsc": "http://mmsc/",
+      "mmsport": 80,
+      "mmsproxy": "10.100.100.100",
+      "name": "OneCall MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc/",
+      "mmsport": 80,
+      "mmsproxy": "10.100.100.100",
+      "name": "OneCall MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.nwn.no",
+      "mmsport": 80,
+      "mmsproxy": "188.149.250.10",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -85,7 +163,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 24205",
+  "display_name": "LineageOS 24205",
   "match": {
     "mccmnc": [
       "24205"

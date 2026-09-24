@@ -26,11 +26,76 @@
     {
       "apn": "giffgaff.com",
       "name": "giffgaff",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "giffgaff.com",
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "name": "giffgaff",
+      "password": "password",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "giffgaff"
+    },
+    {
+      "apn": "giffgaff.com",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "name": "giffgaff",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "gg"
+    },
+    {
+      "apn": "giffgaff.com",
+      "name": "giffgaff",
       "protocol": "IPV4V6",
       "types": [
         "default",
         "xcap"
       ]
+    },
+    {
+      "apn": "giffgaff.com",
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "name": "giffgaff MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "giffgaff.com",
+      "mmsc": "http://mmsc.mms.mediamessaging.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.132.254.1",
+      "name": "giffgaff MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -43,11 +108,12 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_default_wfc_ims_enabled_bool": true,
+    "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "read_only_apn_types_string_array": [
-      "dun",
-      "ims"
-    ],
+    "carrier_wfc_ims_available_bool": true,
+    "show_wifi_calling_icon_in_status_bar_bool": true,
     "smsToMmsTextThreshold": 10
   },
   "capabilities": {
@@ -59,7 +125,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "giffgaff",

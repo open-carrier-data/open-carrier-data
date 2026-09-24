@@ -75,6 +75,15 @@
     },
     {
       "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "carrier_id": 1565,
       "name": "Siminn Internet",
       "types": [
@@ -85,9 +94,45 @@
     },
     {
       "apn": "internet",
-      "name": "Siminn",
+      "authtype": 0,
+      "name": "Siminn Internet",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "name": "Siminn Internet",
+      "port": 8080,
+      "proxy": "213.167.138.200",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Siminn Internet",
+      "port": 8080,
+      "proxy": "213.167.138.200",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -97,6 +142,51 @@
       "mmsport": 8080,
       "mmsproxy": "213.167.138.200",
       "name": "Siminn MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.simi.is",
+      "authtype": 0,
+      "mmsc": "http://mms.simi.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.200",
+      "name": "Siminn MMS",
+      "types": [
+        "mms"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "mms.simi.is",
+      "authtype": 3,
+      "mmsc": "http://mms.simi.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.200",
+      "name": "Siminn MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.simi.is",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms.simi.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.200",
+      "name": "Siminn MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.simi.is",
+      "mmsc": "http://mms.simi.is/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.167.138.200",
+      "name": "mms.simi.is",
       "types": [
         "mms"
       ]
@@ -128,7 +218,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 27401",
+  "display_name": "Siminn",
   "match": {
     "mccmnc": [
       "27401"

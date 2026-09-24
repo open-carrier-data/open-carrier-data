@@ -64,6 +64,20 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Mobilni Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "hipri",
+        "rcs",
+        "supl"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
       "carrier_id": 1710,
       "mmsc": "http://mms.mobitel.si/servlets/mms",
       "mmsport": 8080,
@@ -80,13 +94,63 @@
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mms.telekom.si",
       "name": "internet",
       "password": "internet",
       "types": [
-        "dun"
+        "default",
+        "mms"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "mobitel",
+      "password": "internet",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "Mobilni Internet",
+      "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "name": "Mobitel Internet",
+      "password": "internet",
+      "port": 8080,
+      "proxy": "213.229.249.40",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.mobitel.si/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "213.229.249.40",
+      "name": "internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ],
       "user": "mobitel"
     },
@@ -94,11 +158,12 @@
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "Mobilni Internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "internet",
       "password": "internet",
       "types": [
-        "hipri",
-        "rcs"
+        "dun",
+        "mms"
       ],
       "user": "mobitel"
     }
@@ -141,7 +206,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 29341",
+  "display_name": "mobitel",
   "match": {
     "mccmnc": [
       "29341"

@@ -95,6 +95,14 @@
     },
     {
       "apn": "ims",
+      "name": "Magenta-T-",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "mtu": 1500,
@@ -141,23 +149,81 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "T-Mobile IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "name": "Magenta-T-",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet.t-mobile.at",
       "name": "Magenta-T-",
       "roaming_protocol": "IP",
       "types": [
+        "default",
         "dun"
       ]
     },
     {
       "apn": "internet.t-mobile.at",
       "authtype": 1,
-      "name": "T-Mobile A Internet",
+      "name": "internet.t-mobile.at",
       "password": "tm",
       "protocol": "IPV4V6",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "supl"
       ],
       "user": "T"
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "authtype": 1,
+      "name": "Internet",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "T"
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "Internet",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "T"
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "authtype": 1,
+      "name": "internet.t-mobile.at",
+      "password": "tm",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "t-mobile"
     },
     {
       "apn": "uros.iot",
@@ -216,7 +282,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 23203",
+  "display_name": "LineageOS 23203",
   "match": {
     "mccmnc": [
       "23203"

@@ -51,11 +51,22 @@
     },
     {
       "apn": "airtelwap.es",
+      "name": "airtelwap.es",
+      "password": "wap125",
+      "types": [
+        "default"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "airtelwap.es",
       "authtype": 1,
       "name": "Internet m\u00f3vil",
       "password": "wap125",
       "types": [
-        "ia"
+        "default",
+        "ia",
+        "supl"
       ],
       "user": "wap@wap"
     },
@@ -67,7 +78,43 @@
       "name": "Vodafone",
       "password": "wap125",
       "types": [
+        "default",
         "mms"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "airtelwap.es",
+      "authtype": 1,
+      "name": "Internet m\u00f3vil",
+      "password": "wap125",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "airtelwap.es",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Internet m\u00f3vil",
+      "password": "wap125",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "airtelwap.es",
+      "authtype": 0,
+      "name": "Vodafone ES",
+      "password": "wap125",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "wap@wap"
     },
@@ -92,6 +139,79 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Vodafone",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 1,
+      "mmsc": "http://mmsc.vodafone.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "name": "MMS VODAFONE",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "authtype": 0,
+      "mmsc": "http://mmsc.vodafone.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "name": "Vodafone ES MMS",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
     },
     {
       "apn": "ut.es",
@@ -147,7 +267,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 21401",
+  "display_name": "LineageOS 21401",
   "match": {
     "mccmnc": [
       "21401"

@@ -38,6 +38,28 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "ims",
@@ -49,11 +71,66 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mmsc.pgsm.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "193.225.154.22",
+      "name": "Pannon MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.telenor.hu",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Telenor HU",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "carrier_id": 1534,
       "mmsc": "http://mmsc.telenor.hu/",
       "mmsport": 8080,
       "mmsproxy": "84.225.255.1",
       "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.telenor.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.yettel.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Yettel MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mmsc.yettel.hu",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -79,6 +156,15 @@
     },
     {
       "apn": "online",
+      "name": "Telenor HU",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "online",
       "carrier_id": 1534,
       "name": "Telenor Online",
       "types": [
@@ -89,10 +175,34 @@
     },
     {
       "apn": "online",
-      "name": "Telenor HU",
-      "protocol": "IPV6",
+      "name": "online",
       "types": [
-        "dun"
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "online",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Yettel Online",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "online",
+      "authtype": 1,
+      "name": "online",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
       ]
     },
     {
@@ -160,7 +270,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 21601",
+  "display_name": "Yettel Hu",
   "match": {
     "mccmnc": [
       "21601"

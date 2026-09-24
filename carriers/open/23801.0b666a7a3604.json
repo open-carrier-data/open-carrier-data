@@ -87,6 +87,29 @@
     },
     {
       "apn": "internet",
+      "name": "TDC",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "TDC",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 0,
       "carrier_id": 1463,
       "name": "DK TDC",
@@ -101,18 +124,51 @@
     {
       "apn": "internet",
       "authtype": 0,
-      "name": "internet",
-      "protocol": "IPV4V6",
+      "name": "DK TDC",
       "types": [
-        "dun"
+        "default",
+        "fota",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "TDC",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "TDC DK",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
       "apn": "internet",
       "authtype": 0,
-      "name": "DK TDC",
+      "name": "internet",
+      "protocol": "IPV4V6",
       "types": [
-        "fota"
+        "dun"
       ]
     },
     {
@@ -151,6 +207,60 @@
       "mmsport": 8080,
       "mmsproxy": "194.182.251.15",
       "name": "DK TDC mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "mmsc": "http://192.168.241.114:8002",
+      "mmsport": 8080,
+      "mmsproxy": "194.182.251.15",
+      "name": "DK TDC mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 3,
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "194.182.251.15",
+      "name": "Fullrate MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://192.168.241.114:8002",
+      "mmsport": 8080,
+      "mmsproxy": "194.182.251.15",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -344,7 +454,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 23801",
+  "display_name": "LineageOS 23801",
   "match": {
     "mccmnc": [
       "23801"

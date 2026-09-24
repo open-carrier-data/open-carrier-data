@@ -118,19 +118,56 @@
     },
     {
       "apn": "internet",
-      "carrier_id": 1904,
       "name": "DNA Internet",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
-        "ia",
-        "supl"
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "DNA Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
       "apn": "internet",
       "name": "internet",
       "types": [
+        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1904,
+      "name": "DNA Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     },
     {
@@ -220,6 +257,60 @@
       ]
     },
     {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dna.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.dnafinland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "DNA MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dnafinland.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dna.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.dnafinland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.2",
+      "name": "mms",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "dna"
+    },
+    {
       "apn": "mms.aina.fi",
       "mmsc": "http://mmsc.aina.fi",
       "mmsport": 8080,
@@ -254,6 +345,27 @@
       "authtype": 1,
       "carrier_id": 1904,
       "mmsc": "http://mmsc.dnapro.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.21",
+      "name": "DNA Pro MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.dnapro.fi",
+      "authtype": 1,
+      "mmsc": "http://mmsc.dnapro.fi/",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.21",
+      "name": "DNA Pro MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.dnapro.fi",
+      "mmsc": "http://mmsc.dnapro.fi",
       "mmsport": 8080,
       "mmsproxy": "10.1.1.21",
       "name": "DNA Pro MMS",
@@ -401,7 +513,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carrier 24412",
+  "display_name": "DNA",
   "match": {
     "mccmnc": [
       "24412"

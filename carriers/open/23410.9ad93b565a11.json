@@ -41,6 +41,16 @@
     },
     {
       "apn": "idata.o2.co.uk",
+      "name": "O2",
+      "password": "password",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "vertigo"
+    },
+    {
+      "apn": "idata.o2.co.uk",
       "mmsc": "http://mmsc-ac.mms.o2.co.uk:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "82.132.254.1",
@@ -48,10 +58,30 @@
       "password": "password",
       "protocol": "IPV4V6",
       "types": [
+        "default",
         "dun",
         "mms"
       ],
       "user": "vertigo"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "O2",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -88,6 +118,44 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "O2 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "name": "mobile.o2.co.uk",
+      "password": "password",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "o2web"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "name": "O2 Pay Monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "o2",
+      "user_editable": false
+    },
+    {
       "apn": "mobile.o2.co.uk",
       "carrier_id": 1492,
       "name": "O2 Mobile Web",
@@ -103,15 +171,94 @@
       "apn": "mobile.o2.co.uk",
       "authtype": 1,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "O2 UK",
+      "password": "password",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "o2web"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "O2 Pay Monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
       "name": "O2 Pay Monthly",
       "password": "p",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "hipri"
+        "default",
+        "supl"
       ],
-      "user": "o2",
-      "user_editable": false
+      "user": "o2"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "name": "O2 WEB",
+      "password": "O2web",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "O2web"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "name": "o2 Mobile Web",
+      "password": "password",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "mobileweb"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mtu": 1500,
+      "name": "O2 MMS",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mtu": 1500,
+      "name": "O2 MMS",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "o2"
     },
     {
       "apn": "mobile.o2.co.uk",
@@ -128,6 +275,23 @@
       ],
       "user": "o2",
       "user_editable": false
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "O2 PAYG",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "payandgo"
     },
     {
       "apn": "payandgo.o2.co.uk",
@@ -149,15 +313,13 @@
     },
     {
       "apn": "payandgo.o2.co.uk",
-      "mmsc": "http://mmsc.mms.o2.co.uk:8002/",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
       "mmsport": 8080,
       "mmsproxy": "193.113.200.195",
-      "name": "O2 PAYG",
+      "name": "o2 MMS",
       "password": "password",
-      "port": 8080,
-      "proxy": "193.113.200.195",
       "types": [
-        "hipri"
+        "mms"
       ],
       "user": "payandgo"
     },
@@ -173,6 +335,7 @@
       "types": [
         "default",
         "hipri",
+        "mms",
         "supl"
       ],
       "user": "o2wap"
@@ -244,6 +407,43 @@
       ]
     },
     {
+      "apn": "prepay.tesco-mobile.com",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mms.o2.co.uk:10021/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "mvno_match_data": "TESCO",
+      "mvno_type": "spn",
+      "name": "Tesco Mobile",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "tescowap"
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "mmsc": "http://mmsc.mms.02.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "mvno_match_data": "TESCO",
+      "mvno_type": "spn",
+      "name": "Tesco UK",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "tescowap"
+    },
+    {
       "apn": "giffgaff.com",
       "authtype": 1,
       "carrier_id": 2118,
@@ -270,10 +470,43 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
+        "default",
         "hipri",
-        "ims"
+        "ims",
+        "mms",
+        "supl"
       ],
       "user": "gg"
+    },
+    {
+      "apn": "giffgaff.com",
+      "authtype": 1,
+      "mvno_match_data": "giffgaff",
+      "mvno_type": "spn",
+      "name": "giffgaff GPRS",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "giffgaff"
+    },
+    {
+      "apn": "giffgaff.com",
+      "authtype": 1,
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "mvno_match_data": "giffgaff",
+      "mvno_type": "spn",
+      "name": "giffgaff MMS",
+      "password": "password",
+      "types": [
+        "mms"
+      ],
+      "user": "giffgaff"
     }
   ],
   "android_carrier_config": {
@@ -326,7 +559,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23410",
+  "display_name": "LineageOS 23410",
   "match": {
     "mccmnc": [
       "23410"

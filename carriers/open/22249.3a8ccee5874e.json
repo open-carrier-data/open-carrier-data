@@ -24,10 +24,22 @@
   },
   "android_apns": [
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|20",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
+    },
+    {
       "apn": "apn.vianova.it",
       "name": "Vianova",
       "types": [
-        "default"
+        "default",
+        "supl"
       ]
     },
     {
@@ -51,6 +63,8 @@
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
+    "rtt_supported_bool": true,
+    "rtt_supported_while_roaming_bool": true,
     "smsToMmsTextThreshold": 10
   },
   "capabilities": {

@@ -61,6 +61,29 @@
     {
       "apn": "eezone",
       "authtype": 1,
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "ASDA MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "EE",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
       "carrier_id": 718,
       "mmsc": "http://mms/",
       "mmsport": 8080,
@@ -82,10 +105,54 @@
       "name": "EE MMS",
       "password": "secure",
       "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "EE MMS",
+      "password": "secure",
+      "types": [
+        "mms",
         "xcap"
       ],
       "user": "eesecure",
       "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "name": "EE",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "everywhere",
+      "name": "EE",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
     },
     {
       "apn": "everywhere",
@@ -104,14 +171,6 @@
     },
     {
       "apn": "everywhere",
-      "name": "EE",
-      "protocol": "IPV4V6",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "everywhere",
       "authtype": 1,
       "mmsc": "http://mms/",
       "mmsport": 8080,
@@ -119,7 +178,87 @@
       "name": "Asda Mobile",
       "password": "secure",
       "types": [
-        "mms"
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure",
+      "user_editable": false
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "name": "everywhere",
+      "password": "secure",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "eesecure"
     },
@@ -170,6 +309,99 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure",
+      "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -521,7 +753,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23430",
+  "display_name": "LineageOS 23430",
   "match": {
     "mccmnc": [
       "23430"

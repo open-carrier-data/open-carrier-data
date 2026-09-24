@@ -50,6 +50,56 @@
     },
     {
       "apn": "mobile.o2.co.uk",
+      "name": "O2 Internet(post)",
+      "password": "password",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "O2web"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "name": "O2 MOBILE WEB",
+      "password": "O2web",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "O2web"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "O2 Pay Monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "O2 Pay Monthly",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ],
+      "user": "o2"
+    },
+    {
+      "apn": "mobile.o2.co.uk",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
@@ -64,18 +114,26 @@
       "user": "o2"
     },
     {
-      "apn": "mobile.o2.co.uk",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mtu": 1500,
-      "name": "O2 Pay Monthly",
-      "password": "p",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "payandgo.o2.co.uk",
+      "name": "O2 Internet(pre)",
+      "password": "password",
       "types": [
-        "xcap"
+        "default",
+        "supl"
       ],
-      "user": "o2"
+      "user": "payandgo"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "name": "O2 WAP(pre)",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "payandgo"
     },
     {
       "apn": "payandgo.o2.co.uk",
@@ -87,6 +145,42 @@
       "password": "password",
       "types": [
         "mms"
+      ],
+      "user": "payandgo"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.132.254.1",
+      "name": "O2 MMS Prepay",
+      "password": "password",
+      "types": [
+        "mms"
+      ],
+      "user": "payandgo"
+    },
+    {
+      "apn": "payandgo.o2.co.uk",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "O2 MMS(pre)",
+      "password": "password",
+      "types": [
+        "mms"
+      ],
+      "user": "payandgo"
+    },
+    {
+      "apn": "wap.o2.co.uk",
+      "name": "O2 WAP(post)",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default",
+        "supl"
       ],
       "user": "payandgo"
     },
@@ -105,14 +199,27 @@
     },
     {
       "apn": "wap.o2.co.uk",
-      "name": "O2 WAP(post)",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.132.254.1",
+      "name": "O2 MMS Postpay",
       "password": "password",
-      "port": 8080,
-      "proxy": "193.113.200.195",
       "types": [
-        "supl"
+        "mms"
       ],
-      "user": "payandgo"
+      "user": "o2wap"
+    },
+    {
+      "apn": "wap.o2.co.uk",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "wap.o2.co.uk",
+      "password": "password",
+      "types": [
+        "mms"
+      ],
+      "user": "o2wap"
     }
   ],
   "android_carrier_config": {
@@ -138,7 +245,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23402",
+  "display_name": "LineageOS 23402",
   "match": {
     "mccmnc": [
       "23402"
