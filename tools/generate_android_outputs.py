@@ -118,8 +118,6 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
     if not profile_mvnos:
         return records
     carrier_ids = profile_carrier_ids(match)
-    if carrier_ids and profile_mvnos != [None]:
-        return records
 
     valid_mccmncs = [
         value
@@ -150,12 +148,6 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
             if selector_carrier_id is not None
             else carrier_ids
         )
-        if effective_carrier_ids and (
-            profile_mvnos != [None]
-            or apn.get("mvno_type")
-            or apn.get("mvno_match_data")
-        ):
-            continue
 
         base: dict[str, Any] = {
             "carrier": label_text(profile, apn),
@@ -200,7 +192,7 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
         if apn_carrier_id == -1:
             base["carrier_id"] = -1
 
-        if effective_carrier_ids:
+        if not valid_mccmncs:
             for carrier_id in effective_carrier_ids:
                 record = dict(base)
                 record["carrier_id"] = carrier_id
@@ -219,7 +211,13 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
                 if mvno:
                     record["mvno_type"] = mvno[0]
                     record["mvno_match_data"] = mvno[1]
-                records.append(record)
+                if not effective_carrier_ids:
+                    records.append(record)
+                    continue
+                for carrier_id in effective_carrier_ids:
+                    carrier_record = dict(record)
+                    carrier_record["carrier_id"] = carrier_id
+                    records.append(carrier_record)
     return records
 
 

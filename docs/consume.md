@@ -31,7 +31,7 @@ head -2 /tmp/ocd-out/android/apns-conf.xml
 The generator prints one summary line and the XML header shows the new version:
 
 ```text
-generated Android output for 7765 profile(s): 24222 APN row(s), 6307 CarrierConfig profile(s), 3174 MCC/MNC key(s), 179 Android carrier ID key(s), 5264 CarrierConfig XML block(s)
+generated Android output for 7765 profile(s): 25680 APN row(s), 6307 CarrierConfig profile(s), 3174 MCC/MNC key(s), 179 Android carrier ID key(s), 5264 CarrierConfig XML block(s)
 <?xml version="1.0" encoding="utf-8"?>
 <apns version="9">
 ```
@@ -85,7 +85,9 @@ The first lines of the output are:
 
 The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. A capability of `unknown` in a later profile carries no information, so keep the known value from the earlier one.
 
-When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
+When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first.
+
+Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`. Android returns the rows whose `carrier_id` equals the SIM's carrier id when there are any, then the rows whose network code and MVNO selector match, then the plain network rows. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
 
 ## Check freshness before you ship
 

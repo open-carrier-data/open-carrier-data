@@ -1642,7 +1642,7 @@ def main() -> int:
             dict(element.attrib)
             for element in apn_root
         ]
-        assert_true(len(apn_rows) == 5, f"expected 5 APN rows, got {len(apn_rows)}")
+        assert_true(len(apn_rows) == 7, f"expected 7 APN rows, got {len(apn_rows)}")
         by_apn = {
             (row["mcc"], row["mnc"], row["apn"]): row
             for row in apn_rows
@@ -1681,16 +1681,18 @@ def main() -> int:
             by_apn[("262", "02", "mvno.example")]["type"] == "*",
             "APN rows should preserve wildcard APN type",
         )
+        for mnc in ("02", "23"):
+            ims_row = by_apn[("262", mnc, "ims.example")]
+            assert_true(
+                ims_row["mvno_type"] == "gid"
+                and ims_row["mvno_match_data"] == "AB"
+                and ims_row["carrier_id"] == "2536",
+                "carrier-ID plus GID profiles emit network rows with both selectors",
+            )
+        carrier_id_row = by_apn[("262", "27", "cid.example")]
         assert_true(
-            not any(row["apn"] == "ims.example" for row in apn_rows),
-            "carrier-ID plus GID applicability must not be broadened into APN rows",
-        )
-        carrier_id_row = next(row for row in apn_rows if row["apn"] == "cid.example")
-        assert_true(
-            carrier_id_row["carrier_id"] == "4000"
-            and "mcc" not in carrier_id_row
-            and "mnc" not in carrier_id_row,
-            "carrier-ID-only APNs must not become generic MCC/MNC APNs",
+            carrier_id_row["carrier_id"] == "4000",
+            "carrier-ID profiles keep mcc and mnc and add carrier_id, as AOSP does",
         )
         assert_true(
             by_apn[("262", "24", "iccid.example")]["mvno_type"] == "iccid",
@@ -1865,7 +1867,7 @@ def main() -> int:
         )
         assert_true(
             metadata["omissions"]["apn_profile_ids_with_unrepresentable_match"]
-            == sorted([gid2_id, multi_id]),
+            == [gid2_id],
             "metadata should identify every APN profile omitted to preserve match semantics",
         )
         assert_true(
