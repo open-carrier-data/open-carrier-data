@@ -83,7 +83,9 @@ The first lines of the output are:
       "capabilities": {
 ```
 
-The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. A capability of `unknown` in a later profile carries no information, so keep the known value from the earlier one. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
+The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. A capability of `unknown` in a later profile carries no information, so keep the known value from the earlier one.
+
+When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
 
 ## Check freshness before you ship
 

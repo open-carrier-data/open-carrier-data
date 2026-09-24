@@ -227,10 +227,12 @@ def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
     records: list[dict[str, str]] = []
     for profile in profiles:
         records.extend(apn_records(profile))
-    unique_records = {
-        json.dumps(record, sort_keys=True, separators=(",", ":")): record
-        for record in records
-    }
+    unique_records: dict[str, dict[str, str]] = {}
+    for record in records:
+        settings = {key: value for key, value in record.items() if key != "carrier"}
+        unique_records.setdefault(
+            json.dumps(settings, sort_keys=True, separators=(",", ":")), record
+        )
     records = sorted(
         unique_records.values(),
         key=lambda item: (

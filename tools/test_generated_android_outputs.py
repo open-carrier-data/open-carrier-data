@@ -1927,6 +1927,23 @@ def main() -> int:
             raise AssertionError("duplicate APN types should fail")
 
     print("generated Android output tests passed")
+    with tempfile.TemporaryDirectory() as tmp:
+        apns_path = Path(tmp) / "apns-conf.xml"
+        twins = [
+            {
+                "match": {"mccmnc": ["00101"]},
+                "android_apns": [
+                    {"name": name, "apn": "internet", "types": ["default"], "protocol": "IP"}
+                ],
+                "display_name": name,
+            }
+            for name in ("First label", "Second label")
+        ]
+        count = generate_android_outputs.write_apns(apns_path, twins, 8)
+        assert_true(
+            count == 1 and 'carrier="First label"' in apns_path.read_text(encoding="utf-8"),
+            "Rows identical except their label must collapse to the first",
+        )
     return 0
 
 
