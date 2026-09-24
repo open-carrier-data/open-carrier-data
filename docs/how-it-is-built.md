@@ -18,7 +18,7 @@ carrier profiles         neutral JSON in carriers/open/, one file per match set
 generated files          generated/index.json, evidence-index.json, android/, devices/
 ```
 
-The first three stages live in the private repo. The runner named `bela-open-carrier-data-network` ran them. As of 2026-09-23 that runner is offline and the 13 scheduled private workflows are disabled, so no stage runs by itself. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
+The first three stages live in the private repo. Since 2026-09-24 a weekly GitHub-hosted job runs them for every source family except Samsung, whose lane needs firmware downloads and pinned image tools that only a self-hosted runner has. That runner is offline, so Samsung does not refresh by itself. The public repo receives carrier profiles and generated files, then its own workflow validates them. The public tools can regenerate `generated/android/` from the profiles, but they cannot rebuild profiles from sources.
 
 ## Sources become candidate observations
 
@@ -66,7 +66,7 @@ The sanitizer quarantines any observation whose `checked_at` is older than 180 d
 
 Stale is worse than missing. A missing APN row makes a phone fall back to its own defaults or ask the user. A stale row looks authoritative and sends the phone to a dead MMSC. Nobody notices until messages fail. So the project drops old data instead of keeping it.
 
-On 2026-09-24 `checks_through` is 2026-07-13 and `stale_after` is 2027-01-09. Every source snapshot except Samsung's was re-checked on 2026-09-24, but `checks_through` is the oldest of the snapshot checks and the observation review dates, and the oldest Samsung observation is from 2026-07-13. Past `stale_after` the validators warn by default and exit 0, so a clone keeps validating. The daily public job passes `--freshness fail` and opens an issue labeled `stale-data` when the validators fail, so the first alarm opens on 2027-01-10 unless Samsung is refreshed before then. No new checks arrive by themselves, because the runner is offline and the schedules are disabled. The data does not change by itself. It stops passing the strict check. Run this command to see the window:
+On 2026-09-24 `checks_through` is 2026-07-13 and `stale_after` is 2027-01-09. Every source snapshot except Samsung's was re-checked on 2026-09-24, but `checks_through` is the oldest of the snapshot checks and the observation review dates, and the oldest Samsung observation is from 2026-07-13. Past `stale_after` the validators warn by default and exit 0, so a clone keeps validating. The daily public job passes `--freshness fail` and opens an issue labeled `stale-data` when the validators fail, so the first alarm opens on 2027-01-10 unless Samsung is refreshed before then. The other ten families are re-checked weekly by the hosted job. Samsung is not, and Samsung sets the window. Run this command to see the window:
 
 ```bash
 python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
