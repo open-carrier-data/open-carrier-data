@@ -106,6 +106,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <int name="recipientLimit" value="10" />
@@ -267,10 +268,11 @@
     <int name="wfc_data_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.20410.396bc6e001de -->
-  <carrier_config mcc="204" mnc="10" name="LineageOS 20410">
+  <carrier_config mcc="204" mnc="10" name="KPN NL">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.20412.afdd9506797b -->
   <carrier_config mcc="204" mnc="12" name="NL Telfort">
@@ -361,6 +363,7 @@
       <item value="338|another device sent all devices busy response|1017" />
       <item value="510|Call completed elsewhere|1014" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
@@ -423,6 +426,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.telco.telenet-ops.be</string>
     <int name="maxMessageSize" value="307200" />
@@ -459,6 +463,7 @@
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
@@ -607,6 +612,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
@@ -710,6 +716,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxSubjectLength" value="80" />
     <int name="smsToMmsTextThreshold" value="6" />
   </carrier_config>
@@ -779,11 +786,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
-    <boolean name="carrier_vt_available_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="2" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -909,6 +916,12 @@
   <carrier_config mcc="208" mnc="39" name="Netwo Fr">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
+  </carrier_config>
+  <!-- open.20844.616e410a6572 -->
+  <carrier_config mcc="208" mnc="44" name="SFR FR">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.208500.96d19046214c -->
   <carrier_config mcc="208" mnc="500" name="EDF">
@@ -1072,6 +1085,7 @@
     </string-array>
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="-1" />
@@ -1300,6 +1314,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -1374,6 +1389,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -1439,6 +1455,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -1845,6 +1862,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <string-array name="read_only_apn_types_string_array" num="2">
       <item value="ims" />
@@ -1975,6 +1993,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -2069,6 +2088,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="mms" />
@@ -2103,6 +2123,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -2211,6 +2232,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc003.mcc232.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
@@ -2317,6 +2339,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc003.mcc232.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
@@ -2604,6 +2627,7 @@
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.23403.6a0673f53cf9 -->
@@ -2741,6 +2765,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string-array name="read_only_apn_types_string_array" num="4">
       <item value="default" />
@@ -2929,6 +2954,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
@@ -2979,6 +3005,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc038.mcc234.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
     <boolean name="support_ims_conference_call_bool" value="false" />
@@ -3030,6 +3057,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="ims" />
@@ -3063,7 +3091,7 @@
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.23457.3b1b35551e66 -->
-  <carrier_config mcc="234" mnc="57" name="LineageOS 23457">
+  <carrier_config mcc="234" mnc="57" name="Sky Gb">
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
@@ -3076,6 +3104,7 @@
     <boolean name="carrier_vt_available_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <int name="maxMessageSize" value="307200" />
     <boolean name="show_wifi_calling_icon_in_status_bar_bool" value="true" />
@@ -3241,6 +3270,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="recipientLimit" value="20" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -3327,6 +3357,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc002.mcc238.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
@@ -3478,6 +3509,12 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
   </carrier_config>
+  <!-- open.23877.4b454b5596c7 -->
+  <carrier_config mcc="238" mnc="77" name="23877">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
   <!-- open.24001.aa6951bda708 -->
   <carrier_config mcc="240" mnc="01" name="LineageOS 24001">
     <boolean name="allow_adding_apns_bool" value="true" />
@@ -3614,6 +3651,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc008.mcc240.pub.3gppnetwork.org</string>
@@ -3665,6 +3703,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc008.mcc240.pub.3gppnetwork.org</string>
@@ -3877,6 +3916,7 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
@@ -3889,6 +3929,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -3995,6 +4036,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
@@ -4030,6 +4072,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -4372,6 +4415,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="show_ims_registration_status_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -4397,6 +4441,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="show_ims_registration_status_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -4425,6 +4470,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
@@ -4479,6 +4525,8 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.25037.bdcced08a76f -->
@@ -4497,6 +4545,7 @@
   <carrier_config mcc="250" mnc="50" name="LineageOS 25050">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.25062.125f84ccfafd -->
   <carrier_config mcc="250" mnc="62" name="Tinkoff Ru">
@@ -4515,6 +4564,7 @@
     <boolean name="carrier_vt_available_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="512000" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
@@ -4609,6 +4659,13 @@
     <boolean name="enabledMMS" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
+  <!-- open.25851.e483e7fb840d -->
+  <carrier_config mcc="258" mnc="51" name="ATT US">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
   <!-- open.25901.cec477271b1a -->
   <carrier_config mcc="259" mnc="01" name="Orange Md">
     <string-array name="carrier_metered_apn_types_strings" num="3">
@@ -4659,6 +4716,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="5242880" />
     <int name="recipientLimit" value="10" />
     <boolean name="rtt_supported_bool" value="true" />
@@ -4686,6 +4744,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
@@ -4780,6 +4839,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="100" />
@@ -4840,7 +4900,10 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="6" />
   </carrier_config>
@@ -4867,6 +4930,7 @@
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc001.mcc262.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
@@ -4931,6 +4995,7 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
@@ -4973,6 +5038,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc001.mcc262.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
@@ -5001,6 +5067,7 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
@@ -5023,6 +5090,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
@@ -5078,6 +5146,7 @@
       <item value="1014|decline|510" />
       <item value="1014|call rejected by user|510" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="614400" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
@@ -5165,7 +5234,9 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="wfc_data_spn_format_idx_int" value="1" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -6223,6 +6294,7 @@
       <item value="338|busy everywhere|1017" />
       <item value="510|Call completed elsewhere|1014" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc001.mcc228.pub.3gppnetwork.org</string>
     <boolean name="rtt_supported_bool" value="false" />
@@ -6397,6 +6469,7 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
     <int name="ims_conference_size_limit_int" value="2" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc490.mcc302.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
@@ -6436,13 +6509,21 @@
   </carrier_config>
   <!-- open.302512.55078e5b019e -->
   <carrier_config mcc="302" mnc="512" name="LineageOS 302512">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="5" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_ims_registration_status_bool" value="true" />
   </carrier_config>
   <!-- open.302520.c329b9cf3296 -->
   <carrier_config mcc="302" mnc="520" name="302520">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="5" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -6560,6 +6641,13 @@
     <int name="ims_conference_size_limit_int" value="5" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
   </carrier_config>
+  <!-- open.30272.a6523e484752 -->
+  <carrier_config mcc="302" mnc="72" name="RWC CA">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
   <!-- open.302720.08eb0cbd0df0 -->
   <carrier_config mcc="302" mnc="720" name="Rogers">
     <boolean name="call_forwarding_map_non_number_to_voicemail_bool" value="true" />
@@ -6609,6 +6697,7 @@
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
   </carrier_config>
@@ -6631,10 +6720,11 @@
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
   </carrier_config>
   <!-- open.302990.d48ddea34ebe -->
-  <carrier_config mcc="302" mnc="990" name="LineageOS 302990">
+  <carrier_config mcc="302" mnc="990" name="ESK CA">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.30801.a870b35e86b8 -->
   <carrier_config mcc="308" mnc="01" name="LineageOS 30801">
@@ -6688,8 +6778,11 @@
   <!-- open.310000.a08d6eb841ab -->
   <carrier_config mcc="310" mnc="000" name="Revol">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="cdma_3waycall_flash_delay_int" value="200" />
     <string name="httpParams">X-MDN: ##LINE1##|Proxy-Authorization: Basic ##NAI##</string>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="maxSubjectLength" value="80" />
     <int name="recipientLimit" value="40" />
@@ -6734,6 +6827,7 @@
     <boolean name="ims.enable_presence_publish_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
     <boolean name="ims.use_sip_uri_for_presence_subscribe_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="iwlan.epdg_pco_id_ipv4_int" value="65282" />
@@ -6896,6 +6990,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="120" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:n-way_voice@#HOME_DOMAIN#</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.att.net</string>
     <int name="maxImageHeight" value="1944" />
@@ -6979,6 +7074,7 @@
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <boolean name="rtt_supported_bool" value="true" />
   </carrier_config>
@@ -7012,9 +7108,12 @@
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <string-array name="read_only_apn_types_string_array" num="1">
@@ -7041,6 +7140,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <string name="httpParams">X-MDN: ##LINE1##|Proxy-Authorization: Basic ##NAI##</string>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageTextSize" value="-1" />
@@ -7125,6 +7225,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7157,6 +7258,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="120" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:n-way_voice@#HOME_DOMAIN#</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.att.net</string>
     <int name="maxImageHeight" value="1944" />
@@ -7172,11 +7274,6 @@
     <boolean name="support_video_conference_call_bool" value="true" />
     <int name="volte_replacement_rat_int" value="3" />
     <int name="wfc_spn_format_idx_int" value="1" />
-  </carrier_config>
-  <!-- open.310180.e91621927ed8 -->
-  <carrier_config mcc="310" mnc="180" name="310180">
-    <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.310190.d775960731f5 -->
   <carrier_config mcc="310" mnc="190" name="LineageOS 310190">
@@ -7209,6 +7306,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7246,6 +7344,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7284,6 +7383,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7322,6 +7422,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7359,6 +7460,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7397,6 +7499,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7467,6 +7570,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7505,6 +7609,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7536,6 +7641,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="120" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:n-way_voice@#HOME_DOMAIN#</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.att.net</string>
     <int name="maxImageHeight" value="1944" />
@@ -7597,7 +7703,6 @@
     <boolean name="enableMMSReadReports" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
-    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7641,6 +7746,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7741,6 +7847,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="120" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:n-way_voice@#HOME_DOMAIN#</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.att.net</string>
     <int name="maxImageHeight" value="1944" />
@@ -7803,6 +7910,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -7874,6 +7982,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="120" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:n-way_voice@#HOME_DOMAIN#</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.att.net</string>
     <int name="maxImageHeight" value="1944" />
@@ -7972,6 +8081,7 @@
     <boolean name="ims.enable_presence_publish_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
     <boolean name="ims.use_sip_uri_for_presence_subscribe_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="iwlan.epdg_pco_id_ipv4_int" value="65282" />
@@ -8273,6 +8383,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -8303,6 +8414,7 @@
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <boolean name="rtt_supported_bool" value="true" />
   </carrier_config>
@@ -8310,7 +8422,6 @@
   <carrier_config mcc="310" mnc="690" name="ADAT">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
-    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.31070.67414c4c2149 -->
   <carrier_config mcc="310" mnc="70" name="LineageOS 31070">
@@ -8408,6 +8519,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -8489,6 +8601,7 @@
       <item value="1014|call has been pulled by another device|1016" />
       <item value="*|Call is dropped due to Wi-Fi signal is degraded|1407" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="iwlan.epdg_pco_id_ipv4_int" value="65282" />
@@ -8586,7 +8699,7 @@
     <int name="smsToMmsTextThreshold" value="1" />
   </carrier_config>
   <!-- open.310950.3d3b802bdc5e -->
-  <carrier_config mcc="310" mnc="950" name="LineageOS 310950">
+  <carrier_config mcc="310" mnc="950" name="Att Us">
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
@@ -8637,13 +8750,6 @@
   <carrier_config mcc="310" mnc="990" name="Evolve Us">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
-  </carrier_config>
-  <!-- open.310999.7f1111ee582e -->
-  <carrier_config mcc="310" mnc="999" name="ATT US softphone">
-    <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="carrier_vt_available_bool" value="true" />
-    <boolean name="carrier_wfc_ims_available_bool" value="true" />
-    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.31100.a88da3df55a4 -->
   <carrier_config mcc="311" mnc="00" name="LineageOS 31100">
@@ -8716,11 +8822,6 @@
     <int name="maxSubjectLength" value="80" />
     <int name="recipientLimit" value="20" />
     <int name="smsToMmsTextThreshold" value="1" />
-  </carrier_config>
-  <!-- open.311080.3a4416c07a5b -->
-  <carrier_config mcc="311" mnc="080" name="311080">
-    <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.311100.b18c1c694ef4 -->
   <carrier_config mcc="311" mnc="100" name="311100">
@@ -8806,6 +8907,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8831,6 +8933,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8856,6 +8959,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8881,6 +8985,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8906,6 +9011,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8931,6 +9037,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8956,6 +9063,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -8981,6 +9089,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9006,6 +9115,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9031,6 +9141,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9121,6 +9232,7 @@
       <item value="1014|call has been pulled by another device|1016" />
       <item value="*|Call is dropped due to Wi-Fi signal is degraded|1407" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="iwlan.epdg_pco_id_ipv4_int" value="65282" />
@@ -9171,6 +9283,20 @@
     <boolean name="video_calls_can_be_hd_audio" value="false" />
     <boolean name="vt_upgrade_supported_for_downgraded_rtt_call" value="false" />
     <boolean name="wifi_calls_can_be_hd_audio" value="false" />
+  </carrier_config>
+  <!-- open.311278.a74a3bad4e51 -->
+  <carrier_config mcc="311" mnc="278" name="VZW US">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.311279.63a43b946298 -->
+  <carrier_config mcc="311" mnc="279" name="VZW US">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.311280.1e5e04c6ca8f -->
   <carrier_config mcc="311" mnc="280" name="Verizon Us">
@@ -9300,6 +9426,8 @@
   <carrier_config mcc="311" mnc="370" name="Gci Us">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="1048576" />
@@ -9543,6 +9671,7 @@
       <item value="510|Call completed elsewhere|1014" />
       <item value="*|Call is dropped due to Wi-Fi signal is degraded|1407" />
     </string-array>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -9579,6 +9708,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9604,6 +9734,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9629,6 +9760,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9654,6 +9786,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9679,6 +9812,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9704,6 +9838,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9729,6 +9864,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9754,6 +9890,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9779,6 +9916,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9805,6 +9943,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -9891,6 +10030,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">8881112663@msg.pc.t-mobile.com</string>
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
@@ -10033,6 +10173,7 @@
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="false" />
@@ -10040,6 +10181,7 @@
     <boolean name="enableMultipartSMS" value="true" />
     <boolean name="enabledMMS" value="true" />
     <string name="httpParams">X-MDN: ##LINE1##|Proxy-Authorization: Basic ##NAI##</string>
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageTextSize" value="-1" />
@@ -10066,6 +10208,7 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="false" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -10223,6 +10366,7 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="false" />
     <boolean name="ims.enable_presence_publish_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc260.mcc310.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -10463,6 +10607,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxSubjectLength" value="80" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -10822,6 +10967,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="recipientLimit" value="10" />
   </carrier_config>
@@ -10876,7 +11022,6 @@
   <!-- open.314200.8bdf85bbd9a4 -->
   <carrier_config mcc="314" mnc="200" name="Xfinitymso Us">
     <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
@@ -10909,7 +11054,6 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_override_wfc_provisioning_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
-    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="drop_video_call_when_answering_audio_call_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -10991,6 +11135,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc110.mcc330.pub.3gppnetwork.org</string>
     <int name="maxSubjectLength" value="80" />
@@ -11046,6 +11191,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="5" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.ims.mnc020.mcc334.pub.3gppnetwork.org</string>
     <int name="maxImageHeight" value="1944" />
@@ -11398,6 +11544,7 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <string-array name="read_only_apn_types_string_array" num="1">
@@ -11553,6 +11700,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11567,6 +11715,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -11581,6 +11730,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -11599,6 +11749,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11632,6 +11783,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11650,6 +11802,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11668,6 +11821,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -11703,6 +11857,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11721,6 +11876,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11754,6 +11910,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11773,6 +11930,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11806,6 +11964,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11820,6 +11979,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -11849,11 +12009,12 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.40420.a991ab603b1a -->
-  <carrier_config mcc="404" mnc="20" name="LineageOS 40420">
+  <carrier_config mcc="404" mnc="20" name="Vodafone In">
     <boolean name="allow_adding_apns_bool" value="true" />
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
@@ -11882,6 +12043,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11900,6 +12062,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11916,6 +12079,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -11954,6 +12118,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -11999,6 +12164,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12013,6 +12179,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12067,6 +12234,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12112,6 +12280,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12130,6 +12299,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12141,6 +12311,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12180,6 +12351,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12194,6 +12366,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12252,6 +12425,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12306,6 +12480,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12404,6 +12579,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12657,6 +12833,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12694,6 +12871,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12733,6 +12911,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12774,6 +12953,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12792,6 +12972,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12825,6 +13006,7 @@
     <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -12843,6 +13025,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -12854,6 +13037,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12877,6 +13061,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12891,6 +13076,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12905,6 +13091,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12919,6 +13106,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12933,6 +13121,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12947,6 +13136,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -12961,6 +13151,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13072,6 +13263,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13086,6 +13278,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13100,6 +13293,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13114,6 +13308,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13128,6 +13323,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13142,6 +13338,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="25" />
@@ -13158,6 +13355,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13172,6 +13370,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13188,6 +13387,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13201,11 +13401,12 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.405751.faee83e50bdc -->
-  <carrier_config mcc="405" mnc="751" name="LineageOS 405751">
+  <carrier_config mcc="405" mnc="751" name="Vodafone In">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
@@ -13214,6 +13415,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13227,6 +13429,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13240,6 +13443,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13253,6 +13457,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13266,6 +13471,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13279,6 +13485,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13295,6 +13502,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13391,6 +13599,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13411,6 +13620,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13427,6 +13637,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13453,6 +13664,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13469,6 +13681,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13485,6 +13698,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13511,6 +13725,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13527,6 +13742,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -13558,6 +13774,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13593,6 +13810,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13628,6 +13846,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13663,6 +13882,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13698,6 +13918,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13733,6 +13954,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13768,6 +13990,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13804,6 +14027,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="rtt_supported_bool" value="true" />
@@ -13843,6 +14067,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13878,6 +14103,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13913,6 +14139,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13948,6 +14175,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -13983,6 +14211,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14018,6 +14247,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14053,6 +14283,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14088,6 +14319,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14123,6 +14355,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14158,6 +14391,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14193,6 +14427,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14228,6 +14463,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -14264,6 +14500,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">vowifi.jio.com</string>
     <boolean name="rtt_supported_bool" value="true" />
@@ -14871,6 +15108,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc002.mcc424.etisalat.ae</string>
     <int name="maxMessageSize" value="512000" />
     <int name="recipientLimit" value="20" />
@@ -15156,6 +15394,12 @@
   <carrier_config mcc="432" mnc="11" name="43211">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.43235.b81c89783ddf -->
+  <carrier_config mcc="432" mnc="35" name="43235">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.43404.9de873fa9deb -->
   <carrier_config mcc="434" mnc="04" name="43404">
@@ -15702,6 +15946,7 @@
   <carrier_config mcc="450" mnc="03" name="LineageOS 45003">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
   <!-- open.45004.fc30a29117af -->
@@ -15771,6 +16016,7 @@
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxSubjectLength" value="80" />
@@ -15809,6 +16055,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxSubjectLength" value="80" />
@@ -16503,6 +16750,7 @@
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -16575,6 +16823,7 @@
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -16655,6 +16904,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -16674,6 +16924,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -16711,6 +16962,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
@@ -16744,6 +16996,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -16765,6 +17018,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
     <boolean name="support_ims_conference_call_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="false" />
@@ -16811,6 +17065,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
     <boolean name="support_ims_conference_call_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="false" />
@@ -16831,6 +17086,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -16853,6 +17109,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -16872,10 +17129,17 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="50" />
     <int name="smsToMmsTextThreshold" value="10" />
     <boolean name="support_video_conference_call_bool" value="false" />
+  </carrier_config>
+  <!-- open.46010.c487cc3be2a5 -->
+  <carrier_config mcc="460" mnc="10" name="CMCC CN">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.46011.1945ed7d34b9 -->
   <carrier_config mcc="460" mnc="11" name="LineageOS 46011">
@@ -16904,6 +17168,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="recipientLimit" value="10" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -16941,6 +17206,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <int name="volte_replacement_rat_int" value="6" />
   </carrier_config>
@@ -16963,6 +17229,7 @@
     <boolean name="enableGroupMms" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
     <boolean name="support_ims_conference_call_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="false" />
@@ -16981,6 +17248,7 @@
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="false" />
   </carrier_config>
   <!-- open.46019.1905d8ef05a4 -->
@@ -16991,6 +17259,12 @@
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="show_ims_registration_status_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
+  </carrier_config>
+  <!-- open.46020.b94fc3221059 -->
+  <carrier_config mcc="460" mnc="20" name="CMCC">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.46030.37096e4f1be2 -->
   <carrier_config mcc="460" mnc="30" name="LineageOS 46030">
@@ -17006,9 +17280,10 @@
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.46059.6760b77c9566 -->
-  <carrier_config mcc="460" mnc="59" name="Sony Open Devices AOSP 46059">
+  <carrier_config mcc="460" mnc="59" name="CTC CN">
     <boolean name="allow_adding_apns_bool" value="true" />
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
@@ -17035,6 +17310,7 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
     <int name="volte_replacement_rat_int" value="6" />
@@ -17543,6 +17819,7 @@
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
     <int name="maxMessageSize" value="512000" />
     <int name="recipientLimit" value="20" />
@@ -17831,6 +18108,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">mmtel@conf-factory.ims.mnc002.mcc515.3gppnetwork.org</string>
     <string name="iwlan.epdg_static_address_string">weconnect.globe.com.ph</string>
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -18552,6 +18830,7 @@
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
   <!-- open.62124.2685ffc06ecf -->
@@ -19076,10 +19355,11 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.71021.0bfeaac70f96 -->
-  <carrier_config mcc="710" mnc="21" name="LineageOS 71021">
+  <carrier_config mcc="710" mnc="21" name="Claro NI">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
@@ -19190,6 +19470,7 @@
   <carrier_config mcc="714" mnc="03" name="LineageOS 71403">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
@@ -19243,6 +19524,7 @@
     <boolean name="hide_ims_apn_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="maxSubjectLength" value="80" />
@@ -19309,6 +19591,8 @@
   <!-- open.72231.d67e4e6019c7 -->
   <carrier_config mcc="722" mnc="31" name="Claro Ar">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.722310.6f995bf5e26a -->
   <carrier_config mcc="722" mnc="310" name="Claro Ar">
@@ -19319,6 +19603,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <string-array name="read_only_apn_types_string_array" num="1">
@@ -19330,9 +19615,11 @@
   <carrier_config mcc="722" mnc="34" name="Personal">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
   <!-- open.722340.70faf0df2a81 -->
@@ -19342,7 +19629,10 @@
   <!-- open.722341.d00a0876d7ec -->
   <carrier_config mcc="722" mnc="341" name="Personal">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
   <!-- open.72402.50b08008a919 -->
@@ -19353,6 +19643,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">tel:1234</string>
     <int name="maxMessageSize" value="614400" />
     <int name="recipientLimit" value="10" />
@@ -19371,6 +19662,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">tel:1234</string>
     <int name="maxMessageSize" value="614400" />
     <int name="recipientLimit" value="10" />
@@ -19383,6 +19675,7 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">tel:1234</string>
     <int name="maxMessageSize" value="614400" />
     <int name="recipientLimit" value="10" />
@@ -19395,6 +19688,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="recipientLimit" value="33" />
@@ -19417,6 +19711,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc006.mcc724.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -19437,6 +19732,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc006.mcc724.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -19459,6 +19755,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc006.mcc724.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -19496,6 +19793,7 @@
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc006.mcc724.pub.3gppnetwork.org</string>
     <int name="maxMessageSize" value="307200" />
     <int name="wfc_spn_format_idx_int" value="1" />
@@ -19505,6 +19803,12 @@
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="*" />
     </string-array>
+  </carrier_config>
+  <!-- open.72426.6a7624afb825 -->
+  <carrier_config mcc="724" mnc="26" name="Americanet BR">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.72429.83765bc7109e -->
   <carrier_config mcc="724" mnc="29" name="LineageOS 72429">
@@ -19517,7 +19821,7 @@
     <boolean name="hide_ims_apn_bool" value="false" />
   </carrier_config>
   <!-- open.72431.8965faeb82b3 -->
-  <carrier_config mcc="724" mnc="31" name="LineageOS 72431">
+  <carrier_config mcc="724" mnc="31" name="Oi Br">
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <int name="maxMessageSize" value="307200" />
@@ -19539,6 +19843,12 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
+  </carrier_config>
+  <!-- open.72489.4b629c83caab -->
+  <carrier_config mcc="724" mnc="89" name="Vivo BR">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.73001.7bb2a6c49f77 -->
   <carrier_config mcc="730" mnc="01" name="LineageOS 73001">
@@ -19622,6 +19932,8 @@
   <carrier_config mcc="730" mnc="23" name="LineageOS 73023">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
   </carrier_config>
   <!-- open.73026.c4507f773ee7 -->
@@ -19644,6 +19956,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
     <int name="smsToMmsTextThreshold" value="12" />
@@ -19654,7 +19967,9 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:mmtel@conf-factory.ims.tigo.com.co</string>
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="*" />
@@ -19666,7 +19981,9 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">sip:mmtel@conf-factory.ims.tigo.com.co</string>
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="*" />
@@ -19789,9 +20106,11 @@
   <carrier_config mcc="740" mnc="01" name="LineageOS 74001">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_conference_size_limit_int" value="6" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxMessageSize" value="153600" />
     <string-array name="read_only_apn_types_string_array" num="1">
@@ -25951,6 +26270,7 @@
     <boolean name="enabledTransID" value="true" />
     <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="-1" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
@@ -27297,8 +27617,6 @@
   <!-- open.21405.eb544ac76671 -->
   <carrier_config mcc="214" mnc="05" name="Tuenti" spn="\QTuenti\E">
     <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="carrier_vt_available_bool" value="true" />
-    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
@@ -28549,6 +28867,24 @@
   <!-- open.23408.2ce3386cb332 -->
   <carrier_config mcc="234" mnc="08" name="BT OnePhone" spn="\QBT OnePhone\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.23410.53a811434bf2 -->
+  <carrier_config imsi="23410995[0-9]*" mcc="234" mnc="10" name="TelefonicaLAB GB">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.23410.95779588a508 -->
+  <carrier_config imsi="23410259[0-9]*" mcc="234" mnc="10" name="TelefonicaLAB GB">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.23410.ba2b780a86c0 -->
+  <carrier_config imsi="23410997[0-9]*" mcc="234" mnc="10" name="TelefonicaLAB GB">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.23410.a99164a40baf -->
   <carrier_config mcc="234" mnc="10" name="23410Spn=Jump" spn="\QJUMP\E">
