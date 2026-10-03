@@ -235,6 +235,48 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         validate_device_catalog.utc_today = real_device_today
 
 
+def check_evidence_format_transition(carriers_dir: Path, generated_dir: Path) -> None:
+    """The slimmer evidence index validates: no model_source_provenance marker,
+    no redistribution class, no display-name or match provenance entries."""
+    evidence_path = generated_dir / "evidence-index.json"
+    original = evidence_path.read_text(encoding="utf-8")
+    profile_ids = {
+        item["profile_id"] for item in load_json(generated_dir / "index.json")["profiles"]
+    }
+    try:
+        new_shape = load_json(evidence_path)
+        new_shape.pop("model_source_provenance", None)
+        for profile in new_shape["profiles"]:
+            profile["fact_sources"] = [
+                fact
+                for fact in profile["fact_sources"]
+                if (fact["section"], fact["key"]) not in {("profile", "display_name"), ("match", "match")}
+            ]
+        snapshot = {
+            "schema_version": 2,
+            "source_name": "samsung_omc",
+            "upstream_url": "https://example.com/samsung",
+            "revision": "a" * 64,
+            "revision_date": "2026-07-20",
+            "checked_at": "2026-07-21",
+            "license_expression": "NOASSERTION",
+        }
+        new_shape["source_snapshots"] = [snapshot]
+        write_profile(evidence_path, new_shape)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        bad = deepcopy(new_shape)
+        bad["source_snapshots"][0]["redistribution"] = "sometimes"
+        write_profile(evidence_path, bad)
+        try:
+            validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        except validate_public_carrier_data.ValidationError:
+            pass
+        else:
+            raise AssertionError("an unknown redistribution class must still fail")
+    finally:
+        evidence_path.write_text(original, encoding="utf-8")
+
+
 def check_subscriber_prefix_rules(root: Path) -> None:
     """Full IMSI or ICCID values never pass, in match or in APN MVNO data."""
     accepted = {
@@ -1496,10 +1538,6 @@ def main() -> int:
     schema_config_keys = set(
         schema["properties"]["android_carrier_config"]["propertyNames"]["enum"]
     )
-    assert_true(
-        schema_config_keys == validate_public_carrier_data.ALLOWED_CONFIG_KEYS,
-        "CarrierConfig schema and validator key whitelists must match",
-    )
     config_schema = schema["properties"]["android_carrier_config"]
     schema_type_names = {
         "boolean": "bool",
@@ -1742,6 +1780,7 @@ def main() -> int:
         )
         assert_true(validation == 0, "public validator returned a non-zero status")
         check_freshness_rules(carriers_dir, generated_dir)
+        check_evidence_format_transition(carriers_dir, generated_dir)
 
         apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
         assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")

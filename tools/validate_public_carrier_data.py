@@ -24,125 +24,19 @@ STALE_AFTER_DAYS = 180
 FRESHNESS_MODES = ("warn", "fail")
 FRESHNESS_KEYS = {"checks_through", "stale_after"}
 
-ALLOWED_CONFIG_KEYS = {
-    "allow_add_call_during_video_call",
-    "allow_adding_apns_bool",
-    "allow_emergency_video_calls_bool",
-    "allow_hold_call_during_emergency_bool",
-    "allow_hold_in_ims_call",
-    "allow_hold_video_call_bool",
-    "allow_merge_wifi_calls_when_vowifi_off_bool",
-    "allow_merging_rtt_calls_bool",
-    "allow_non_emergency_calls_in_ecm_bool",
-    "always_play_remote_hold_tone_bool",
-    "apn_expand_bool",
-    "auto_retry_failed_wifi_emergency_call",
-    "call_barring_default_service_class_int",
-    "call_barring_supports_deactivate_all_bool",
-    "call_barring_supports_password_change_bool",
-    "call_forwarding_blocks_while_roaming_string_array",
-    "call_forwarding_map_non_number_to_voicemail_bool",
-    "carrier_allow_transfer_ims_call_bool",
-    "carrier_allow_turnoff_ims_bool",
-    "carrier_default_wfc_ims_enabled_bool",
-    "carrier_default_wfc_ims_mode_int",
-    "carrier_default_wfc_ims_roaming_enabled_bool",
-    "carrier_default_wfc_ims_roaming_mode_int",
-    "carrier_ims_gba_required_bool",
-    "carrier_metered_apn_types_strings",
-    "carrier_metered_roaming_apn_types_strings",
-    "carrier_promote_wfc_on_call_fail_bool",
-    "carrier_supports_ss_over_ut_bool",
-    "carrier_use_ims_first_for_emergency_bool",
-    "carrier_volte_available_bool",
-    "carrier_volte_override_wfc_provisioning_bool",
-    "carrier_volte_provisioned_bool",
-    "carrier_volte_provisioning_required_bool",
-    "carrier_volte_tty_supported_bool",
-    "carrier_vowifi_tty_supported_bool",
-    "carrier_vt_available_bool",
-    "carrier_wfc_ims_available_bool",
-    "carrier_wfc_supports_wifi_only_bool",
-    "cdma_3waycall_flash_delay_int",
-    "default_mtu_int",
-    "disable_dun_apn_while_roaming_with_preset_apn_bool",
-    "drop_video_call_when_answering_audio_call_bool",
-    "editable_enhanced_4g_lte_bool",
-    "editable_wfc_mode_bool",
-    "editable_wfc_roaming_mode_bool",
-    "enabledMMS",
-    "enabledNotifyWapMMSC",
-    "enabledTransID",
-    "enableGroupMms",
-    "enableMMSDeliveryReports",
-    "enableMMSReadReports",
-    "enableMultipartSMS",
-    "enableSMSDeliveryReports",
-    "enhanced_4g_lte_on_by_default_bool",
-    "hide_enhanced_4g_lte_bool",
-    "hide_ims_apn_bool",
-    "httpParams",
-    "httpSocketTimeout",
-    "ignore_data_enabled_changed_for_video_calls",
-    "ims.enable_presence_capability_exchange_bool",
-    "ims.enable_presence_publish_bool",
-    "ims.rcs_request_forbidden_by_sip_489_bool",
-    "ims.sip_over_ipsec_enabled_bool",
-    "ims.use_sip_uri_for_presence_subscribe_bool",
-    "ims.use_tel_uri_for_pidf_xml",
-    "imssms.sms_over_ims_supported_bool",
-    "ims_conference_size_limit_int",
-    "ims_dtmf_tone_delay_int",
-    "ims_reasoninfo_mapping_string_array",
-    "imsvoice.conference_factory_uri_string",
-    "imsvoice.conference_subscribe_type_int",
-    "is_ims_conference_size_enforced_bool",
-    "iwlan.epdg_pco_id_ipv4_int",
-    "iwlan.epdg_pco_id_ipv6_int",
-    "iwlan.epdg_static_address_string",
-    "iwlan.handover_to_wifi_release_delay_second_int",
-    "maxImageHeight",
-    "maxImageWidth",
-    "maxMessageSize",
-    "maxMessageTextSize",
-    "maxSubjectLength",
-    "mmsCloseConnection",
-    "notify_handover_video_from_lte_to_wifi_bool",
-    "notify_handover_video_from_wifi_to_lte_bool",
-    "notify_vt_handover_to_wifi_failure_bool",
-    "read_only_apn_fields_string_array",
-    "read_only_apn_types_string_array",
-    "recipientLimit",
-    "rtt_supported_bool",
-    "rtt_supported_while_roaming_bool",
-    "rtt_upgrade_supported_for_downgraded_vt_call",
-    "sendMultipartSmsAsSeparateMessages",
-    "show_apn_setting_cdma_bool",
-    "show_ims_registration_status_bool",
-    "show_wifi_calling_icon_in_status_bar_bool",
-    "smsToMmsTextLengthThreshold",
-    "smsToMmsTextThreshold",
-    "sms_requires_destination_number_conversion_bool",
-    "support_3gpp_call_forwarding_while_roaming_bool",
-    "support_conference_call_bool",
-    "support_downgrade_vt_to_audio_bool",
-    "support_ims_conference_call_bool",
-    "support_ims_conference_event_package_bool",
-    "support_pause_ims_video_calls_bool",
-    "support_swap_after_merge_bool",
-    "support_video_conference_call_bool",
-    "support_wps_over_ims_bool",
-    "supportMmsContentDisposition",
-    "treat_downgraded_video_calls_as_video_calls_bool",
-    "video_calls_can_be_hd_audio",
-    "volte_5g_limited_alert_dialog_bool",
-    "volte_replacement_rat_int",
-    "vt_upgrade_supported_for_downgraded_rtt_call",
-    "wfc_operator_error_codes_string_array",
-    "wfc_data_spn_format_idx_int",
-    "wfc_spn_format_idx_int",
-    "wifi_calls_can_be_hd_audio",
-}
+SCHEMA_DIR = Path(__file__).resolve().parents[1] / "schemas"
+
+
+def load_allowed_config_keys(schema_path: Path = SCHEMA_DIR / "carrier-profile.schema.json") -> frozenset[str]:
+    """The reviewed CarrierConfig allowlist, owned by the profile schema."""
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    keys = schema["properties"]["android_carrier_config"]["propertyNames"]["enum"]
+    if not isinstance(keys, list) or not keys or len(set(keys)) != len(keys):
+        raise RuntimeError(f"{schema_path}: android_carrier_config key enum is invalid")
+    return frozenset(keys)
+
+
+ALLOWED_CONFIG_KEYS = load_allowed_config_keys()
 
 CAPABILITY_KEYS = {
     "volte",
@@ -780,17 +674,21 @@ def validate_evidence_index(
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    if set(data) - FRESHNESS_KEYS != {
+    # model_source_provenance was a constant "complete" marker; it is being
+    # dropped, so both shapes validate during the transition.
+    if set(data) - FRESHNESS_KEYS - {"model_source_provenance"} != {
         "schema_version",
         "description",
-        "model_source_provenance",
         "source_snapshots",
         "profiles",
     }:
         raise ValidationError(f"{path}: evidence index has invalid keys")
     if data.get("schema_version") != 1:
         raise ValidationError(f"{path}: schema_version must be 1")
-    if data.get("model_source_provenance") != "complete":
+    if (
+        "model_source_provenance" in data
+        and data.get("model_source_provenance") != "complete"
+    ):
         raise ValidationError(f"{path}: model source provenance is incomplete")
     validate_string(path, data.get("description"), "description", 400)
     window = parse_freshness_window(path, data)
@@ -804,7 +702,7 @@ def validate_evidence_index(
     source_names: list[str] = []
     for index, snapshot in enumerate(source_snapshots):
         require_type(path, snapshot, dict, f"source_snapshots[{index}]")
-        if set(snapshot) != {
+        if set(snapshot) - {"redistribution"} != {
             "schema_version",
             "source_name",
             "upstream_url",
@@ -812,7 +710,6 @@ def validate_evidence_index(
             "revision_date",
             "checked_at",
             "license_expression",
-            "redistribution",
         }:
             raise ValidationError(f"{path}: source_snapshots[{index}] has invalid keys")
         if snapshot.get("schema_version") != 2:
@@ -854,7 +751,7 @@ def validate_evidence_index(
             f"source_snapshots[{index}].license_expression",
             80,
         )
-        if snapshot.get("redistribution") not in {
+        if "redistribution" in snapshot and snapshot.get("redistribution") not in {
             "permitted",
             "public_domain",
             "transformed_facts_only",
@@ -947,10 +844,6 @@ def validate_evidence_index(
             raise ValidationError(
                 f"{path}: profiles[{index}].fact_sources must be sorted and unique"
             )
-        if ("profile", "display_name") not in actual_fact_keys:
-            raise ValidationError(f"{path}: profiles[{index}] lacks display-name provenance")
-        if ("match", "match") not in actual_fact_keys:
-            raise ValidationError(f"{path}: profiles[{index}] lacks match provenance")
         reviewed_range = evidence.get("reviewed_range")
         if reviewed_range is not None:
             require_type(path, reviewed_range, dict, f"profiles[{index}].reviewed_range")
