@@ -801,6 +801,59 @@ def check_country_apns() -> None:
         )
 
 
+def check_apn_value_rules(root: Path) -> None:
+    """The validator refuses values a phone cannot use: control characters or
+    padding in strings, an MMSC without a scheme, and an mms row whose APN has
+    no MMSC in the profile."""
+
+    def profile(*apns: dict, spn: str = "Example", display_name: str = "Example") -> dict:
+        value = {
+            "schema_version": 1,
+            "display_name": display_name,
+            "match": {"mccmnc": ["26202"], "spn": [spn]},
+            "capabilities": {},
+            "android_apns": list(apns),
+        }
+        value["profile_id"] = validate_public_carrier_data.canonical_profile_id(value["match"])
+        return value
+
+    def row(apn: str = "internet", types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": "Internet", "apn": apn, "types": sorted(types), **extra}
+
+    def accepted(value: dict) -> None:
+        validate_public_carrier_data.validate_profile_object(root / "value.json", value)
+
+    def rejected(value: dict, message: str) -> None:
+        try:
+            accepted(value)
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    accepted(profile(row(), row("mms", ("mms",), mmsc="http://10.0.0.1:8002/mms")))
+    accepted(
+        profile(
+            row("internet", ("default", "mms"), protocol="IPV4V6"),
+            row("internet", ("mms",), mmsc="https://mms.example"),
+        )
+    )
+    rejected(profile(row(), spn="C Spire\r"), "a carriage return in an SPN")
+    rejected(profile(row(), display_name=" Example"), "a padded display name")
+    rejected(profile(row(mvno_type="spn", mvno_match_data="C Spire\r")), "a carriage return in mvno_match_data")
+    rejected(profile(row("internet\t")), "a tab in an APN")
+    for mmsc in ("208.254.124.11:8514", "mms.iliad.it", "http:/mms.example", "http:// 10.0.0.1", "null"):
+        rejected(profile(row("mms", ("mms",), mmsc=mmsc)), f"the MMSC {mmsc!r}")
+    rejected(profile(row("internet", ("default", "mms"))), "an mms row without an MMSC")
+    rejected(profile(row("internet", ("*",))), "a wildcard row serves mms and needs an MMSC")
+    rejected(
+        profile(
+            row("internet", ("default", "mms")),
+            row("internet", ("mms",), mmsc="http://mms.example", mvno_type="spn", mvno_match_data="Other"),
+        ),
+        "the MMSC must come from a row of the same MVNO selector",
+    )
+
+
 def check_apn_ranking() -> None:
     """Android tries a scope's rows in file order, so each scope is ordered by
     the evidence behind its rows, rows Android treats as one are collapsed,
@@ -2263,6 +2316,7 @@ def main() -> int:
                         "name": "mvno",
                         "apn": "mvno.example",
                         "types": ["*"],
+                        "mmsc": "http://mms.mvno.example",
                     }
                 ],
             },
@@ -2747,6 +2801,9 @@ def main() -> int:
     print("per-country APN export tests passed")
     check_apn_ranking()
     print("APN ranking tests passed")
+    with tempfile.TemporaryDirectory() as tmp:
+        check_apn_value_rules(Path(tmp))
+    print("APN value rule tests passed")
     return 0
 
 

@@ -97,14 +97,14 @@ An add-on value is a boolean, an integer from -1000000 to 1000000, or a string o
 
 ## APN row fields
 
-`android_apns` is an array of rows. Each row needs `name`, `apn`, and `types`. The schema allows no other keys than the ones below.
+`android_apns` is an array of rows. Each row needs `name`, `apn`, and `types`. The schema allows no other keys than the ones below. No string holds a control character or surrounding whitespace. A row that serves `mms`, or `*`, needs an MMSC, its own or one on another `mms` row of the same APN and MVNO selector in the profile. The validator checks both.
 
 | Field | Type | Rule |
 | --- | --- | --- |
 | `name` | string | 1 to 80 characters, required |
 | `apn` | string | 1 to 120 characters, required |
 | `types` | array of strings | required, unique, from the type list below |
-| `mmsc` | string | up to 240 characters |
+| `mmsc` | string | up to 240 characters, a URL with a scheme such as `http://` |
 | `mmsproxy` | string | up to 120 characters |
 | `mmsport` | integer | 1 to 65535 |
 | `proxy` | string | up to 120 characters |
@@ -178,7 +178,7 @@ Each `profiles` record describes one carrier profile.
 | `newest_entry` | some records | month (`YYYY-MM`) of the newest upstream entry behind the profile, present only when every observation is dated |
 | `capability_newest_entries` | some records | capability name to the month of the newest upstream entry behind that published capability, present only when every supporting observation is dated |
 | `conflicts` | some records | facts omitted, made conditional, or published in every variant because sources disagreed |
-| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
+| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, the `mms` type of a row without an MMSC by `mms_without_mmsc`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
 | `source_versions` | some records | per source family, the exact builds, commits, or Apple bundle and iOS versions the observations were read from |
 
 The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digits of the SHA-256 of the row as compact JSON: the row without `name`, `types` set to the one type, keys sorted, no spaces, non-ASCII characters escaped. In Python that is `json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`. `apn_fact_key` in `tools/generate_android_outputs.py` computes it, and the generator uses it to order APN rows.
