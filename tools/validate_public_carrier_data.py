@@ -709,6 +709,35 @@ def validate_entry_dates(
             )
 
 
+STALE_CAPABILITY_GATE = "stale_single_source_entry"
+
+
+def validate_stale_capability_gates(
+    path: Path,
+    gates: list[dict[str, Any]],
+    index: int,
+    capabilities: dict[str, str] | None,
+) -> None:
+    """A capability withheld because its only source family's newest entry is
+    over five years old names a real capability that the profile publishes as
+    unknown."""
+    for gate_index, gate in enumerate(gates):
+        name, _, capability = gate["key"].partition(":")
+        if name != STALE_CAPABILITY_GATE:
+            continue
+        label = f"profiles[{index}].quality_gates[{gate_index}]"
+        if (
+            gate["section"] != "capabilities"
+            or capability not in CAPABILITY_KEYS
+            or gate["resolution"] != "omitted_from_stable"
+        ):
+            raise ValidationError(f"{path}: {label} is not a valid stale capability gate")
+        if capabilities is not None and capabilities.get(capability, "unknown") != "unknown":
+            raise ValidationError(
+                f"{path}: {label} withholds {capability}, but the profile publishes it"
+            )
+
+
 def validate_evidence_index(
     path: Path,
     expected_profile_ids: set[str],
@@ -965,6 +994,12 @@ def validate_evidence_index(
                 evidence["quality_gates"],
                 "quality_gate",
                 f"profiles[{index}].quality_gates",
+            )
+            validate_stale_capability_gates(
+                path,
+                evidence["quality_gates"],
+                index,
+                None if profile_capabilities is None else profile_capabilities.get(profile_id),
             )
     if actual_profile_ids != sorted(actual_profile_ids):
         raise ValidationError(f"{path}: profiles must be sorted by profile_id")
