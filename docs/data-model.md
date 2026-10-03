@@ -59,7 +59,7 @@ Every capability takes one of four values.
 | `supported` | sources agree the feature works |
 | `unsupported` | sources agree the feature is off |
 | `conditional` | sources disagree, or the value depends on device scope |
-| `unknown` | no source says |
+| `unknown` | no source says, or the only source family's newest entry is older than five years |
 
 ## Android carrier config
 
@@ -175,9 +175,11 @@ Each `profiles` record describes one carrier profile.
 | `observed_scope` | some records | device and firmware scope of the observations |
 | `observed_model_source_groups` | some records | `models` and `sources` pairs when a model was named by fewer sources than the profile |
 | `reviewed_range` | some records | `oldest` and `newest` review dates |
+| `newest_entry` | some records | month (`YYYY-MM`) of the newest upstream entry behind the profile, present only when every observation is dated |
+| `capability_newest_entries` | some records | capability name to the month of the newest upstream entry behind that published capability, present only when every supporting observation is dated |
 | `conflicts` | some records | facts omitted, made conditional, or published in every variant because sources disagreed |
-| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn` |
+| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
 
 `observed_scope` can hold `models`, `android_majors`, `firmware_builds`, `firmware_regions`, `sales_codes`, `multi_csc`, `omc_revisions`, `omc_versions`, and `source_layers`. `source_layers` is `firmware_baseline` or `gras_delta`.
 
-Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, ordered by APN. [how-it-is-built.md](how-it-is-built.md) explains both rules.
+Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, ordered by APN. A `stale_single_source_entry:<capability>` gate names a capability the profile publishes as `unknown`; the validator checks that. [how-it-is-built.md](how-it-is-built.md) explains both rules.

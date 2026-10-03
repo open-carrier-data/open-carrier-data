@@ -22,7 +22,7 @@ The first three stages live in the private repo. Since 2026-09-24 a weekly GitHu
 
 ## Sources become candidate observations
 
-A source family is one upstream. Examples are the LineageOS APN repo, Apple's carrier bundle index, or a Samsung firmware baseline. An importer reads the upstream and writes candidate observations. Each observation records one carrier match set, the facts seen, the source family, the upstream revision, and the date automation checked it. Raw source material stays in the private repo.
+A source family is one upstream. Examples are the LineageOS APN repo, Apple's carrier bundle index, or a Samsung firmware baseline. An importer reads the upstream and writes candidate observations. Each observation records one carrier match set, the facts seen, the source family, the upstream revision, the date automation checked it, and, where it can be found, the date of the newest upstream entry behind it. Raw source material stays in the private repo.
 
 [SOURCES.md](../SOURCES.md) lists every source family and its terms.
 
@@ -38,6 +38,7 @@ The sanitizer groups observations and applies fixed rules. The rules are:
 - Empty profiles are dropped. A profile left with no APN, no CarrierConfig, no add-on, and no known capability is not written. The sanitization report counts these as `empty_profile_count`.
 - Conditional capabilities. Capabilities are the one exception. A disagreement becomes `conditional` instead of an omission.
 - Corroboration for generic APNs. A low-confidence generic APN row needs a second source or a primary maintained APN source. Otherwise the `uncorroborated_generic_apn` gate drops it.
+- Old single-source capabilities. A capability that rests on one source family is published as `unknown` when the newest upstream entry behind it is older than five years. The evidence index records the gate as `stale_single_source_entry:<capability>`. An entry whose date is unknown never counts as old. APN rows and CarrierConfig values are not withheld for age.
 - No source-branded duplicates. A source name never becomes its own profile. Samsung and Apple observations for the same match set land in the same neutral profile.
 - Certification test profiles are quarantined. A name starting with GCF, PTCRB, or Testbed, or a Samsung `network_type_capability` starting with `GCF-`, gets the reason `certification_test_profile`. The rule is `is_certification_test_profile` in the private sanitizer, `tools/sanitize_profiles.py`.
 
@@ -72,6 +73,20 @@ Stale is worse than missing. A missing APN row makes a phone fall back to its ow
 ```bash
 python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
 ```
+
+## How old the entries behind a fact are
+
+A check date says when automation last confirmed a source. It does not say how old the entries inside that source are. A source checked last week can still carry an APN row last changed in 2010.
+
+So each observation also records the date of the newest upstream entry behind it. An entry is one APN row, one provider block, one CarrierConfig file or block, one Pixel carrier file, one Apple bundle, or one Samsung CSC package. The git-based lanes use the first day they saw the entry's current content, seeded from git history. Apple uses the publish date in the bundle's download URL from Apple's index. Samsung uses the build month in the CSC build string. Every date is the latest possible one, so an age read from it is a minimum. When no date can be found, none is published.
+
+The evidence index publishes the result to the month. `newest_entry` is the newest entry behind a profile. `capability_newest_entries` gives it for each published capability. Both appear only where every supporting observation is dated. Run this command to print the oldest capabilities that are still published:
+
+```bash
+python3 -c 'import json; e=json.load(open("generated/evidence-index.json")); print(*sorted((d, k, p["profile_id"]) for p in e["profiles"] for k, d in p.get("capability_newest_entries", {}).items())[:10], sep="\n")'
+```
+
+Old is not always wrong. Where an old and a fresh entry spoke about the same fact on 2026-10-03, they agreed on VoLTE 98 percent of the time, but only 88 percent on VoWiFi and 80 percent on video calling. That is why a capability with only old evidence from one source family is published as `unknown`, and why APN rows and CarrierConfig values, which agreed more often, only show their age.
 
 ## What the public repo checks
 

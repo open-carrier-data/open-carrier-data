@@ -300,6 +300,30 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
             dated(newest_entry="2019-02", capability_newest_entries={"mms": "2019-03"}),
             "a capability date newer than the profile's newest_entry passed",
         )
+
+        def gate(key: str, section: str = "capabilities") -> dict:
+            return {
+                "kind": "quality_gate",
+                "section": section,
+                "key": key,
+                "observed_value_count": 1,
+                "resolution": "omitted_from_stable",
+            }
+
+        validate(dated(quality_gates=[gate("stale_single_source_entry:vonr")]))
+        validate(dated(quality_gates=[gate("uncorroborated_generic_apn", "android_apns")]))
+        expect_failure(
+            dated(quality_gates=[gate("stale_single_source_entry:mms")]),
+            "a stale gate for a capability the profile still publishes passed",
+        )
+        expect_failure(
+            dated(quality_gates=[gate("stale_single_source_entry:telepathy")]),
+            "a stale gate for an unknown capability name passed",
+        )
+        expect_failure(
+            dated(quality_gates=[gate("stale_single_source_entry:vonr", "android_apns")]),
+            "a stale gate outside the capabilities section passed",
+        )
     finally:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
