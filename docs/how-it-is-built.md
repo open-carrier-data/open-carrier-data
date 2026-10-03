@@ -41,7 +41,7 @@ The sanitizer groups observations and applies fixed rules. The rules are:
 - No source-branded duplicates. A source name never becomes its own profile. Samsung and Apple observations for the same match set land in the same neutral profile.
 - Certification test profiles are quarantined. A name starting with GCF, PTCRB, or Testbed, or a Samsung `network_type_capability` starting with `GCF-`, gets the reason `certification_test_profile`. The rule is `is_certification_test_profile` in the private sanitizer, `tools/sanitize_profiles.py`.
 
-The evidence index keeps `fact_sources` per exported fact. A profile-wide source list is not proof for every field. Check the fact, not the profile.
+The evidence index lists `fact_sources` for every exported fact whose sources are narrower than the profile's `sources`; a fact without an entry rests on all of them. A profile-wide source list is not proof for every field. Check the fact, not the profile.
 
 ## Why profiles are neutral
 

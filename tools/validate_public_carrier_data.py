@@ -166,15 +166,9 @@ REQUIRED_GENERATED_FILES = {
 
 ADDON_NAMESPACES = {
     "emergency_calling",
-    "entitlement",
-    "euc",
     "ims",
-    "messaging",
     "network_policy",
     "operator_display",
-    "presence",
-    "provisioning",
-    "rcs",
     "wifi_calling",
 }
 
@@ -674,9 +668,7 @@ def validate_evidence_index(
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    # model_source_provenance was a constant "complete" marker; it is being
-    # dropped, so both shapes validate during the transition.
-    if set(data) - FRESHNESS_KEYS - {"model_source_provenance"} != {
+    if set(data) - FRESHNESS_KEYS != {
         "schema_version",
         "description",
         "source_snapshots",
@@ -685,11 +677,6 @@ def validate_evidence_index(
         raise ValidationError(f"{path}: evidence index has invalid keys")
     if data.get("schema_version") != 1:
         raise ValidationError(f"{path}: schema_version must be 1")
-    if (
-        "model_source_provenance" in data
-        and data.get("model_source_provenance") != "complete"
-    ):
-        raise ValidationError(f"{path}: model source provenance is incomplete")
     validate_string(path, data.get("description"), "description", 400)
     window = parse_freshness_window(path, data)
     if index_window is not None and window is not None and window != index_window:
@@ -702,7 +689,7 @@ def validate_evidence_index(
     source_names: list[str] = []
     for index, snapshot in enumerate(source_snapshots):
         require_type(path, snapshot, dict, f"source_snapshots[{index}]")
-        if set(snapshot) - {"redistribution"} != {
+        if set(snapshot) != {
             "schema_version",
             "source_name",
             "upstream_url",
@@ -751,14 +738,6 @@ def validate_evidence_index(
             f"source_snapshots[{index}].license_expression",
             80,
         )
-        if "redistribution" in snapshot and snapshot.get("redistribution") not in {
-            "permitted",
-            "public_domain",
-            "transformed_facts_only",
-        }:
-            raise ValidationError(
-                f"{path}: source_snapshots[{index}].redistribution is invalid"
-            )
     if source_names != sorted(set(source_names)):
         raise ValidationError(f"{path}: source snapshots must be sorted and unique")
     profiles = data.get("profiles")
@@ -824,8 +803,6 @@ def validate_evidence_index(
                 raise ValidationError(f"{path}: {label} has invalid keys")
             section = fact.get("section")
             if section not in {
-                "profile",
-                "match",
                 "capabilities",
                 "android_carrier_config",
                 "android_apns",
@@ -839,6 +816,9 @@ def validate_evidence_index(
             validate_canonical_list(path, fact_source_names, f"{label}.sources")
             if not fact_source_names or not set(fact_source_names) <= set(sources):
                 raise ValidationError(f"{path}: {label}.sources is invalid")
+            if fact_source_names == sources:
+                # An absent fact means every profile source supports it.
+                raise ValidationError(f"{path}: {label} is a redundant override")
             actual_fact_keys.append((section, key))
         if actual_fact_keys != sorted(set(actual_fact_keys)):
             raise ValidationError(

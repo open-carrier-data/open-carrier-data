@@ -70,13 +70,13 @@ The data republishes whenever a source changes, so these values drift. The comma
 | --- | --- |
 | Carrier profiles | 7,827 |
 | Source names in profile evidence | 11 |
-| Source snapshot records | 10 |
+| Source snapshot records | 12 |
 | Android devices in the device catalog | 42,401 |
 | Apple products in the device catalog | 183 |
 | Android identities with observed carrier data | 266 |
 | Observations verified on a device | 0 |
 
-Eleven source names appear in profiles but only ten snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and `samsung_omc` and `samsung_ims` have no snapshot record. Their check dates are in `generated/devices/index.json`.
+Eleven source names appear in profiles and twelve snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, and `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`. The `samsung_omc` and `samsung_ims` records carry a content hash as their revision and `NOASSERTION` as their terms.
 
 Counts and the freshness window come from these commands, run from the repo root:
 

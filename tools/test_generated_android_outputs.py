@@ -68,7 +68,6 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
             "revision_date": "2026-07-01",
             "checked_at": "2026-07-13",
             "license_expression": "Apache-2.0",
-            "redistribution": "permitted",
         }
     ]
     base_evidence["profiles"][0]["reviewed_range"] = {
@@ -235,46 +234,88 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         validate_device_catalog.utc_today = real_device_today
 
 
-def check_evidence_format_transition(carriers_dir: Path, generated_dir: Path) -> None:
-    """The slimmer evidence index validates: no model_source_provenance marker,
-    no redistribution class, no display-name or match provenance entries."""
+def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
+    """The evidence index carries no constant markers, no redistribution class,
+    and only fact_sources entries narrower than the profile's sources."""
     evidence_path = generated_dir / "evidence-index.json"
     original = evidence_path.read_text(encoding="utf-8")
     profile_ids = {
         item["profile_id"] for item in load_json(generated_dir / "index.json")["profiles"]
     }
-    try:
-        new_shape = load_json(evidence_path)
-        new_shape.pop("model_source_provenance", None)
-        for profile in new_shape["profiles"]:
-            profile["fact_sources"] = [
-                fact
-                for fact in profile["fact_sources"]
-                if (fact["section"], fact["key"]) not in {("profile", "display_name"), ("match", "match")}
-            ]
-        snapshot = {
-            "schema_version": 2,
-            "source_name": "samsung_omc",
-            "upstream_url": "https://example.com/samsung",
-            "revision": "a" * 64,
-            "revision_date": "2026-07-20",
-            "checked_at": "2026-07-21",
-            "license_expression": "NOASSERTION",
-        }
-        new_shape["source_snapshots"] = [snapshot]
-        write_profile(evidence_path, new_shape)
-        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
-        bad = deepcopy(new_shape)
-        bad["source_snapshots"][0]["redistribution"] = "sometimes"
+    snapshot = {
+        "schema_version": 2,
+        "source_name": "samsung_omc",
+        "upstream_url": "https://example.com/samsung",
+        "revision": "a" * 64,
+        "revision_date": "2026-07-20",
+        "checked_at": "2026-07-21",
+        "license_expression": "NOASSERTION",
+    }
+
+    def expect_failure(mutate: Callable[[dict], None], message: str) -> None:
+        bad = load_json(evidence_path)
+        mutate(bad)
         write_profile(evidence_path, bad)
         try:
             validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
         except validate_public_carrier_data.ValidationError:
             pass
         else:
-            raise AssertionError("an unknown redistribution class must still fail")
+            raise AssertionError(message)
+        finally:
+            evidence_path.write_text(good_text, encoding="utf-8")
+
+    try:
+        good = load_json(evidence_path)
+        good["source_snapshots"] = [snapshot]
+        write_profile(evidence_path, good)
+        good_text = evidence_path.read_text(encoding="utf-8")
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        expect_failure(
+            lambda value: value.__setitem__("model_source_provenance", "complete"),
+            "the constant model_source_provenance marker must be rejected",
+        )
+        expect_failure(
+            lambda value: value["source_snapshots"][0].__setitem__("redistribution", "permitted"),
+            "the dropped redistribution class must be rejected",
+        )
+
+        def redundant(value: dict) -> None:
+            profile = value["profiles"][0]
+            profile["fact_sources"] = [
+                {"section": "capabilities", "key": "volte", "sources": list(profile["sources"])}
+            ]
+
+        expect_failure(redundant, "a fact entry equal to the profile sources must be rejected")
+
+        def display_name_entry(value: dict) -> None:
+            profile = value["profiles"][0]
+            profile["fact_sources"] = [
+                {"section": "profile", "key": "display_name", "sources": profile["sources"][:1]}
+            ]
+
+        expect_failure(display_name_entry, "display-name provenance entries must be rejected")
     finally:
         evidence_path.write_text(original, encoding="utf-8")
+
+    rcs_profile = {
+        "schema_version": 1,
+        "display_name": "Unused namespace",
+        "match": {"mccmnc": ["00195"]},
+        "capabilities": {},
+        "addons": {"rcs": {"chat_enabled": True}},
+    }
+    rcs_profile["profile_id"] = validate_public_carrier_data.canonical_profile_id(
+        rcs_profile["match"]
+    )
+    try:
+        validate_public_carrier_data.validate_profile_object(
+            carriers_dir / "rcs.json", rcs_profile
+        )
+    except validate_public_carrier_data.ValidationError:
+        pass
+    else:
+        raise AssertionError("an add-on namespace no source uses must be rejected")
 
 
 def check_subscriber_prefix_rules(root: Path) -> None:
@@ -1742,7 +1783,6 @@ def main() -> int:
             {
                 "schema_version": 1,
                 "description": "Safe source and scope summaries for neutral carrier profiles.",
-                "model_source_provenance": "complete",
                 "source_snapshots": [],
                 "profiles": [
                     {
@@ -1751,13 +1791,8 @@ def main() -> int:
                         "sources": ["aosp", "lineageos"],
                         "fact_sources": [
                             {
-                                "section": "match",
-                                "key": "match",
-                                "sources": ["lineageos"],
-                            },
-                            {
-                                "section": "profile",
-                                "key": "display_name",
+                                "section": "capabilities",
+                                "key": "volte",
                                 "sources": ["lineageos"],
                             },
                         ],
@@ -1780,7 +1815,7 @@ def main() -> int:
         )
         assert_true(validation == 0, "public validator returned a non-zero status")
         check_freshness_rules(carriers_dir, generated_dir)
-        check_evidence_format_transition(carriers_dir, generated_dir)
+        check_evidence_format(carriers_dir, generated_dir)
 
         apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
         assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")

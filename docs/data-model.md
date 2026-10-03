@@ -88,15 +88,9 @@ Thirty keys carry no type suffix. The schema types each of them by name. Example
 | Namespace | Scope |
 | --- | --- |
 | `emergency_calling` | emergency dial and routing policy |
-| `entitlement` | entitlement server behaviour |
-| `euc` | end user consent |
 | `ims` | IMS behaviour beyond CarrierConfig |
-| `messaging` | SMS and MMS behaviour |
 | `network_policy` | network selection and display policy |
 | `operator_display` | operator name and icon rules |
-| `presence` | presence and capability exchange |
-| `provisioning` | provisioning flow facts |
-| `rcs` | RCS facts |
 | `wifi_calling` | Wi-Fi calling branding and style |
 
 An add-on value is a boolean, an integer from -1000000 to 1000000, or a string of 1 to 160 characters. An array of up to 40 such scalars is also allowed.
@@ -155,7 +149,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 ## Provenance fields in the evidence index
 
-`generated/evidence-index.json` has `schema_version`, `description`, `model_source_provenance`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes. It never contains raw source material.
+`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes. It never contains raw source material.
 
 Each `source_snapshots` record describes one source family check.
 
@@ -163,11 +157,10 @@ Each `source_snapshots` record describes one source family check.
 | --- | --- |
 | `source_name` | source family identifier, such as `lineageos` |
 | `upstream_url` | where the source lives |
-| `revision` | full Git commit or SHA-256 of the downloaded content |
+| `revision` | full Git commit, SHA-256 of the downloaded content, or for Samsung the SHA-256 of the lane's state file |
 | `revision_date` | when that revision was published upstream |
 | `checked_at` | when automation last checked the source with success |
 | `license_expression` | SPDX expression or `NOASSERTION` |
-| `redistribution` | `permitted`, `public_domain`, or `transformed_facts_only` |
 | `schema_version` | record format version, `2` on 2026-09-23 |
 
 Each `profiles` record describes one carrier profile.
@@ -178,7 +171,7 @@ Each `profiles` record describes one carrier profile.
 | `sources` | every record | source families that contributed to this profile |
 | `observation_count` | every record | candidate observations merged into this profile |
 | `verified_observation_count` | every record | observations confirmed on a device, `0` for every profile on 2026-09-23 |
-| `fact_sources` | every record | list of `section`, `key`, `sources` for each exported fact |
+| `fact_sources` | every record | list of `section`, `key`, `sources` for only the facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources` |
 | `observed_scope` | some records | device and firmware scope of the observations |
 | `observed_model_source_groups` | some records | `models` and `sources` pairs when a model was named by fewer sources than the profile |
 | `reviewed_range` | some records | `oldest` and `newest` review dates |
