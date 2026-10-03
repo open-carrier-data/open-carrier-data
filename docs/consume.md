@@ -28,21 +28,21 @@ python3 tools/generate_android_outputs.py carriers /tmp/ocd-out --apn-version 9
 head -2 /tmp/ocd-out/android/apns-conf.xml
 ```
 
-The generator prints one summary line and the XML header shows the new version:
+The generator prints one summary line and the XML header shows the new version. On 2026-10-03 the output is:
 
 ```text
-generated Android output for 7765 profile(s): 25680 APN row(s), 6307 CarrierConfig profile(s), 3174 MCC/MNC key(s), 179 Android carrier ID key(s), 5264 CarrierConfig XML block(s)
+generated Android output for 7827 profile(s): 25680 APN row(s), 6361 CarrierConfig profile(s), 3177 MCC/MNC key(s), 179 Android carrier ID key(s), 5275 CarrierConfig XML block(s)
 <?xml version="1.0" encoding="utf-8"?>
 <apns version="9">
 ```
 
-Read `metadata.json` before you ship. On 2026-09-23 it lists 33 profiles whose match cannot be expressed in APN XML and 1,294 profiles left out of CarrierConfig XML. Print both counts with:
+Read `metadata.json` before you ship. On 2026-10-03 it lists 18 profiles whose match cannot be expressed in APN XML and 1,376 profiles left out of CarrierConfig XML. Print both counts with:
 
 ```bash
 python3 -c 'print({k: v for k, v in __import__("json").load(open("generated/android/metadata.json"))["omissions"].items() if k.endswith("_unrepresentable_match") and not k.endswith("ids_with_unrepresentable_match")})'
 ```
 
-The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` lines 409 to 414 skips. Of the 1,294, 985 use GID only, 300 use ICCID only, and 9 use both. Recount them with:
+The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-03, of the 1,376, 1,070 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
 
 ```bash
 python3 <<'PY'
@@ -71,7 +71,7 @@ Those profiles stay available in `lookup.json`.
 python3 tools/diff_apns_conf.py /path/to/android_vendor_apn --json diff.json
 ```
 
-The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-09-24, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
+The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
 
 ## Use the data in an app or tool
 
@@ -83,13 +83,13 @@ To resolve every profile for one SIM, run the resolver with what you know:
 python3 tools/resolve_carrier_profiles.py --mccmnc 26202 --spn Vodafone.de
 ```
 
-The first lines of the output are:
+On 2026-10-03 the first lines of the output are:
 
 ```text
 {
   "profiles": [
     {
-      "android_apn_count": 10,
+      "android_apn_count": 15,
       "capabilities": {
 ```
 
@@ -97,7 +97,7 @@ The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi
 
 When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first.
 
-Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`. Android returns the rows whose `carrier_id` equals the SIM's carrier id when there are any, then the rows whose network code and MVNO selector match, then the plain network rows. To reuse the rules in your own code, read `specificity` at line 81 and the match loop in `tools/resolve_carrier_profiles.py`.
+Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`. Android returns the rows whose `carrier_id` equals the SIM's carrier id when there are any, then the rows whose network code and MVNO selector match, then the plain network rows. To reuse the rules in your own code, read the `specificity` function and the match loop in `tools/resolve_carrier_profiles.py`.
 
 ## Check freshness before you ship
 
@@ -109,7 +109,7 @@ To read the APN target version and the omission counts, run:
 python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["target"])'
 ```
 
-Output on 2026-09-23:
+Output on 2026-10-03:
 
 ```text
 {'apn_database_version': 8, 'carrier_config_gid_matching': 'exact_only'}
@@ -121,15 +121,15 @@ To read the freshness window, run:
 python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
 ```
 
-Output on 2026-09-23:
+Output on 2026-10-03:
 
 ```text
-2026-07-13 2027-01-09
+2026-07-14 2027-01-10
 ```
 
 `checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
 
-The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode and keep passing. Ten source families were re-checked on 2026-09-24, but `checks_through` also follows the oldest observation, a Samsung one from 2026-07-13, so the first stale-data issue opens on 2027-01-10 unless Samsung is refreshed before then. A weekly GitHub-hosted job re-checks the other ten families. Samsung still needs the self-hosted runner.
+The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode and keep passing. `checks_through` also follows the oldest observation, a Samsung one from a superseded firmware build, so the first stale-data issue opens the day after `stale_after` unless the daily Samsung run re-extracts those observations first. A weekly GitHub-hosted job re-checks the other ten families. Samsung runs daily on the self-hosted runner.
 
 ## Validate a snapshot
 
@@ -140,10 +140,10 @@ python3 tools/validate_public_carrier_data.py carriers generated/index.json --fr
 python3 tools/validate_device_catalog.py generated/devices --freshness fail
 ```
 
-Output on 2026-09-23:
+Output on 2026-10-03:
 
 ```text
-validated 7765 public carrier profile(s)
+validated 7827 public carrier profile(s)
 validated 42401 Android devices, 183 Apple products, and 4642 carrier artifacts
 ```
 
