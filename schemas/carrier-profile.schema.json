@@ -549,6 +549,30 @@
             ]
           }
         },
+        "allOf": [
+          {
+            "if": {
+              "properties": { "mvno_type": { "const": "imsi" } },
+              "required": ["mvno_type"]
+            },
+            "then": {
+              "properties": {
+                "mvno_match_data": { "pattern": "^[0-9xX]{4,9}[0-9][xX]*$" }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "mvno_type": { "const": "iccid" } },
+              "required": ["mvno_type"]
+            },
+            "then": {
+              "properties": {
+                "mvno_match_data": { "pattern": "^[0-9]{5,13}$" }
+              }
+            }
+          }
+        ],
         "additionalProperties": false
       }
     }

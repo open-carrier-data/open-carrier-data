@@ -235,6 +235,113 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         validate_device_catalog.utc_today = real_device_today
 
 
+def check_subscriber_prefix_rules(root: Path) -> None:
+    """Full IMSI or ICCID values never pass, in match or in APN MVNO data."""
+    accepted = {
+        ("imsi", "26201"),
+        ("imsi", "262260x1"),
+        ("imsi", "2620112345"),
+        ("imsi", "26201xxxxxxxxxx"),
+        ("imsi", "310260XXXXX"),
+        ("iccid", "89490"),
+        ("iccid", "8949012345678"),
+    }
+    rejected = {
+        ("imsi", "262011234567890"),
+        ("imsi", "26201123456"),
+        ("imsi", "2620xxxxxx"),
+        ("imsi", "xxxxxxx"),
+        ("imsi", "26201-1"),
+        ("iccid", "8949"),
+        ("iccid", "8949012345678901234"),
+        ("iccid", "89490x"),
+    }
+    schema = load_json(
+        Path(__file__).resolve().parents[1] / "schemas/carrier-profile.schema.json"
+    )
+    schema_patterns = {
+        rule["if"]["properties"]["mvno_type"]["const"]: re.compile(
+            rule["then"]["properties"]["mvno_match_data"]["pattern"]
+        )
+        for rule in schema["properties"]["android_apns"]["items"]["allOf"]
+    }
+    assert_true(
+        set(schema_patterns) == validate_public_carrier_data.SUBSCRIBER_PREFIX_KINDS,
+        "schema must pin APN MVNO data for every subscriber prefix kind",
+    )
+    for kind, value in accepted | rejected:
+        expected = (kind, value) in accepted
+        assert_true(
+            validate_public_carrier_data.subscriber_prefix_ok(kind, value) is expected,
+            f"subscriber_prefix_ok({kind!r}, {value!r}) should be {expected}",
+        )
+        assert_true(
+            (schema_patterns[kind].search(value) is not None) is expected,
+            f"schema pattern for {kind} disagrees with the validator on {value!r}",
+        )
+
+    def profile_with_mvno(mvno_type: str, mvno_match_data: str) -> dict:
+        profile = {
+            "schema_version": 1,
+            "display_name": "Subscriber prefix",
+            "match": {"mccmnc": ["00197"]},
+            "capabilities": {},
+            "android_apns": [
+                {
+                    "name": "mvno",
+                    "apn": "mvno.example",
+                    "types": ["default"],
+                    "mvno_type": mvno_type,
+                    "mvno_match_data": mvno_match_data,
+                }
+            ],
+        }
+        profile["profile_id"] = validate_public_carrier_data.canonical_profile_id(
+            profile["match"]
+        )
+        return profile
+
+    for mvno_type, value in (("imsi", "262260x1"), ("imsi", "26201xxxxxxxxxx"), ("iccid", "8949012")):
+        validate_public_carrier_data.validate_profile_object(
+            root / "mvno-prefix.json", profile_with_mvno(mvno_type, value)
+        )
+    for mvno_type, value in (("imsi", "262011234567890"), ("iccid", "8949012345678901234")):
+        try:
+            validate_public_carrier_data.validate_profile_object(
+                root / "mvno-full-identity.json", profile_with_mvno(mvno_type, value)
+            )
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(
+                "mvno_match_data is not an" in str(exc),
+                f"wrong error for a full {mvno_type} in mvno_match_data: {exc}",
+            )
+        else:
+            raise AssertionError(f"a full {mvno_type} in mvno_match_data should fail")
+
+    for key, value in (
+        ("imsi_prefix_patterns", "262011234567890"),
+        ("imsi_prefix_patterns", "2620xxxxxx"),
+        ("iccid_prefixes", "8949012345678901234"),
+    ):
+        profile = {
+            "schema_version": 1,
+            "display_name": "Subscriber prefix",
+            "match": {"mccmnc": ["00196"], key: [value]},
+            "capabilities": {},
+        }
+        profile["profile_id"] = validate_public_carrier_data.canonical_profile_id(
+            profile["match"]
+        )
+        try:
+            validate_public_carrier_data.validate_profile_object(
+                root / "match-full-identity.json", profile
+            )
+        except validate_public_carrier_data.ValidationError:
+            pass
+        else:
+            raise AssertionError(f"match.{key} {value!r} should fail")
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -1927,6 +2034,8 @@ def main() -> int:
             assert_true("sorted and unique" in str(exc), "wrong APN type error")
         else:
             raise AssertionError("duplicate APN types should fail")
+
+        check_subscriber_prefix_rules(root)
 
     print("generated Android output tests passed")
     with tempfile.TemporaryDirectory() as tmp:
