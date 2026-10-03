@@ -8,19 +8,13 @@ The Open Carrier Data contributors may hold copyright or database rights in the 
 
 ## What the waiver cannot grant
 
-The waiver grants nothing the project does not own. Upstream rights, database rights, trademarks, patents, contracts, and service terms may still apply. In particular:
+The waiver grants nothing the project does not own. Upstream rights, database rights, trademarks, patents, contracts, and service terms may still apply.
 
-| Input | Declared terms |
-| --- | --- |
-| AOSP and LineageOS | Apache-2.0 |
-| Mobile Broadband Provider Info | public domain dedication |
-| Apple's carrier index and carrier bundles | no license the project can assert, recorded as `NOASSERTION` |
-| Google's public supported-device list | recorded as `NOASSERTION` |
-| Google Pixel CarrierSettings and TheMuppets vendor snapshots | recorded as `NOASSERTION` |
-| Fairphone and Sony source trees | Apache-2.0 |
-| Samsung OMC source material | the project does not claim that Samsung grants a license |
+Per-source terms are in `generated/evidence-index.json` under `source_snapshots[].license_expression`. Sources recorded as `NOASSERTION` (Apple carrier bundles, Google CarrierSettings and TheMuppets snapshots, LineageOS device overlays, Google's device list) and Samsung firmware facts are published only as normalized facts, never as source files; you must decide whether your use is permitted. On 2026-10-03, 439 profiles rest only on Apache-2.0 or public-domain sources. To print the current count, run:
 
-For Apple, Google device inventory, and Samsung inputs, this repo publishes only normalized factual fields or narrow transformed facts. It does not publish raw source packages. You must decide whether your use of those facts is permitted in your jurisdiction and use case.
+```bash
+python3 -c 'import json; e=json.load(open("generated/evidence-index.json")); lic={s["source_name"]: s["license_expression"] for s in e["source_snapshots"]}; alias={"aosp": ["aosp_carrier_config", "aosp_carrier_ids"], "lineageos_device_overlays": ["lineageos_device_carrier_overlays"]}; print(sum(all(lic.get(n) in ("Apache-2.0", "CC-PD") for s in p["sources"] for n in alias.get(s, [s])) for p in e["profiles"]))'
+```
 
 ## Where the exact terms are recorded
 

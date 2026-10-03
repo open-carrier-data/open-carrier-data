@@ -4,12 +4,12 @@ To report a security or privacy issue, use GitHub's private vulnerability report
 
 To report wrong carrier data, use the public issue forms after you strip private values.
 
-Never put these in a public issue:
+This is the one list of private values. The contribution guide, the issue forms, and the pull request template point here. Never put these in a public issue or pull request:
 
-- credentials or signed vendor URLs
-- private carrier responses or account data
 - phone numbers
-- full IMSI or ICCID values, IMEI, or serial numbers
-- raw logs or raw bugreports
-
-Carrier-data pull requests are treated as untrusted input.
+- account numbers or customer IDs
+- credentials, tokens, cookies, or signed URLs
+- full IMSI or ICCID values
+- IMEI, serial numbers, Android ID, or other device identifiers
+- private vendor responses or firmware dumps
+- whole logs or bugreports; short excerpts with all identifiers removed are fine

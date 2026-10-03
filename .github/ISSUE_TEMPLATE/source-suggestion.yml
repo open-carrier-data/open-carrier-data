@@ -9,7 +9,7 @@ body:
       value: |
         Use this for sources that may help keep the database current.
 
-        Do not post personal passwords, private tokens, private URLs, private vendor credentials, raw firmware dumps, raw vendor responses, full IMSI values, full ICCID values, IMEI, or personal logs.
+        Remove every private value listed in [SECURITY.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/SECURITY.md) before you post.
   - type: input
     id: source_name
     attributes:
@@ -59,5 +59,5 @@ body:
     attributes:
       label: Privacy check
       options:
-        - label: I did not include personal passwords, private tokens, private URLs, private vendor credentials, raw firmware dumps, raw vendor responses, personal identifiers, or personal logs.
+        - label: I removed every private value listed in [SECURITY.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/SECURITY.md).
           required: true

@@ -93,7 +93,7 @@ On 2026-10-03 the first lines of the output are:
       "capabilities": {
 ```
 
-The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. A capability of `unknown` in a later profile carries no information, so keep the known value from the earlier one.
+The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. Overlay APN rows and CarrierConfig keys. For capabilities, report the most specific profile's value; an `unknown` there means the sources say nothing about this brand, and the host network's value is only the host's.
 
 When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first.
 
@@ -121,13 +121,9 @@ To read the freshness window, run:
 python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'
 ```
 
-Output on 2026-10-03:
+It prints two dates, `checks_through` and then `stale_after`.
 
-```text
-2026-07-14 2027-01-10
-```
-
-`checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
+`checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. The per-profile `stale_after` in `generated/android/lookup.json` is the precise value for each profile; the file-wide one is the earliest of them. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
 
 The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode and keep passing. `checks_through` also follows the oldest observation, a Samsung one from a superseded firmware build, so the first stale-data issue opens the day after `stale_after` unless the daily Samsung run re-extracts those observations first. A weekly GitHub-hosted job re-checks the other ten families. Samsung runs daily on the self-hosted runner.
 

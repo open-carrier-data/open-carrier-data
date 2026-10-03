@@ -4,13 +4,7 @@ This guide shows the three issue forms, the pull request path for tools and docs
 
 ## Keep private data out
 
-Before you post anything, remove every private value. Never include:
-
-- phone numbers, account numbers, or customer IDs
-- personal passwords, tokens, cookies, private URLs, or vendor credentials
-- full IMSI or ICCID values
-- IMEI, serial numbers, Android ID, or other device identifiers
-- raw modem logs, bugreports, vendor responses, or firmware dumps
+Before you post anything, remove every private value listed in [SECURITY.md](SECURITY.md). The issue forms and the pull request template point to the same list.
 
 Safe values are the carrier name, country, brand, MCC/MNC, and Android carrier ID. A shortened ICCID prefix is safe when it is already public. APN values from public docs or the phone's settings screen are safe. So is a feature result such as "MMS receive works". A public APN username or password is fine only when it is a shared carrier setting. When unsure, leave the value out and describe the problem without it.
 
@@ -31,9 +25,9 @@ Use this path when you know an upstream that automation could import.
 
 1. Open the `Maintained source suggestion` form.
 2. Name the source, its owner, and what carrier facts it holds.
-3. State its license or usage terms if known. A current source can still be unfit for redistribution.
+3. State its license or usage terms if known.
 
-A good source is maintained by a carrier, OEM, OS project, or public data project. Automation can refresh it, and its facts can be translated without publishing private material.
+A usable source is public and kept current by its owner (carrier, OEM, OS or public data project), can be refreshed by automation, and its terms allow publishing derived facts without the raw files.
 
 ## Improve tooling or docs
 
@@ -41,11 +35,11 @@ Open a pull request for schema, validator, generator, test, or documentation cha
 
 ## Why carrier data changes are not accepted by hand
 
-Stable profiles in `carriers/open/` and the files under `generated/` come from maintained sources through the private sanitizer. On 2026-09-23 there is no path for a hand-written carrier data change. A pull request that edits those files is closed with a pointer to the issue forms.
+`carriers/` and the data files under `generated/` are rebuilt from the private pipeline on every publish; a hand edit would be overwritten and would carry false provenance, so change the source or importer instead (see [the curation section](#how-a-correction-reaches-stable-data)).
 
-Two reasons drive that. First, every published value traces to a source snapshot in `generated/evidence-index.json`. A hand edit has no snapshot, so the evidence index would record provenance the data does not have. Second, the project cannot verify a test result from an issue. A tested fix stays a report until a maintained source confirms it or a maintainer curates it into the data with the evidence attached.
+## How a correction reaches stable data
 
-A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer curates the change. An automated path for tested community changes existed until 2026-09-23 and was removed unused.
+A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer curates the change.
 
 ## Run the local checks
 
