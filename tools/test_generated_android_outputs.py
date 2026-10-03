@@ -329,6 +329,91 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
         evidence_path.write_text(old_shape, encoding="utf-8")
 
 
+def check_source_versions(evidence_path: Path, profile_ids: set[str]) -> None:
+    """source_versions is optional. Each item names a profile source once, in
+    order, with sorted lists of build IDs, full Git commits, or Apple bundle
+    and iOS versions, and nothing else."""
+    old_shape = evidence_path.read_text(encoding="utf-8")
+    first_id = sorted(profile_ids)[0]
+
+    def versioned(items: object) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == first_id:
+                profile["source_versions"] = items
+        return value
+
+    def validate(value: dict) -> None:
+        write_profile(evidence_path, value)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+
+    def expect_failure(items: object, message: str) -> None:
+        try:
+            validate(versioned(items))
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    commit = "b446f3306fb55d46e6799f3ae76dbb1f40b22193"
+    try:
+        validate(json.loads(old_shape))
+        validate(
+            versioned(
+                [
+                    {"source": "aosp", "builds": ["CP3A.260905.009", "G981BXXSNHYB1"]},
+                    {
+                        "source": "lineageos",
+                        "commits": [commit],
+                        "bundle_versions": ["31.1", "8.1.1"],
+                        "ios_versions": ["11.2", "26.0.1"],
+                    },
+                ]
+            )
+        )
+        expect_failure([], "an empty source_versions list passed")
+        expect_failure({"source": "aosp"}, "a source_versions object instead of a list passed")
+        expect_failure([{"source": "aosp"}], "an item without identifiers passed")
+        expect_failure(
+            [{"source": "samsung_omc", "builds": ["G981BXXSNHYB1"]}],
+            "an item for a source the profile does not name passed",
+        )
+        expect_failure(
+            [{"source": "lineageos", "commits": [commit]}, {"source": "aosp", "builds": ["A1"]}],
+            "unsorted source_versions items passed",
+        )
+        expect_failure(
+            [{"source": "aosp", "builds": ["A1"]}, {"source": "aosp", "commits": [commit]}],
+            "a source named twice passed",
+        )
+        expect_failure(
+            [{"source": "aosp", "urls": ["https://example.com/firmware.zip"]}],
+            "an unknown identifier kind passed",
+        )
+        expect_failure([{"source": "aosp", "builds": []}], "an empty identifier list passed")
+        expect_failure(
+            [{"source": "aosp", "builds": ["B2", "A1"]}], "an unsorted identifier list passed"
+        )
+        expect_failure(
+            [{"source": "aosp", "builds": ["A1", "A1"]}], "a repeated identifier passed"
+        )
+        for kind, bad in (
+            ("builds", "work/raw/firmware.zip"),
+            ("builds", "SM-G981B/BTU G981BXXSNHYB1"),
+            ("builds", 12),
+            ("commits", commit[:12]),
+            ("commits", "git-" + commit),
+            ("commits", commit.upper()),
+            ("bundle_versions", "31.1-beta"),
+            ("ios_versions", "iOS 17.1"),
+            ("ios_versions", "21A329"),
+        ):
+            expect_failure(
+                [{"source": "aosp", kind: [bad]}], f"{kind} accepted {bad!r}"
+            )
+    finally:
+        evidence_path.write_text(old_shape, encoding="utf-8")
+
+
 def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
     """The evidence index carries no constant markers, no redistribution class,
     and only fact_sources entries narrower than the profile's sources."""
@@ -391,6 +476,7 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
 
         expect_failure(display_name_entry, "display-name provenance entries must be rejected")
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
+        check_source_versions(evidence_path, profile_ids)
     finally:
         evidence_path.write_text(original, encoding="utf-8")
 
