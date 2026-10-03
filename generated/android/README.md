@@ -4,15 +4,15 @@ These files are generated from the carrier profiles by `tools/generate_android_o
 
 | File | Meaning |
 | --- | --- |
-| `apns-conf.xml` | Android APN XML, 21,900 rows, `version="8"` |
-| `carrier-config-list.xml` | CarrierConfig XML, 4,115 blocks in generic-to-specific order |
-| `carrier-config-overrides.json` | reviewed CarrierConfig values per profile, 5,119 profiles |
+| `apns-conf.xml` | Android APN XML, `version="8"` |
+| `carrier-config-list.xml` | CarrierConfig XML, blocks in generic-to-specific order |
+| `carrier-config-overrides.json` | reviewed CarrierConfig values per profile |
 | `lookup.json` | every profile with `match`, `capabilities`, `specificity`, and counts |
-| `mccmnc-index.json` | profiles keyed by MCC/MNC, 2,158 keys |
-| `carrier-id-index.json` | profiles keyed by Android carrier ID, 179 keys |
+| `mccmnc-index.json` | profiles keyed by MCC/MNC |
+| `carrier-id-index.json` | profiles keyed by Android carrier ID |
 | `metadata.json` | target version, output counts, the profile IDs left out of each XML, and the freshness window |
 
-Counts come from these commands:
+The counts change with every publish, so this page does not repeat them. `metadata.json` carries the APN row and CarrierConfig block counts under `output`. Print those and the other counts with these commands:
 
 ```bash
 python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["output"])'
@@ -21,8 +21,8 @@ python3 -c 'print(len(__import__("json").load(open("generated/android/mccmnc-ind
 python3 -c 'print(len(__import__("json").load(open("generated/android/carrier-id-index.json"))["android_carrier_ids"]))'
 ```
 
-`metadata.json` also carries `checks_through`, the oldest source check behind the profiles, and `stale_after`, 180 days later. On 2026-09-24 they are still 2026-07-13 and 2027-01-09, held by the Samsung observations. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
+`metadata.json` also carries `checks_through`, the oldest source check behind the profiles, and `stale_after`, 180 days later. On 2026-10-03 they are 2026-07-14 and 2027-01-10, held by the Samsung observations. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
 
-Two limits apply. Profiles whose match uses GID or ICCID prefixes are left out of `carrier-config-list.xml`, because `config_filter_records` in `tools/generate_android_outputs.py` lines 409 to 414 skips them. On 2026-09-23 that is 985 GID-only, 300 ICCID-only, and 9 profiles with both. APN XML cannot express every match rule, so those profiles are left out of `apns-conf.xml`. Both lists are in `metadata.json`. The full facts stay in `lookup.json`.
+Two limits apply. Profiles whose match uses GID or ICCID prefixes are left out of `carrier-config-list.xml`, because `config_filter_records` in `tools/generate_android_outputs.py` skips them. On 2026-10-03 that is 1,070 GID-only, 298 ICCID-only, and 8 profiles with both. APN XML cannot express every match rule, so those profiles are left out of `apns-conf.xml`. Both lists are in `metadata.json`. The full facts stay in `lookup.json`.
 
 [docs/consume.md](../../docs/consume.md) shows how to package these files and how to generate for another APN version.

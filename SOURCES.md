@@ -4,23 +4,23 @@ This page lists every source family that feeds the public data, what each one co
 
 ## All source families at a glance
 
-The table has one row per source name as it appears in profile evidence. The snapshot column names the `source_snapshots` record when its name differs.
+The table has one row per source name as it appears in profile evidence. The snapshot column names the `source_snapshots` record when its name differs. The profile counts change with every publish. The first command below prints the current ones.
 
-| Source name in profiles | Snapshot record | Upstream | Contributes | Terms | Profiles |
+| Source name in profiles | Snapshot record | Upstream | Contributes | Terms | Profiles on 2026-10-03 |
 | --- | --- | --- | --- | --- | --- |
 | `aosp` | `aosp_carrier_config`, `aosp_carrier_ids` | AOSP `platform/packages/apps/CarrierConfig` and `platform/packages/providers/TelephonyProvider` | CarrierConfig values, Android carrier identity rules | Apache-2.0 | 235 |
 | `lineageos` | same | `LineageOS/android_vendor_apn` | APN rows and MVNO selectors | Apache-2.0 | 1,064 |
 | `lineageos_device_overlays` | `lineageos_device_carrier_overlays` | LineageOS device repos | device overlay carrier facts | NOASSERTION | 1,163 |
-| `mobile_broadband_provider_info` | same | GNOME `mobile-broadband-provider-info` | carrier and APN facts | CC-PD | 836 |
-| `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,881 |
+| `mobile_broadband_provider_info` | same | GNOME `mobile-broadband-provider-info` | carrier and APN facts | CC-PD | 741 |
+| `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,934 |
 | `google_carriersettings` | same | `GrapheneOS/adevtool` plus Google's live endpoint | match rules, APNs, CarrierConfig, capabilities | MIT and NOASSERTION | 3,446 |
-| `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,236 |
-| `samsung_omc` | none | Samsung firmware OMC baselines and GRAS checks | APN, capability, CarrierConfig, add-on facts | none asserted | 2,604 |
-| `samsung_ims` | none | Samsung IMS maps in versioned firmware | positive IMS capability observations | none asserted | 629 |
+| `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,234 |
+| `samsung_omc` | none | Samsung firmware OMC baselines and GRAS checks | APN, capability, CarrierConfig, add-on facts | none asserted | 2,572 |
+| `samsung_ims` | none | Samsung IMS maps in versioned firmware | positive IMS capability observations | none asserted | 944 |
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates, both 2026-07-20 on 2026-09-24, are in `generated/devices/index.json` under `sources`. The oldest Samsung observation dates from 2026-07-13 and sets `checks_through`.
+Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates are in `generated/devices/index.json` under `sources`. Samsung is checked daily, and on 2026-10-03 both dates are 2026-10-03. The oldest Samsung observation still sets `checks_through`, 2026-07-14 on that day.
 
 To print the profile count per source name, run:
 
@@ -40,7 +40,7 @@ The refresh methods below, the AOSP branch name, and the Samsung scope rules com
 
 Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.
 
-Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. On 2026-09-24 every snapshot record was checked that same day, but `checks_through` also follows the oldest observation review date. The oldest Samsung observation is from 2026-07-13, so `stale_after` stays 2027-01-09 until Samsung is refreshed. Past that date `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. Since 2026-09-24 a weekly GitHub-hosted job re-checks every family except Samsung, which still needs the self-hosted runner.
+Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. `checks_through` also follows the oldest observation review date. On 2026-10-03 every snapshot record was checked between 2026-09-24 and 2026-10-01, but the oldest Samsung observation is from 2026-07-14, so `stale_after` is 2027-01-10. That date moves only as the daily Samsung run re-extracts the observations from superseded firmware builds. Past that date `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. A weekly GitHub-hosted job re-checks every family except Samsung, which runs daily on the self-hosted runner.
 
 ## AOSP contributes CarrierConfig values and carrier IDs
 
@@ -80,7 +80,7 @@ Both families are read from public AOSP-style manifests under Apache-2.0 and rec
 
 The device catalog under `generated/devices/` uses its own sources. The broad Android inventory is Google's Play supported-devices CSV, recorded by SHA-256 and published as normalized identity fields under `NOASSERTION`. Identities that vanish from a later revision stay as `historical`. Apple product types come from the same carrier index as the bundles. LineageOS device repos and the carrier families above add exact model scope.
 
-On 2026-09-24 the catalog's `index.json` lists 17 named sources. Print them with:
+On 2026-10-03 the catalog's `index.json` lists 12 named sources. Print them with:
 
 ```bash
 python3 -c 'print(*sorted(s["name"] for s in __import__("json").load(open("generated/devices/index.json"))["sources"]), sep="\n")'

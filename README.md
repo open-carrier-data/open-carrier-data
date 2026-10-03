@@ -4,7 +4,7 @@ Open Carrier Data is a public database of mobile carrier settings. It stores neu
 
 ## Get the data
 
-You can get the data in three ways. Each one works as of 2026-09-23.
+You can get the data in three ways. Each one works as of 2026-10-03.
 
 To take everything, including tools and schemas, clone the public repo:
 
@@ -34,13 +34,13 @@ To find every profile that applies to one SIM, run the resolver with the SIM's f
 python3 tools/resolve_carrier_profiles.py --mccmnc 26202 --spn Vodafone.de
 ```
 
-The output starts like this:
+On 2026-10-03 the output starts like this:
 
 ```text
 {
   "profiles": [
     {
-      "android_apn_count": 10,
+      "android_apn_count": 15,
       "capabilities": {
         "esim": "unknown",
         "ims_conference": "unknown",
@@ -53,7 +53,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 
 | Path | Contents |
 | --- | --- |
-| `carriers/open/` | 7,765 carrier profiles, one JSON file per profile |
+| `carriers/open/` | the carrier profiles, one JSON file per profile, listed in `generated/index.json` |
 | `generated/index.json` | stable snapshot, one entry per profile |
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, conflicts |
 | `generated/android/` | APN XML, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
@@ -62,16 +62,18 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
 | `docs/` | data model, build explanation, consumer guide |
 
-## Status on 2026-09-24
+## Status on 2026-10-03
+
+The data republishes whenever a source changes, so these values drift. The commands below the table print the current ones.
 
 | Measure | Value |
 | --- | --- |
-| Carrier profiles | 7,765 |
+| Carrier profiles | 7,827 |
 | Source names in profile evidence | 11 |
 | Source snapshot records | 10 |
-| Checks through | 2026-07-13 |
-| Stale after | 2027-01-09 |
-| Android devices in the device catalog | 43,007 |
+| Checks through | 2026-07-14 |
+| Stale after | 2027-01-10 |
+| Android devices in the device catalog | 42,401 |
 | Apple products in the device catalog | 183 |
 | Android identities with observed carrier data | 266 |
 | Observations verified on a device | 0 |
@@ -99,7 +101,7 @@ Read these before you depend on the data:
 - No profile has been verified on a phone. Every value comes from a maintained source, not from a test call.
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - When sources disagree on a CarrierConfig key, add-on, or APN row, the value is omitted. The conflict is listed in `generated/evidence-index.json`.
-- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. On 2026-09-24 they are 2026-07-13 and 2027-01-09. Ten of the eleven source families were re-checked on 2026-09-24 from the machine that hosted the runner. Samsung's lane runs on the owner's self-hosted runner and re-confirms observations whose firmware build is still current. Observations from superseded builds keep their July dates until they are re-extracted, and `checks_through` follows the oldest of them, 2026-07-13, so the window did not move. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens on 2027-01-10 unless Samsung is refreshed before then. Since 2026-09-24 a weekly GitHub-hosted job re-checks the ten source families that need no secret. Samsung still needs the self-hosted runner, and until it runs the window stays where it is.
+- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. The status table above gives both on 2026-10-03. The oldest Samsung observations set `checks_through`. Samsung's lane runs daily on the owner's self-hosted runner. It re-confirms observations whose firmware build is still current and re-extracts up to 50 CSC packages per run. Observations from superseded builds keep their July dates until they are re-extracted, so `checks_through` moves only as that queue drains. A weekly GitHub-hosted job re-checks the other source families. Their check dates are in `generated/evidence-index.json` under `source_snapshots`. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens the day after `stale_after`.
 - A device listed in `generated/devices/` is an inventory fact. It is not a support claim. A device is covered only when carrier evidence names that exact identity. `generated/devices/README.md` defines the rule and the one command that prints the number.
 
 ## How it is built
