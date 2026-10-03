@@ -242,6 +242,8 @@ APN_MVNO_TYPES = {
     "iccid",
 }
 
+SUBSCRIBER_PREFIX_KINDS = {"iccid", "imsi"}
+
 GENERATED_FILES = {
     "README.md",
     "evidence-index.json",
@@ -287,6 +289,26 @@ ADDON_KEY_RE = re.compile(r"^[a-z][a-z0-9_]{2,80}$")
 
 class ValidationError(Exception):
     pass
+
+
+def subscriber_prefix_ok(kind: str, value: Any) -> bool:
+    """Accept only a carrier prefix, never a full subscriber identity.
+
+    Mirrors subscriber_prefix_ok in the private sanitizer. An ICCID prefix is
+    5 to 13 digits. An IMSI pattern, after trailing x wildcards are stripped,
+    is 5 to 10 digits or x wildcards with at least one digit.
+    """
+    if not isinstance(value, str):
+        return False
+    if kind == "iccid":
+        return re.fullmatch(r"[0-9]{5,13}", value) is not None
+    if kind == "imsi":
+        stem = value.lower().rstrip("x")
+        return (
+            re.fullmatch(r"[0-9x]{5,10}", stem) is not None
+            and re.search(r"[0-9]", stem) is not None
+        )
+    raise ValueError(f"unknown subscriber prefix kind {kind!r}")
 
 
 class FreshnessWindow(NamedTuple):
@@ -495,18 +517,13 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         ):
             raise ValidationError(f"{path}: invalid GID2 prefix {gid!r}")
     for iccid in match.get("iccid_prefixes", []):
-        if (
-            not isinstance(iccid, str)
-            or not 5 <= len(iccid) <= 13
-            or any(char not in "0123456789" for char in iccid)
-        ):
+        if not subscriber_prefix_ok("iccid", iccid):
             raise ValidationError(f"{path}: invalid ICCID prefix {iccid!r}")
     for imsi in match.get("imsi_prefix_patterns", []):
         if (
-            not isinstance(imsi, str)
+            not subscriber_prefix_ok("imsi", imsi)
             or not 5 <= len(imsi) <= 10
             or any(char not in "0123456789xX" for char in imsi)
-            or all(char in "xX" for char in imsi)
         ):
             raise ValidationError(f"{path}: invalid IMSI prefix pattern {imsi!r}")
     for spn in match.get("spn", []):
@@ -624,6 +641,14 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
                     f"android_apns[{index}].mvno_match_data",
                     120,
                 )
+                mvno_type = apn["mvno_type"]
+                if mvno_type in SUBSCRIBER_PREFIX_KINDS and not subscriber_prefix_ok(
+                    mvno_type, apn["mvno_match_data"]
+                ):
+                    raise ValidationError(
+                        f"{path}: android_apns[{index}].mvno_match_data is not "
+                        f"an {mvno_type.upper()} prefix"
+                    )
             for key in ("protocol", "roaming_protocol"):
                 if key in apn and apn[key] not in APN_PROTOCOLS:
                     raise ValidationError(f"{path}: android_apns[{index}].{key}")
