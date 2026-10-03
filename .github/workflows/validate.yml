@@ -38,6 +38,12 @@ jobs:
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8
           git diff --exit-code -- generated
+          untracked="$(git ls-files --others --exclude-standard -- generated)"
+          if [ -n "$untracked" ]; then
+            echo "Generated files the commit lacks:" >&2
+            echo "$untracked" >&2
+            exit 1
+          fi
 
   freshness-alarm:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
