@@ -15,12 +15,12 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,934 |
 | `google_carriersettings` | same | `GrapheneOS/adevtool` plus Google's live endpoint | match rules, APNs, CarrierConfig, capabilities | MIT and NOASSERTION | 3,446 |
 | `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,234 |
-| `samsung_omc` | none | Samsung firmware OMC baselines and GRAS checks | APN, capability, CarrierConfig, add-on facts | none asserted | 2,572 |
-| `samsung_ims` | none | Samsung IMS maps in versioned firmware | positive IMS capability observations | none asserted | 944 |
+| `samsung_omc` | same | Samsung firmware OMC baselines | APN, capability, CarrierConfig, add-on facts | NOASSERTION | 2,572 |
+| `samsung_ims` | same | Samsung IMS maps in versioned firmware | positive IMS capability observations | NOASSERTION | 944 |
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates are in `generated/devices/index.json` under `sources`. Samsung is checked daily, and on 2026-10-03 both dates are 2026-10-03. The oldest Samsung observation still sets `checks_through`.
+Two profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
 
 To print the profile count per source name, run:
 
@@ -44,7 +44,7 @@ Freshness uses `checked_at`. Unchanged upstream content stays current while its 
 
 ## AOSP contributes CarrierConfig values and carrier IDs
 
-Automation reads the `android-latest-release` branch of both AOSP repos and records the full commit ID. Terms are Apache-2.0, so redistribution is `permitted`.
+Automation reads the `android-latest-release` branch of both AOSP repos and records the full commit ID. Terms are Apache-2.0.
 
 ## LineageOS contributes APN rows and device overlays
 
