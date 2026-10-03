@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-FileCopyrightText: Open Carrier Data contributors
+    SPDX-License-Identifier: CC0-1.0
+-->
+<apns version="8">
+  <apn apn="EMERGENCY" carrier="emergency" mcc="222" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
+  <apn apn="ibox.tim.it" carrier="ibox.tim.it" mcc="222" mnc="01" type="default,supl" />
+  <apn apn="ibox.tim.it" authtype="0" carrier="ibox.tim.it" mcc="222" mnc="01" type="dun" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="TIM IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="222" mnc="01" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="TIM IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="01" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="mms.tim.it" carrier="TIM MMS" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" type="mms" />
+  <apn apn="sos" carrier="TIM" mcc="222" mnc="01" protocol="IPV4V6" type="emergency" />
+  <apn apn="tiscalimobileinternet" carrier="tiscalimobileinternet" mcc="222" mnc="01" type="default,supl" />
+  <apn apn="tiscalimobilemms" carrier="Tiscali MMS" mcc="222" mmsc="http://mms.tiscali.mobi/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" type="mms" />
+  <apn apn="unico.tim.it" authtype="0" carrier="unico.tim.it" carrier_enabled="true" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" port="80" proxy="213.230.130.89" type="mms" />
+  <apn apn="wap.tim.it" authtype="1" carrier="wap.tim.it" carrier_enabled="true" mcc="222" mnc="01" password="WAPTIM" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="WAPTIM" />
+  <apn apn="wap.tim.it" authtype="1" carrier="wap.tim.it" carrier_enabled="true" mcc="222" mnc="01" password="WAPTIM" type="dun" user="WAPTIM" />
+  <apn apn="xcap.tim.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="01" mvno_match_data="434F4F50FFFFFFFFFF" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.coopvoce.it" carrier="WEB CoopVoce" mcc="222" mnc="01" mvno_match_data="434F4F50FFFFFFFFFF" mvno_type="gid" type="default,dun,supl" />
+  <apn apn="message.coopvoce.it" carrier="MMS CoopVoce" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="434F4F50FFFFFFFFFF" mvno_type="gid" type="mms" />
+  <apn apn="xcap.coopvoce.it" carrier="Ut CoopVoce" mcc="222" mnc="01" mvno_match_data="434F4F50FFFFFFFFFF" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="01" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="wbdata" carrier="Webbing" mcc="222" mnc="01" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
+  <apn apn="globaldata" carrier="globaldata" mcc="222" mnc="01" mvno_match_data="636F6E6E65637431" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
+  <apn apn="globaldata" carrier="Connect" mcc="222" mnc="01" mvno_match_data="636F6E6E65637431" mvno_type="gid" type="dun" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="222" mnc="01" mvno_match_data="636F6E6E65637431" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.freedommobile.ca" carrier="Internet" mcc="222" mnc="01" mvno_match_data="FFFFFF00" mvno_type="gid" protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="mms.freedommobile.ca" carrier="MMS" mcc="222" mmsc="http://mms.freedommobile.ca" mmsport="8080" mmsproxy="74.115.197.70" mnc="01" mvno_match_data="FFFFFF00" mvno_type="gid" type="mms" user_editable="false" />
+  <apn apn="volte.mobilefrdm.ca" carrier="VoLTE" mcc="222" mnc="01" mvno_match_data="FFFFFF00" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="NOVA" mcc="222" mnc="01" mvno_match_data="8935411" mvno_type="iccid" protocol="IP" type="ims" />
+  <apn apn="mms.nova.is" carrier="NOVA" mcc="222" mmsc="http://mmsc.nova.is" mmsport="8080" mmsproxy="10.10.2.60" mnc="01" mvno_match_data="8935411" mvno_type="iccid" type="mms" />
+  <apn apn="net.nova.is" carrier="NOVA" mcc="222" mnc="01" mvno_match_data="8935411" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" />
+  <apn apn="ip.primetel" carrier="PrimeTel" mcc="222" mmsc="http://mms.primetel" mnc="01" mvno_match_data="8935720" mvno_type="iccid" type="default,mms" />
+  <apn apn="phs.primetel" carrier="PrimeTel" mcc="222" mnc="01" mvno_match_data="8935720" mvno_type="iccid" type="dun" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile" mcc="222" mmsport="80" mmsproxy="10.248.1.12" mnc="01" mvno_match_data="893907" mvno_type="iccid" type="mms" />
+  <apn apn="web.kenamobile.it" carrier="Kena Mobile" mcc="222" mnc="01" mvno_match_data="893907" mvno_type="iccid" type="default,dun" />
+  <apn apn="globaldata" carrier="Mobile-X" mcc="222" mmsc="http://mms.mobileuc.global/" mmsport="8008" mmsproxy="37.18.129.98" mnc="01" mvno_match_data="894453" mvno_type="iccid" type="default,mms" />
+  <apn apn="globalhotspot" carrier="Mobile-X" mcc="222" mnc="01" mvno_match_data="894453" mvno_type="iccid" type="dun" />
+  <apn apn="ims" carrier="AT&amp;T" mcc="222" mnc="01" mvno_match_data="8952050" mvno_type="iccid" type="ims" />
+  <apn apn="mms.iusacellgsm.mx" carrier="AT&amp;T" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="8952050" mvno_type="iccid" password="iusacellgsm" type="mms" user="iusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="AT&amp;T" mcc="222" mnc="01" mvno_match_data="8952050" mvno_type="iccid" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" carrier="AT&amp;T" mcc="222" mnc="01" mvno_match_data="8952050" mvno_type="iccid" password="iusacellgsm" protocol="IP" type="default" user="iusacellgsm" />
+  <apn apn="algar.br" carrier="Algar TELECOM" mcc="222" mnc="01" mvno_match_data="895532" mvno_type="iccid" password="1212" type="default,dun" user="algar" />
+  <apn apn="algar.br" carrier="Algar TELECOM" mcc="222" mnc="01" mvno_match_data="895533" mvno_type="iccid" password="1212" type="default,dun" user="algar" />
+  <apn apn="algar.br" carrier="Algar TELECOM" mcc="222" mnc="01" mvno_match_data="895534" mvno_type="iccid" password="1212" type="default,dun" user="algar" />
+  <apn apn="iboots" carrier="RedteaMobile" mcc="222" mnc="01" mvno_match_data="89852245280" mvno_type="iccid" type="default,dun" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991840" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991840" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991840" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991854" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991854" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991854" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991855" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991855" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991855" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991856" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991856" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991856" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991857" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991857" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991857" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991858" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991858" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991858" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991859" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991859" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991859" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991860" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991860" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991860" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991861" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991861" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991861" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991862" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991862" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991862" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991863" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991863" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991863" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991864" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991864" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991864" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991865" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991865" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991865" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991866" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991866" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991866" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991867" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991867" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991867" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991868" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991868" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991868" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991869" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991869" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991869" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991870" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991870" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991870" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991871" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991871" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991871" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991872" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991872" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991872" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991873" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991873" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991873" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="ims" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991874" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="jionet" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991874" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="sos" carrier="Jio" mcc="222" mnc="01" mvno_match_data="8991874" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" />
+  <apn apn="internet.btitalia.it" authtype="0" carrier="BT Internet" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="BT Enia" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.btitalia.it" authtype="0" carrier="BT MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="BT Enia" mvno_type="spn" type="mms" />
+  <apn apn="internet.btitalia.it" authtype="0" carrier="BT Internet" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="BT Italia" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.btitalia.it" authtype="0" carrier="BT MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="BT Italia" mvno_type="spn" type="mms" />
+  <apn apn="internet.btitalia.it" carrier="BT Internet" mcc="222" mnc="01" mvno_match_data="BTEnia" mvno_type="spn" type="default" />
+  <apn apn="mms.btitalia.it" carrier="BT MMS" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="BTEnia" mvno_type="spn" type="mms" />
+  <apn apn="internet.btitalia.it" carrier="BT Internet" mcc="222" mnc="01" mvno_match_data="BTItalia" mvno_type="spn" type="default" />
+  <apn apn="mms.btitalia.it" carrier="BT MMS" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="BTItalia" mvno_type="spn" type="mms" />
+  <apn apn="mms.coopvoce.it" authtype="0" carrier="CoopVoce MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="COOP" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" authtype="1" carrier="CoopVoce WEB" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="COOP" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.coopvoce.it" authtype="0" carrier="CoopVoce MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="COOP MOBILE" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" authtype="1" carrier="CoopVoce WEB" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="COOP MOBILE" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.coopvoce.it" authtype="0" carrier="CoopVoce MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="COOP ¡OBILE" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" authtype="1" carrier="CoopVoce WEB" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="COOP ¡OBILE" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.coopvoce.it" authtype="1" carrier="mms.coopvoce.it" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="Coop Mobile" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" carrier="web.coopvoce.it" mcc="222" mnc="01" mvno_match_data="Coop Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia" />
+  <apn apn="web.coopvoce.it" carrier="COOPVOCE WEB" mcc="222" mnc="01" mvno_match_data="Coop Mobile" mvno_type="spn" type="supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="IMS CoopVoce" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet.coopvoce.it" carrier="WEB CoopVoce" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" type="default,dun,supl" />
+  <apn apn="internet.coopvoce.it" authtype="0" carrier="WEB CoopVoce" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" type="default,dun,supl" />
+  <apn apn="message.coopvoce.it" carrier="MMS CoopVoce" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" type="mms" />
+  <apn apn="message.coopvoce.it" authtype="0" carrier="MMS CoopVoce" carrier_enabled="true" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" type="mms" />
+  <apn apn="xcap.coopvoce.it" carrier="Ut CoopVoce" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="xcap.coopvoce.it" authtype="0" carrier="Ut CoopVoce" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="CoopVoce" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" carrier="IMS CoopVoce" mcc="222" mnc="01" mvno_match_data="CoopVoce IT R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet.coopvoce.it" carrier="WEB CoopVoce" mcc="222" mnc="01" mvno_match_data="CoopVoce IT R" mvno_type="spn" type="default" />
+  <apn apn="message.coopvoce.it" carrier="MMS CoopVoce" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce IT R" mvno_type="spn" type="mms" />
+  <apn apn="xcap.coopvoce.it" carrier="Ut CoopVoce" mcc="222" mnc="01" mvno_match_data="CoopVoce IT R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="mms.coopvoce.it" carrier="CoopVoce MMS" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce1" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" carrier="CoopVoce WEB" mcc="222" mnc="01" mvno_match_data="CoopVoce1" mvno_type="spn" type="default" />
+  <apn apn="mms.coopvoce.it" carrier="CoopVoce MMS" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce2" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" carrier="CoopVoce WEB" mcc="222" mnc="01" mvno_match_data="CoopVoce2" mvno_type="spn" type="default" />
+  <apn apn="mms.coopvoce.it" carrier="CoopVoce MMS" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="CoopVoce3" mvno_type="spn" type="mms" />
+  <apn apn="web.coopvoce.it" carrier="CoopVoce WEB" mcc="222" mnc="01" mvno_match_data="CoopVoce3" mvno_type="spn" type="default" />
+  <apn apn="gigsky" carrier="GigSky" mcc="222" mnc="01" mvno_match_data="GigSky" mvno_type="spn" type="default" />
+  <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="Modem" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" user_editable="false" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.kenamobile.it" authtype="0" carrier="Kena Mobile MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" type="mms" />
+  <apn apn="mms.kenamobile.it" carrier="Kenamobile MMS" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" type="mms" />
+  <apn apn="web.kenamobile.it" carrier="Kenamobile web" mcc="222" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" type="default,ia" />
+  <apn apn="web.kenamobile.it" authtype="0" carrier="Kena Mobile Web" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" type="default,supl" />
+  <apn apn="xcap.kena.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile MMS" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" type="mms" />
+  <apn apn="mms.kenamobile.it" authtype="0" carrier="Kena Mobile MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" type="mms" />
+  <apn apn="web.kenamobile.it" carrier="Kena Mobile Web" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" type="default" />
+  <apn apn="web.kenamobile.it" authtype="0" carrier="Kena Mobile Web" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" type="default,supl" />
+  <apn apn="xcap.kena.it" carrier="XCAP" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="xcap.kena.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="Kena Mobile R" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="01" mvno_match_data="NOVA" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="01" mvno_match_data="NOVA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="01" mtu="1280" mvno_match_data="NOVA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.nova.is" carrier="Nova MMS" mcc="222" mmsc="http://mmsc.nova.is" mmsport="8080" mmsproxy="10.10.2.60" mnc="01" mvno_match_data="NOVA" mvno_type="spn" type="mms" />
+  <apn apn="mms.nova.is" authtype="1" carrier="Nova MMS" carrier_enabled="true" mcc="222" mmsc="http://mmsc.nova.is" mmsport="8080" mmsproxy="10.10.2.60" mnc="01" mvno_match_data="NOVA" mvno_type="spn" type="mms" />
+  <apn apn="net.nova.is" authtype="1" carrier="Nova net" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="NOVA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl,xcap" />
+  <apn apn="net.nova.is" carrier="Nova net" mcc="222" mnc="01" mvno_match_data="NOVA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="mms.noverca.it" authtype="0" carrier="NOVERCA MMS" mcc="222" mmsc="http://mms.noverca.it/" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="NOVERCA" mvno_type="spn" type="mms" />
+  <apn apn="web.noverca.it" authtype="0" carrier="NOVERCA WEB" mcc="222" mnc="01" mvno_match_data="NOVERCA" mvno_type="spn" type="default,dun,fota,supl" />
+  <apn apn="ibox.tim.it" carrier="TIM WEB" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="unico.tim.it" carrier="iTIM" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="mms" />
+  <apn apn="wap.tim.it" carrier="WAP TIM" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="default" />
+  <apn apn="xcap.tim.it" carrier="XCAP" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="tiscalimobileinternet" carrier="Tiscali INTERNET" mcc="222" mnc="01" mvno_match_data="Tiscali" mvno_type="spn" type="default" />
+  <apn apn="tiscalimobilemms" carrier="Tiscali MMS" mcc="222" mmsc="http://mms.tiscali.mobi/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="Tiscali" mvno_type="spn" type="mms" />
+  <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Unefon MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="Modem" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" user_editable="false" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Unefon Modem" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Unefon Internet" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="apn.vianova.it" carrier="Vianova" mcc="222" mnc="01" mvno_match_data="Vianova R" mvno_type="spn" type="default" />
+  <apn apn="tiscalimobileinternet" authtype="1" carrier="Tiscali INTERNET" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="tiscali mobile" mvno_type="spn" type="default,supl" />
+  <apn apn="tiscalimobilemms" authtype="0" carrier="Tiscali MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.tiscali.mobi/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="tiscali mobile" mvno_type="spn" type="mms" />
+  <apn apn="IMS" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="01" mvno_match_data="vianova" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="apn.vianova.it" authtype="1" carrier="Vianova" carrier_enabled="true" mcc="222" mnc="01" mvno_match_data="vianova" mvno_type="spn" type="default,dun,supl" />
+  <apn apn="apn.vianova.it" carrier="Vianova" mcc="222" mnc="01" mvno_match_data="vianova" mvno_type="spn" type="default,supl" />
+  <apn apn="IMS" carrier="TIM IMS" carrier_id="33" mcc="222" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ibox.tim.it" carrier="TIM Web" carrier_id="33" mcc="222" mnc="01" type="dun" />
+  <apn apn="unico.tim.it" carrier="TIM MMS" carrier_id="33" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" type="mms" />
+  <apn apn="wap.tim.it" carrier="TIM WAP" carrier_id="33" mcc="222" mnc="01" type="default,ia,supl" />
+  <apn apn="xcap.tim.it" carrier="TIM UT" carrier_id="33" mcc="222" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="mms.iusacellgsm.mx" carrier="MMS" carrier_id="1912" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" type="mms" />
+  <apn apn="supl.iusacellgsm.mx" carrier="Location" carrier_id="1912" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" port="7275" server="http://supl.iusacell.com" type="supl" />
+  <apn apn="web.iusacellgsm.mx" carrier="Internet" carrier_id="1912" mcc="222" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" type="default,ia" />
+  <apn apn="mms.iusacellgsm.mx" carrier="MMS" carrier_id="1912" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" type="mms" />
+  <apn apn="supl.iusacellgsm.mx" carrier="Location" carrier_id="1912" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" port="7275" server="http://supl.iusacell.com" type="supl" />
+  <apn apn="web.iusacellgsm.mx" carrier="Internet" carrier_id="1912" mcc="222" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" type="default,ia" />
+  <apn apn="gigsky" carrier="GigSky" carrier_id="2459" mcc="222" mnc="01" mvno_match_data="GigSky" mvno_type="spn" type="default,ia" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="010" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="010" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="010" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="011" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="011" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="011" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="012" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="012" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="012" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="013" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="013" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="013" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="014" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="014" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="014" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="015" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="015" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="015" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="016" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="016" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="016" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="017" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="017" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="017" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="018" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="018" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="018" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="019" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Internet Modem" mcc="222" mnc="019" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="019" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="07" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile" mcc="222" mmsport="80" mmsproxy="10.248.1.12" mnc="07" type="mms" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile MMS" mcc="222" mmsc="http://mms.kenamobile.it" mmsport="80" mmsproxy="10.248.1.12" mnc="07" type="mms" />
+  <apn apn="mms.kenamobile.it" authtype="0" carrier="Kena Mobile MMS" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="07" type="mms" />
+  <apn apn="mms.kenamobile.it" authtype="0" carrier="Kena Mobile MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="07" type="mms" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile MMS" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="07" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="web.kenamobile.it" authtype="0" carrier="web.kenamobile.it" carrier_enabled="true" mcc="222" mnc="07" protocol="IP" roaming_protocol="IP" type="default,supl" />
+  <apn apn="web.kenamobile.it" authtype="0" carrier="web.kenamobile.it" mcc="222" mnc="07" type="dun" />
+  <apn apn="web.kenamobile.it" carrier="Kena Mobile Web" mcc="222" mnc="07" type="ia" />
+  <apn apn="xcap.kena.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="xcap.kenamobile.it" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="XCAP" mcc="222" mnc="07" protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="07" mvno_match_data="Kena Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.kenamobile.it" carrier="Kena Mobile MMS" mcc="222" mmsc="http://mms.kenamobile.it/" mmsport="80" mmsproxy="10.248.1.12" mnc="07" mvno_match_data="Kena Mobile" mvno_type="spn" type="mms" />
+  <apn apn="web.kenamobile.it" carrier="Kena Mobile Web" mcc="222" mnc="07" mvno_match_data="Kena Mobile" mvno_type="spn" type="default" />
+  <apn apn="xcap.kena.it" carrier="XCAP" mcc="222" mnc="07" mvno_match_data="Kena Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="apn.fastweb.it" authtype="0" carrier="FW WEB" carrier_enabled="true" mcc="222" mnc="08" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="apn.fastweb.it" carrier="Fastweb" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" type="default" />
+  <apn apn="apn.fastweb.it" carrier="Fastweb" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IP" type="default,dun" />
+  <apn apn="apn.fastweb.it" authtype="0" carrier="apn.fastweb.it" carrier_enabled="true" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" protocol="IP" roaming_protocol="IP" type="mms,supl" />
+  <apn apn="hos" authtype="0" carrier="FW HOS" carrier_enabled="true" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="hos" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="HOS" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="FW IMS" carrier_enabled="true" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="apn.fastweb.it" authtype="2" carrier="Fastweb 4G" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" mvno_match_data="FASTWEB" mvno_type="spn" type="default,mms,supl" />
+  <apn apn="apn.fastweb.it" carrier="FW WEB" mcc="222" mnc="08" mvno_match_data="FASTWEB1" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="apn.fastweb.it" carrier="FW MMS" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" mvno_match_data="FASTWEB1" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="ims" carrier="FW IMS" mcc="222" mnc="08" mvno_match_data="FASTWEB1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="apn.fastweb.it" carrier="FW WEB" carrier_id="2416" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia" />
+  <apn apn="apn.fastweb.it" carrier="FW MMS" carrier_id="2416" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" type="mms" />
+  <apn apn="EMERGENCY" carrier="emergency" mcc="222" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
+  <apn apn="data.lycamobile.it" carrier="Lycamobile" mcc="222" mnc="10" password="plus" type="default,supl" user="lmit" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="1" carrier="IMS" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Vodafone IT" mcc="222" mnc="10" protocol="IP" type="ims" />
+  <apn apn="ims" carrier="Vodafone IT IMS" mcc="222" mnc="10" protocol="IPV4V6" type="ims" />
+  <apn apn="internet" carrier="Vodafone IT" mcc="222" mnc="10" type="dun" />
+  <apn apn="iphone.vodafone.it" carrier="Vodafone IT" mcc="222" mnc="10" protocol="IP" type="default" />
+  <apn apn="mms" carrier="UNO Mobile MMS GPRS" mcc="222" mmsc="mms.unomobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" type="mms" />
+  <apn apn="mms.vodafone.it" carrier="MMS Vodafone" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.vodafone.it" carrier="MMS Vodafone" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" protocol="IP" type="mms" />
+  <apn apn="mms.vodafone.it" authtype="0" carrier="MMS Vodafone" carrier_enabled="true" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mtu="1350" type="mms" />
+  <apn apn="mms.vodafone.it" authtype="0" carrier="MMS Vodafone" carrier_enabled="true" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mtu="1350" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.vodafone.it" carrier="mms.vodafone.it" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" type="mms" />
+  <apn apn="mobile.vodafone.it" carrier="Acc. Internet da cell" mcc="222" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="mobile.vodafone.it" carrier="Acc. Internet da cell" mcc="222" mnc="10" protocol="IP" type="default,supl" />
+  <apn apn="mobile.vodafone.it" authtype="0" carrier="Accesso a Internet da cellulare" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="mobile.vodafone.it" carrier="mobile.vodafone.it" mcc="222" mnc="10" type="default,supl" />
+  <apn apn="mobile.vodafone.it" authtype="0" carrier="Acc. Internet da cell" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" type="default,supl,xcap" />
+  <apn apn="wap.omnitel.it" carrier="Internet da cellulare" mcc="222" mnc="10" port="80" proxy="10.128.201.76" type="default,supl" />
+  <apn apn="web.omnitel.it" authtype="0" carrier="web.omnitel.it" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,xcap" />
+  <apn apn="web.omnitel.it" carrier="Tethering Internet" mcc="222" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" />
+  <apn apn="web.omnitel.it" carrier="Tethering Internet" mcc="222" mnc="10" protocol="IP" type="dun" />
+  <apn apn="web.omnitel.it" carrier="Tethering Internet" mcc="222" mnc="10" protocol="IP" type="dun" user_visible="false" />
+  <apn apn="web.omnitel.it" authtype="0" carrier="Tethering Internet" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" type="dun" />
+  <apn apn="web.omnitel.it" carrier="web.omnitel.it" mcc="222" mnc="10" type="dun" />
+  <apn apn="web.unomobile.it" carrier="UNO Mobile" mcc="222" mnc="10" protocol="IP" roaming_protocol="IP" type="cbs,default,fota,hipri,mcx,mms,supl" />
+  <apn apn="internet.ho-mobile.it" carrier="ho.mobile Tethering" mcc="222" mnc="10" mvno_match_data="20" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="dun" />
+  <apn apn="internet.ho-mobile.it" carrier="ho." mcc="222" mnc="10" mvno_match_data="20" mvno_type="gid" type="dun" />
+  <apn apn="web.ho-mobile.it" carrier="ho." mcc="222" mnc="10" mvno_match_data="20" mvno_type="gid" type="default,dun" />
+  <apn apn="web.ho-mobile.it" carrier="ho.mobile Internet" mcc="222" mnc="10" mvno_match_data="20" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,supl" />
+  <apn apn="mobile.erg.it" authtype="0" carrier="ErgMobile WAP" mcc="222" mnc="10" mvno_match_data="ERG" mvno_type="spn" type="default,dun,fota,supl" user_editable="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="10" mvno_match_data="Optima" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="wap.optima.it" carrier="Optima" mcc="222" mnc="10" mvno_match_data="Optima" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet.postemobile.it" authtype="0" carrier="PosteMobile (DUN)" mcc="222" mnc="10" mvno_match_data="POSTEMOBILE" mvno_type="spn" type="dun" user_editable="false" />
+  <apn apn="mms.postemobile.it" authtype="0" carrier="PosteMobile MMS" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mvno_match_data="POSTEMOBILE" mvno_type="spn" type="mms" />
+  <apn apn="wap.postemobile.it" authtype="0" carrier="PosteMobile" mcc="222" mnc="10" mvno_match_data="POSTEMOBILE" mvno_type="spn" type="default,fota,supl" />
+  <apn apn="internet.postemobile.it" carrier="PosteMobile" mcc="222" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="default,supl" />
+  <apn apn="mms.postemobile.it" carrier="PosteMobile MMS" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="mms" />
+  <apn apn="wap.postemobile.it" carrier="PosteMobile WAP" mcc="222" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="default,supl" />
+  <apn apn="IMS" carrier="IMS" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="IMS" authtype="1" carrier="IMS" carrier_enabled="true" mcc="222" mnc="10" mtu="1350" mvno_match_data="ho." mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.ho-mobile.it" carrier="Internet Ho Mobile" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="default" />
+  <apn apn="internet.ho-mobile.it" authtype="0" carrier="ho. (Tethering)" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="dun" />
+  <apn apn="internet.ho-mobile.it" authtype="0" carrier="Internet Ho Mobile" carrier_enabled="true" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="dun" />
+  <apn apn="web.ho-mobile.it" authtype="0" carrier="web.ho-mobile.it" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="web.ho-mobile.it" authtype="0" carrier="Web Ho Mobile" carrier_enabled="true" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="default,supl" />
+  <apn apn="web.ho-mobile.it" authtype="0" carrier="ho." mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="fota,hipri" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="10" mvno_match_data="vodafone IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.vodafone.it" carrier="MMS Vodafone" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mvno_match_data="vodafone IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mobile.vodafone.it" carrier="mobile.vodafone.it" mcc="222" mnc="10" mvno_match_data="vodafone IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="mobile.vodafone.it" carrier="Acc. Internet da cell" mcc="222" mnc="10" mvno_match_data="vodafone IT" mvno_type="spn" type="xcap" />
+  <apn apn="web.omnitel.it" carrier="web.omnitel.it" mcc="222" mnc="10" mvno_match_data="vodafone IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="ims" carrier="IMS Vodafone" carrier_id="29" mcc="222" mnc="10" protocol="IPV4V6" type="ims" />
+  <apn apn="mms.vodafone.it" carrier="MMS Vodafone" carrier_id="29" mcc="222" mmsc="http://mms.vodafone.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" type="mms" />
+  <apn apn="mobile.vodafone.it" carrier="Acc. Internet da cell" carrier_id="29" mcc="222" mnc="10" type="default,ia,supl" />
+  <apn apn="internet.postemobile.it" carrier="PosteMobile (DUN)" carrier_id="2303" mcc="222" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="dun" />
+  <apn apn="mms.postemobile.it" carrier="PosteMobile MMS" carrier_id="2303" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="mms" />
+  <apn apn="wap.postemobile.it" carrier="PosteMobile" carrier_id="2303" mcc="222" mnc="10" mvno_match_data="PosteMobile" mvno_type="spn" type="default,fota,ia,supl" />
+  <apn apn="mobile.erg.it" carrier="ErgMobile WAP" carrier_id="2304" mcc="222" mnc="10" mvno_match_data="ERG" mvno_type="spn" type="default,dun,fota,ia,supl" />
+  <apn apn="wap.dtm.it" carrier="DailyTelecomWAP" carrier_id="2438" mcc="222" mnc="10" mvno_match_data="Daily Telecom" mvno_type="spn" type="default,dun,ia,supl" />
+  <apn apn="internet.ho-mobile.it" carrier="ho. (Tethering)" carrier_id="2455" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="dun" />
+  <apn apn="web.ho-mobile.it" carrier="ho." carrier_id="2455" mcc="222" mnc="10" mvno_match_data="ho." mvno_type="spn" type="default,fota,hipri,ia,supl" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="11" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="11" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="11" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="12" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="12" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="12" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="13" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="13" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="13" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="14" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="14" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="14" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="15" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="15" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="15" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="16" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="16" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="16" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="17" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="17" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="17" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="18" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="18" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="18" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" mcc="222" mmsc="http://mms.iusacell3g.com/" mnc="19" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
+  <apn apn="modem.iusacellgsm.mx" carrier="Iusacell Modem" mcc="222" mnc="19" password="iusacellgsm" type="dun" user="iusacellgsm" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="222" mnc="19" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="222" mnc="33" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.postemobile.it" authtype="0" carrier="PosteMobile MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="33" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="wap.postemobile.it" authtype="0" carrier="PosteMobile WAP" carrier_enabled="true" mcc="222" mnc="33" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="wap.postemobile.it" authtype="0" carrier="PosteMobile WAP" carrier_enabled="true" mcc="222" mnc="33" type="supl" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="33" mvno_match_data="Poste Mobile" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.postemobile.it" carrier="PosteMobile MMS" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="33" mvno_match_data="Poste Mobile" mvno_type="spn" type="mms" />
+  <apn apn="wap.postemobile.it" carrier="PosteMobile WAP" mcc="222" mnc="33" mvno_match_data="Poste Mobile" mvno_type="spn" type="default" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="33" mvno_match_data="PosteMobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="mms.postemobile.it" carrier="PosteMobile MMS" mcc="222" mmsc="http://mms.postemobile.it/servlets/mms" mmsport="80" mmsproxy="10.128.224.10" mnc="33" mvno_match_data="PosteMobile" mvno_type="spn" type="mms" />
+  <apn apn="wap.postemobile.it" carrier="PosteMobile WAP" mcc="222" mnc="33" mvno_match_data="PosteMobile" mvno_type="spn" type="default,dun,fota,supl" user_editable="false" />
+  <apn apn="wap.postemobile.it" carrier="PosteMobile" mcc="222" mnc="33" mvno_match_data="PosteMobile" mvno_type="spn" type="default,fota,ia,supl" />
+  <apn apn="internet.btitalia.it" authtype="0" carrier="BT Internet" carrier_enabled="true" mcc="222" mnc="34" type="default,supl" />
+  <apn apn="mms.btitalia.it" authtype="0" carrier="BT MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="34" type="mms" />
+  <apn apn="internet.btitalia.it" carrier="BT Internet" mcc="222" mnc="34" mvno_match_data="British Telecom" mvno_type="spn" type="default" />
+  <apn apn="mms.btitalia.it" carrier="BT MMS" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="34" mvno_match_data="British Telecom" mvno_type="spn" type="mms" />
+  <apn apn="data.lycamobile.it" authtype="0" carrier="data.lycamobile.it" carrier_enabled="true" mcc="222" mnc="35" password="plus" type="default" user="lmit" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="35" protocol="IPV4V6" type="ims" />
+  <apn apn="data.lycamobile.it" authtype="1" carrier="data.lycamobile.it" mcc="222" mnc="35" mvno_match_data="LycaMobile" mvno_type="spn" type="default,supl" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="35" mvno_match_data="LycaMobile" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="data.lycamobile.it" authtype="1" carrier="data.lycamobile.it" mcc="222" mnc="35" mvno_match_data="Lycamobile" mvno_type="spn" password="plus" type="default,supl" user="lmit" />
+  <apn apn="data.lycamobile.it" authtype="1" carrier="Lycamobile" mcc="222" mnc="35" mvno_match_data="Lycamobile" mvno_type="spn" type="ia" />
+  <apn apn="digi.mobile" carrier="Digi" mcc="222" mnc="36" type="default,supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="36" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="digi.mobile" authtype="0" carrier="Digi" carrier_enabled="true" mcc="222" mnc="36" mtu="1500" mvno_match_data="Digi IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="36" mtu="1500" mvno_match_data="Digi IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="digi.mobile" authtype="0" carrier="Digi" carrier_enabled="true" mcc="222" mnc="36" mtu="1500" mvno_match_data="Digi.Mobil" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="36" mtu="1500" mvno_match_data="Digi.Mobil" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="digi.mobile" carrier="DIGI Italy" carrier_id="2443" mcc="222" mnc="36" type="default,ia,supl" />
+  <apn apn="ims" carrier="DIGI Italy IMS" carrier_id="2443" mcc="222" mnc="36" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="43" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="unico.tim.it" authtype="0" carrier="iTIM" carrier_enabled="true" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="43" type="mms" />
+  <apn apn="wap.tim.it" authtype="1" carrier="WAP TIM" carrier_enabled="true" mcc="222" mnc="43" password="WAPTIM" type="default,dun,supl" user="WAPTIM" />
+  <apn apn="xcap.tim.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="43" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="43" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="unico.tim.it" carrier="iTIM" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="43" mvno_match_data="TIM" mvno_type="spn" type="mms" />
+  <apn apn="wap.tim.it" carrier="WAP TIM" mcc="222" mnc="43" mvno_match_data="TIM" mvno_type="spn" type="default" />
+  <apn apn="xcap.tim.it" carrier="XCAP" mcc="222" mnc="43" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="apn.vianova.it" authtype="1" carrier="Vianova" carrier_enabled="true" mcc="222" mnc="49" type="default,dun,supl" />
+  <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="222" mnc="49" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="xcap.vianova.it" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="222" mnc="49" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="IMS" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="49" mvno_match_data="Vianova" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="apn.vianova.it" carrier="Vianova" mcc="222" mnc="49" mvno_match_data="Vianova" mvno_type="spn" type="default,supl" />
+  <apn apn="ims" carrier="IMS" mcc="222" mnc="49" mvno_match_data="Vianova" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="xcap.vianova.it" carrier="XCAP" mcc="222" mnc="49" mvno_match_data="Vianova" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="iliad" carrier="Iliad" mcc="222" mmsc="mms.iliad.it" mnc="50" type="default,dun,mms" />
+  <apn apn="iliad" carrier="Iliad" mcc="222" mmsc="http://mms.iliad-italia.it" mnc="50" type="default,mms,supl" />
+  <apn apn="iliad" carrier="Iliad" mcc="222" mmsc="mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" type="default,dun,mms" />
+  <apn apn="iliad" carrier="iliad" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV4V6" type="default,mms" />
+  <apn apn="iliad" carrier="iliad" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" type="default,mms" />
+  <apn apn="iliad" carrier="iliad" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,mms" />
+  <apn apn="iliad" authtype="0" carrier="Iliad" carrier_enabled="true" mcc="222" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="iliad" authtype="0" carrier="Iliad MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="Iliad IMS" carrier_enabled="true" mcc="222" mnc="50" mvno_match_data="F003" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="iliad" carrier="Iliad" mcc="222" mnc="50" mvno_match_data="Iliad" mvno_type="spn" protocol="IPV4V6" type="default" />
+  <apn apn="iliad" carrier="Iliad MMS" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="Iliad" mvno_type="spn" protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="Iliad IMS" mcc="222" mnc="50" mvno_match_data="Iliad" mvno_type="spn" protocol="IPV6" type="ims" />
+  <apn apn="iliad" carrier="Iliad" carrier_id="2124" mcc="222" mmsc="http://mms.iliad.it" mnc="50" mvno_match_data="F003" mvno_type="gid" type="default,hipri,ia,mms,supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="53" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="IMS CoopVoce" carrier_enabled="true" mcc="222" mnc="53" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet.coopvoce.it" authtype="0" carrier="internet.coopvoce.it" carrier_enabled="true" mcc="222" mnc="53" protocol="IP" roaming_protocol="IP" type="default,dun,supl" />
+  <apn apn="message.coopvoce.it" authtype="0" carrier="message.coopvoce.it" carrier_enabled="true" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="53" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="xcap.coopvoce.it" authtype="0" carrier="Ut CoopVoce" carrier_enabled="true" mcc="222" mnc="53" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" carrier="IMS CoopVoce" mcc="222" mnc="53" mvno_match_data="CoopVoce IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet.coopvoce.it" carrier="WEB CoopVoce" mcc="222" mnc="53" mvno_match_data="CoopVoce IT" mvno_type="spn" type="default" />
+  <apn apn="message.coopvoce.it" carrier="MMS CoopVoce" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="53" mvno_match_data="CoopVoce IT" mvno_type="spn" type="mms" />
+  <apn apn="xcap.coopvoce.it" carrier="Ut CoopVoce" mcc="222" mnc="53" mvno_match_data="CoopVoce IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="internet.coopvoce.it" carrier="WEB CoopVoce" carrier_id="2452" mcc="222" mnc="53" type="default,dun,ia,supl" />
+  <apn apn="message.coopvoce.it" carrier="MMS CoopVoce" carrier_id="2452" mcc="222" mmsc="http://mms.coop.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="53" type="mms" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" type="ims" />
+  <apn apn="apn.enegan.it" carrier="Enegan" mcc="222" mnc="54" mvno_match_data="ENEGAN" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="ENEGAN" mvno_type="spn" type="ims" />
+  <apn apn="apn.enegan.it" authtype="1" carrier="Enegan" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Enegan" mvno_type="spn" type="default" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Enegan" mvno_type="spn" type="ims" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="Europe Energy" mvno_type="spn" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Europe Energy" mvno_type="spn" type="ims" />
+  <apn apn="web.withu.it" carrier="EuropeEnergy" mcc="222" mnc="54" mvno_match_data="Europe Energy" mvno_type="spn" type="default" />
+  <apn apn="web.withu.it" authtype="1" carrier="EuropeEnergy" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Europe Energy" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="FEDER" mvno_type="spn" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="FEDER" mvno_type="spn" type="ims" />
+  <apn apn="web.federmobile.it" carrier="Feder" mcc="222" mnc="54" mvno_match_data="FEDER" mvno_type="spn" type="default" />
+  <apn apn="web.federmobile.it" authtype="1" carrier="Feder" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="FEDER" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="INTERPLANET" mvno_type="spn" type="ims" />
+  <apn apn="internet.ovunque.it" carrier="Interplanet" mcc="222" mnc="54" mvno_match_data="INTERPLANET" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="Italia Power" mvno_type="spn" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Italia Power" mvno_type="spn" type="ims" />
+  <apn apn="italiapower.it" carrier="ItaliaPower" mcc="222" mnc="54" mvno_match_data="Italia Power" mvno_type="spn" type="default" />
+  <apn apn="italiapower.it" authtype="1" carrier="ItaliaPower" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Italia Power" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="NEXTUS" mvno_type="spn" type="ims" />
+  <apn apn="internet.ntmobile.it" carrier="Nextus" mcc="222" mnc="54" mvno_match_data="NEXTUS" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="NOITEL" mvno_type="spn" type="ims" />
+  <apn apn="web.noitel.it" carrier="Noitel" mcc="222" mnc="54" mvno_match_data="NOITEL" mvno_type="spn" type="default" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Nextus" mvno_type="spn" type="ims" />
+  <apn apn="internet.ntmobile.it" authtype="1" carrier="Nextus" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Nextus" mvno_type="spn" type="default" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Noitel" mvno_type="spn" type="ims" />
+  <apn apn="web.noitel.it" authtype="1" carrier="Noitel" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Noitel" mvno_type="spn" type="default" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="OVUNQUE" mvno_type="spn" type="ims" />
+  <apn apn="internet.ovunque.it" authtype="1" carrier="Interplanet" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="OVUNQUE" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="PLINK" mvno_type="spn" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="PLINK" mvno_type="spn" type="ims" />
+  <apn apn="internet.plink.it" carrier="Plink" mcc="222" mnc="54" mvno_match_data="PLINK" mvno_type="spn" type="default" />
+  <apn apn="internet.plink.it" authtype="1" carrier="Plink" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="PLINK" mvno_type="spn" type="default" />
+  <apn apn="data.plintron.it" authtype="1" carrier="Plintron" mcc="222" mnc="54" mvno_match_data="Plintron" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="Plintron" mvno_type="spn" type="ims" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="54" mvno_match_data="RABONA" mvno_type="spn" type="ims" />
+  <apn apn="rabona.it" carrier="Rabona" mcc="222" mnc="54" mvno_match_data="RABONA" mvno_type="spn" type="default" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Rabona" mvno_type="spn" type="ims" />
+  <apn apn="rabona.it" authtype="1" carrier="Rabona" carrier_enabled="true" mcc="222" mnc="54" mvno_match_data="Rabona" mvno_type="spn" type="default" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="ims" mcc="222" mnc="56" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="56" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="web" carrier="spusu" mcc="222" mnc="56" type="bip,cbs,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,mms,rcs,vsim,xcap" user_editable="false" />
+  <apn apn="web" authtype="0" carrier="spusu" carrier_enabled="true" mcc="222" mnc="56" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user_editable="false" />
+  <apn apn="web" carrier="spusu" mcc="222" mnc="56" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" user_editable="false" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="56" mvno_match_data="spusu IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="web" carrier="spusu" mcc="222" mnc="56" mvno_match_data="spusu IT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="222" mnc="88" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="88" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="IMS" mcc="222" mnc="88" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="88" protocol="IP" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="88" protocol="IPV4V6" type="ims" />
+  <apn apn="internet.it" carrier="WINDTRE" mcc="222" mnc="88" type="default,dun" />
+  <apn apn="internet.it" authtype="0" carrier="INTERNET" carrier_enabled="true" mcc="222" mnc="88" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="88" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="88" type="default,supl" user_editable="false" />
+  <apn apn="internet.wind" carrier="internet.wind" mcc="222" mnc="88" password="Wind" type="default,supl" user="Wind" />
+  <apn apn="internet.wind" carrier="I WIND" mcc="222" mnc="88" type="dun" />
+  <apn apn="mms.it" authtype="0" carrier="mms.it" carrier_enabled="true" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" type="mms" />
+  <apn apn="mms.wind" carrier="Wind IT MMS" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.11" mnc="88" type="mms" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="88" protocol="IP" type="xcap" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="88" mvno_match_data="0000000099" mvno_type="gid" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="88" mvno_match_data="0000000099" mvno_type="gid" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="Very" mcc="222" mnc="88" mvno_match_data="0000000099" mvno_type="gid" type="default,dun" />
+  <apn apn="internet.it" authtype="0" carrier="INTERNET" carrier_enabled="true" mcc="222" mnc="88" mvno_match_data="0000000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
+  <apn apn="mms.it" carrier="Very" mcc="222" mmsc="http://mms" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" mvno_match_data="0000000099" mvno_type="gid" type="mms" />
+  <apn apn="mms.it" authtype="0" carrier="MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" mvno_match_data="0000000099" mvno_type="gid" type="mms" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.tre.it" mnc="88" mvno_match_data="0000000099" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,mms,supl" />
+  <apn apn="xcap" carrier="xcap" carrier_enabled="true" mcc="222" mnc="88" mvno_match_data="0000000099" mvno_type="gid" protocol="IP" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="88" mvno_match_data="00000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="IMS" mcc="222" mnc="88" mvno_match_data="00000099" mvno_type="gid" type="ims" user_visible="false" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="88" mvno_match_data="00000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" mvno_match_data="00000099" mvno_type="gid" type="mms" />
+  <apn apn="xcap" carrier="XCAP" mcc="222" mnc="88" mvno_match_data="00000099" mvno_type="gid" type="xcap" user_visible="false" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.tre.it" mnc="88" mvno_match_data="99" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,mms,supl" />
+  <apn apn="internet.freedommobile.ca" carrier="Internet" mcc="222" mnc="88" mvno_match_data="FFFFFF00" mvno_type="gid" protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="mms.freedommobile.ca" carrier="MMS" mcc="222" mmsc="http://mms.freedommobile.ca" mmsport="8080" mmsproxy="74.115.197.70" mnc="88" mvno_match_data="FFFFFF00" mvno_type="gid" type="mms" user_editable="false" />
+  <apn apn="volte.mobilefrdm.ca" carrier="VoLTE" mcc="222" mnc="88" mvno_match_data="FFFFFF00" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222880" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222880" mvno_type="imsi" type="mms" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222881" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222881" mvno_type="imsi" type="mms" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.tre.it" mnc="88" mvno_match_data="222882" mvno_type="imsi" protocol="IP" roaming_protocol="IP" type="default,mms,supl" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222883" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222883" mvno_type="imsi" type="mms" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222884" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222884" mvno_type="imsi" type="mms" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222885" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222885" mvno_type="imsi" type="mms" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222886" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222886" mvno_type="imsi" type="mms" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222887" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222887" mvno_type="imsi" type="mms" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.tre.it" mnc="88" mvno_match_data="222888" mvno_type="imsi" protocol="IP" roaming_protocol="IP" type="default,mms,supl" />
+  <apn apn="internet.wind" carrier="INTERNET WIND" mcc="222" mnc="88" mvno_match_data="222889" mvno_type="imsi" type="default,supl" />
+  <apn apn="mms.wind" carrier="MMS WIND" mcc="222" mmsc="http://mms.wind.it" mmsport="8080" mmsproxy="212.245.244.100" mnc="88" mvno_match_data="222889" mvno_type="imsi" type="mms" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="88" mvno_match_data="VERY" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="INTERNET" mcc="222" mnc="88" mvno_match_data="VERY" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" mvno_match_data="VERY" mvno_type="spn" type="mms" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="88" mvno_match_data="VERY" mvno_type="spn" protocol="IP" type="xcap" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="88" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="INTERNET" mcc="222" mnc="88" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" mvno_match_data="WINDTRE" mvno_type="spn" type="mms" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="88" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IP" type="xcap" />
+  <apn apn="internet.it" carrier="INTERNET" carrier_id="1573" mcc="222" mnc="88" type="default,ia,supl" />
+  <apn apn="mms.it" carrier="MMS" carrier_id="1573" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="88" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="222" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="99" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="IMS" mcc="222" mnc="99" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="99" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="99" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="WINDTRE" mcc="222" mnc="99" type="default,dun" />
+  <apn apn="internet.it" authtype="0" carrier="INTERNET" carrier_enabled="true" mcc="222" mnc="99" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="99" type="default,supl" user_editable="false" />
+  <apn apn="mms.it" authtype="0" carrier="mms.it" carrier_enabled="true" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" type="mms" />
+  <apn apn="tre.it" carrier="tre.it" mcc="222" mnc="99" type="default,dun" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.tre.it" mnc="99" protocol="IP" roaming_protocol="IP" type="default,mms,supl" />
+  <apn apn="tre.it" carrier="3" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="62.13.171.3" mnc="99" type="default,mms,supl" />
+  <apn apn="tre.it" carrier="tre.it" mcc="222" mmsc="http://10.216.59.240:10021/mmsc" mmsport="8799" mmsproxy="wsb.treumts.it" mnc="99" type="default,mms,supl" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="99" protocol="IP" type="xcap" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="0000000099" mvno_type="gid" protocol="IP" type="ims" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="0000000099" mvno_type="gid" protocol="IPV4V6" type="ims" />
+  <apn apn="internet.it" carrier="Very" mcc="222" mnc="99" mvno_match_data="0000000099" mvno_type="gid" type="default,dun" />
+  <apn apn="internet.it" authtype="0" carrier="INTERNET" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="0000000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
+  <apn apn="mms.it" carrier="Very" mcc="222" mmsc="http://mms" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" mvno_match_data="0000000099" mvno_type="gid" type="mms" />
+  <apn apn="mms.it" authtype="0" carrier="MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" mvno_match_data="0000000099" mvno_type="gid" type="mms" />
+  <apn apn="xcap" carrier="xcap" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="0000000099" mvno_type="gid" protocol="IP" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|20" mcc="222" mnc="99" mvno_match_data="00000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="IMS" mcc="222" mnc="99" mvno_match_data="00000099" mvno_type="gid" type="ims" user_visible="false" />
+  <apn apn="internet.it" carrier="Internet" mcc="222" mnc="99" mvno_match_data="00000099" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" mvno_match_data="00000099" mvno_type="gid" type="mms" />
+  <apn apn="xcap" carrier="XCAP" mcc="222" mnc="99" mvno_match_data="00000099" mvno_type="gid" type="xcap" user_visible="false" />
+  <apn apn="apn.fastweb.it" carrier="FASTWEB WEB" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default" />
+  <apn apn="apn.fastweb.it" authtype="2" carrier="Fastweb 3G" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="10.0.65.9" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default,mms,supl" />
+  <apn apn="apn.fastweb.it" carrier="Fastweb" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default,mms,supl" />
+  <apn apn="apn.fastweb.it" carrier="apn.fastweb.it" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="10.0.65.9" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default,mms,supl" />
+  <apn apn="apn.fastweb.it" authtype="0" carrier="FASTWEB WEB" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default,supl" />
+  <apn apn="apn.fastweb.it" authtype="0" carrier="FASTWEB MMS" carrier_enabled="true" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="10.0.65.9" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="mms" />
+  <apn apn="datacard.fastweb.it" carrier="FASTWEB Datacard" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default" />
+  <apn apn="datacard.fastweb.it" authtype="0" carrier="FASTWEB Datacard" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default" />
+  <apn apn="hos" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="HOS" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="hos" authtype="0" carrier="FW HOS" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="FW IMS" carrier_enabled="true" mcc="222" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="99" mvno_match_data="VERY" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="INTERNET" mcc="222" mnc="99" mvno_match_data="VERY" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" mvno_match_data="VERY" mvno_type="spn" type="mms" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="99" mvno_match_data="VERY" mvno_type="spn" protocol="IP" type="xcap" />
+  <apn apn="ims" carrier="ims" mcc="222" mnc="99" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="internet.it" carrier="INTERNET" mcc="222" mnc="99" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="mms.it" carrier="MMS" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" mvno_match_data="WINDTRE" mvno_type="spn" type="mms" />
+  <apn apn="xcap" carrier="xcap" mcc="222" mnc="99" mvno_match_data="WINDTRE" mvno_type="spn" protocol="IP" type="xcap" />
+  <apn apn="internet.it" carrier="INTERNET" carrier_id="1575" mcc="222" mnc="99" type="default,ia,supl" />
+  <apn apn="mms.it" carrier="MMS" carrier_id="1575" mcc="222" mmsc="http://mms.windtre.it" mmsport="8080" mmsproxy="mmsproxy.windtre.it" mnc="99" type="mms" />
+  <apn apn="apn.fastweb.it" carrier="Fastweb WEB" carrier_id="2039" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="10.0.65.9" mnc="99" mvno_match_data="FASTWEB" mvno_type="spn" type="default,ia,mms,supl" />
+</apns>

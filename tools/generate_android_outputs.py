@@ -13,6 +13,7 @@ from typing import Any
 from xml.sax.saxutils import escape
 
 from carrier_config_types import config_value_has_expected_type, expected_config_type
+from lineageos_apns import country_files, fits_lineageos_schema
 from validate_public_carrier_data import STALE_AFTER_DAYS
 
 
@@ -221,17 +222,18 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
     return records
 
 
-def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
-    records: list[dict[str, str]] = []
+def apn_xml_records(profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Every APN XML row of these profiles, deduplicated and in file order."""
+    records: list[dict[str, Any]] = []
     for profile in profiles:
         records.extend(apn_records(profile))
-    unique_records: dict[str, dict[str, str]] = {}
+    unique_records: dict[str, dict[str, Any]] = {}
     for record in records:
         settings = {key: value for key, value in record.items() if key != "carrier"}
         unique_records.setdefault(
             json.dumps(settings, sort_keys=True, separators=(",", ":")), record
         )
-    records = sorted(
+    return sorted(
         unique_records.values(),
         key=lambda item: (
             item.get("mcc", ""),
@@ -243,17 +245,66 @@ def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
             item.get("type", ""),
         )
     )
+
+
+def apn_row_line(record: dict[str, Any]) -> str:
+    attrs = "".join(attr(key, record[key]) for key in sorted(record))
+    return f"  <apn{attrs} />"
+
+
+def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
+    records = apn_xml_records(profiles)
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
         f'<apns version="{version}">',
     ]
-    for record in records:
-        attrs = "".join(attr(key, record[key]) for key in sorted(record))
-        lines.append(f"  <apn{attrs} />")
+    lines.extend(apn_row_line(record) for record in records)
     lines.append("</apns>")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return len(records)
+
+
+# Each per-country file starts like a file in LineageOS's android_vendor_apn:
+# the XML declaration, an SPDX comment, then the apns element.
+COUNTRY_APN_HEADER = [
+    '<?xml version="1.0" encoding="utf-8"?>',
+    "<!--",
+    "    SPDX-FileCopyrightText: Open Carrier Data contributors",
+    "    SPDX-License-Identifier: CC0-1.0",
+    "-->",
+]
+
+
+def write_country_apns(
+    directory: Path, profiles: list[dict[str, Any]], version: int
+) -> tuple[int, int, int]:
+    """Write the rows of apns-conf.xml again, one file per country in the
+    layout of LineageOS's android_vendor_apn. Each row keeps its line and its
+    order from apns-conf.xml. A row whose MCC has no country, such as 001 for
+    test networks, and a row LineageOS's apns-conf.xsd would reject are left
+    out. Returns the file count and the two counts of rows left out."""
+    by_file: dict[str, list[str]] = {}
+    without_country = 0
+    schema_rejected = 0
+    for record in apn_xml_records(profiles):
+        names = country_files(str(record.get("mcc", "")))
+        if not names:
+            without_country += 1
+            continue
+        if not fits_lineageos_schema(record):
+            schema_rejected += 1
+            continue
+        for name in names:
+            by_file.setdefault(name, []).append(apn_row_line(record))
+    directory.mkdir(parents=True, exist_ok=True)
+    for stale in sorted(directory.glob("*.xml")):
+        if stale.name not in by_file:
+            stale.unlink()
+    for name, rows in sorted(by_file.items()):
+        lines = [*COUNTRY_APN_HEADER, f'<apns version="{version}">', *rows, "</apns>"]
+        (directory / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return len(by_file), without_country, schema_rejected
 
 
 SNAPSHOTS_BY_PROFILE_SOURCE = {
@@ -676,6 +727,11 @@ def main(argv: list[str]) -> int:
         profiles,
         args.apn_version,
     )
+    country_file_count, rows_without_country, rows_schema_rejected = write_country_apns(
+        generated_dir / "android" / "apns",
+        profiles,
+        args.apn_version,
+    )
     write_lookup(
         generated_dir / "android" / "lookup.json",
         carriers_dir,
@@ -712,7 +768,10 @@ def main(argv: list[str]) -> int:
         f"generated Android output for {len(profiles)} profile(s): "
         f"{apn_count} APN row(s), {config_count} CarrierConfig profile(s), "
         f"{mccmnc_count} MCC/MNC key(s), {carrier_id_count} Android carrier ID key(s), "
-        f"{config_xml_count} CarrierConfig XML block(s)"
+        f"{config_xml_count} CarrierConfig XML block(s), "
+        f"{country_file_count} per-country APN file(s), "
+        f"{rows_without_country} APN row(s) without a country, "
+        f"{rows_schema_rejected} APN row(s) LineageOS's schema rejects"
     )
     return 0
 

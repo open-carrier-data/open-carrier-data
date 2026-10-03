@@ -9,6 +9,7 @@ The Android files live in `generated/android/`. Each file has one job.
 | File | Put it where |
 | --- | --- |
 | `apns-conf.xml` | the APN database path your TelephonyProvider reads |
+| `apns/<country>.xml` | a LineageOS tree's `vendor/apn`, in place of its country files |
 | `carrier-config-list.xml` | your CarrierConfig overlay input |
 | `carrier-config-overrides.json` | a build-time source for CarrierConfig if you do not consume XML |
 | `lookup.json`, `mccmnc-index.json`, `carrier-id-index.json` | any local lookup your ROM does at SIM load |
@@ -31,7 +32,7 @@ head -2 /tmp/ocd-out/android/apns-conf.xml
 The generator prints one summary line and the XML header shows the new version. On 2026-10-03 the output is:
 
 ```text
-generated Android output for 7827 profile(s): 25680 APN row(s), 6361 CarrierConfig profile(s), 3177 MCC/MNC key(s), 179 Android carrier ID key(s), 5275 CarrierConfig XML block(s)
+generated Android output for 7834 profile(s): 25683 APN row(s), 6378 CarrierConfig profile(s), 3172 MCC/MNC key(s), 179 Android carrier ID key(s), 5282 CarrierConfig XML block(s), 218 per-country APN file(s), 250 APN row(s) without a country, 3 APN row(s) LineageOS's schema rejects
 <?xml version="1.0" encoding="utf-8"?>
 <apns version="9">
 ```
@@ -63,6 +64,41 @@ PY
 
 Those profiles stay available in `lookup.json`.
 
+## Use the per-country files in a LineageOS tree
+
+LineageOS keeps its APN list in `vendor/apn`, the `android_vendor_apn` repository, as one XML file per country. Its build merges them into one `apns-conf.xml` and checks the result against the repository's `apns-conf.xsd`. `generated/android/apns/` holds our rows in the same layout, so the files can replace LineageOS's.
+
+Each file is named by a country code as in LineageOS, for example `DE.xml`. It starts like a LineageOS file, with the XML declaration, an SPDX comment, and `<apns version="8">`. Its rows are the lines of `apns-conf.xml` for that country, unchanged and in the same order.
+
+Rows go to files by MCC, the way LineageOS split its list. An MCC goes to the country Android's MccTable gives it. Five MCCs follow LineageOS instead:
+
+| MCC | File |
+| --- | --- |
+| 340 | `GF.xml` |
+| 362 | `AN.xml` |
+| 425 | both `IL.xml` and `PS.xml` |
+| 647 | both `RE.xml` and `YT.xml` |
+| 901 | `INTL.xml` |
+
+LineageOS repeats every MCC 425 and MCC 647 row in both files, and so does this export. A merged build carries those rows twice, as LineageOS's own does. `tools/lineageos_apns.py` holds the table.
+
+Two kinds of rows stay only in `apns-conf.xml`. A row whose MCC has no country, such as 001 for test networks or 999 for internal use, has no file. A row that LineageOS's `apns-conf.xsd` rejects is left out, because the build would fail on it. On 2026-10-03 that is 250 rows without a country and 3 US rows whose MMSC is an address and port without a scheme. The generator prints both counts.
+
+On 2026-10-03 the export has 218 files. LineageOS has 169, and each of its country names is among ours. To use the export, delete LineageOS's country files and copy ours in. Keep its `Android.bp`, `make-apns.sh`, and `apns-conf.xsd`:
+
+```bash
+rm /path/to/lineage/vendor/apn/*.xml
+cp generated/android/apns/*.xml /path/to/lineage/vendor/apn/
+```
+
+To check the files against LineageOS's schema before you build, run:
+
+```bash
+xmllint --noout --schema /path/to/lineage/vendor/apn/apns-conf.xsd generated/android/apns/*.xml
+```
+
+On 2026-10-03 all 218 files validate against `apns-conf.xsd` at LineageOS revision `6e73ba90`, and so does the file `make-apns.sh` merges from them.
+
 ## Compare with the APN list you ship today
 
 `tools/diff_apns_conf.py` takes your `apns-conf.xml`, or a directory of per-country files in the LineageOS layout, and compares it with `generated/android/apns-conf.xml`. Rows match on network code, MVNO selector, APN, and type set, ignoring case and type order.
@@ -71,7 +107,7 @@ Those profiles stay available in `lookup.json`.
 python3 tools/diff_apns_conf.py /path/to/android_vendor_apn --json diff.json
 ```
 
-The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
+The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. To compare one country file with ours, pass both files, for example `python3 tools/diff_apns_conf.py /path/to/android_vendor_apn/DE.xml --ours generated/android/apns/DE.xml`. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
 
 ## Use the data in an app or tool
 
