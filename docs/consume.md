@@ -82,7 +82,7 @@ Rows go to files by MCC, the way LineageOS split its list. An MCC goes to the co
 
 LineageOS repeats every MCC 425 and MCC 647 row in both files, and so does this export. A merged build carries those rows twice, as LineageOS's own does. `tools/lineageos_apns.py` holds the table.
 
-Two kinds of rows stay only in `apns-conf.xml`. A row whose MCC has no country, such as 001 for test networks or 999 for internal use, has no file. A row that LineageOS's `apns-conf.xsd` rejects is left out, because the build would fail on it. On 2026-10-03 that is 250 rows without a country and 3 US rows whose MMSC is an address and port without a scheme. The generator prints both counts.
+Two kinds of rows stay only in `apns-conf.xml`. A row whose MCC has no country, such as 001 for test networks or 999 for internal use, has no file. A row that LineageOS's `apns-conf.xsd` rejects is left out, because the build would fail on it. On 2026-10-03 that is 250 rows without a country and 3 US rows whose MMSC is an address and port without a scheme: `208.254.124.11:8514` on 310100 and `172.16.0.37:8514` twice on 311210. `apns-conf.xml` keeps those three as published. `US.xml` keeps the variant of each with `http://`, which other sources give for the same APN. The generator prints both counts.
 
 On 2026-10-03 the export has 218 files. LineageOS has 169, and each of its country names is among ours. To use the export, delete LineageOS's country files and copy ours in. Keep its `Android.bp`, `make-apns.sh`, and `apns-conf.xsd`:
 
@@ -107,7 +107,7 @@ On 2026-10-03 all 218 files validate against `apns-conf.xsd` at LineageOS revisi
 python3 tools/diff_apns_conf.py /path/to/android_vendor_apn --json diff.json
 ```
 
-The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. To compare one country file with ours, pass both files, for example `python3 tools/diff_apns_conf.py /path/to/android_vendor_apn/DE.xml --ours generated/android/apns/DE.xml`. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 18 of its 3,967 rows were absent from ours: 17 initial-attach rows with an empty APN, which the profile schema does not allow, and one row that carries an MVNO match value without an MVNO type.
+The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. To compare one country file with ours, pass both files, for example `python3 tools/diff_apns_conf.py /path/to/android_vendor_apn/DE.xml --ours generated/android/apns/DE.xml`. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 319 of its 3,967 rows have no exact match in ours. 301 of them have the same network, MVNO selector, and APN in ours with another type set. 18 have an APN we lack: 17 rows with an empty APN, which the profile schema does not allow (15 initial-attach rows and 2 Lycamobile UK MMS rows), and one row that carries an MVNO match value without an MVNO type. Every LineageOS network is in ours.
 
 ## Use the data in an app or tool
 
@@ -133,7 +133,17 @@ The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi
 
 When sources disagree on one APN, `apns-conf.xml` carries every variant, and variants are ordered by APN name; pick per type using `fact_sources` in `generated/evidence-index.json` if you need one. Rows that differ only in their label are collapsed to the first.
 
-Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`. Android returns the rows whose `carrier_id` equals the SIM's carrier id when there are any, then the rows whose network code and MVNO selector match, then the plain network rows. To reuse the rules in your own code, read the `specificity` function and the match loop in `tools/resolve_carrier_profiles.py`.
+Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`.
+
+Android picks a SIM's rows in its own way. In Android 16, which LineageOS 23.2 builds on, `getSubscriptionMatchingAPNListSynchronized` in TelephonyProvider does it in three steps:
+
+1. If rows match the SIM's network code and MVNO selector, Android uses those rows and ignores the plain rows of that network.
+2. Otherwise, it uses the plain rows of the SIM's network code.
+3. Otherwise, it uses the rows that carry the SIM's carrier id under another network code.
+
+Rows that carry the SIM's carrier id and no network code are added in every case. A `carrier_id` on a row that also has a network code does not restrict that row, and Android does not prefer such rows. Rows come back in file order. Without a preferred APN, the first row that can serve a request is tried first. `apns-conf.xml` sorts rows by network code, carrier id, MVNO selector, APN, and type, so among the variants for one network and selector, the one whose APN sorts first is tried first.
+
+The resolver works on profiles, not on rows. To reuse its rules in your own code, read the `specificity` function and the match loop in `tools/resolve_carrier_profiles.py`.
 
 ## Check freshness before you ship
 
