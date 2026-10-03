@@ -78,17 +78,32 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_default_wfc_ims_enabled_bool": false,
     "carrier_default_wfc_ims_mode_int": 1,
     "carrier_default_wfc_ims_roaming_enabled_bool": false,
     "carrier_default_wfc_ims_roaming_mode_int": 2,
     "carrier_ims_gba_required_bool": true,
-    "carrier_supports_ss_over_ut_bool": false,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_metered_roaming_apn_types_strings": [
+      "default",
+      "dun",
+      "supl",
+      "mms"
+    ],
     "carrier_volte_available_bool": true,
     "carrier_vowifi_tty_supported_bool": false,
     "carrier_vt_available_bool": false,
     "carrier_wfc_ims_available_bool": false,
+    "carrier_wfc_supports_wifi_only_bool": false,
+    "editable_enhanced_4g_lte_bool": false,
+    "editable_wfc_roaming_mode_bool": true,
+    "enableMMSDeliveryReports": true,
+    "enableMMSReadReports": true,
     "enabledMMS": true,
+    "enhanced_4g_lte_on_by_default_bool": true,
     "hide_enhanced_4g_lte_bool": true,
     "ims.enable_presence_capability_exchange_bool": false,
     "ims.enable_presence_publish_bool": false,
