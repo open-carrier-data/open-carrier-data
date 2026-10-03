@@ -119,4 +119,4 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 ## License
 
-Software and documentation are Apache-2.0. The text is in [LICENSE](LICENSE). The project's own rights in the data are waived under CC0 1.0, subject to upstream terms. The details are in [DATA-LICENSE.md](DATA-LICENSE.md).
+Software and documentation are Apache-2.0. The text is in [LICENSE](LICENSE). The published carrier values are facts the project derived and normalized. The project publishes no vendor files and waives its own rights in the data under CC0 1.0. The details are in [DATA-LICENSE.md](DATA-LICENSE.md).
