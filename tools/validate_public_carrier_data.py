@@ -716,6 +716,54 @@ def validate_entry_dates(
             )
 
 
+# The exact upstream versions behind a profile, per source family: firmware
+# build IDs, full Git commits of the repository a value was read from, and
+# Apple carrier bundle and iOS versions. Never URLs, paths, or file names.
+SOURCE_VERSION_PATTERNS = {
+    "builds": re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,119}"),
+    "commits": re.compile(r"[0-9a-f]{40}"),
+    "bundle_versions": re.compile(r"[0-9]{1,6}(\.[0-9]{1,6}){0,4}"),
+    "ios_versions": re.compile(r"[0-9]{1,3}(\.[0-9]{1,3}){0,3}"),
+}
+MAX_SOURCE_VERSIONS = 5000
+
+
+def validate_source_versions(
+    path: Path, items: Any, index: int, sources: list[str]
+) -> None:
+    """source_versions is optional. Each item names one of the profile's
+    sources once, in source order, with at least one non-empty, sorted, unique
+    list of version identifiers of the kinds in SOURCE_VERSION_PATTERNS."""
+    label = f"profiles[{index}].source_versions"
+    require_type(path, items, list, label)
+    if not items:
+        raise ValidationError(f"{path}: {label} is empty")
+    named: list[str] = []
+    for item_index, item in enumerate(items):
+        item_label = f"{label}[{item_index}]"
+        require_type(path, item, dict, item_label)
+        kinds = set(item) - {"source"}
+        if "source" not in item or not kinds or kinds - set(SOURCE_VERSION_PATTERNS):
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        source = item["source"]
+        if source not in sources:
+            raise ValidationError(f"{path}: {item_label}.source is not a profile source")
+        named.append(source)
+        for kind in sorted(kinds):
+            values = item[kind]
+            require_type(path, values, list, f"{item_label}.{kind}")
+            if not values or len(values) > MAX_SOURCE_VERSIONS:
+                raise ValidationError(f"{path}: {item_label}.{kind} is empty or too long")
+            for value in values:
+                if not isinstance(value, str) or not SOURCE_VERSION_PATTERNS[kind].fullmatch(
+                    value
+                ):
+                    raise ValidationError(f"{path}: {item_label}.{kind} has an invalid value")
+            validate_canonical_list(path, values, f"{item_label}.{kind}")
+    if named != sorted(set(named)):
+        raise ValidationError(f"{path}: {label} must name each source once, sorted")
+
+
 STALE_CAPABILITY_GATE = "stale_single_source_entry"
 
 
@@ -841,6 +889,7 @@ def validate_evidence_index(
         "quality_gates",
         "newest_entry",
         "capability_newest_entries",
+        "source_versions",
     }
     scope_keys = {
         "models",
@@ -985,6 +1034,8 @@ def validate_evidence_index(
                 )
             if group_sort_keys != sorted(group_sort_keys):
                 raise ValidationError(f"{path}: {label} must be canonically sorted")
+        if "source_versions" in evidence:
+            validate_source_versions(path, evidence["source_versions"], index, sources)
         validate_entry_dates(
             path,
             evidence,
