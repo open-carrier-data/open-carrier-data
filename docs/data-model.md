@@ -179,7 +179,19 @@ Each `profiles` record describes one carrier profile.
 | `capability_newest_entries` | some records | capability name to the month of the newest upstream entry behind that published capability, present only when every supporting observation is dated |
 | `conflicts` | some records | facts omitted, made conditional, or published in every variant because sources disagreed |
 | `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
+| `source_versions` | some records | per source family, the exact builds, commits, or Apple bundle and iOS versions the observations were read from |
 
 `observed_scope` can hold `models`, `android_majors`, `firmware_builds`, `firmware_regions`, `sales_codes`, `multi_csc`, `omc_revisions`, `omc_versions`, and `source_layers`. `source_layers` is `firmware_baseline` or `gras_delta`.
+
+`source_versions` is a list with one item per source family, sorted by `source`. `source` names one of the record's `sources`. The other keys are lists, each sorted, unique, and non-empty. An item has at least one.
+
+| Key | Holds | Example |
+| --- | --- | --- |
+| `builds` | firmware build IDs | `CP3A.260905.009`, `G981BXXSNHYB1` |
+| `commits` | full Git commits of the repository a value was read from | `b446f3306fb55d46e6799f3ae76dbb1f40b22193` |
+| `bundle_versions` | Apple carrier bundle versions | `31.1` |
+| `ios_versions` | the iOS versions Apple's index lists for the bundle | `17.1` |
+
+A family appears only where its observations name a version. The git-based families, `aosp`, `lineageos`, and `mobile_broadband_provider_info`, read one commit per snapshot, which `source_snapshots[].revision` names. The validator rejects any other key and any value outside these patterns, so no URL or path can appear.
 
 Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, ordered by APN. A `stale_single_source_entry:<capability>` gate names a capability the profile publishes as `unknown`; the validator checks that. [how-it-is-built.md](how-it-is-built.md) explains both rules.

@@ -36,6 +36,28 @@ python3 -c 'print(*[(s["source_name"], s["revision_date"], s["checked_at"]) for 
 
 The refresh methods below, the AOSP branch name, and the Samsung scope rules come from the private importer configuration. They cannot be checked from this repo.
 
+## Exact versions behind a profile
+
+A snapshot revision names the source state that was checked. Where a family also knows the exact version each value was read from, the profile's record in `generated/evidence-index.json` names it under `source_versions`. [docs/data-model.md](docs/data-model.md) lists the fields.
+
+| Source name | Version kind | From |
+| --- | --- | --- |
+| `google_carriersettings` | `builds` | the Pixel build ID of the GrapheneOS snapshot |
+| `samsung_ims` | `builds` | the Samsung firmware (PDA) build |
+| `fairphone_official_source` | `commits` | the pinned `fp2-common` or `fp3-common` commit |
+| `sony_open_devices_aosp` | `commits` | the `device-sony-common` commit |
+| `lineageos_device_overlays` | `commits` | the commit that last changed the overlay file |
+| `google_pixel_vendor_carriersettings` | `commits` | the commits that last changed each device's CarrierSettings files |
+| `apple_carrier_bundles` | `bundle_versions`, `ios_versions` | the bundle and iOS versions Apple's index lists for the package |
+
+On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names no build, because its lane does not record which firmware build each observation was extracted from. Its OMC versions are in `observed_scope.omc_versions`.
+
+To print how many profiles name a version, per family and kind, run:
+
+```bash
+python3 -c 'import json, collections; print(collections.Counter((i["source"], k) for p in json.load(open("generated/evidence-index.json"))["profiles"] for i in p.get("source_versions", []) for k in i if k != "source"))'
+```
+
 ## Freshness uses checked_at, not revision_date
 
 Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.

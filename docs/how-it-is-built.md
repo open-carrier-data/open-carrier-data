@@ -44,6 +44,8 @@ The sanitizer groups observations and applies fixed rules. The rules are:
 
 The evidence index lists `fact_sources` for every exported fact whose sources are narrower than the profile's `sources`; a fact without an entry rests on all of them. A profile-wide source list is not proof for every field. Check the fact, not the profile.
 
+`source_versions` names the exact origin behind each source family of a profile: a Pixel build ID, a Samsung firmware build, a Git commit, an Apple bundle and iOS version. To cite a fact, take the families `fact_sources` names for it, or all of `sources`, and read their versions. Where a family read several versions, the list holds all of them for the profile, not per fact.
+
 ## Why profiles are neutral
 
 A profile says "this carrier has these settings". It does not say "Samsung says this" or "Apple says this". One reason drives that choice.
