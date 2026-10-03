@@ -68,7 +68,7 @@ Raw textproto and protobuf files, endpoint responses, and download URLs stay pri
 
 ## Samsung contributes OMC facts and positive IMS observations
 
-OMC facts come from firmware baselines and from GRAS update checks. A live GRAS observation needs a recent check and a complete model, CSC, sales code, Android version, OMC revision, and OMC version scope. A firmware observation needs a real release date.
+OMC facts come from firmware baselines found through Samsung's unauthenticated firmware update lookup. The GRAS update-check path was removed on 2026-10-03; two older GRAS observations remain until re-extraction replaces them. A firmware observation needs a versioned artifact whose build Samsung's update service confirmed as current, dated by that confirmation.
 
 IMS facts are positive, device-scoped observations of VoLTE, Wi-Fi calling, VoNR, video calling, SMS over IMS, and RCS. A false or absent Samsung switch is never published as proof that a carrier lacks the feature. Raw firmware, OMC files, requests, responses, signed URLs, and credentials stay private. The project asserts no Samsung license.
 

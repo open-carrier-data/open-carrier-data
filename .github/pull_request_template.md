@@ -16,12 +16,4 @@ Explain the problem this fixes.
 
 ## Checks
 
-Run the checks that apply:
-
-```bash
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/validate_device_catalog.py generated/devices
-python3 tools/test_generated_android_outputs.py
-python3 tools/test_carrier_relevance_contract.py
-python3 tools/test_resolve_carrier_profiles.py
-```
+Run the commands in the `validate` job of `.github/workflows/validate.yml`; the pull request check runs the same.

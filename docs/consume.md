@@ -95,7 +95,7 @@ On 2026-10-03 the first lines of the output are:
 
 The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. Overlay APN rows and CarrierConfig keys. For capabilities, report the most specific profile's value; an `unknown` there means the sources say nothing about this brand, and the host network's value is only the host's.
 
-When sources disagree on one APN, `apns-conf.xml` carries every variant, and rows with the same network, APN, and type keep the profile's order, so the primary source's row comes first. Take the first row per APN and type if you want one row each. Rows that differ only in their label are collapsed to the first.
+When sources disagree on one APN, `apns-conf.xml` carries every variant, and variants are ordered by APN name; pick per type using `fact_sources` in `generated/evidence-index.json` if you need one. Rows that differ only in their label are collapsed to the first.
 
 Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`. Android returns the rows whose `carrier_id` equals the SIM's carrier id when there are any, then the rows whose network code and MVNO selector match, then the plain network rows. To reuse the rules in your own code, read the `specificity` function and the match loop in `tools/resolve_carrier_profiles.py`.
 
