@@ -6,9 +6,9 @@
 <apns version="8">
   <apn apn="internet" carrier="UBIQUISYS" carrier_id="1491" mcc="234" mnc="01" type="default,ia,supl" />
   <apn apn="internet" carrier="UBIQUISYS" mcc="234" mnc="01" type="default,supl" />
-  <apn apn="prepay.tesco-mobile.com" carrier="Tesco Prepay" mcc="234" mnc="01" password="password" port="9201" proxy="193.113.200.195" server="http://wap.tesco-mobile.com/" type="default,mms,supl" user="tescowap" />
+  <apn apn="prepay.tesco-mobile.com" carrier="Tesco Prepay" mcc="234" mnc="01" password="password" port="9201" proxy="193.113.200.195" server="http://wap.tesco-mobile.com/" type="default,supl" user="tescowap" />
   <apn apn="webuk.mundio.com" carrier="Vectone Mobile" mcc="234" mnc="01" type="default,supl" />
-  <apn apn="internet" carrier="UBIQUISYS" mcc="234" mnc="01" mvno_match_data="Vectone Mobile" mvno_type="spn" type="default,mms,supl" />
+  <apn apn="internet" carrier="UBIQUISYS" mcc="234" mnc="01" mvno_match_data="Vectone Mobile" mvno_type="spn" type="default,supl" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MOBILE WEB" carrier_id="1492" mcc="234" mnc="02" password="O2web" type="default,ia,supl" user="O2web" />
   <apn apn="mobile.o2.co.uk" carrier="O2 Internet(post)" mcc="234" mnc="02" password="password" type="default,supl" user="O2web" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MOBILE WEB" mcc="234" mnc="02" password="O2web" type="default,supl" user="O2web" />
@@ -660,7 +660,7 @@
   <apn apn="ims" carrier="ims" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="hos" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="gamma.co.uk" carrier="Gamma Data" carrier_id="2137" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" protocol="IP" roaming_protocol="IP" type="default" />
-  <apn apn="gamma.co.uk" carrier="Gamma Data" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" protocol="IP" roaming_protocol="IP" type="bip,cbs,default,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,mms,rcs,supl,vsim,xcap" />
+  <apn apn="gamma.co.uk" carrier="Gamma Data" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" protocol="IP" roaming_protocol="IP" type="cbs,default,dun,fota,hipri,ims,mms,supl" />
   <apn apn="gamma" authtype="0" carrier="GAMMA" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" type="default,dun,mms,supl" user_editable="false" />
   <apn apn="three.co.uk" bearer_bitmask="1|2|3|9|10|11|13|15|18" carrier="Gamma Services" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms" user_editable="false" />
   <apn apn="three.co.uk" carrier="Gamma MMS" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms,xcap" user_editable="false" />
@@ -670,7 +670,7 @@
   <apn apn="gamma.co.uk" carrier="Internet" mcc="234" mnc="39" mvno_match_data="Gamma" mvno_type="spn" type="default" />
   <apn apn="gamma.co.uk" carrier="MMS" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" mvno_match_data="Gamma" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="39" mvno_match_data="Gamma" mvno_type="spn" protocol="IPV4V6" type="ims" />
-  <apn apn="Jump" carrier="Jump" mcc="234" mmsc="http://mmsc.mobi/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" mvno_match_data="JUMP" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="bip,cbs,default,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,mms,rcs,supl,vsim,xcap" user_editable="false" />
+  <apn apn="Jump" carrier="Jump" mcc="234" mmsc="http://mmsc.mobi/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" mvno_match_data="JUMP" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="cbs,default,dun,fota,hipri,ims,mms,supl" user_editable="false" />
   <apn apn="Jump" carrier="Jump" carrier_id="2138" mcc="234" mmsc="http://mmsc.mobi/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" mvno_match_data="Jump" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="web" authtype="1" carrier="spusu" carrier_enabled="true" mcc="234" mnc="40" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="ims" mcc="234" mnc="40" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />

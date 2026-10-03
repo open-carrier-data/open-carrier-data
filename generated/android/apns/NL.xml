@@ -5,7 +5,7 @@
 -->
 <apns version="8">
   <apn apn="internet.tele2.nl" carrier="internet.tele2.nl" mcc="204" mmsc="http://mmsc.tele2.nl" mmsport="8080" mmsproxy="193.12.40.64" mnc="02" type="default,dun,mms,supl" />
-  <apn apn="Tele2 GPRS" carrier="Tele2 GPRS" mcc="204" mmsport="8080" mmsproxy="193.12.40.64" mnc="02" port="8080" proxy="130.244.196.90" type="default,mms,supl" />
+  <apn apn="Tele2 GPRS" carrier="Tele2 GPRS" mcc="204" mmsport="8080" mmsproxy="193.12.40.64" mnc="02" port="8080" proxy="130.244.196.90" type="default,supl" />
   <apn apn="internet.tele2.nl" authtype="1" carrier="Tele2 Internet" carrier_id="1643" mcc="204" mnc="02" mvno_match_data="4E4C" mvno_type="gid" protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="ims" carrier="Tele2 IMS" carrier_id="1643" mcc="204" mnc="02" mvno_match_data="4E4C" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet.tele2.nl" carrier="Tele2 Internet" mcc="204" mnc="02" mvno_match_data="Tele2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" />
@@ -98,7 +98,7 @@
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" roaming_protocol="IP" type="fota" user_visible="false" />
-  <apn apn="live.vodafone.com" carrier="Vodafone Travel" mcc="204" mnc="04" mvno_match_data="C2" mvno_type="gid" password="vodafone" type="default,dun,mms" user="vodafone" />
+  <apn apn="live.vodafone.com" carrier="Vodafone Travel" mcc="204" mnc="04" mvno_match_data="C2" mvno_type="gid" password="vodafone" type="default,dun" user="vodafone" />
   <apn apn="internet" carrier="8ta" mcc="204" mnc="04" mvno_match_data="892702" mvno_type="iccid" type="default,dun" />
   <apn apn="internet.xploremobile.com" carrier="Xplore" mcc="204" mmsc="http://mmsc.xploremobile.com" mnc="04" mvno_match_data="89302130" mvno_type="iccid" type="default,dun,mms" />
   <apn apn="media.ng" carrier="Videotron" mcc="204" mnc="04" mvno_match_data="89302500" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IP" type="default" />
@@ -175,10 +175,6 @@
   <apn apn="tethering.cs4glte.com" carrier="CSpire international" carrier_id="1836" mcc="204" mmsc="http://pix.cspire.com" mnc="04" mvno_match_data="C Spire" mvno_type="spn" protocol="IPV4V6" server="*" type="dun" />
   <apn apn="admin.cs4glte.com" carrier="INTL CSpire Admin" mcc="204" mnc="04" mvno_match_data="C Spire" mvno_type="spn" password="cs3g" protocol="IPV4V6" type="fota" user="Uniroam@inet.cs.com" user_visible="false" />
   <apn apn="admin.cs4glte.com" carrier="CSpire international" carrier_id="1836" mcc="204" mmsc="http://pix.cspire.com" mnc="04" mvno_match_data="C Spire" mvno_type="spn" protocol="IPV4V6" server="*" type="fota" />
-  <apn apn="internet.cs4glte.com" authtype="3" carrier="INTL CSpire Internet" mcc="204" mmsc="http://pix.cspire.com" mnc="04" mvno_match_data="C Spire&#13;" mvno_type="spn" password="cs3g" protocol="IPV4V6" type="default,mms,supl" user="Uniroam@inet.cs.com" />
-  <apn apn="ims.cs4glte.com" bearer_bitmask="14|20" carrier="INTL CSpire IMS" mcc="204" mnc="04" mvno_match_data="C Spire&#13;" mvno_type="spn" password="cs3g" protocol="IPV4V6" type="ims" user="Uniroam@inet.cs.com" user_visible="false" />
-  <apn apn="tethering.cs4glte.com" carrier="INTL CSpire Tethering" mcc="204" mnc="04" mvno_match_data="C Spire&#13;" mvno_type="spn" password="cs3g" protocol="IPV4V6" type="dun" user="Uniroam@inet.cs.com" user_editable="false" />
-  <apn apn="admin.cs4glte.com" carrier="INTL CSpire Admin" mcc="204" mnc="04" mvno_match_data="C Spire&#13;" mvno_type="spn" password="cs3g" protocol="IPV4V6" type="fota" user="Uniroam@inet.cs.com" user_visible="false" />
   <apn apn="admin.cs4glte.com" carrier="INTL CSpire Admin" mcc="204" mnc="04" mvno_match_data="C Spire Roaming" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="internet.cs4glte.com" carrier="INTL CSpire Internet" mcc="204" mnc="04" mvno_match_data="C Spire Roaming" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="tethering.cs4glte.com" carrier="INTL CSpire Tethering" mcc="204" mnc="04" mvno_match_data="C Spire Roaming" mvno_type="spn" protocol="IPV4V6" type="default" />
@@ -301,16 +297,16 @@
   <apn apn="internet" carrier="internet" mcc="204" mnc="08" protocol="IPV4V6" type="default,dun" />
   <apn apn="portalmmm.nl" authtype="1" carrier="portalmmm.nl" mcc="204" mmsc="http://mp.mobiel.kpn/mmsc" mmsport="5080" mmsproxy="10.10.100.20" mnc="08" type="default,mms,supl" />
   <apn apn="KPN4G.nl" carrier="KPN 4G LTE" mcc="204" mmsc="http://mp.mobiel.kpn/mmsc" mmsport="5080" mmsproxy="10.10.100.20" mnc="08" type="default,mms,supl" />
-  <apn apn="multimedia.ah.nl" carrier="AH Mobiel Internet" mcc="204" mmsc="http://mms" mmsport="8080" mmsproxy="193.113.200.195" mnc="08" type="bip,cbs,default,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,mms,rcs,supl,vsim,xcap" />
+  <apn apn="multimedia.ah.nl" carrier="AH Mobiel Internet" mcc="204" mmsc="http://mms" mmsport="8080" mmsproxy="193.113.200.195" mnc="08" type="cbs,default,dun,fota,hipri,ims,mms,supl" />
   <apn apn="multimedia.lebara.nl" authtype="1" carrier="Lebara Internet" mcc="204" mmsc="http://mp.mobiel.kpn/mmsc" mmsport="5080" mmsproxy="10.10.100.20" mnc="08" type="default,mms,supl" />
   <apn apn="truphone.com" carrier="Truphone" mcc="204" mnc="08" type="default,supl" />
-  <apn apn="portalmmm.nl" carrier="portalmmm.nl" mcc="204" mmsc="http://mp.mobiel.kpn/mmsc" mmsport="5080" mmsproxy="10.10.100.20" mnc="08" type="bip,cbs,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,rcs,vsim,xcap" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="204" mnc="08" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="204" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="204" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="IMS" carrier_id="1644" mcc="204" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" authtype="0" carrier="KPN IMS" carrier_enabled="true" mcc="204" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="KPN NL" mcc="204" mnc="08" protocol="IPV6" type="ims" />
+  <apn apn="portalmmm.nl" carrier="portalmmm.nl" mcc="204" mmsc="http://mp.mobiel.kpn/mmsc" mmsport="5080" mmsproxy="10.10.100.20" mnc="08" type="cbs,dun,fota,hipri,ims" />
   <apn apn="ut" carrier="UT-Interface" carrier_id="1644" mcc="204" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="ut" authtype="0" carrier="ut" carrier_enabled="true" mcc="204" mnc="08" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="truphone.com" carrier="DATA" mcc="204" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
