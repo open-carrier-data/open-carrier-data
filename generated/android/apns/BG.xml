@@ -4,62 +4,60 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="284" mnc="01" mtu="1330" port="8080" protocol="IPV4V6" proxy="xcap.ims.mnc001.mcc284.pub.3gppnetwork.org" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="284" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="284" mnc="01" mtu="1330" protocol="IPV4V6" type="ims" />
+  <apn apn="inet-gprs.mtel.bg" carrier="MTel" carrier_id="1370" mcc="284" mnc="01" type="default,ia,supl" />
   <apn apn="inet-gprs.mtel.bg" carrier="inet-gprs.mtel.bg" mcc="284" mnc="01" type="default,dun,supl" />
   <apn apn="internet.a1.bg" authtype="0" carrier="internet.a1.bg" carrier_enabled="true" mcc="284" mnc="01" type="default,supl" />
-  <apn apn="internet.a1.bg" carrier="A1 BG" mcc="284" mnc="01" type="dun" />
+  <apn apn="wap-gprs.mtel.bg" carrier="Mtel Internet" mcc="284" mnc="01" type="default,supl" />
+  <apn apn="mms-gprs.mtel.bg" authtype="1" carrier="MTel MMS" carrier_id="1370" mcc="284" mmsc="http://mmsc/" mmsport="8080" mmsproxy="10.150.0.33" mnc="01" password="mtel" type="mms" user="mtel" />
   <apn apn="mms-gprs.mtel.bg" carrier="mms-gprs.mtel.bg" mcc="284" mmsc="http://mmsc/" mmsport="8080" mmsproxy="10.150.0.33" mnc="01" password="mtel" type="mms" user="mtel" />
   <apn apn="mms.a1.bg" authtype="0" carrier="mms.a1.bg" carrier_enabled="true" mcc="284" mmsc="http://mmsc" mmsport="8080" mmsproxy="10.150.0.33" mnc="01" type="mms" />
-  <apn apn="wap-gprs.mtel.bg" carrier="Mtel Internet" mcc="284" mnc="01" type="default,supl" />
-  <apn apn="hos" carrier="A1 HOS" mcc="284" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="A1 IMS" mcc="284" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="284" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="284" mnc="01" mtu="1330" protocol="IPV4V6" type="ims" />
+  <apn apn="internet.a1.bg" carrier="A1 BG" mcc="284" mnc="01" type="dun" />
+  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="284" mnc="01" mtu="1330" port="8080" protocol="IPV4V6" proxy="xcap.ims.mnc001.mcc284.pub.3gppnetwork.org" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="internet.a1.bg" carrier="A1" mcc="284" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" type="default" />
   <apn apn="mms.a1.bg" carrier="A1 MMS" mcc="284" mmsc="http://mmsc" mmsport="8080" mmsproxy="10.150.0.33" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" type="mms" />
-  <apn apn="inet-gprs.mtel.bg" carrier="MTel" carrier_id="1370" mcc="284" mnc="01" type="default,ia,supl" />
-  <apn apn="mms-gprs.mtel.bg" authtype="1" carrier="MTel MMS" carrier_id="1370" mcc="284" mmsc="http://mmsc/" mmsport="8080" mmsproxy="10.150.0.33" mnc="01" password="mtel" type="mms" user="mtel" />
-  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="284" mnc="03" mtu="1400" port="8090" protocol="IPV4V6" proxy="xcap.ims.mnc003.mcc284.pub.3gppnetwork.org" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="ims" carrier="A1 IMS" mcc="284" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="A1 HOS" mcc="284" mnc="01" mvno_match_data="A1 BG" mvno_type="spn" protocol="IPV4V6" type="xcap" />
+  <apn apn="internet.vivacom.bg" authtype="1" carrier="VIVACOM Internet" carrier_id="1999" mcc="284" mnc="03" password="vivacom" type="default,ia,supl" user="vivacom" />
+  <apn apn="internet.vivacom.bg" authtype="0" carrier="Internet Vivacom" carrier_enabled="true" mcc="284" mnc="03" password="VIVACOM" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="VIVACOM" />
+  <apn apn="internet.vivacom.bg" authtype="0" carrier="VIVACOM Internet" mcc="284" mnc="03" password="VIVACOM" type="default,supl" user="VIVACOM" />
+  <apn apn="internet.vivacom.bg" authtype="1" carrier="VIVACOM Internet" mcc="284" mnc="03" password="vivacom" type="default,supl" user="vivacom" />
+  <apn apn="internet.vivacom.bg" carrier="VIVACOM" mcc="284" mnc="03" password="VIVACOM" type="default,dun" user="VIVACOM" />
+  <apn apn="mms.vivacom.bg" authtype="0" carrier="VIVACOM MMS" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
+  <apn apn="mms.vivacom.bg" authtype="1" carrier="Vivacom MMS" carrier_id="1999" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
+  <apn apn="mms.vivacom.bg" authtype="1" carrier="Vivacom MMS" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
+  <apn apn="mms.vivacom.bg" carrier="mms.vivacom.bg" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="284" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" authtype="0" carrier="Vivacom IMS" carrier_enabled="true" mcc="284" mnc="03" mtu="1400" protocol="IPV4V6" type="ims" />
-  <apn apn="internet.vivacom.bg" carrier="VIVACOM" mcc="284" mnc="03" password="VIVACOM" type="default,dun" user="VIVACOM" />
-  <apn apn="internet.vivacom.bg" authtype="0" carrier="Internet Vivacom" carrier_enabled="true" mcc="284" mnc="03" password="VIVACOM" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="VIVACOM" />
-  <apn apn="internet.vivacom.bg" authtype="1" carrier="VIVACOM Internet" mcc="284" mnc="03" password="vivacom" type="default,supl" user="vivacom" />
-  <apn apn="internet.vivacom.bg" authtype="0" carrier="VIVACOM Internet" mcc="284" mnc="03" password="VIVACOM" type="default,supl" user="VIVACOM" />
-  <apn apn="mms.vivacom.bg" authtype="0" carrier="VIVACOM MMS" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="mms.vivacom.bg" authtype="1" carrier="Vivacom MMS" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="mms.vivacom.bg" authtype="0" carrier="Vivacom MMS" carrier_enabled="true" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="mms.vivacom.bg" carrier="mms.vivacom.bg" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="hos" carrier="hos" mcc="284" mnc="03" mvno_match_data="vivacom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="Vivacom IMS" mcc="284" mnc="03" mvno_match_data="vivacom" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="284" mnc="03" mtu="1400" port="8090" protocol="IPV4V6" proxy="xcap.ims.mnc003.mcc284.pub.3gppnetwork.org" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="internet.vivacom.bg" carrier="Internet Vivacom" mcc="284" mnc="03" mvno_match_data="vivacom" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.vivacom.bg" carrier="Vivacom MMS" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" mvno_match_data="vivacom" mvno_type="spn" type="mms" />
-  <apn apn="internet.vivacom.bg" authtype="1" carrier="VIVACOM Internet" carrier_id="1999" mcc="284" mnc="03" password="vivacom" type="default,ia,supl" user="vivacom" />
-  <apn apn="mms.vivacom.bg" authtype="1" carrier="Vivacom MMS" carrier_id="1999" mcc="284" mmsc="http://mmsc.vivacom.bg" mmsport="8080" mmsproxy="192.168.123.123" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="globul" carrier="GLOBUL Internet" mcc="284" mnc="05" port="8004" proxy="192.168.88.11" type="default,supl" user="globul" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="284" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="284" mnc="05" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Vivacom IMS" mcc="284" mnc="03" mvno_match_data="vivacom" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="284" mnc="03" mvno_match_data="vivacom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="284" mnc="05" type="default,supl" />
-  <apn apn="internet" carrier="Yettel" mcc="284" mnc="05" type="dun" />
+  <apn apn="telenorbg" authtype="0" carrier="Telenor Internet" carrier_id="1371" mcc="284" mnc="05" type="default,ia,supl" />
+  <apn apn="telenorbg" authtype="0" carrier="Telenor Internet" mcc="284" mnc="05" type="default,supl" />
+  <apn apn="globul" carrier="GLOBUL Internet" mcc="284" mnc="05" port="8004" proxy="192.168.88.11" type="default,supl" user="globul" />
+  <apn apn="telenor" carrier="Telenor Internet" mcc="284" mnc="05" type="default,supl" user="telenor" />
+  <apn apn="mms" authtype="0" carrier="Yettel MMS" carrier_enabled="true" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
+  <apn apn="mms" authtype="1" carrier="Telenor MMS" carrier_id="1371" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
   <apn apn="mms" authtype="1" carrier="Telenor MMS" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
   <apn apn="mms" carrier="Yettel" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" password="mms" type="mms" user="mms" />
   <apn apn="mms" carrier="Yettel" mcc="284" mnc="05" password="mms" type="mms" user="mms" />
-  <apn apn="mms" authtype="0" carrier="Yettel MMS" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
-  <apn apn="mms" authtype="0" carrier="Yettel MMS" carrier_enabled="true" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
   <apn apn="mms.globul.bg" carrier="mms.globul.bg" mcc="284" mmsc="http://mmsc1.mms.globul.bg:8002" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
   <apn apn="mms.telenor.bg" carrier="Telenor MMS" mcc="284" mmsc="http://mmsc1.mms.telenor.bg:8002" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
-  <apn apn="telenor" carrier="Telenor Internet" mcc="284" mnc="05" type="default,supl" user="telenor" />
-  <apn apn="telenorbg" authtype="0" carrier="Telenor Internet" mcc="284" mnc="05" type="default,supl" />
-  <apn apn="ims" carrier="Telenor IMS" mcc="284" mnc="05" mvno_match_data="Telenor BG" mvno_type="spn" type="ims" />
-  <apn apn="mms" carrier="Telenor MMS" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" mvno_match_data="Telenor BG" mvno_type="spn" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="284" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="284" mnc="05" protocol="IPV4V6" type="ims" />
+  <apn apn="internet" carrier="Yettel" mcc="284" mnc="05" type="dun" />
   <apn apn="telenorbg" carrier="Telenor Internet" mcc="284" mnc="05" mvno_match_data="Telenor BG" mvno_type="spn" type="default" />
-  <apn apn="ims" carrier="Yettel VoLTE" mcc="284" mnc="05" mvno_match_data="Yettel BG" mvno_type="spn" type="ims" />
+  <apn apn="mms" carrier="Telenor MMS" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" mvno_match_data="Telenor BG" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="Telenor IMS" mcc="284" mnc="05" mvno_match_data="Telenor BG" mvno_type="spn" type="ims" />
   <apn apn="internet" carrier="Yettel Internet" mcc="284" mnc="05" mvno_match_data="Yettel BG" mvno_type="spn" type="default" />
   <apn apn="mms" carrier="Yettel MMS" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" mvno_match_data="Yettel BG" mvno_type="spn" type="mms" />
-  <apn apn="mms" authtype="1" carrier="Telenor MMS" carrier_id="1371" mcc="284" mmsc="http://mmsc" mmsport="8004" mmsproxy="192.168.87.11" mnc="05" type="mms" user="mms" />
-  <apn apn="telenorbg" authtype="0" carrier="Telenor Internet" carrier_id="1371" mcc="284" mnc="05" type="default,ia,supl" />
-  <apn apn="bulsat.com" carrier="bulsat.com" mcc="284" mnc="11" type="default,supl" />
+  <apn apn="ims" carrier="Yettel VoLTE" mcc="284" mnc="05" mvno_match_data="Yettel BG" mvno_type="spn" type="ims" />
   <apn apn="bulsat.com" carrier="bulsatcom" carrier_id="2230" mcc="284" mnc="11" type="default,ia,supl" />
-  <apn apn="apn.maxtelecom.bg" carrier="MAX TELECOM" mcc="284" mnc="13" type="default,supl" />
+  <apn apn="bulsat.com" carrier="bulsat.com" mcc="284" mnc="11" type="default,supl" />
   <apn apn="apn.maxtelecom.bg" carrier="MAX TELECOM" carrier_id="2231" mcc="284" mnc="13" type="default,ia,supl" />
+  <apn apn="apn.maxtelecom.bg" carrier="MAX TELECOM" mcc="284" mnc="13" type="default,supl" />
 </apns>

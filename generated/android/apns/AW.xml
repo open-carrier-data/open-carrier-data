@@ -4,28 +4,28 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="internet.setar.aw" carrier="SETAR" mcc="363" mnc="01" type="default,dun" />
-  <apn apn="mms.setar.aw" carrier="SETAR" mcc="363" mmsc="http://mms.setar.aw/" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
-  <apn apn="mms.setar.aw" carrier="Setar MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
   <apn apn="wap.setar.aw" carrier="Setar" mcc="363" mnc="01" type="default,supl" />
-  <apn apn="IMS" bearer_bitmask="14|20" carrier="IMS" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.setar.aw" carrier="SETAR" mcc="363" mnc="01" type="default,dun" />
+  <apn apn="mms.setar.aw" carrier="Setar MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
+  <apn apn="mms.setar.aw" carrier="SETAR" mcc="363" mmsc="http://mms.setar.aw/" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
   <apn apn="internet.setar.aw" bearer_bitmask="14|20" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="internet.setar.aw" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="mms.setar.aw" authtype="3" carrier="SETAR MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="201.229.65.204" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="ims" mcc="363" mnc="01" mvno_match_data="SETAR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="IMS" bearer_bitmask="14|20" carrier="IMS" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet.setar.aw" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="SETAR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.setar.aw" carrier="SETAR MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="201.229.65.204" mnc="01" mvno_match_data="SETAR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="wap" authtype="1" carrier="wap" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" password="wap03aruba" type="mms" user="waparuba" />
+  <apn apn="ims" carrier="ims" mcc="363" mnc="01" mvno_match_data="SETAR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="web" carrier="web" mcc="363" mnc="02" type="default,dun,supl" />
+  <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" carrier_id="2163" mcc="363" mnc="02" type="default,ia,supl" />
   <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" mcc="363" mnc="02" type="default,supl" />
+  <apn apn="wap" authtype="1" carrier="wap" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" password="wap03aruba" type="mms" user="waparuba" />
+  <apn apn="wap" authtype="1" carrier="MMS Digicel" carrier_id="2163" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" type="mms" />
+  <apn apn="web.digicelaruba.com" carrier="DIGICEL" mcc="363" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="default" />
+  <apn apn="wap" carrier="Digicel MMS" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="363" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="ims" />
   <apn apn="sos" carrier="IMS Emergency" mcc="363" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="ims" />
-  <apn apn="wap" carrier="Digicel MMS" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="mms" />
-  <apn apn="web.digicelaruba.com" carrier="DIGICEL" mcc="363" mnc="02" mvno_match_data="Digicel Aruba" mvno_type="spn" type="default" />
-  <apn apn="wap" authtype="1" carrier="MMS Digicel" carrier_id="2163" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="02" type="mms" />
-  <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" carrier_id="2163" mcc="363" mnc="02" type="default,ia,supl" />
-  <apn apn="wap" authtype="1" carrier="MMS Digicel" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="020" type="mms" />
+  <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" carrier_id="2163" mcc="363" mnc="020" type="default,ia,supl" />
   <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" mcc="363" mnc="020" type="default,supl" />
   <apn apn="wap" authtype="1" carrier="MMS Digicel" carrier_id="2163" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="020" type="mms" />
-  <apn apn="web.digicelaruba.com" authtype="1" carrier="INTERNET Aruba" carrier_id="2163" mcc="363" mnc="020" type="default,ia,supl" />
+  <apn apn="wap" authtype="1" carrier="MMS Digicel" mcc="363" mmsc="http://mms.digicelgroup.com" mmsport="8080" mmsproxy="172.16.7.12" mnc="020" type="mms" />
 </apns>

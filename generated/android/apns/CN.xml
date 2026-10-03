@@ -5,142 +5,138 @@
 -->
 <apns version="8">
   <apn apn="cmnet" authtype="3" carrier="cmnet" mcc="460" mnc="00" password="guest" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="guest" />
-  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="00" type="dun" />
+  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="00" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="00" password="guest" port="80" proxy="10.0.0.172" type="default" user="guest" />
+  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="00" port="80" proxy="10.0.0.172" type="default,ia,supl" />
+  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="00" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="00" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="00" port="80" proxy="10.0.0.172" type="supl" />
   <apn apn="ims" carrier="中国移动 (China Mobile) IMS" mcc="460" mnc="00" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="00" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="00" port="80" proxy="10.0.0.172" type="supl" />
+  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="00" type="dun" />
   <apn apn="cmnet" carrier="CMNET" mcc="460" mnc="00" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="cmwap" carrier="CMWAP" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="00" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="00" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="00" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
-  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="00" port="80" proxy="10.0.0.172" type="default,ia,supl" />
-  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="00" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="00" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="01" type="default" />
   <apn apn="3gnet" carrier="China Unicom 3G" mcc="460" mnc="01" port="80" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="3gnet" carrier="中国联通" mcc="460" mnc="01" roaming_protocol="IP" type="default" />
   <apn apn="3gnet" authtype="3" carrier="中国联通3g因特网设置" mcc="460" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="3gnet" carrier="中国联通" mcc="460" mnc="01" protocol="IP" roaming_protocol="IP" type="default,dun" />
   <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
-  <apn apn="3gnet" authtype="3" carrier="3gnet" mcc="460" mnc="01" port="80" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" user="uninet" />
+  <apn apn="3gnet" carrier="沃3G连接互联网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" type="default,ia,supl" />
+  <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="01" type="default,dun" />
+  <apn apn="3gwap" carrier="沃3G手机上网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" port="80" proxy="10.0.0.172" type="default,ia,supl" />
   <apn apn="3gwap" authtype="3" carrier="3gwap" mcc="460" mnc="01" port="80" proxy="10.0.0.172" type="default,supl" />
-  <apn apn="3gwap" authtype="3" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" port="80" proxy="10.0.0.172" type="mms" />
-  <apn apn="ims" carrier="中国联通" mcc="460" mnc="01" protocol="IPV6" type="ims" />
-  <apn apn="ims" carrier="联通IMS" mcc="460" mnc="01" protocol="IPV4V6" type="ims" />
+  <apn apn="uninet" carrier="联通2GNET上网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" type="default,ia,supl" />
   <apn apn="uninet" carrier="uninet" mcc="460" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="uniwap" carrier="中国联通 Wap 网络 (China Unicom)" mcc="460" mnc="01" port="80" proxy="10.0.0.172" type="default" />
+  <apn apn="3gwap" authtype="3" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" port="80" proxy="10.0.0.172" type="mms" />
+  <apn apn="3gwap" carrier="联通彩信 (China Unicom)" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" type="mms" />
+  <apn apn="uniwap" carrier="联通2g彩信 (China Unicom)" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" type="mms" />
   <apn apn="uniwap" carrier="uniwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" type="mms" />
+  <apn apn="ims" carrier="中国联通" mcc="460" mnc="01" protocol="IPV6" type="ims" />
+  <apn apn="ims" carrier="联通IMS" mcc="460" mnc="01" protocol="IPV4V6" type="ims" />
+  <apn apn="3gnet" authtype="3" carrier="3gnet" mcc="460" mnc="01" port="80" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" user="uninet" />
   <apn apn="ctnet" authtype="3" carrier="CTNET" mcc="460" mnc="01" mvno_match_data="China Telecom" mvno_type="spn" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,xcap" user="ctnet@mycdma.cn" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="01" mvno_match_data="China Telecom" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="3gwap" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="3gnet" carrier="沃3G连接互联网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" type="default,ia,supl" />
-  <apn apn="3gwap" carrier="沃3G手机上网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" port="80" proxy="10.0.0.172" type="default,ia,supl" />
-  <apn apn="3gwap" carrier="联通彩信 (China Unicom)" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" type="mms" />
-  <apn apn="uninet" carrier="联通2GNET上网 (China Unicom)" carrier_id="1436" mcc="460" mnc="01" type="default,ia,supl" />
-  <apn apn="uniwap" carrier="联通2g彩信 (China Unicom)" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" type="mms" />
   <apn apn="cmnet" authtype="3" carrier="cmnet" mcc="460" mnc="02" password="guest" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="guest" />
-  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="02" type="dun" />
+  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="02" password="guest" port="80" proxy="10.0.0.172" type="default" user="guest" />
+  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="02" port="80" proxy="10.0.0.172" type="default,ia,supl" />
+  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="02" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="02" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="02" port="80" proxy="10.0.0.172" type="supl" />
   <apn apn="ims" carrier="中国移动 (China Mobile) IMS" mcc="460" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="中国移动 (China Mobile) IMS" carrier_id="1435" mcc="460" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmwap" authtype="3" carrier="cmwap" mcc="460" mnc="02" port="80" proxy="10.0.0.172" type="supl" />
+  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="02" type="dun" />
   <apn apn="cmnet" carrier="CMNET" mcc="460" mnc="02" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="cmwap" carrier="CMWAP" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="02" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="02" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
-  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="02" port="80" proxy="10.0.0.172" type="default,ia,supl" />
-  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="02" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="中国移动 (China Mobile) IMS" carrier_id="1435" mcc="460" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ctlte" carrier="China Telecom" mcc="460" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
+  <apn apn="ctnet" authtype="3" carrier="CTNET" carrier_id="2237" mcc="460" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri,ia" user="ctnet@mycdma.cn" />
+  <apn apn="ctwap" authtype="3" carrier="CTWAP" carrier_id="2237" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri,ia,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="ctnet" authtype="3" carrier="CTNET" mcc="460" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri" user="ctnet@mycdma.cn" />
   <apn apn="ctnet" authtype="3" carrier="CTNET" mcc="460" mnc="03" password="vnet.mobi" server="*" type="default,hipri" user="ctnet@mycdma.cn" />
   <apn apn="ctnet" authtype="3" carrier="ctnet" mcc="460" mnc="03" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,hipri,supl" user="ctnet@mycdma.cn" />
   <apn apn="ctwap" authtype="3" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="ctwap" authtype="3" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" server="*" type="default,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="ctwap" authtype="2" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,mms,supl" user="ctwap@mycdma.cn" />
+  <apn apn="ctlte" carrier="China Telecom" mcc="460" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
   <apn apn="ctwap" authtype="3" carrier="中国电信彩信 (China Telecom)" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" type="mms" user="ctwap@mycdma.cn" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="03" protocol="IPV4V6" type="ims" />
   <apn apn="ctexcel" authtype="3" carrier="CTEXCEL" mcc="460" mnc="03" mvno_match_data="CTExcel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,xcap" />
   <apn apn="ims" authtype="3" carrier="IMS" mcc="460" mnc="03" mvno_match_data="CTExcel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="IMS" carrier="IMS" mcc="460" mnc="03" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" carrier="CTNET" mcc="460" mnc="03" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="ctwap" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ctnet" authtype="3" carrier="CTNET" carrier_id="2237" mcc="460" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri,ia" user="ctnet@mycdma.cn" />
-  <apn apn="ctwap" authtype="3" carrier="CTWAP" carrier_id="2237" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="03" password="vnet.mobi" port="80" protocol="IP" server="*" type="cbs,default,fota,hipri,ia,mms,supl" user="ctwap@mycdma.cn" />
+  <apn apn="IMS" carrier="IMS" mcc="460" mnc="03" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="中国移动 (China Mobile) NET" carrier_id="1435" mcc="460" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="cmnet" carrier="中国移动 (China Mobile) GPRS" mcc="460" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP&amp;MMS" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="04" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="cmwap" carrier="中国移动彩信 (China Mobile)" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="04" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) IMS" mcc="460" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="cmnet" carrier="中国移动 (China Mobile) NET" carrier_id="1435" mcc="460" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
-  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP&amp;MMS" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="04" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="06" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl,xcap" />
   <apn apn="ims" carrier="联通IMS" mcc="460" mnc="06" protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="cmnet" authtype="3" carrier="cmnet" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="07" type="dun" />
+  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="07" port="80" proxy="10.0.0.172" type="default,ia,supl" />
   <apn apn="cmwap" carrier="cmwap" mcc="460" mnc="07" port="80" proxy="10.0.0.172" type="default,supl" />
-  <apn apn="cmwap" carrier="中国移动彩信 (China Mobile)" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="07" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="hwmobile" authtype="3" carrier="HW-KuiKe" mcc="460" mmsc="http://192.168.111.12:19090/was" mmsport="8080" mmsproxy="192.168.111.32" mnc="07" port="8080" proxy="192.168.111.32" type="default" />
+  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="07" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="cmwap" carrier="中国移动彩信 (China Mobile)" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="07" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) IMS" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="07" type="dun" />
   <apn apn="cmnet" carrier="CMNET" mcc="460" mnc="07" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="cmwap" carrier="CMWAP" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="07" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="07" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
-  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="07" port="80" proxy="10.0.0.172" type="default,ia,supl" />
-  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="07" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IP" type="default,ia,supl,xcap" />
   <apn apn="cmnet" carrier="cmnet" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="08" type="dun" />
+  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="08" port="80" proxy="10.0.0.172" type="default,ia,supl" />
   <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" mcc="460" mnc="08" port="80" proxy="10.0.0.172" type="default,supl" />
+  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="08" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="cmwap" carrier="中国移动彩信 (China Mobile)" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="08" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) IMS" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="中国移动" mcc="460" mnc="08" type="dun" />
   <apn apn="cmnet" carrier="CMNET" mcc="460" mnc="08" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="cmwap" carrier="CMWAP" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="08" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="08" mvno_match_data="中国移动" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="cmnet" carrier="cmnet" carrier_id="1435" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IP" type="default,ia,supl,xcap" />
-  <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP" carrier_id="1435" mcc="460" mnc="08" port="80" proxy="10.0.0.172" type="default,ia,supl" />
-  <apn apn="cmwap" carrier="cmwap" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="08" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="09" type="default" />
-  <apn apn="3gnet" carrier="China Unicom 3G" mcc="460" mnc="09" port="80" type="default" />
-  <apn apn="3gnet" carrier="中国联通" mcc="460" mnc="09" roaming_protocol="IP" type="default" />
-  <apn apn="3gnet" carrier="中国联通" mcc="460" mnc="09" protocol="IP" roaming_protocol="IP" type="default,dun" />
   <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="09" port="80" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="3gnet" carrier="China Unicom 3G" carrier_id="1436" mcc="460" mnc="09" port="80" type="default,ia,supl" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="09" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="3gnet" carrier="China Unicom 3G" mcc="460" mnc="09" port="80" type="default" />
+  <apn apn="3gnet" carrier="3gnet" mcc="460" mnc="09" type="default,dun" />
+  <apn apn="3gwap" carrier="China Unicom wap" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" port="80" proxy="10.0.0.172" type="default,ia,mms" />
   <apn apn="3gwap" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" port="80" proxy="10.0.0.172" type="default,mms" />
-  <apn apn="ims" carrier="中国联通" mcc="460" mnc="09" protocol="IPV6" type="ims" />
-  <apn apn="ims" carrier="联通IMS" mcc="460" mnc="09" protocol="IPV4V6" type="ims" />
   <apn apn="uniwap" carrier="中国联通 Wap 网络 (China Unicom)" mcc="460" mnc="09" port="80" proxy="10.0.0.172" type="default" />
   <apn apn="uniwap" carrier="中国联通彩信 (China Unicom)" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" type="mms" />
+  <apn apn="ims" carrier="中国联通" mcc="460" mnc="09" protocol="IPV6" type="ims" />
+  <apn apn="ims" carrier="联通IMS" mcc="460" mnc="09" protocol="IPV4V6" type="ims" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="3gwap" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="3gnet" carrier="China Unicom 3G" carrier_id="1436" mcc="460" mnc="09" port="80" type="default,ia,supl" />
-  <apn apn="3gwap" carrier="China Unicom wap" carrier_id="1436" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" port="80" proxy="10.0.0.172" type="default,ia,mms" />
+  <apn apn="ctlte" authtype="0" carrier="ctlte" carrier_id="2237" mcc="460" mnc="11" port="80" protocol="IPV4V6" server="*" type="cbs,default,fota,hipri,ia,supl" />
+  <apn apn="ctlte" authtype="3" carrier="中国电信互联网设置CTLTE" mcc="460" mnc="11" password="vnet.mobi" protocol="IPV6" roaming_protocol="IPV4V6" type="default,supl" user="ctlte@mycdma.cn" />
   <apn apn="ctlte" authtype="0" carrier="ctlte" mcc="460" mnc="11" port="80" protocol="IPV4V6" server="*" type="cbs,default,fota,hipri,supl" />
   <apn apn="ctlte" authtype="0" carrier="ctlte" mcc="460" mnc="11" protocol="IPV4V6" server="*" type="default,supl" />
-  <apn apn="ctlte" authtype="3" carrier="中国电信互联网设置CTLTE" mcc="460" mnc="11" password="vnet.mobi" protocol="IPV6" roaming_protocol="IPV4V6" type="default,supl" user="ctlte@mycdma.cn" />
-  <apn apn="ctlte" carrier="China Telecom" mcc="460" mnc="11" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
+  <apn apn="ctnet" carrier="中国电信互联网" carrier_id="2237" mcc="460" mnc="11" mtu="1400" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,fota,supl,xcap" user="ctnet@mycdma.cn" user_editable="false" />
   <apn apn="ctnet" authtype="3" carrier="ctnet" mcc="460" mnc="11" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="ctnet@mycdma.cn" />
   <apn apn="ctwap" authtype="2" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,mms,supl" user="ctwap@mycdma.cn" />
-  <apn apn="ctwap" authtype="0" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" protocol="IPV4V6" server="*" type="mms" />
+  <apn apn="ctlte" carrier="China Telecom" mcc="460" mnc="11" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
+  <apn apn="ctwap" authtype="0" carrier="ctwap" carrier_id="2237" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" mtu="1380" password="vnet.mobi" port="80" protocol="IPV4V6" server="*" type="mms" user="ctwap@mycdma.cn" user_visible="false" />
   <apn apn="ctwap" authtype="0" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" port="80" protocol="IPV4V6" server="*" type="mms" />
-  <apn apn="IMS" carrier="IMS" mcc="460" mnc="11" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ctwap" authtype="0" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" protocol="IPV4V6" server="*" type="mms" />
+  <apn apn="IMS" carrier="中国电信(IMS)" carrier_id="2237" mcc="460" mnc="11" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="ctnet" carrier="CTNET" mcc="460" mnc="11" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="ctwap" carrier="CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="IMS" carrier="中国电信(IMS)" carrier_id="2237" mcc="460" mnc="11" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
-  <apn apn="ctlte" authtype="0" carrier="ctlte" carrier_id="2237" mcc="460" mnc="11" port="80" protocol="IPV4V6" server="*" type="cbs,default,fota,hipri,ia,supl" />
-  <apn apn="ctnet" carrier="中国电信互联网" carrier_id="2237" mcc="460" mnc="11" mtu="1400" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,fota,supl,xcap" user="ctnet@mycdma.cn" user_editable="false" />
-  <apn apn="ctwap" authtype="0" carrier="ctwap" carrier_id="2237" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="11" mtu="1380" password="vnet.mobi" port="80" protocol="IPV4V6" server="*" type="mms" user="ctwap@mycdma.cn" user_visible="false" />
-  <apn apn="IMS" carrier="IMS" mcc="460" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="IMS" carrier="IMS" mcc="460" mnc="11" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" authtype="3" carrier="ctnet" mcc="460" mnc="12" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl,xcap" user="ctnet@mycdma.cn" />
   <apn apn="ctwap" authtype="2" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="12" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="ctwap" authtype="3" carrier="中国电信彩信 (China Telecom)" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="12" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="ctwap@mycdma.cn" />
+  <apn apn="IMS" carrier="IMS" mcc="460" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="中国移动 (China Mobile) NET" carrier_id="1435" mcc="460" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="ctnet" authtype="3" carrier="中国电信互联网设置CTNET" mcc="460" mnc="13" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user="ctnet@mycdma.cn" />
   <apn apn="ctwap" authtype="3" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="13" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,dun,mms,supl" user="ctwap@mycdma.cn" />
-  <apn apn="cmnet" carrier="中国移动 (China Mobile) NET" carrier_id="1435" mcc="460" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP&amp;MMS" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="13" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="cbnet" carrier="CBNET" mcc="460" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
@@ -152,7 +148,7 @@
   <apn apn="cmwap" carrier="CMCC MMS" mcc="460" mmsc="http://mmsc.monternet.com" mnc="20" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="20" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" authtype="3" carrier="ctnet" mcc="460" mnc="99" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user="ctnet@mycdma.cn" />
-  <apn apn="ctnet" carrier="China Telecom" mcc="460" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
   <apn apn="ctwap" authtype="3" carrier="APN_NAME_CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="99" password="vnet.mobi" port="80" protocol="IPV4V6" proxy="10.0.0.200" roaming_protocol="IPV4V6" type="default,dun,supl" user="ctwap@mycdma.cn" />
   <apn apn="ctwap" authtype="2" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="99" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,mms,supl" user="ctwap@mycdma.cn" />
+  <apn apn="ctnet" carrier="China Telecom" mcc="460" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
 </apns>

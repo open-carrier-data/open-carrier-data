@@ -4,69 +4,67 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="220" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="Yettel IMS" carrier_enabled="true" mcc="220" mnc="01" mtu="1300" type="ims" />
-  <apn apn="internet" authtype="1" carrier="Yettel INTERNET" carrier_enabled="true" mcc="220" mnc="01" password="gprs" protocol="IP" roaming_protocol="IP" type="default" user="yettel" />
-  <apn apn="internet" carrier="Telenor" mcc="220" mnc="01" password="gprs" type="default,dun" user="telenor" />
+  <apn apn="internet" authtype="1" carrier="Telenor internet" carrier_id="1012" mcc="220" mnc="01" password="gprs" type="default,ia,supl" user="telenor" />
   <apn apn="internet" carrier="Telenor RS" mcc="220" mnc="01" password="gprs" port="8080" proxy="217.65.192.33" type="default,supl" user="telenor" />
   <apn apn="internet" authtype="1" carrier="Telenor internet" mcc="220" mnc="01" password="gprs" type="default,supl" user="telenor" />
+  <apn apn="internet" authtype="1" carrier="Yettel INTERNET" carrier_enabled="true" mcc="220" mnc="01" password="gprs" protocol="IP" roaming_protocol="IP" type="default" user="yettel" />
+  <apn apn="internet" carrier="Telenor" mcc="220" mnc="01" password="gprs" type="default,dun" user="telenor" />
   <apn apn="internet" carrier="Yettel INTERNET" mcc="220" mnc="01" password="gprs" type="default,supl" user="yettel" />
-  <apn apn="mms" carrier="Yettel MMS" mcc="220" mmsc="http://mms.yettel.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" type="mms" />
-  <apn apn="mms" authtype="1" carrier="Yettel MMS" carrier_enabled="true" mcc="220" mmsc="http://mms.yettel.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="mms" carrier="Telenor MMS" carrier_id="1012" mcc="220" mmsc="http://mms.telenor.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" type="mms" />
   <apn apn="mms" carrier="mms" mcc="220" mmsc="http://mms.telenor.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" type="mms" />
+  <apn apn="mms" authtype="1" carrier="Yettel MMS" carrier_enabled="true" mcc="220" mmsc="http://mms.yettel.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="mms" carrier="Yettel MMS" mcc="220" mmsc="http://mms.yettel.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="220" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="Yettel IMS" carrier_enabled="true" mcc="220" mnc="01" mtu="1300" type="ims" />
   <apn apn="xcap" carrier="xcap" carrier_enabled="true" mcc="220" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" carrier="Yettel IMS" mcc="220" mnc="01" mvno_match_data="Yettel SRB" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="internet" carrier="Yettel INTERNET" mcc="220" mnc="01" mvno_match_data="Yettel SRB" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="mms" carrier="Yettel MMS" mcc="220" mmsc="http://mms.yettel.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" mvno_match_data="Yettel SRB" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="ims" carrier="Yettel IMS" mcc="220" mnc="01" mvno_match_data="Yettel SRB" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="xcap" carrier="Yettel XCAP" mcc="220" mnc="01" mvno_match_data="Yettel SRB" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="xcap" />
-  <apn apn="internet" authtype="1" carrier="Telenor internet" carrier_id="1012" mcc="220" mnc="01" password="gprs" type="default,ia,supl" user="telenor" />
-  <apn apn="mms" carrier="Telenor MMS" carrier_id="1012" mcc="220" mmsc="http://mms.telenor.rs/servlets/mms" mmsport="8080" mmsproxy="217.65.192.33" mnc="01" type="mms" />
-  <apn apn="internet" carrier="Telenor MNE internet" mcc="220" mnc="02" password="gprs" port="8080" proxy="192.168.246.5" type="default,supl" user="gprs" />
-  <apn apn="mms" carrier="Telenor MNE mms" mcc="220" mmsc="http://mm.vor.telenor.me" mmsport="8080" mmsproxy="192.168.246.5" mnc="02" password="mms" type="mms" user="mms" />
   <apn apn="internet" carrier="Telenor MNE internet" carrier_id="1012" mcc="220" mnc="02" password="gprs" port="8080" proxy="192.168.246.5" type="default,ia,supl" user="gprs" />
+  <apn apn="internet" carrier="Telenor MNE internet" mcc="220" mnc="02" password="gprs" port="8080" proxy="192.168.246.5" type="default,supl" user="gprs" />
   <apn apn="mms" carrier="Telenor MNE mms" carrier_id="1012" mcc="220" mmsc="http://mm.vor.telenor.me" mmsport="8080" mmsproxy="192.168.246.5" mnc="02" password="mms" type="mms" user="mms" />
-  <apn apn="HOS" carrier="HOS" carrier_enabled="true" mcc="220" mnc="03" mtu="1500" protocol="IPV4V6" type="xcap" />
-  <apn apn="IMS" carrier="IMS" carrier_enabled="true" mcc="220" mnc="03" mtu="1358" protocol="IPV4V6" type="ims" />
+  <apn apn="mms" carrier="Telenor MNE mms" mcc="220" mmsc="http://mm.vor.telenor.me" mmsport="8080" mmsproxy="192.168.246.5" mnc="02" password="mms" type="mms" user="mms" />
+  <apn apn="gprswap" authtype="1" carrier="gprswap" carrier_enabled="true" mcc="220" mnc="03" password="064" port="8080" protocol="IPV4V6" proxy="172.17.88.198" type="default,supl" user="mts" />
+  <apn apn="gprswap" authtype="1" carrier="MTS WAP" carrier_id="1013" mcc="220" mnc="03" password="064" server="http://m.mondo.rs" type="default,ia,supl" user="mts" />
   <apn apn="gprsinternet" authtype="0" carrier="gprsinternet" mcc="220" mnc="03" password="064" type="default,dun,fota,supl" user="mts" user_editable="false" />
-  <apn apn="gprswap" authtype="1" carrier="gprswap" carrier_enabled="true" mcc="220" mnc="03" password="064" port="8080" protocol="IPV4V6" proxy="172.17.88.198" type="default" user="mts" />
-  <apn apn="gprswap" carrier="mt:s" mcc="220" mnc="03" password="064" type="dun" user="mts" />
-  <apn apn="gprswap" authtype="1" carrier="gprswap" mcc="220" mnc="03" password="064" port="8080" protocol="IPV4V6" proxy="172.17.88.198" type="supl" user="mts" />
-  <apn apn="hos" carrier="HOS" mcc="220" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="220" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="mt:s" mcc="220" mnc="03" protocol="IP" type="ims" />
-  <apn apn="mms" carrier="mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
-  <apn apn="mms" authtype="1" carrier="mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="mts" />
-  <apn apn="mms" authtype="1" carrier="mt:s mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
   <apn apn="mms" authtype="1" carrier="mt:s mms" carrier_enabled="true" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
-  <apn apn="HOS" carrier="HOS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="IMS" carrier="IMS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="mms" authtype="1" carrier="MTS MMS" carrier_id="1013" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
+  <apn apn="mms" authtype="1" carrier="mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="mts" />
+  <apn apn="mms" carrier="mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="220" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" carrier="IMS" carrier_enabled="true" mcc="220" mnc="03" mtu="1358" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="mt:s" mcc="220" mnc="03" protocol="IP" type="ims" />
+  <apn apn="gprswap" carrier="mt:s" mcc="220" mnc="03" password="064" type="dun" user="mts" />
+  <apn apn="hos" carrier="HOS" mcc="220" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="HOS" carrier="HOS" carrier_enabled="true" mcc="220" mnc="03" mtu="1500" protocol="IPV4V6" type="xcap" />
   <apn apn="gprswap" carrier="mt:s wap" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" type="default" />
   <apn apn="mms" carrier="mt:s mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" mvno_match_data="mt:s" mvno_type="spn" type="mms" />
-  <apn apn="gprswap" authtype="1" carrier="MTS WAP" carrier_id="1013" mcc="220" mnc="03" password="064" server="http://m.mondo.rs" type="default,ia,supl" user="mts" />
-  <apn apn="mms" authtype="1" carrier="MTS MMS" carrier_id="1013" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" password="064" type="mms" user="mts" />
-  <apn apn="mms" authtype="1" carrier="mms" mcc="220" mmsc="http://192.168.180.100/servlets/mms" mmsport="8080" mmsproxy="10.0.5.19" mnc="04" password="38267" type="mms" user="38267" />
+  <apn apn="IMS" carrier="IMS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="tmcg-wnw" authtype="1" carrier="tmcg-wnw" mcc="220" mnc="04" password="38267" port="8080" proxy="10.0.5.19" type="default,supl" user="38267" />
-  <apn apn="tmcg-wnw" carrier="Telekom.me" mcc="220" mnc="04" password="38267" type="dun" user="38267" />
-  <apn apn="mms" carrier="T-Mobile MMS" carrier_id="10" mcc="220" mmsc="http://192.168.180.100/servlets/mms" mmsport="8080" mmsproxy="10.0.5.19" mnc="04" password="38267" type="mms" user="38267" />
   <apn apn="tmcg-wnw" carrier="T-Mobile Internet" carrier_id="10" mcc="220" mnc="04" password="38267" port="8080" proxy="10.0.5.19" type="default,ia,supl" user="38267" />
+  <apn apn="mms" authtype="1" carrier="mms" mcc="220" mmsc="http://192.168.180.100/servlets/mms" mmsport="8080" mmsproxy="10.0.5.19" mnc="04" password="38267" type="mms" user="38267" />
+  <apn apn="mms" carrier="T-Mobile MMS" carrier_id="10" mcc="220" mmsc="http://192.168.180.100/servlets/mms" mmsport="8080" mmsproxy="10.0.5.19" mnc="04" password="38267" type="mms" user="38267" />
+  <apn apn="tmcg-wnw" carrier="Telekom.me" mcc="220" mnc="04" password="38267" type="dun" user="38267" />
+  <apn apn="vipmobile" authtype="1" carrier="vipmobile" mcc="220" mnc="05" password="vipmobile" port="8080" proxy="212.15.182.82" type="default,supl" user="vipmobile" />
+  <apn apn="vipmobile" carrier="Vip GPRS" carrier_id="1014" mcc="220" mnc="05" password="vipmobile" type="default,ia,supl" user="vipmobile" />
+  <apn apn="internet" authtype="1" carrier="A1 SRB Internet" carrier_enabled="true" mcc="220" mnc="05" password="internet" type="default" user="internet" />
+  <apn apn="vipmobile.mms" authtype="1" carrier="Vip MMS" mcc="220" mmsc="http://mmsc.vipmobile.rs" mmsport="8080" mmsproxy="212.15.182.82" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="vipmobile.mms" carrier="Vip MMS" mcc="220" mmsc="http://mmsc.vipmobile.rs" mmsport="8080" mmsproxy="212.15.182.82" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="vipmobile.mms" authtype="1" carrier="Vip MMS" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="vipmobile.mms" carrier="Vip MMS" carrier_id="1014" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="vipmobile.mms" carrier="A1 SRB" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="mms" authtype="1" carrier="mms" carrier_enabled="true" mcc="220" mmsc="http://mms.a1.rs" mnc="05" password="mms" type="mms" user="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="A1 SRB IMS" mcc="220" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="A1 SRB" mcc="220" mnc="05" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="220" mnc="05" mtu="1358" protocol="IP" type="ims" />
+  <apn apn="internet" carrier="A1 SRB Internet" mcc="220" mnc="05" type="supl" />
+  <apn apn="vipmobile" carrier="A1 SRB" mcc="220" mnc="05" password="vipmobile" type="dun" user="vipmobile" />
   <apn apn="hos" carrier="A1 SRB XCAP" mcc="220" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="hos" carrier="hos" carrier_enabled="true" mcc="220" mnc="05" mtu="1500" protocol="IP" type="xcap" />
-  <apn apn="ims" carrier="A1 SRB" mcc="220" mnc="05" protocol="IPV4V6" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="A1 SRB IMS" mcc="220" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="220" mnc="05" mtu="1358" protocol="IP" type="ims" />
-  <apn apn="internet" authtype="1" carrier="A1 SRB Internet" carrier_enabled="true" mcc="220" mnc="05" password="internet" type="default" user="internet" />
-  <apn apn="internet" carrier="A1 SRB Internet" mcc="220" mnc="05" type="supl" />
-  <apn apn="mms" authtype="1" carrier="mms" carrier_enabled="true" mcc="220" mmsc="http://mms.a1.rs" mnc="05" password="mms" type="mms" user="mms" />
-  <apn apn="vipmobile" authtype="1" carrier="vipmobile" mcc="220" mnc="05" password="vipmobile" port="8080" proxy="212.15.182.82" type="default,supl" user="vipmobile" />
-  <apn apn="vipmobile" carrier="A1 SRB" mcc="220" mnc="05" password="vipmobile" type="dun" user="vipmobile" />
-  <apn apn="vipmobile.mms" carrier="A1 SRB" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
-  <apn apn="vipmobile.mms" authtype="1" carrier="Vip MMS" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
-  <apn apn="vipmobile.mms" carrier="Vip MMS" mcc="220" mmsc="http://mmsc.vipmobile.rs" mmsport="8080" mmsproxy="212.15.182.82" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
-  <apn apn="vipmobile.mms" authtype="1" carrier="Vip MMS" mcc="220" mmsc="http://mmsc.vipmobile.rs" mmsport="8080" mmsproxy="212.15.182.82" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
-  <apn apn="hos" carrier="hos" mcc="220" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" protocol="IP" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="220" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="internet" carrier="A1 SRB Internet" mcc="220" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" type="default" />
   <apn apn="mms" carrier="A1 SRB MMS" mcc="220" mmsc="http://mms.a1.rs" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" type="mms" />
-  <apn apn="vipmobile" carrier="Vip GPRS" carrier_id="1014" mcc="220" mnc="05" password="vipmobile" type="default,ia,supl" user="vipmobile" />
-  <apn apn="vipmobile.mms" carrier="Vip MMS" carrier_id="1014" mcc="220" mmsc="http://mms.vipmobile.rs" mnc="05" password="vipmobile" type="mms" user="vipmobile" />
+  <apn apn="ims" carrier="IMS" mcc="220" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="220" mnc="05" mvno_match_data="A1 SRB" mvno_type="spn" protocol="IP" type="xcap" />
 </apns>

@@ -4,48 +4,47 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="hos" authtype="0" carrier="HOS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
-  <apn apn="hos" carrier="Telekom XCAP" mcc="294" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="294" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="internet" mcc="294" mnc="01" password="t-mobile" type="default,dun,supl" user="internet" />
-  <apn apn="internet" authtype="1" carrier="Internet" mcc="294" mnc="01" password="t-mobile" protocol="IPV4V6" type="default,supl" user="internet" />
   <apn apn="internet" authtype="1" carrier="Internet" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" password="t-mobile" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" user="internet" />
   <apn apn="internet" authtype="3" carrier="T-Mobile MK" mcc="294" mnc="01" password="t-mobile" type="default,supl" user="internet" />
-  <apn apn="mms" authtype="1" carrier="MMS" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
+  <apn apn="internet" authtype="1" carrier="T-Mobile MK Internet" carrier_id="2396" mcc="294" mnc="01" password="t-mobile" type="default,ia,supl" user="internet" />
+  <apn apn="internet" authtype="1" carrier="Internet" mcc="294" mnc="01" password="t-mobile" protocol="IPV4V6" type="default,supl" user="internet" />
+  <apn apn="internet" carrier="internet" mcc="294" mnc="01" password="t-mobile" type="default,dun,supl" user="internet" />
   <apn apn="mms" authtype="1" carrier="MMS" carrier_enabled="true" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" mtu="1500" password="mms" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="mms" />
+  <apn apn="mms" authtype="1" carrier="T-Mobile MK MMS" carrier_id="2396" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
   <apn apn="mms" authtype="3" carrier="T-Mobile MK MMS" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
+  <apn apn="mms" authtype="1" carrier="MMS" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
   <apn apn="mms" carrier="mms" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
-  <apn apn="IMS" carrier="IMS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="hos" carrier="HOS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="294" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="Telekom XCAP" mcc="294" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="hos" authtype="0" carrier="HOS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet" carrier="internet" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="mms" carrier="mms" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
-  <apn apn="internet" authtype="1" carrier="T-Mobile MK Internet" carrier_id="2396" mcc="294" mnc="01" password="t-mobile" type="default,ia,supl" user="internet" />
-  <apn apn="mms" authtype="1" carrier="T-Mobile MK MMS" carrier_id="2396" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" password="mms" type="mms" user="mms" />
+  <apn apn="IMS" carrier="IMS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="HOS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="Internet" carrier="Cosmofon" carrier_id="1608" mcc="294" mnc="02" password="Internet" port="8080" proxy="http://wap.planet.mk" type="default,ia,supl" user="Internet" />
   <apn apn="Internet" carrier="Cosmofon" mcc="294" mnc="02" password="Internet" port="8080" proxy="wap.planet.mk" type="default,supl" user="Internet" />
   <apn apn="Internet" carrier="Cosmofon" mcc="294" mnc="02" password="Internet" port="8080" proxy="http://wap.planet.mk" type="default,supl" user="Internet" />
   <apn apn="internet" carrier="ONE" mcc="294" mnc="02" type="default,dun" />
+  <apn apn="mms" carrier="Cosmofon MMS" carrier_id="1608" mcc="294" mmsc="http://195.167.65.220:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="02" type="mms" />
   <apn apn="mms" carrier="Cosmofon MMS" mcc="294" mmsc="http://195.167.65.220:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="02" type="mms" />
   <apn apn="mms" carrier="ONE" mcc="294" mmsc="http://mm" mmsport="8080" mmsproxy="10.146.64.5" mnc="02" type="mms" />
-  <apn apn="Internet" carrier="Cosmofon" carrier_id="1608" mcc="294" mnc="02" password="Internet" port="8080" proxy="http://wap.planet.mk" type="default,ia,supl" user="Internet" />
-  <apn apn="mms" carrier="Cosmofon MMS" carrier_id="1608" mcc="294" mmsc="http://195.167.65.220:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="02" type="mms" />
-  <apn apn="HOS" authtype="0" carrier="VoLTE HoS" carrier_enabled="true" mcc="294" mnc="03" mtu="1500" protocol="IP" roaming_protocol="IP" type="xcap" />
-  <apn apn="IMS" carrier="VoLTE IMS" carrier_enabled="true" mcc="294" mnc="03" mtu="1500" protocol="IP" roaming_protocol="IP" type="ims" />
-  <apn apn="MMS" authtype="1" carrier="MMS" carrier_enabled="true" mcc="294" mmsc="http://mmsc.a1.mk" mmsport="8080" mnc="03" protocol="IP" roaming_protocol="IP" type="mms" />
-  <apn apn="hos" carrier="hos" mcc="294" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="294" mnc="03" protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="294" mnc="03" protocol="IP" roaming_protocol="IP" type="default" />
-  <apn apn="internet" carrier="internet" mcc="294" mnc="03" protocol="IPV4V6" type="default,supl" />
-  <apn apn="mms" carrier="MMS" mcc="294" mmsc="http://mmsc.a1.mk" mnc="03" type="mms" />
-  <apn apn="vipoperator" carrier="vipoperator" mcc="294" mnc="03" password="vipoperator" port="8080" proxy="78.40.0.1" type="default,supl" user="vipoperator" />
-  <apn apn="vipoperator" carrier="A1 MK" mcc="294" mnc="03" type="dun" />
-  <apn apn="vipoperator.mms" carrier="vipoperator.mms" mcc="294" mmsc="http://mmsc.vipoperator.com.mk" mmsport="8080" mmsproxy="78.40.0.1" mnc="03" password="vipoperator" type="mms" user="vipoperator" />
-  <apn apn="HOS" carrier="VoLTE HoS" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="xcap" />
-  <apn apn="IMS" carrier="VoLTE IMS" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="ims" />
-  <apn apn="MMS" carrier="MMS" mcc="294" mmsc="http://mmsc.a1.mk" mmsport="8080" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
-  <apn apn="internet" carrier="internet" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="vipoperator" carrier="Internet" carrier_id="1609" mcc="294" mnc="03" password="vipoperator" port="8080" proxy="78.40.0.1" type="default,ia,supl" user="vipoperator" />
+  <apn apn="vipoperator" carrier="vipoperator" mcc="294" mnc="03" password="vipoperator" port="8080" proxy="78.40.0.1" type="default,supl" user="vipoperator" />
+  <apn apn="internet" carrier="internet" mcc="294" mnc="03" protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="294" mnc="03" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="vipoperator.mms" carrier="MMS" carrier_id="1609" mcc="294" mmsc="http://mmsc.vipoperator.com.mk" mmsport="8080" mmsproxy="78.40.0.1" mnc="03" password="vipoperator" type="mms" user="vipoperator" />
+  <apn apn="vipoperator.mms" carrier="vipoperator.mms" mcc="294" mmsc="http://mmsc.vipoperator.com.mk" mmsport="8080" mmsproxy="78.40.0.1" mnc="03" password="vipoperator" type="mms" user="vipoperator" />
+  <apn apn="mms" carrier="MMS" mcc="294" mmsc="http://mmsc.a1.mk" mnc="03" type="mms" />
+  <apn apn="MMS" authtype="1" carrier="MMS" carrier_enabled="true" mcc="294" mmsc="http://mmsc.a1.mk" mmsport="8080" mnc="03" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="294" mnc="03" protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" carrier="VoLTE IMS" carrier_enabled="true" mcc="294" mnc="03" mtu="1500" protocol="IP" roaming_protocol="IP" type="ims" />
+  <apn apn="vipoperator" carrier="A1 MK" mcc="294" mnc="03" type="dun" />
+  <apn apn="hos" carrier="hos" mcc="294" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="HOS" authtype="0" carrier="VoLTE HoS" carrier_enabled="true" mcc="294" mnc="03" mtu="1500" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="internet" carrier="internet" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="MMS" carrier="MMS" mcc="294" mmsc="http://mmsc.a1.mk" mmsport="8080" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="IMS" carrier="VoLTE IMS" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="ims" />
+  <apn apn="HOS" carrier="VoLTE HoS" mcc="294" mnc="03" mvno_match_data="A1 MK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="xcap" />
   <apn apn="data.lycamobile.mk" authtype="1" carrier="Lycamobile" mcc="294" mnc="04" mvno_match_data="Lycamobile" mvno_type="spn" type="default,ia,supl" />
-  <apn apn="data.lycamobile.mk" authtype="1" carrier="lycamobile" mcc="294" mnc="04" mvno_match_data="Lycamobile" mvno_type="spn" type="default,supl" />
 </apns>

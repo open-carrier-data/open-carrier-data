@@ -4,94 +4,88 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="IMS" authtype="0" carrier="Cosmote IMS" carrier_enabled="true" mcc="202" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="hos" bearer_bitmask="18" carrier="hos" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" protocol="IPV4V6" type="mms,xcap" user_visible="false" />
-  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="ims" carrier="COSMOTE" mcc="202" mnc="01" roaming_protocol="IPV6" type="ims" />
-  <apn apn="ims" authtype="1" carrier="Cosmote IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="202" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,hipri,supl,xcap" />
+  <apn apn="internet" carrier="Cosmote Internet" carrier_id="747" mcc="202" mnc="01" protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="internet" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Cosmote Internet" mcc="202" mnc="01" protocol="IPV4V6" type="default,supl,xcap" />
+  <apn apn="mms" authtype="0" carrier="Cosmote MMS" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IP" type="mms" />
   <apn apn="mms" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Cosmote MMS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" type="mms" />
   <apn apn="mms" carrier="Cosmote MMS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
-  <apn apn="mms" authtype="0" carrier="Cosmote MMS" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IP" type="mms" />
-  <apn apn="mms" carrier="mms" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" type="mms" />
-  <apn apn="IMS" carrier="Cosmote IMS" mcc="202" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="hos" carrier="HOS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="internet" carrier="Cosmote Internet" mcc="202" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" />
-  <apn apn="mms" carrier="Cosmote MMS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IP" type="mms" />
-  <apn apn="hos" carrier="HOS" carrier_id="747" mcc="202" mmsc="http://mmsc.cosmote.gr" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" network_type_bitmask="18" protocol="IPV4V6" type="mms" user_visible="false" />
-  <apn apn="ims" carrier="IMS" carrier_id="747" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="Cosmote Internet" carrier_id="747" mcc="202" mnc="01" protocol="IPV4V6" type="default,ia,supl,xcap" />
   <apn apn="mms" carrier="Cosmote Mms" carrier_id="747" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" type="mms" />
-  <apn apn="hos" carrier="hos" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" carrier="Vf IMS" mcc="202" mnc="05" protocol="IP" roaming_protocol="IP" type="ims" />
-  <apn apn="ims" carrier="vf GR" mcc="202" mnc="05" type="ims" />
-  <apn apn="internet" carrier="internet" mcc="202" mnc="05" password="pass" type="default,supl" user="user" />
-  <apn apn="internet" carrier="vf GR" mcc="202" mnc="05" type="dun" />
+  <apn apn="mms" carrier="mms" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" type="mms" />
+  <apn apn="hos" carrier="HOS" carrier_id="747" mcc="202" mmsc="http://mmsc.cosmote.gr" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" network_type_bitmask="18" protocol="IPV4V6" type="mms" user_visible="false" />
+  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" bearer_bitmask="18" carrier="hos" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" protocol="IPV4V6" type="mms,xcap" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="Cosmote IMS" carrier_enabled="true" mcc="202" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="COSMOTE" mcc="202" mnc="01" roaming_protocol="IPV6" type="ims" />
+  <apn apn="ims" authtype="1" carrier="Cosmote IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="IMS" carrier_id="747" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet" carrier="Cosmote Internet" mcc="202" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="mms" carrier="Cosmote MMS" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IP" type="mms" />
+  <apn apn="IMS" carrier="Cosmote IMS" mcc="202" mnc="01" mvno_match_data="COSMOTE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.vodafone.gr" authtype="0" carrier="Vf Internet" carrier_enabled="true" mcc="202" mnc="05" password="pass" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="user" />
-  <apn apn="internet.vodafone.gr" carrier="vf GR" mcc="202" mnc="05" password="pass" type="default" user="user" />
-  <apn apn="internet.vodafone.gr" carrier="Vf Internet" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="internet.vodafone.gr" carrier="Vf Internet" mcc="202" mnc="05" protocol="IP" roaming_protocol="IP" type="default,supl" />
-  <apn apn="internet.vodafone.gr" carrier="Vf Mobile Internet" mcc="202" mnc="05" type="default,supl" />
+  <apn apn="internet.vodafone.gr" carrier="Vf Mobile Internet" carrier_id="2399" mcc="202" mnc="05" password="pass" type="default,ia,supl" user="user" />
   <apn apn="internet.vodafone.gr" authtype="3" carrier="Vodafone Web" mcc="202" mnc="05" password="pass" type="default,supl" user="user" />
-  <apn apn="internet.vodafone.gr" carrier="internet.vodafone.gr" mcc="202" mnc="05" password="pass" protocol="IP" roaming_protocol="IP" type="dun" user="user" />
-  <apn apn="mms.vodafone.net" authtype="1" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="user" />
-  <apn apn="mms.vodafone.net" authtype="1" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" type="mms" user="user" />
-  <apn apn="mms.vodafone.net" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IP" roaming_protocol="IP" type="mms" user="user" />
-  <apn apn="mms.vodafone.net" authtype="0" carrier="Vf MMS" carrier_enabled="true" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="user" />
-  <apn apn="mms.vodafone.net" carrier="vf GR" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" type="mms" user="user" />
+  <apn apn="internet.vodafone.gr" carrier="vf GR" mcc="202" mnc="05" password="pass" type="default,dun" user="user" />
+  <apn apn="internet.vodafone.gr" carrier="Vf Internet" mcc="202" mnc="05" protocol="IP" roaming_protocol="IP" type="default,supl" />
+  <apn apn="internet.vodafone.gr" carrier="Vf Internet" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" carrier="internet" mcc="202" mnc="05" password="pass" type="default,supl" user="user" />
   <apn apn="surfonly.vodafone.gr" carrier="Vodafone GR" mcc="202" mnc="05" type="default,supl" />
   <apn apn="wap.vodafone.gr" authtype="3" carrier="Vf live!" mcc="202" mnc="05" password="pass" port="5080" proxy="213.249.19.49" type="default,supl" user="user" />
   <apn apn="wapkarta.vodafone.gr" authtype="3" carrier="Vf live! Prepay" mcc="202" mnc="05" password="pass" port="5080" proxy="213.249.19.49" type="default,supl" user="user" />
   <apn apn="webkarta.vodafone.gr" carrier="Vodafone GR Prepaid" mcc="202" mnc="05" type="default,supl" />
   <apn apn="webonly.vodafone.gr" carrier="Vf Mobile Internet" mcc="202" mnc="05" type="default,supl" />
   <apn apn="websession" carrier="Vf kartointernet" mcc="202" mnc="05" type="default,supl" />
-  <apn apn="hos" carrier="hos" mcc="202" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="202" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.vodafone.net" authtype="1" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="user" />
+  <apn apn="mms.vodafone.net" authtype="1" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" type="mms" user="user" />
+  <apn apn="mms.vodafone.net" authtype="0" carrier="Vf MMS" carrier_enabled="true" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="user" />
+  <apn apn="mms.vodafone.net" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" password="pass" protocol="IP" roaming_protocol="IP" type="mms" user="user" />
+  <apn apn="mms.vodafone.net" carrier="Vf MMS" carrier_id="2399" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="IMS" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Vf IMS" mcc="202" mnc="05" protocol="IP" roaming_protocol="IP" type="ims" />
+  <apn apn="internet" carrier="vf GR" mcc="202" mnc="05" type="dun" />
+  <apn apn="hos" carrier="hos" mcc="202" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.vodafone.gr" carrier="Vf Internet" mcc="202" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.vodafone.net" carrier="Vf MMS" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="internet.vodafone.gr" carrier="Vf Mobile Internet" carrier_id="2399" mcc="202" mnc="05" password="pass" type="default,ia,supl" user="user" />
-  <apn apn="mms.vodafone.net" carrier="Vf MMS" carrier_id="2399" mcc="202" mmsc="http://mms.vodafone.gr" mmsport="5080" mmsproxy="213.249.19.49" mnc="05" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="202" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="202" mnc="05" mvno_match_data="vodafone GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="myq" authtype="0" carrier="myq" carrier_enabled="true" mcc="202" mnc="09" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="myq" carrier="myq" mcc="202" mnc="09" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" />
   <apn apn="q-mms.myq.gr" authtype="0" carrier="q-mms.myq.gr" carrier_enabled="true" mcc="202" mmsc="http://mms.myq.gr" mmsport="8080" mmsproxy="192.168.80.134" mnc="09" type="mms" />
+  <apn apn="myq" carrier="myq" mcc="202" mnc="09" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" />
   <apn apn="myq" carrier="Q Internet" mcc="202" mnc="09" mvno_match_data="Q Telecom" mvno_type="spn" type="default" />
   <apn apn="q-mms.myq.gr" carrier="Q MMS" mcc="202" mmsc="http://mms.myq.gr" mmsport="8080" mmsproxy="192.168.80.134" mnc="09" mvno_match_data="Q Telecom" mvno_type="spn" type="mms" />
   <apn apn="myq" carrier="Q Internet" carrier_id="749" mcc="202" mnc="09" mvno_match_data="Q-Telcom" mvno_type="spn" type="default,ia,supl" />
   <apn apn="q-mms.myq.gr" carrier="Q-Telecom MMS GPRS" carrier_id="749" mcc="202" mmsc="http://mms.myq.gr" mmsport="8080" mmsproxy="192.168.80.134" mnc="09" mvno_match_data="Q-Telcom" mvno_type="spn" type="mms" />
   <apn apn="gint.b-online.gr" authtype="0" carrier="NOVA Internet" carrier_enabled="true" mcc="202" mnc="10" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="gint.b-online.gr" carrier="Wind Internet" mcc="202" mnc="10" protocol="IPV4V6" type="default" />
-  <apn apn="gint.b-online.gr" carrier="Wind Internet" mcc="202" mnc="10" protocol="IP" roaming_protocol="IP" type="default" />
-  <apn apn="gint.b-online.gr" carrier="gint.b-online.gr" mcc="202" mnc="10" type="default,dun" />
-  <apn apn="gint.b-online.gr" carrier="gint.b-online.gr" mcc="202" mnc="10" password="web" protocol="IPV4V6" type="supl" user="web" />
-  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="202" mnc="10" type="xcap" />
+  <apn apn="gint.b-online.gr" carrier="Wind Internet" mcc="202" mnc="10" protocol="IP" roaming_protocol="IP" type="default,dun" />
+  <apn apn="gint.b-online.gr" carrier="Wind Internet" carrier_id="1519" mcc="202" mnc="10" type="default,ia,supl" />
+  <apn apn="mnet.b-online.gr" authtype="0" carrier="mnet.b-online.gr" carrier_enabled="true" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="mnet.b-online.gr" carrier="Wind MMS" carrier_id="1519" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="10" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="NOVA" mcc="202" mnc="10" protocol="IPV6" type="ims" />
   <apn apn="ims" authtype="0" carrier="NOVA IMS" carrier_enabled="true" mcc="202" mnc="10" mtu="1390" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="ims" carrier="Wind IMS" mcc="202" mnc="10" protocol="IPV6" roaming_protocol="IP" type="ims" />
-  <apn apn="mnet.b-online.gr" authtype="0" carrier="mnet.b-online.gr" carrier_enabled="true" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" protocol="IP" roaming_protocol="IP" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="gint.b-online.gr" carrier="gint.b-online.gr" mcc="202" mnc="10" password="web" protocol="IPV4V6" type="supl" user="web" />
+  <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="202" mnc="10" type="xcap" />
   <apn apn="gint.b-online.gr" carrier="NOVA Internet" mcc="202" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="NOVA XCAP" mcc="202" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="NOVA IMS" mcc="202" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="mnet.b-online.gr" carrier="NOVA MMS" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="NOVA IMS" mcc="202" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="hos" carrier="NOVA XCAP" mcc="202" mnc="10" mvno_match_data="NOVA GR" mvno_type="spn" type="xcap" />
   <apn apn="gint.b-online.gr" carrier="Wind Internet" mcc="202" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" type="default" />
-  <apn apn="hos" carrier="Wind XCAP" mcc="202" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="Wind IMS" mcc="202" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" protocol="IPV6" type="ims" />
   <apn apn="mnet.b-online.gr" carrier="Wind MMS" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" type="mms" />
-  <apn apn="gint.b-online.gr" carrier="Wind Internet" carrier_id="1519" mcc="202" mnc="10" type="default,ia,supl" />
-  <apn apn="mnet.b-online.gr" carrier="Wind MMS" carrier_id="1519" mcc="202" mmsc="http://192.168.200.95/servlets/mms" mmsport="9401" mmsproxy="192.168.200.11" mnc="10" type="mms" />
+  <apn apn="ims" carrier="Wind IMS" mcc="202" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" protocol="IPV6" type="ims" />
+  <apn apn="hos" carrier="Wind XCAP" mcc="202" mnc="10" mvno_match_data="WIND GR" mvno_type="spn" type="xcap" />
   <apn apn="internet.cyta.gr" carrier="Cyta GR" mcc="202" mnc="14" type="default,supl" />
   <apn apn="internet.nova.gr" authtype="1" carrier="internet.nova.gr" carrier_enabled="true" mcc="202" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet.nova.gr" authtype="1" carrier="nova Internet" carrier_enabled="true" mcc="202" mnc="17" type="dun,supl" />
   <apn apn="mms.nova.gr" authtype="0" carrier="mms.nova.gr" carrier_enabled="true" mcc="202" mmsc="http://mms.nova.gr/mms/" mmsport="8080" mmsproxy="212.251.24.200" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="internet.nova.gr" authtype="1" carrier="nova Internet" carrier_enabled="true" mcc="202" mnc="17" type="dun,supl" />
   <apn apn="internet.nova.gr" carrier="nova Internet" mcc="202" mnc="17" mvno_match_data="nova" mvno_type="spn" type="default" />
   <apn apn="mms.nova.gr" carrier="nova MMS" mcc="202" mmsc="http://mms.nova.gr/mms/" mmsport="8080" mmsproxy="212.251.24.200" mnc="17" mvno_match_data="nova" mvno_type="spn" type="mms" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="21" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="mobile.data" carrier="orizon internet" mcc="202" mnc="21" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl,xcap" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="21" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
 </apns>

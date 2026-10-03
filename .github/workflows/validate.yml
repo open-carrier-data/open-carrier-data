@@ -44,6 +44,14 @@ jobs:
             echo "$untracked" >&2
             exit 1
           fi
+      - name: Check the APN files against LineageOS's apns-conf.xsd
+        run: |
+          if ! command -v xmllint >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq libxml2-utils
+          fi
+          xmllint --noout --schema tools/lineageos/apns-conf.xsd \
+            generated/android/apns-conf.xml generated/android/apns/*.xml
 
   freshness-alarm:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
