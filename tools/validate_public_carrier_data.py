@@ -288,6 +288,23 @@ def validate_string(path: Path, value: Any, name: str, max_len: int = 120) -> st
     return value
 
 
+# A carrier setting holds no control character and no surrounding whitespace.
+# The sanitizer removes them; a parser would turn a carriage return into a
+# space and a SIM would no longer match.
+CONTROL_CHARACTERS_RE = re.compile(r"[\x00-\x1f\x7f-\x9f]")
+# Android's MMS service opens the MMSC with java.net.URL, which needs a scheme.
+MMSC_RE = re.compile(r"[A-Za-z][A-Za-z0-9+.-]*://[^/?#\s].*")
+
+
+def validate_clean_text(path: Path, value: Any, name: str, max_len: int = 120) -> str:
+    text = validate_string(path, value, name, max_len)
+    if CONTROL_CHARACTERS_RE.search(text) or text != text.strip():
+        raise ValidationError(
+            f"{path}: {name} has a control character or surrounding whitespace"
+        )
+    return text
+
+
 def canonical_json(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
 
@@ -384,7 +401,7 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
     ):
         raise ValidationError(f"{path}: profile_id has invalid format")
 
-    validate_string(path, data.get("display_name"), "display_name")
+    validate_clean_text(path, data.get("display_name"), "display_name")
 
     match = data.get("match")
     require_type(path, match, dict, "match")
@@ -434,7 +451,7 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         ):
             raise ValidationError(f"{path}: invalid IMSI prefix pattern {imsi!r}")
     for spn in match.get("spn", []):
-        validate_string(path, spn, "match.spn[]", 80)
+        validate_clean_text(path, spn, "match.spn[]", 80)
     android_carrier_ids = match.get("android_carrier_ids", [])
     require_type(path, android_carrier_ids, list, "match.android_carrier_ids")
     for carrier_id in android_carrier_ids:
@@ -500,8 +517,8 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             } | set(APN_STRING_FIELDS) | APN_PORT_FIELDS | set(APN_INT_FIELDS) | APN_BOOL_FIELDS
             if set(apn) - allowed_apn_keys:
                 raise ValidationError(f"{path}: android_apns[{index}] has unknown keys")
-            validate_string(path, apn.get("name"), f"android_apns[{index}].name", 80)
-            validate_string(path, apn.get("apn"), f"android_apns[{index}].apn", 120)
+            validate_clean_text(path, apn.get("name"), f"android_apns[{index}].name", 80)
+            validate_clean_text(path, apn.get("apn"), f"android_apns[{index}].apn", 120)
             types = apn.get("types")
             require_type(path, types, list, f"android_apns[{index}].types")
             if not types:
@@ -517,7 +534,13 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
                     )
             for key, max_len in APN_STRING_FIELDS.items():
                 if key in apn:
-                    validate_string(path, apn[key], f"android_apns[{index}].{key}", max_len)
+                    validate_clean_text(
+                        path, apn[key], f"android_apns[{index}].{key}", max_len
+                    )
+            if "mmsc" in apn and not MMSC_RE.fullmatch(apn["mmsc"]):
+                raise ValidationError(
+                    f"{path}: android_apns[{index}].mmsc is not a URL with a scheme"
+                )
             for key in APN_PORT_FIELDS:
                 if key in apn:
                     port = apn[key]
@@ -542,7 +565,7 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             if "mvno_type" in apn or "mvno_match_data" in apn:
                 if apn.get("mvno_type") not in APN_MVNO_TYPES:
                     raise ValidationError(f"{path}: android_apns[{index}].mvno_type")
-                validate_string(
+                validate_clean_text(
                     path,
                     apn.get("mvno_match_data"),
                     f"android_apns[{index}].mvno_match_data",
@@ -559,8 +582,29 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             for key in ("protocol", "roaming_protocol"):
                 if key in apn and apn[key] not in APN_PROTOCOLS:
                     raise ValidationError(f"{path}: android_apns[{index}].{key}")
+        validate_mms_rows(path, apns)
 
     return data
+
+
+def validate_mms_rows(path: Path, apns: list[dict[str, Any]]) -> None:
+    """A row that serves MMS needs an MMSC. Android's MMS service looks it up
+    among the SIM's mms rows with the APN its MMS connection uses, so another
+    mms row of the same APN and MVNO selector may carry it."""
+
+    def serves_mms(apn: dict[str, Any]) -> bool:
+        return "mms" in apn["types"] or "*" in apn["types"]
+
+    def selector(apn: dict[str, Any]) -> tuple[Any, Any, Any]:
+        return (apn.get("mvno_type"), apn.get("mvno_match_data"), apn["apn"])
+
+    supplied = {selector(apn) for apn in apns if serves_mms(apn) and apn.get("mmsc")}
+    for index, apn in enumerate(apns):
+        if serves_mms(apn) and not apn.get("mmsc") and selector(apn) not in supplied:
+            raise ValidationError(
+                f"{path}: android_apns[{index}] serves mms, and no mms row of its "
+                "APN carries an MMSC"
+            )
 
 
 def validate_index(

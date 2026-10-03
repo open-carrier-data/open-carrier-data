@@ -32,18 +32,18 @@ head -2 /tmp/ocd-out/android/apns-conf.xml
 The generator prints one summary line and the XML header shows the new version. On 2026-10-03 the output is:
 
 ```text
-generated Android output for 7834 profile(s): 25450 APN row(s), 6378 CarrierConfig profile(s), 3172 MCC/MNC key(s), 179 Android carrier ID key(s), 5282 CarrierConfig XML block(s), 218 per-country APN file(s), 250 APN row(s) without a country, 3 APN row(s) left out because LineageOS's schema rejects them
+generated Android output for 7833 profile(s): 25406 APN row(s), 6377 CarrierConfig profile(s), 3172 MCC/MNC key(s), 179 Android carrier ID key(s), 5281 CarrierConfig XML block(s), 218 per-country APN file(s), 250 APN row(s) without a country, 0 APN row(s) left out because LineageOS's schema rejects them
 <?xml version="1.0" encoding="utf-8"?>
 <apns version="9">
 ```
 
-Read `metadata.json` before you ship. On 2026-10-03 it lists 18 profiles whose match cannot be expressed in APN XML and 1,376 profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
+Read `metadata.json` before you ship. On 2026-10-03 it lists 18 profiles whose match cannot be expressed in APN XML and 1,386 profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
 
 ```bash
 python3 -c 'print({k: v for k, v in __import__("json").load(open("generated/android/metadata.json"))["omissions"].items() if k.endswith("_unrepresentable_match") and not k.endswith("ids_with_unrepresentable_match")})'
 ```
 
-The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-03, of the 1,376, 1,070 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
+The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-03, of the 1,386, 1,080 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
 
 ```bash
 python3 <<'PY'
@@ -82,7 +82,7 @@ Rows go to files by MCC, the way LineageOS split its list. An MCC goes to the co
 
 LineageOS repeats every MCC 425 and MCC 647 row in both files, and so does this export. A merged build carries those rows twice, as LineageOS's own does. `tools/lineageos_apns.py` holds the table.
 
-A row whose MCC has no country, such as 001 for test networks or 999 for internal use, has no file and stays only in `apns-conf.xml`. On 2026-10-03 that is 250 rows. A row that LineageOS's `apns-conf.xsd` rejects is in neither file, because a LineageOS build fails on it and Android cannot use the value either. On 2026-10-03 that is 3 US rows whose MMSC is an address and port without a scheme: `208.254.124.11:8514` on 310100 and `172.16.0.37:8514` twice on 311210. Both files keep the variant of each with `http://`, which other sources give for the same APN. The generator prints both counts, and `metadata.json` carries the second.
+A row whose MCC has no country, such as 001 for test networks or 999 for internal use, has no file and stays only in `apns-conf.xml`. On 2026-10-03 that is 250 rows. A row that LineageOS's `apns-conf.xsd` rejects is in neither file, because a LineageOS build fails on it and Android cannot use the value either. The generator prints both counts, and `metadata.json` carries the second. On 2026-10-03 no row is rejected: the three US rows whose MMSC was an address and port without a scheme, `208.254.124.11:8514` on 310100 and `172.16.0.37:8514` twice on 311210, now carry `http://`, because the sanitizer adds the missing scheme.
 
 On 2026-10-03 the export has 218 files. LineageOS has 169, and each of its country names is among ours. To use the export, delete LineageOS's country files and copy ours in. Keep its `Android.bp`, `make-apns.sh`, and `apns-conf.xsd`:
 
@@ -107,7 +107,7 @@ The public check runs the same command on `apns-conf.xml` and every per-country 
 python3 tools/diff_apns_conf.py /path/to/android_vendor_apn --json diff.json
 ```
 
-The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. To compare one country file with ours, pass both files, for example `python3 tools/diff_apns_conf.py /path/to/android_vendor_apn/DE.xml --ours generated/android/apns/DE.xml`. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 309 of its 3,967 rows have no exact match in ours. 291 of them have the same network, MVNO selector, and APN in ours with another type set. 18 have an APN we lack: 17 rows with an empty APN (15 initial-attach rows and 2 Lycamobile UK MMS rows, see [Rows with an empty APN](#rows-with-an-empty-apn)), and one row that carries an MVNO match value without an MVNO type. Every LineageOS network is in ours.
+The summary counts rows in both, rows only in ours, and rows only in yours split by cause: same APN with other types, an APN we lack, or a network we lack. `--mccmnc 26202` limits the comparison to one network. To compare one country file with ours, pass both files, for example `python3 tools/diff_apns_conf.py /path/to/android_vendor_apn/DE.xml --ours generated/android/apns/DE.xml`. The JSON report lists every row with its label. Against the LineageOS repository at revision `6e73ba90` on 2026-10-03, 358 of its 3,967 rows have no exact match in ours. 335 of them have the same network, MVNO selector, and APN in ours with another type set, often without `mms` where no row of that APN has an MMSC. 23 have an APN we lack: 17 rows with an empty APN (15 initial-attach rows and 2 Lycamobile UK MMS rows, see [Rows with an empty APN](#rows-with-an-empty-apn)), 5 MMS rows without an MMSC, which no phone can send MMS with, and one row that carries an MVNO match value without an MVNO type. Every LineageOS network is in ours.
 
 ## Use the data in an app or tool
 
@@ -141,7 +141,7 @@ Android picks a SIM's rows in its own way. In Android 16, which LineageOS 23.2 b
 2. Otherwise, it uses the plain rows of the SIM's network code.
 3. Otherwise, it uses the rows that carry the SIM's carrier id under another network code.
 
-Rows that carry the SIM's carrier id and no network code are added in every case. A `carrier_id` on a row that also has a network code does not restrict that row, and Android does not prefer such rows. Rows come back in file order. Without a preferred APN, the first row that can serve a request on the current radio technology is tried first. After a failure, the rows not tried yet come next, in file order. For the initial attach, Android takes the first row that serves `ia`, and the first row that serves `default` when none does. For MMS, the MMS service looks up the MMSC by the APN the MMS data connection uses, among the SIM's rows that serve `mms` and carry an MMSC.
+Rows that carry the SIM's carrier id and no network code are added in every case. A `carrier_id` on a row that also has a network code does not restrict that row, and Android does not prefer such rows. Rows come back in file order. Without a preferred APN, the first row that can serve a request on the current radio technology is tried first. After a failure, the rows not tried yet come next, in file order. For the initial attach, Android takes the first row that serves `ia`, and the first row that serves `default` when none does. For MMS, the MMS service looks up the MMSC by the APN the MMS data connection uses, among the SIM's rows that serve `mms` and carry an MMSC. Every row in `apns-conf.xml` that serves `mms` has an MMSC, or shares its APN with one that has.
 
 `apns-conf.xml` groups rows by network code and MVNO selector and ranks each group by the evidence behind its rows, so Android first tries the internet APN that the most independent source families give, and never a row named `default` while a row with a real APN is there. On 2026-10-03, 1,224 network and MVNO scopes of LineageOS's list at `6e73ba90` have an internet row. In 993 of them our first internet row has the same APN as LineageOS's. In 201 of the other 231, more independent source families back our first APN than LineageOS's; in 29 the families tie; in one LineageOS's first row is the placeholder `default`.
 
@@ -191,8 +191,8 @@ python3 tools/validate_device_catalog.py generated/devices --freshness fail
 Output on 2026-10-03:
 
 ```text
-validated 7827 public carrier profile(s)
-validated 42401 Android devices, 183 Apple products, and 4642 carrier artifacts
+validated 7833 public carrier profile(s)
+validated 42473 Android devices, 183 Apple products, and 4642 carrier artifacts
 ```
 
 The first validator also checks every source snapshot date.
