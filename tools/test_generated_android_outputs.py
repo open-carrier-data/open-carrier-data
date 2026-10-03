@@ -234,6 +234,76 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         validate_device_catalog.utc_today = real_device_today
 
 
+def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[str]) -> None:
+    """newest_entry and capability_newest_entries are optional YYYY-MM dates;
+    a capability date needs a published capability and cannot be newer than
+    the profile's newest_entry."""
+    capabilities = {
+        profile["profile_id"]: profile["capabilities"]
+        for path in carriers_dir.rglob("*.json")
+        for profile in [load_json(path)]
+    }
+    dated_id = next(
+        profile_id
+        for profile_id, values in sorted(capabilities.items())
+        if values.get("mms") == "supported"
+    )
+    old_shape = evidence_path.read_text(encoding="utf-8")
+
+    def validate(value: dict) -> None:
+        write_profile(evidence_path, value)
+        validate_public_carrier_data.validate_evidence_index(
+            evidence_path, profile_ids, None, capabilities
+        )
+
+    def dated(**fields: object) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == dated_id:
+                profile.update(fields)
+        return value
+
+    def expect_failure(value: dict, message: str) -> None:
+        try:
+            validate(value)
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    try:
+        validate(json.loads(old_shape))
+        validate(dated(newest_entry="2025-08"))
+        validate(dated(newest_entry="2025-08", capability_newest_entries={"mms": "2019-03"}))
+        validate(dated(capability_newest_entries={"mms": "2019-03"}))
+        for bad_month in ("2025-8", "2025-08-01", "2025-13", "2025-00", 202508):
+            expect_failure(
+                dated(newest_entry=bad_month),
+                f"newest_entry accepted {bad_month!r}",
+            )
+            expect_failure(
+                dated(capability_newest_entries={"mms": bad_month}),
+                f"a capability entry date accepted {bad_month!r}",
+            )
+        expect_failure(dated(newest_entry="2999-01"), "a future newest_entry passed")
+        expect_failure(
+            dated(capability_newest_entries={}), "an empty capability date map passed"
+        )
+        expect_failure(
+            dated(capability_newest_entries={"telepathy": "2019-03"}),
+            "a date for an unknown capability name passed",
+        )
+        expect_failure(
+            dated(capability_newest_entries={"vonr": "2019-03"}),
+            "a date for a capability the profile does not publish passed",
+        )
+        expect_failure(
+            dated(newest_entry="2019-02", capability_newest_entries={"mms": "2019-03"}),
+            "a capability date newer than the profile's newest_entry passed",
+        )
+    finally:
+        evidence_path.write_text(old_shape, encoding="utf-8")
+
+
 def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
     """The evidence index carries no constant markers, no redistribution class,
     and only fact_sources entries narrower than the profile's sources."""
@@ -295,6 +365,7 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ]
 
         expect_failure(display_name_entry, "display-name provenance entries must be rejected")
+        check_entry_dates(carriers_dir, evidence_path, profile_ids)
     finally:
         evidence_path.write_text(original, encoding="utf-8")
 

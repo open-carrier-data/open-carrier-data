@@ -237,6 +237,20 @@ def parse_freshness_window(path: Path, data: dict[str, Any]) -> FreshnessWindow 
     return window
 
 
+ENTRY_MONTH_RE = re.compile(r"[0-9]{4}-(0[1-9]|1[0-2])")
+
+
+def parse_entry_month(path: Path, value: Any, name: str) -> tuple[int, int]:
+    """A newest-supporting-entry date, published to the month as YYYY-MM."""
+    if not isinstance(value, str) or not ENTRY_MONTH_RE.fullmatch(value):
+        raise ValidationError(f"{path}: {name} must be YYYY-MM")
+    month = (int(value[:4]), int(value[5:]))
+    today = utc_today()
+    if month > (today.year, today.month):
+        raise ValidationError(f"{path}: {name} is future-dated")
+    return month
+
+
 def check_freshness(window: FreshnessWindow, mode: str) -> None:
     if utc_today() <= window.stale_after:
         return
@@ -661,10 +675,45 @@ def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: 
             raise ValidationError(f"{path}: {name}[{index}].resolution is invalid")
 
 
+def validate_entry_dates(
+    path: Path,
+    evidence: dict[str, Any],
+    index: int,
+    capabilities: dict[str, str] | None,
+) -> None:
+    """newest_entry and capability_newest_entries are optional; each appears
+    only where every supporting observation carries an entry date."""
+    newest_month: tuple[int, int] | None = None
+    if "newest_entry" in evidence:
+        newest_month = parse_entry_month(
+            path, evidence["newest_entry"], f"profiles[{index}].newest_entry"
+        )
+    if "capability_newest_entries" not in evidence:
+        return
+    label = f"profiles[{index}].capability_newest_entries"
+    entries = evidence["capability_newest_entries"]
+    require_type(path, entries, dict, label)
+    if not entries:
+        raise ValidationError(f"{path}: {label} is empty")
+    for key, value in entries.items():
+        if key not in CAPABILITY_KEYS:
+            raise ValidationError(f"{path}: {label} names an unknown capability")
+        month = parse_entry_month(path, value, f"{label}.{key}")
+        if newest_month is not None and month > newest_month:
+            raise ValidationError(
+                f"{path}: {label}.{key} is newer than the profile's newest_entry"
+            )
+        if capabilities is not None and capabilities.get(key, "unknown") == "unknown":
+            raise ValidationError(
+                f"{path}: {label}.{key} dates a capability the profile does not publish"
+            )
+
+
 def validate_evidence_index(
     path: Path,
     expected_profile_ids: set[str],
     index_window: FreshnessWindow | None = None,
+    profile_capabilities: dict[str, dict[str, str]] | None = None,
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
@@ -754,6 +803,8 @@ def validate_evidence_index(
         "observed_model_source_groups",
         "conflicts",
         "quality_gates",
+        "newest_entry",
+        "capability_newest_entries",
     }
     scope_keys = {
         "models",
@@ -898,6 +949,12 @@ def validate_evidence_index(
                 )
             if group_sort_keys != sorted(group_sort_keys):
                 raise ValidationError(f"{path}: {label} must be canonically sorted")
+        validate_entry_dates(
+            path,
+            evidence,
+            index,
+            None if profile_capabilities is None else profile_capabilities.get(profile_id),
+        )
         if "conflicts" in evidence:
             validate_resolution_items(
                 path, evidence["conflicts"], "conflict", f"profiles[{index}].conflicts"
@@ -1038,7 +1095,13 @@ def main(argv: list[str]) -> int:
     index_window = validate_index(index_path, profiles_by_path)
     validate_generated_files(index_path.parent)
     window = validate_evidence_index(
-        index_path.parent / "evidence-index.json", seen_ids, index_window
+        index_path.parent / "evidence-index.json",
+        seen_ids,
+        index_window,
+        {
+            profile["profile_id"]: profile["capabilities"]
+            for profile in profiles_by_path.values()
+        },
     )
     validate_android_metadata(index_path.parent, seen_ids, window)
     if window is not None:
