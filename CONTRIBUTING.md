@@ -31,7 +31,7 @@ A usable source is public and kept current by its owner (carrier, OEM, OS or pub
 
 ## Improve tooling or docs
 
-Open a pull request for schema, validator, generator, test, or documentation changes. Keep each change to one topic. To report a problem without a fix, use the `Documentation, schema, or tooling issue` form.
+Open a pull request for schema, validator, generator, test, or documentation changes. To report a problem without a fix, use the `Documentation, schema, or tooling issue` form.
 
 ## Why carrier data changes are not accepted by hand
 
@@ -39,23 +39,8 @@ Open a pull request for schema, validator, generator, test, or documentation cha
 
 ## How a correction reaches stable data
 
-A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer curates the change.
+A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request; per-carrier overrides do not exist yet and will be built when the first verified report needs one.
 
 ## Run the local checks
 
-To check profiles and the device catalog, run from the repo root:
-
-```bash
-python3 tools/validate_public_carrier_data.py carriers generated/index.json
-python3 tools/validate_device_catalog.py generated/devices
-```
-
-The pull request check runs the same commands. A snapshot past `stale_after` prints one warning and still passes. Only the daily `freshness-alarm` job runs them with `--freshness fail`.
-
-To run the tests the public workflow runs, execute:
-
-```bash
-python3 tools/test_generated_android_outputs.py
-python3 tools/test_carrier_relevance_contract.py
-python3 tools/test_resolve_carrier_profiles.py
-```
+Run the commands in the `validate` job of `.github/workflows/validate.yml` from the repo root; the pull request check runs the same. A snapshot past `stale_after` prints one warning and still passes. Only the daily `freshness-alarm` job runs the validators with `--freshness fail`.

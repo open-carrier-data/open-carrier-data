@@ -31,10 +31,10 @@ A source family is one upstream. Examples are the LineageOS APN repo, Apple's ca
 The sanitizer groups observations and applies fixed rules. The rules are:
 
 - Grouping by exact match set. Observations with the same `mccmnc`, `spn`, `gid1_prefixes`, `gid2_prefixes`, `iccid_prefixes`, `imsi_prefix_patterns`, and `android_carrier_ids` form one profile. A different match set forms a different profile. The `spn` comparison ignores letter case, so `TELEKOM` and `Telekom` land in one profile, and the profile keeps the spelling most observations use.
-- Naming. A profile takes the operator name that the most observations agree on once words like `internet` or `mms` are stripped. Only a profile whose every observation carries a source fallback name gets the placeholder `Carrier <mccmnc>`.
+- Naming. A profile takes the operator name that the most independent naming sources agree on once words like `internet` or `mms` are stripped; the number of observations breaks ties. The two Google lanes count as one naming source, and so do the LineageOS, Sony and Fairphone APN lists, which copy AOSP's list. A placeholder an importer emits when its source has no operator name, such as `LineageOS 26202` or a bare `26202`, never wins. A profile with no operator name gets the placeholder `Carrier <mccmnc>`.
 - Agreement. When every source that names a fact gives the same value, the value is published.
 - Conflict omission. When sources give different values for one CarrierConfig key or one add-on key, the value is left out. The evidence index records the conflict with `resolution: omitted_from_stable`.
-- APN variants. When sources disagree on one APN selector, every variant is published, primary sources first, because an APN list holds several rows per type by design. The evidence index records the conflict with `resolution: published_variants`.
+- APN variants. When sources disagree on one APN selector, every variant is published, ordered by APN, because an APN list holds several rows per type by design. The evidence index records the conflict with `resolution: published_variants`.
 - Empty profiles are dropped. A profile left with no APN, no CarrierConfig, no add-on, and no known capability is not written. The sanitization report counts these as `empty_profile_count`.
 - Conditional capabilities. Capabilities are the one exception. A disagreement becomes `conditional` instead of an omission.
 - Corroboration for generic APNs. A low-confidence generic APN row needs a second source or a primary maintained APN source. Otherwise the `uncorroborated_generic_apn` gate drops it.
@@ -45,11 +45,9 @@ The evidence index keeps `fact_sources` per exported fact. A profile-wide source
 
 ## Why profiles are neutral
 
-A profile says "this carrier has these settings". It does not say "Samsung says this" or "Apple says this". Two reasons drive that choice.
+A profile says "this carrier has these settings". It does not say "Samsung says this" or "Apple says this". One reason drives that choice.
 
-First, a consumer needs one answer per SIM. A ROM cannot ask the user which vendor to believe.
-
-Second, source-branded profiles would leak vendor structure into public data. Neutral profiles let the project publish transformed facts from sources whose raw files it may not redistribute.
+A consumer needs one answer per SIM. A ROM cannot ask the user which vendor to believe.
 
 The cost is real. When sources disagree, the consumer gets nothing for that key. The evidence index shows why, so a maintainer can go back to the sources.
 
@@ -59,7 +57,7 @@ Grouping by exact match set has one visible consequence. An MVNO that no source 
 
 LIDL Connect runs on the Vodafone Germany network, `26202`. No source names it with an SPN, GID, or IMSI prefix. So no profile names it. A LIDL Connect SIM resolves the plain `26202` profile plus whichever `26202` SPN profile matches the SPN on the SIM. The result is Vodafone's data, which may or may not be right for that MVNO.
 
-The limit exists because the sanitizer only publishes what a source observed. It does not invent a selector. A maintained source that publishes a tested SPN or GID prefix, or a maintainer-curated change, is the way to add one.
+The limit exists because the sanitizer only publishes what a source observed. It does not invent a selector. A maintained source that publishes a tested SPN or GID prefix, or an importer/mapping change, is the way to add one.
 
 ## Why stale data is dropped after 180 days
 
@@ -77,4 +75,4 @@ python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.jso
 
 ## What the public repo checks
 
-The workflow `Validate carrier data` in `.github/workflows/validate.yml` has two jobs. `validate` runs on push to `main`, on pull requests, and on manual dispatch. It validates the profiles against the stable index and the device catalog in warn mode, runs the four test scripts, and regenerates `generated/android/` to confirm nothing drifted. It is the required check on `main`. Pull requests, including carrier-data ones, are untrusted input: they run through the `pull_request` trigger with a read-only token (`permissions: contents: read`), and the workflow uses no secrets. `freshness-alarm` runs daily at 04:17 UTC by cron and on manual dispatch. It runs both validators with `--freshness fail`. When they fail it opens one issue labeled `stale-data` with the validator output, and it does not open a second while one is open. When they pass again it closes that issue. It is the only job with `issues: write`, and it never runs on a pull request. The dispatch input `simulate_today` passes `--today` to the validators, so the alarm can be rehearsed before the real date arrives. GitHub disables a public repository's scheduled workflows after 60 days without a commit and emails the owner first. Every data publish is a commit to `main`, so the alarm keeps running while publishes land, and `gh workflow enable validate.yml` turns it back on after a pause.
+The workflow `Validate carrier data` in `.github/workflows/validate.yml` has two jobs. `validate` runs on push to `main`, on pull requests, and on manual dispatch. It validates the profiles against the stable index and the device catalog in warn mode, runs the test scripts, and regenerates `generated/android/` to confirm nothing drifted. It is the required check on `main`. Pull requests, including carrier-data ones, are untrusted input: they run through the `pull_request` trigger with a read-only token (`permissions: contents: read`), and the workflow uses no secrets. `freshness-alarm` runs daily at 04:17 UTC by cron and on manual dispatch. It runs both validators with `--freshness fail`. When they fail it opens one issue labeled `stale-data` with the validator output, and it does not open a second while one is open. When they pass again it closes that issue. It is the only job with `issues: write`, and it never runs on a pull request. The dispatch input `simulate_today` passes `--today` to the validators, so the alarm can be rehearsed before the real date arrives. GitHub disables a public repository's scheduled workflows after 60 days without a commit and emails the owner first. Every data publish is a commit to `main`, so the alarm keeps running while publishes land, and `gh workflow enable validate.yml` turns it back on after a pause.

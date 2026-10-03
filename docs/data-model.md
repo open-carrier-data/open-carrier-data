@@ -187,4 +187,4 @@ Each `profiles` record describes one carrier profile.
 
 `observed_scope` can hold `models`, `android_majors`, `firmware_builds`, `firmware_regions`, `sales_codes`, `multi_csc`, `omc_revisions`, `omc_versions`, and `source_layers`. `source_layers` is `firmware_baseline` or `gras_delta`.
 
-Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, primary sources first. [how-it-is-built.md](how-it-is-built.md) explains both rules.
+Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, ordered by APN. [how-it-is-built.md](how-it-is-built.md) explains both rules.

@@ -26,10 +26,10 @@ One rule defines coverage. A device is covered when a maintained source produced
 Print the two numbers with:
 
 ```bash
-python3 -c 'import json; c=json.load(open("generated/devices/index.json"))["platforms"]; print(c["android"]["carrier_data_coverage_counts"].get("exact_carrier_data_observed", 0), "of", c["android"]["device_count"], "Android identities;", c["apple"]["carrier_data_coverage_counts"].get("exact_source_verified", 0), "of", c["apple"]["device_count"], "Apple product types")'
+python3 -c 'import json; c=json.load(open("generated/devices/index.json"))["platforms"]["android"]; print(c["carrier_data_coverage_counts"].get("exact_carrier_data_observed", 0), "of", c["device_count"], "Android identities")'
 ```
 
-On 2026-10-03 it prints `266 of 42401 Android identities; 5 of 183 Apple product types`.
+On 2026-10-03 it prints `266 of 42401 Android identities`. Apple is left out of that headline: the exact product scopes in Apple's bundles name only 2011 to 2014 hardware (`iPhone6,x`, `iPhone7,x`, `iPad2,3`), so an Apple exact count says nothing about current iPhones. Most Apple product types are `family_source_verified`; the table below has the counts.
 
 Every device carries `carrier_data_coverage.status`. The other statuses say how far a maintained source got, or why it stopped. They are steps, not fractions of coverage. The counts below are from 2026-10-03. `carrier_data_coverage_counts` in `index.json` holds the current ones.
 
