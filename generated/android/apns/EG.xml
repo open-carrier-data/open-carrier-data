@@ -4,46 +4,46 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="mobinilmms" carrier="mobinilmms" mcc="602" mmsc="http://10.7.13.24:8002" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
-  <apn apn="mobinilmms" authtype="2" carrier="mobinilmms" mcc="602" mmsc="http://10.7.13.24:8002/" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
-  <apn apn="mobinilwap" carrier="Mobinil WAP" mcc="602" mnc="01" port="8080" proxy="62.241.155.45" type="default,supl" />
   <apn apn="mobinilweb" authtype="2" carrier="mobinilweb" mcc="602" mnc="01" type="default,supl" />
+  <apn apn="mobinilweb" carrier="Mobinil Web" carrier_id="675" mcc="602" mnc="01" type="default,ia,supl" />
+  <apn apn="mobinilwap" carrier="Mobinil WAP" carrier_id="675" mcc="602" mnc="01" port="8080" proxy="62.241.155.45" type="default,ia,supl" />
+  <apn apn="mobinilwap" carrier="Mobinil WAP" mcc="602" mnc="01" port="8080" proxy="62.241.155.45" type="default,supl" />
+  <apn apn="mobinilmms" carrier="Mobinil MMS" carrier_id="675" mcc="602" mmsc="http://10.7.13.24:8002" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
+  <apn apn="mobinilmms" authtype="2" carrier="mobinilmms" mcc="602" mmsc="http://10.7.13.24:8002/" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
+  <apn apn="mobinilmms" carrier="mobinilmms" mcc="602" mmsc="http://10.7.13.24:8002" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
   <apn apn="mobinilweb" carrier="Orange" mcc="602" mnc="01" type="dun" />
-  <apn apn="IMS" carrier="IMS" mcc="602" mnc="01" mvno_match_data="Orange Egypt" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="Orangeweb" carrier="Orange Egypt Web" mcc="602" mnc="01" mvno_match_data="Orange Egypt" mvno_type="spn" type="default" />
   <apn apn="mobinilmms" carrier="Orange Egypt MMS" mcc="602" mmsc="http://10.7.13.24:8002" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" mvno_match_data="Orange Egypt" mvno_type="spn" type="mms" />
-  <apn apn="mobinilmms" carrier="Mobinil MMS" carrier_id="675" mcc="602" mmsc="http://10.7.13.24:8002" mmsport="8080" mmsproxy="62.241.155.45" mnc="01" type="mms" />
-  <apn apn="mobinilwap" carrier="Mobinil WAP" carrier_id="675" mcc="602" mnc="01" port="8080" proxy="62.241.155.45" type="default,ia,supl" />
-  <apn apn="mobinilweb" carrier="Mobinil Web" carrier_id="675" mcc="602" mnc="01" type="default,ia,supl" />
+  <apn apn="IMS" carrier="IMS" mcc="602" mnc="01" mvno_match_data="Orange Egypt" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="internet.vodafone.net" authtype="3" carrier="vodafone internet" carrier_id="2380" mcc="602" mnc="02" password="internet" type="default,ia,supl" user="internet" />
   <apn apn="internet.vodafone.net" authtype="3" carrier="internet.vodafone.net" mcc="602" mnc="02" password="internet" type="default,supl" user="internet" />
-  <apn apn="internet.vodafone.net" carrier="Vodafone" mcc="602" mnc="02" password="internet" type="dun" user="internet" />
-  <apn apn="mms.vodafone.com.eg" authtype="1" carrier="mms.vodafone.com.eg" mcc="602" mmsc="http://mms.vodafone.com.eg/servlets/mms" mmsport="8080" mmsproxy="163.121.178.2" mnc="02" password="mms" type="mms" user="mms" />
+  <apn apn="wap.vodafone.com.eg" authtype="3" carrier="Vodafone WAP" carrier_id="2380" mcc="602" mnc="02" password="wap" port="8080" proxy="163.121.178.2" type="default,ia,supl" user="wap" />
   <apn apn="wap.Vodafone.com.eg" authtype="1" carrier="Vodafone live!" mcc="602" mnc="02" password="wap" port="8080" proxy="163.121.178.2" type="default,supl" user="wap" />
   <apn apn="wap.vodafone.com.eg" authtype="3" carrier="Vodafone WAP" mcc="602" mnc="02" password="wap" port="8080" proxy="163.121.178.2" type="default,supl" user="wap" />
+  <apn apn="mms.vodafone.com.eg" authtype="1" carrier="Vodafone MMS" carrier_id="2380" mcc="602" mmsc="http://mms.vodafone.com.eg/servlets/mms" mmsport="8080" mmsproxy="163.121.178.2" mnc="02" password="mms" type="mms" user="mms" />
+  <apn apn="mms.vodafone.com.eg" authtype="1" carrier="mms.vodafone.com.eg" mcc="602" mmsc="http://mms.vodafone.com.eg/servlets/mms" mmsport="8080" mmsproxy="163.121.178.2" mnc="02" password="mms" type="mms" user="mms" />
+  <apn apn="internet.vodafone.net" carrier="Vodafone" mcc="602" mnc="02" password="internet" type="dun" user="internet" />
   <apn apn="globaldata" carrier="Connect" mcc="602" mnc="02" mvno_match_data="636F6E6E65637431" mvno_type="gid" type="default,dun" />
-  <apn apn="hos" carrier="hos" mcc="602" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV6" type="xcap" />
-  <apn apn="ims" carrier="ims" mcc="602" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="internet.vodafone.net" carrier="Vodafone Internet" mcc="602" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="mms.vodafone.com.eg" carrier="Vodafone MMS" mcc="602" mmsc="http://mms.vodafone.com.eg/servlets/mms" mmsport="8080" mmsproxy="163.121.178.2" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" type="mms" />
-  <apn apn="internet.vodafone.net" authtype="3" carrier="vodafone internet" carrier_id="2380" mcc="602" mnc="02" password="internet" type="default,ia,supl" user="internet" />
-  <apn apn="mms.vodafone.com.eg" authtype="1" carrier="Vodafone MMS" carrier_id="2380" mcc="602" mmsc="http://mms.vodafone.com.eg/servlets/mms" mmsport="8080" mmsproxy="163.121.178.2" mnc="02" password="mms" type="mms" user="mms" />
-  <apn apn="wap.vodafone.com.eg" authtype="3" carrier="Vodafone WAP" carrier_id="2380" mcc="602" mnc="02" password="wap" port="8080" proxy="163.121.178.2" type="default,ia,supl" user="wap" />
+  <apn apn="ims" carrier="ims" mcc="602" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="602" mnc="02" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV6" type="xcap" />
+  <apn apn="etisalat" authtype="1" carrier="etisalat" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" port="8080" protocol="IPV4V6" proxy="10.71.130.29" roaming_protocol="IP" type="default" />
+  <apn apn="etisalat" carrier="Etisalat WAP" carrier_id="1968" mcc="602" mnc="03" port="8080" proxy="10.71.130.29" type="default,ia,supl" />
   <apn apn="Etisalat" carrier="Etisalat internet" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" type="default,mms,supl" />
   <apn apn="etisalat" authtype="1" carrier="Etisalat WAP" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" type="bip,cbs,emergency,enterprise,fota,hipri,ia,ims,mcx,rcs,vsim,xcap" />
-  <apn apn="etisalat" authtype="1" carrier="etisalat" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" port="8080" protocol="IPV4V6" proxy="10.71.130.29" roaming_protocol="IP" type="default" />
   <apn apn="etisalat" authtype="1" carrier="etisalat" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" protocol="IPV4V6" roaming_protocol="IP" type="dun,mms" />
+  <apn apn="etisalat" carrier="Etisalat MMS" carrier_id="1968" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" type="mms" />
   <apn apn="etisalat" authtype="1" carrier="etisalat" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" port="8080" proxy="10.71.130.29" type="supl" />
   <apn apn="etisalat" carrier="Etisalat WEB" mcc="602" mnc="03" mvno_match_data="Etisalat" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="etisalat" carrier="Etisalat MMS" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" mvno_match_data="Etisalat" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="602" mnc="03" mvno_match_data="Etisalat" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
-  <apn apn="etisalat" carrier="Etisalat WAP" carrier_id="1968" mcc="602" mnc="03" port="8080" proxy="10.71.130.29" type="default,ia,supl" />
-  <apn apn="etisalat" carrier="Etisalat MMS" carrier_id="1968" mcc="602" mmsc="http://10.71.131.7:38090" mmsport="8080" mmsproxy="10.71.130.29" mnc="03" type="mms" />
-  <apn apn="ims" carrier="WE ims" mcc="602" mnc="04" type="ims" />
   <apn apn="internet.te.eg" carrier="internet.te.eg" mcc="602" mnc="04" type="default,dun" />
   <apn apn="mms.te.eg" carrier="WE mms" mcc="602" mmsc="http://wemmsc.te.eg:8080" mmsport="8080" mmsproxy="wemmsc.te.eg" mnc="04" type="mms" />
-  <apn apn="hos" carrier="hos" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
-  <apn apn="ims" carrier="ims" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="ims" />
+  <apn apn="ims" carrier="WE ims" mcc="602" mnc="04" type="ims" />
   <apn apn="internet" carrier="we Internet" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="default" />
   <apn apn="internet.te.eg" carrier="WE Internet" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="default" />
+  <apn apn="ims" carrier="ims" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet.vodafone.net" authtype="2" carrier="Vodafone GPRS Internet" mcc="602" mnc="12" password="internet" type="default,supl" user="internet" />
 </apns>

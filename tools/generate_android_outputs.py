@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 from datetime import date, timedelta
+import hashlib
 import json
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 from xml.sax.saxutils import escape
 
 from carrier_config_types import config_value_has_expected_type, expected_config_type
@@ -26,12 +28,21 @@ def profile_paths(carriers_dir: Path) -> list[Path]:
     return sorted(path for path in carriers_dir.rglob("*.json") if path.is_file())
 
 
+# An XML parser turns a raw tab, line feed or carriage return inside an
+# attribute into a space, so they are written as character references. Other
+# control characters cannot appear in XML 1.0 at all.
+ATTRIBUTE_ENTITIES = {'"': "&quot;", "\t": "&#9;", "\n": "&#10;", "\r": "&#13;"}
+XML_FORBIDDEN_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
 def attr(name: str, value: Any) -> str:
     if isinstance(value, bool):
         text = "true" if value else "false"
     else:
         text = str(value)
-    return f' {name}="{escape(text, {"\"": "&quot;"})}"'
+    if XML_FORBIDDEN_RE.search(text):
+        raise ValueError(f"{name} holds a control character XML cannot carry: {text!r}")
+    return f' {name}="{escape(text, ATTRIBUTE_ENTITIES)}"'
 
 
 def label_text(profile: dict[str, Any], apn: dict[str, Any]) -> str:
@@ -111,7 +122,13 @@ def matching_mvno(
     return [(apn_type, apn_value)]
 
 
-def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
+def apn_records(
+    profile: dict[str, Any],
+    evidence: dict[str, ProfileEvidence] | None = None,
+) -> list[dict[str, Any]]:
+    """The APN XML rows of one profile. With evidence, each row also carries
+    "_support", the sources behind it per type, which only orders rows and is
+    never written."""
     records: list[dict[str, Any]] = []
     match = profile.get("match", {})
     mccmncs = match.get("mccmnc", [])
@@ -119,6 +136,7 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
     if not profile_mvnos:
         return records
     carrier_ids = profile_carrier_ids(match)
+    profile_evidence = (evidence or {}).get(str(profile.get("profile_id")))
 
     valid_mccmncs = [
         value
@@ -192,6 +210,8 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
                 base[key] = apn[key]
         if apn_carrier_id == -1:
             base["carrier_id"] = -1
+        if evidence is not None:
+            base["_support"] = apn_row_support(apn, profile_evidence)
 
         if not valid_mccmncs:
             for carrier_id in effective_carrier_ids:
@@ -222,38 +242,320 @@ def apn_records(profile: dict[str, Any]) -> list[dict[str, Any]]:
     return records
 
 
-def apn_xml_records(profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Every APN XML row of these profiles, deduplicated and in file order."""
-    records: list[dict[str, Any]] = []
-    for profile in profiles:
-        records.extend(apn_records(profile))
-    unique_records: dict[str, dict[str, Any]] = {}
-    for record in records:
-        settings = {key: value for key, value in record.items() if key != "carrier"}
-        unique_records.setdefault(
-            json.dumps(settings, sort_keys=True, separators=(",", ":")), record
+# How APN rows are ordered. Android 16 gives a SIM the rows of its scope (its
+# network code and, when rows name one, its MVNO selector) in file order, and
+# without a preferred APN it tries the first row that can serve a request
+# first. So within a scope the row most sources back comes first. The
+# evidence index names the sources behind every published APN fact.
+
+# Lanes that copy one upstream list count as one source family, as in the
+# display-name vote: the two Google lanes; the LineageOS, Sony and Fairphone
+# lists, which descend from AOSP's list; and Samsung's two firmware lanes.
+APN_SOURCE_FAMILIES = {
+    "google_pixel_vendor_carriersettings": "google_carriersettings",
+    "lineageos": "aosp_apn_lists",
+    "sony_open_devices_aosp": "aosp_apn_lists",
+    "fairphone_official_source": "aosp_apn_lists",
+    "samsung_ims": "samsung_omc",
+}
+# Sources whose rows are the complete APN list a phone ships. The others add
+# rows for one purpose: GNOME's mobile-broadband-provider-info is a menu users
+# pick from, and the AOSP, LineageOS device overlay and Samsung IMS lanes add
+# CarrierConfig or IMS facts.
+PRIMARY_APN_SOURCES = frozenset(
+    {
+        "android_carrier_app",
+        "apple_carrier_bundles",
+        "fairphone_official_source",
+        "google_carriersettings",
+        "google_pixel_vendor_carriersettings",
+        "lineageos",
+        "samsung_omc",
+        "sony_open_devices_aosp",
+    }
+)
+# APN values that name no network: a list writes them where it knows no APN.
+PLACEHOLDER_APNS = frozenset({"default"})
+# One file order serves every request type, so types are ranked in this order:
+# rows that serve the internet come first, best backed first, then the rest.
+APN_TYPE_PRIORITY = (
+    "default",
+    "ia",
+    "mms",
+    "ims",
+    "supl",
+    "dun",
+    "xcap",
+    "emergency",
+    "cbs",
+    "fota",
+    "hipri",
+    "mcx",
+    "vsim",
+    "bip",
+    "enterprise",
+    "rcs",
+)
+# ApnSetting.TYPE_ALL, what Android reads from a "*" type.
+ANDROID_WILDCARD_TYPES = ("default", "hipri", "mms", "supl", "dun", "fota", "ims", "cbs")
+# TelephonyProvider's column defaults. An attribute with this value means the
+# same as no attribute.
+ANDROID_APN_DEFAULTS: dict[str, Any] = {
+    "protocol": "IP",
+    "roaming_protocol": "IP",
+    "authtype": -1,
+    "carrier_enabled": True,
+    "bearer": 0,
+    "profile_id": 0,
+    "user_visible": True,
+    "user_editable": True,
+    "apn_set_id": 0,
+    "skip_464xlat": -1,
+    "mtu": 0,
+    "mtu_v4": 0,
+    "mtu_v6": 0,
+    "max_conns": 0,
+    "max_conns_time": 0,
+    "wait_time": 0,
+    "modem_cognitive": False,
+    "always_on": False,
+    "esim_bootstrap_provisioning": False,
+}
+# Defaults LineageOS's apns-conf.xsd does not accept as values. They are left
+# out of the row, which TelephonyProvider reads the same way.
+SCHEMA_OMITTED_DEFAULTS = {"authtype": -1, "skip_464xlat": -1}
+
+
+class ProfileEvidence(NamedTuple):
+    sources: frozenset[str]
+    apn_fact_sources: dict[str, frozenset[str]]
+
+
+class ApnRows(NamedTuple):
+    records: list[dict[str, Any]]
+    schema_rejected: int
+
+
+def canonical_json(value: Any) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+
+
+def apn_fact_key(apn: dict[str, Any], apn_type: str) -> str:
+    """The evidence index key of one APN fact: one row with one type, its
+    label left out."""
+    fact = {key: value for key, value in apn.items() if key != "name"}
+    fact["types"] = [apn_type]
+    return "sha256:" + hashlib.sha256(canonical_json(fact).encode("utf-8")).hexdigest()[:16]
+
+
+def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvidence] | None:
+    """Per profile, its sources and the sources of each APN fact that rests on
+    fewer of them. None when there is no evidence index."""
+    if evidence_index_path is None or not evidence_index_path.exists():
+        return None
+    evidence: dict[str, ProfileEvidence] = {}
+    for profile in load_json(evidence_index_path).get("profiles", []):
+        evidence[profile["profile_id"]] = ProfileEvidence(
+            frozenset(profile.get("sources", [])),
+            {
+                fact["key"]: frozenset(fact["sources"])
+                for fact in profile.get("fact_sources", [])
+                if fact.get("section") == "android_apns"
+            },
         )
-    return sorted(
-        unique_records.values(),
-        key=lambda item: (
-            item.get("mcc", ""),
-            item.get("mnc", ""),
-            item.get("carrier_id", -1),
-            item.get("mvno_type", ""),
-            item.get("mvno_match_data", ""),
-            item.get("apn", ""),
-            item.get("type", ""),
+    return evidence
+
+
+def apn_row_types(types: str | list[str]) -> list[str]:
+    values = types.split(",") if isinstance(types, str) else list(types)
+    if "*" in values:
+        return sorted(set(ANDROID_WILDCARD_TYPES) | (set(values) - {"*"}))
+    return values
+
+
+def apn_row_support(
+    apn: dict[str, Any], profile_evidence: ProfileEvidence | None
+) -> dict[str, frozenset[str]]:
+    """The sources behind each type of a profile row. A fact the evidence
+    index does not list rests on every source of its profile."""
+    if profile_evidence is None:
+        return {}
+    support: dict[str, frozenset[str]] = {}
+    for apn_type in apn.get("types", []):
+        sources = profile_evidence.apn_fact_sources.get(
+            apn_fact_key(apn, apn_type), profile_evidence.sources
         )
+        for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
+            support[served] = support.get(served, frozenset()) | sources
+    return support
+
+
+def source_families(sources: frozenset[str] | set[str]) -> set[str]:
+    return {APN_SOURCE_FAMILIES.get(source, source) for source in sources}
+
+
+def written_attributes(record: dict[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in record.items() if not key.startswith("_")}
+
+
+def android_settings_key(record: dict[str, Any]) -> str:
+    """Everything TelephonyProvider stores for a row except its label and
+    types, with its column defaults filled in. Rows with the same key are the
+    same APN to Android."""
+    return canonical_json(
+        {
+            key: value
+            for key, value in written_attributes(record).items()
+            if key not in {"carrier", "type"}
+            and not (key in ANDROID_APN_DEFAULTS and ANDROID_APN_DEFAULTS[key] == value)
+        }
     )
 
 
+def collapse_android_duplicates(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Rows that differ only in their label, in a type set, or in an attribute
+    that repeats TelephonyProvider's default become one row with the union of
+    their types, which is what TelephonyProvider makes of them when it loads
+    them. The first row in fallback order gives the label."""
+    merged: dict[str, dict[str, Any]] = {}
+    for record in sorted(records, key=fallback_order_key):
+        key = android_settings_key(record)
+        kept = merged.get(key)
+        if kept is None:
+            merged[key] = dict(record)
+            continue
+        kept["type"] = ",".join(
+            sorted(set(kept["type"].split(",")) | set(record["type"].split(",")))
+        )
+        if "_support" in kept or "_support" in record:
+            support = dict(kept.get("_support", {}))
+            for apn_type, sources in record.get("_support", {}).items():
+                support[apn_type] = support.get(apn_type, frozenset()) | sources
+            kept["_support"] = support
+    return list(merged.values())
+
+
+def fallback_order_key(record: dict[str, Any]) -> tuple[Any, ...]:
+    """The order before ranking, and among rows ranking cannot separate."""
+    return (
+        record.get("apn", ""),
+        record.get("type", ""),
+        record.get("carrier", ""),
+        canonical_json(written_attributes(record)),
+    )
+
+
+def apn_scope_key(record: dict[str, Any]) -> tuple[Any, ...]:
+    """Which SIMs see a row. A carrier id on a row with a network code does not
+    restrict it in Android 16, so only rows without a network code are scoped
+    by their carrier id. SPN and GID matches ignore letter case."""
+    if "mcc" not in record:
+        return ("", "", "", "", record.get("carrier_id", -1))
+    return (
+        record["mcc"],
+        record["mnc"],
+        str(record.get("mvno_type", "")).casefold(),
+        str(record.get("mvno_match_data", "")).casefold(),
+        -1,
+    )
+
+
+def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Order the rows of one scope so the best-backed row comes first. A row's
+    lead type is the first type of APN_TYPE_PRIORITY it serves, so every row
+    that serves the internet leads with "default". Rows are grouped by lead
+    type in that order. Within a group, for the lead type:
+
+    1. a real APN before a placeholder such as "default",
+    2. the APN value more source families give for that type in this scope,
+    3. an APN value a primary APN source gives,
+    4. the row more source families back,
+    5. a row a primary APN source backs,
+    6. the row more sources back.
+
+    A row is backed for a type by the sources whose observations support it.
+    Rows still tied keep the fallback order: APN, types, label."""
+    apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for record in records:
+        apn = str(record["apn"]).casefold()
+        for apn_type, sources in record.get("_support", {}).items():
+            apn_sources[(apn, apn_type)].update(sources)
+
+    def type_rank(record: dict[str, Any], apn_type: str) -> tuple[Any, ...]:
+        apn = str(record["apn"]).casefold()
+        value_sources = apn_sources.get((apn, apn_type), set())
+        row_sources = record.get("_support", {}).get(apn_type, frozenset())
+        return (
+            apn in PLACEHOLDER_APNS,
+            -len(source_families(value_sources)),
+            not value_sources & PRIMARY_APN_SOURCES,
+            -len(source_families(row_sources)),
+            not row_sources & PRIMARY_APN_SOURCES,
+            -len(row_sources),
+        )
+
+    def row_rank(record: dict[str, Any]) -> tuple[Any, ...]:
+        types = set(apn_row_types(record["type"]))
+        lead = next(
+            (index for index, apn_type in enumerate(APN_TYPE_PRIORITY) if apn_type in types),
+            len(APN_TYPE_PRIORITY),
+        )
+        evidence = (
+            type_rank(record, APN_TYPE_PRIORITY[lead]) if lead < len(APN_TYPE_PRIORITY) else ()
+        )
+        return (lead, evidence, fallback_order_key(record))
+
+    return sorted(records, key=row_rank)
+
+
+def apn_xml_rows(
+    profiles: list[dict[str, Any]],
+    evidence: dict[str, ProfileEvidence] | None = None,
+) -> ApnRows:
+    """Every APN XML row of these profiles in file order: rows LineageOS's
+    apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
+    network code and MVNO selector order, and each scope ranked by its
+    evidence."""
+    records: list[dict[str, Any]] = []
+    schema_rejected = 0
+    for profile in profiles:
+        for record in apn_records(profile, evidence):
+            for key, value in SCHEMA_OMITTED_DEFAULTS.items():
+                if record.get(key) == value:
+                    del record[key]
+            if not fits_lineageos_schema(record):
+                schema_rejected += 1
+                continue
+            records.append(record)
+    scopes: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in collapse_android_duplicates(records):
+        scopes[apn_scope_key(record)].append(record)
+    ordered: list[dict[str, Any]] = []
+    for scope in sorted(scopes):
+        ordered.extend(rank_scope(scopes[scope]))
+    return ApnRows(ordered, schema_rejected)
+
+
+def apn_xml_records(
+    profiles: list[dict[str, Any]],
+    evidence: dict[str, ProfileEvidence] | None = None,
+) -> list[dict[str, Any]]:
+    return apn_xml_rows(profiles, evidence).records
+
+
 def apn_row_line(record: dict[str, Any]) -> str:
-    attrs = "".join(attr(key, record[key]) for key in sorted(record))
+    attributes = written_attributes(record)
+    attrs = "".join(attr(key, attributes[key]) for key in sorted(attributes))
     return f"  <apn{attrs} />"
 
 
-def write_apns(path: Path, profiles: list[dict[str, Any]], version: int) -> int:
-    records = apn_xml_records(profiles)
+def write_apns(
+    path: Path,
+    profiles: list[dict[str, Any]],
+    version: int,
+    evidence: dict[str, ProfileEvidence] | None = None,
+) -> int:
+    records = apn_xml_records(profiles, evidence)
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
         f'<apns version="{version}">',
@@ -277,23 +579,24 @@ COUNTRY_APN_HEADER = [
 
 
 def write_country_apns(
-    directory: Path, profiles: list[dict[str, Any]], version: int
+    directory: Path,
+    profiles: list[dict[str, Any]],
+    version: int,
+    evidence: dict[str, ProfileEvidence] | None = None,
 ) -> tuple[int, int, int]:
     """Write the rows of apns-conf.xml again, one file per country in the
     layout of LineageOS's android_vendor_apn. Each row keeps its line and its
     order from apns-conf.xml. A row whose MCC has no country, such as 001 for
-    test networks, and a row LineageOS's apns-conf.xsd would reject are left
-    out. Returns the file count and the two counts of rows left out."""
+    test networks, is left out. Returns the file count, the count of rows
+    without a country, and the count of rows LineageOS's apns-conf.xsd
+    rejects, which neither file carries."""
     by_file: dict[str, list[str]] = {}
     without_country = 0
-    schema_rejected = 0
-    for record in apn_xml_records(profiles):
+    rows = apn_xml_rows(profiles, evidence)
+    for record in rows.records:
         names = country_files(str(record.get("mcc", "")))
         if not names:
             without_country += 1
-            continue
-        if not fits_lineageos_schema(record):
-            schema_rejected += 1
             continue
         for name in names:
             by_file.setdefault(name, []).append(apn_row_line(record))
@@ -301,10 +604,10 @@ def write_country_apns(
     for stale in sorted(directory.glob("*.xml")):
         if stale.name not in by_file:
             stale.unlink()
-    for name, rows in sorted(by_file.items()):
-        lines = [*COUNTRY_APN_HEADER, f'<apns version="{version}">', *rows, "</apns>"]
+    for name, lines_of_file in sorted(by_file.items()):
+        lines = [*COUNTRY_APN_HEADER, f'<apns version="{version}">', *lines_of_file, "</apns>"]
         (directory / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
-    return len(by_file), without_country, schema_rejected
+    return len(by_file), without_country, rows.schema_rejected
 
 
 SNAPSHOTS_BY_PROFILE_SOURCE = {
@@ -668,6 +971,7 @@ def write_metadata(
     apn_count: int,
     config_xml_count: int,
     freshness: dict[str, str],
+    apn_rows_schema_rejected: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -692,6 +996,7 @@ def write_metadata(
         "omissions": {
             "apn_profile_ids_with_unrepresentable_match": apn_unrepresentable_ids,
             "apn_profiles_with_unrepresentable_match": len(apn_unrepresentable_ids),
+            "apn_rows_rejected_by_lineageos_schema": apn_rows_schema_rejected,
             "carrier_config_profile_ids_with_unrepresentable_match": (
                 config_unrepresentable_ids
             ),
@@ -715,28 +1020,44 @@ def main(argv: list[str]) -> int:
         default=8,
         help="APN XML version expected by the target Android build (default: 8)",
     )
+    parser.add_argument(
+        "--evidence-index",
+        type=Path,
+        help="the evidence index that orders APN rows and dates the profiles "
+        "(default: GENERATED_DIR/evidence-index.json)",
+    )
     args = parser.parse_args(argv[1:])
     if args.apn_version < 1:
         parser.error("--apn-version must be a positive integer")
     carriers_dir = args.carriers_dir
     generated_dir = args.generated_dir
+    evidence_index_path = args.evidence_index or generated_dir / "evidence-index.json"
     profile_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
     profiles = [profile for _, profile in profile_items]
+    evidence = load_apn_evidence(evidence_index_path)
+    if evidence is None:
+        print(
+            f"warning: {evidence_index_path} is missing, so APN rows are ordered "
+            "without their sources",
+            file=sys.stderr,
+        )
     apn_count = write_apns(
         generated_dir / "android" / "apns-conf.xml",
         profiles,
         args.apn_version,
+        evidence,
     )
     country_file_count, rows_without_country, rows_schema_rejected = write_country_apns(
         generated_dir / "android" / "apns",
         profiles,
         args.apn_version,
+        evidence,
     )
     write_lookup(
         generated_dir / "android" / "lookup.json",
         carriers_dir,
         profile_items,
-        profile_windows(generated_dir / "evidence-index.json"),
+        profile_windows(evidence_index_path),
     )
     mccmnc_count = write_mccmnc_index(
         generated_dir / "android" / "mccmnc-index.json",
@@ -762,7 +1083,8 @@ def main(argv: list[str]) -> int:
         args.apn_version,
         apn_count,
         config_xml_count,
-        freshness_window(generated_dir / "evidence-index.json"),
+        freshness_window(evidence_index_path),
+        rows_schema_rejected,
     )
     print(
         f"generated Android output for {len(profiles)} profile(s): "
@@ -771,7 +1093,7 @@ def main(argv: list[str]) -> int:
         f"{config_xml_count} CarrierConfig XML block(s), "
         f"{country_file_count} per-country APN file(s), "
         f"{rows_without_country} APN row(s) without a country, "
-        f"{rows_schema_rejected} APN row(s) LineageOS's schema rejects"
+        f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them"
     )
     return 0
 

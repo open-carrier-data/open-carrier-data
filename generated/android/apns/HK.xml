@@ -4,32 +4,36 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" type="default,mms,supl" />
-  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="00" type="dun" />
+  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="1526" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" type="default,ia,mms,supl" />
   <apn apn="mobile" authtype="3" carrier="mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" type="default,hipri,mms,supl" />
+  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" type="default,mms,supl" />
+  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="1526" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" type="default,ia,mms,supl" />
+  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="00" type="dun" />
   <apn apn="mobile" carrier="CSL" mcc="454" mnc="00" type="dun" />
-  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="00" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="1O1O" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01010000" mvno_type="gid" type="default,hipri,mms" />
-  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="00" mvno_match_data="01020000" mvno_type="gid" type="dun" />
+  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="00" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="csl" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01020000" mvno_type="gid" type="default,hipri,mms" />
+  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="00" mvno_match_data="01020000" mvno_type="gid" type="dun" />
   <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" mvno_match_data="01030000" mvno_type="gid" type="default,mms" />
   <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="cslp1" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="02020001" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="cslp3" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="02020002" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="cslp1" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="02030001" mvno_type="gid" type="default,hipri,mms" />
-  <apn apn="hos" bearer_bitmask="14|18|20" carrier="HOS" mcc="454" mnc="00" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="00" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="truphone.com" carrier="DATA" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="314747454E45524943" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="00" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" bearer_bitmask="14|18|20" carrier="HOS" mcc="454" mnc="00" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="roamless" carrier="Roamless" mcc="454" mnc="00" mvno_match_data="4D2E3F1A6B7C8D9E" mvno_type="gid" type="default,dun" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="00" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="00" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="00" mvno_match_data="536E617065" mvno_type="gid" type="default,supl" />
-  <apn apn="hos" bearer_bitmask="14|18|20" carrier="1GLOBAL HOS" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="00" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="truphone.com" carrier="truphone.com" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
+  <apn apn="truphone.com" carrier="Truphone" carrier_id="2143" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,ia,mms,supl" />
   <apn apn="ims" carrier="Truphone" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="1GLOBAL IMS" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="Truphone IMS" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Truphone IMS" carrier_id="2143" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Truphone IMS" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="truphone.com" carrier="truphone.com" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
+  <apn apn="hos" bearer_bitmask="14|18|20" carrier="1GLOBAL HOS" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="alosim" carrier="aloSIM" mcc="454" mnc="00" mvno_match_data="616C6F73696D31" mvno_type="gid" type="default,dun" />
   <apn apn="globaldata" carrier="Connect" mcc="454" mnc="00" mvno_match_data="636F6E6E65637431" mvno_type="gid" type="default,dun" />
   <apn apn="ppcom" carrier="AIRSIMe" mcc="454" mnc="00" mvno_match_data="AAAA" mvno_type="gid" type="default,dun" />
@@ -55,54 +59,52 @@
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="00" mvno_match_data="899167" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="00" mvno_match_data="899183" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="00" mvno_match_data="899185" mvno_type="iccid" type="default,dun" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="00" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="mobile" carrier="1O1O" mcc="454" mnc="00" mvno_match_data="1O1O" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="1O1O MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="1O1O" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
+  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="00" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="csl" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl." mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="00" mvno_match_data="Global Call" mvno_type="spn" type="default" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="Global Call" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="Global Call" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
   <apn apn="SUNMobile" carrier="SUN Mobile" mcc="454" mnc="00" mvno_match_data="SUN Mobile" mvno_type="spn" type="default" />
   <apn apn="SUNMobile" carrier="SUN Mobile MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" mvno_match_data="SUN Mobile" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="00" mvno_match_data="SUN Mobile" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
   <apn apn="truphone.com" carrier="Truphone HK" mcc="454" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="truphone.com" carrier="Truphone MMS" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="csl" mcc="454" mnc="00" mvno_match_data="csl." mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="csl." mvno_type="spn" type="mms" />
-  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="1526" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="00" type="default,ia,mms,supl" />
-  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="1526" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" type="default,ia,mms,supl" />
-  <apn apn="ims" carrier="Truphone IMS" carrier_id="2143" mcc="454" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="truphone.com" carrier="Truphone" carrier_id="2143" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="00" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,ia,mms,supl" />
-  <apn apn="MMS" authtype="1" carrier="New World MMS" mcc="454" mmsc="http://mmsc.nwmobility.com:8002" mmsport="8080" mmsproxy="192.168.111.1" mnc="01" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="Truphone HK" mvno_type="spn" type="xcap" />
   <apn apn="internet" authtype="1" carrier="New World internet" mcc="454" mnc="01" type="default" />
   <apn apn="wap" authtype="1" carrier="New World" mcc="454" mnc="01" password="wwm" port="8080" proxy="192.168.111.1" type="default" user="wwm" />
+  <apn apn="MMS" authtype="1" carrier="New World MMS" mcc="454" mmsc="http://mmsc.nwmobility.com:8002" mmsport="8080" mmsproxy="192.168.111.1" mnc="01" type="mms" />
   <apn apn="citic" carrier="CITIC" mcc="454" mnc="01" mvno_match_data="CITIC Telecom" mvno_type="spn" type="default" />
-  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" type="default,mms,supl" />
-  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="02" type="dun" />
+  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="759" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" type="default,ia,mms,supl" />
   <apn apn="mobile" authtype="3" carrier="mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" type="default,hipri,mms,supl" />
+  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" type="default,mms,supl" />
+  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="759" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" type="default,ia,mms,supl" />
+  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="02" type="dun" />
   <apn apn="mobile" carrier="CSL" mcc="454" mnc="02" type="dun" />
-  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="02" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="1O1O" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01010000" mvno_type="gid" type="default,hipri,mms" />
-  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="02" mvno_match_data="01020000" mvno_type="gid" type="dun" />
+  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="02" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="csl" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01020000" mvno_type="gid" type="default,hipri,mms" />
+  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="02" mvno_match_data="01020000" mvno_type="gid" type="dun" />
   <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" mvno_match_data="01030000" mvno_type="gid" type="default,mms" />
   <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="rcomnet" carrier="Reliance" mcc="454" mnc="02" mvno_match_data="899101" mvno_type="iccid" type="default,dun" />
@@ -125,44 +127,44 @@
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="02" mvno_match_data="899167" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="02" mvno_match_data="899183" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="02" mvno_match_data="899185" mvno_type="iccid" type="default,dun" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="02" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="mobile" carrier="1O1O" mcc="454" mnc="02" mvno_match_data="1O1O" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="1O1O MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="1O1O" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
+  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="02" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="csl" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl." mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="02" mvno_match_data="Global Call" mvno_type="spn" type="default" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="Global Call" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="Global Call" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
   <apn apn="SUNMobile" carrier="SUN Mobile" mcc="454" mnc="02" mvno_match_data="SUN Mobile" mvno_type="spn" type="default" />
   <apn apn="SUNMobile" carrier="SUN Mobile MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" mvno_match_data="SUN Mobile" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="02" mvno_match_data="SUN Mobile" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="csl" mcc="454" mnc="02" mvno_match_data="csl." mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="csl." mvno_type="spn" type="mms" />
-  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="759" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="02" type="default,ia,mms,supl" />
-  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="759" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" type="default,ia,mms,supl" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
+  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" carrier_id="760" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,ia,mms,supl" />
+  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,mms,supl" />
+  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="172.20.97.116" mnc="03" type="default,dun,mms,supl" />
+  <apn apn="mobile.three.com.hk" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,dun,mms" />
+  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="3 LTE" carrier_id="760" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,ia,mms,supl" />
+  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="3 LTE" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="172.20.97.116" mnc="03" type="default,mms" />
+  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="mobile.lte.three.com.hk" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,mms,supl" />
   <apn apn="imobile.three.com.hk" carrier="3" mcc="454" mnc="03" type="default,dun" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="3 LTE" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="172.20.97.116" mnc="03" type="default,mms" />
-  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="mobile.lte.three.com.hk" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,mms,supl" />
-  <apn apn="mobile.three.com.hk" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,dun,mms" />
-  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="172.20.97.116" mnc="03" type="default,dun,mms,supl" />
-  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,mms,supl" />
   <apn apn="mobile.three.com.hk" carrier="3" mcc="454" mnc="03" type="dun" />
   <apn apn="share.lte.three.com.hk" authtype="1" carrier="3 Share" mcc="454" mnc="03" type="dun" />
   <apn apn="imobile.three.com.hk" carrier="HKBN" mcc="454" mnc="03" mvno_match_data="0009" mvno_type="gid" type="default,dun" />
@@ -172,50 +174,49 @@
   <apn apn="imobile.three.com.hk" carrier="HKBN" mcc="454" mnc="03" mvno_match_data="8985203026" mvno_type="iccid" type="default,dun" />
   <apn apn="iboots" carrier="RedteaMobile" mcc="454" mnc="03" mvno_match_data="89852245280" mvno_type="iccid" type="default,dun" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="03" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
-  <apn apn="ims" carrier="3 IMS" mcc="454" mnc="03" mvno_match_data="3" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="mobile.three.com.hk" carrier="3" mcc="454" mnc="03" mvno_match_data="3" mvno_type="spn" type="default" />
-  <apn apn="mobile.three.com.hk" carrier="3 MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3" mvno_type="spn" type="mms" />
   <apn apn="share.three.com.hk" carrier="3 Share" mcc="454" mnc="03" mvno_match_data="3" mvno_type="spn" type="default" />
+  <apn apn="mobile.three.com.hk" carrier="3 MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3" mvno_type="spn" type="mms" />
   <apn apn="vas.wlan.three.com.hk" carrier="3 IMS VAS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3" mvno_type="spn" type="mms" />
-  <apn apn="ims" carrier="3 IMS" mcc="454" mnc="03" mvno_match_data="3 HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="3 IMS" mcc="454" mnc="03" mvno_match_data="3" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="mobile.three.com.hk" carrier="3" mcc="454" mnc="03" mvno_match_data="3 HK" mvno_type="spn" type="default" />
-  <apn apn="mobile.three.com.hk" carrier="3 MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3 HK" mvno_type="spn" type="mms" />
   <apn apn="share.three.com.hk" carrier="3 Share" mcc="454" mnc="03" mvno_match_data="3 HK" mvno_type="spn" type="default" />
+  <apn apn="mobile.three.com.hk" carrier="3 MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3 HK" mvno_type="spn" type="mms" />
   <apn apn="vas.wlan.three.com.hk" carrier="3 EPDG MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="3 HK" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="HKBN IMS UT" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="HKBN IMS" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="3 IMS" mcc="454" mnc="03" mvno_match_data="3 HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="mobile.three.com.hk" carrier="HKBN" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" type="default" />
-  <apn apn="mobile.three.com.hk" carrier="HKBN MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="HKBN" mvno_type="spn" type="mms" />
   <apn apn="share.three.com.hk" carrier="HKBN Share" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" type="default" />
+  <apn apn="mobile.three.com.hk" carrier="HKBN MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="HKBN" mvno_type="spn" type="mms" />
   <apn apn="vas.wlan.three.com.hk" carrier="HKBN IMS VAS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="HKBN" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="Hutchison HK IMS UT" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="Hutchison HK IMS" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="HKBN IMS" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="HKBN IMS UT" mcc="454" mnc="03" mvno_match_data="HKBN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="mobile.three.com.hk" carrier="Hutchison HK" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" type="default" />
-  <apn apn="mobile.three.com.hk" carrier="Hutchison HK MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" type="mms" />
   <apn apn="share.three.com.hk" carrier="Hutchison HK Share" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" type="default" />
+  <apn apn="mobile.three.com.hk" carrier="Hutchison HK MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" type="mms" />
   <apn apn="vas.wlan.three.com.hk" carrier="Hutchison HK IMS VAS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="Mo IMS UT" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="Mo IMS" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Hutchison HK IMS" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="Hutchison HK IMS UT" mcc="454" mnc="03" mvno_match_data="Hutchison HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="mobile.three.com.hk" carrier="Mo" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" type="default" />
-  <apn apn="mobile.three.com.hk" carrier="Mo MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Mo" mvno_type="spn" type="mms" />
   <apn apn="share.three.com.hk" carrier="Mo Share" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" type="default" />
+  <apn apn="mobile.three.com.hk" carrier="Mo MMS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Mo" mvno_type="spn" type="mms" />
   <apn apn="vas.wlan.three.com.hk" carrier="Mo IMS VAS" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" mvno_match_data="Mo" mvno_type="spn" type="mms" />
-  <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="3 LTE" carrier_id="760" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,ia,mms,supl" />
-  <apn apn="mobile.three.com.hk" authtype="1" carrier="3" carrier_id="760" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,ia,mms,supl" />
-  <apn apn="imobile.three.com.hk" carrier="3" mcc="454" mnc="04" type="default,dun" />
-  <apn apn="mms-g.three.com.hk" carrier="mms-g.three.com.hk" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" type="mms" />
-  <apn apn="mobile.three.com.hk" carrier="mobile.three.com.hk" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="04" type="default,dun,mms" />
-  <apn apn="web-g.three.com.hk" carrier="web-g.three.com.hk" mcc="454" mnc="04" port="8080" proxy="10.30.3.151" type="default,supl" />
-  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="mms" />
-  <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="default" />
-  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" type="mms" />
-  <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" type="default" />
-  <apn apn="mms-g.three.com.hk" carrier="3(2G) MMS" carrier_id="1960" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" type="mms" />
+  <apn apn="ims" carrier="Mo IMS" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="Mo IMS UT" mcc="454" mnc="03" mvno_match_data="Mo" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="web-g.three.com.hk" carrier="3(2G) GPRS" carrier_id="1960" mcc="454" mnc="04" port="8080" proxy="10.30.3.151" type="default,ia,supl" />
+  <apn apn="web-g.three.com.hk" carrier="web-g.three.com.hk" mcc="454" mnc="04" port="8080" proxy="10.30.3.151" type="default,supl" />
+  <apn apn="mobile.three.com.hk" carrier="mobile.three.com.hk" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="04" type="default,dun,mms" />
+  <apn apn="imobile.three.com.hk" carrier="3" mcc="454" mnc="04" type="default,dun" />
+  <apn apn="mms-g.three.com.hk" carrier="3(2G) MMS" carrier_id="1960" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" type="mms" />
+  <apn apn="mms-g.three.com.hk" carrier="mms-g.three.com.hk" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" type="mms" />
+  <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="default" />
+  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="mms" />
+  <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" type="default" />
+  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" type="mms" />
+  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="761" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="06" type="default,ia,mms,supl" />
   <apn apn="SmarTone" authtype="3" carrier="SmarTone" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="06" type="default,mms,supl" />
+  <apn apn="internet" carrier="internet" mcc="454" mnc="06" type="default,dun" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="06" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="06" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="internet" mcc="454" mnc="06" type="default,dun" />
   <apn apn="internet" carrier="HKBN" mcc="454" mnc="06" mvno_match_data="0009" mvno_type="gid" type="default,dun" />
   <apn apn="iboots" carrier="RedteaMobile" mcc="454" mnc="06" mvno_match_data="89852245280" mvno_type="iccid" type="default,dun" />
   <apn apn="SOS" carrier="SmarTone Emergency" mcc="454" mnc="06" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
@@ -223,10 +224,9 @@
   <apn apn="SmarTone" carrier="SMC HK MMS" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="06" mvno_match_data="SmarTone HK" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SmarTone IMS" mcc="454" mnc="06" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="smt" carrier="SmarTone XCAP" mcc="454" mnc="06" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="761" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="06" type="default,ia,mms,supl" />
   <apn apn="3gnet" carrier="3gnet" mcc="454" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="3gnet" carrier="中國聯通" mcc="454" mnc="07" type="dun" />
   <apn apn="3gwap" carrier="3gwap" mcc="454" mnc="07" port="80" proxy="10.0.0.172" type="default,supl" />
+  <apn apn="3gnet" carrier="中國聯通" mcc="454" mnc="07" type="dun" />
   <apn apn="ppcom" carrier="AIRSIMe" mcc="454" mnc="07" mvno_match_data="AAAA" mvno_type="gid" type="default,dun" />
   <apn apn="iboots" carrier="RedteaMobile" mcc="454" mnc="07" mvno_match_data="89852245280" mvno_type="iccid" type="default,dun" />
   <apn apn="cuhkiot" carrier="cuhkiot" mcc="454" mnc="07" mvno_match_data="CUHK IOT" mvno_type="spn" type="default,xcap" />
@@ -236,56 +236,58 @@
   <apn apn="3gnet" carrier="3gnet" mcc="454" mnc="07" mvno_match_data="UNICOM HK" mvno_type="spn" type="default,xcap" />
   <apn apn="ims" carrier="ims" mcc="454" mnc="07" mvno_match_data="UNICOM HK" mvno_type="spn" type="ims" />
   <apn apn="truphone.com" carrier="Truphone" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" type="default,dun,mms,supl" user_editable="false" />
-  <apn apn="hos" bearer_bitmask="14|18|20" carrier="HOS" mcc="454" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="truphone.com" carrier="DATA" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
-  <apn apn="hos" bearer_bitmask="14|18|20" carrier="1GLOBAL HOS" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" bearer_bitmask="14|18|20" carrier="HOS" mcc="454" mnc="08" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="truphone.com" carrier="Truphone" carrier_id="2143" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,ia,mms,supl" />
+  <apn apn="truphone.com" carrier="truphone.com" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
   <apn apn="ims" carrier="Truphone" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default" />
+  <apn apn="sos" carrier="Truphone" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="1GLOBAL IMS" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="Truphone IMS" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Truphone IMS" carrier_id="2143" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Truphone IMS" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="sos" carrier="Truphone" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default" />
-  <apn apn="truphone.com" carrier="truphone.com" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
+  <apn apn="hos" bearer_bitmask="14|18|20" carrier="1GLOBAL HOS" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="truphone.com" carrier="Truphone" mcc="454" mnc="08" mvno_match_data="894450" mvno_type="iccid" type="default,dun" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" type="ims" />
   <apn apn="truphone.com" carrier="Truphone HK" mcc="454" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="truphone.com" carrier="Truphone MMS" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="Truphone IMS" carrier_id="2143" mcc="454" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="truphone.com" carrier="Truphone" carrier_id="2143" mcc="454" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="08" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,ia,mms,supl" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="08" mvno_match_data="Truphone HK" mvno_type="spn" type="xcap" />
   <apn apn="cmnet" carrier="SCT" mcc="454" mnc="09" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="hkcsl" authtype="3" carrier="one2free" carrier_id="765" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" type="default,ia,mms,supl" />
   <apn apn="hkcsl" authtype="3" carrier="csl" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" type="default,hipri,mms,supl" />
-  <apn apn="internet" authtype="0" carrier="internet" mcc="454" mnc="10" type="dun" user_visible="false" />
   <apn apn="mobile" carrier="CSL" mcc="454" mnc="10" type="default,dun" />
+  <apn apn="internet" authtype="0" carrier="internet" mcc="454" mnc="10" type="dun" user_visible="false" />
   <apn apn="cslp1" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" mvno_match_data="02020001" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="cslp3" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" mvno_match_data="02020002" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="cslp1" authtype="3" carrier="csl prepaid" mcc="454" mmsc="http://mms.hkcsl.com:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" mvno_match_data="02030001" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="hkcsl" carrier="csl" mcc="454" mnc="10" mvno_match_data="csl(3G)" mvno_type="spn" type="default" />
   <apn apn="hkcsl" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" mvno_match_data="csl(3G)" mvno_type="spn" type="mms" />
-  <apn apn="hkcsl" authtype="3" carrier="one2free" carrier_id="765" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="10" type="default,ia,mms,supl" />
   <apn apn="chkt" carrier="chkt" mcc="454" mnc="11" mvno_match_data="CHKT" mvno_type="spn" type="default" />
-  <apn apn="CMHK" carrier="CMHK" mcc="454" mnc="12" type="default,dun" />
   <apn apn="cmhk" carrier="cmhk" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mmsport="8080" mmsproxy="172.31.31.36" mnc="12" type="default,dun,mms" />
-  <apn apn="cmhk" carrier="cmhk" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="12" type="supl" />
-  <apn apn="ims" carrier="CMHK" mcc="454" mnc="12" protocol="IP" type="ims" />
+  <apn apn="cmhk" carrier="CMHK Data" carrier_id="767" mcc="454" mnc="12" type="default,ia,supl" />
+  <apn apn="CMHK" carrier="CMHK" mcc="454" mnc="12" type="default,dun" />
+  <apn apn="cmhk" carrier="CMHK MMS" carrier_id="767" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="12" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="CMHK" mcc="454" mnc="12" protocol="IP" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="cmhk" carrier="cmhk" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="12" type="supl" />
   <apn apn="CMHK" carrier="HKBN" mcc="454" mnc="12" mvno_match_data="0009" mvno_type="gid" type="default,dun" />
   <apn apn="cmhk" carrier="HKBN" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mmsport="8080" mmsproxy="172.31.31.36" mnc="12" mvno_match_data="0009" mvno_type="gid" type="default,dun,mms" />
   <apn apn="ims" carrier="HKBN" mcc="454" mnc="12" mvno_match_data="0009" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="MB" carrier="MultiByte" mcc="454" mnc="12" mvno_match_data="0331" mvno_type="gid" type="default,dun" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="12" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="12" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="12" mvno_match_data="536E617065" mvno_type="gid" type="default,supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="12" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="iboots" carrier="RedteaMobile" mcc="454" mnc="12" mvno_match_data="89852245280" mvno_type="iccid" type="default,dun" />
   <apn apn="cmlink" carrier="CMLink" mcc="454" mnc="12" mvno_match_data="8985234" mvno_type="iccid" type="default,dun" />
   <apn apn="cmhk" carrier="CMHK Data" mcc="454" mnc="12" mvno_match_data="China Mobile HK" mvno_type="spn" type="default" />
   <apn apn="cmhk" carrier="CMHK MMS" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="12" mvno_match_data="China Mobile HK" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="CMHK IMS" mcc="454" mnc="12" mvno_match_data="China Mobile HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="CMHK XCAP" mcc="454" mnc="12" mvno_match_data="China Mobile HK" mvno_type="spn" type="xcap" />
-  <apn apn="cmhk" carrier="CMHK Data" carrier_id="767" mcc="454" mnc="12" type="default,ia,supl" />
-  <apn apn="cmhk" carrier="CMHK MMS" carrier_id="767" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="12" type="mms" />
   <apn apn="cmhk" carrier="cmhk" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="13" type="default,mms,supl" />
+  <apn apn="cmhk" carrier="CMHK Data" carrier_id="767" mcc="454" mnc="13" type="default,ia,supl" />
+  <apn apn="cmhk" carrier="CMHK MMS" carrier_id="767" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="13" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="MB" carrier="MultiByte" mcc="454" mnc="13" mvno_match_data="0331" mvno_type="gid" type="default,dun" />
@@ -293,49 +295,49 @@
   <apn apn="cmhk" carrier="CMHK MMS" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="13" mvno_match_data="China Mobile HK" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="CMHK IMS" mcc="454" mnc="13" mvno_match_data="China Mobile HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="CMHK XCAP" mcc="454" mnc="13" mvno_match_data="China Mobile HK" mvno_type="spn" type="xcap" />
-  <apn apn="cmhk" carrier="CMHK Data" carrier_id="767" mcc="454" mnc="13" type="default,ia,supl" />
-  <apn apn="cmhk" carrier="CMHK MMS" carrier_id="767" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="13" type="mms" />
-  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="14" type="mms" />
   <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="14" port="8080" proxy="10.30.15.53" type="default,supl" />
-  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="14" mvno_match_data="3(2G)" mvno_type="spn" type="mms" />
+  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="14" type="mms" />
   <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="14" mvno_match_data="3(2G)" mvno_type="spn" type="default" />
+  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="14" mvno_match_data="3(2G)" mvno_type="spn" type="mms" />
+  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="768" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="15" type="default,ia,mms,supl" />
   <apn apn="SmarTone" authtype="3" carrier="SmarTone" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="15" type="default,mms,supl" />
+  <apn apn="internet" carrier="SMC HK" mcc="454" mnc="15" type="default,dun" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="SMC HK" mcc="454" mnc="15" type="default,dun" />
   <apn apn="SOS" carrier="SmarTone Emergency" mcc="454" mnc="15" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="SmarTone" carrier="SmarTone" mcc="454" mnc="15" mvno_match_data="SmarTone HK" mvno_type="spn" type="default" />
   <apn apn="SmarTone" carrier="SMC HK MMS" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="15" mvno_match_data="SmarTone HK" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SmarTone IMS" mcc="454" mnc="15" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="smt" carrier="SmarTone XCAP" mcc="454" mnc="15" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="768" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="15" type="default,ia,mms,supl" />
-  <apn apn="mobile" carrier="csl." mcc="454" mnc="16" type="default,dun" />
   <apn apn="pccw" authtype="3" carrier="csl" mcc="454" mmsc="http://mms.hkcsl.com:8080" mmsport="8080" mmsproxy="10.140.14.10" mnc="16" type="default,hipri,mms" />
+  <apn apn="pccw" authtype="1" carrier="PCCW-HKT" carrier_id="769" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="16" type="default,ia,mms,supl" />
   <apn apn="pccw" authtype="1" carrier="pccw" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="16" type="default,mms,supl" />
   <apn apn="pccwdata" carrier="pccwdata" mcc="454" mnc="16" port="8080" proxy="10.131.2.8" type="default" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="mobile" carrier="csl." mcc="454" mnc="16" type="default,dun" />
   <apn apn="mobile" carrier="csl" mcc="454" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://mms.hkcsl.com:8080" mmsport="8080" mmsproxy="10.140.14.10" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" type="mms" />
-  <apn apn="pccw" authtype="1" carrier="PCCW-HKT" carrier_id="769" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="16" type="default,ia,mms,supl" />
+  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="16" mvno_match_data="PCCW-HKT" mvno_type="spn" type="xcap" />
+  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="761" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="17" type="default,ia,mms,supl" />
   <apn apn="SmarTone" authtype="3" carrier="SmarTone" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="17" type="default,mms,supl" />
+  <apn apn="internet" carrier="SMC HK" mcc="454" mnc="17" type="default,dun" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="SMC HK" mcc="454" mnc="17" type="default,dun" />
   <apn apn="SOS" carrier="SmarTone Emergency" mcc="454" mnc="17" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="SmarTone" carrier="SmarTone" mcc="454" mnc="17" mvno_match_data="SmarTone HK" mvno_type="spn" type="default" />
   <apn apn="SmarTone" carrier="SMC HK MMS" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="17" mvno_match_data="SmarTone HK" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SmarTone IMS" mcc="454" mnc="17" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="smt" carrier="SmarTone XCAP" mcc="454" mnc="17" mvno_match_data="SmarTone HK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="SmarTone" authtype="3" carrier="SmarTone" carrier_id="761" mcc="454" mmsc="http://mms.smartone.com/server" mmsport="8080" mmsproxy="10.9.9.9" mnc="17" type="default,ia,mms,supl" />
-  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" type="default,mms,supl" />
-  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="18" type="dun" />
+  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="770" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" type="default,ia,mms,supl" />
   <apn apn="mobile" authtype="3" carrier="mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" type="default,hipri,mms,supl" />
+  <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" type="default,mms,supl" />
+  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="770" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" type="default,ia,mms,supl" />
+  <apn apn="lte.internet" carrier="lte.internet" mcc="454" mnc="18" type="dun" />
   <apn apn="mobile" carrier="CSL" mcc="454" mnc="18" type="dun" />
-  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="18" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="1O1O" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01010000" mvno_type="gid" type="default,hipri,mms" />
-  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="18" mvno_match_data="01020000" mvno_type="gid" type="dun" />
+  <apn apn="lte.internet" carrier="1O1O Tethering" mcc="454" mnc="18" mvno_match_data="01010000" mvno_type="gid" type="dun" />
   <apn apn="mobile" authtype="3" carrier="csl" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01020000" mvno_type="gid" type="default,hipri,mms" />
+  <apn apn="lte.internet" carrier="csl Tethering" mcc="454" mnc="18" mvno_match_data="01020000" mvno_type="gid" type="dun" />
   <apn apn="SUNMobile" authtype="3" carrier="SUN Mobile" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" mvno_match_data="01030000" mvno_type="gid" type="default,mms" />
   <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="rcomnet" carrier="Reliance" mcc="454" mnc="18" mvno_match_data="899101" mvno_type="iccid" type="default,dun" />
@@ -358,49 +360,47 @@
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="18" mvno_match_data="899167" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="18" mvno_match_data="899183" mvno_type="iccid" type="default,dun" />
   <apn apn="smartnet" carrier="Reliance" mcc="454" mnc="18" mvno_match_data="899185" mvno_type="iccid" type="default,dun" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="18" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="mobile" carrier="1O1O" mcc="454" mnc="18" mvno_match_data="1O1O" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="1O1O MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="1O1O" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
+  <apn apn="ims" carrier="1O1O IMS" mcc="454" mnc="18" mvno_match_data="1O1O" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="1O1O" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
+  <apn apn="mobile" carrier="csl" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" type="default" />
+  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl." mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="18" mvno_match_data="Global Call" mvno_type="spn" type="default" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="Global Call" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="Global Call" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="Global Call" mvno_type="spn" type="xcap" />
   <apn apn="SUNMobile" carrier="SUN Mobile" mcc="454" mnc="18" mvno_match_data="SUN Mobile" mvno_type="spn" type="default" />
   <apn apn="SUNMobile" carrier="SUN Mobile MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" mvno_match_data="SUN Mobile" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="18" mvno_match_data="SUN Mobile" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(1)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(2)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="HK Prepaid MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl prepaid(3)" mvno_type="spn" type="mms" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mobile" carrier="csl" mcc="454" mnc="18" mvno_match_data="csl." mvno_type="spn" type="default" />
-  <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="csl." mvno_type="spn" type="mms" />
-  <apn apn="NWMOBILE" authtype="3" carrier="NWMOBILE" carrier_id="770" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.61" mnc="18" type="default,ia,mms,supl" />
-  <apn apn="mobile" authtype="3" carrier="mobile" carrier_id="770" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" type="default,ia,mms,supl" />
-  <apn apn="mobile" carrier="csl." mcc="454" mnc="19" type="default,dun" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="SUN Mobile" mvno_type="spn" type="xcap" />
   <apn apn="pccw" authtype="3" carrier="csl" mcc="454" mmsc="http://mms.hkcsl.com:8080" mmsport="8080" mmsproxy="10.140.14.10" mnc="19" type="default,hipri,mms" />
+  <apn apn="pccw" authtype="1" carrier="PCCW-HKT" carrier_id="1526" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="19" type="default,ia,mms,supl" />
   <apn apn="pccw" authtype="1" carrier="pccw" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="19" type="default,mms,supl" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="mobile" carrier="csl." mcc="454" mnc="19" type="default,dun" />
   <apn apn="mobile" carrier="csl" mcc="454" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://mms.hkcsl.com:8080" mmsport="8080" mmsproxy="10.140.14.10" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" type="mms" />
-  <apn apn="pccw" authtype="1" carrier="PCCW-HKT" carrier_id="1526" mcc="454" mmsc="http://3gmms.pccwmobile.com:8080/was" mmsport="8080" mmsproxy="10.140.14.10" mnc="19" type="default,ia,mms,supl" />
+  <apn apn="ims" carrier="csl IMS" mcc="454" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="19" mvno_match_data="PCCW-HKT" mvno_type="spn" type="xcap" />
   <apn apn="mobile" carrier="csl." mcc="454" mnc="20" type="default,dun" />
-  <apn apn="HOS" carrier="HOS" mcc="454" mnc="20" mvno_match_data="CSL" mvno_type="spn" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="454" mnc="20" mvno_match_data="CSL" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="mobile" carrier="csl" mcc="454" mnc="20" mvno_match_data="CSL" mvno_type="spn" type="default" />
   <apn apn="mobile" carrier="csl MMS" mcc="454" mmsc="http://192.168.58.171:8002/" mmsport="8080" mmsproxy="192.168.59.51" mnc="20" mvno_match_data="CSL" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="454" mnc="20" mvno_match_data="CSL" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="HOS" carrier="HOS" mcc="454" mnc="20" mvno_match_data="CSL" mvno_type="spn" type="xcap" />
   <apn apn="21VN" carrier="21VN" mcc="454" mnc="21" mvno_match_data="Vave" mvno_type="spn" type="default" />
   <apn apn="MB" carrier="MultiByte" mcc="454" mnc="24" type="default,dun" />
   <apn apn="hkia-5g" carrier="CMHK Data" mcc="454" mnc="30" mvno_match_data="HKIA-5G" mvno_type="spn" type="default" />
@@ -412,16 +412,16 @@
   <apn apn="ims" authtype="3" carrier="IMS" mcc="454" mnc="31" mvno_match_data="CTExcel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="CTExcel" carrier="CTExcel" mcc="454" mnc="31" mvno_match_data="CTG" mvno_type="spn" type="default,xcap" />
   <apn apn="ims" carrier="ims" mcc="454" mnc="31" mvno_match_data="CTG" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="IMS" carrier="IMS" mcc="454" mnc="31" mvno_match_data="CTHK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" carrier="ctnet" mcc="454" mnc="31" mvno_match_data="CTHK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="IMS" carrier="IMS" mcc="454" mnc="31" mvno_match_data="CTHK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" authtype="3" carrier="CTNET" mcc="454" mnc="31" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,xcap" />
   <apn apn="ims" authtype="3" carrier="IMS" mcc="454" mnc="31" mvno_match_data="中国电信" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="35" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="35" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="35" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="35" mvno_match_data="536E617065" mvno_type="gid" type="default,supl" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="35" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
-  <apn apn="ims" carrier="ims" mcc="454" mnc="35" mvno_match_data="Webbing" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="wbdata" carrier="Webbing" mcc="454" mnc="35" mvno_match_data="Webbing" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" carrier="ims" mcc="454" mnc="35" mvno_match_data="Webbing" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="xcap" mcc="454" mnc="35" mvno_match_data="Webbing" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="cmhk" carrier="CMHK Data" mcc="454" mnc="383" mvno_match_data="China Mobile HK" mvno_type="spn" type="default" />
   <apn apn="cmhk" carrier="CMHK MMS" mcc="454" mmsc="http://mms.hk.chinamobile.com/mms" mnc="383" mvno_match_data="China Mobile HK" mvno_type="spn" type="mms" />

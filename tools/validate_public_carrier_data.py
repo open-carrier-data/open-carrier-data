@@ -1117,11 +1117,15 @@ def validate_android_metadata(
     expected_omission_keys = {
         "apn_profile_ids_with_unrepresentable_match",
         "apn_profiles_with_unrepresentable_match",
+        "apn_rows_rejected_by_lineageos_schema",
         "carrier_config_profile_ids_with_unrepresentable_match",
         "carrier_config_profiles_with_unrepresentable_match",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
+    rejected = omissions["apn_rows_rejected_by_lineageos_schema"]
+    if not isinstance(rejected, int) or isinstance(rejected, bool) or rejected < 0:
+        raise ValidationError(f"{metadata_path}: rejected APN row count is invalid")
     for prefix in ("apn", "carrier_config"):
         count = omissions[f"{prefix}_profiles_with_unrepresentable_match"]
         profile_ids = omissions[f"{prefix}_profile_ids_with_unrepresentable_match"]
@@ -1137,13 +1141,16 @@ def validate_android_metadata(
 
 
 def validate_country_apns(generated_dir: Path, apn_root: ET.Element) -> None:
-    """The per-country files hold exactly the apns-conf.xml rows whose MCC has
-    a country and which LineageOS's apns-conf.xsd accepts, each in its
-    country's file, in apns-conf.xml order, under the same APN version."""
+    """apns-conf.xml holds no row LineageOS's apns-conf.xsd rejects, and the
+    per-country files hold exactly its rows whose MCC has a country, each in
+    its country's file, in apns-conf.xml order, under the same APN version."""
     expected: dict[str, list[dict[str, str]]] = {}
-    for row in apn_root.findall("apn"):
+    for index, row in enumerate(apn_root.findall("apn")):
         if not fits_lineageos_schema(row.attrib):
-            continue
+            raise ValidationError(
+                f"{generated_dir / 'android' / 'apns-conf.xml'}: row {index + 1} "
+                "fails LineageOS's apns-conf.xsd"
+            )
         for name in country_files(row.attrib.get("mcc", "")):
             expected.setdefault(name, []).append(dict(row.attrib))
     directory = generated_dir / COUNTRY_APN_DIR

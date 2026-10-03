@@ -171,7 +171,7 @@ Each `profiles` record describes one carrier profile.
 | `sources` | every record | source families that contributed to this profile |
 | `observation_count` | every record | candidate observations merged into this profile |
 | `verified_observation_count` | every record | observations confirmed on a device, `0` for every profile on 2026-09-23 |
-| `fact_sources` | every record | list of `section`, `key`, `sources` for only the facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources` |
+| `fact_sources` | every record | list of `section`, `key`, `sources` for only the facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources`. An APN fact is one row with one of its types, and its key is described below the table |
 | `observed_scope` | some records | device and firmware scope of the observations |
 | `observed_model_source_groups` | some records | `models` and `sources` pairs when a model was named by fewer sources than the profile |
 | `reviewed_range` | some records | `oldest` and `newest` review dates |
@@ -180,6 +180,8 @@ Each `profiles` record describes one carrier profile.
 | `conflicts` | some records | facts omitted, made conditional, or published in every variant because sources disagreed |
 | `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
 | `source_versions` | some records | per source family, the exact builds, commits, or Apple bundle and iOS versions the observations were read from |
+
+The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digits of the SHA-256 of the row as compact JSON: the row without `name`, `types` set to the one type, keys sorted, no spaces, non-ASCII characters escaped. In Python that is `json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`. `apn_fact_key` in `tools/generate_android_outputs.py` computes it, and the generator uses it to order APN rows.
 
 `observed_scope` can hold `models`, `android_majors`, `firmware_builds`, `firmware_regions`, `sales_codes`, `multi_csc`, `omc_revisions`, `omc_versions`, and `source_layers`. `source_layers` is `firmware_baseline` or `gras_delta`.
 
@@ -194,4 +196,4 @@ Each `profiles` record describes one carrier profile.
 
 A family appears only where its observations name a version. The git-based families, `aosp`, `lineageos`, and `mobile_broadband_provider_info`, read one commit per snapshot, which `source_snapshots[].revision` names. The validator rejects any other key and any value outside these patterns, so no URL or path can appear.
 
-Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published, ordered by APN. A `stale_single_source_entry:<capability>` gate names a capability the profile publishes as `unknown`; the validator checks that. [how-it-is-built.md](how-it-is-built.md) explains both rules.
+Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published. `generated/android/apns-conf.xml` orders the variants by the sources behind each row. A `stale_single_source_entry:<capability>` gate names a capability the profile publishes as `unknown`; the validator checks that. [how-it-is-built.md](how-it-is-built.md) explains both rules.

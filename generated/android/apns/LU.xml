@@ -4,54 +4,54 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="hos" carrier="POST XCAP" mcc="270" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="hos" authtype="0" carrier="POST XCAP" carrier_enabled="true" mcc="270" mnc="01" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="web.pt.lu" authtype="1" carrier="web.pt.lu" carrier_enabled="true" mcc="270" mnc="01" port="8080" protocol="IP" proxy="194.154.192.88" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="web.pt.lu" carrier="POST Internet" carrier_id="895" mcc="270" mnc="01" type="default,ia,supl" />
+  <apn apn="web.pt.lu" carrier="web.pt.lu" mcc="270" mnc="01" type="dun,ia,mms" />
+  <apn apn="mms.pt.lu" authtype="1" carrier="mms.pt.lu" carrier_enabled="true" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" password="mms" port="8080" protocol="IP" proxy="194.154.192.88" roaming_protocol="IPV4V6" type="mms" user="mms" />
+  <apn apn="mms.pt.lu" carrier="POST MMS" carrier_id="895" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" password="mms" type="mms" user="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="270" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" authtype="0" carrier="POST IMS" carrier_enabled="true" mcc="270" mnc="01" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.pt.lu" authtype="1" carrier="mms.pt.lu" carrier_enabled="true" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" password="mms" port="8080" protocol="IP" proxy="194.154.192.88" roaming_protocol="IPV4V6" type="mms" user="mms" />
-  <apn apn="web.pt.lu" authtype="1" carrier="web.pt.lu" carrier_enabled="true" mcc="270" mnc="01" port="8080" protocol="IP" proxy="194.154.192.88" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="web.pt.lu" carrier="web.pt.lu" mcc="270" mnc="01" type="dun,ia,mms" />
-  <apn apn="hos" carrier="POST XCAP" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="POST IMS" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.pt.lu" carrier="POST MMS" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="hos" carrier="POST XCAP" mcc="270" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="hos" authtype="0" carrier="POST XCAP" carrier_enabled="true" mcc="270" mnc="01" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="web.pt.lu" carrier="POST Internet" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="web.pt.lu" carrier="POST Internet" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="mms.pt.lu" carrier="POST MMS" carrier_id="895" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" password="mms" type="mms" user="mms" />
-  <apn apn="web.pt.lu" carrier="POST Internet" carrier_id="895" mcc="270" mnc="01" type="default,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="270" mnc="02" type="ims,supl,xcap" />
+  <apn apn="mms.pt.lu" carrier="POST MMS" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="POST IMS" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="POST XCAP" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet" carrier="internet" mcc="270" mnc="02" protocol="IPV4V6" type="default,ia,supl" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="270" mnc="02" type="ims,supl,xcap" />
   <apn apn="internet" carrier="MTXC" mcc="270" mnc="02" type="dun" />
   <apn apn="internet.pro" carrier="Cellusina" mcc="270" mnc="02" mvno_match_data="1F" mvno_type="gid" type="default,dun" />
   <apn apn="internet.pro" carrier="Cellusina" mcc="270" mnc="02" mvno_match_data="1FFFFFFFFFFFFFFFFFFF" mvno_type="gid" type="default,dun" />
-  <apn apn="Internet2" carrier="TANGO" mcc="270" mnc="77" password="tango" type="default" user="tango" />
-  <apn apn="hos" carrier="Tango XCAP" mcc="270" mnc="77" protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="270" mnc="77" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" authtype="1" carrier="internet" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" port="8080" proxy="130.244.196.90" type="default,supl" user="tango" />
-  <apn apn="internet" carrier="Tango Internet" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
-  <apn apn="internet2" carrier="TANGO" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="default,dun,mms" user="tango" />
-  <apn apn="mms" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" type="mms" />
-  <apn apn="mms" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
-  <apn apn="mms" authtype="1" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
-  <apn apn="hos" carrier="Tango XCAP" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="hos" carrier="Tango XCAP" carrier_enabled="true" mcc="270" mnc="77" mtu="1500" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="Tango IMS" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" carrier="Tango IMS" carrier_enabled="true" mcc="270" mnc="77" mtu="1500" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet" carrier="Tango Internet" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet" authtype="0" carrier="Tango Internet" carrier_enabled="true" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="default,supl" user="tango" />
-  <apn apn="internet" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="internet" authtype="0" carrier="Tango MMS" carrier_enabled="true" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="mms" user="tango" />
   <apn apn="internet" carrier="Tango WAP" carrier_id="896" mcc="270" mnc="77" password="tango" port="8080" proxy="130.244.196.90" type="default,ia,supl" user="tango" />
+  <apn apn="Internet2" carrier="TANGO" mcc="270" mnc="77" password="tango" type="default" user="tango" />
+  <apn apn="internet2" carrier="TANGO" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="default,dun,mms" user="tango" />
+  <apn apn="mms" authtype="1" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
   <apn apn="mms" carrier="Tango MMS" carrier_id="896" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
+  <apn apn="mms" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
+  <apn apn="mms" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" type="mms" />
+  <apn apn="internet" carrier="Tango Internet" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" password="tango" type="mms" user="tango" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="270" mnc="77" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="hos" carrier="Tango XCAP" mcc="270" mnc="77" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="270" mnc="77" mvno_match_data="BB00" mvno_type="gid" password="tsl" type="default,ia,supl" user="tsl" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="270" mnc="77" mvno_match_data="LU-Transatel" mvno_type="spn" password="tsl" type="default,ia,supl" user="tsl" />
+  <apn apn="internet" carrier="Tango Internet" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="internet" authtype="0" carrier="Tango Internet" carrier_enabled="true" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="default,supl" user="tango" />
+  <apn apn="internet" authtype="0" carrier="Tango MMS" carrier_enabled="true" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="mms" user="tango" />
+  <apn apn="internet" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="Tango IMS" carrier_enabled="true" mcc="270" mnc="77" mtu="1500" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Tango IMS" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="Tango XCAP" carrier_enabled="true" mcc="270" mnc="77" mtu="1500" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="hos" carrier="Tango XCAP" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="orange.lu" authtype="1" carrier="orange.lu" carrier_enabled="true" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" roaming_protocol="IPV4V6" type="default,mms,supl" />
+  <apn apn="orange.lu" carrier="Orange" carrier_id="897" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" type="default,ia,mms,supl" />
+  <apn apn="orange5g.lu" carrier="Orange Luxembourg" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" type="default,dun,mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="270" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="270" mnc="99" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" authtype="1" carrier="Orange LUX IMS" carrier_enabled="true" mcc="270" mnc="99" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="orange.lu" authtype="1" carrier="orange.lu" carrier_enabled="true" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" roaming_protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="orange.lu" carrier="Orange Luxembourg" mcc="270" mnc="99" type="dun" />
-  <apn apn="orange5g.lu" carrier="Orange Luxembourg" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" type="default,dun,mms" />
-  <apn apn="ims" carrier="Orange LUX IMS" mcc="270" mnc="99" mvno_match_data="Orange LUX" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="orange.lu" carrier="Orange LUX Internet" mcc="270" mnc="99" mvno_match_data="Orange LUX" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
   <apn apn="orange.lu" carrier="Orange LUX MMS" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" mvno_match_data="Orange LUX" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="orange.lu" carrier="Orange" carrier_id="897" mcc="270" mmsc="http://mms.orange.lu" mmsport="8080" mmsproxy="212.88.139.44" mnc="99" type="default,ia,mms,supl" />
+  <apn apn="ims" carrier="Orange LUX IMS" mcc="270" mnc="99" mvno_match_data="Orange LUX" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
 </apns>

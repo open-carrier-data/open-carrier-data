@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import contextlib
 from copy import deepcopy
+import hashlib
 import io
 import json
 import re
+import shutil
+import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
 from datetime import date
@@ -795,6 +798,240 @@ def check_country_apns() -> None:
         assert_true(
             lineageos_apns.fits_lineageos_schema({**base, **extra}) == accepted,
             f"LineageOS schema check of {extra} must be {accepted}",
+        )
+
+
+def check_apn_ranking() -> None:
+    """Android tries a scope's rows in file order, so each scope is ordered by
+    the evidence behind its rows, rows Android treats as one are collapsed,
+    rows LineageOS's schema rejects are left out, and control characters
+    survive the XML round trip."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": sorted(types), **extra}
+
+    def profile(profile_id: str, match: dict, *rows: dict) -> dict:
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": match,
+            "android_apns": list(rows),
+        }
+
+    def evidence_index(*entries: tuple[dict, list[tuple[str, ...]]]) -> dict:
+        """Each entry is a profile and the sources behind each of its rows,
+        written the way the sanitizer writes them: fact_sources only for facts
+        that rest on fewer sources than the profile."""
+        records = []
+        for item, row_sources in entries:
+            everything = sorted({source for sources in row_sources for source in sources})
+            facts = [
+                {
+                    "section": "android_apns",
+                    "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                    "sources": sorted(sources),
+                }
+                for row, sources in zip(item["android_apns"], row_sources, strict=True)
+                for apn_type in row["types"]
+                if sorted(sources) != everything
+            ]
+            records.append(
+                {"profile_id": item["profile_id"], "sources": everything, "fact_sources": facts}
+            )
+        return {"profiles": records}
+
+    fact = {"name": "label", "apn": "internet", "types": ["default", "mms"], "mmsc": "http://m"}
+    expected_key = "sha256:" + hashlib.sha256(
+        b'{"apn":"internet","mmsc":"http://m","types":["mms"]}'
+    ).hexdigest()[:16]
+    assert_true(
+        generate_android_outputs.apn_fact_key(fact, "mms") == expected_key,
+        "an APN fact key is the evidence index key: the row without its label, one type",
+    )
+
+    roshan = profile(
+        "open.41220.a",
+        {"mccmnc": ["41220"]},
+        apn("default", ("default", "supl")),
+        apn("internet", ("default", "supl"), user="gprs"),
+    )
+    telekom = profile(
+        "open.26201.a",
+        {"mccmnc": ["26201"]},
+        apn("internet.t-d1.de", ("default", "supl")),
+        apn("internet.v6.telekom", ("default", "supl"), protocol="IPV4V6"),
+        apn("internet.v6.telekom", ("default", "supl"), protocol="IP"),
+    )
+    orange = profile(
+        "open.20801.a",
+        {"mccmnc": ["20801"]},
+        apn("aaa.example"),
+        apn("zzz.example"),
+    )
+    lead = profile(
+        "open.23410.a",
+        {"mccmnc": ["23410"]},
+        apn("ims", ("ims",)),
+        apn("mms.example", ("mms",), mmsc="http://mms.example"),
+        apn("web.example", ("default", "mms"), mmsc="http://mms.example"),
+    )
+    twins = profile(
+        "open.24001.a",
+        {"mccmnc": ["24001"]},
+        apn("net.example", ("default",), name="First"),
+        apn("net.example", ("default", "supl"), name="Second", carrier_enabled=True, protocol="IP"),
+        apn("net.example", ("default",), protocol="IPV6"),
+    )
+    host = profile(
+        "open.26202.a",
+        {"mccmnc": ["26202"]},
+        apn("lidl.example", mvno_type="spn", mvno_match_data="LIDL"),
+    )
+    mvno = profile("open.26202.b", {"mccmnc": ["26202"], "spn": ["lidl"]}, apn("web.example"))
+    schema = profile(
+        "open.310100.a",
+        {"mccmnc": ["310100"]},
+        apn("plateau", ("mms",), mmsc="208.254.124.11:8514"),
+        apn("open.example", authtype=-1),
+    )
+    control = profile(
+        "open.20404.a",
+        {"mccmnc": ["20404"]},
+        apn("cspire.example", mvno_type="spn", mvno_match_data="C Spire\r"),
+    )
+    profiles = [roshan, telekom, orange, lead, twins, host, mvno, schema, control]
+    google = "google_carriersettings"
+    pixel = "google_pixel_vendor_carriersettings"
+    index = evidence_index(
+        (roshan, [(google, pixel, "fairphone_official_source"), ("lineageos", "apple_carrier_bundles")]),
+        (
+            telekom,
+            [
+                ("lineageos", "sony_open_devices_aosp", "fairphone_official_source",
+                 "mobile_broadband_provider_info"),
+                ("lineageos", google, "samsung_omc"),
+                ("samsung_omc",),
+            ],
+        ),
+        (orange, [("mobile_broadband_provider_info", "aosp"), ("apple_carrier_bundles", "mobile_broadband_provider_info")]),
+        (lead, [("apple_carrier_bundles", google, "samsung_omc", "lineageos"), ("apple_carrier_bundles",), ("lineageos",)]),
+        (twins, [("lineageos",), ("apple_carrier_bundles",), ("mobile_broadband_provider_info",)]),
+        (host, [("lineageos",)]),
+        (mvno, [("apple_carrier_bundles", google, "samsung_omc")]),
+        (schema, [("lineageos",), ("lineageos",)]),
+        (control, [(google,)]),
+    )
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence-index.json"
+        evidence_path.write_text(json.dumps(index), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        assert_true(
+            generate_android_outputs.load_apn_evidence(Path(tmp) / "missing.json") is None,
+            "a missing evidence index gives no evidence",
+        )
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+
+        def scope_apns(mccmnc: str, **selector: str) -> list[tuple[str, str]]:
+            return [
+                (record["apn"], record.get("protocol", ""))
+                for record in rows.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+                and all(
+                    str(record.get(key, "")).casefold() == value.casefold()
+                    for key, value in selector.items()
+                )
+            ]
+
+        assert_true(
+            scope_apns("41220")[0][0] == "internet",
+            "a real APN comes before the placeholder 'default' at equal backing",
+        )
+        assert_true(
+            scope_apns("26201")
+            == [("internet.v6.telekom", "IPV4V6"), ("internet.v6.telekom", "IP"), ("internet.t-d1.de", "")],
+            "the APN more source families back comes first, the LineageOS, Sony and "
+            "Fairphone copies of one list count once, and within one APN the row "
+            f"more families back leads: {scope_apns('26201')}",
+        )
+        assert_true(
+            scope_apns("20801")[0][0] == "zzz.example",
+            "at equal family counts an APN a primary APN source gives comes first",
+        )
+        assert_true(
+            [value for value, _ in scope_apns("23410")] == ["web.example", "mms.example", "ims"],
+            "rows that serve the internet lead, then MMS rows, then IMS rows",
+        )
+        net_rows = [record for record in rows.records if record["apn"] == "net.example"]
+        assert_true(
+            len(net_rows) == 2
+            and net_rows[0]["type"] == "default,supl"
+            and net_rows[0]["carrier"] == "First"
+            and net_rows[1]["protocol"] == "IPV6",
+            "rows differing only in label, a covered type set, or an explicit "
+            f"Android default collapse; another protocol stays a variant: {net_rows}",
+        )
+        assert_true(
+            [value for value, _ in scope_apns("26202", mvno_type="spn", mvno_match_data="lidl")]
+            == ["web.example", "lidl.example"],
+            "rows from two profiles that one SIM sees are ranked together",
+        )
+        assert_true(
+            rows.schema_rejected == 1
+            and "plateau" not in {record["apn"] for record in rows.records},
+            "a row LineageOS's apns-conf.xsd rejects is left out of every APN file",
+        )
+        open_row = next(record for record in rows.records if record["apn"] == "open.example")
+        assert_true(
+            "authtype" not in open_row,
+            "authtype -1 is TelephonyProvider's default and is left out of the row",
+        )
+
+        android_dir = Path(tmp) / "android"
+        generate_android_outputs.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        text = (android_dir / "apns-conf.xml").read_text(encoding="utf-8")
+        assert_true("C Spire&#13;" in text, "a carriage return is written as a character reference")
+        parsed = {
+            element.attrib["apn"]: element.attrib
+            for element in ET.parse(android_dir / "apns-conf.xml").getroot()
+        }
+        assert_true(
+            parsed["cspire.example"]["mvno_match_data"] == "C Spire\r",
+            "an XML parser reads back the exact value",
+        )
+        assert_true(
+            all("_support" not in attributes for attributes in parsed.values()),
+            "the ranking evidence is never written",
+        )
+        counts = generate_android_outputs.write_country_apns(android_dir / "apns", profiles, 8, evidence)
+        assert_true(counts[2] == 1, f"the country export reports the rejected row: {counts}")
+        if shutil.which("xmllint"):
+            xsd = Path(__file__).resolve().parent / "lineageos" / "apns-conf.xsd"
+            result = subprocess.run(
+                ["xmllint", "--noout", "--schema", str(xsd), str(android_dir / "apns-conf.xml"),
+                 *sorted(str(path) for path in (android_dir / "apns").glob("*.xml"))],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            assert_true(result.returncode == 0, f"LineageOS's schema accepts the output: {result.stderr}")
+
+        try:
+            generate_android_outputs.attr("apn", "bad\x01value")
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("a control character XML cannot carry must fail")
+
+        plain = generate_android_outputs.apn_xml_records(profiles)
+        plain_scope = [record["apn"] for record in plain if record.get("mcc") == "412"]
+        assert_true(
+            plain_scope == ["internet", "default"],
+            "without evidence the placeholder still comes last",
+        )
+        assert_true(
+            [record["apn"] for record in plain if record.get("mnc") == "01" and record.get("mcc") == "262"][0]
+            == "internet.t-d1.de",
+            "without evidence rows keep the fallback order, by APN",
         )
 
 
@@ -2218,11 +2455,15 @@ def main() -> int:
             "mtu_v4": "1440",
             "mtu_v6": "1420",
             "apn_set_id": "-1",
-            "skip_464xlat": "-1",
             "always_on": "true",
             "esim_bootstrap_provisioning": "false",
         }.items():
             assert_true(internet_row[key] == value, f"APN row should preserve {key}")
+        assert_true(
+            "skip_464xlat" not in internet_row,
+            "skip_464xlat -1 is TelephonyProvider's default, which LineageOS's "
+            "schema does not accept as a value, so the row leaves it out",
+        )
         assert_true(
             by_apn[("262", "02", "mvno.example")]["mvno_type"] == "spn",
             "SPN profile should generate SPN-constrained APN row",
@@ -2504,6 +2745,8 @@ def main() -> int:
         )
     check_country_apns()
     print("per-country APN export tests passed")
+    check_apn_ranking()
+    print("APN ranking tests passed")
     return 0
 
 

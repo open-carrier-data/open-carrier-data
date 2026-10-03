@@ -4,53 +4,55 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="HOS" authtype="0" carrier="Proximus XCAP" carrier_enabled="true" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="INTERNET.PROXIMUS.BE" carrier="Px Internet" mcc="206" mnc="01" type="default,supl" />
-  <apn apn="event.proximus.be" authtype="1" carrier="event.proximus.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" password="mms" roaming_protocol="IPV4V6" type="mms" user="mms" />
-  <apn apn="hos" carrier="Proximus XCAP" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="0" carrier="Proximus IMS" carrier_enabled="true" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.bmbpartner.be" carrier="Scarlet Internet" mcc="206" mnc="01" type="default,supl" />
   <apn apn="internet.proximus.be" authtype="0" carrier="internet.proximus.be" carrier_enabled="true" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="internet.proximus.be" carrier="Proximus" mcc="206" mnc="01" type="dun" />
+  <apn apn="INTERNET.PROXIMUS.BE" carrier="Px Internet" carrier_id="1365" mcc="206" mnc="01" type="default,ia,supl" />
+  <apn apn="INTERNET.PROXIMUS.BE" carrier="Px Internet" mcc="206" mnc="01" type="default,supl" />
+  <apn apn="telenetwap.be" carrier="telenetwap.be" mcc="206" mnc="01" type="default,supl" />
+  <apn apn="internet.bmbpartner.be" carrier="Scarlet Internet" mcc="206" mnc="01" type="default,supl" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="206" mnc="01" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
+  <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink Internet" mcc="206" mnc="01" type="default,supl" />
+  <apn apn="event.proximus.be" authtype="1" carrier="event.proximus.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" password="mms" roaming_protocol="IPV4V6" type="mms" user="mms" />
+  <apn apn="EVENT.PROXIMUS.BE" authtype="1" carrier="Px MMS" carrier_id="1365" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" password="mms" type="mms" user="mms" />
   <apn apn="mms.be" carrier="mms.be" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" type="mms" />
   <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="Iusacell MMS" mcc="206" mmsc="http://mms.iusacell3g.com/" mnc="01" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
   <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="Proximus IMS" carrier_enabled="true" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="Iusacell Modem" mcc="206" mnc="01" password="iusacellgsm" type="dun" user="iusacellgsm" />
-  <apn apn="telenetwap.be" carrier="telenetwap.be" mcc="206" mnc="01" type="default,supl" />
-  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Iusacell Internet" mcc="206" mnc="01" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
-  <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink Internet" mcc="206" mnc="01" type="default,supl" />
+  <apn apn="internet.proximus.be" carrier="Proximus" mcc="206" mnc="01" type="dun" />
+  <apn apn="hos" carrier="Proximus XCAP" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="HOS" authtype="0" carrier="Proximus XCAP" carrier_enabled="true" mcc="206" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="data.esim" carrier="Internet" mcc="206" mnc="01" mvno_match_data="0409" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" user_editable="false" />
+  <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
   <apn apn="IMS" bearer_bitmask="14|18|20" carrier="ims" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="206" mnc="01" mtu="1280" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="ims" mcc="206" mnc="01" mtu="1280" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
   <apn apn="hos" bearer_bitmask="14" carrier="XCAP" mcc="206" mnc="01" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="2800000000000000" mvno_type="gid" type="default,supl" user="user" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="VM Picture messaging" carrier_enabled="true" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="2800000000000000" mvno_type="gid" type="mms" user="user" />
-  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="206" mnc="01" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" type="xcap" />
   <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="206" mnc="01" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="206" mnc="01" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" type="xcap" />
   <apn apn="roamless" carrier="Roamless" mcc="206" mnc="01" mvno_match_data="4D2E3F1A6B7C8D9E" mvno_type="gid" type="default,dun" />
   <apn apn="INTERNET.PROXIMUS.BE" carrier="Px Internet" mcc="206" mnc="01" mvno_match_data="4E" mvno_type="gid" type="default,supl" />
   <apn apn="event.proximus.be" authtype="1" carrier="Px MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="4E" mvno_type="gid" password="mms" type="mms" user="mms" />
-  <apn apn="event.proximus.be" authtype="1" carrier="Proximus MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="4E524A31" mvno_type="gid" password="mms" type="mms" user="mms" />
   <apn apn="internet.proximus.be" authtype="1" carrier="Proximus Web" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="4E524A31" mvno_type="gid" type="default" />
-  <apn apn="event.proximus.be" authtype="1" carrier="Proximus MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="52" mvno_type="gid" password="mms" type="mms" user="mms" />
-  <apn apn="internet.proximus.be" authtype="1" carrier="Proximus Web" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="52" mvno_type="gid" type="default" />
+  <apn apn="event.proximus.be" authtype="1" carrier="Proximus MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="4E524A31" mvno_type="gid" password="mms" type="mms" user="mms" />
   <apn apn="virgin-mobile.fr" carrier="Virgin mobile" mcc="206" mnc="01" mvno_match_data="52" mvno_type="gid" port="8080" proxy="10.6.10.1" type="default,supl" />
+  <apn apn="internet.proximus.be" authtype="1" carrier="Proximus Web" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="52" mvno_type="gid" type="default" />
   <apn apn="virgin-mobile.fr" carrier="VM MMS" mcc="206" mmsc="http://virginmms.fr" mmsport="8080" mmsproxy="10.6.10.1" mnc="01" mvno_match_data="52" mvno_type="gid" type="mms" />
+  <apn apn="event.proximus.be" authtype="1" carrier="Proximus MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="52" mvno_type="gid" password="mms" type="mms" user="mms" />
   <apn apn="virgin-mobile.fr" carrier="Virgin" mcc="206" mmsc="http://virginmms.fr" mmsport="8080" mmsproxy="10.6.10.1" mnc="01" mvno_match_data="524D4F31" mvno_type="gid" type="default,dun,mms" />
   <apn apn="Internet" authtype="1" carrier="Virgin Media" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="75" mvno_type="gid" type="default,supl" />
-  <apn apn="mms.mobi.eastlink.ca" carrier="MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="B6" mvno_type="gid" type="mms" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Internet" mcc="206" mnc="01" mvno_match_data="B6" mvno_type="gid" type="default,supl" />
+  <apn apn="mms.mobi.eastlink.ca" carrier="MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="B6" mvno_type="gid" type="mms" />
   <apn apn="internet" carrier="Only Internet" mcc="206" mnc="01" mvno_match_data="F004" mvno_type="gid" type="default,dun,supl" />
   <apn apn="mms" carrier="Only MMS" mcc="206" mmsc="http://mmsc.telcooi.re:9091" mnc="01" mvno_match_data="F004" mvno_type="gid" type="mms" />
-  <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="891035" mvno_type="iccid" type="mms" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink" mcc="206" mnc="01" mvno_match_data="891035" mvno_type="iccid" type="default,dun" />
+  <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="891035" mvno_type="iccid" type="mms" />
   <apn apn="bicsapn" carrier="BICS" mcc="206" mnc="01" mvno_match_data="893204" mvno_type="iccid" type="default,dun" />
   <apn apn="Telenetwap.be" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="893207" mvno_type="iccid" type="default,dun" />
-  <apn apn="ims" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="893207" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mms.be" carrier="Telenet" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="893207" mvno_type="iccid" protocol="IP" type="mms" />
   <apn apn="telenetwap.be" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="893207" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="mms.be" carrier="Telenet" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="893207" mvno_type="iccid" protocol="IP" type="mms" />
+  <apn apn="ims" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="893207" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="fnetnrj" carrier="NRJ" mcc="206" mnc="01" mvno_match_data="893326" mvno_type="iccid" type="default,dun" />
   <apn apn="mmsnrj" carrier="NRJ" mcc="206" mmsc="http://mmsnrj" mmsport="8080" mmsproxy="10.143.156.5" mnc="01" mvno_match_data="893326" mvno_type="iccid" type="mms" />
   <apn apn="internet" carrier="ID Ireland" mcc="206" mnc="01" mvno_match_data="8935316" mvno_type="iccid" type="default,dun" />
@@ -59,9 +61,9 @@
   <apn apn="internet.iphone" carrier="Orange Armenia" mcc="206" mnc="01" mvno_match_data="8937410" mvno_type="iccid" type="default,dun" />
   <apn apn="mms" carrier="Orange Armenia" mcc="206" mmsc="http://mms" mmsport="3128" mmsproxy="192.168.220.251" mnc="01" mvno_match_data="8937410" mvno_type="iccid" type="mms" />
   <apn apn="Telenetwap.be" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="89410" mvno_type="iccid" type="default,dun" />
-  <apn apn="ims" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="89410" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mms.be" carrier="Telenet" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="89410" mvno_type="iccid" protocol="IP" type="mms" />
   <apn apn="telenetwap.be" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="89410" mvno_type="iccid" protocol="IPV4V6" type="default,dun" />
+  <apn apn="mms.be" carrier="Telenet" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="89410" mvno_type="iccid" protocol="IP" type="mms" />
+  <apn apn="ims" carrier="Telenet" mcc="206" mnc="01" mvno_match_data="89410" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="Internet.ch.upcmobile.com" carrier="upc ch" mcc="206" mnc="01" mvno_match_data="894125" mvno_type="iccid" type="default,dun" />
   <apn apn="mms.ch.upcmobile.com" carrier="upc ch" mcc="206" mmsc="http://mms.ch.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="894125" mvno_type="iccid" type="mms" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="894443" mvno_type="iccid" type="default,dun,mms" />
@@ -70,186 +72,177 @@
   <apn apn="cmlink" carrier="CMLink" mcc="206" mnc="01" mvno_match_data="8985234" mvno_type="iccid" type="default,dun" />
   <apn apn="internet.golantelecom.net.il" carrier="GOLAN T" mcc="206" mnc="01" mvno_match_data="89972080" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IP" type="default,dun" />
   <apn apn="mms.golantelecom.net.il" carrier="GOLAN T" mcc="206" mmsc="http://mmsc.golantelecom.co.il" mmsport="80" mmsproxy="10.224.228.81" mnc="01" mvno_match_data="89972080" mvno_type="iccid" type="mms" />
+  <apn apn="em" carrier="EMnify" carrier_id="2326" mcc="206" mnc="01" mvno_match_data="206018" mvno_type="imsi" type="default,ia,supl" />
   <apn apn="internet" carrier="Virgin Media Ireland" mcc="206" mnc="01" mvno_match_data="206018016" mvno_type="imsi" type="default" />
-  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="2060188" mvno_type="imsi" type="mms" />
   <apn apn="telenetwap.be" carrier="Telenet Internet" mcc="206" mnc="01" mvno_match_data="2060188" mvno_type="imsi" type="default,supl" />
-  <apn apn="ims" carrier="Eastlink VoLTE" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" type="mms" />
-  <apn apn="services" carrier="Eastlink Xcap" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="services" carrier="Eastlink Xcap" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="services" carrier="Eastlink Xcap" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="2060188" mvno_type="imsi" type="mms" />
+  <apn apn="telenetwap.be" carrier="Telenet Internet" carrier_id="2270" mcc="206" mnc="01" mvno_match_data="20601889" mvno_type="imsi" type="default,ia,supl" />
+  <apn apn="mms.be" carrier="Telenet MMS" carrier_id="2270" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="20601889" mvno_type="imsi" type="mms" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink Internet" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" type="default" />
-  <apn apn="iijmio.jp" authtype="3" carrier="iijmio" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IPV4V6" type="default" user="mio@iij" />
-  <apn apn="iijmio.jp" authtype="3" carrier="iijmio" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" type="default" user="mio@iij" />
-  <apn apn="iijmio.jp" authtype="3" carrier="iijmio" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IPV4V6" roaming_protocol="IP" type="default" user="mio@iij" />
+  <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="Eastlink VoLTE" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="services" carrier="Eastlink Xcap" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="services" carrier="Eastlink Xcap" mcc="206" mnc="01" mvno_match_data="Eastlink" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="iijmio.jp" authtype="3" carrier="iijmio" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IP" roaming_protocol="IP" type="default" user="mio@iij" />
-  <apn apn="vmobile.jp" authtype="3" carrier="vmobile" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IPV4V6" type="default" user="vmobile@jp" />
-  <apn apn="vmobile.jp" authtype="3" carrier="vmobile" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" type="default" user="vmobile@jp" />
-  <apn apn="vmobile.jp" authtype="3" carrier="vmobile" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IPV4V6" roaming_protocol="IP" type="default" user="vmobile@jp" />
+  <apn apn="iijmio.jp" authtype="3" carrier="iijmio" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IPV4V6" roaming_protocol="IP" type="default" user="mio@iij" />
+  <apn apn="iijmio.jp" authtype="3" carrier="IIJmio (TypeI/Roaming)" carrier_id="2106" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IP" roaming_protocol="IP" type="default,ia" user="mio@iij" />
   <apn apn="vmobile.jp" authtype="3" carrier="vmobile" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IP" roaming_protocol="IP" type="default" user="vmobile@jp" />
+  <apn apn="vmobile.jp" authtype="3" carrier="vmobile" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IPV4V6" roaming_protocol="IP" type="default" user="vmobile@jp" />
+  <apn apn="vmobile.jp" authtype="3" carrier="vmobile.jp (Roaming)" carrier_id="2106" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IP" roaming_protocol="IP" type="default,ia" user="vmobile@jp" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="206" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
   <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="MMS" mcc="206" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
   <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="MODEM" mcc="206" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" user_editable="false" />
-  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="206" mnc="01" mvno_match_data="IUSACELL" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
-  <apn apn="ims" carrier="MobiCom IMS" mcc="206" mnc="01" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="internet" carrier="MobiCom Internet" mcc="206" mnc="01" mvno_match_data="MobiCom" mvno_type="spn" type="default" />
   <apn apn="mms" carrier="MobiCom MMS" mcc="206" mmsc="http://mms" mmsport="8080" mmsproxy="10.10.10.10" mnc="01" mvno_match_data="MobiCom" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="MobiCom IMS" mcc="206" mnc="01" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="MobiCom XCAP" mcc="206" mnc="01" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="event.proximus.be" authtype="0" carrier="NRJMMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="NRJ MOBILE" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="internet.proximus.be" authtype="0" carrier="NRJWEB" mcc="206" mnc="01" mvno_match_data="NRJ MOBILE" mvno_type="spn" type="default,dun,fota,supl" user_editable="false" />
-  <apn apn="HOS" carrier="Proximus XCAP" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="event.proximus.be" authtype="0" carrier="NRJMMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="NRJ MOBILE" mvno_type="spn" password="mms" type="mms" user="mms" />
+  <apn apn="internet.proximus.be" carrier="Proximus Internet" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="Proximus IMS" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.proximus.be" carrier="Proximus Internet" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="event.proximus.be" carrier="event.proximus.be" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus (BTBD)" mvno_type="spn" type="mms" />
+  <apn apn="HOS" carrier="Proximus XCAP" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.proximus.be" carrier="internet.proximus.be" mcc="206" mnc="01" mvno_match_data="Proximus (BTBD)" mvno_type="spn" type="default" />
-  <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus (Virgin)" mvno_type="spn" type="mms" />
+  <apn apn="event.proximus.be" carrier="event.proximus.be" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus (BTBD)" mvno_type="spn" type="mms" />
   <apn apn="internet.proximus.be" carrier="Proximus Web" mcc="206" mnc="01" mvno_match_data="Proximus (Virgin)" mvno_type="spn" type="default" />
+  <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus (Virgin)" mvno_type="spn" type="mms" />
   <apn apn="data" authtype="1" carrier="DATA" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default,dun,fota" />
-  <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mcs" authtype="1" carrier="MCS" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="cbs" />
   <apn apn="mms" authtype="1" carrier="MMS" carrier_enabled="true" mcc="206" mmsc="http://mms.rrf.fr" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="sos" authtype="1" carrier="sos" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="XCAP" carrier="Telenet XCAP" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="XCAP" carrier="Telenet XCAP" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" carrier="Telenet IMS" carrier_enabled="true" mcc="206" mnc="01" mtu="1300" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mms.be" authtype="1" carrier="Telenet MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mcs" authtype="1" carrier="MCS" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="RRF" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="cbs" />
   <apn apn="telenetwap.be" carrier="Telenet Internet" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="telenetwap.be" authtype="1" carrier="Telenet Internet" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="mms.be" authtype="1" carrier="Telenet MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="Telenet IMS" carrier_enabled="true" mcc="206" mnc="01" mtu="1300" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="XCAP" carrier="Telenet XCAP" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="tescomobile.liffeytelecom.com" carrier="Tesco Mobile Internet" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="Tesco Mobile" mvno_type="spn" type="default,supl" />
   <apn apn="tescomobile.liffeytelecom.com" carrier="Tesco MMS" carrier_enabled="true" mcc="206" mmsc="http://10.1.11.68/servlets/mms" mmsport="8080" mmsproxy="10.1.11.19" mnc="01" mvno_match_data="Tesco Mobile" mvno_type="spn" type="mms" />
   <apn apn="tescomobile.liffeytelecom.com" carrier="Tesco Mobile Internet" mcc="206" mnc="01" mvno_match_data="Tesco Mobile Ireland" mvno_type="spn" type="default" />
   <apn apn="tescomobile.liffeytelecom.com" carrier="Tesco MMS" mcc="206" mmsc="http://10.1.11.68/servlets/mms" mmsport="8080" mmsproxy="10.1.11.19" mnc="01" mvno_match_data="Tesco Mobile Ireland" mvno_type="spn" type="mms" />
+  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="206" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
   <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="MMS" mcc="206" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
   <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="MODEM" mcc="206" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" user_editable="false" />
-  <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="206" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
+  <apn apn="internet.ch.upcmobile.com" carrier="upcnet" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="default,xcap" />
+  <apn apn="mms.ch.upcmobile.com" carrier="upcmms" mcc="206" mmsc="http://mms.ch.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="Internet.hu.upcmobile.com" carrier="UPC Mobil Internet" mcc="206" mnc="01" mvno_match_data="UPC HU" mvno_type="spn" type="default" />
   <apn apn="mms.hu.upcmobile.com" carrier="UPC MMS" mcc="206" mmsc="http://mms.hu.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="UPC HU" mvno_type="spn" type="mms" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="default" />
   <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="hos" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="ims" carrier="ims" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="hos" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="Internet" carrier="Virgin Media" mcc="206" mnc="01" mvno_match_data="Virgin Media IE" mvno_type="spn" type="default" />
-  <apn apn="ims" carrier="IMS" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.ch.upcmobile.com" carrier="upcnet" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="default,xcap" />
-  <apn apn="mms.ch.upcmobile.com" carrier="upcmms" mcc="206" mmsc="http://mms.ch.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="mms" />
-  <apn apn="EVENT.PROXIMUS.BE" authtype="1" carrier="Px MMS" carrier_id="1365" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" password="mms" type="mms" user="mms" />
-  <apn apn="INTERNET.PROXIMUS.BE" carrier="Px Internet" carrier_id="1365" mcc="206" mnc="01" type="default,ia,supl" />
-  <apn apn="iijmio.jp" authtype="3" carrier="IIJmio (TypeI/Roaming)" carrier_id="2106" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="iij" protocol="IP" roaming_protocol="IP" type="default,ia" user="mio@iij" />
-  <apn apn="vmobile.jp" authtype="3" carrier="vmobile.jp (Roaming)" carrier_id="2106" mcc="206" mnc="01" mvno_match_data="IIJ" mvno_type="spn" password="vmobile" protocol="IP" roaming_protocol="IP" type="default,ia" user="vmobile@jp" />
-  <apn apn="mms.be" carrier="Telenet MMS" carrier_id="2270" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="01" mvno_match_data="20601889" mvno_type="imsi" type="mms" />
-  <apn apn="telenetwap.be" carrier="Telenet Internet" carrier_id="2270" mcc="206" mnc="01" mvno_match_data="20601889" mvno_type="imsi" type="default,ia,supl" />
-  <apn apn="em" carrier="EMnify" carrier_id="2326" mcc="206" mnc="01" mvno_match_data="206018" mvno_type="imsi" type="default,ia,supl" />
   <apn apn="MetTel" carrier="MetTel" mcc="206" mnc="018" mvno_match_data="8915518F" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
   <apn apn="connect.citymesh.com" carrier="Citymesh Connect" mcc="206" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia" />
-  <apn apn="hotspot.citymesh.com" carrier="hotspot" mcc="206" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="206" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="hotspot.citymesh.com" carrier="hotspot" mcc="206" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
+  <apn apn="telenetwap.be" authtype="1" carrier="telenetwap.be" carrier_enabled="true" mcc="206" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="telenetwap.be" carrier="Telenet Internet" carrier_id="2150" mcc="206" mnc="05" type="default,ia,supl" />
   <apn apn="Telenetwap.be" carrier="Telenet" mcc="206" mnc="05" type="default,dun" />
-  <apn apn="XCAP" carrier="Telenet XCAP" carrier_enabled="true" mcc="206" mnc="05" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="mms.be" authtype="1" carrier="mms.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" password="mms" protocol="IP" roaming_protocol="IPV4V6" type="mms" user="mms" />
+  <apn apn="mms.be" carrier="Telenet MMS" carrier_id="2150" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" type="mms" />
+  <apn apn="ims" carrier="Telenet IMS" carrier_enabled="true" mcc="206" mnc="05" mtu="1300" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Telenet" mcc="206" mnc="05" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="Telenet" mcc="206" mnc="05" protocol="IPV6" type="ims" />
-  <apn apn="ims" carrier="Telenet IMS" carrier_enabled="true" mcc="206" mnc="05" mtu="1300" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.be" authtype="1" carrier="mms.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" password="mms" protocol="IP" roaming_protocol="IPV4V6" type="mms" user="mms" />
-  <apn apn="telenetwap.be" authtype="1" carrier="telenetwap.be" carrier_enabled="true" mcc="206" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="telenetwap.be" carrier="Telenet" mcc="206" mnc="05" protocol="IPV4V6" type="dun" />
   <apn apn="xcap" carrier="XCAP" mcc="206" mnc="05" type="xcap" user_visible="false" />
-  <apn apn="XCAP" carrier="Telenet XCAP" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="XCAP" carrier="Telenet XCAP" carrier_enabled="true" mcc="206" mnc="05" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="telenetwap.be" carrier="Telenet Internet" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Telenet IMS" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mms.be" carrier="Telenet MMS" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="telenetwap.be" carrier="Telenet Internet" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="mms.be" carrier="Telenet MMS" carrier_id="2150" mcc="206" mmsc="http://mmsc.telenet.be" mmsport="80" mmsproxy="195.130.149.100" mnc="05" type="mms" />
-  <apn apn="telenetwap.be" carrier="Telenet Internet" carrier_id="2150" mcc="206" mnc="05" type="default,ia,supl" />
+  <apn apn="XCAP" carrier="Telenet XCAP" mcc="206" mnc="05" mvno_match_data="Telenet" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="data.lycamobile.be" carrier="data.lycamobile.be" mcc="206" mnc="06" password="plus" type="default,supl" user="lmbe" />
   <apn apn="data.lycamobile.be" authtype="1" carrier="Lycamobile" mcc="206" mnc="06" mvno_match_data="Lycamobile" mvno_type="spn" type="default,ia,supl" />
-  <apn apn="data.lycamobile.be" authtype="1" carrier="lycamobile" mcc="206" mnc="06" mvno_match_data="Lycamobile" mvno_type="spn" type="default,supl" />
   <apn apn="SOS" carrier="SOS" carrier_enabled="true" mcc="206" mnc="08" mtu="1300" protocol="IPV6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet.voo.be" authtype="1" carrier="VOO Internet" carrier_enabled="true" mcc="206" mnc="08" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="internet.voo.be" carrier="VOO Internet" mcc="206" mnc="08" mvno_match_data="VOO" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="iew.be" carrier="iew.be" mcc="206" mnc="10" password="mobistar" type="default" user="mobistar" />
-  <apn apn="iew.be" carrier="Orange B" mcc="206" mnc="10" type="dun" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="0" carrier="Orange B IMS" carrier_enabled="true" mcc="206" mnc="10" mtu="1300" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.be" authtype="1" carrier="mms.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" password="mobistar" roaming_protocol="IPV4V6" type="mms" user="mobistar" />
   <apn apn="mworld.be" authtype="1" carrier="Mobistar" mcc="206" mnc="10" password="mobistar" port="8080" proxy="212.65.63.143" type="default,supl" user="mobistar" />
+  <apn apn="mworld.be" carrier="Mobistar Internet" carrier_id="1366" mcc="206" mnc="10" type="default,ia,supl" />
   <apn apn="mworld.be" authtype="0" carrier="Orange Internet" carrier_enabled="true" mcc="206" mnc="10" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="mworld.be" carrier="mworld.be" mcc="206" mnc="10" type="default,supl" />
+  <apn apn="iew.be" carrier="iew.be" mcc="206" mnc="10" password="mobistar" type="default" user="mobistar" />
   <apn apn="telenetwap.be" authtype="1" carrier="Telenet" mcc="206" mnc="10" type="default,supl" />
-  <apn apn="ims" carrier="Orange B IMS" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" authtype="0" carrier="Orange B IMS" carrier_enabled="true" mcc="206" mnc="10" mtu="1300" mvno_match_data="Orange B" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mms.be" carrier="Orange MMS" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mms.be" authtype="1" carrier="Orange MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mworld.be" carrier="Orange Internet" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="mworld.be" authtype="0" carrier="Orange Internet" carrier_enabled="true" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="mms.be" authtype="1" carrier="mms.be" carrier_enabled="true" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" password="mobistar" roaming_protocol="IPV4V6" type="mms" user="mobistar" />
   <apn apn="mms.be" carrier="Mobistar MMS" carrier_id="1366" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" type="mms" />
-  <apn apn="mworld.be" carrier="Mobistar Internet" carrier_id="1366" mcc="206" mnc="10" type="default,ia,supl" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="Orange B IMS" carrier_enabled="true" mcc="206" mnc="10" mtu="1300" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="iew.be" carrier="Orange B" mcc="206" mnc="10" type="dun" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="206" mnc="10" mvno_match_data="BB00" mvno_type="gid" password="tsl" type="default,ia,supl" user="tsl" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="206" mnc="10" mvno_match_data="BE-Transatel" mvno_type="spn" password="tsl" type="default,ia,supl" user="tsl" />
-  <apn apn="IMS" authtype="0" carrier="DIGI IMS" carrier_enabled="true" mcc="206" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mworld.be" carrier="Orange Internet" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="mworld.be" authtype="0" carrier="Orange Internet" carrier_enabled="true" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="mms.be" authtype="1" carrier="Orange MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.be" carrier="Orange MMS" mcc="206" mmsc="http://mmsc.mobistar.be" mmsport="8080" mmsproxy="212.65.63.143" mnc="10" mvno_match_data="Orange B" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" authtype="0" carrier="Orange B IMS" carrier_enabled="true" mcc="206" mnc="10" mtu="1300" mvno_match_data="Orange B" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="Orange B IMS" mcc="206" mnc="10" mvno_match_data="Orange B" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="web" authtype="0" carrier="DIGI Internet" carrier_enabled="true" mcc="206" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="HOS" authtype="0" carrier="Citymesh XCAP" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="IMS" authtype="0" carrier="DIGI IMS" carrier_enabled="true" mcc="206" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="connect.citymesh.com" authtype="0" carrier="connect.citymesh.com" carrier_enabled="true" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="connect.citymesh.com" carrier="Citymesh Connect" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
-  <apn apn="hotspot.citymesh.com" carrier="hotspot" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="ims" authtype="0" carrier="Citymesh IMS" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="HOS" authtype="0" carrier="Telavox XCAP" carrier_enabled="true" mcc="206" mnc="14" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="hotspot.citymesh.com" carrier="hotspot" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
+  <apn apn="HOS" authtype="0" carrier="Citymesh XCAP" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="206" mnc="14" protocol="IP" roaming_protocol="IP" type="default,supl" />
   <apn apn="MMS" authtype="1" carrier="Telavox MMS" carrier_enabled="true" mcc="206" mmsc="http://mms.media/" mnc="14" roaming_protocol="IP" type="mms" />
   <apn apn="ims" authtype="0" carrier="Telavox IMS" carrier_enabled="true" mcc="206" mnc="14" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="206" mnc="14" protocol="IP" roaming_protocol="IP" type="default,supl" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="14" mvno_match_data="0E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" user_visible="false" />
+  <apn apn="HOS" authtype="0" carrier="Telavox XCAP" carrier_enabled="true" mcc="206" mnc="14" protocol="IP" roaming_protocol="IP" type="xcap" />
   <apn apn="internet" authtype="1" carrier="Internet" mcc="206" mnc="14" mvno_match_data="0E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="mms" carrier="MMS" mcc="206" mmsc="http://mms.media/" mnc="14" mvno_match_data="0E" mvno_type="gid" type="mms" />
-  <apn apn="HOS" carrier="Telavox XCAP" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="14" mvno_match_data="0E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" user_visible="false" />
+  <apn apn="internet" authtype="1" carrier="Internet" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" carrier="Telavox Internet" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="mms" carrier="MMS" mcc="206" mmsc="http://mms.media/" mnc="14" mvno_match_data="Telavox" mvno_type="spn" type="mms" />
   <apn apn="MMS" carrier="Telavox MMS" mcc="206" mmsc="http://mms.media/" mnc="14" mvno_match_data="Telavox" mvno_type="spn" roaming_protocol="IP" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" user_visible="false" />
   <apn apn="ims" carrier="Telavox IMS" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet" carrier="Telavox Internet" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
-  <apn apn="internet" authtype="1" carrier="Internet" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="mms" carrier="MMS" mcc="206" mmsc="http://mms.media/" mnc="14" mvno_match_data="Telavox" mvno_type="spn" type="mms" />
-  <apn apn="XCAP" carrier="BASE XCAP" carrier_enabled="true" mcc="206" mnc="20" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="carrefourdata.be" carrier="Carrefour Belgium" mcc="206" mnc="20" password="carrefour" type="default,supl" user="carrefour" />
-  <apn apn="carrefourmms.be" carrier="Carrefour Belgium MMS" mcc="206" mmsc="http://mmsc.base.be/" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="carrefour" type="mms" user="carrefour" />
-  <apn apn="gprs.BASE.be" authtype="1" carrier="BASE Internet" carrier_enabled="true" mcc="206" mnc="20" password="BASE" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="BASE" />
+  <apn apn="HOS" carrier="Telavox XCAP" mcc="206" mnc="14" mvno_match_data="Telavox" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="xcap" />
   <apn apn="gprs.base.be" authtype="1" carrier="gprs.base.be" mcc="206" mnc="20" password="base" protocol="IPV4V6" type="default,supl" user="base" />
-  <apn apn="gprs.base.be" carrier="BASE" mcc="206" mnc="20" protocol="IPV4V6" type="dun" />
+  <apn apn="gprs.base.be" authtype="1" carrier="BASE WAP" carrier_id="1367" mcc="206" mnc="20" password="base" type="default,ia,supl" user="base" />
+  <apn apn="gprs.BASE.be" authtype="1" carrier="BASE Internet" carrier_enabled="true" mcc="206" mnc="20" password="BASE" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="BASE" />
+  <apn apn="web.be" authtype="1" carrier="Mobile Vikings" mcc="206" mnc="20" password="web" type="default,supl" user="web" />
+  <apn apn="carrefourdata.be" carrier="Carrefour Belgium" mcc="206" mnc="20" password="carrefour" type="default,supl" user="carrefour" />
+  <apn apn="mms.base.be" authtype="1" carrier="BASE MMS" carrier_id="1367" mcc="206" mmsc="http://mmsc.base.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="base" type="mms" user="base" />
+  <apn apn="mms.base.be" authtype="1" carrier="mms.base.be" mcc="206" mmsc="http://mmsc.base.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="base" type="mms" user="base" />
+  <apn apn="mms.BASE.be" authtype="1" carrier="BASE MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="BASE" roaming_protocol="IPV4V6" type="mms" user="BASE" />
+  <apn apn="carrefourmms.be" carrier="Carrefour Belgium MMS" mcc="206" mmsc="http://mmsc.base.be/" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="carrefour" type="mms" user="carrefour" />
+  <apn apn="mms.be" authtype="1" carrier="Mobile Vikings MMS" mcc="206" mmsc="http://mmsc.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="mms" type="mms" user="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="20" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="BASE" mcc="206" mnc="20" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="BASE IMS" carrier_enabled="true" mcc="206" mnc="20" mtu="1300" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="206" mnc="20" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="mms.BASE.be" authtype="1" carrier="BASE MMS" carrier_enabled="true" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="BASE" roaming_protocol="IPV4V6" type="mms" user="BASE" />
-  <apn apn="mms.base.be" authtype="1" carrier="mms.base.be" mcc="206" mmsc="http://mmsc.base.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="base" type="mms" user="base" />
-  <apn apn="mms.be" authtype="1" carrier="Mobile Vikings MMS" mcc="206" mmsc="http://mmsc.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="mms" type="mms" user="mms" />
-  <apn apn="web.be" authtype="1" carrier="Mobile Vikings" mcc="206" mnc="20" password="web" type="default,supl" user="web" />
+  <apn apn="gprs.base.be" carrier="BASE" mcc="206" mnc="20" protocol="IPV4V6" type="dun" />
   <apn apn="xcap" carrier="XCAP" mcc="206" mnc="20" type="xcap" user_visible="false" />
+  <apn apn="XCAP" carrier="BASE XCAP" carrier_enabled="true" mcc="206" mnc="20" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
   <apn apn="IMS" bearer_bitmask="14|18|20" carrier="ims" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="206" mnc="20" mtu="1280" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="ims" mcc="206" mnc="20" mtu="1280" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
   <apn apn="hos" bearer_bitmask="14" carrier="XCAP" mcc="206" mnc="20" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" carrier_enabled="true" mcc="206" mnc="20" mvno_match_data="2800000000000000" mvno_type="gid" type="default,supl" user="user" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="VM Picture messaging" carrier_enabled="true" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="2800000000000000" mvno_type="gid" type="mms" user="user" />
-  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="206" mnc="20" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" type="xcap" />
   <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="206" mnc="20" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="206" mnc="20" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" type="xcap" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="894443" mvno_type="iccid" type="default,dun,mms" />
   <apn apn="ims" carrier="Virgin" mcc="206" mnc="20" mvno_match_data="894443" mvno_type="iccid" type="ims" />
-  <apn apn="XCAP" carrier="BASE XCAP" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="gprs.BASE.be" carrier="BASE Internet" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="mms.BASE.be" carrier="BASE MMS" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="BASE IMS" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="BASE IMS" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="mms.BASE.be" carrier="BASE MMS" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="XCAP" carrier="BASE XCAP" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="default" />
   <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="hos" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="ims" carrier="ims" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="gprs.base.be" authtype="1" carrier="BASE WAP" carrier_id="1367" mcc="206" mnc="20" password="base" type="default,ia,supl" user="base" />
-  <apn apn="mms.base.be" authtype="1" carrier="BASE MMS" carrier_id="1367" mcc="206" mmsc="http://mmsc.base.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" password="base" type="mms" user="base" />
+  <apn apn="hos" carrier="hos" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
+  <apn apn="bicsapn" carrier="BICS Internet" carrier_id="2132" mcc="206" mnc="28" type="default,ia,supl" />
   <apn apn="bicsapn" carrier="bicsapn" mcc="206" mnc="28" type="default,dun,ia,supl" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="BICS IMS" mcc="206" mnc="28" type="ims" />
   <apn apn="data.esim" carrier="Internet" mcc="206" mnc="28" mvno_match_data="0409" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" user_editable="false" />
   <apn apn="roamless" carrier="Roamless" mcc="206" mnc="28" mvno_match_data="4D2E3F1A6B7C8D9E" mvno_type="gid" type="default,dun" />
-  <apn apn="bicsapn" carrier="BICS Internet" carrier_id="2132" mcc="206" mnc="28" type="default,ia,supl" />
-  <apn apn="web.be" carrier="Unleashed" mcc="206" mnc="30" type="default,supl" />
   <apn apn="web.be" carrier="Unleashed" carrier_id="2144" mcc="206" mnc="30" type="default,ia,supl" />
+  <apn apn="web.be" carrier="Unleashed" mcc="206" mnc="30" type="default,supl" />
 </apns>

@@ -4,51 +4,51 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="IMS" carrier="Zain KW" mcc="419" mnc="02" type="ims" />
-  <apn apn="SOS" carrier="Zain KW" mcc="419" mnc="02" type="emergency" />
-  <apn apn="apn01" carrier="apn01" mcc="419" mnc="02" type="default,supl" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="419" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="mms" carrier="MTC Vodafone KW MMS" mcc="419" mmsc="http://176.0.0.21" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="online" type="mms" user="annyway" />
-  <apn apn="pps" carrier="Zain KW" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="pps" type="default,dun,mms" user="pps" />
-  <apn apn="pps" carrier="Zain KW" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" type="default,mms" />
+  <apn apn="pps" authtype="3" carrier="pps" carrier_id="1585" mcc="419" mnc="02" password="pps" port="8080" proxy="10.43.4.5" type="default,ia,supl" user="pps" />
   <apn apn="pps" authtype="1" carrier="ZAIN MI" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="pps" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="pps" />
+  <apn apn="pps" carrier="Zain KW" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="pps" type="default,dun,mms" user="pps" />
   <apn apn="pps" authtype="3" carrier="Zain WAP" mcc="419" mnc="02" password="pps" port="8080" proxy="10.43.4.5" type="default,supl" user="pps" />
   <apn apn="pps" carrier="pps" mcc="419" mnc="02" password="pps" type="default,supl" user="pps" />
+  <apn apn="pps" carrier="Zain KW" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" type="default,mms" />
+  <apn apn="apn01" carrier="apn01" mcc="419" mnc="02" type="default,supl" />
+  <apn apn="pps" authtype="3" carrier="MMS" carrier_id="1585" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="mms" type="mms" user="mms" />
   <apn apn="pps" authtype="3" carrier="MMS" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="mms" type="mms" user="mms" />
   <apn apn="pps" carrier="Zain KW MMS" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="mms" type="mms" user="mms" />
+  <apn apn="mms" carrier="MTC Vodafone KW MMS" mcc="419" mmsc="http://176.0.0.21" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="online" type="mms" user="annyway" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="419" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" carrier="Zain KW" mcc="419" mnc="02" type="ims" />
   <apn apn="xcap" carrier="xcap" mcc="419" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="IMS" mcc="419" mnc="02" mvno_match_data="ZAIN KW" mvno_type="spn" type="ims" />
+  <apn apn="SOS" carrier="Zain KW" mcc="419" mnc="02" type="emergency" />
   <apn apn="pps" carrier="ZAIN MI" mcc="419" mnc="02" mvno_match_data="ZAIN KW" mvno_type="spn" type="default" />
   <apn apn="pps" carrier="ZAIN MMS" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" mvno_match_data="ZAIN KW" mvno_type="spn" type="mms" />
+  <apn apn="ims" carrier="IMS" mcc="419" mnc="02" mvno_match_data="ZAIN KW" mvno_type="spn" type="ims" />
   <apn apn="xcap" carrier="XCAP" mcc="419" mnc="02" mvno_match_data="ZAIN KW" mvno_type="spn" type="xcap" />
-  <apn apn="pps" authtype="3" carrier="pps" carrier_id="1585" mcc="419" mnc="02" password="pps" port="8080" proxy="10.43.4.5" type="default,ia,supl" user="pps" />
-  <apn apn="pps" authtype="3" carrier="MMS" carrier_id="1585" mcc="419" mmsc="http://mms.zain" mmsport="8080" mmsproxy="176.0.0.65" mnc="02" password="mms" type="mms" user="mms" />
-  <apn apn="IMS" carrier="Ooredoo" mcc="419" mnc="03" protocol="IP" type="ims" />
   <apn apn="action.ooredoo.com" authtype="0" carrier="action.ooredoo.com" mcc="419" mnc="03" protocol="IPV4V6" type="default" />
-  <apn apn="action.ooredoo.com" carrier="Ooredoo" mcc="419" mnc="03" protocol="IPV4V6" type="dun" />
-  <apn apn="action.ooredoo.com" authtype="0" carrier="action.ooredoo.com" mcc="419" mnc="03" type="supl" />
+  <apn apn="action.ooredoo.com" authtype="1" carrier="Ooredoo Action" carrier_id="1586" mcc="419" mnc="03" type="default,ia" />
   <apn apn="action.wataniya.com" carrier="action.wataniya.com" mcc="419" mnc="03" type="bip,cbs,default,dun,emergency,enterprise,fota,hipri,ia,ims,mcx,mms,rcs,supl,vsim,xcap" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="419" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="mms.ooredoo.com" authtype="1" carrier="Ooredoo MMS" carrier_id="1586" mcc="419" mmsc="http://action.ooredoo.com" mmsport="8080" mmsproxy="194.126.53.64" mnc="03" type="default,ia" />
   <apn apn="mms.ooredoo.com" authtype="0" carrier="mms.ooredoo.com" mcc="419" mmsc="http://action.ooredoo.com" mmsport="8080" mmsproxy="194.126.53.64" mnc="03" type="mms" />
   <apn apn="mms.wataniya.com" carrier="mms.wataniya.com" mcc="419" mmsc="http://action.wataniya.com" mmsport="8080" mmsproxy="194.126.53.64" mnc="03" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="419" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" carrier="Ooredoo" mcc="419" mnc="03" protocol="IP" type="ims" />
+  <apn apn="action.ooredoo.com" authtype="0" carrier="action.ooredoo.com" mcc="419" mnc="03" type="supl" />
+  <apn apn="action.ooredoo.com" carrier="Ooredoo" mcc="419" mnc="03" protocol="IPV4V6" type="dun" />
   <apn apn="action.ooredoo.com" carrier="Ooredoo Internet" mcc="419" mnc="03" mvno_match_data="Ooredoo KW" mvno_type="spn" protocol="IPV4V6" type="default,xcap" />
-  <apn apn="ims" carrier="IMS" mcc="419" mnc="03" mvno_match_data="Ooredoo KW" mvno_type="spn" type="ims" />
   <apn apn="mms.ooredoo.com" carrier="Ooredoo MMS" mcc="419" mmsc="http://action.ooredoo.com" mmsport="8080" mmsproxy="194.126.53.64" mnc="03" mvno_match_data="Ooredoo KW" mvno_type="spn" type="mms" />
-  <apn apn="action.ooredoo.com" authtype="1" carrier="Ooredoo Action" carrier_id="1586" mcc="419" mnc="03" type="default,ia" />
-  <apn apn="mms.ooredoo.com" authtype="1" carrier="Ooredoo MMS" carrier_id="1586" mcc="419" mmsc="http://action.ooredoo.com" mmsport="8080" mmsproxy="194.126.53.64" mnc="03" type="default,ia" />
+  <apn apn="ims" carrier="IMS" mcc="419" mnc="03" mvno_match_data="Ooredoo KW" mvno_type="spn" type="ims" />
+  <apn apn="viva" authtype="0" carrier="VIVA - KW" carrier_id="1992" mcc="419" mmsc="http://172.16.128.80:38090/was" mmsport="8080" mmsproxy="172.16.128.228" mnc="04" type="default,ia,mms,supl" />
+  <apn apn="viva" authtype="0" carrier="viva" mcc="419" mmsc="http://172.16.128.80:38090/was" mmsport="8080" mmsproxy="172.16.128.228" mnc="04" type="default,mms,supl,xcap" />
   <apn apn="VIVA" carrier="VIVA" mcc="419" mnc="04" type="default,dun" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="419" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="419" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="ims" mcc="419" mnc="04" protocol="IP" type="ims" />
-  <apn apn="viva" authtype="0" carrier="viva" mcc="419" mmsc="http://172.16.128.80:38090/was" mmsport="8080" mmsproxy="172.16.128.228" mnc="04" type="default,mms,supl,xcap" />
   <apn apn="viva" carrier="stc KW" mcc="419" mnc="04" type="dun" />
   <apn apn="VIVA" carrier="VIVA Internet" mcc="419" mnc="04" mvno_match_data="VIVA" mvno_type="spn" type="default" />
   <apn apn="VIVA" carrier="VIVA  MMS" mcc="419" mmsc="http://172.16.128.80:38090/was" mmsport="8080" mmsproxy="172.16.128.228" mnc="04" mvno_match_data="VIVA" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="419" mnc="04" mvno_match_data="VIVA" mvno_type="spn" type="ims" />
   <apn apn="xcap" carrier="XCAP" mcc="419" mnc="04" mvno_match_data="VIVA" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="viva" authtype="0" carrier="VIVA - KW" carrier_id="1992" mcc="419" mmsc="http://172.16.128.80:38090/was" mmsport="8080" mmsproxy="172.16.128.228" mnc="04" type="default,ia,mms,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="419" mnc="09" type="ims" user_visible="false" />
   <apn apn="internet" carrier="Internet" mcc="419" mnc="09" type="default" />
-  <apn apn="IMS" carrier="IMS" mcc="419" mnc="09" mvno_match_data="Virgin Mobile KWT" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="419" mnc="09" type="ims" user_visible="false" />
   <apn apn="internet" carrier="Virgin Kuwait" mcc="419" mnc="09" mvno_match_data="Virgin Mobile KWT" mvno_type="spn" type="default" />
+  <apn apn="IMS" carrier="IMS" mcc="419" mnc="09" mvno_match_data="Virgin Mobile KWT" mvno_type="spn" protocol="IP" type="ims" />
 </apns>

@@ -4,75 +4,73 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet.t-mobile.cz" authtype="1" carrier="Internet" carrier_enabled="true" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
+  <apn apn="internet.t-mobile.cz" authtype="1" carrier="T-Mobile CZ" carrier_id="2394" mcc="230" mnc="01" password="wap" type="default,ia,supl" user="wap" />
+  <apn apn="internet.t-mobile.cz" carrier="T-Mobile CZ" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="wap" server="*" type="default,supl" user="wap" />
+  <apn apn="internet.t-mobile.cz" authtype="1" carrier="T-Mobile CZ" mcc="230" mnc="01" password="wap" type="default,supl" user="wap" />
+  <apn apn="internet.t-mobile.cz" carrier="T-Mobile CZ" mcc="230" mnc="01" protocol="IP" type="default,dun" />
+  <apn apn="mms.t-mobile.cz" authtype="1" carrier="T-Mobile MMS" carrier_id="2394" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="mms" type="mms" user="mms" />
+  <apn apn="mms.t-mobile.cz" authtype="1" carrier="mms.t-mobile.cz" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="mms" type="mms" user="mms" />
+  <apn apn="hos" authtype="1" carrier="HOS" carrier_id="2394" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" network_type_bitmask="18" protocol="IPV4V6" type="mms" user_visible="false" />
   <apn apn="hos" authtype="1" carrier="HOS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" protocol="IPV4V6" type="mms,xcap" user_visible="false" />
   <apn apn="hos" authtype="1" carrier="HOS" carrier_enabled="true" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="hos" authtype="1" carrier="HOS" carrier_enabled="true" mcc="230" mmsc="http://mms" mmsport="8080" mmsproxy="10.0.0.10" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="hos" carrier="HOS" mcc="230" mnc="01" protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="IMS" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="T-Mobile CZ" mcc="230" mnc="01" protocol="IP" type="ims" />
-  <apn apn="internet.t-mobile.cz" carrier="T-Mobile CZ" mcc="230" mnc="01" protocol="IP" type="default" />
-  <apn apn="internet.t-mobile.cz" carrier="internet.t-mobile.cz" mcc="230" mnc="01" type="default,dun" />
-  <apn apn="internet.t-mobile.cz" authtype="1" carrier="Internet" mcc="230" mnc="01" protocol="IPV4V6" type="default,supl" />
-  <apn apn="internet.t-mobile.cz" authtype="1" carrier="Internet" carrier_enabled="true" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
-  <apn apn="internet.t-mobile.cz" authtype="1" carrier="T-Mobile CZ" mcc="230" mnc="01" password="wap" type="default,supl" user="wap" />
-  <apn apn="internet.t-mobile.cz" carrier="T-Mobile CZ" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="wap" server="*" type="default,supl" user="wap" />
-  <apn apn="mms.t-mobile.cz" authtype="1" carrier="mms.t-mobile.cz" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="mms" type="mms" user="mms" />
-  <apn apn="IMS" carrier="IMS" mcc="230" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="hos" carrier="HOS" mcc="230" mmsc="http://mms" mmsport="8080" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="hos" carrier="HOS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="ims" carrier="T-Mobile IMS" carrier_id="2394" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="hos" carrier="HOS" mcc="230" mnc="01" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="internet.t-mobile.cz" carrier="Internet" mcc="230" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="internet.t-mobile.cz" carrier="Internet" mcc="230" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="hos" carrier="HOS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="230" mmsc="http://mms" mmsport="8080" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="mms.t-mobile.cz" carrier="MMS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
   <apn apn="mms.t-mobile.cz" carrier="MMS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
-  <apn apn="hos" authtype="1" carrier="HOS" carrier_id="2394" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" network_type_bitmask="18" protocol="IPV4V6" type="mms" user_visible="false" />
-  <apn apn="ims" carrier="T-Mobile IMS" carrier_id="2394" mcc="230" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="internet.t-mobile.cz" authtype="1" carrier="T-Mobile CZ" carrier_id="2394" mcc="230" mnc="01" password="wap" type="default,ia,supl" user="wap" />
-  <apn apn="mms.t-mobile.cz" authtype="1" carrier="T-Mobile MMS" carrier_id="2394" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.0.0.10" mnc="01" password="mms" type="mms" user="mms" />
-  <apn apn="EMERGENCY" carrier="emergency" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="internet" carrier="internet" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" />
+  <apn apn="IMS" carrier="IMS" mcc="230" mnc="01" mvno_match_data="T-Mobile CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet" authtype="0" carrier="O2 internet" carrier_id="1449" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl" />
   <apn apn="internet" authtype="3" carrier="O2 CZ" mcc="230" mnc="02" type="default,supl" />
   <apn apn="internet" authtype="1" carrier="O2 Internet" carrier_enabled="true" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" carrier="internet" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="internet" carrier="internet" mcc="230" mnc="02" type="default,supl" />
-  <apn apn="mms" authtype="3" carrier="O2 CZ MMS" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
-  <apn apn="mms" carrier="O2 MMS" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mms" authtype="1" carrier="O2 MMS" carrier_enabled="true" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mms" carrier="O2.CZ" mcc="230" mnc="02" type="mms" />
-  <apn apn="mms" carrier="mms" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
   <apn apn="wap" carrier="O2 CZ" mcc="230" mnc="02" password="wap" port="9201" proxy="160.218.160.218" type="default,supl" user="O2" />
+  <apn apn="mms" authtype="3" carrier="O2 CZ MMS" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
+  <apn apn="mms" authtype="1" carrier="O2 MMS" carrier_enabled="true" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms" carrier="O2 MMS" carrier_id="1449" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
+  <apn apn="mms" carrier="O2 MMS" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms" carrier="mms" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
+  <apn apn="mms" carrier="O2.CZ" mcc="230" mnc="02" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="O2 VoLTE Hlas" carrier_id="1449" mcc="230" mnc="02" protocol="IPV6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="1" carrier="ims" carrier_enabled="true" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="xcap" bearer_bitmask="14|18|20" carrier="O2 VoLTE" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_visible="false" />
   <apn apn="xcap" authtype="1" carrier="O2 VoLTE" carrier_enabled="true" mcc="230" mnc="02" protocol="IPV6" roaming_protocol="IPV6" type="xcap" />
-  <apn apn="ims" carrier="O2 VoLTE Hlas" mcc="230" mnc="02" mvno_match_data="O2.CZ" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
+  <apn apn="xcap" carrier="O2 VoLTE" carrier_id="1449" mcc="230" mnc="02" protocol="IPV6" type="xcap" user_visible="false" />
+  <apn apn="EMERGENCY" carrier="emergency" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="internet" carrier="internet" mcc="230" mnc="02" mvno_match_data="O2.CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="O2 MMS" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" mvno_match_data="O2.CZ" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="O2 VoLTE Hlas" mcc="230" mnc="02" mvno_match_data="O2.CZ" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="xcap" carrier="O2 VoLTE" mcc="230" mnc="02" mvno_match_data="O2.CZ" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="xcap" />
-  <apn apn="ims" carrier="O2 VoLTE Hlas" carrier_id="1449" mcc="230" mnc="02" protocol="IPV6" type="ims" user_visible="false" />
-  <apn apn="internet" authtype="0" carrier="O2 internet" carrier_id="1449" mcc="230" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl" />
-  <apn apn="mms" carrier="O2 MMS" carrier_id="1449" mcc="230" mmsc="http://mms.o2active.cz:8002" mmsport="8080" mmsproxy="160.218.160.218" mnc="02" type="mms" />
-  <apn apn="xcap" carrier="O2 VoLTE" carrier_id="1449" mcc="230" mnc="02" protocol="IPV6" type="xcap" user_visible="false" />
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="03" protocol="IPV4V6" type="ims" />
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="03" protocol="IP" type="ims" />
-  <apn apn="hos" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="230" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="230" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="VF CZ" mcc="230" mnc="03" type="ims" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="230" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" carrier="Internet" carrier_id="2398" mcc="230" mnc="03" type="default,ia,supl,xcap" />
   <apn apn="iphone.vodafone.cz" carrier="VF CZ" mcc="230" mnc="03" type="default,dun" />
   <apn apn="mms" authtype="1" carrier="mms" carrier_enabled="true" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="03" password="mms" protocol="IPV4V6" roaming_protocol="IPV4V6" server="mms" type="mms" user="mms" user_editable="false" />
+  <apn apn="mms" authtype="1" carrier="MMS" carrier_id="2398" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="03" password="mms" type="mms" user="mms" user_editable="false" />
+  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="230" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="IMS" carrier_id="2398" mcc="230" mnc="03" type="ims" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="03" protocol="IP" type="ims" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="230" mnc="03" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="VF CZ" mcc="230" mnc="03" type="ims" />
+  <apn apn="hos" authtype="0" carrier="XCAP" carrier_enabled="true" mcc="230" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="sos" carrier="VF CZ" mcc="230" mnc="03" type="emergency" />
+  <apn apn="internet" carrier="Internet" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="default" />
+  <apn apn="mms" carrier="MMS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="mms" />
   <apn apn="IMS" carrier="IMS" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="internet" carrier="Internet" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="internet" mcc="230" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IP" type="xcap" />
-  <apn apn="mms" carrier="MMS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="03" mvno_match_data="Vodafone CZ" mvno_type="spn" protocol="IPV4V6" type="mms" />
-  <apn apn="ims" carrier="IMS" carrier_id="2398" mcc="230" mnc="03" type="ims" user_visible="false" />
-  <apn apn="internet" carrier="Internet" carrier_id="2398" mcc="230" mnc="03" type="default,ia,supl,xcap" />
-  <apn apn="mms" authtype="1" carrier="MMS" carrier_id="2398" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="03" password="mms" type="mms" user="mms" user_editable="false" />
   <apn apn="internet.t-mobile.cz" carrier="T-Mobile CZ" mcc="230" mnc="07" type="default,dun" />
   <apn apn="Internet" authtype="3" carrier="GPRS Web" mcc="230" mnc="99" type="default,supl" />
   <apn apn="MMS" authtype="1" carrier="MMS" mcc="230" mmsc="http://mms" mmsport="80" mmsproxy="10.11.10.111" mnc="99" password="mms" type="mms" user="mms" />

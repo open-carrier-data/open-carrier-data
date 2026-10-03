@@ -4,58 +4,58 @@
     SPDX-License-Identifier: CC0-1.0
 -->
 <apns version="8">
-  <apn apn="ims" carrier="Vodafone IMS" carrier_enabled="true" mcc="255" mnc="01" protocol="IPV4V6" type="ims" />
-  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="01" type="cbs,dun,fota,hipri,rcs,xcap" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="01" type="default,supl" user="internet" />
-  <apn apn="mms" carrier="MTS MMS" mcc="255" mmsc="http://mmsc:8002/" mmsport="8080" mmsproxy="192.168.10.10" mnc="01" type="mms" />
-  <apn apn="mms" carrier="Vodafone UA MMS" mcc="255" mmsc="http://mms" mmsport="8080" mmsproxy="192.168.10.10" mnc="01" type="mms" />
-  <apn apn="ims" carrier="Vodafone IMS" mcc="255" mnc="01" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV4V6" type="ims" />
-  <apn apn="internet" carrier="Vodafone Internet" mcc="255" mnc="01" mvno_match_data="Vodafone" mvno_type="spn" type="default,xcap" />
   <apn apn="internet" carrier="MTS-internet" carrier_id="1746" mcc="255" mnc="01" type="default,ia,supl" />
   <apn apn="mms" carrier="MTS MMS" carrier_id="1746" mcc="255" mmsc="http://mmsc:8002/" mmsport="8080" mmsproxy="192.168.10.10" mnc="01" type="mms" />
+  <apn apn="mms" carrier="MTS MMS" mcc="255" mmsc="http://mmsc:8002/" mmsport="8080" mmsproxy="192.168.10.10" mnc="01" type="mms" />
+  <apn apn="mms" carrier="Vodafone UA MMS" mcc="255" mmsc="http://mms" mmsport="8080" mmsproxy="192.168.10.10" mnc="01" type="mms" />
+  <apn apn="ims" carrier="Vodafone IMS" carrier_enabled="true" mcc="255" mnc="01" protocol="IPV4V6" type="ims" />
+  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="01" type="cbs,dun,fota,hipri,rcs,xcap" />
+  <apn apn="internet" carrier="Vodafone Internet" mcc="255" mnc="01" mvno_match_data="Vodafone" mvno_type="spn" type="default,xcap" />
+  <apn apn="ims" carrier="Vodafone IMS" mcc="255" mnc="01" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV4V6" type="ims" />
+  <apn apn="internet.beeline.ua" carrier="Beeline-internet" carrier_id="12" mcc="255" mnc="02" type="default,ia,supl" />
   <apn apn="internet.beeline.ua" carrier="internet.beeline.ua" mcc="255" mnc="02" type="default,supl" />
+  <apn apn="www.ab.kyivstar.net" carrier="Beeline UA" mcc="255" mnc="02" type="default,supl" />
+  <apn apn="mms.beeline.ua" carrier="Beeline MMS" carrier_id="12" mcc="255" mmsc="http://mms/" mmsport="8080" mmsproxy="172.29.18.192" mnc="02" type="mms" />
   <apn apn="mms.beeline.ua" carrier="Beeline MMS" mcc="255" mmsc="http://mms/" mmsport="8080" mmsproxy="172.29.18.192" mnc="02" type="mms" />
   <apn apn="mms.kyivstar.net" carrier="Beeline UA MMS" mcc="255" mmsc="http://mms.kyivstar.net/" mmsport="8080" mmsproxy="10.10.10.10" mnc="02" type="mms" />
-  <apn apn="www.ab.kyivstar.net" carrier="Beeline UA" mcc="255" mnc="02" type="default,supl" />
-  <apn apn="internet.beeline.ua" carrier="Beeline-internet" carrier_id="12" mcc="255" mnc="02" type="default,ia,supl" />
-  <apn apn="mms.beeline.ua" carrier="Beeline MMS" carrier_id="12" mcc="255" mmsc="http://mms/" mmsport="8080" mmsproxy="172.29.18.192" mnc="02" type="mms" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" carrier="ims" carrier_enabled="true" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet" authtype="0" carrier="UA-KYIVSTAR Internet" carrier_id="1747" mcc="255" mnc="03" port="8080" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,fota,supl" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IP" type="cbs,default,dun,fota,hipri,rcs,supl" />
-  <apn apn="internet" carrier="Kyivstar" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="internet" carrier="Internet" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="mms.kyivstar.net" authtype="1" carrier="Kyivstar MMS" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="www.ab.kyivstar.net" carrier="www.ab.kyivstar.net" mcc="255" mnc="03" password="internet" type="default,supl" user="igprs" />
+  <apn apn="internet" carrier="Kyivstar" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="www.kyivstar.net" authtype="1" carrier="Kyivstar Internet" carrier_id="1747" mcc="255" mnc="03" password="internet" type="default,ia,supl" user="igprs" />
   <apn apn="www.kyivstar.net" authtype="1" carrier="www.kyivstar.net" mcc="255" mnc="03" password="internet" type="default,supl" user="igprs" />
-  <apn apn="mms.djuice.com.ua" authtype="1" carrier="Djuice MMS" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" password="mms" type="mms" user="djuice" />
+  <apn apn="www.ab.kyivstar.net" carrier="www.ab.kyivstar.net" mcc="255" mnc="03" password="internet" type="default,supl" user="igprs" />
+  <apn apn="mms.kyivstar.net" authtype="1" carrier="Kyivstar MMS" carrier_id="1747" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" password="mms" type="mms" user="mms" />
+  <apn apn="mms.kyivstar.net" authtype="1" carrier="Kyivstar MMS" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" password="mms" type="mms" user="mms" />
+  <apn apn="mms.kyivstar.net" authtype="0" carrier="UA-KYIVSTAR MMS" carrier_id="1747" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" type="mms" />
+  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="IMS" carrier_id="1747" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="ims" carrier_enabled="true" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="HOS" carrier_id="1747" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="www.djuice.com.ua" carrier="Djuice Internet" carrier_id="2331" mcc="255" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" type="default,ia,supl" />
   <apn apn="www.djuice.com.ua" carrier="Djuice Internet" mcc="255" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" type="default,supl" />
-  <apn apn="ims" carrier="Kyivstar IMS" mcc="255" mnc="03" mvno_match_data="Kyivstar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="mms.djuice.com.ua" authtype="1" carrier="Djuice MMS" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" password="mms" type="mms" user="djuice" />
+  <apn apn="mms.djuice.com.ua" authtype="1" carrier="Djuice MMS" carrier_id="2331" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" password="mms" type="mms" user="djuice" />
   <apn apn="internet" carrier="Kyivstar Internet" mcc="255" mnc="03" mvno_match_data="Kyivstar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="mms" carrier="Kyivstar MMS" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" mvno_match_data="Kyivstar" mvno_type="spn" type="mms" />
-  <apn apn="hos" carrier="HOS" carrier_id="1747" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="ims" carrier="IMS" carrier_id="1747" mcc="255" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet" authtype="0" carrier="UA-KYIVSTAR Internet" carrier_id="1747" mcc="255" mnc="03" port="8080" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,fota,supl" />
-  <apn apn="mms.kyivstar.net" authtype="1" carrier="Kyivstar MMS" carrier_id="1747" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" password="mms" type="mms" user="mms" />
-  <apn apn="mms.kyivstar.net" authtype="0" carrier="UA-KYIVSTAR MMS" carrier_id="1747" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" type="mms" />
-  <apn apn="www.kyivstar.net" authtype="1" carrier="Kyivstar Internet" carrier_id="1747" mcc="255" mnc="03" password="internet" type="default,ia,supl" user="igprs" />
-  <apn apn="mms.djuice.com.ua" authtype="1" carrier="Djuice MMS" carrier_id="2331" mcc="255" mmsc="http://mms.kyivstar.net" mmsport="8080" mmsproxy="10.10.10.10" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" password="mms" type="mms" user="djuice" />
-  <apn apn="www.djuice.com.ua" carrier="Djuice Internet" carrier_id="2331" mcc="255" mnc="03" mvno_match_data="DJUICE" mvno_type="spn" type="default,ia,supl" />
+  <apn apn="ims" carrier="Kyivstar IMS" mcc="255" mnc="03" mvno_match_data="Kyivstar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="06" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,default,dun,fota,hipri,rcs,supl" />
+  <apn apn="internet" carrier="Life:) internet" carrier_id="1750" mcc="255" mnc="06" type="default,ia,supl" />
+  <apn apn="mms" carrier="Life:) MMS" carrier_id="1750" mcc="255" mmsc="http://mms.life.com.ua/cmmsc/post" mmsport="8080" mmsproxy="212.58.162.230" mnc="06" type="mms" />
+  <apn apn="mms" carrier="mms" mcc="255" mmsc="http://mms.life.com.ua/cmmsc/post" mmsport="8080" mmsproxy="212.58.162.230" mnc="06" type="mms" />
+  <apn apn="mms" carrier="lifecell MMS" mcc="255" mmsc="http://mms.life" mmsport="8080" mmsproxy="10.10.10.10" mnc="06" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="255" mnc="06" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="255" mnc="06" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Lifecell IMS" carrier_enabled="true" mcc="255" mnc="06" mtu="1280" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="lifecell" mcc="255" mnc="06" protocol="IPV4V6" type="ims" />
-  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="255" mnc="06" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,default,dun,fota,hipri,rcs,supl" />
-  <apn apn="mms" carrier="lifecell MMS" mcc="255" mmsc="http://mms.life" mmsport="8080" mmsproxy="10.10.10.10" mnc="06" type="mms" />
-  <apn apn="mms" carrier="mms" mcc="255" mmsc="http://mms.life.com.ua/cmmsc/post" mmsport="8080" mmsproxy="212.58.162.230" mnc="06" type="mms" />
-  <apn apn="ims" carrier="Lifecell IMS" mcc="255" mnc="06" mvno_match_data="Lifecell" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="internet" carrier="Lifecell Internet" mcc="255" mnc="06" mvno_match_data="Lifecell" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="Lifecell MMS" mcc="255" mmsc="http://mms.life" mmsport="8080" mmsproxy="10.10.10.10" mnc="06" mvno_match_data="Lifecell" mvno_type="spn" type="mms" />
-  <apn apn="internet" carrier="Life:) internet" carrier_id="1750" mcc="255" mnc="06" type="default,ia,supl" />
-  <apn apn="mms" carrier="Life:) MMS" carrier_id="1750" mcc="255" mmsc="http://mms.life.com.ua/cmmsc/post" mmsport="8080" mmsproxy="212.58.162.230" mnc="06" type="mms" />
-  <apn apn="3g.utel.ua" authtype="1" carrier="3Mob Internet" carrier_enabled="true" mcc="255" mnc="07" type="cbs,dun,fota,hipri,rcs" />
+  <apn apn="ims" carrier="Lifecell IMS" mcc="255" mnc="06" mvno_match_data="Lifecell" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="3g.utel.ua" authtype="1" carrier="3g.utel.ua" carrier_enabled="true" mcc="255" mmsc="http://10.212.1.4/mms/wapenc" mmsport="8080" mmsproxy="10.212.3.148" mnc="07" type="default,mms,supl" />
-  <apn apn="3g.utel.ua" carrier="3Mob Internet" mcc="255" mnc="07" mvno_match_data="3Mob" mvno_type="spn" type="default" />
-  <apn apn="3g.utel.ua" carrier="3Mob MMS" mcc="255" mmsc="http://10.212.1.4/mms/wapenc" mmsport="8080" mmsproxy="10.212.3.148" mnc="07" mvno_match_data="3Mob" mvno_type="spn" type="mms" />
   <apn apn="3g.utel.ua" carrier="Utel Internet" carrier_id="1751" mcc="255" mnc="07" type="default,ia,supl" />
   <apn apn="3g.utel.ua" carrier="Utel MMS" carrier_id="1751" mcc="255" mmsc="http://10.212.1.4/mms/wapenc" mmsport="8080" mmsproxy="10.212.3.148" mnc="07" type="mms" />
+  <apn apn="3g.utel.ua" authtype="1" carrier="3Mob Internet" carrier_enabled="true" mcc="255" mnc="07" type="cbs,dun,fota,hipri,rcs" />
+  <apn apn="3g.utel.ua" carrier="3Mob Internet" mcc="255" mnc="07" mvno_match_data="3Mob" mvno_type="spn" type="default" />
+  <apn apn="3g.utel.ua" carrier="3Mob MMS" mcc="255" mmsc="http://10.212.1.4/mms/wapenc" mmsport="8080" mmsproxy="10.212.3.148" mnc="07" mvno_match_data="3Mob" mvno_type="spn" type="mms" />
 </apns>
