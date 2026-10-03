@@ -4,6 +4,10 @@ title: "[docs-tooling] "
 labels:
   - documentation
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Remove every private value listed in [SECURITY.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/SECURITY.md) before you post, including from pasted logs.
   - type: dropdown
     id: area
     attributes:
@@ -34,3 +38,10 @@ body:
     attributes:
       label: Extra context
       placeholder: Links, commands, or small safe examples.
+  - type: checkboxes
+    id: privacy_check
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed every private value listed in [SECURITY.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/SECURITY.md).
+          required: true

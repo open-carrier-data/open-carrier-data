@@ -20,7 +20,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates are in `generated/devices/index.json` under `sources`. Samsung is checked daily, and on 2026-10-03 both dates are 2026-10-03. The oldest Samsung observation still sets `checks_through`, 2026-07-14 on that day.
+Four profile source names have no snapshot of the same name. `aosp` and `lineageos_device_overlays` map to differently named records. `samsung_omc` and `samsung_ims` have no snapshot record at all. Their check dates are in `generated/devices/index.json` under `sources`. Samsung is checked daily, and on 2026-10-03 both dates are 2026-10-03. The oldest Samsung observation still sets `checks_through`.
 
 To print the profile count per source name, run:
 
@@ -40,7 +40,7 @@ The refresh methods below, the AOSP branch name, and the Samsung scope rules com
 
 Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.
 
-Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. `checks_through` also follows the oldest observation review date. On 2026-10-03 every snapshot record was checked between 2026-09-24 and 2026-10-01, but the oldest Samsung observation is from 2026-07-14, so `stale_after` is 2027-01-10. That date moves only as the daily Samsung run re-extracts the observations from superseded firmware builds. Past that date `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. A weekly GitHub-hosted job re-checks every family except Samsung, which runs daily on the self-hosted runner.
+Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. `checks_through` also follows the oldest observation review date. The oldest Samsung observation is older than every snapshot check, so it sets the window, and the window moves only as the daily Samsung run re-extracts the observations from superseded firmware builds. To print the window, run `python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'`. Past `stale_after` `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. A weekly GitHub-hosted job re-checks every family except Samsung, which runs daily on the self-hosted runner.
 
 ## AOSP contributes CarrierConfig values and carrier IDs
 
@@ -92,4 +92,4 @@ python3 -c 'print(*sorted(s["name"] for s in __import__("json").load(open("gener
 
 ## Suggest a source through the issue form
 
-Use the `Maintained source suggestion` form under `.github/ISSUE_TEMPLATE/`. A usable source is refreshable by automation, has a clear carrier-data scope, and can be translated without publishing private material.
+Use the `Maintained source suggestion` form under `.github/ISSUE_TEMPLATE/`. What makes a source usable is defined in [CONTRIBUTING.md](CONTRIBUTING.md#suggest-a-maintained-source).

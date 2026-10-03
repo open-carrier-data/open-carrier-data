@@ -1,6 +1,6 @@
 # Generated files
 
-The Android files under `generated/android/` are produced from the carrier profiles in `carriers/open/`. The evidence index and the device catalog are published from the private repo. Never edit any of these files by hand.
+The Android files under `generated/android/` are produced from the carrier profiles in `carriers/open/`. The evidence index and the device catalog are published from the private repo. Never edit the data files here by hand; these README files are documentation.
 
 | Path | Meaning |
 | --- | --- |

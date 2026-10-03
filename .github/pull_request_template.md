@@ -9,13 +9,10 @@ Explain the problem this fixes.
 
 ## Safety Check
 
-- [ ] I did not include phone numbers, account data, personal passwords,
-      private vendor credentials, full IMSI values, full ICCID values, IMEI,
-      raw logs, raw bugreports, raw firmware dumps, or private vendor
-      responses.
+- [ ] I removed every private value listed in
+      [SECURITY.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/SECURITY.md).
 - [ ] If this changes carrier behavior, I included evidence or linked a
       maintained source.
-- [ ] I did not edit `carriers/open/` or `generated/` by hand.
 
 ## Checks
 

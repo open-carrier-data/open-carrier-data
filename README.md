@@ -47,7 +47,7 @@ On 2026-10-03 the output starts like this:
         "mms": "conditional",
 ```
 
-Profiles come back in generic-to-specific order. Apply each one as an overlay on the previous one. With `--mccmnc` alone only the broad profile returns. SPN, GID, IMSI, and ICCID profiles need their own flags.
+Profiles come back in generic-to-specific order. Apply each one as an overlay on the previous one. Capabilities are not inherited; see [docs/consume.md](docs/consume.md). With `--mccmnc` alone only the broad profile returns. SPN, GID, IMSI, and ICCID profiles need their own flags.
 
 ## What is in this repository
 
@@ -64,15 +64,13 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 
 ## Status on 2026-10-03
 
-The data republishes whenever a source changes, so these values drift. The commands below the table print the current ones.
+The data republishes whenever a source changes, so these values drift. The commands below the table print the current ones. The table leaves out the freshness window, which moves with every Samsung refresh. The commands print it.
 
 | Measure | Value |
 | --- | --- |
 | Carrier profiles | 7,827 |
 | Source names in profile evidence | 11 |
 | Source snapshot records | 10 |
-| Checks through | 2026-07-14 |
-| Stale after | 2027-01-10 |
 | Android devices in the device catalog | 42,401 |
 | Apple products in the device catalog | 183 |
 | Android identities with observed carrier data | 266 |
@@ -80,7 +78,7 @@ The data republishes whenever a source changes, so these values drift. The comma
 
 Eleven source names appear in profiles but only ten snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and `samsung_omc` and `samsung_ims` have no snapshot record. Their check dates are in `generated/devices/index.json`.
 
-Counts come from these commands, run from the repo root:
+Counts and the freshness window come from these commands, run from the repo root:
 
 ```bash
 ls carriers/open | wc -l
@@ -101,7 +99,7 @@ Read these before you depend on the data:
 - No profile has been verified on a phone. Every value comes from a maintained source, not from a test call.
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - When sources disagree on a CarrierConfig key, add-on, or APN row, the value is omitted. The conflict is listed in `generated/evidence-index.json`.
-- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. The status table above gives both on 2026-10-03. The oldest Samsung observations set `checks_through`. Samsung's lane runs daily on the owner's self-hosted runner. It re-confirms observations whose firmware build is still current and re-extracts up to 50 CSC packages per run. Observations from superseded builds keep their July dates until they are re-extracted, so `checks_through` moves only as that queue drains. A weekly GitHub-hosted job re-checks the other source families. Their check dates are in `generated/evidence-index.json` under `source_snapshots`. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens the day after `stale_after`.
+- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. The commands under the status table print both. The oldest Samsung observations set `checks_through`. Samsung's lane runs daily on the owner's self-hosted runner. It re-confirms observations whose firmware build is still current and re-extracts up to 50 CSC packages per run. Observations from superseded builds keep their July dates until they are re-extracted, so `checks_through` moves only as that queue drains. A weekly GitHub-hosted job re-checks the other source families. Their check dates are in `generated/evidence-index.json` under `source_snapshots`. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens the day after `stale_after`.
 - A device listed in `generated/devices/` is an inventory fact. It is not a support claim. A device is covered only when carrier evidence names that exact identity. `generated/devices/README.md` defines the rule and the one command that prints the number.
 
 ## How it is built
@@ -116,7 +114,7 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 ## How to contribute
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. There is no automated path for community carrier data yet. A correction reaches stable data only through a maintained source or a maintainer-curated change.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data only through a maintained source or a maintainer-curated change.
 
 ## License
 
