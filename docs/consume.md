@@ -105,6 +105,37 @@ On 2026-10-03 the first lines of the output are:
 
 The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. Overlay APN rows and CarrierConfig keys. For capabilities, report the most specific profile's value; an `unknown` there means no usable source for this brand, and the host network's value is only the host's. A value is what carrier tables configure, not a test result. `supported` means at least one phone maker's or OS carrier table turns the feature on for this SIM and none turns it off, and the feature may still be off on a given phone or on phones the carrier has not approved. `unsupported` means the operator's own configuration, or two independent source families, turn it off. One maker's off alone is `unknown`. To see which source families turn a capability on and which turn it off, read `capability_sources` in `generated/evidence-index.json`.
 
+### Ask why with --explain
+
+`--explain` answers why a SIM gets what it gets. It prints, as JSON:
+
+- `profiles`: the profile stack, generic to specific, with each profile's sources, `newest_entry` and freshness window.
+- `capabilities`: per capability, the value each profile gives, the sources that turn it on or off (`capability_sources`), any gate that withheld it, and `answer`, the most specific profile's value, with `answer_from`.
+- `android_carrier_config` and `addons`: per key, the value each profile gives with the sources behind it (`fact_sources`, or all the profile's sources when it lists none), and `applied`, the value left after overlaying generic to specific.
+- `apns`: the rows Android 16 gives this SIM, in `apns-conf.xml` order: the rows of its MVNO selector when any match (`scope: mvno`), otherwise the plain rows of its network (`scope: network`). Each row has its `position`, its attributes, its `lead_type` and the ranking `reasons`: whether the APN is a real name, the source families and primary sources behind its APN value and behind the row itself, and the row's sources. [how-it-is-built.md](how-it-is-built.md#how-the-android-apn-file-is-ordered) explains the order.
+
+It reads `generated/android/lookup.json`, the profile files, and `generated/evidence-index.json` (`--evidence-index` names another one). Rows that carry a carrier id and no network code are not listed; no profile produces them on 2026-10-04.
+
+```bash
+python3 tools/resolve_carrier_profiles.py --mccmnc 26201 --spn Telekom.de --android-carrier-id 3 --explain
+```
+
+On 2026-10-04 a Telekom SIM with SPN `Telekom.de` and carrier id 3 resolves three profiles. The plain 26201 profile says VoLTE `supported`, from seven sources; the SPN profile says `supported` from Samsung OMC; the most specific profile, SPN plus carrier id, rests on AOSP alone and gives no VoLTE value, so `answer` is `unknown`:
+
+```text
+"volte": {
+  "answer": "unknown",
+  "answer_from": "open.26201.420d035152c1",
+  "by_profile": [
+    {"profile_id": "open.26201.13528695fee7", "value": "supported", "on": ["apple_carrier_bundles", "google_carriersettings", "google_pixel_vendor_carriersettings", "lineageos_device_overlays", "samsung_ims", "samsung_omc", "sony_open_devices_aosp"]},
+    {"profile_id": "open.26201.1f7e1db680d5", "value": "supported", "on": ["samsung_omc"]},
+    {"profile_id": "open.26201.420d035152c1", "value": "unknown"}
+  ]
+}
+```
+
+The same command without `--spn` and `--android-carrier-id` shows the plain 26201 rows: first `internet.telekom` (IPV4V6), whose APN value four source families give for `default` (the AOSP-derived lists, Apple, Google and GNOME), then `internet.v6.telekom`.
+
 When sources disagree on one APN, `apns-conf.xml` carries every variant, and the variant most sources back comes first. Rows that Android treats as one APN, because they differ only in their label, their type set, or an attribute that repeats TelephonyProvider's default, are collapsed into one row with the union of their types. [how-it-is-built.md](how-it-is-built.md#how-the-android-apn-file-is-ordered) gives the ranking. To pick per type yourself, read `fact_sources` in `generated/evidence-index.json`; [data-model.md](data-model.md) gives the key of each APN fact.
 
 Every row carries `mcc` and `mnc`. A row whose profile or source names an Android carrier id also carries `carrier_id`, the shape of AOSP's own `apns-full-conf.xml`.

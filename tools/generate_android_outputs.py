@@ -460,6 +460,64 @@ def apn_scope_key(record: dict[str, Any]) -> tuple[Any, ...]:
     )
 
 
+class RowRank(NamedTuple):
+    """Why a row sits where it does in its scope, for its lead type: the first
+    type of APN_TYPE_PRIORITY it serves (None when it serves none of them).
+    The sources are those that give this APN value for the lead type anywhere
+    in the scope, and those that back this exact row."""
+
+    lead_type: str | None
+    placeholder: bool
+    value_sources: frozenset[str]
+    row_sources: frozenset[str]
+
+    def sort_key(self) -> tuple[Any, ...]:
+        lead = (
+            APN_TYPE_PRIORITY.index(self.lead_type)
+            if self.lead_type is not None
+            else len(APN_TYPE_PRIORITY)
+        )
+        if self.lead_type is None:
+            return (lead, ())
+        return (
+            lead,
+            (
+                self.placeholder,
+                -len(source_families(self.value_sources)),
+                not self.value_sources & PRIMARY_APN_SOURCES,
+                -len(source_families(self.row_sources)),
+                not self.row_sources & PRIMARY_APN_SOURCES,
+                -len(self.row_sources),
+            ),
+        )
+
+
+def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
+    """The RowRank of each row of one scope, in the order given."""
+    apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for record in records:
+        apn = str(record["apn"]).casefold()
+        for apn_type, sources in record.get("_support", {}).items():
+            apn_sources[(apn, apn_type)].update(sources)
+    ranks: list[RowRank] = []
+    for record in records:
+        types = set(apn_row_types(record["type"]))
+        lead_type = next((apn_type for apn_type in APN_TYPE_PRIORITY if apn_type in types), None)
+        apn = str(record["apn"]).casefold()
+        if lead_type is None:
+            ranks.append(RowRank(None, apn in PLACEHOLDER_APNS, frozenset(), frozenset()))
+            continue
+        ranks.append(
+            RowRank(
+                lead_type,
+                apn in PLACEHOLDER_APNS,
+                frozenset(apn_sources.get((apn, lead_type), set())),
+                frozenset(record.get("_support", {}).get(lead_type, frozenset())),
+            )
+        )
+    return ranks
+
+
 def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Order the rows of one scope so the best-backed row comes first. A row's
     lead type is the first type of APN_TYPE_PRIORITY it serves, so every row
@@ -474,38 +532,15 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     6. the row more sources back.
 
     A row is backed for a type by the sources whose observations support it.
-    Rows still tied keep the fallback order: APN, types, label."""
-    apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
-    for record in records:
-        apn = str(record["apn"]).casefold()
-        for apn_type, sources in record.get("_support", {}).items():
-            apn_sources[(apn, apn_type)].update(sources)
-
-    def type_rank(record: dict[str, Any], apn_type: str) -> tuple[Any, ...]:
-        apn = str(record["apn"]).casefold()
-        value_sources = apn_sources.get((apn, apn_type), set())
-        row_sources = record.get("_support", {}).get(apn_type, frozenset())
-        return (
-            apn in PLACEHOLDER_APNS,
-            -len(source_families(value_sources)),
-            not value_sources & PRIMARY_APN_SOURCES,
-            -len(source_families(row_sources)),
-            not row_sources & PRIMARY_APN_SOURCES,
-            -len(row_sources),
+    Rows still tied keep the fallback order: APN, types, label.
+    scope_row_ranks gives the reasons, which the resolver's --explain prints."""
+    ranked = zip(scope_row_ranks(records), records)
+    return [
+        record
+        for _rank, record in sorted(
+            ranked, key=lambda item: (*item[0].sort_key(), fallback_order_key(item[1]))
         )
-
-    def row_rank(record: dict[str, Any]) -> tuple[Any, ...]:
-        types = set(apn_row_types(record["type"]))
-        lead = next(
-            (index for index, apn_type in enumerate(APN_TYPE_PRIORITY) if apn_type in types),
-            len(APN_TYPE_PRIORITY),
-        )
-        evidence = (
-            type_rank(record, APN_TYPE_PRIORITY[lead]) if lead < len(APN_TYPE_PRIORITY) else ()
-        )
-        return (lead, evidence, fallback_order_key(record))
-
-    return sorted(records, key=row_rank)
+    ]
 
 
 def apn_xml_rows(
