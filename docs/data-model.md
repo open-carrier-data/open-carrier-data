@@ -63,6 +63,8 @@ Every capability takes one of four values. A value says what carrier tables conf
 
 Apple and Samsung publish only what they turn on, so their offs never count. Source names that copy one origin count as one family: the LineageOS, Sony and Fairphone APN lists, the two Google lanes, and Samsung's two lanes. The operator's own configuration is Google's settings for its Google Fi service and an AOSP CarrierConfig file the carrier itself submitted; [how-it-is-built.md](how-it-is-built.md) lists them. `capability_sources` in the evidence index names, for each capability, the source families that turn it on and those that turn it off.
 
+Samsung's `vonr` says less than a table that turns VoNR on. It comes from Samsung's carrier pack (OMC): when the pack's Mobile networks menu feature carries the token `+vonrcall`, Samsung's settings offer a "VoNR (Voice over 5G)" switch for that carrier on that model. So `supported` from Samsung means that Samsung offers the switch on the models the evidence index lists. It does not mean VoNR is on by default, and it is not a field test. A model without the token leaves VoNR `unknown`, not `unsupported`: Vodafone Germany, for one, runs VoNR on Samsung phones that show no switch. Test and lab networks (MCC 001 and 999, test equipment and lab entries) get no value, and neither does a SIM that a KT phone dims the switch for. The value never becomes a CarrierConfig key, so `carrier-config-list.xml` gets no `vonr_*` key from it. `capability_basis` in the evidence index names this basis with the Samsung sales codes and models behind it.
+
 ## Android carrier config
 
 `android_carrier_config` holds a reviewed subset of Android CarrierConfig keys. The schema names 117 allowed keys. Count them with this command:
@@ -177,6 +179,7 @@ Each `profiles` record describes one carrier profile.
 | `verified_observation_count` | every record | observations confirmed on a device, `0` for every profile on 2026-09-23 |
 | `fact_sources` | every record | list of `section`, `key`, `sources` for only the CarrierConfig, APN and add-on facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources`. An APN fact is one row with one of its types, and its key is described below the table. Capabilities are in `capability_sources` |
 | `capability_sources` | some records | capability name to `on`, `off` and `conditional`, each a list of the sources whose observations turn the capability on, turn it off, or call it conditional. It lists every capability a source gives a value, whatever the profile publishes, and is present whenever the profile publishes a capability other than `unknown` |
+| `capability_basis` | some records | capability name to what its value rests on, where a source's `on` says less than a table that turns the feature on. Only `vonr` from `samsung_omc` has one, with `basis` `samsung_vonr_switch`; it is described below the table |
 | `observed_scope` | some records | device and firmware scope of the observations |
 | `observed_model_source_groups` | some records | `models` and `sources` pairs when a model was named by fewer sources than the profile |
 | `reviewed_range` | some records | `oldest` and `newest` review dates |
@@ -187,6 +190,8 @@ Each `profiles` record describes one carrier profile.
 | `source_versions` | some records | per source family, the exact builds, commits, or Apple bundle and iOS versions the observations were read from |
 
 The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digits of the SHA-256 of the row as compact JSON: the row without `name`, `types` set to the one type, keys sorted, no spaces, non-ASCII characters escaped. In Python that is `json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`. `apn_fact_key` in `tools/generate_android_outputs.py` computes it, and the generator uses it to order APN rows.
+
+`capability_basis` maps a capability to one object. `basis` is `samsung_vonr_switch`: Samsung's settings offer the VoNR switch for the carrier. `source` is the source family, which `capability_sources` also lists under `on`. `sales_codes` are the Samsung carrier pack codes whose pack carries the switch token, sorted, all in `observed_scope.sales_codes`. `model_count` counts the models whose pack carries it; the profile's other Samsung models leave VoNR unknown. Up to 24 models are named in `models`, sorted, all in `observed_scope.models`; more are given as `models_sha256`, the SHA-256 in hex of the sorted model names joined by newline characters. Like `capability_sources`, it appears whatever the profile publishes, so a `conditional` VoNR still names it. The validator checks all of this.
 
 `observed_scope` can hold `models`, `android_majors`, `firmware_builds`, `firmware_regions`, `sales_codes`, `multi_csc`, `omc_revisions`, `omc_versions`, and `source_layers`. `source_layers` is `firmware_baseline` or `gras_delta`.
 

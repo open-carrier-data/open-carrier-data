@@ -596,6 +596,126 @@ def check_source_versions(evidence_path: Path, profile_ids: set[str]) -> None:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
 
+def check_capability_basis(evidence_path: Path, profile_ids: set[str]) -> None:
+    """capability_basis is optional. Samsung OMC's vonr names the Samsung VoNR
+    switch offer with its sales codes and models: the models by name up to
+    24, otherwise their count and SHA-256. The source must turn the capability
+    on, and the sales codes and models must be in the observed scope."""
+    old_shape = evidence_path.read_text(encoding="utf-8")
+    target = sorted(profile_ids)[0]
+    models = [f"SM-S9{index:02d}U" for index in range(30)]
+
+    def based(basis: object, scope_models: list[str] | None = None, on: list[str] | None = None) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == target:
+                profile["sources"] = sorted(set(profile["sources"]) | {"samsung_omc"})
+                profile["fact_sources"] = []
+                profile.pop("observed_model_source_groups", None)
+                profile.pop("source_versions", None)
+                profile["observed_scope"] = {
+                    "models": scope_models if scope_models is not None else models,
+                    "sales_codes": ["TMB", "XAG"],
+                }
+                profile["capability_sources"] = {"vonr": {"on": on or ["samsung_omc"]}}
+                profile["capability_basis"] = basis
+        return value
+
+    def validate(value: dict) -> None:
+        write_profile(evidence_path, value)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+
+    def expect_failure(value: dict, message: str) -> None:
+        try:
+            validate(value)
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    listed = {
+        "basis": "samsung_vonr_switch",
+        "source": "samsung_omc",
+        "sales_codes": ["TMB"],
+        "model_count": 2,
+        "models": models[:2],
+    }
+    digest = hashlib.sha256("\n".join(models).encode("utf-8")).hexdigest()
+    hashed = {
+        "basis": "samsung_vonr_switch",
+        "source": "samsung_omc",
+        "sales_codes": ["TMB", "XAG"],
+        "model_count": 30,
+        "models_sha256": digest,
+    }
+    try:
+        validate(json.loads(old_shape))
+        validate(based({"vonr": listed}))
+        validate(based({"vonr": hashed}))
+        expect_failure(based({}), "an empty capability_basis passed")
+        expect_failure(based({"volte": listed}), "the VoNR switch as a VoLTE basis passed")
+        expect_failure(based({"telepathy": listed}), "an unknown capability passed")
+        expect_failure(
+            based({"vonr": {**listed, "basis": "samsung_default_on"}}), "an unknown basis passed"
+        )
+        expect_failure(
+            based({"vonr": {**listed, "source": "aosp"}}), "the switch from another source passed"
+        )
+        expect_failure(
+            based({"vonr": listed}, on=["aosp"]),
+            "a basis whose source does not turn the capability on passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "sales_codes": ["KTC"]}}),
+            "a sales code outside the observed scope passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "sales_codes": []}}), "an empty sales code list passed"
+        )
+        expect_failure(
+            based({"vonr": {**listed, "sales_codes": ["XAG", "TMB"]}}),
+            "an unsorted sales code list passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "model_count": 3}}), "a model count that disagrees passed"
+        )
+        expect_failure(
+            based({"vonr": {**listed, "models": ["SM-X000"], "model_count": 1}}),
+            "a model outside the observed scope passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "models": models[1::-1]}}), "an unsorted model list passed"
+        )
+        expect_failure(
+            based({"vonr": {**listed, "models": models[:25], "model_count": 25}}),
+            "more than 24 listed models passed",
+        )
+        expect_failure(
+            based({"vonr": {**hashed, "model_count": 24}}),
+            "a digest for a list short enough to name passed",
+        )
+        expect_failure(
+            based({"vonr": {**hashed, "model_count": 31}}),
+            "more models than the profile observed passed",
+        )
+        expect_failure(
+            based({"vonr": {**hashed, "models_sha256": digest.upper()}}),
+            "a malformed digest passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "models_sha256": digest}}),
+            "both a model list and a digest passed",
+        )
+        expect_failure(
+            based({"vonr": {key: value for key, value in listed.items() if key != "model_count"}}),
+            "a basis without a model count passed",
+        )
+        expect_failure(
+            based({"vonr": {**listed, "default_on": True}}), "an unknown basis field passed"
+        )
+    finally:
+        evidence_path.write_text(old_shape, encoding="utf-8")
+
+
 def check_apn_variant_sources_and_removal_gates(
     evidence_path: Path, profile_ids: set[str]
 ) -> None:
@@ -784,6 +904,7 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
         check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
+        check_capability_basis(evidence_path, profile_ids)
         check_apn_variant_sources_and_removal_gates(evidence_path, profile_ids)
     finally:
         evidence_path.write_text(original, encoding="utf-8")

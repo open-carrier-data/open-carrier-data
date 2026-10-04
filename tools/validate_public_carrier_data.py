@@ -1031,6 +1031,94 @@ def validate_capability_sources(
             raise ValidationError(f"{path}: {label} lacks published {missing}")
 
 
+# What a capability value rests on where a source's on says less than a
+# configuration that turns the feature on. Each basis belongs to one capability
+# and one source: Samsung OMC's vonr means Samsung's settings offer the VoNR
+# switch for the carrier on the listed models, not that VoNR is on by default.
+CAPABILITY_BASES = {
+    "samsung_vonr_switch": {"capability": "vonr", "source": "samsung_omc"},
+}
+# Up to this many models are listed by name; more are given as the SHA-256 of
+# their sorted names joined by newlines.
+MAX_LISTED_BASIS_MODELS = 24
+SALES_CODE_RE = re.compile(r"[A-Z0-9]{2,8}")
+
+
+def validate_capability_basis(
+    path: Path,
+    evidence: dict[str, Any],
+    index: int,
+    sources: list[str],
+) -> None:
+    """capability_basis is optional. It maps a capability to what its value
+    rests on, one of CAPABILITY_BASES: the basis, its source (a profile source
+    that turns the capability on in capability_sources), the sales codes and
+    the number of models behind it, and either the models (sorted, unique, at
+    most MAX_LISTED_BASIS_MODELS, all in observed_scope.models) or the SHA-256
+    of their sorted names. The sales codes are in observed_scope.sales_codes."""
+    if "capability_basis" not in evidence:
+        return
+    label = f"profiles[{index}].capability_basis"
+    value = evidence["capability_basis"]
+    require_type(path, value, dict, label)
+    if not value:
+        raise ValidationError(f"{path}: {label} is empty")
+    scope = evidence.get("observed_scope") if isinstance(evidence.get("observed_scope"), dict) else {}
+    capability_sources = evidence.get("capability_sources")
+    if not isinstance(capability_sources, dict):
+        capability_sources = {}
+    for key, basis in value.items():
+        item_label = f"{label}.{key}"
+        if key not in CAPABILITY_KEYS:
+            raise ValidationError(f"{path}: {label} names an unknown capability")
+        require_type(path, basis, dict, item_label)
+        listed = "models" in basis
+        expected_keys = {"basis", "source", "sales_codes", "model_count"} | (
+            {"models"} if listed else {"models_sha256"}
+        )
+        if set(basis) != expected_keys:
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        kind = CAPABILITY_BASES.get(basis["basis"])
+        if kind is None or kind["capability"] != key:
+            raise ValidationError(f"{path}: {item_label}.basis is invalid")
+        source = basis["source"]
+        if source != kind["source"] or source not in sources:
+            raise ValidationError(f"{path}: {item_label}.source is invalid")
+        if source not in (capability_sources.get(key) or {}).get("on", []):
+            raise ValidationError(
+                f"{path}: {item_label} rests on a source that does not turn {key} on"
+            )
+        sales_codes = basis["sales_codes"]
+        validate_canonical_list(path, sales_codes, f"{item_label}.sales_codes")
+        if (
+            not sales_codes
+            or not all(isinstance(code, str) and SALES_CODE_RE.fullmatch(code) for code in sales_codes)
+            or not set(sales_codes) <= set(scope.get("sales_codes", []))
+        ):
+            raise ValidationError(f"{path}: {item_label}.sales_codes is invalid")
+        count = basis["model_count"]
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+            raise ValidationError(f"{path}: {item_label}.model_count is invalid")
+        if listed:
+            models = basis["models"]
+            validate_canonical_list(path, models, f"{item_label}.models")
+            if (
+                len(models) != count
+                or count > MAX_LISTED_BASIS_MODELS
+                or not set(models) <= set(scope.get("models", []))
+            ):
+                raise ValidationError(f"{path}: {item_label}.models is invalid")
+        else:
+            digest = basis["models_sha256"]
+            if (
+                not isinstance(digest, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", digest)
+                or count <= MAX_LISTED_BASIS_MODELS
+                or count > len(scope.get("models", []))
+            ):
+                raise ValidationError(f"{path}: {item_label}.models_sha256 is invalid")
+
+
 def validate_evidence_index(
     path: Path,
     expected_profile_ids: set[str],
@@ -1130,6 +1218,7 @@ def validate_evidence_index(
         "capability_newest_entries",
         "source_versions",
         "capability_sources",
+        "capability_basis",
     }
     scope_keys = {
         "models",
@@ -1313,6 +1402,7 @@ def validate_evidence_index(
             sources,
             None if profile_capabilities is None else profile_capabilities.get(profile_id),
         )
+        validate_capability_basis(path, evidence, index, sources)
     if actual_profile_ids != sorted(actual_profile_ids):
         raise ValidationError(f"{path}: profiles must be sorted by profile_id")
     if set(actual_profile_ids) != expected_profile_ids or len(actual_profile_ids) != len(
