@@ -703,27 +703,70 @@ def validate_generated_files(generated_dir: Path) -> None:
         )
 
 
-def validate_resolution_items(path: Path, items: Any, expected_kind: str, name: str) -> None:
+RESOLUTION_ITEM_KEYS = {"kind", "section", "key", "observed_value_count", "resolution"}
+APN_FACT_KEY_RE = re.compile(r"sha256:[0-9a-f]{16}")
+
+
+def validate_resolution_items(
+    path: Path,
+    items: Any,
+    expected_kind: str,
+    name: str,
+    sources: list[str] | None = None,
+) -> None:
     require_type(path, items, list, name)
     for index, item in enumerate(items):
         require_type(path, item, dict, f"{name}[{index}]")
-        if set(item) != {
-            "kind",
-            "section",
-            "key",
-            "observed_value_count",
-            "resolution",
-        }:
-            raise ValidationError(f"{path}: {name}[{index}] has invalid keys")
+        label = f"{name}[{index}]"
+        if set(item) - {"variant_sources"} != RESOLUTION_ITEM_KEYS:
+            raise ValidationError(f"{path}: {label} has invalid keys")
         if item["kind"] != expected_kind:
-            raise ValidationError(f"{path}: {name}[{index}].kind is invalid")
-        validate_string(path, item["section"], f"{name}[{index}].section", 80)
-        validate_string(path, item["key"], f"{name}[{index}].key", 160)
+            raise ValidationError(f"{path}: {label}.kind is invalid")
+        validate_string(path, item["section"], f"{label}.section", 80)
+        validate_string(path, item["key"], f"{label}.key", 160)
         count = item["observed_value_count"]
         if not isinstance(count, int) or isinstance(count, bool) or count < 1:
-            raise ValidationError(f"{path}: {name}[{index}].observed_value_count is invalid")
+            raise ValidationError(f"{path}: {label}.observed_value_count is invalid")
         if item["resolution"] not in {"conditional", "omitted_from_stable", "published_variants"}:
-            raise ValidationError(f"{path}: {name}[{index}].resolution is invalid")
+            raise ValidationError(f"{path}: {label}.resolution is invalid")
+        if "variant_sources" in item:
+            validate_variant_sources(path, item, label, sources)
+
+
+def validate_variant_sources(
+    path: Path, item: dict[str, Any], label: str, sources: list[str] | None
+) -> None:
+    """variant_sources names, for each variant of an APN conflict, the profile
+    sources that gave it: one entry per variant, keyed by the APN fact key of
+    the variant (data-model.md), sorted by key."""
+    if (
+        item["kind"] != "conflict"
+        or item["section"] != "android_apns"
+        or item["resolution"] != "published_variants"
+    ):
+        raise ValidationError(f"{path}: {label}.variant_sources belongs only to APN variants")
+    variants = item["variant_sources"]
+    require_type(path, variants, list, f"{label}.variant_sources")
+    if len(variants) != item["observed_value_count"]:
+        raise ValidationError(
+            f"{path}: {label}.variant_sources must name every observed variant"
+        )
+    keys: list[str] = []
+    for variant_index, variant in enumerate(variants):
+        variant_label = f"{label}.variant_sources[{variant_index}]"
+        require_type(path, variant, dict, variant_label)
+        if set(variant) != {"key", "sources"}:
+            raise ValidationError(f"{path}: {variant_label} has invalid keys")
+        if not isinstance(variant["key"], str) or not APN_FACT_KEY_RE.fullmatch(variant["key"]):
+            raise ValidationError(f"{path}: {variant_label}.key is not an APN fact key")
+        keys.append(variant["key"])
+        validate_canonical_list(path, variant["sources"], f"{variant_label}.sources")
+        if not variant["sources"] or (
+            sources is not None and not set(variant["sources"]) <= set(sources)
+        ):
+            raise ValidationError(f"{path}: {variant_label}.sources is invalid")
+    if keys != sorted(set(keys)):
+        raise ValidationError(f"{path}: {label}.variant_sources must be sorted and unique")
 
 
 def validate_entry_dates(
@@ -827,6 +870,31 @@ CAPABILITY_GATING_CONFIG_KEYS = {
     "support_conference_call_bool": "ims_conference",
 }
 CAPABILITY_SOURCE_KINDS = {"on", "off", "conditional"}
+# APN rows LineageOS removed from its list, left out of a profile because no
+# source gives them with an entry newer than the removal. The key names the
+# android_vendor_apn commit first seen without the rows; the count is the rows
+# left out of this profile.
+LINEAGEOS_APN_REMOVED_GATE = "lineageos_apn_removed"
+LINEAGEOS_APN_REMOVED_RE = re.compile(rf"{LINEAGEOS_APN_REMOVED_GATE}:[0-9a-f]{{40}}")
+
+
+def validate_apn_removal_gates(path: Path, gates: list[dict[str, Any]], index: int) -> None:
+    """A lineageos_apn_removed gate names one full android_vendor_apn commit,
+    once, in the APN section, as an omission."""
+    seen: set[str] = set()
+    for gate_index, gate in enumerate(gates):
+        if gate["key"].partition(":")[0] != LINEAGEOS_APN_REMOVED_GATE:
+            continue
+        label = f"profiles[{index}].quality_gates[{gate_index}]"
+        if (
+            not LINEAGEOS_APN_REMOVED_RE.fullmatch(gate["key"])
+            or gate["section"] != "android_apns"
+            or gate["resolution"] != "omitted_from_stable"
+        ):
+            raise ValidationError(f"{path}: {label} is not a valid {LINEAGEOS_APN_REMOVED_GATE} gate")
+        if gate["key"] in seen:
+            raise ValidationError(f"{path}: {label} repeats a removal commit")
+        seen.add(gate["key"])
 
 
 def validate_stale_capability_gates(
@@ -1182,7 +1250,11 @@ def validate_evidence_index(
         )
         if "conflicts" in evidence:
             validate_resolution_items(
-                path, evidence["conflicts"], "conflict", f"profiles[{index}].conflicts"
+                path,
+                evidence["conflicts"],
+                "conflict",
+                f"profiles[{index}].conflicts",
+                sources,
             )
         if "quality_gates" in evidence:
             validate_resolution_items(
@@ -1190,7 +1262,9 @@ def validate_evidence_index(
                 evidence["quality_gates"],
                 "quality_gate",
                 f"profiles[{index}].quality_gates",
+                sources,
             )
+            validate_apn_removal_gates(path, evidence["quality_gates"], index)
             validate_stale_capability_gates(
                 path,
                 evidence["quality_gates"],

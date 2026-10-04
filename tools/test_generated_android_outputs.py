@@ -557,6 +557,126 @@ def check_source_versions(evidence_path: Path, profile_ids: set[str]) -> None:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
 
+def check_apn_variant_sources_and_removal_gates(
+    evidence_path: Path, profile_ids: set[str]
+) -> None:
+    """An APN variant conflict may name, per variant, the sources that gave
+    it, and a lineageos_apn_removed gate names one full LineageOS commit in
+    the APN section."""
+    old_shape = evidence_path.read_text(encoding="utf-8")
+    first_id = sorted(profile_ids)[0]
+    key_a = "sha256:" + "a" * 16
+    key_b = "sha256:" + "b" * 16
+    commit = "3169b43c" + "0" * 32
+
+    def conflict(**extra: object) -> dict:
+        return {
+            "kind": "conflict",
+            "section": "android_apns",
+            "key": "type:default:selector:" + "c" * 16,
+            "observed_value_count": 2,
+            "resolution": "published_variants",
+            **extra,
+        }
+
+    def gate(key: str, section: str = "android_apns", resolution: str = "omitted_from_stable") -> dict:
+        return {
+            "kind": "quality_gate",
+            "section": section,
+            "key": key,
+            "observed_value_count": 3,
+            "resolution": resolution,
+        }
+
+    def shaped(conflicts: list | None = None, gates: list | None = None) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == first_id:
+                if conflicts is not None:
+                    profile["conflicts"] = conflicts
+                if gates is not None:
+                    profile["quality_gates"] = gates
+        return value
+
+    def validate(value: dict) -> None:
+        write_profile(evidence_path, value)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+
+    def expect_failure(value: dict, message: str) -> None:
+        try:
+            validate(value)
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    variants = [
+        {"key": key_a, "sources": ["aosp", "lineageos"]},
+        {"key": key_b, "sources": ["lineageos"]},
+    ]
+    try:
+        validate(shaped([conflict()]))
+        validate(shaped([conflict(variant_sources=variants)]))
+        expect_failure(
+            shaped([conflict(variant_sources=variants[:1])]),
+            "variant_sources that miss a variant passed",
+        )
+        expect_failure(
+            shaped([conflict(variant_sources=list(reversed(variants)))]),
+            "unsorted variant_sources passed",
+        )
+        expect_failure(
+            shaped([conflict(variant_sources=[variants[0], {"key": key_b, "sources": ["samsung_omc"]}])]),
+            "a variant source the profile does not name passed",
+        )
+        expect_failure(
+            shaped([conflict(variant_sources=[variants[0], {"key": "internet.example", "sources": ["aosp"]}])]),
+            "a variant keyed by anything but an APN fact key passed",
+        )
+        expect_failure(
+            shaped([conflict(variant_sources=[variants[0], {"key": key_b, "sources": []}])]),
+            "a variant without sources passed",
+        )
+        expect_failure(
+            shaped(
+                [
+                    {
+                        **conflict(variant_sources=variants),
+                        "section": "android_carrier_config",
+                        "resolution": "omitted_from_stable",
+                    }
+                ]
+            ),
+            "variant_sources outside an APN variant conflict passed",
+        )
+        validate(shaped(gates=[gate("lineageos_apn_removed:" + commit)]))
+        validate(
+            shaped(
+                gates=[
+                    gate("lineageos_apn_removed:" + commit),
+                    gate("lineageos_apn_removed:" + "e003409d" + "1" * 32),
+                ]
+            )
+        )
+        expect_failure(
+            shaped(gates=[gate("lineageos_apn_removed:" + commit[:12])]),
+            "a removal gate with an abbreviated commit passed",
+        )
+        expect_failure(
+            shaped(gates=[gate("lineageos_apn_removed:" + commit, section="capabilities")]),
+            "a removal gate outside the APN section passed",
+        )
+        expect_failure(
+            shaped(gates=[gate("lineageos_apn_removed:" + commit, resolution="conditional")]),
+            "a removal gate that is not an omission passed",
+        )
+        expect_failure(
+            shaped(gates=[gate("lineageos_apn_removed:" + commit), gate("lineageos_apn_removed:" + commit)]),
+            "a removal commit named twice passed",
+        )
+    finally:
+        evidence_path.write_text(old_shape, encoding="utf-8")
+
+
 def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
     """The evidence index carries no constant markers, no redistribution class,
     and only fact_sources entries narrower than the profile's sources."""
@@ -625,6 +745,7 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
         check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
+        check_apn_variant_sources_and_removal_gates(evidence_path, profile_ids)
     finally:
         evidence_path.write_text(original, encoding="utf-8")
 
