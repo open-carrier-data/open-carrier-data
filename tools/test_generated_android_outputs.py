@@ -216,6 +216,45 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         write_profile(metadata_path, {**metadata, "stale_after": "2027-01-06"})
         assert_true(validate() == "", "matching metadata freshness window was rejected")
 
+        # The early alarm for a stopped pipeline: the newest source check (the
+        # snapshot was checked on 2026-07-13) or the last publish more than 21
+        # days ago, long before stale_after.
+        assert_true(
+            validate_public_carrier_data.LIVENESS_MAX_AGE_DAYS == 21,
+            "the liveness limit is one named constant of 21 days",
+        )
+        set_today("2026-08-03")
+        assert_true(
+            validate("--liveness", "fail") == "", "a source checked 21 days ago passed as alive"
+        )
+        set_today("2026-08-04")
+        assert_true(validate() == "", "liveness must be off unless asked for")
+        assert_true(
+            validate("--liveness", "warn")
+            == "warning: the pipeline looks stopped: the newest source check was on "
+            "2026-07-13, 22 days ago (more than 21 days)\n",
+            "warn mode did not print the liveness warning",
+        )
+        assert_rejected(
+            "a newest source check 22 days old passed in fail mode",
+            "--liveness",
+            "fail",
+            reason="the newest source check was on 2026-07-13",
+        )
+        set_today("2026-08-03")
+        assert_rejected(
+            "a last publish 22 days old passed in fail mode",
+            "--liveness",
+            "fail",
+            "--last-publish",
+            "2026-07-12",
+            reason="the last data publish was on 2026-07-12, 22 days ago",
+        )
+        assert_true(
+            validate("--liveness", "fail", "--last-publish", "2026-07-13") == "",
+            "a publish 21 days ago passed as alive",
+        )
+
         set_today("2027-01-19")
         stderr = io.StringIO()
         with contextlib.redirect_stderr(stderr):

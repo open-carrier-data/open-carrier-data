@@ -23,6 +23,14 @@ from lineageos_apns import fits_lineageos_schema
 
 STALE_AFTER_DAYS = 180
 FRESHNESS_MODES = ("warn", "fail")
+# The early alarm for a stopped pipeline. stale_after says when the data is too
+# old to ship, about six months after the oldest check. A pipeline that stops
+# shows much sooner: the weekly import re-checks every source, and each check
+# reaches this repo with a publish. When the newest source check, or the last
+# data publish, is older than this many days, three weekly runs in a row were
+# missed.
+LIVENESS_MAX_AGE_DAYS = 21
+LIVENESS_MODES = ("off", "warn", "fail")
 FRESHNESS_KEYS = {"checks_through", "stale_after"}
 
 SCHEMA_DIR = Path(__file__).resolve().parents[1] / "schemas"
@@ -255,6 +263,41 @@ def check_freshness(window: FreshnessWindow, mode: str) -> None:
     message = (
         f"snapshot is past stale_after {window.stale_after} "
         f"(checks_through {window.checks_through})"
+    )
+    if mode == "fail":
+        raise ValidationError(message)
+    print(f"warning: {message}", file=sys.stderr)
+
+
+def newest_source_check(evidence_index_path: Path) -> date | None:
+    """The newest checked_at among the evidence index's source snapshots."""
+    if not evidence_index_path.exists():
+        return None
+    dates = [
+        date.fromisoformat(snapshot["checked_at"])
+        for snapshot in load_json(evidence_index_path).get("source_snapshots", [])
+        if isinstance(snapshot, dict) and isinstance(snapshot.get("checked_at"), str)
+    ]
+    return max(dates) if dates else None
+
+
+def check_liveness(newest_check: date | None, last_publish: date | None, mode: str) -> None:
+    """Warn, or fail, when the newest source check or the last data publish is
+    more than LIVENESS_MAX_AGE_DAYS old."""
+    if mode == "off":
+        return
+    today = utc_today()
+    late = [
+        f"the {name} was on {day}, {(today - day).days} days ago"
+        for name, day in (("newest source check", newest_check), ("last data publish", last_publish))
+        if day is not None and (today - day).days > LIVENESS_MAX_AGE_DAYS
+    ]
+    if not late:
+        return
+    message = (
+        "the pipeline looks stopped: "
+        + "; ".join(late)
+        + f" (more than {LIVENESS_MAX_AGE_DAYS} days)"
     )
     if mode == "fail":
         raise ValidationError(message)
@@ -1478,6 +1521,19 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "index_path", nargs="?", type=Path, default=Path("generated/index.json")
     )
     parser.add_argument("--freshness", choices=FRESHNESS_MODES, default="warn")
+    parser.add_argument(
+        "--liveness",
+        choices=LIVENESS_MODES,
+        default="off",
+        help=f"warn or fail when the newest source check or --last-publish is more "
+        f"than {LIVENESS_MAX_AGE_DAYS} days old (default: off)",
+    )
+    parser.add_argument(
+        "--last-publish",
+        type=date.fromisoformat,
+        default=None,
+        help="the date of the last data publish, for --liveness",
+    )
     parser.add_argument("--today", type=date.fromisoformat, default=None)
     return parser.parse_args(argv[1:])
 
@@ -1540,6 +1596,13 @@ def main(argv: list[str]) -> int:
     validate_lookup(index_path.parent, seen_ids)
     if window is not None:
         check_freshness(window, args.freshness)
+    check_liveness(
+        newest_source_check(index_path.parent / "evidence-index.json")
+        if args.liveness != "off"
+        else None,
+        args.last_publish,
+        args.liveness,
+    )
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0
 
