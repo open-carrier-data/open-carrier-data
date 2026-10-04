@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, NamedTuple
 
 from carrier_config_types import config_value_has_expected_type, expected_config_type
-from lineageos_apns import COUNTRY_FILE_NAMES, country_files, fits_lineageos_schema
+from lineageos_apns import fits_lineageos_schema
 
 
 STALE_AFTER_DAYS = 180
@@ -158,10 +158,6 @@ GENERATED_FILES = {
     "devices/apple.json",
     "devices/index.json",
 }
-
-# The per-country APN files, one per country in the layout of LineageOS's
-# android_vendor_apn. Which of them exist depends on the data.
-COUNTRY_APN_DIR = "android/apns"
 
 REQUIRED_GENERATED_FILES = {
     path
@@ -689,9 +685,7 @@ def validate_generated_files(generated_dir: Path) -> None:
         for path in generated_dir.rglob("*")
         if path.is_file()
     }
-    extra = actual - GENERATED_FILES - {
-        f"{COUNTRY_APN_DIR}/{name}" for name in COUNTRY_FILE_NAMES
-    }
+    extra = actual - GENERATED_FILES
     if extra:
         raise ValidationError(
             f"{generated_dir}: unexpected generated files: {sorted(extra)}"
@@ -1324,7 +1318,7 @@ def validate_android_metadata(
         raise ValidationError(f"{metadata_path}: APN XML version does not match metadata")
     if config_root.tag != "carrier_config_list":
         raise ValidationError(f"{generated_dir}: invalid CarrierConfig XML root")
-    validate_country_apns(generated_dir, apn_root)
+    validate_apn_schema(generated_dir, apn_root)
     output = metadata.get("output")
     require_type(metadata_path, output, dict, "output")
     if output != {
@@ -1360,37 +1354,14 @@ def validate_android_metadata(
             raise ValidationError(f"{metadata_path}: omission profile IDs are invalid")
 
 
-def validate_country_apns(generated_dir: Path, apn_root: ET.Element) -> None:
-    """apns-conf.xml holds no row LineageOS's apns-conf.xsd rejects, and the
-    per-country files hold exactly its rows whose MCC has a country, each in
-    its country's file, in apns-conf.xml order, under the same APN version."""
-    expected: dict[str, list[dict[str, str]]] = {}
+def validate_apn_schema(generated_dir: Path, apn_root: ET.Element) -> None:
+    """apns-conf.xml holds no row LineageOS's apns-conf.xsd rejects."""
     for index, row in enumerate(apn_root.findall("apn")):
         if not fits_lineageos_schema(row.attrib):
             raise ValidationError(
                 f"{generated_dir / 'android' / 'apns-conf.xml'}: row {index + 1} "
                 "fails LineageOS's apns-conf.xsd"
             )
-        for name in country_files(row.attrib.get("mcc", "")):
-            expected.setdefault(name, []).append(dict(row.attrib))
-    directory = generated_dir / COUNTRY_APN_DIR
-    actual_names = sorted(path.name for path in directory.glob("*")) if directory.is_dir() else []
-    if actual_names != sorted(expected):
-        raise ValidationError(
-            f"{directory}: per-country APN files do not match apns-conf.xml: "
-            f"missing {sorted(set(expected) - set(actual_names))}, "
-            f"unexpected {sorted(set(actual_names) - set(expected))}"
-        )
-    for name in actual_names:
-        path = directory / name
-        try:
-            root = ET.parse(path).getroot()
-        except ET.ParseError as exc:
-            raise ValidationError(f"{path}: invalid APN XML: {exc}") from exc
-        if root.tag != "apns" or root.attrib != apn_root.attrib:
-            raise ValidationError(f"{path}: APN XML version does not match apns-conf.xml")
-        if [dict(row.attrib) for row in root] != expected[name]:
-            raise ValidationError(f"{path}: rows do not match apns-conf.xml")
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:

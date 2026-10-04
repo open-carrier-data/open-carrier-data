@@ -876,152 +876,54 @@ def check_subscriber_prefix_rules(root: Path) -> None:
             raise AssertionError(f"match.{key} {value!r} should fail")
 
 
-def check_country_apns() -> None:
-    """The per-country files repeat the apns-conf.xml rows in the layout of
-    LineageOS's android_vendor_apn: one file per country, shared MCCs in every
-    country's file, no file for test or unassigned MCCs, and no row LineageOS's
-    apns-conf.xsd rejects."""
-
-    def profile(mccmnc: str, *apns: dict) -> dict:
-        return {
-            "display_name": f"Network {mccmnc}",
-            "match": {"mccmnc": [mccmnc]},
-            "android_apns": list(apns),
-        }
-
-    def apn(name: str, **extra: object) -> dict:
-        return {"name": name, "apn": f"{name}.example", "types": ["default"], **extra}
-
-    profiles = [
-        profile("26202", apn("web"), apn("mms", types=["mms"], mmsc="http://mms.example")),
-        profile("42501", apn("israel")),
-        profile("64710", apn("reunion")),
-        profile("36269", apn("curacao")),
-        profile("34001", apn("antilles")),
-        profile("90128", apn("international")),
-        profile("313100", apn("firstnet")),
-        profile("00101", apn("test")),
-        profile("99999", apn("internal")),
-        profile("310100", apn("plateau", types=["mms"], mmsc="208.254.124.11:8514")),
-        profile("311210", apn("farmers", types=["mms"], mmsc="mms.example:8514/mms")),
-    ]
-    header = [
-        '<?xml version="1.0" encoding="utf-8"?>',
-        "<!--",
-        "    SPDX-FileCopyrightText: Open Carrier Data contributors",
-        "    SPDX-License-Identifier: CC0-1.0",
-        "-->",
-        '<apns version="8">',
-    ]
+def check_no_country_export() -> None:
+    """The generator writes one APN file, apns-conf.xml, and nothing under
+    generated/android/apns/; the validator refuses a per-country file there.
+    The per-country export was removed on 2026-10-04: nothing read it, it
+    repeated every row, and LineageOS's format.py re-sorts such files."""
     with tempfile.TemporaryDirectory() as tmp:
-        generated_dir = Path(tmp) / "generated"
-        android_dir = generated_dir / "android"
-        country_dir = android_dir / "apns"
-        country_dir.mkdir(parents=True)
-        (country_dir / "XK.xml").write_text("stale\n", encoding="utf-8")
-        generate_android_outputs.write_apns(android_dir / "apns-conf.xml", profiles, 8)
-        counts = generate_android_outputs.write_country_apns(country_dir, profiles, 8)
-        names = sorted(path.name for path in country_dir.iterdir())
+        root = Path(tmp)
+        carriers_dir = root / "carriers"
+        generated_dir = root / "generated"
+        write_carrier_profile(
+            carriers_dir / "open",
+            {
+                "schema_version": 1,
+                "display_name": "Example",
+                "match": {"mccmnc": ["26202"]},
+                "capabilities": {},
+                "android_apns": [{"name": "Web", "apn": "web.example", "types": ["default"]}],
+            },
+        )
+        result = generate_android_outputs.main(
+            ["generate_android_outputs.py", str(carriers_dir), str(generated_dir)]
+        )
+        assert_true(result == 0, "generator returned a non-zero status")
         assert_true(
-            names
-            == ["AN.xml", "DE.xml", "GF.xml", "IL.xml", "INTL.xml", "PS.xml", "RE.xml", "US.xml", "YT.xml"],
-            f"per-country files follow LineageOS's split and drop stale files: {names}",
+            not (generated_dir / "android" / "apns").exists(),
+            "the generator must not write per-country APN files",
         )
         assert_true(
-            counts == (9, 2, 1),
-            f"two rows lack a country and one fails LineageOS's schema: {counts}",
+            not hasattr(generate_android_outputs, "write_country_apns")
+            and not hasattr(lineageos_apns, "country_files"),
+            "the per-country export code is gone",
         )
-        conf_lines = (android_dir / "apns-conf.xml").read_text(encoding="utf-8").split("\n")
-        rows: dict[str, list[str]] = {}
-        for name in names:
-            lines = (country_dir / name).read_text(encoding="utf-8").split("\n")
-            assert_true(lines[:6] == header, f"{name} must start with the LineageOS-style header")
-            assert_true(lines[-2:] == ["</apns>", ""], f"{name} must end with the apns element")
-            rows[name] = lines[6:-2]
-            positions = [conf_lines.index(line) for line in rows[name]]
-            assert_true(
-                positions == sorted(positions),
-                f"{name} must repeat apns-conf.xml lines in apns-conf.xml order",
-            )
-        assert_true(len(rows["DE.xml"]) == 2, "both German rows land in DE.xml")
-        assert_true(rows["IL.xml"] == rows["PS.xml"], "MCC 425 rows repeat in IL.xml and PS.xml")
-        assert_true(rows["RE.xml"] == rows["YT.xml"], "MCC 647 rows repeat in RE.xml and YT.xml")
-        us_rows = "\n".join(rows["US.xml"])
-        assert_true(
-            'mcc="313"' in us_rows and "mms.example:8514/mms" in us_rows,
-            "MCC 313 belongs to US.xml, and a scheme-like host before the colon passes",
-        )
-        assert_true(
-            "208.254.124.11:8514" not in us_rows,
-            "an MMSC LineageOS's schema rejects stays out of the per-country files",
-        )
-        exported = "\n".join("\n".join(lines) for lines in rows.values())
-        assert_true(
-            "test.example" not in exported and "internal.example" not in exported,
-            "MCC 001 and 999 rows have no country file",
-        )
-        before = {name: (country_dir / name).read_bytes() for name in names}
-        generate_android_outputs.write_country_apns(country_dir, profiles, 8)
-        assert_true(
-            before == {path.name: path.read_bytes() for path in country_dir.iterdir()},
-            "the per-country export must be deterministic",
-        )
+        for name in ("index.json", "evidence-index.json"):
+            (generated_dir / name).write_text("{}\n", encoding="utf-8")
+        validate_public_carrier_data.validate_generated_files(generated_dir)
+        stray = generated_dir / "android" / "apns" / "DE.xml"
+        stray.parent.mkdir(parents=True)
+        stray.write_text('<?xml version="1.0" encoding="utf-8"?>\n<apns version="8">\n</apns>\n', encoding="utf-8")
+        try:
+            validate_public_carrier_data.validate_generated_files(generated_dir)
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true("android/apns/DE.xml" in str(exc), f"unexpected error {exc}")
+        else:
+            raise AssertionError("a per-country APN file in generated/android/apns/ must be rejected")
 
-        apn_root = ET.parse(android_dir / "apns-conf.xml").getroot()
-        validate_public_carrier_data.validate_country_apns(generated_dir, apn_root)
 
-        def expect_rejected(change: Callable[[], None], message: str) -> None:
-            change()
-            try:
-                validate_public_carrier_data.validate_country_apns(generated_dir, apn_root)
-            except validate_public_carrier_data.ValidationError:
-                pass
-            else:
-                raise AssertionError(message)
-            finally:
-                for name, content in before.items():
-                    (country_dir / name).write_bytes(content)
-                for path in country_dir.iterdir():
-                    if path.name not in before:
-                        path.unlink()
-
-        def move_row() -> None:
-            de = (country_dir / "DE.xml").read_text(encoding="utf-8").split("\n")
-            moved = de.pop(6)
-            (country_dir / "DE.xml").write_text("\n".join(de), encoding="utf-8")
-            at = (country_dir / "US.xml").read_text(encoding="utf-8").split("\n")
-            at.insert(6, moved)
-            (country_dir / "US.xml").write_text("\n".join(at), encoding="utf-8")
-
-        expect_rejected(move_row, "a row in another country's file must be rejected")
-        expect_rejected(
-            lambda: (country_dir / "PS.xml").unlink(),
-            "a missing country file must be rejected",
-        )
-        expect_rejected(
-            lambda: (country_dir / "FR.xml").write_bytes(before["DE.xml"]),
-            "a country file apns-conf.xml has no rows for must be rejected",
-        )
-        expect_rejected(
-            lambda: (country_dir / "DE.xml").write_text(
-                before["DE.xml"].decode("utf-8").replace('version="8"', 'version="9"'),
-                encoding="utf-8",
-            ),
-            "a country file with another APN version must be rejected",
-        )
-        expect_rejected(
-            lambda: (country_dir / "IL.xml").write_text(
-                before["IL.xml"].decode("utf-8").replace("israel.example", "other.example"),
-                encoding="utf-8",
-            ),
-            "a changed row must be rejected",
-        )
-
-    for name in sorted(lineageos_apns.COUNTRY_FILE_NAMES):
-        assert_true(
-            re.fullmatch(r"([A-Z]{2}|INTL)\.xml", name) is not None,
-            f"country file names are ISO 3166 codes or INTL: {name}",
-        )
+def check_lineageos_schema_rules() -> None:
+    """fits_lineageos_schema agrees with xmllint and LineageOS's apns-conf.xsd."""
     # Expected outcomes from xmllint --schema with LineageOS's apns-conf.xsd.
     uri_cases = {
         "http://mms.example/servlets/mms": True,
@@ -1321,13 +1223,10 @@ def check_apn_ranking() -> None:
             all("_support" not in attributes for attributes in parsed.values()),
             "the ranking evidence is never written",
         )
-        counts = generate_android_outputs.write_country_apns(android_dir / "apns", profiles, 8, evidence)
-        assert_true(counts[2] == 1, f"the country export reports the rejected row: {counts}")
         if shutil.which("xmllint"):
             xsd = Path(__file__).resolve().parent / "lineageos" / "apns-conf.xsd"
             result = subprocess.run(
-                ["xmllint", "--noout", "--schema", str(xsd), str(android_dir / "apns-conf.xml"),
-                 *sorted(str(path) for path in (android_dir / "apns").glob("*.xml"))],
+                ["xmllint", "--noout", "--schema", str(xsd), str(android_dir / "apns-conf.xml")],
                 capture_output=True,
                 text=True,
                 check=False,
@@ -3079,8 +2978,10 @@ def main() -> int:
             count == 1 and 'carrier="First label"' in apns_path.read_text(encoding="utf-8"),
             "Rows identical except their label must collapse to the first",
         )
-    check_country_apns()
-    print("per-country APN export tests passed")
+    check_no_country_export()
+    print("no per-country export tests passed")
+    check_lineageos_schema_rules()
+    print("LineageOS schema rule tests passed")
     check_apn_ranking()
     print("APN ranking tests passed")
     with tempfile.TemporaryDirectory() as tmp:

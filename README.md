@@ -56,7 +56,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `carriers/open/` | the carrier profiles, one JSON file per profile, listed in `generated/index.json` |
 | `generated/index.json` | stable snapshot, one entry per profile |
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, exact source versions, conflicts, newest entry dates |
-| `generated/android/` | APN XML, the same rows as one file per country for a LineageOS tree, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
+| `generated/android/` | APN XML, CarrierConfig XML and JSON, lookup indexes, `metadata.json` |
 | `generated/devices/` | the device catalog and carrier artifact registries |
 | `schemas/` | five JSON schemas |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
