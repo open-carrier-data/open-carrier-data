@@ -8,16 +8,39 @@ The Android files live in `generated/android/`. Each file has one job.
 
 | File | Put it where |
 | --- | --- |
-| `apns-conf.xml` | the APN database path your TelephonyProvider reads |
-| `carrier-config-list.xml` | your CarrierConfig overlay input |
+| `apns-conf.xml` | the one APN file your build installs, see below |
+| `carrier-config-list.xml` | only if you want it: a `vendor.xml` for the CarrierConfig app, merged with your device's own, see below |
 | `lookup.json` | a tool that resolves profiles for a SIM, see below |
-| `metadata.json` | your build log, so you know which profiles the XML left out |
+| `metadata.json` | your build log, so you know which profiles the XML left out and how fresh the snapshot is |
 
-To copy the Android files into a build tree, run:
+A ROM reads one APN file, so copy that one file. For a LineageOS tree, put it in a subdirectory of `vendor/apn`, where the `*.xml` glob that assembles LineageOS's own country files does not pick it up:
 
 ```bash
-cp -r generated/android/ /path/to/your/build/carrier-data/
+mkdir -p /path/to/lineage/vendor/apn/open-carrier-data
+cp generated/android/apns-conf.xml /path/to/lineage/vendor/apn/open-carrier-data/apns-conf.xml
 ```
+
+Then let `vendor/apn/Android.bp` choose which list to install. The owner's S20 tree does it with a Soong config variable, so LineageOS's list stays the default. This is its module, with the schema line simplified: the file now passes LineageOS's unchanged schema, where the tree still points at a copy that relaxes `mmsc`:
+
+```text
+prebuilt_etc_xml {
+    name: "apns-conf.xml",
+    product_specific: true,
+    src: select(soong_config_variable("lineage_apn", "source"), {
+        "open_carrier_data": "open-carrier-data/apns-conf.xml",
+        default: ":apns-conf",
+    }),
+    schema: "apns-conf.xsd",
+}
+```
+
+A device turns it on with `$(call soong_config_set,lineage_apn,source,open_carrier_data)` in its makefile. The module keeps its name and its install path, `/product/etc/apns-conf.xml`. A phone that already has the list in its database loads the new one only when the file's checksum changes and TelephonyProvider reloads, for example after `content delete --uri content://telephony/carriers/update_db` as root; a new build with the same build ID does not reload it by itself.
+
+The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_digest`, `checks_through` and `stale_after`. `git log -S <data_digest> -- generated/android/metadata.json` in a clone finds the commit that published it.
+
+### carrier-config-list.xml is a vendor.xml
+
+`carrier-config-list.xml` has the format of the CarrierConfig app's `res/xml/vendor.xml`. That file is not one carrier's config: `DefaultCarrierConfigService` first reads the per-carrier asset AOSP ships for the SIM, then applies every matching block of `vendor.xml` on top with `putAll`, so each key here overrides AOSP's own value for that carrier on every device that installs it. A build has one `vendor.xml`, and devices often ship their own (the S20 tree's overlay has one), so merge the blocks into it instead of replacing it, and keep only keys you have reason to apply. Profiles whose match needs a GID or ICCID prefix are left out, because `vendor.xml` matches GID1 only exactly; `metadata.json` says so (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`) and lists them. No value in this file has been tested on a phone.
 
 The checked-in `apns-conf.xml` carries `version="8"`. Android's TelephonyProvider expects the APN database version to match the build. To generate for a different version, write into a scratch directory so the checked-in files stay untouched. Pass the evidence index, because the generator orders APN rows by it:
 
@@ -34,13 +57,13 @@ generated Android output for 7816 profile(s): 25406 APN row(s), 6351 CarrierConf
 <apns version="9">
 ```
 
-Read `metadata.json` before you ship. On 2026-10-03 it lists 18 profiles whose match cannot be expressed in APN XML and 1,386 profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
+Read `metadata.json` before you ship. On 2026-10-04 it lists 18 profiles whose match cannot be expressed in APN XML and 1,380 profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
 
 ```bash
 python3 -c 'print({k: v for k, v in __import__("json").load(open("generated/android/metadata.json"))["omissions"].items() if k.endswith("_unrepresentable_match") and not k.endswith("ids_with_unrepresentable_match")})'
 ```
 
-The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-03, of the 1,386, 1,080 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
+The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-04, of the 1,380, 1,074 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
 
 ```bash
 python3 <<'PY'
@@ -180,9 +203,11 @@ python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.jso
 
 It prints two dates, `checks_through` and then `stale_after`.
 
-`checks_through` is the oldest source check behind the data. `stale_after` is `checks_through` plus 180 days. Do not ship a snapshot after `stale_after`. The per-profile `stale_after` in `generated/android/lookup.json` is the precise value for each profile; the file-wide one is the earliest of them. Use `checks_through`, not `revision_date`. An upstream revision can be old and still current if automation confirmed it inside the window.
+`checks_through` is the oldest source check behind the data: the last day a lane fetched its source with success, or confirmed an observation. `stale_after` is `checks_through` plus 180 days. It is a lane-liveness deadline: after it, at least one lane behind the data has not run for six months. Do not ship a snapshot after `stale_after`. The per-profile `stale_after` in `generated/android/lookup.json` is the precise value for each profile; the file-wide one is the earliest of them.
 
-The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode and keep passing. `checks_through` also follows the oldest observation, a Samsung one from a superseded firmware build, so the first stale-data issue opens the day after `stale_after` unless the daily Samsung run re-extracts those observations first. A weekly GitHub-hosted job re-checks the other ten families. Samsung runs daily on the self-hosted runner.
+A check date does not say a value is current. Only two lanes ask the vendor: Samsung's update service confirms that the firmware build an observation came from is current, and the GrapheneOS Pixel lane checks every Pixel against Google's update service. For every other lane a check means the lane ran. How old the data is shows in `newest_entry`, the month of the newest upstream entry behind a profile, in `generated/android/lookup.json` and `generated/evidence-index.json`. On 2026-10-04, 1,009 profiles rest only on entries from before October 2021, and 711 of them put 1,056 APN rows into `apns-conf.xml`. APN rows LineageOS removed are left out unless a newer source gives them, and a capability with only old evidence from one family is `unknown`; [how-it-is-built.md](how-it-is-built.md) has both rules.
+
+The validators apply the same window. `check_freshness` in `tools/validate_public_carrier_data.py` and in `tools/validate_device_catalog.py` compares the UTC date with `stale_after`. By default both print one warning line to stderr and exit 0, so a clone keeps validating after the deadline. With `--freshness fail` they exit 1 instead. The daily public job passes that flag, and `--liveness fail`, which fails when the newest source check or the last publish is more than 21 days old, and opens an issue labeled `stale-data` when either fails. Pushes and pull requests run in warn mode and keep passing. `checks_through` follows the oldest observation, a Samsung one from a superseded firmware build; observations still from July 2026 on 2027-01-11 are quarantined, so the window then moves on. A weekly GitHub-hosted job re-checks the other ten families. Samsung runs daily on the self-hosted runner.
 
 ## Validate a snapshot
 
@@ -193,10 +218,10 @@ python3 tools/validate_public_carrier_data.py carriers generated/index.json --fr
 python3 tools/validate_device_catalog.py generated/devices --freshness fail
 ```
 
-Output on 2026-10-03:
+Output on 2026-10-04:
 
 ```text
-validated 7833 public carrier profile(s)
+validated 7806 public carrier profile(s)
 validated 42473 Android devices, 183 Apple products, and 4642 carrier artifacts
 ```
 
