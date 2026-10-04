@@ -17,10 +17,11 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,234 |
 | `samsung_omc` | same | Samsung firmware OMC baselines | APN, capability, CarrierConfig, add-on facts | NOASSERTION | 2,572 |
 | `samsung_ims` | same | Samsung IMS maps in versioned firmware | positive IMS capability observations | NOASSERTION | 944 |
+| `samsung_carrier_config` | `samsung_ims` | Samsung's own CarrierConfig overrides (`vendor.xml`) in the firmware build of the IMS maps | CarrierConfig values, positive capability observations | NOASSERTION | not yet published; 247 in the dry run of 2026-10-04 |
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Two profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
+Three profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records, and `samsung_carrier_config`, read from the same firmware build as the IMS maps, shares the `samsung_ims` record. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
 
 To print the profile count per source name, run:
 
@@ -42,7 +43,7 @@ A source family that turns a capability on makes it `supported`, as long as none
 
 | Source name | Its offs |
 | --- | --- |
-| `apple_carrier_bundles`, `samsung_omc`, `samsung_ims` | never published; these lanes publish only what they turn on |
+| `apple_carrier_bundles`, `samsung_omc`, `samsung_ims`, `samsung_carrier_config` | never published; these lanes publish only what they turn on |
 | `google_carriersettings`, `google_pixel_vendor_carriersettings` | one family; the operator's own for Google Fi |
 | `aosp` | one family; the operator's own only for a file the carrier submitted, on 2026-10-04 SETAR's |
 | `lineageos`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list |
@@ -62,6 +63,7 @@ A snapshot revision names the source state that was checked. Where a family also
 | --- | --- | --- |
 | `google_carriersettings` | `builds` | the Pixel build ID of the GrapheneOS snapshot |
 | `samsung_ims` | `builds` | the Samsung firmware (PDA) build |
+| `samsung_carrier_config` | `builds` | the Samsung firmware (PDA) build, the same as `samsung_ims` |
 | `samsung_omc` | `builds` | the firmware (PDA) build of the CSC package, recorded at extraction since 2026-10-04 |
 | `fairphone_official_source` | `commits` | the pinned `fp2-common` or `fp3-common` commit |
 | `sony_open_devices_aosp` | `commits` | the `device-sony-common` commit |
@@ -113,7 +115,9 @@ OMC facts come from firmware baselines found through Samsung's unauthenticated f
 
 OMC VoNR comes only from the carrier pack token `+vonrcall`, which makes Samsung's settings offer the VoNR switch for the carrier on that model. It means the switch is offered, not that VoNR is on by default or was tested; a model without the token leaves VoNR `unknown`, and test and lab networks get no value. The evidence index names the sales codes and models in `capability_basis`.
 
-IMS facts are positive, device-scoped observations of VoLTE, Wi-Fi calling, video calling, SMS over IMS, and RCS. A false or absent Samsung switch is never published as proof that a carrier lacks the feature. Raw firmware, OMC files, requests, responses, signed URLs, and credentials stay private. The project asserts no Samsung license.
+IMS facts are positive, device-scoped observations of VoLTE, Wi-Fi calling, video calling, SMS over IMS, and RCS. A false or absent Samsung switch is never published as proof that a carrier lacks the feature.
+
+CarrierConfig facts (`samsung_carrier_config`) come from Samsung's own per-carrier overrides, `res/xml/vendor.xml` in `CarrierConfig.apk`, read from the same firmware build as the IMS maps and through the same rules as an AOSP carrier config file. They are positive too. `vonr_enabled_bool` set to true there gives `vonr` `supported`: Samsung's telephony framework turns VoNR on for that carrier when the SIM loads, unless the user turned it off. The key itself is not published. Samsung's framework ignores the key on Qualcomm phones with a European CSC, so such a build, or one whose chip is not known, gives no `vonr`. Raw firmware, OMC files, requests, responses, signed URLs, and credentials stay private. The project asserts no Samsung license.
 
 ## Fairphone and Sony contribute facts from public AOSP trees
 
