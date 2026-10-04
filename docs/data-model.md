@@ -163,7 +163,7 @@ Each `source_snapshots` record describes one source family check.
 | `upstream_url` | where the source lives |
 | `revision` | full Git commit, SHA-256 of the downloaded content, or for Samsung the SHA-256 of the lane's state file |
 | `revision_date` | when that revision was published upstream |
-| `checked_at` | when automation last checked the source with success |
+| `checked_at` | when automation last fetched the source with success: the lane's liveness, not a statement that the values are current |
 | `license_expression` | SPDX expression or `NOASSERTION` |
 | `schema_version` | record format version, `2` on 2026-09-23 |
 

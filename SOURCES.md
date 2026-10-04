@@ -62,13 +62,14 @@ A snapshot revision names the source state that was checked. Where a family also
 | --- | --- | --- |
 | `google_carriersettings` | `builds` | the Pixel build ID of the GrapheneOS snapshot |
 | `samsung_ims` | `builds` | the Samsung firmware (PDA) build |
+| `samsung_omc` | `builds` | the firmware (PDA) build of the CSC package, recorded at extraction since 2026-10-04 |
 | `fairphone_official_source` | `commits` | the pinned `fp2-common` or `fp3-common` commit |
 | `sony_open_devices_aosp` | `commits` | the `device-sony-common` commit |
 | `lineageos_device_overlays` | `commits` | the commit that last changed the overlay file |
 | `google_pixel_vendor_carriersettings` | `commits` | the commits that last changed each device's CarrierSettings files |
 | `apple_carrier_bundles` | `bundle_versions`, `ios_versions` | the bundle and iOS versions Apple's index lists for the package |
 
-On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names no build, because its lane does not record which firmware build each observation was extracted from. Its OMC versions are in `observed_scope.omc_versions`.
+On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names the firmware build only for observations extracted since 2026-10-04, up to 50 CSC packages a day; older ones carry none, because a later join would have to guess. Its OMC versions are in `observed_scope.omc_versions`.
 
 To print how many profiles name a version, per family and kind, run:
 
@@ -80,7 +81,7 @@ python3 -c 'import json, collections; print(collections.Counter((i["source"], k)
 
 Every `source_snapshots` record carries two dates. `revision_date` is when the upstream published that revision. `checked_at` is when automation last confirmed the revision with success.
 
-Freshness uses `checked_at`. Unchanged upstream content stays current while its check is within 180 days. An observation with an older check is quarantined. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. `checks_through` also follows the oldest observation review date. The oldest Samsung observation is older than every snapshot check, so it sets the window, and the window moves only as the daily Samsung run re-extracts the observations from superseded firmware builds. To print the window, run `python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'`. Past `stale_after` `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. A weekly GitHub-hosted job re-checks every family except Samsung, which runs daily on the self-hosted runner.
+Freshness uses `checked_at`, the last successful sync of a lane. It says the lane is alive, not that a value is current: unchanged upstream content keeps passing while its check is within 180 days, however old the entries in it are. An observation whose source check or review date is older is quarantined. Only Samsung's update service and the GrapheneOS lane's check against Google's update service confirm vendor data as current; other vendor data, such as the `TheMuppets` Pixel files, passes as a versioned artifact at any age. `newest_entry` in the evidence index and `lookup.json` gives the age. The public side publishes the window as `checks_through` and `stale_after` in `generated/android/metadata.json`. `checks_through` also follows the oldest observation review date. The oldest Samsung observation is older than every snapshot check, so it sets the window, and the window moves only as the daily Samsung run re-extracts the observations from superseded firmware builds. To print the window, run `python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.json"))[k] for k in ("checks_through", "stale_after")])'`. Past `stale_after` `tools/validate_public_carrier_data.py` warns by default and fails only with `--freshness fail`. The daily public job passes that flag and opens an issue labeled `stale-data` when it fails. Pushes and pull requests run in warn mode. A weekly GitHub-hosted job re-checks every family except Samsung, which runs daily on the self-hosted runner.
 
 ## AOSP contributes CarrierConfig values and carrier IDs
 
@@ -88,7 +89,7 @@ Automation reads the `android-latest-release` branch of both AOSP repos and reco
 
 ## LineageOS contributes APN rows and device overlays
 
-The APN repo is imported by commit ID under Apache-2.0. Device overlays are read across LineageOS device repos and recorded as one content hash. The project asserts no license for overlay content beyond what each repo declares, so those facts are `transformed_facts_only`.
+The APN repo is imported by commit ID under Apache-2.0. When LineageOS removes an APN, the lane records it, and the same row is left out of the other sources unless one gives it with an entry newer than the removal; the evidence index names the LineageOS commit in the gate `lineageos_apn_removed:<commit>`. Device overlays are read across LineageOS device repos and recorded as one content hash. The project asserts no license for overlay content beyond what each repo declares, so those facts are `transformed_facts_only`.
 
 ## GNOME contributes public carrier and APN facts
 

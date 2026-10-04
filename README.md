@@ -4,7 +4,7 @@ Open Carrier Data is a public database of mobile carrier settings. It stores neu
 
 ## Get the data
 
-You can get the data in three ways. Each one works as of 2026-10-03.
+You can get the data in three ways. Each one works as of 2026-10-04.
 
 To take everything, including tools and schemas, clone the public repo:
 
@@ -18,11 +18,13 @@ To read the stable snapshot without a checkout, download the raw index:
 curl -sL https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/generated/index.json | head -c 200
 ```
 
-To package the Android files into a build, copy the whole directory:
+To ship the APN list in a build, copy the one file Android reads:
 
 ```bash
-cp -r generated/android/ /path/to/your/build/carrier-data/
+cp generated/android/apns-conf.xml /path/to/your/build/vendor/apn/open-carrier-data/apns-conf.xml
 ```
+
+[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides.
 
 Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8.
 
@@ -62,16 +64,16 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
 | `docs/` | data model, build explanation, consumer guide |
 
-## Status on 2026-10-03
+## Status on 2026-10-04
 
 The data republishes whenever a source changes, so these values drift. The commands below the table print the current ones. The table leaves out the freshness window, which moves with every Samsung refresh. The commands print it.
 
 | Measure | Value |
 | --- | --- |
-| Carrier profiles | 7,827 |
+| Carrier profiles | 7,806 |
 | Source names in profile evidence | 11 |
 | Source snapshot records | 12 |
-| Android devices in the device catalog | 42,401 |
+| Android devices in the device catalog | 42,473 |
 | Apple products in the device catalog | 183 |
 | Android identities with observed carrier data | 266 |
 | Observations verified on a device | 0 |
@@ -100,8 +102,8 @@ Read these before you depend on the data:
 - A capability value says what carrier tables configure, not what works. `supported` means at least one phone maker's or OS carrier table turns the feature on for this SIM and none turns it off; it may still be off on your phone, or on phones the carrier has not approved. `unsupported` needs the operator's own configuration, or two independent source families, turning it off. One maker's off alone is published as `unknown`, and its false CarrierConfig switch is left out. [docs/data-model.md](docs/data-model.md#capability-names-and-values) defines the four values, and `capability_sources` in `generated/evidence-index.json` names the families that turn each capability on and off.
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - CarrierConfig and add-on conflicts are omitted; conflicting APN rows are all published as variants. Every conflict is listed in `generated/evidence-index.json`.
-- A capability whose only source family has no entry newer than five years is published as `unknown`. APN rows and CarrierConfig values stay, however old. `generated/evidence-index.json` gives the month of the newest entry behind each profile and each published capability where it is known. [docs/how-it-is-built.md](docs/how-it-is-built.md) explains entry age.
-- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. The commands under the status table print both. The oldest Samsung observations set `checks_through`. Samsung's lane runs daily on the owner's self-hosted runner. It re-confirms observations whose firmware build is still current and re-extracts up to 50 CSC packages per run. Observations from superseded builds keep their July dates until they are re-extracted, so `checks_through` moves only as that queue drains. A weekly GitHub-hosted job re-checks the other source families. Their check dates are in `generated/evidence-index.json` under `source_snapshots`. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, so the first alarm opens the day after `stale_after`.
+- A capability whose only source family has no entry newer than five years is published as `unknown`. APN rows and CarrierConfig values stay, however old, except APN rows LineageOS removed, which are left out unless a newer source gives them. `generated/evidence-index.json` gives the month of the newest entry behind each profile and each published capability where it is known. [docs/how-it-is-built.md](docs/how-it-is-built.md) explains entry age.
+- Every snapshot carries a freshness window. `generated/android/metadata.json` publishes `checks_through`, the oldest source check behind the data, and `stale_after`, the last date the data should ship. A check date means the lane behind the data ran, not that a value is current: only Samsung's update service and Google's Pixel update check confirm vendor data as current. How old the data is shows in `newest_entry` per profile in `generated/android/lookup.json`. The commands under the status table print both. The oldest Samsung observations set `checks_through`. Samsung's lane runs daily on the owner's self-hosted runner. It re-confirms observations whose firmware build is still current and re-extracts up to 50 CSC packages per run. Observations from superseded builds keep their July 2026 dates until they are re-extracted; whatever is still from July on 2027-01-11 is quarantined. A weekly GitHub-hosted job re-checks the other source families. Their check dates are in `generated/evidence-index.json` under `source_snapshots`. The validators compare the UTC date with `stale_after`. By default they warn and exit 0, so a clone keeps validating after the deadline. The push and pull request check runs the validators in warn mode, so a stale snapshot never blocks a fix. The daily job runs them with `--freshness fail` and opens an issue labeled `stale-data` when they fail, and also when the newest source check or the last publish is more than 21 days old.
 - A device listed in `generated/devices/` is an inventory fact. It is not a support claim. A device is covered only when carrier evidence names that exact identity. `generated/devices/README.md` defines the rule and the one command that prints the number.
 
 ## How it is built
