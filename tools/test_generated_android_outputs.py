@@ -876,6 +876,118 @@ def check_subscriber_prefix_rules(root: Path) -> None:
             raise AssertionError(f"match.{key} {value!r} should fail")
 
 
+def check_provenance_and_lookup(carriers_dir: Path, generated_dir: Path) -> None:
+    """apns-conf.xml and carrier-config-list.xml start with a provenance
+    comment: licence, the digest of their inputs, and the freshness window,
+    the same as metadata.json. The digest is deterministic and moves with any
+    input. lookup.json repeats each profile's newest_entry month from the
+    evidence index, and the validator checks both."""
+    evidence_path = generated_dir / "evidence-index.json"
+    metadata_path = generated_dir / "android" / "metadata.json"
+    apns_path = generated_dir / "android" / "apns-conf.xml"
+    config_path = generated_dir / "android" / "carrier-config-list.xml"
+    lookup_path = generated_dir / "android" / "lookup.json"
+    index_path = generated_dir / "index.json"
+    original_evidence = evidence_path.read_text(encoding="utf-8")
+    evidence = json.loads(original_evidence)
+    dated_id = evidence["profiles"][0]["profile_id"]
+    evidence["profiles"][0]["newest_entry"] = "2019-03"
+    evidence["checks_through"] = "2026-07-10"
+    evidence["stale_after"] = "2027-01-06"
+    index = load_json(index_path)
+    original_index = index_path.read_text(encoding="utf-8")
+
+    def regenerate() -> None:
+        with contextlib.redirect_stdout(io.StringIO()):
+            result = generate_android_outputs.main(
+                ["generate_android_outputs.py", str(carriers_dir), str(generated_dir)]
+            )
+        assert_true(result == 0, "generator returned a non-zero status")
+
+    def validate() -> None:
+        validate_public_carrier_data.main(
+            ["validate_public_carrier_data.py", str(carriers_dir), str(index_path)]
+        )
+
+    def expect_failure(message: str, reason: str) -> None:
+        try:
+            validate()
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(reason in str(exc), f"{message}: unexpected error {exc}")
+            return
+        raise AssertionError(message)
+
+    real_today = validate_public_carrier_data.utc_today
+    validate_public_carrier_data.utc_today = lambda: date(2026, 10, 4)
+    try:
+        write_profile(evidence_path, evidence)
+        write_profile(index_path, {**index, "checks_through": "2026-07-10", "stale_after": "2027-01-06"})
+        regenerate()
+        metadata = load_json(metadata_path)
+        digest = metadata["data_digest"]
+        assert_true(
+            re.fullmatch(r"sha256:[0-9a-f]{64}", digest) is not None,
+            f"metadata names the data digest: {digest}",
+        )
+        for path, what in ((apns_path, "Android APN list"), (config_path, "Android CarrierConfig list")):
+            lines = path.read_text(encoding="utf-8").split("\n")
+            assert_true(
+                lines[:3] == ['<?xml version="1.0" encoding="utf-8"?>', "<!--", lines[2]]
+                and lines[2].startswith(f"    {what}")
+                and "    SPDX-License-Identifier: CC0-1.0" in lines
+                and f"    data_digest: {digest}" in lines
+                and "    checks_through: 2026-07-10" in lines
+                and "    stale_after: 2027-01-06" in lines,
+                f"{path.name} starts with the provenance comment: {lines[:12]}",
+            )
+        root = ET.parse(apns_path).getroot()
+        assert_true(root.tag == "apns" and root.attrib == {"version": "8"}, "the comment leaves the APN root alone")
+        lookup = {item["profile_id"]: item for item in load_json(lookup_path)["profiles"]}
+        assert_true(lookup[dated_id]["newest_entry"] == "2019-03", "lookup copies newest_entry")
+        assert_true(
+            all("newest_entry" not in item for key, item in lookup.items() if key != dated_id),
+            "lookup has no newest_entry where the evidence index has none",
+        )
+        validate()
+
+        before = apns_path.read_bytes()
+        regenerate()
+        assert_true(apns_path.read_bytes() == before, "the generated files are deterministic")
+        profile_file = sorted(carriers_dir.rglob("*.json"))[0]
+        original_profile = profile_file.read_text(encoding="utf-8")
+        profile_file.write_text(original_profile.replace("}", "}", 1) + "\n", encoding="utf-8")
+        regenerate()
+        assert_true(
+            load_json(metadata_path)["data_digest"] != digest,
+            "a changed profile file changes the data digest",
+        )
+        profile_file.write_text(original_profile, encoding="utf-8")
+        regenerate()
+        assert_true(load_json(metadata_path)["data_digest"] == digest, "the digest comes back")
+
+        apns_text = apns_path.read_text(encoding="utf-8")
+        apns_path.write_text(apns_text.replace(digest, "sha256:" + "0" * 64), encoding="utf-8")
+        expect_failure("a header digest that differs from metadata passed", "provenance comment")
+        apns_path.write_text(apns_text.replace("    stale_after: 2027-01-06\n", ""), encoding="utf-8")
+        expect_failure("a header without stale_after passed", "provenance comment")
+        apns_path.write_text(apns_text.replace("SPDX-License-Identifier: CC0-1.0", "SPDX-License-Identifier: MIT"), encoding="utf-8")
+        expect_failure("a header with another licence passed", "CC0-1.0")
+        apns_path.write_text(apns_text, encoding="utf-8")
+
+        lookup_text = lookup_path.read_text(encoding="utf-8")
+        lookup_path.write_text(lookup_text.replace('"newest_entry": "2019-03"', '"newest_entry": "2020-03"'), encoding="utf-8")
+        expect_failure("a lookup newest_entry that differs from the evidence index passed", "newest_entry")
+        lookup_path.write_text(lookup_text.replace('"newest_entry": "2019-03"', '"newest_entry": "2019-3"'), encoding="utf-8")
+        expect_failure("a malformed lookup newest_entry passed", "newest_entry")
+        lookup_path.write_text(lookup_text, encoding="utf-8")
+        validate()
+    finally:
+        validate_public_carrier_data.utc_today = real_today
+        evidence_path.write_text(original_evidence, encoding="utf-8")
+        index_path.write_text(original_index, encoding="utf-8")
+        regenerate()
+
+
 def check_no_country_export() -> None:
     """The generator writes one APN file, apns-conf.xml, and nothing under
     generated/android/apns/; the validator refuses a per-country file there.
@@ -2661,6 +2773,7 @@ def main() -> int:
         assert_true(validation == 0, "public validator returned a non-zero status")
         check_freshness_rules(carriers_dir, generated_dir)
         check_evidence_format(carriers_dir, generated_dir)
+        check_provenance_and_lookup(carriers_dir, generated_dir)
 
         apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
         assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")
@@ -2778,86 +2891,11 @@ def main() -> int:
             "lookup should preserve IMSI prefix pattern match constraints",
         )
 
-        mccmnc_index = load_json(generated_dir / "android/mccmnc-index.json")
-        assert_true(
-            sorted(mccmnc_index["mccmnc"])
-            == ["26202", "26223", "26224", "26225", "26226", "26227"],
-            "MCC/MNC index should expose expected SIM operator keys",
-        )
-        assert_true(
-            [item["profile_id"] for item in mccmnc_index["mccmnc"]["26202"]]
-            == [base_id, mvno_id, multi_id],
-            "MCC/MNC index should list generic profiles before more specific matches",
-        )
-        assert_true(
-            [item["profile_id"] for item in mccmnc_index["mccmnc"]["26223"]] == [multi_id],
-            "MCC/MNC index should include multi-MCC/MNC profiles under every key",
-        )
-        assert_true(
-            mccmnc_index["mccmnc"]["26223"][0]["match"]["android_carrier_ids"] == [2536],
-            "MCC/MNC index should preserve Android carrier ID match constraints",
-        )
-        assert_true(
-            mccmnc_index["mccmnc"]["26224"][0]["match"]["iccid_prefixes"] == ["8981090"],
-            "MCC/MNC index should preserve ICCID match constraints",
-        )
-        assert_true(
-            mccmnc_index["mccmnc"]["26225"][0]["match"]["gid2_prefixes"] == ["A1"],
-            "MCC/MNC index should preserve GID2 match constraints",
-        )
-        assert_true(
-            mccmnc_index["mccmnc"]["26226"][0]["match"]["imsi_prefix_patterns"] == ["262260x1"],
-            "MCC/MNC index should preserve IMSI prefix pattern constraints",
-        )
-
-        carrier_id_index = load_json(generated_dir / "android/carrier-id-index.json")
-        assert_true(
-            sorted(carrier_id_index["android_carrier_ids"]) == ["2536", "4000"],
-            "carrier ID index should expose expected Android carrier ID keys",
-        )
-        assert_true(
-            [item["profile_id"] for item in carrier_id_index["android_carrier_ids"]["2536"]]
-            == [multi_id],
-            "carrier ID index should list sorted carrier-ID-matched profiles",
-        )
-        assert_true(
-            carrier_id_index["android_carrier_ids"]["2536"][0]["match"]["mccmnc"]
-            == ["26202", "26223"],
-            "carrier ID index should preserve full profile match constraints",
-        )
-
-        carrier_config = load_json(generated_dir / "android/carrier-config-overrides.json")
-        assert_true(
-            sorted(item["profile_id"] for item in carrier_config["profiles"])
-            == sorted([gid2_id, imsi_id, multi_id]),
-            "CarrierConfig JSON export should preserve profiles with exact neutral matches",
-        )
-        carrier_config_by_id = {item["profile_id"]: item for item in carrier_config["profiles"]}
-        assert_true(
-            carrier_config_by_id[multi_id]["match"]["android_carrier_ids"] == [2536],
-            "CarrierConfig export should preserve Android carrier ID match constraints",
-        )
-        assert_true(
-            carrier_config_by_id[gid2_id]["match"]["gid2_prefixes"] == ["A1"],
-            "CarrierConfig JSON export should preserve GID2 match constraints",
-        )
-        assert_true(
-            carrier_config_by_id[imsi_id]["match"]["imsi_prefix_patterns"] == ["262260x1"],
-            "CarrierConfig JSON export should preserve IMSI prefix pattern constraints",
-        )
-        exported_config = carrier_config_by_id[multi_id]["android_carrier_config"]
-        assert_true(
-            exported_config["carrier_default_wfc_ims_roaming_mode_int"] == 2,
-            "CarrierConfig export should preserve WFC roaming mode",
-        )
-        assert_true(
-            exported_config["carrier_volte_override_wfc_provisioning_bool"] is False,
-            "CarrierConfig export should preserve VoLTE/WFC provisioning override",
-        )
-        assert_true(
-            exported_config["wfc_data_spn_format_idx_int"] == 1,
-            "CarrierConfig export should preserve WFC data SPN format",
-        )
+        for name in ("mccmnc-index.json", "carrier-id-index.json", "carrier-config-overrides.json"):
+            assert_true(
+                not (generated_dir / "android" / name).exists(),
+                f"{name} is no longer published: only the validator read it",
+            )
 
         config_xml = ET.parse(generated_dir / "android/carrier-config-list.xml").getroot()
         config_nodes = config_xml.findall("carrier_config")
@@ -2888,8 +2926,21 @@ def main() -> int:
             "metadata should identify the APN target version",
         )
         assert_true(
-            metadata["target"]["carrier_config_gid_matching"] == "exact_only",
-            "metadata should identify exact CarrierConfig GID semantics",
+            metadata["target"]
+            == {
+                "apn_database_version": 8,
+                "carrier_config_gid_matching": "omitted",
+                "carrier_config_iccid_matching": "omitted",
+            },
+            "metadata must say that GID and ICCID profiles are left out of the CarrierConfig XML",
+        )
+        assert_true(
+            not any(
+                key in node.attrib
+                for node in config_nodes
+                for key in ("gid1", "gid2", "iccid")
+            ),
+            "the CarrierConfig XML carries no GID or ICCID filter",
         )
         assert_true(
             metadata["omissions"]["carrier_config_profiles_with_unrepresentable_match"] == 2,

@@ -10,8 +10,7 @@ The Android files live in `generated/android/`. Each file has one job.
 | --- | --- |
 | `apns-conf.xml` | the APN database path your TelephonyProvider reads |
 | `carrier-config-list.xml` | your CarrierConfig overlay input |
-| `carrier-config-overrides.json` | a build-time source for CarrierConfig if you do not consume XML |
-| `lookup.json`, `mccmnc-index.json`, `carrier-id-index.json` | any local lookup your ROM does at SIM load |
+| `lookup.json` | a tool that resolves profiles for a SIM, see below |
 | `metadata.json` | your build log, so you know which profiles the XML left out |
 
 To copy the Android files into a build tree, run:
@@ -25,14 +24,13 @@ The checked-in `apns-conf.xml` carries `version="8"`. Android's TelephonyProvide
 ```bash
 mkdir -p /tmp/ocd-out
 python3 tools/generate_android_outputs.py carriers /tmp/ocd-out --apn-version 9 --evidence-index generated/evidence-index.json
-head -2 /tmp/ocd-out/android/apns-conf.xml
+grep -m1 '<apns ' /tmp/ocd-out/android/apns-conf.xml
 ```
 
-The generator prints one summary line and the XML header shows the new version. On 2026-10-04 the output is:
+The generator prints one summary line, and the root element shows the new version. On 2026-10-04 the output is:
 
 ```text
-generated Android output for 7816 profile(s): 25406 APN row(s), 6351 CarrierConfig profile(s), 3170 MCC/MNC key(s), 179 Android carrier ID key(s), 5261 CarrierConfig XML block(s), 0 APN row(s) left out because LineageOS's schema rejects them
-<?xml version="1.0" encoding="utf-8"?>
+generated Android output for 7816 profile(s): 25406 APN row(s), 6351 CarrierConfig profile(s), 5261 CarrierConfig XML block(s), 0 APN row(s) left out because LineageOS's schema rejects them
 <apns version="9">
 ```
 
@@ -137,10 +135,10 @@ To read the APN target version and the omission counts, run:
 python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["target"])'
 ```
 
-Output on 2026-10-03:
+Output on 2026-10-04:
 
 ```text
-{'apn_database_version': 8, 'carrier_config_gid_matching': 'exact_only'}
+{'apn_database_version': 8, 'carrier_config_gid_matching': 'omitted', 'carrier_config_iccid_matching': 'omitted'}
 ```
 
 To read the freshness window, run:
