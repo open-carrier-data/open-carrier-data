@@ -395,9 +395,24 @@ def check_capability_sources(
             "resolution": "omitted_from_stable",
         }
 
+    def without_sources(facts: list) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == target:
+                profile.pop("capability_sources", None)
+                profile["fact_sources"] = facts
+        return value
+
     try:
         validate(json.loads(old_shape))
         validate(shaped(new_sources))
+        expect_failure(
+            without_sources([{"section": "capabilities", "key": "mms", "sources": ["aosp"]}]),
+            "the old shape, capabilities in fact_sources, passed",
+        )
+        expect_failure(
+            without_sources([]), "a profile that publishes capabilities without sources passed"
+        )
         withheld = {**new_sources, "vonr": {"off": ["lineageos"]}}
         validate(shaped(withheld, [gate("single_family_off:vonr")]))
         validate(shaped(withheld, [gate("stale_single_source_entry:vonr")]))
@@ -591,7 +606,11 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
         def redundant(value: dict) -> None:
             profile = value["profiles"][0]
             profile["fact_sources"] = [
-                {"section": "capabilities", "key": "volte", "sources": list(profile["sources"])}
+                {
+                    "section": "android_carrier_config",
+                    "key": "carrier_volte_available_bool",
+                    "sources": list(profile["sources"]),
+                }
             ]
 
         expect_failure(redundant, "a fact entry equal to the profile sources must be rejected")
@@ -2565,9 +2584,21 @@ def main() -> int:
                 ],
             },
         )
-        profile_ids = sorted(
-            load_json(path)["profile_id"] for path in carriers_dir.rglob("*.json")
-        )
+        published = {
+            profile["profile_id"]: {
+                key: value
+                for key, value in profile["capabilities"].items()
+                if value != "unknown"
+            }
+            for path in carriers_dir.rglob("*.json")
+            for profile in [load_json(path)]
+        }
+        profile_ids = sorted(published)
+        sources_for = {
+            "supported": {"on": ["lineageos"]},
+            "unsupported": {"off": ["aosp", "lineageos"]},
+            "conditional": {"off": ["aosp"], "on": ["lineageos"]},
+        }
         write_profile(
             generated_dir / "evidence-index.json",
             {
@@ -2579,13 +2610,17 @@ def main() -> int:
                         "profile_id": profile_id,
                         "observation_count": 1,
                         "sources": ["aosp", "lineageos"],
-                        "fact_sources": [
+                        "fact_sources": [],
+                        **(
                             {
-                                "section": "capabilities",
-                                "key": "volte",
-                                "sources": ["lineageos"],
-                            },
-                        ],
+                                "capability_sources": {
+                                    key: sources_for[value]
+                                    for key, value in published[profile_id].items()
+                                }
+                            }
+                            if published[profile_id]
+                            else {}
+                        ),
                         "verified_observation_count": 0,
                         "observed_scope": {
                             "models": ["SM-TEST"],

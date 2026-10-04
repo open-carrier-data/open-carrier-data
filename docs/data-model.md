@@ -52,14 +52,16 @@ The lookup indexes derive `specificity` from these fields. It counts how many of
 | `ims_conference` | IMS conference calls |
 | `wifi_calling_roaming` | Wi-Fi calling while roaming |
 
-Every capability takes one of four values.
+Every capability takes one of four values. A value says what carrier tables configure for the SIM. It is a configuration, not a test result: no profile has been checked on a phone.
 
 | Value | Meaning |
 | --- | --- |
-| `supported` | sources agree the feature works |
-| `unsupported` | sources agree the feature is off |
-| `conditional` | sources disagree, or the value depends on device scope |
-| `unknown` | no source says, or the only source family's newest entry is older than five years |
+| `supported` | at least one phone maker's or OS carrier table turns the feature on for this SIM, and none turns it off. It may still be off on a given phone, or on phones the carrier has not approved |
+| `unsupported` | the operator's own configuration turns it off, or at least two independent source families turn it off and none turns it on |
+| `conditional` | sources disagree, also between the devices of one source |
+| `unknown` | no usable source. That includes a single maker or maintainer turning the feature off, and a capability whose only source family's newest entry is older than five years |
+
+Apple and Samsung publish only what they turn on, so their offs never count. Source names that copy one origin count as one family: the LineageOS, Sony and Fairphone APN lists, the two Google lanes, and Samsung's two lanes. The operator's own configuration is Google's settings for its Google Fi service and an AOSP CarrierConfig file the carrier itself submitted; [how-it-is-built.md](how-it-is-built.md) lists them. `capability_sources` in the evidence index names, for each capability, the source families that turn it on and those that turn it off.
 
 ## Android carrier config
 
@@ -171,14 +173,15 @@ Each `profiles` record describes one carrier profile.
 | `sources` | every record | source families that contributed to this profile |
 | `observation_count` | every record | candidate observations merged into this profile |
 | `verified_observation_count` | every record | observations confirmed on a device, `0` for every profile on 2026-09-23 |
-| `fact_sources` | every record | list of `section`, `key`, `sources` for only the facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources`. An APN fact is one row with one of its types, and its key is described below the table |
+| `fact_sources` | every record | list of `section`, `key`, `sources` for only the CarrierConfig, APN and add-on facts whose sources are narrower than `sources`; a fact without an entry rests on every source in `sources`. An APN fact is one row with one of its types, and its key is described below the table. Capabilities are in `capability_sources` |
+| `capability_sources` | some records | capability name to `on`, `off` and `conditional`, each a list of the sources whose observations turn the capability on, turn it off, or call it conditional. It lists every capability a source gives a value, whatever the profile publishes, and is present whenever the profile publishes a capability other than `unknown` |
 | `observed_scope` | some records | device and firmware scope of the observations |
 | `observed_model_source_groups` | some records | `models` and `sources` pairs when a model was named by fewer sources than the profile |
 | `reviewed_range` | some records | `oldest` and `newest` review dates |
 | `newest_entry` | some records | month (`YYYY-MM`) of the newest upstream entry behind the profile, present only when every observation is dated |
 | `capability_newest_entries` | some records | capability name to the month of the newest upstream entry behind that published capability, present only when every supporting observation is dated |
 | `conflicts` | some records | facts omitted, made conditional, or published in every variant because sources disagreed |
-| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, the `mms` type of a row without an MMSC by `mms_without_mmsc`, or a capability published as `unknown` by `stale_single_source_entry:<capability>` |
+| `quality_gates` | some records | facts omitted by a gate, such as `uncorroborated_generic_apn`, the `mms` type of a row without an MMSC by `mms_without_mmsc`, a capability published as `unknown` by `stale_single_source_entry:<capability>` or `single_family_off:<capability>`, or a false capability-gating CarrierConfig key left out by `single_family_off:<key>` |
 | `source_versions` | some records | per source family, the exact builds, commits, or Apple bundle and iOS versions the observations were read from |
 
 The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digits of the SHA-256 of the row as compact JSON: the row without `name`, `types` set to the one type, keys sorted, no spaces, non-ASCII characters escaped. In Python that is `json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`. `apn_fact_key` in `tools/generate_android_outputs.py` computes it, and the generator uses it to order APN rows.
@@ -196,4 +199,4 @@ The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digit
 
 A family appears only where its observations name a version. The git-based families, `aosp`, `lineageos`, and `mobile_broadband_provider_info`, read one commit per snapshot, which `source_snapshots[].revision` names. The validator rejects any other key and any value outside these patterns, so no URL or path can appear.
 
-Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published. `generated/android/apns-conf.xml` orders the variants by the sources behind each row. A `stale_single_source_entry:<capability>` gate names a capability the profile publishes as `unknown`; the validator checks that. [how-it-is-built.md](how-it-is-built.md) explains both rules.
+Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, or `published_variants`. Only capabilities become `conditional`. Only APN rows become `published_variants`, which means every variant was published. `generated/android/apns-conf.xml` orders the variants by the sources behind each row. A `stale_single_source_entry:<capability>` or `single_family_off:<capability>` gate names a capability the profile publishes as `unknown`, and a `single_family_off:<key>` gate in `android_carrier_config` names a capability-gating key the profile does not publish; the validator checks both. `capability_sources` agrees with the published value: `supported` has only `on`, `unsupported` only `off`, `conditional` two kinds or `conditional`, and an `unknown` with sources names the gate that withheld it. [how-it-is-built.md](how-it-is-built.md) explains the rules.

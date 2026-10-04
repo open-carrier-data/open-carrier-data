@@ -36,6 +36,24 @@ python3 -c 'print(*[(s["source_name"], s["revision_date"], s["checked_at"]) for 
 
 The refresh methods below, the AOSP branch name, and the Samsung scope rules come from the private importer configuration. They cannot be checked from this repo.
 
+## How a source's on and off count
+
+A source family that turns a capability on makes it `supported`, as long as none turns it off. An off counts only when the operator's own configuration gives it, or when two independent families give it. One family's off alone leaves the capability `unknown` and leaves its false CarrierConfig switch out. [docs/data-model.md](docs/data-model.md#capability-names-and-values) defines the values.
+
+| Source name | Its offs |
+| --- | --- |
+| `apple_carrier_bundles`, `samsung_omc`, `samsung_ims` | never published; these lanes publish only what they turn on |
+| `google_carriersettings`, `google_pixel_vendor_carriersettings` | one family; the operator's own for Google Fi |
+| `aosp` | one family; the operator's own only for a file the carrier submitted, on 2026-10-04 SETAR's |
+| `lineageos`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list |
+| `lineageos_device_overlays` | one family |
+
+`capability_sources` in each profile's record of `generated/evidence-index.json` names the sources that turn each capability on and off. To print, per source, how many profile capabilities it turns off, whatever value the profiles publish, run:
+
+```bash
+python3 -c 'import json, collections; print(collections.Counter(s for p in json.load(open("generated/evidence-index.json"))["profiles"] for c in p.get("capability_sources", {}).values() for s in c.get("off", [])))'
+```
+
 ## Exact versions behind a profile
 
 A snapshot revision names the source state that was checked. Where a family also knows the exact version each value was read from, the profile's record in `generated/evidence-index.json` names it under `source_versions`. [docs/data-model.md](docs/data-model.md) lists the fields.
@@ -88,9 +106,9 @@ The maintained snapshot is the newest numeric Android branch in `GrapheneOS/adev
 
 Raw textproto and protobuf files, endpoint responses, and download URLs stay private. Pixel variants that disagree stay separate observations and become conditional or omitted in the merge. The GrapheneOS tooling is MIT. The project asserts no license for Google's data.
 
-## Samsung contributes OMC facts and positive IMS observations
+## Samsung contributes OMC facts and positive capability observations
 
-OMC facts come from firmware baselines found through Samsung's unauthenticated firmware update lookup. The GRAS update-check path was removed on 2026-10-03; two older GRAS observations remain until re-extraction replaces them. A firmware observation needs a versioned artifact whose build Samsung's update service confirmed as current, dated by that confirmation.
+OMC facts come from firmware baselines found through Samsung's unauthenticated firmware update lookup. OMC capabilities are positive too: where Samsung's last OMC layer turns a feature off, the capability stays `unknown` and no false CarrierConfig switch is written. The GRAS update-check path was removed on 2026-10-03; two older GRAS observations remain until re-extraction replaces them. A firmware observation needs a versioned artifact whose build Samsung's update service confirmed as current, dated by that confirmation.
 
 IMS facts are positive, device-scoped observations of VoLTE, Wi-Fi calling, video calling, SMS over IMS, and RCS. A false or absent Samsung switch is never published as proof that a carrier lacks the feature. Raw firmware, OMC files, requests, responses, signed URLs, and credentials stay private. The project asserts no Samsung license.
 
