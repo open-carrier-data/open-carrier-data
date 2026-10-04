@@ -146,11 +146,8 @@ GENERATED_FILES = {
     "android/README.md",
     "android/apns-conf.xml",
     "android/carrier-config-list.xml",
-    "android/carrier-config-overrides.json",
-    "android/carrier-id-index.json",
     "android/lookup.json",
     "android/metadata.json",
-    "android/mccmnc-index.json",
     "devices/README.md",
     "devices/android-carrier-artifacts.json",
     "devices/android.json",
@@ -1292,8 +1289,17 @@ def validate_android_metadata(
     metadata_path = generated_dir / "android" / "metadata.json"
     metadata = load_json(metadata_path)
     require_type(metadata_path, metadata, dict, "metadata")
-    if set(metadata) - FRESHNESS_KEYS != {"schema_version", "target", "output", "omissions"}:
+    if set(metadata) - FRESHNESS_KEYS != {
+        "schema_version",
+        "target",
+        "output",
+        "omissions",
+        "data_digest",
+    }:
         raise ValidationError(f"{metadata_path}: metadata has invalid keys")
+    digest = metadata["data_digest"]
+    if not isinstance(digest, str) or not DATA_DIGEST_RE.fullmatch(digest):
+        raise ValidationError(f"{metadata_path}: data_digest is invalid")
     if metadata.get("schema_version") != 1:
         raise ValidationError(f"{metadata_path}: schema_version must be 1")
     metadata_window = parse_freshness_window(metadata_path, metadata)
@@ -1306,8 +1312,17 @@ def validate_android_metadata(
     version = target.get("apn_database_version")
     if not isinstance(version, int) or isinstance(version, bool) or version < 1:
         raise ValidationError(f"{metadata_path}: APN database version is invalid")
-    if target.get("carrier_config_gid_matching") != "exact_only":
-        raise ValidationError(f"{metadata_path}: CarrierConfig GID policy is invalid")
+    # carrier-config-list.xml carries no gid1, gid2 or ICCID filter; profiles
+    # that need one are left out and listed under omissions.
+    if set(target) != {
+        "apn_database_version",
+        "carrier_config_gid_matching",
+        "carrier_config_iccid_matching",
+    } or (target["carrier_config_gid_matching"], target["carrier_config_iccid_matching"]) != (
+        "omitted",
+        "omitted",
+    ):
+        raise ValidationError(f"{metadata_path}: CarrierConfig GID and ICCID policy is invalid")
 
     try:
         apn_root = ET.parse(generated_dir / "android" / "apns-conf.xml").getroot()
@@ -1316,6 +1331,8 @@ def validate_android_metadata(
         raise ValidationError(f"{generated_dir}: invalid generated Android XML: {exc}") from exc
     if apn_root.tag != "apns" or apn_root.attrib.get("version") != str(version):
         raise ValidationError(f"{metadata_path}: APN XML version does not match metadata")
+    for name in ("apns-conf.xml", "carrier-config-list.xml"):
+        validate_provenance_header(generated_dir / "android" / name, metadata)
     if config_root.tag != "carrier_config_list":
         raise ValidationError(f"{generated_dir}: invalid CarrierConfig XML root")
     validate_apn_schema(generated_dir, apn_root)
@@ -1352,6 +1369,96 @@ def validate_android_metadata(
         )
         if len(profile_ids) != count or not set(profile_ids) <= expected_profile_ids:
             raise ValidationError(f"{metadata_path}: omission profile IDs are invalid")
+
+
+DATA_DIGEST_RE = re.compile(r"sha256:[0-9a-f]{64}")
+HEADER_FIELD_RE = re.compile(r"\s*(data_digest|checks_through|stale_after): (\S+)\s*")
+
+
+def provenance_header_fields(path: Path) -> dict[str, str]:
+    """The key: value lines of the comment that follows the XML declaration."""
+    text = path.read_text(encoding="utf-8")
+    declaration = '<?xml version="1.0" encoding="utf-8"?>\n<!--\n'
+    if not text.startswith(declaration) or "\n-->\n" not in text:
+        raise ValidationError(f"{path}: the provenance comment is missing")
+    comment = text[len(declaration) : text.index("\n-->\n")]
+    if "SPDX-License-Identifier: CC0-1.0" not in comment:
+        raise ValidationError(f"{path}: the provenance comment names no CC0-1.0 licence")
+    fields: dict[str, str] = {}
+    for line in comment.split("\n"):
+        found = HEADER_FIELD_RE.fullmatch(line)
+        if found:
+            if found.group(1) in fields:
+                raise ValidationError(f"{path}: the provenance comment repeats {found.group(1)}")
+            fields[found.group(1)] = found.group(2)
+    return fields
+
+
+def validate_provenance_header(path: Path, metadata: dict[str, Any]) -> None:
+    """A generated XML file names the data digest and freshness window of
+    metadata.json in its provenance comment."""
+    fields = provenance_header_fields(path)
+    expected = {
+        key: metadata[key]
+        for key in ("data_digest", "checks_through", "stale_after")
+        if key in metadata
+    }
+    if fields != expected:
+        raise ValidationError(
+            f"{path}: the provenance comment does not match metadata.json: "
+            f"{fields} != {expected}"
+        )
+
+
+def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None:
+    """lookup.json lists every profile once. newest_entry, where present,
+    repeats the month the evidence index publishes for that profile, and is
+    present exactly where the evidence index has one."""
+    path = generated_dir / "android" / "lookup.json"
+    lookup = load_json(path)
+    require_type(path, lookup, dict, "lookup")
+    if set(lookup) != {"schema_version", "resolution_order", "match_semantics", "profiles"}:
+        raise ValidationError(f"{path}: lookup has invalid keys")
+    profiles = lookup["profiles"]
+    require_type(path, profiles, list, "profiles")
+    evidence_path = generated_dir / "evidence-index.json"
+    newest_entries = {
+        item["profile_id"]: item["newest_entry"]
+        for item in load_json(evidence_path).get("profiles", [])
+        if "newest_entry" in item
+    } if evidence_path.exists() else {}
+    seen: set[str] = set()
+    allowed = {
+        "profile_id",
+        "display_name",
+        "path",
+        "match",
+        "specificity",
+        "capabilities",
+        "android_apn_count",
+        "has_android_carrier_config",
+        "checks_through",
+        "stale_after",
+        "newest_entry",
+    }
+    for index, record in enumerate(profiles):
+        label = f"profiles[{index}]"
+        require_type(path, record, dict, label)
+        if set(record) - allowed:
+            raise ValidationError(f"{path}: {label} has unknown keys")
+        profile_id = record.get("profile_id")
+        if profile_id in seen or profile_id not in expected_profile_ids:
+            raise ValidationError(f"{path}: {label}.profile_id is unknown or repeated")
+        seen.add(profile_id)
+        parse_freshness_window(path, record)
+        if "newest_entry" in record:
+            parse_entry_month(path, record["newest_entry"], f"{label}.newest_entry")
+        if record.get("newest_entry") != newest_entries.get(profile_id):
+            raise ValidationError(
+                f"{path}: {label}.newest_entry does not match the evidence index"
+            )
+    if seen != expected_profile_ids:
+        raise ValidationError(f"{path}: lookup does not list every profile")
 
 
 def validate_apn_schema(generated_dir: Path, apn_root: ET.Element) -> None:
@@ -1430,6 +1537,7 @@ def main(argv: list[str]) -> int:
         },
     )
     validate_android_metadata(index_path.parent, seen_ids, window)
+    validate_lookup(index_path.parent, seen_ids)
     if window is not None:
         check_freshness(window, args.freshness)
     print(f"validated {len(profile_paths)} public carrier profile(s)")

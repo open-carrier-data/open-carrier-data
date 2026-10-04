@@ -549,9 +549,69 @@ def apn_row_line(record: dict[str, Any]) -> str:
     return f"  <apn{attrs} />"
 
 
-def write_apn_rows(path: Path, records: list[dict[str, Any]], version: int) -> int:
+# Every XML file the generator writes starts with this comment: what the file
+# is, the data licence, the digest of everything it was built from, and the
+# freshness window. The publish commit cannot be named, because it is made
+# after the file is written and squash-merged into a new commit, and the
+# public check regenerates the file and fails on any difference. The digest is
+# stable instead: SHA-256 over the profile files, the evidence index, and the
+# generator's own source, so it names one snapshot, and metadata.json repeats
+# it, so `git log -S <digest> -- generated/android/metadata.json` finds the
+# commit that published it.
+PROJECT_URL = "https://github.com/open-carrier-data/open-carrier-data"
+DATA_LICENSE = "CC0-1.0"
+DIGEST_TOOLS = ("generate_android_outputs.py", "carrier_config_types.py", "lineageos_apns.py")
+
+
+def data_digest(
+    carriers_dir: Path, paths: list[Path], evidence_index_path: Path | None
+) -> str:
+    """SHA-256 over the inputs of the generated files, each named by its path
+    in the repository: the profile files, generated/evidence-index.json, and
+    the generator's source."""
+    digest = hashlib.sha256()
+
+    def add(name: str, data: bytes) -> None:
+        digest.update(f"{name}\n{hashlib.sha256(data).hexdigest()}\n".encode("utf-8"))
+
+    for path in sorted(paths, key=lambda item: item.relative_to(carriers_dir.parent).as_posix()):
+        add(path.relative_to(carriers_dir.parent).as_posix(), path.read_bytes())
+    if evidence_index_path is not None and evidence_index_path.exists():
+        add("generated/evidence-index.json", evidence_index_path.read_bytes())
+    tools = Path(__file__).resolve().parent
+    for name in DIGEST_TOOLS:
+        add(f"tools/{name}", (tools / name).read_bytes())
+    return "sha256:" + digest.hexdigest()
+
+
+def provenance_header(what: str, digest: str | None, freshness: dict[str, str]) -> list[str]:
+    """The XML declaration and the provenance comment of a generated file."""
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
+        "<!--",
+        f"    {what} from Open Carrier Data",
+        f"    {PROJECT_URL}",
+        f"    SPDX-License-Identifier: {DATA_LICENSE}",
+        "    The project waives its rights in these derived facts; DATA-LICENSE.md",
+        "    in the repository records each source's own terms.",
+    ]
+    if digest is not None:
+        lines.append(f"    data_digest: {digest}")
+    for key in ("checks_through", "stale_after"):
+        if freshness.get(key):
+            lines.append(f"    {key}: {freshness[key]}")
+    lines.append("-->")
+    return lines
+
+
+def write_apn_rows(
+    path: Path,
+    records: list[dict[str, Any]],
+    version: int,
+    header: list[str] | None = None,
+) -> int:
+    lines = [
+        *(header or ['<?xml version="1.0" encoding="utf-8"?>']),
         f'<apns version="{version}">',
     ]
     lines.extend(apn_row_line(record) for record in records)
@@ -607,11 +667,24 @@ def profile_windows(evidence_index_path: Path) -> dict[str, dict[str, str]]:
     return windows
 
 
+def profile_newest_entries(evidence_index_path: Path) -> dict[str, str]:
+    """The month of the newest upstream entry behind each profile, as the
+    evidence index publishes it, for the profiles where it is known."""
+    if not evidence_index_path.exists():
+        return {}
+    return {
+        profile["profile_id"]: profile["newest_entry"]
+        for profile in load_json(evidence_index_path).get("profiles", [])
+        if isinstance(profile.get("newest_entry"), str)
+    }
+
+
 def write_lookup(
     path: Path,
     carriers_dir: Path,
     profile_items: list[tuple[Path, dict[str, Any]]],
     windows: dict[str, dict[str, str]] | None = None,
+    newest_entries: dict[str, str] | None = None,
 ) -> None:
     profiles = []
     for profile_path, profile in profile_items:
@@ -620,6 +693,9 @@ def write_lookup(
         if window:
             record["checks_through"] = window["checks_through"]
             record["stale_after"] = window["stale_after"]
+        newest = (newest_entries or {}).get(profile["profile_id"])
+        if newest:
+            record["newest_entry"] = newest
         profiles.append(record)
     value = {
         "schema_version": 1,
@@ -657,102 +733,6 @@ def lookup_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any
         "android_apn_count": len(profile.get("android_apns", []) or []),
         "has_android_carrier_config": bool(profile.get("android_carrier_config")),
     }
-
-
-def mccmnc_index_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "profile_id": profile["profile_id"],
-        "display_name": profile["display_name"],
-        "path": profile_path.relative_to(carriers_dir.parent).as_posix(),
-        "match": profile["match"],
-        "specificity": match_specificity(profile["match"]),
-    }
-
-
-def write_mccmnc_index(
-    path: Path,
-    carriers_dir: Path,
-    profile_items: list[tuple[Path, dict[str, Any]]],
-) -> int:
-    index: dict[str, list[dict[str, Any]]] = {}
-    for profile_path, profile in profile_items:
-        match = profile.get("match", {})
-        mccmncs = match.get("mccmnc", []) if isinstance(match, dict) else []
-        if not isinstance(mccmncs, list):
-            continue
-        record = mccmnc_index_record(carriers_dir, profile_path, profile)
-        valid_mccmncs = sorted(
-            mccmnc
-            for mccmnc in set(mccmncs)
-            if isinstance(mccmnc, str) and len(mccmnc) in {5, 6}
-        )
-        for mccmnc in valid_mccmncs:
-            index.setdefault(mccmnc, []).append(record)
-    for records in index.values():
-        records.sort(
-            key=lambda item: (
-                item["specificity"],
-                item["profile_id"],
-                item["display_name"],
-            )
-        )
-    value = {"schema_version": 1, "mccmnc": dict(sorted(index.items()))}
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return len(index)
-
-
-def write_carrier_id_index(
-    path: Path,
-    carriers_dir: Path,
-    profile_items: list[tuple[Path, dict[str, Any]]],
-) -> int:
-    index: dict[str, list[dict[str, Any]]] = {}
-    for profile_path, profile in profile_items:
-        match = profile.get("match", {})
-        carrier_ids = match.get("android_carrier_ids", []) if isinstance(match, dict) else []
-        if not isinstance(carrier_ids, list):
-            continue
-        record = mccmnc_index_record(carriers_dir, profile_path, profile)
-        valid_carrier_ids = sorted(
-            carrier_id
-            for carrier_id in set(carrier_ids)
-            if isinstance(carrier_id, int) and not isinstance(carrier_id, bool)
-        )
-        for carrier_id in valid_carrier_ids:
-            index.setdefault(str(carrier_id), []).append(record)
-    for records in index.values():
-        records.sort(
-            key=lambda item: (
-                item["specificity"],
-                item["profile_id"],
-                item["display_name"],
-            )
-        )
-    value = {"schema_version": 1, "android_carrier_ids": dict(sorted(index.items()))}
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return len(index)
-
-
-def write_carrier_config(path: Path, profiles: list[dict[str, Any]]) -> int:
-    records = []
-    for profile in profiles:
-        config = profile.get("android_carrier_config")
-        if not config:
-            continue
-        records.append(
-            {
-                "profile_id": profile["profile_id"],
-                "display_name": profile["display_name"],
-                "match": profile["match"],
-                "android_carrier_config": config,
-            }
-        )
-    value = {"schema_version": 1, "profiles": records}
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return len(records)
 
 
 def java_regex_literal(value: str) -> str:
@@ -856,7 +836,9 @@ def config_xml_lines(config: dict[str, Any]) -> list[str]:
     return lines
 
 
-def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
+def write_carrier_config_xml(
+    path: Path, profiles: list[dict[str, Any]], header: list[str] | None = None
+) -> int:
     blocks: list[tuple[int, str, dict[str, str], list[str]]] = []
     for profile in profiles:
         config = profile.get("android_carrier_config")
@@ -885,7 +867,7 @@ def write_carrier_config_xml(path: Path, profiles: list[dict[str, Any]]) -> int:
         )
     )
     lines = [
-        '<?xml version="1.0" encoding="utf-8"?>',
+        *(header or ['<?xml version="1.0" encoding="utf-8"?>']),
         "<carrier_config_list>",
     ]
     for _specificity, profile_id, filters, config_lines in blocks:
@@ -932,6 +914,7 @@ def write_metadata(
     config_xml_count: int,
     freshness: dict[str, str],
     apn_rows_schema_rejected: int = 0,
+    digest: str | None = None,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -945,9 +928,14 @@ def write_metadata(
     )
     value = {
         "schema_version": 1,
+        # carrier-config-list.xml has no gid1, gid2 or ICCID filter: a profile
+        # whose match needs a GID or ICCID prefix is left out of it and listed
+        # under omissions, because Android's vendor.xml can match GID1 only
+        # exactly and profiles carry prefixes.
         "target": {
             "apn_database_version": apn_version,
-            "carrier_config_gid_matching": "exact_only",
+            "carrier_config_gid_matching": "omitted",
+            "carrier_config_iccid_matching": "omitted",
         },
         "output": {
             "apn_row_count": apn_count,
@@ -966,6 +954,8 @@ def write_metadata(
         },
         **freshness,
     }
+    if digest is not None:
+        value["data_digest"] = digest
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
@@ -1001,11 +991,16 @@ def main(argv: list[str]) -> int:
             "without their sources",
             file=sys.stderr,
         )
+    freshness = freshness_window(evidence_index_path)
+    digest = data_digest(
+        carriers_dir, [path for path, _ in profile_items], evidence_index_path
+    )
     apn_rows = apn_xml_rows(profiles, evidence)
     apn_count = write_apn_rows(
         generated_dir / "android" / "apns-conf.xml",
         apn_rows.records,
         args.apn_version,
+        provenance_header("Android APN list", digest, freshness),
     )
     rows_schema_rejected = apn_rows.schema_rejected
     write_lookup(
@@ -1013,24 +1008,12 @@ def main(argv: list[str]) -> int:
         carriers_dir,
         profile_items,
         profile_windows(evidence_index_path),
-    )
-    mccmnc_count = write_mccmnc_index(
-        generated_dir / "android" / "mccmnc-index.json",
-        carriers_dir,
-        profile_items,
-    )
-    carrier_id_count = write_carrier_id_index(
-        generated_dir / "android" / "carrier-id-index.json",
-        carriers_dir,
-        profile_items,
-    )
-    config_count = write_carrier_config(
-        generated_dir / "android" / "carrier-config-overrides.json",
-        profiles,
+        profile_newest_entries(evidence_index_path),
     )
     config_xml_count = write_carrier_config_xml(
         generated_dir / "android" / "carrier-config-list.xml",
         profiles,
+        provenance_header("Android CarrierConfig list (vendor.xml format)", digest, freshness),
     )
     write_metadata(
         generated_dir / "android" / "metadata.json",
@@ -1038,13 +1021,14 @@ def main(argv: list[str]) -> int:
         args.apn_version,
         apn_count,
         config_xml_count,
-        freshness_window(evidence_index_path),
+        freshness,
         rows_schema_rejected,
+        digest,
     )
+    config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
         f"generated Android output for {len(profiles)} profile(s): "
         f"{apn_count} APN row(s), {config_count} CarrierConfig profile(s), "
-        f"{mccmnc_count} MCC/MNC key(s), {carrier_id_count} Android carrier ID key(s), "
         f"{config_xml_count} CarrierConfig XML block(s), "
         f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them"
     )

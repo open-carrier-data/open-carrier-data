@@ -33,7 +33,7 @@ The first five fields identify the profile and say when it applies.
 | `spn` | no | string | 1 to 80 characters, unique |
 | `android_carrier_ids` | no | integer | 0 to 1000000, unique |
 
-The lookup indexes derive `specificity` from these fields. It counts how many of the six optional fields are populated. A profile with only `mccmnc` has specificity 0.
+`lookup.json` derives `specificity` from these fields. It counts how many of the six optional fields are populated. A profile with only `mccmnc` has specificity 0.
 
 ## Capability names and values
 
@@ -147,7 +147,9 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 `generated/index.json` has `schema_version` and a `profiles` array. Each entry has `profile_id`, `display_name`, and `path`. `path` is the profile file relative to the repo root.
 
-`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`. An entry whose sources carry a check date also has `checks_through` and `stale_after`, the freshness window of that one profile. The file-level window in `generated/android/metadata.json` is the oldest of these, so a consumer that keeps only some profiles can read the per-profile dates instead.
+`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`. An entry whose sources carry a check date also has `checks_through` and `stale_after`, the freshness window of that one profile. The file-level window in `generated/android/metadata.json` is the oldest of these, so a consumer that keeps only some profiles can read the per-profile dates instead. An entry also has `newest_entry`, the month (`YYYY-MM`) of the newest upstream entry behind the profile, wherever the evidence index publishes one; it tells you how old the profile's data is, which the check dates do not. The validator checks that it matches the evidence index.
+
+`generated/android/metadata.json` has `schema_version`, `target`, `output`, `omissions`, `data_digest`, and the file-level `checks_through` and `stale_after`. `target` names the APN database version and says that profiles needing a GID or ICCID match are left out of `carrier-config-list.xml` (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`). `data_digest` is `sha256:` and the SHA-256 over the profile files, `generated/evidence-index.json` and the generator's source; `apns-conf.xml` and `carrier-config-list.xml` repeat it with the licence and the freshness window in the comment they start with.
 
 ## Provenance fields in the evidence index
 
