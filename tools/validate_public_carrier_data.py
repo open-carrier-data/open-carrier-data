@@ -809,6 +809,24 @@ def validate_source_versions(
 
 
 STALE_CAPABILITY_GATE = "stale_single_source_entry"
+# An off that one source family alone gives, which is not the operator's own
+# configuration: the capability is published as unknown, and a false
+# capability-gating CarrierConfig key is left out.
+SINGLE_FAMILY_OFF_GATE = "single_family_off"
+# The gates that publish a capability as unknown although a source gives it.
+UNKNOWN_CAPABILITY_GATES = {STALE_CAPABILITY_GATE, SINGLE_FAMILY_OFF_GATE}
+# The CarrierConfig keys the importers treat as a capability's Android switch.
+# Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
+CAPABILITY_GATING_CONFIG_KEYS = {
+    "carrier_volte_available_bool": "volte",
+    "carrier_wfc_ims_available_bool": "vowifi",
+    "carrier_vt_available_bool": "video_calling",
+    "enabledMMS": "mms",
+    "imssms.sms_over_ims_supported_bool": "sms_over_ims",
+    "support_ims_conference_call_bool": "ims_conference",
+    "support_conference_call_bool": "ims_conference",
+}
+CAPABILITY_SOURCE_KINDS = {"on", "off", "conditional"}
 
 
 def validate_stale_capability_gates(
@@ -816,25 +834,98 @@ def validate_stale_capability_gates(
     gates: list[dict[str, Any]],
     index: int,
     capabilities: dict[str, str] | None,
+    config_keys: set[str] | None = None,
 ) -> None:
     """A capability withheld because its only source family's newest entry is
-    over five years old names a real capability that the profile publishes as
-    unknown."""
+    over five years old, or because one source family alone turns it off,
+    names a real capability that the profile publishes as unknown. A
+    single-family gate on a CarrierConfig key names a capability-gating key
+    the profile does not publish."""
     for gate_index, gate in enumerate(gates):
-        name, _, capability = gate["key"].partition(":")
-        if name != STALE_CAPABILITY_GATE:
+        name, _, key = gate["key"].partition(":")
+        if name not in UNKNOWN_CAPABILITY_GATES:
             continue
         label = f"profiles[{index}].quality_gates[{gate_index}]"
-        if (
-            gate["section"] != "capabilities"
-            or capability not in CAPABILITY_KEYS
-            or gate["resolution"] != "omitted_from_stable"
-        ):
-            raise ValidationError(f"{path}: {label} is not a valid stale capability gate")
-        if capabilities is not None and capabilities.get(capability, "unknown") != "unknown":
+        if gate["resolution"] != "omitted_from_stable":
+            raise ValidationError(f"{path}: {label} is not a valid {name} gate")
+        if name == SINGLE_FAMILY_OFF_GATE and gate["section"] == "android_carrier_config":
+            if key not in CAPABILITY_GATING_CONFIG_KEYS:
+                raise ValidationError(f"{path}: {label} names no capability-gating key")
+            if config_keys is not None and key in config_keys:
+                raise ValidationError(
+                    f"{path}: {label} withholds {key}, but the profile publishes it"
+                )
+            continue
+        if gate["section"] != "capabilities" or key not in CAPABILITY_KEYS:
+            raise ValidationError(f"{path}: {label} is not a valid {name} gate")
+        if capabilities is not None and capabilities.get(key, "unknown") != "unknown":
             raise ValidationError(
-                f"{path}: {label} withholds {capability}, but the profile publishes it"
+                f"{path}: {label} withholds {key}, but the profile publishes it"
             )
+
+
+def validate_capability_sources(
+    path: Path,
+    evidence: dict[str, Any],
+    index: int,
+    sources: list[str],
+    capabilities: dict[str, str] | None,
+) -> None:
+    """capability_sources is optional. It maps every capability that a source
+    gives a value to the profile sources that turn it on, turn it off, or call
+    it conditional, and it agrees with the published value: supported has only
+    on, unsupported only off, conditional two kinds or conditional, and unknown
+    names the gate that withheld it. Where it is present it covers every
+    published capability, and fact_sources holds no capability entry."""
+    if "capability_sources" not in evidence:
+        return
+    label = f"profiles[{index}].capability_sources"
+    value = evidence["capability_sources"]
+    require_type(path, value, dict, label)
+    if not value:
+        raise ValidationError(f"{path}: {label} is empty")
+    withheld = {
+        gate["key"].partition(":")[2]
+        for gate in evidence.get("quality_gates", [])
+        if gate["section"] == "capabilities"
+        and gate["key"].partition(":")[0] in UNKNOWN_CAPABILITY_GATES
+    }
+    for key, kinds in value.items():
+        if key not in CAPABILITY_KEYS:
+            raise ValidationError(f"{path}: {label} names an unknown capability")
+        require_type(path, kinds, dict, f"{label}.{key}")
+        if not kinds or set(kinds) - CAPABILITY_SOURCE_KINDS:
+            raise ValidationError(f"{path}: {label}.{key} has invalid keys")
+        for kind, names in kinds.items():
+            validate_canonical_list(path, names, f"{label}.{key}.{kind}")
+            if not names or not set(names) <= set(sources):
+                raise ValidationError(f"{path}: {label}.{key}.{kind} is invalid")
+        if capabilities is None:
+            continue
+        published = capabilities.get(key, "unknown")
+        agrees = {
+            "supported": set(kinds) == {"on"},
+            "unsupported": set(kinds) == {"off"},
+            "conditional": len(kinds) >= 2 or "conditional" in kinds,
+            "unknown": key in withheld,
+        }[published]
+        if not agrees:
+            raise ValidationError(
+                f"{path}: {label}.{key} does not support the published value {published}"
+            )
+    if capabilities is not None:
+        missing = sorted(
+            key
+            for key, published in capabilities.items()
+            if published != "unknown" and key not in value
+        )
+        if missing:
+            raise ValidationError(f"{path}: {label} lacks published {missing}")
+    if any(fact["section"] == "capabilities" for fact in evidence["fact_sources"]):
+        raise ValidationError(
+            f"{path}: profiles[{index}] lists capabilities in both fact_sources and "
+            "capability_sources"
+        )
 
 
 def validate_evidence_index(
@@ -842,6 +933,7 @@ def validate_evidence_index(
     expected_profile_ids: set[str],
     index_window: FreshnessWindow | None = None,
     profile_capabilities: dict[str, dict[str, str]] | None = None,
+    profile_config_keys: dict[str, set[str]] | None = None,
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
@@ -934,6 +1026,7 @@ def validate_evidence_index(
         "newest_entry",
         "capability_newest_entries",
         "source_versions",
+        "capability_sources",
     }
     scope_keys = {
         "models",
@@ -1102,7 +1195,15 @@ def validate_evidence_index(
                 evidence["quality_gates"],
                 index,
                 None if profile_capabilities is None else profile_capabilities.get(profile_id),
+                None if profile_config_keys is None else profile_config_keys.get(profile_id),
             )
+        validate_capability_sources(
+            path,
+            evidence,
+            index,
+            sources,
+            None if profile_capabilities is None else profile_capabilities.get(profile_id),
+        )
     if actual_profile_ids != sorted(actual_profile_ids):
         raise ValidationError(f"{path}: profiles must be sorted by profile_id")
     if set(actual_profile_ids) != expected_profile_ids or len(actual_profile_ids) != len(
@@ -1275,6 +1376,10 @@ def main(argv: list[str]) -> int:
         index_window,
         {
             profile["profile_id"]: profile["capabilities"]
+            for profile in profiles_by_path.values()
+        },
+        {
+            profile["profile_id"]: set(profile.get("android_carrier_config") or {})
             for profile in profiles_by_path.values()
         },
     )

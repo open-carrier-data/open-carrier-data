@@ -332,6 +332,131 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
         evidence_path.write_text(old_shape, encoding="utf-8")
 
 
+def check_capability_sources(
+    carriers_dir: Path, evidence_path: Path, profile_ids: set[str]
+) -> None:
+    """capability_sources lists, per capability, the profile sources that turn
+    it on, turn it off, or call it conditional. It agrees with the published
+    value, covers every published capability, replaces the capability entries
+    of fact_sources, and an unknown with sources names the gate behind it."""
+    profiles = {
+        profile["profile_id"]: profile
+        for path in carriers_dir.rglob("*.json")
+        for profile in [load_json(path)]
+    }
+    capabilities = {profile_id: profile["capabilities"] for profile_id, profile in profiles.items()}
+    config_keys = {
+        profile_id: set(profile.get("android_carrier_config") or {})
+        for profile_id, profile in profiles.items()
+    }
+    target = next(
+        profile_id
+        for profile_id, values in sorted(capabilities.items())
+        if values.get("mms") == "supported" and values.get("vonr", "unknown") == "unknown"
+    )
+    published = {key: value for key, value in capabilities[target].items() if value != "unknown"}
+    kinds_for = {
+        "supported": {"on": ["aosp"]},
+        "unsupported": {"off": ["aosp", "lineageos"]},
+        "conditional": {"off": ["lineageos"], "on": ["aosp"]},
+    }
+    new_sources = {key: kinds_for[value] for key, value in published.items()}
+    old_shape = evidence_path.read_text(encoding="utf-8")
+
+    def shaped(sources: object, gates: list | None = None, facts: list | None = None) -> dict:
+        value = json.loads(old_shape)
+        for profile in value["profiles"]:
+            if profile["profile_id"] == target:
+                profile["fact_sources"] = facts or []
+                profile["capability_sources"] = sources
+                if gates:
+                    profile["quality_gates"] = gates
+        return value
+
+    def validate(value: dict) -> None:
+        write_profile(evidence_path, value)
+        validate_public_carrier_data.validate_evidence_index(
+            evidence_path, profile_ids, None, capabilities, config_keys
+        )
+
+    def expect_failure(value: dict, message: str) -> None:
+        try:
+            validate(value)
+        except validate_public_carrier_data.ValidationError:
+            return
+        raise AssertionError(message)
+
+    def gate(key: str, section: str = "capabilities") -> dict:
+        return {
+            "kind": "quality_gate",
+            "section": section,
+            "key": key,
+            "observed_value_count": 1,
+            "resolution": "omitted_from_stable",
+        }
+
+    try:
+        validate(json.loads(old_shape))
+        validate(shaped(new_sources))
+        withheld = {**new_sources, "vonr": {"off": ["lineageos"]}}
+        validate(shaped(withheld, [gate("single_family_off:vonr")]))
+        validate(shaped(withheld, [gate("stale_single_source_entry:vonr")]))
+        expect_failure(
+            shaped(withheld), "an unknown capability with sources but no gate passed"
+        )
+        expect_failure(
+            shaped({key: value for key, value in new_sources.items() if key != "mms"}),
+            "capability_sources without a published capability passed",
+        )
+        expect_failure(
+            shaped({**new_sources, "mms": {"off": ["lineageos"], "on": ["aosp"]}}),
+            "a supported capability with an off source passed",
+        )
+        expect_failure(
+            shaped({**new_sources, "mms": {"on": ["samsung_omc"]}}),
+            "a source the profile does not name passed",
+        )
+        expect_failure(
+            shaped({**new_sources, "mms": {"on": ["lineageos", "aosp"]}}),
+            "an unsorted source list passed",
+        )
+        expect_failure(
+            shaped({**new_sources, "mms": {"yes": ["aosp"]}}), "an unknown source kind passed"
+        )
+        expect_failure(
+            shaped({**new_sources, "telepathy": {"on": ["aosp"]}}),
+            "an unknown capability name passed",
+        )
+        expect_failure(shaped({}), "an empty capability_sources passed")
+        expect_failure(
+            shaped(
+                new_sources,
+                facts=[{"section": "capabilities", "key": "mms", "sources": ["aosp"]}],
+            ),
+            "capability entries in both fact_sources and capability_sources passed",
+        )
+        expect_failure(
+            shaped(new_sources, [gate("single_family_off:mms")]),
+            "a single-family gate on a published capability passed",
+        )
+        validate(
+            shaped(
+                new_sources,
+                [gate("single_family_off:carrier_volte_available_bool", "android_carrier_config")],
+            )
+        )
+        expect_failure(
+            shaped(new_sources, [gate("single_family_off:rtt_supported_bool", "android_carrier_config")]),
+            "a single-family gate on a key that gates no capability passed",
+        )
+        expect_failure(
+            shaped(new_sources, [gate("single_family_off:vonr", "android_apns")]),
+            "a single-family gate outside capabilities and CarrierConfig passed",
+        )
+    finally:
+        evidence_path.write_text(old_shape, encoding="utf-8")
+
+
 def check_source_versions(evidence_path: Path, profile_ids: set[str]) -> None:
     """source_versions is optional. Each item names a profile source once, in
     order, with sorted lists of build IDs, full Git commits, or Apple bundle
@@ -479,6 +604,7 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
 
         expect_failure(display_name_entry, "display-name provenance entries must be rejected")
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
+        check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
     finally:
         evidence_path.write_text(original, encoding="utf-8")
