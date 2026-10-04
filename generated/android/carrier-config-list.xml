@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:f6608b9c55e7ba39582242adf8851e12d97f5af8c2e036cce0a7e00b3ca8af2e
+    data_digest: sha256:0b57513f94c4fd2366bfeb3b2318a55c84705e73f54cceeac93ae128a535afae
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -7071,6 +7071,11 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="supl" />
+      <item value="dun" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -7107,6 +7112,11 @@
   <carrier_config mcc="310" mnc="090" name="Carrier 310090">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="supl" />
+      <item value="dun" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -7185,6 +7195,11 @@
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="dun" />
+      <item value="supl" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -8411,6 +8426,11 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="supl" />
+      <item value="dun" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -15931,6 +15951,11 @@
   <carrier_config mcc="450" mnc="02" name="Kt Kr">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="supl" />
+      <item value="dun" />
+    </string-array>
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="false" />
     <boolean name="enableMMSReadReports" value="false" />
@@ -16002,6 +16027,11 @@
     <boolean name="allow_hold_in_ims_call" value="false" />
     <boolean name="allow_hold_video_call_bool" value="false" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <string-array name="carrier_metered_apn_types_strings" num="3">
+      <item value="default" />
+      <item value="dun" />
+      <item value="supl" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -27116,6 +27146,12 @@
   </carrier_config>
   <!-- open.21403.0f3d6937d5da -->
   <carrier_config mcc="214" mnc="03" name="EUSKALTEL" spn="\QEUSKALTEL\E">
+    <string-array name="carrier_metered_apn_types_strings" num="4">
+      <item value="default" />
+      <item value="dun" />
+      <item value="mms" />
+      <item value="supl" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
       <item value="default" />
       <item value="mms" />
@@ -27248,6 +27284,12 @@
   </carrier_config>
   <!-- open.21403.5339acf3d1b4 -->
   <carrier_config mcc="214" mnc="03" name="mobil R" spn="\QmobilR\E">
+    <string-array name="carrier_metered_apn_types_strings" num="4">
+      <item value="default" />
+      <item value="mms" />
+      <item value="dun" />
+      <item value="supl" />
+    </string-array>
     <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
       <item value="default" />
       <item value="mms" />
