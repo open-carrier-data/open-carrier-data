@@ -17,7 +17,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `google_pixel_vendor_carriersettings` | same | `TheMuppets` vendor snapshots | Pixel CarrierSettings facts | NOASSERTION | 2,234 |
 | `samsung_omc` | same | Samsung firmware OMC baselines | APN, capability, CarrierConfig, add-on facts | NOASSERTION | 2,572 |
 | `samsung_ims` | same | Samsung IMS maps in versioned firmware | positive IMS capability observations | NOASSERTION | 944 |
-| `samsung_carrier_config` | `samsung_ims` | Samsung's own CarrierConfig overrides (`vendor.xml`) in the firmware build of the IMS maps | CarrierConfig values, positive capability observations | NOASSERTION | not yet published; 247 in the dry run of 2026-10-04 |
+| `samsung_carrier_config` | `samsung_ims` | Samsung's own CarrierConfig overrides (`vendor.xml`) in the firmware build of the IMS maps | CarrierConfig values, positive capability observations | NOASSERTION | 247, first published on 2026-10-04 |
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
