@@ -871,13 +871,19 @@ def validate_capability_sources(
     sources: list[str],
     capabilities: dict[str, str] | None,
 ) -> None:
-    """capability_sources is optional. It maps every capability that a source
-    gives a value to the profile sources that turn it on, turn it off, or call
-    it conditional, and it agrees with the published value: supported has only
-    on, unsupported only off, conditional two kinds or conditional, and unknown
-    names the gate that withheld it. Where it is present it covers every
-    published capability, and fact_sources holds no capability entry."""
+    """capability_sources maps every capability that a source gives a value to
+    the profile sources that turn it on, turn it off, or call it conditional,
+    and it agrees with the published value: supported has only on, unsupported
+    only off, conditional two kinds or conditional, and unknown names the gate
+    that withheld it. It covers every published capability, so a profile that
+    publishes one needs it."""
     if "capability_sources" not in evidence:
+        if capabilities is not None and any(
+            value != "unknown" for value in capabilities.values()
+        ):
+            raise ValidationError(
+                f"{path}: profiles[{index}] publishes capabilities without capability_sources"
+            )
         return
     label = f"profiles[{index}].capability_sources"
     value = evidence["capability_sources"]
@@ -921,11 +927,6 @@ def validate_capability_sources(
         )
         if missing:
             raise ValidationError(f"{path}: {label} lacks published {missing}")
-    if any(fact["section"] == "capabilities" for fact in evidence["fact_sources"]):
-        raise ValidationError(
-            f"{path}: profiles[{index}] lists capabilities in both fact_sources and "
-            "capability_sources"
-        )
 
 
 def validate_evidence_index(
@@ -1075,8 +1076,8 @@ def validate_evidence_index(
             if set(fact) != {"section", "key", "sources"}:
                 raise ValidationError(f"{path}: {label} has invalid keys")
             section = fact.get("section")
+            # Capabilities are in capability_sources, with on and off lists.
             if section not in {
-                "capabilities",
                 "android_carrier_config",
                 "android_apns",
                 "addons",
