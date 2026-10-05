@@ -98,6 +98,13 @@ jobs:
           status=0
           python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${liveness[@]}" "${today[@]}" 2>&1 | tee strict.log || status=1
           python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
+          # Warnings do not fail the alarm, but show on the run: a Samsung
+          # build whose values publish under the vendor build grace warns
+          # every day until the lane rebuilds them.
+          { grep '^warning: ' strict.log || true; } | while IFS= read -r line; do
+            echo "::warning::${line#warning: }"
+            echo "Warning: ${line#warning: }" >> "$GITHUB_STEP_SUMMARY"
+          done
           exit "$status"
       - name: Open the stale-data issue when strict validation fails, close it when it passes again
         shell: bash

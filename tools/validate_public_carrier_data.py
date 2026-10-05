@@ -35,9 +35,17 @@ LIVENESS_MAX_AGE_DAYS = 21
 # on the self-hosted runner; a healthy manifest's checked_at can lag up to six
 # days, because an unchanged revision is rewritten only once a week.
 LANE_LIVENESS_MAX_AGE_DAYS = {
+    "samsung_carrier_config": 10,
     "samsung_ims": 10,
     "samsung_omc": 10,
 }
+# Samsung's IMS and CarrierConfig values come from one tracked firmware. When
+# Samsung ships a new build of it and the lane has not rebuilt the indexes yet,
+# the previous build's values keep publishing for up to this many days after
+# the build was last confirmed current, listed in the evidence index as
+# vendor_build_grace. Mirrors SAMSUNG_BUILD_GRACE_DAYS in the private sanitizer.
+VENDOR_BUILD_GRACE_DAYS = 30
+VENDOR_BUILD_GRACE_KEYS = {"sources", "model", "region", "build", "confirmed_at", "grace_until"}
 LIVENESS_MODES = ("off", "warn", "fail")
 FRESHNESS_KEYS = {"checks_through", "stale_after"}
 
@@ -294,12 +302,28 @@ def lane_liveness_limit(source_name: str) -> int:
     return LANE_LIVENESS_MAX_AGE_DAYS.get(source_name, LIVENESS_MAX_AGE_DAYS)
 
 
+def vendor_build_grace(evidence_index_path: Path) -> list[dict[str, Any]]:
+    """The evidence index's vendor_build_grace items, already validated."""
+    if not evidence_index_path.exists():
+        return []
+    items = load_json(evidence_index_path).get("vendor_build_grace", [])
+    return items if isinstance(items, list) else []
+
+
 def check_liveness(
-    checks: dict[str, date], last_publish: date | None, mode: str
+    checks: dict[str, date],
+    last_publish: date | None,
+    mode: str,
+    grace: list[dict[str, Any]] | None = None,
 ) -> None:
     """Warn, or fail, when any source's last check is older than its lane's
     limit (LANE_LIVENESS_MAX_AGE_DAYS, otherwise LIVENESS_MAX_AGE_DAYS) or the
-    last data publish is more than LIVENESS_MAX_AGE_DAYS old."""
+    last data publish is more than LIVENESS_MAX_AGE_DAYS old.
+
+    A vendor build in its grace (vendor_build_grace) always warns: its lane
+    runs but has not confirmed the values it publishes. Its last confirmation
+    counts as the lane's check, so it fails like a stopped lane once that is
+    older than the lane's limit, while the values still publish."""
     if mode == "off":
         return
     today = utc_today()
@@ -309,6 +333,21 @@ def check_liveness(
         for name, day in sorted(checks.items())
         if (today - day).days > lane_liveness_limit(name)
     ]
+    for item in grace or []:
+        confirmed = date.fromisoformat(item["confirmed_at"])
+        age = (today - confirmed).days
+        limit = min(lane_liveness_limit(name) for name in item["sources"])
+        successor = f" (superseded by {item['superseded_by']})" if item.get("superseded_by") else ""
+        description = (
+            f"{', '.join(item['sources'])} values of {item['model']} {item['region']} "
+            f"build {item['build']}{successor} publish under the vendor build grace: "
+            f"last confirmed current on {confirmed}, {age} days ago; they drop on "
+            f"{item['grace_until']} unless the lane rebuilds them from the current build"
+        )
+        if age > limit:
+            late.append(f"{description} (more than {limit} days)")
+        else:
+            print(f"warning: {description}", file=sys.stderr)
     if last_publish is not None and (today - last_publish).days > LIVENESS_MAX_AGE_DAYS:
         late.append(
             f"the last data publish was on {last_publish}, "
@@ -1137,6 +1176,59 @@ def validate_capability_basis(
                 raise ValidationError(f"{path}: {item_label}.models_sha256 is invalid")
 
 
+SCOPE_VALUE_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+() -]{0,119}")
+
+
+def validate_vendor_build_grace(
+    path: Path, items: Any, window: FreshnessWindow | None
+) -> None:
+    """vendor_build_grace is optional. Each item names a tracked vendor
+    firmware whose values still publish although the vendor has a newer build:
+    the sources whose values it carries, the model, region and build, and
+    optionally the build that superseded it (superseded_by); confirmed_at, the
+    last day the build was confirmed current, not before checks_through; and
+    grace_until, the day the values drop, 1 to VENDOR_BUILD_GRACE_DAYS days
+    later. Items are sorted and unique."""
+    label = "vendor_build_grace"
+    require_type(path, items, list, label)
+    if not items:
+        raise ValidationError(f"{path}: {label} is empty")
+    keys: list[tuple[Any, ...]] = []
+    for index, item in enumerate(items):
+        item_label = f"{label}[{index}]"
+        require_type(path, item, dict, item_label)
+        if set(item) - {"superseded_by"} != VENDOR_BUILD_GRACE_KEYS:
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        sources = item["sources"]
+        validate_canonical_list(path, sources, f"{item_label}.sources")
+        if not sources or not all(
+            isinstance(name, str) and re.fullmatch(r"[a-z0-9_]{2,64}", name) for name in sources
+        ):
+            raise ValidationError(f"{path}: {item_label}.sources is invalid")
+        for key in ("model", "region", "build", "superseded_by"):
+            if key in item and (
+                not isinstance(item[key], str) or not SCOPE_VALUE_RE.fullmatch(item[key])
+            ):
+                raise ValidationError(f"{path}: {item_label}.{key} is invalid")
+        try:
+            confirmed = date.fromisoformat(item["confirmed_at"])
+            until = date.fromisoformat(item["grace_until"])
+        except (TypeError, ValueError) as exc:
+            raise ValidationError(f"{path}: {item_label} has an invalid date") from exc
+        if confirmed > utc_today():
+            raise ValidationError(f"{path}: {item_label}.confirmed_at is future-dated")
+        if window is not None and confirmed < window.checks_through:
+            raise ValidationError(f"{path}: {item_label}.confirmed_at is before checks_through")
+        if not 1 <= (until - confirmed).days <= VENDOR_BUILD_GRACE_DAYS:
+            raise ValidationError(
+                f"{path}: {item_label}.grace_until must be 1 to {VENDOR_BUILD_GRACE_DAYS} "
+                "days after confirmed_at"
+            )
+        keys.append((tuple(sources), item["model"], item["region"], item["build"]))
+    if keys != sorted(set(keys)):
+        raise ValidationError(f"{path}: {label} must be sorted and unique")
+
+
 def validate_evidence_index(
     path: Path,
     expected_profile_ids: set[str],
@@ -1146,7 +1238,7 @@ def validate_evidence_index(
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    if set(data) - FRESHNESS_KEYS != {
+    if set(data) - FRESHNESS_KEYS - {"vendor_build_grace"} != {
         "schema_version",
         "description",
         "source_snapshots",
@@ -1218,6 +1310,8 @@ def validate_evidence_index(
         )
     if source_names != sorted(set(source_names)):
         raise ValidationError(f"{path}: source snapshots must be sorted and unique")
+    if "vendor_build_grace" in data:
+        validate_vendor_build_grace(path, data["vendor_build_grace"], window)
     profiles = data.get("profiles")
     require_type(path, profiles, list, "profiles")
     actual_profile_ids: list[str] = []
@@ -1711,6 +1805,7 @@ def main(argv: list[str]) -> int:
         else {},
         args.last_publish,
         args.liveness,
+        vendor_build_grace(index_path.parent / "evidence-index.json"),
     )
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0

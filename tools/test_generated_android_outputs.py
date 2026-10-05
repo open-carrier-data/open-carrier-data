@@ -260,7 +260,7 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         # check across all lanes fresh.
         assert_true(
             validate_public_carrier_data.LANE_LIVENESS_MAX_AGE_DAYS
-            == {"samsung_ims": 10, "samsung_omc": 10},
+            == {"samsung_carrier_config": 10, "samsung_ims": 10, "samsung_omc": 10},
             "the Samsung lanes have a 10-day liveness limit",
         )
         samsung_snapshot = {
@@ -286,6 +286,56 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
             reason="source samsung_omc was last checked on 2026-07-14, 11 days ago "
             "(more than 10 days)",
         )
+        write_evidence(**window)
+
+        # A tracked Samsung build in its grace: the values keep publishing,
+        # the liveness check warns, and fails like a stopped Samsung lane once
+        # the last confirmation is more than 10 days old.
+        grace_item = {
+            "sources": ["samsung_carrier_config", "samsung_ims"],
+            "model": "SM-S942B",
+            "region": "EUX",
+            "build": "S942BXXS4BZIG",
+            "superseded_by": "S942BXXS5BZJ1",
+            "confirmed_at": "2026-07-20",
+            "grace_until": "2026-08-19",
+        }
+        write_evidence(vendor_build_grace=[grace_item], **window)
+        set_today("2026-07-25")
+        assert_true(validate() == "", "the grace warned with liveness off")
+        grace_warning = (
+            "warning: samsung_carrier_config, samsung_ims values of SM-S942B EUX build "
+            "S942BXXS4BZIG (superseded by S942BXXS5BZJ1) publish under the vendor build "
+            "grace: last confirmed current on 2026-07-20, 5 days ago; they drop on "
+            "2026-08-19 unless the lane rebuilds them from the current build\n"
+        )
+        assert_true(
+            validate("--liveness", "warn") == grace_warning, "the grace did not warn in warn mode"
+        )
+        assert_true(
+            validate("--liveness", "fail") == grace_warning,
+            "the grace failed, or did not warn, within the Samsung lane limit",
+        )
+        set_today("2026-07-31")
+        assert_rejected(
+            "a grace 11 days after the last confirmation passed in fail mode",
+            "--liveness",
+            "fail",
+            reason="last confirmed current on 2026-07-20, 11 days ago; they drop on "
+            "2026-08-19 unless the lane rebuilds them from the current build (more than 10 days)",
+        )
+        set_today("2026-07-25")
+        for bad, reason in (
+            ({"grace_until": "2026-08-20"}, "grace_until must be 1 to 30 days"),
+            ({"confirmed_at": "2026-07-09"}, "confirmed_at is before checks_through"),
+            ({"confirmed_at": "2026-07-26"}, "confirmed_at is future-dated"),
+            ({"build_id": "x"}, "has invalid keys"),
+            ({"sources": ["samsung_ims", "samsung_carrier_config"]}, "sources must be"),
+        ):
+            write_evidence(vendor_build_grace=[{**grace_item, **bad}], **window)
+            assert_rejected(f"an invalid grace item {bad} was accepted", reason=reason)
+        write_evidence(vendor_build_grace=[], **window)
+        assert_rejected("an empty grace list was accepted", reason="vendor_build_grace is empty")
         write_evidence(**window)
 
         set_today("2027-01-19")
