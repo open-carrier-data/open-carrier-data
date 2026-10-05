@@ -1,7 +1,8 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -9,6 +10,7 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -23,40 +25,59 @@
   },
   "android_apns": [
     {
-      "apn": "halotel",
-      "name": "halotel",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.movil.es",
+      "name": "internet.movil.es",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "internet.movil.es",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "AVATEL",
+      "mvno_type": "spn",
+      "name": "internet.movil.es",
+      "types": [
+        "default",
+        "supl"
       ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "enhanced_4g_lte_on_by_default_bool": false
+    "carrier_wfc_ims_available_bool": true,
+    "imssms.sms_over_ims_supported_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
     "mms": "unknown",
     "rcs": "unknown",
-    "sms_over_ims": "unknown",
+    "sms_over_ims": "supported",
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "HALOTEL",
+  "display_name": "Avatel",
   "match": {
     "mccmnc": [
-      "64009"
+      "21405"
     ],
     "spn": [
-      "HALOTEL"
+      "AVATEL"
     ]
   },
-  "profile_id": "open.64009.d16ec35f8c70",
+  "profile_id": "open.21405.e5b1fa5d4a67",
   "schema_version": 1
 }

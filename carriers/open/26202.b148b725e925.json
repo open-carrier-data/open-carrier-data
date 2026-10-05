@@ -1,46 +1,46 @@
 {
   "addons": {
     "emergency_calling": {
+      "e911_routing_policy": "auto",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
-      "contacts_operator_style": "VGR",
+      "contacts_operator_style": "VD2",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_style": "-voltecall",
       "mobile_network_setting_menu_tokens": [
         "-voltecall"
       ],
       "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
-      "voice_network_setting_style": "SupportDualDataRoam"
+      "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
-      "five_g_icon_branding": "UseOneShapedIcon",
       "five_g_icon_configuration": [
         "connected_mmwave:5G",
         "connected:5G",
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
-      "indicator_icon_branding": "VGR",
+      "indicator_icon_branding": "OVF",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "WiFi Calling",
+      "operator_style_tokens": [
+        "ECallDlgVFDE",
+        "HideMenuAtAuthFail",
+        "WFC_TITLE_FROM_CSC"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
     {
-      "apn": "hos",
-      "name": "hos",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
-      "apn": "ims",
+      "apn": "IMS",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -49,29 +49,39 @@
       ]
     },
     {
-      "apn": "internet.vodafone.gr",
-      "name": "Vf Internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "mms.vodafone.net",
-      "mmsc": "http://mms.vodafone.gr",
-      "mmsport": 5080,
-      "mmsproxy": "213.249.19.49",
-      "name": "Vf MMS",
+      "apn": "event.vodafone.de",
+      "mmsc": "http://139.7.24.1/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "139.7.29.17",
+      "name": "event.vodafone.de",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web.vodafone.de",
+      "name": "web.vodafone.de",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 5
   },
   "capabilities": {
     "esim": "unknown",
@@ -85,15 +95,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Vodafone GR",
+  "display_name": "Vodafone.de",
   "match": {
     "mccmnc": [
-      "20205"
+      "26202"
     ],
     "spn": [
-      "vodafone GR"
+      "Vodafone.de"
     ]
   },
-  "profile_id": "open.20205.b12c412f3f93",
+  "profile_id": "open.26202.b148b725e925",
   "schema_version": 1
 }

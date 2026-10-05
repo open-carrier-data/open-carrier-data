@@ -9,39 +9,48 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-allowReasonEnable2g"
-      ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
-      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
+      "indicator_icon_branding": "LTE",
       "refer_eons_without_lac": true
     }
   },
   "android_apns": [
     {
-      "apn": "vala",
-      "name": "vala",
-      "protocol": "IPV4V6",
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
       "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS TIGO PA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.tigo.pa",
+      "name": "INTERNET",
+      "protocol": "IPV4V6",
       "types": [
         "default"
       ]
     },
     {
-      "apn": "vala",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mtu": 1500,
-      "mvno_match_data": "Vala",
-      "mvno_type": "spn",
-      "name": "vala",
-      "protocol": "IPV4V6",
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "xcap"
       ]
     }
   ],
@@ -60,15 +69,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "VALA",
+  "display_name": "tigo_PA",
   "match": {
     "mccmnc": [
-      "22101"
+      "714020"
     ],
     "spn": [
-      "Vala"
+      "Tigo_PA"
     ]
   },
-  "profile_id": "open.22101.964d2e022aaa",
+  "profile_id": "open.714020.2ca592f7f59a",
   "schema_version": 1
 }
