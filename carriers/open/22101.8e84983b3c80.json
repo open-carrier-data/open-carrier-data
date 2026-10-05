@@ -1,11 +1,19 @@
 {
   "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
     "ims": {
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "DisplayRatInfoForManualSearch"
     },
     "operator_display": {
@@ -14,42 +22,32 @@
   },
   "android_apns": [
     {
-      "apn": "5g.ubix.mx",
-      "name": "INTERNET_5G",
+      "apn": "vala",
+      "name": "vala",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ]
     },
     {
-      "apn": "ims",
-      "name": "ims",
+      "apn": "vala",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "mvno_match_data": "Vala",
+      "mvno_type": "spn",
+      "name": "vala",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "modem.ubix.mx",
-      "name": "modem",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "movil.ubix.mx",
-      "name": "movil.ubix.mx",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -57,20 +55,20 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "UBIX",
+  "display_name": "VALA",
   "match": {
     "mccmnc": [
-      "334050"
+      "22101"
     ],
     "spn": [
-      "Ubix"
+      "VALA"
     ]
   },
-  "profile_id": "open.334050.4e60fbd40a27",
+  "profile_id": "open.22101.8e84983b3c80",
   "schema_version": 1
 }
