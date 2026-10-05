@@ -155,7 +155,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 ## Provenance fields in the evidence index
 
-`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes. It never contains raw source material.
+`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, and `vendor_build_grace`, described below. It never contains raw source material.
 
 Each `source_snapshots` record describes one source family check.
 
@@ -168,6 +168,16 @@ Each `source_snapshots` record describes one source family check.
 | `checked_at` | when automation last fetched the source with success: the lane's liveness, not a statement that the values are current |
 | `license_expression` | SPDX expression or `NOASSERTION` |
 | `schema_version` | record format version, `2` on 2026-09-23 |
+
+`vendor_build_grace` is present only while a tracked vendor firmware publishes under its grace. Samsung's IMS and CarrierConfig values (`samsung_ims`, `samsung_carrier_config`) come from one tracked firmware. When Samsung ships a new build of it and the lane has not yet rebuilt the indexes from that build, because the download failed or the space check skipped it, the previous build's values keep publishing for up to 30 days after the build was last confirmed current, instead of dropping the same day. Each item has these fields.
+
+| Field | Meaning |
+| --- | --- |
+| `sources` | the source families whose values the build carries, sorted |
+| `model`, `region`, `build` | the tracked firmware and the build the values were read from |
+| `superseded_by` | the build Samsung's update service now reports, when it reported one |
+| `confirmed_at` | the last day the build was confirmed current; not before `checks_through` |
+| `grace_until` | the day the values drop unless the lane rebuilds them, 1 to 30 days after `confirmed_at` |
 
 Each `profiles` record describes one carrier profile.
 
