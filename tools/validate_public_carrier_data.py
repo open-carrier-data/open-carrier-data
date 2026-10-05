@@ -867,7 +867,10 @@ def validate_entry_dates(
     capabilities: dict[str, str] | None,
 ) -> None:
     """newest_entry and capability_newest_entries are optional; each appears
-    only where every supporting observation carries an entry date."""
+    only where every supporting observation carries an entry date. A
+    capability is dated whether or not the profile publishes it: a value a
+    gate withheld keeps its date, so it must be one capability_sources
+    names."""
     newest_month: tuple[int, int] | None = None
     if "newest_entry" in evidence:
         newest_month = parse_entry_month(
@@ -888,9 +891,12 @@ def validate_entry_dates(
             raise ValidationError(
                 f"{path}: {label}.{key} is newer than the profile's newest_entry"
             )
-        if capabilities is not None and capabilities.get(key, "unknown") == "unknown":
+        sourced = isinstance(evidence.get("capability_sources"), dict) and key in evidence[
+            "capability_sources"
+        ]
+        if capabilities is not None and capabilities.get(key, "unknown") == "unknown" and not sourced:
             raise ValidationError(
-                f"{path}: {label}.{key} dates a capability the profile does not publish"
+                f"{path}: {label}.{key} dates a capability no source gives a value"
             )
 
 
@@ -1208,6 +1214,72 @@ def validate_capability_sources(
             raise ValidationError(f"{path}: {label} lacks published {missing}")
 
 
+# Informational flags on a profile's facts. They withhold nothing.
+# old_single_source: the capability's value rests on one source family whose
+# newest entry behind it is more than five years old; capability_newest_entries
+# gives the month. capability_label_withheld: a capability-gating CarrierConfig
+# key the profile publishes whose capability label a quality gate withheld
+# (published as unknown); a phone that applies the key still switches the
+# feature on.
+FLAG_SECTIONS = {
+    "old_single_source": "capabilities",
+    "capability_label_withheld": "android_carrier_config",
+}
+
+
+def validate_flags(
+    path: Path,
+    evidence: dict[str, Any],
+    index: int,
+    capabilities: dict[str, str] | None,
+    config_keys: set[str] | None,
+) -> None:
+    """flags is optional: a non-empty list of section, key and flag, sorted and
+    unique. old_single_source names a capability that capability_sources names
+    and capability_newest_entries dates. capability_label_withheld names a
+    capability-gating CarrierConfig key the profile publishes, whose
+    capability the profile publishes as unknown under a quality gate."""
+    if "flags" not in evidence:
+        return
+    label = f"profiles[{index}].flags"
+    items = evidence["flags"]
+    require_type(path, items, list, label)
+    if not items:
+        raise ValidationError(f"{path}: {label} is empty")
+    withheld = {
+        gate["key"].partition(":")[2]
+        for gate in evidence.get("quality_gates", [])
+        if gate["section"] == "capabilities"
+    }
+    keys: list[tuple[str, str, str]] = []
+    for item_index, item in enumerate(items):
+        item_label = f"{label}[{item_index}]"
+        require_type(path, item, dict, item_label)
+        if set(item) != {"section", "key", "flag"}:
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        flag, section, key = item["flag"], item["section"], item["key"]
+        if FLAG_SECTIONS.get(flag) != section:
+            raise ValidationError(f"{path}: {item_label} is not a valid flag")
+        if flag == "old_single_source":
+            if (
+                key not in CAPABILITY_KEYS
+                or key not in (evidence.get("capability_sources") or {})
+                or key not in (evidence.get("capability_newest_entries") or {})
+            ):
+                raise ValidationError(f"{path}: {item_label} flags an undated or unsourced capability")
+        else:
+            capability = CAPABILITY_GATING_CONFIG_KEYS.get(key)
+            if capability is None or (config_keys is not None and key not in config_keys):
+                raise ValidationError(f"{path}: {item_label} flags a key the profile does not publish")
+            if capability not in withheld or (
+                capabilities is not None and capabilities.get(capability, "unknown") != "unknown"
+            ):
+                raise ValidationError(f"{path}: {item_label} flags a key whose label is not withheld")
+        keys.append((section, key, flag))
+    if keys != sorted(set(keys)):
+        raise ValidationError(f"{path}: {label} must be sorted and unique")
+
+
 # What a capability value rests on where a source's on says less than a
 # configuration that turns the feature on. Each basis belongs to one capability
 # and one source: Samsung OMC's vonr means Samsung's settings offer the VoNR
@@ -1455,6 +1527,7 @@ def validate_evidence_index(
         "source_versions",
         "capability_sources",
         "capability_basis",
+        "flags",
     }
     scope_keys = {
         "models",
@@ -1639,6 +1712,13 @@ def validate_evidence_index(
             None if profile_capabilities is None else profile_capabilities.get(profile_id),
         )
         validate_capability_basis(path, evidence, index, sources)
+        validate_flags(
+            path,
+            evidence,
+            index,
+            None if profile_capabilities is None else profile_capabilities.get(profile_id),
+            None if profile_config_keys is None else profile_config_keys.get(profile_id),
+        )
     if actual_profile_ids != sorted(actual_profile_ids):
         raise ValidationError(f"{path}: profiles must be sorted by profile_id")
     if set(actual_profile_ids) != expected_profile_ids or len(actual_profile_ids) != len(
