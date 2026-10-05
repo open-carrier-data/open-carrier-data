@@ -77,11 +77,12 @@ jobs:
           if [ -n "$SIMULATE_TODAY" ]; then
             today=(--today "$SIMULATE_TODAY")
           fi
-          # The last data publish is the newest commit on main with the
-          # publish workflow's title. If the API call fails, the newest source
-          # check alone decides.
+          # The last data publish is the newest commit with the publish
+          # workflow's title on the branch being validated: main for the
+          # schedule, the dispatched branch for a rehearsal. If the API call
+          # fails, the source checks alone decide.
           last_publish="$(
-            gh api "repos/$GH_REPO/commits?sha=main&per_page=100" \
+            gh api "repos/$GH_REPO/commits?sha=$GITHUB_REF_NAME&per_page=100" \
               --jq '[.[] | select(.commit.message | startswith("Update sanitized carrier data"))][0].commit.committer.date // empty' \
               2>/dev/null | cut -c1-10
           )" || last_publish=""
@@ -129,7 +130,7 @@ jobs:
             echo
             echo "Pushes and pull requests keep passing, because their check runs the validators in warn mode. Consumers who run the validators with \`--freshness fail\` get the same error. Refresh the sources and publish a new snapshot, or read \`docs/consume.md\` for what a stale snapshot means."
             echo
-            echo "An error that says the pipeline looks stopped means no source was checked, or no data was published, for more than 21 days, three missed weekly imports. Check the private import and publish workflows and the self-hosted runner. For a deliberate pause, set the repository variable \`LIVENESS_SNOOZE_UNTIL\` to the last day of the pause; the alarm then only warns."
+            echo "An error that says the pipeline looks stopped names each late lane. A weekly lane is late when its source was not checked for more than 21 days, three missed weekly imports; a Samsung lane (samsung_omc, samsung_ims), which runs daily on the self-hosted runner, after 10 days. The alarm also fires when no data was published for more than 21 days. Check the private import and publish workflows and the self-hosted runner. For a deliberate pause, set the repository variable \`LIVENESS_SNOOZE_UNTIL\` to the last day of the pause; the alarm then only warns."
             echo
             echo '```'
             cat strict.log
