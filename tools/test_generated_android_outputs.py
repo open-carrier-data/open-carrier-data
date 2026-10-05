@@ -915,6 +915,51 @@ def check_apn_variant_sources_and_removal_gates(
             shaped(gates=[gate("lineageos_apn_removed:" + commit), gate("lineageos_apn_removed:" + commit)]),
             "a removal commit named twice passed",
         )
+
+        # Why each removing commit dropped its rows, and the profiles a gate
+        # left with no fact at all.
+        other = "d6b9e1c0" + "2" * 32
+        withdrawn = {
+            "profile_id": "open.722071.0123456789ab",
+            "sources": ["sony_open_devices_aosp"],
+            "quality_gates": [gate("lineageos_apn_removed:" + other)],
+        }
+        commits = [
+            {"commit": commit, "removed_on": "2026-07-20", "reasons": ["extra_code", "vendor_rom_absent"], "gerrit_change": 486920},
+            {"commit": other, "removed_on": "2026-03-27", "reasons": ["extra_code"]},
+        ]
+
+        def with_removals(withdrawn_profiles: list | None, removal_commits: list | None) -> dict:
+            value = shaped(gates=[gate("lineageos_apn_removed:" + commit)])
+            if withdrawn_profiles is not None:
+                value["withdrawn_profiles"] = withdrawn_profiles
+            if removal_commits is not None:
+                value["apn_removal_commits"] = removal_commits
+            return value
+
+        validate(with_removals([withdrawn], commits))
+        validate(with_removals(None, commits[:1]))
+        validate(with_removals([withdrawn], None))
+        for bad_withdrawn, bad_commits, message in (
+            ([withdrawn], commits[:1], "a withdrawn profile's removal commit missing from the table passed"),
+            (None, commits, "a removal commit no gate names passed"),
+            (None, [{**commits[0], "reasons": ["shut_down"]}], "an unknown removal reason passed"),
+            (None, [{**commits[0], "reasons": ["vendor_rom_absent", "extra_code"]}], "unsorted reasons passed"),
+            (None, [{**commits[0], "reasons": []}], "a commit without a reason passed"),
+            (None, [{**commits[0], "gerrit_change": "486920"}], "a Gerrit change given as text passed"),
+            (None, [{**commits[0], "url": "https://review.lineageos.org/486920"}], "an unknown commit key passed"),
+            ([withdrawn], list(reversed(commits)), "unsorted removal commits passed"),
+            ([{**withdrawn, "profile_id": first_id}], commits, "a withdrawn profile that is published passed"),
+            ([{**withdrawn, "quality_gates": []}], commits[:1], "a withdrawn profile without a gate passed"),
+            (
+                [{**withdrawn, "quality_gates": [gate("lineageos_apn_removed:" + other, resolution="conditional")]}],
+                commits,
+                "a withdrawn profile whose gate is no omission passed",
+            ),
+            ([withdrawn, withdrawn], commits, "a withdrawn profile listed twice passed"),
+            ([{**withdrawn, "display_name": "Movistar"}], commits, "an unknown withdrawn key passed"),
+        ):
+            expect_failure(with_removals(bad_withdrawn, bad_commits), message)
     finally:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
