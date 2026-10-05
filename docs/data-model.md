@@ -155,7 +155,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 ## Provenance fields in the evidence index
 
-`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, and `vendor_build_grace`, described below. It never contains raw source material.
+`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.
 
 Each `source_snapshots` record describes one source family check.
 
@@ -178,6 +178,10 @@ Each `source_snapshots` record describes one source family check.
 | `superseded_by` | the build Samsung's update service now reports, when it reported one |
 | `confirmed_at` | the last day the build was confirmed current; not before `checks_through` |
 | `grace_until` | the day the values drop unless the lane rebuilds them, 1 to 30 days after `confirmed_at` |
+
+`withdrawn_profiles` lists the profiles that sources give but that publish no fact, because quality gates removed every fact they had: for example a network code whose only APN rows LineageOS removed, or a profile whose only fact was a withheld capability. Each item has `profile_id` (the ID the profile would have, which no published profile has), `sources`, and `quality_gates`, in the same shape as a profile's, each an omission. Items are sorted by `profile_id`. Without this list such a profile left no public trace.
+
+`apn_removal_commits` names, for every LineageOS commit that a `lineageos_apn_removed:<commit>` gate of a profile or a withdrawn profile names, why the rows it removed are left out. Each item has `commit`, `removed_on` (the commit date), `reasons`, and, when known, `gerrit_change`, the number of the change on review.lineageos.org. `reasons` lists, sorted, the reason classes the private tombstone state records for the commit's rows that are left out: `defunct` (the commit cites a shutdown or merger), `superseded` (an old value replaced by a new one), `extra_code` (an extra network code removed while the operator's main code keeps its APNs), `moved` (moved to another code or selector), `policy` (old WAP APNs removed as a policy), `vendor_rom_absent` (deleted because one maker's ROM no longer has it), and `unclassified` (a weekly removal nobody has looked at yet). Items are sorted by `commit`, and the validator checks that the list names exactly the commits the gates name.
 
 Each `profiles` record describes one carrier profile.
 

@@ -969,6 +969,126 @@ LINEAGEOS_APN_REMOVED_GATE = "lineageos_apn_removed"
 LINEAGEOS_APN_REMOVED_RE = re.compile(rf"{LINEAGEOS_APN_REMOVED_GATE}:[0-9a-f]{{40}}")
 
 
+# Why LineageOS removed the rows of one commit, per row, as the private
+# tombstone state records it: a cited shutdown or merger (defunct), an old
+# value replaced by a new one (superseded), an extra network code cleaned up
+# while the operator's main code keeps its APNs (extra_code), a row moved to
+# another code or selector (moved), old WAP APNs removed as a policy (policy),
+# a row deleted because one maker's ROM no longer has it (vendor_rom_absent),
+# and a removal nobody classified yet (unclassified).
+APN_REMOVAL_REASONS = frozenset(
+    {
+        "defunct",
+        "superseded",
+        "extra_code",
+        "moved",
+        "policy",
+        "vendor_rom_absent",
+        "unclassified",
+    }
+)
+APN_REMOVAL_COMMIT_KEYS = {"commit", "removed_on", "reasons"}
+
+
+def apn_removal_commits_of(gates: list[dict[str, Any]]) -> set[str]:
+    return {
+        gate["key"].partition(":")[2]
+        for gate in gates
+        if isinstance(gate, dict)
+        and isinstance(gate.get("key"), str)
+        and gate["key"].partition(":")[0] == LINEAGEOS_APN_REMOVED_GATE
+    }
+
+
+def validate_apn_removal_commits(path: Path, items: Any, referenced: set[str]) -> None:
+    """apn_removal_commits is optional. Each item names one android_vendor_apn
+    commit that a lineageos_apn_removed gate of a profile or a withdrawn
+    profile names, with its date, the sorted reasons of the rows it leaves
+    out (APN_REMOVAL_REASONS), and optionally its LineageOS Gerrit change
+    number. Items are sorted by commit, and every referenced commit is listed
+    exactly once."""
+    label = "apn_removal_commits"
+    require_type(path, items, list, label)
+    commits: list[str] = []
+    for index, item in enumerate(items):
+        item_label = f"{label}[{index}]"
+        require_type(path, item, dict, item_label)
+        if set(item) - {"gerrit_change"} != APN_REMOVAL_COMMIT_KEYS:
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        if not isinstance(item["commit"], str) or not re.fullmatch(r"[0-9a-f]{40}", item["commit"]):
+            raise ValidationError(f"{path}: {item_label}.commit is invalid")
+        try:
+            removed_on = date.fromisoformat(item["removed_on"])
+        except (TypeError, ValueError) as exc:
+            raise ValidationError(f"{path}: {item_label}.removed_on is invalid") from exc
+        if removed_on > utc_today():
+            raise ValidationError(f"{path}: {item_label}.removed_on is future-dated")
+        reasons = item["reasons"]
+        validate_canonical_list(path, reasons, f"{item_label}.reasons")
+        if not reasons or not set(reasons) <= APN_REMOVAL_REASONS:
+            raise ValidationError(f"{path}: {item_label}.reasons is invalid")
+        if "gerrit_change" in item:
+            change = item["gerrit_change"]
+            if not isinstance(change, int) or isinstance(change, bool) or not 0 < change < 10**8:
+                raise ValidationError(f"{path}: {item_label}.gerrit_change is invalid")
+        commits.append(item["commit"])
+    if commits != sorted(set(commits)):
+        raise ValidationError(f"{path}: {label} must be sorted by commit and unique")
+    if set(commits) != referenced:
+        raise ValidationError(
+            f"{path}: {label} must list exactly the commits the lineageos_apn_removed gates name"
+        )
+
+
+WITHDRAWN_PROFILE_KEYS = {"profile_id", "sources", "quality_gates"}
+
+
+def validate_withdrawn_profiles(
+    path: Path, items: Any, published_ids: set[str]
+) -> list[dict[str, Any]]:
+    """withdrawn_profiles is optional. Each item is a profile that sources give
+    but that publishes no fact because quality gates removed every fact it
+    had, such as APN rows LineageOS removed or a capability withheld: its
+    profile_id, which no published profile has, its sources, and its quality
+    gates, each an omission. Items are sorted by profile_id and unique.
+    Returns the gates of every item."""
+    label = "withdrawn_profiles"
+    require_type(path, items, list, label)
+    if not items:
+        raise ValidationError(f"{path}: {label} is empty")
+    ids: list[str] = []
+    gates: list[dict[str, Any]] = []
+    for index, item in enumerate(items):
+        item_label = f"{label}[{index}]"
+        require_type(path, item, dict, item_label)
+        if set(item) != WITHDRAWN_PROFILE_KEYS:
+            raise ValidationError(f"{path}: {item_label} has invalid keys")
+        profile_id = validate_string(path, item["profile_id"], f"{item_label}.profile_id", 96)
+        if not re.fullmatch(r"open\.[0-9a-z]+\.[0-9a-f]{12}", profile_id):
+            raise ValidationError(f"{path}: {item_label}.profile_id is invalid")
+        if profile_id in published_ids:
+            raise ValidationError(f"{path}: {item_label} names a published profile")
+        ids.append(profile_id)
+        sources = item["sources"]
+        validate_canonical_list(path, sources, f"{item_label}.sources")
+        if not sources or not all(
+            isinstance(name, str) and re.fullmatch(r"[a-z0-9_]{2,64}", name) for name in sources
+        ):
+            raise ValidationError(f"{path}: {item_label}.sources is invalid")
+        item_gates = item["quality_gates"]
+        validate_resolution_items(
+            path, item_gates, "quality_gate", f"{item_label}.quality_gates", sources
+        )
+        if not item_gates or any(gate["resolution"] != "omitted_from_stable" for gate in item_gates):
+            raise ValidationError(f"{path}: {item_label}.quality_gates must name omissions")
+        validate_apn_removal_gates(path, item_gates, index)
+        validate_stale_capability_gates(path, item_gates, index, None, None)
+        gates.extend(item_gates)
+    if ids != sorted(set(ids)):
+        raise ValidationError(f"{path}: {label} must be sorted by profile_id and unique")
+    return gates
+
+
 def validate_apn_removal_gates(path: Path, gates: list[dict[str, Any]], index: int) -> None:
     """A lineageos_apn_removed gate names one full android_vendor_apn commit,
     once, in the APN section, as an omission."""
@@ -1238,7 +1358,11 @@ def validate_evidence_index(
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
-    if set(data) - FRESHNESS_KEYS - {"vendor_build_grace"} != {
+    if set(data) - FRESHNESS_KEYS - {
+        "vendor_build_grace",
+        "withdrawn_profiles",
+        "apn_removal_commits",
+    } != {
         "schema_version",
         "description",
         "source_snapshots",
@@ -1521,6 +1645,16 @@ def validate_evidence_index(
         expected_profile_ids
     ):
         raise ValidationError(f"{path}: profile IDs do not match the stable database")
+    withdrawn_gates = (
+        validate_withdrawn_profiles(path, data["withdrawn_profiles"], set(actual_profile_ids))
+        if "withdrawn_profiles" in data
+        else []
+    )
+    if "apn_removal_commits" in data:
+        referenced = apn_removal_commits_of(withdrawn_gates)
+        for evidence in profiles:
+            referenced |= apn_removal_commits_of(evidence.get("quality_gates", []))
+        validate_apn_removal_commits(path, data["apn_removal_commits"], referenced)
     if window is None and earliest is not None:
         window = FreshnessWindow(earliest, earliest + timedelta(days=STALE_AFTER_DAYS))
     return window
