@@ -231,15 +231,15 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
         assert_true(validate() == "", "liveness must be off unless asked for")
         assert_true(
             validate("--liveness", "warn")
-            == "warning: the pipeline looks stopped: the newest source check was on "
+            == "warning: the pipeline looks stopped: source lineageos was last checked on "
             "2026-07-13, 22 days ago (more than 21 days)\n",
             "warn mode did not print the liveness warning",
         )
         assert_rejected(
-            "a newest source check 22 days old passed in fail mode",
+            "a source check 22 days old passed in fail mode",
             "--liveness",
             "fail",
-            reason="the newest source check was on 2026-07-13",
+            reason="source lineageos was last checked on 2026-07-13",
         )
         set_today("2026-08-03")
         assert_rejected(
@@ -254,6 +254,39 @@ def check_freshness_rules(carriers_dir: Path, generated_dir: Path) -> None:
             validate("--liveness", "fail", "--last-publish", "2026-07-13") == "",
             "a publish 21 days ago passed as alive",
         )
+
+        # Liveness is per lane: a daily Samsung lane that stops shows after 10
+        # days, even while a weekly lane's newer check would keep the newest
+        # check across all lanes fresh.
+        assert_true(
+            validate_public_carrier_data.LANE_LIVENESS_MAX_AGE_DAYS
+            == {"samsung_ims": 10, "samsung_omc": 10},
+            "the Samsung lanes have a 10-day liveness limit",
+        )
+        samsung_snapshot = {
+            **base_evidence["source_snapshots"][0],
+            "source_name": "samsung_omc",
+            "upstream_url": "https://example.com/samsung",
+            "revision_date": "2026-07-14",
+            "checked_at": "2026-07-14",
+        }
+        window = {"checks_through": "2026-07-10", "stale_after": "2027-01-06"}
+        write_evidence(
+            source_snapshots=[*base_evidence["source_snapshots"], samsung_snapshot], **window
+        )
+        set_today("2026-07-24")
+        assert_true(
+            validate("--liveness", "fail") == "", "a Samsung check 10 days old failed"
+        )
+        set_today("2026-07-25")
+        assert_rejected(
+            "a Samsung check 11 days old passed while a weekly lane was fresh",
+            "--liveness",
+            "fail",
+            reason="source samsung_omc was last checked on 2026-07-14, 11 days ago "
+            "(more than 10 days)",
+        )
+        write_evidence(**window)
 
         set_today("2027-01-19")
         stderr = io.StringIO()

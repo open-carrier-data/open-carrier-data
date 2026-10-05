@@ -26,10 +26,18 @@ FRESHNESS_MODES = ("warn", "fail")
 # The early alarm for a stopped pipeline. stale_after says when the data is too
 # old to ship, about six months after the oldest check. A pipeline that stops
 # shows much sooner: the weekly import re-checks every source, and each check
-# reaches this repo with a publish. When the newest source check, or the last
+# reaches this repo with a publish. When a source's last check, or the last
 # data publish, is older than this many days, three weekly runs in a row were
 # missed.
 LIVENESS_MAX_AGE_DAYS = 21
+# Lanes that run daily get a shorter limit, so one dead lane shows on its own
+# instead of hiding behind the others' fresh checks. Samsung's lanes run daily
+# on the self-hosted runner; a healthy manifest's checked_at can lag up to six
+# days, because an unchanged revision is rewritten only once a week.
+LANE_LIVENESS_MAX_AGE_DAYS = {
+    "samsung_ims": 10,
+    "samsung_omc": 10,
+}
 LIVENESS_MODES = ("off", "warn", "fail")
 FRESHNESS_KEYS = {"checks_through", "stale_after"}
 
@@ -269,36 +277,46 @@ def check_freshness(window: FreshnessWindow, mode: str) -> None:
     print(f"warning: {message}", file=sys.stderr)
 
 
-def newest_source_check(evidence_index_path: Path) -> date | None:
-    """The newest checked_at among the evidence index's source snapshots."""
+def source_checks(evidence_index_path: Path) -> dict[str, date]:
+    """Each source snapshot's checked_at in the evidence index, by source name."""
     if not evidence_index_path.exists():
-        return None
-    dates = [
-        date.fromisoformat(snapshot["checked_at"])
+        return {}
+    return {
+        snapshot["source_name"]: date.fromisoformat(snapshot["checked_at"])
         for snapshot in load_json(evidence_index_path).get("source_snapshots", [])
-        if isinstance(snapshot, dict) and isinstance(snapshot.get("checked_at"), str)
-    ]
-    return max(dates) if dates else None
+        if isinstance(snapshot, dict)
+        and isinstance(snapshot.get("source_name"), str)
+        and isinstance(snapshot.get("checked_at"), str)
+    }
 
 
-def check_liveness(newest_check: date | None, last_publish: date | None, mode: str) -> None:
-    """Warn, or fail, when the newest source check or the last data publish is
-    more than LIVENESS_MAX_AGE_DAYS old."""
+def lane_liveness_limit(source_name: str) -> int:
+    return LANE_LIVENESS_MAX_AGE_DAYS.get(source_name, LIVENESS_MAX_AGE_DAYS)
+
+
+def check_liveness(
+    checks: dict[str, date], last_publish: date | None, mode: str
+) -> None:
+    """Warn, or fail, when any source's last check is older than its lane's
+    limit (LANE_LIVENESS_MAX_AGE_DAYS, otherwise LIVENESS_MAX_AGE_DAYS) or the
+    last data publish is more than LIVENESS_MAX_AGE_DAYS old."""
     if mode == "off":
         return
     today = utc_today()
     late = [
-        f"the {name} was on {day}, {(today - day).days} days ago"
-        for name, day in (("newest source check", newest_check), ("last data publish", last_publish))
-        if day is not None and (today - day).days > LIVENESS_MAX_AGE_DAYS
+        f"source {name} was last checked on {day}, {(today - day).days} days ago "
+        f"(more than {lane_liveness_limit(name)} days)"
+        for name, day in sorted(checks.items())
+        if (today - day).days > lane_liveness_limit(name)
     ]
+    if last_publish is not None and (today - last_publish).days > LIVENESS_MAX_AGE_DAYS:
+        late.append(
+            f"the last data publish was on {last_publish}, "
+            f"{(today - last_publish).days} days ago (more than {LIVENESS_MAX_AGE_DAYS} days)"
+        )
     if not late:
         return
-    message = (
-        "the pipeline looks stopped: "
-        + "; ".join(late)
-        + f" (more than {LIVENESS_MAX_AGE_DAYS} days)"
-    )
+    message = "the pipeline looks stopped: " + "; ".join(late)
     if mode == "fail":
         raise ValidationError(message)
     print(f"warning: {message}", file=sys.stderr)
@@ -1615,7 +1633,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--liveness",
         choices=LIVENESS_MODES,
         default="off",
-        help=f"warn or fail when the newest source check or --last-publish is more "
+        help=f"warn or fail when a source's last check is older than its lane's limit "
+        f"(10 days for Samsung, otherwise {LIVENESS_MAX_AGE_DAYS}) or --last-publish is more "
         f"than {LIVENESS_MAX_AGE_DAYS} days old (default: off)",
     )
     parser.add_argument(
@@ -1687,9 +1706,9 @@ def main(argv: list[str]) -> int:
     if window is not None:
         check_freshness(window, args.freshness)
     check_liveness(
-        newest_source_check(index_path.parent / "evidence-index.json")
+        source_checks(index_path.parent / "evidence-index.json")
         if args.liveness != "off"
-        else None,
+        else {},
         args.last_publish,
         args.liveness,
     )
