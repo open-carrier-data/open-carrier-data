@@ -244,9 +244,71 @@ def check_explain() -> None:
         assert json.loads(output)["capabilities"]["volte"]["answer"] == "unknown"
 
 
+def check_explain_shared_file() -> None:
+    """--explain names a value Google gives only from its unconfirmed shared
+    file (shared_file_unconfirmed); such a value is not a current vendor's."""
+    plain = carrier(
+        {"mccmnc": ["64004"]},
+        {},
+        android_apns=[
+            {"name": "Wap", "apn": "Wap", "types": ["default"], "proxy": "10.154.0.8", "port": 9401},
+            {"name": "Internet", "apn": "internet", "types": ["default"]},
+        ],
+    )
+    wap = generate_android_outputs.apn_fact_key(plain["android_apns"][0], "default")
+    internet = generate_android_outputs.apn_fact_key(plain["android_apns"][1], "default")
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 3,
+                "verified_observation_count": 0,
+                "sources": ["google_carriersettings", "lineageos", "mobile_broadband_provider_info"],
+                "fact_sources": sorted(
+                    [
+                        {
+                            "section": "android_apns",
+                            "key": wap,
+                            "sources": ["google_carriersettings"],
+                            "shared_file_sources": ["google_carriersettings"],
+                        },
+                        {
+                            "section": "android_apns",
+                            "key": internet,
+                            "sources": ["lineageos", "mobile_broadband_provider_info"],
+                        },
+                    ],
+                    key=lambda fact: fact["key"],
+                ),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "64004"}, root, root / "generated" / "evidence-index.json")
+        rows = result["apns"]["rows"]
+        assert [row["row"]["apn"] for row in rows] == ["internet", "Wap"], rows
+        assert rows[0]["reasons"]["shared_file_unconfirmed"] is False, rows[0]
+        assert rows[1]["reasons"]["shared_file_unconfirmed"] is True, rows[1]
+        assert rows[1]["reasons"]["value_from_current_vendor"] is False, rows[1]
+        assert rows[1]["reasons"]["row_sources"] == ["google_carriersettings"], rows[1]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
+    check_explain_shared_file()
     print("carrier profile resolver tests passed")
     return 0
 

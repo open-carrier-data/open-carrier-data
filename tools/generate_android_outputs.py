@@ -214,6 +214,9 @@ def apn_records(
         if evidence is not None:
             base["_support"] = apn_row_support(apn, profile_evidence)
             base["_current"] = apn_row_current(apn, profile_evidence)
+            shared = apn_row_shared(apn, profile_evidence)
+            if shared:
+                base["_shared"] = shared
 
         if not valid_mccmncs:
             for carrier_id in effective_carrier_ids:
@@ -283,14 +286,42 @@ PRIMARY_APN_SOURCES = frozenset(
 # Pixel or Galaxy ships. Apple's index keeps retired bundles, the TheMuppets
 # Pixel files and Sony's and Fairphone's trees are frozen copies, and
 # LineageOS's list keeps whatever nobody removed, so none of them is in it.
-# Samsung's service also confirms the last build of a phone it stopped
-# updating years ago, so a Samsung value counts only where the evidence index
-# does not name the source in the fact's old_build_sources: the sanitizer
-# lists a Samsung source there when every observation of it behind the fact
-# comes from a build more than three years old.
+# Apple's index date is the day a bundle was re-issued, not the day its
+# content was written: measured on 2026-10-06, its newest bundles carry
+# APNs made for iPhones and old names forward, and agree with the Android
+# vendors less often than older ones (private rule decisions of 2026-10-06).
+# Two exceptions, both named per APN fact by the evidence index:
+# - Samsung's service also confirms the last build of a phone it stopped
+#   updating years ago, so a Samsung value does not count where the fact's
+#   old_build_sources names the source: every observation of it behind the
+#   fact comes from a build more than three years old.
+# - Google's update service confirms its shared "others" file as a whole, not
+#   each entry: in two years 5 of its 688 entries changed. A Google value
+#   that comes only from that file counts only where a maintained
+#   per-carrier source (a Google per-carrier file, or a Samsung build at most
+#   three years old) gives the same APN value for the type on the same
+#   network code, or where Google's frozen Pixel copies (TheMuppets) show
+#   that Google edited the entry's values for that type: a copy gives a value
+#   for the type that the current file no longer gives. Otherwise the fact's
+#   shared_file_sources names Google. The private sanitizer decides; this
+#   generator only reads the mark.
 CURRENT_VENDOR_APN_SOURCES = frozenset({"google_carriersettings", "samsung_omc", "samsung_ims"})
 # APN values that name no network: a list writes them where it knows no APN.
 PLACEHOLDER_APNS = frozenset({"default"})
+# An APN name is labels of letters, digits and hyphens joined by dots (3GPP
+# TS 23.003, section 9.1); underscores are tolerated, as networks use them. A
+# value with any other character, such as "mms/airtel mms" or
+# "http://mms.pepephone.com", is not an APN a phone can attach to.
+APN_VALUE_RE = re.compile(r"[A-Za-z0-9._-]+")
+
+
+def placeholder_apn(apn: Any) -> bool:
+    """Whether an APN value names no network: a placeholder such as
+    "default", or a malformed value (APN_VALUE_RE)."""
+    value = str(apn)
+    return value.casefold() in PLACEHOLDER_APNS or not APN_VALUE_RE.fullmatch(value)
+
+
 # One file order serves every request type, so types are ranked in this order:
 # rows that serve the internet come first, best backed first, then the rest.
 APN_TYPE_PRIORITY = (
@@ -346,6 +377,9 @@ class ProfileEvidence(NamedTuple):
     apn_fact_sources: dict[str, frozenset[str]]
     # Per APN fact, the vendor sources that give it only from old builds.
     apn_fact_old_build_sources: dict[str, frozenset[str]]
+    # Per APN fact, the vendor sources that give it only from a shared file
+    # no maintained per-carrier source confirms.
+    apn_fact_shared_file_sources: dict[str, frozenset[str]] = {}
 
 
 class ApnRows(NamedTuple):
@@ -384,6 +418,11 @@ def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvid
                 for fact in apn_facts
                 if fact.get("old_build_sources")
             },
+            {
+                fact["key"]: frozenset(fact["shared_file_sources"])
+                for fact in apn_facts
+                if fact.get("shared_file_sources")
+            },
         )
     return evidence
 
@@ -417,7 +456,9 @@ def apn_row_current(
 ) -> dict[str, frozenset[str]]:
     """The current vendors behind each type of a profile row: its sources in
     CURRENT_VENDOR_APN_SOURCES, less the Samsung sources that give the fact
-    only from builds more than three years old (old_build_sources)."""
+    only from builds more than three years old (old_build_sources) and the
+    Google source that gives it only from its unconfirmed shared file
+    (shared_file_sources)."""
     if profile_evidence is None:
         return {}
     current: dict[str, frozenset[str]] = {}
@@ -425,11 +466,33 @@ def apn_row_current(
         key = apn_fact_key(apn, apn_type)
         sources = profile_evidence.apn_fact_sources.get(key, profile_evidence.sources)
         vendors = (
-            sources & CURRENT_VENDOR_APN_SOURCES
-        ) - profile_evidence.apn_fact_old_build_sources.get(key, frozenset())
+            (sources & CURRENT_VENDOR_APN_SOURCES)
+            - profile_evidence.apn_fact_old_build_sources.get(key, frozenset())
+            - profile_evidence.apn_fact_shared_file_sources.get(key, frozenset())
+        )
         for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
             current[served] = current.get(served, frozenset()) | vendors
     return current
+
+
+def apn_row_shared(
+    apn: dict[str, Any], profile_evidence: ProfileEvidence | None
+) -> dict[str, frozenset[str]]:
+    """The sources behind each type of a profile row that give it only from
+    an unconfirmed shared file (shared_file_sources). Only --explain reads
+    them."""
+    if profile_evidence is None:
+        return {}
+    shared: dict[str, frozenset[str]] = {}
+    for apn_type in apn.get("types", []):
+        sources = profile_evidence.apn_fact_shared_file_sources.get(
+            apn_fact_key(apn, apn_type), frozenset()
+        )
+        if not sources:
+            continue
+        for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
+            shared[served] = shared.get(served, frozenset()) | sources
+    return shared
 
 
 def source_families(sources: frozenset[str] | set[str]) -> set[str]:
@@ -469,7 +532,7 @@ def collapse_android_duplicates(records: list[dict[str, Any]]) -> list[dict[str,
         kept["type"] = ",".join(
             sorted(set(kept["type"].split(",")) | set(record["type"].split(",")))
         )
-        for field in ("_support", "_current"):
+        for field in ("_support", "_current", "_shared"):
             if field in kept or field in record:
                 merged_field = dict(kept.get(field, {}))
                 for apn_type, sources in record.get(field, {}).items():
@@ -516,6 +579,9 @@ class RowRank(NamedTuple):
     row_sources: frozenset[str]
     value_current: frozenset[str] = frozenset()
     row_current: frozenset[str] = frozenset()
+    # The sources that give this APN value for the lead type in the scope
+    # only from an unconfirmed shared file. They do not order rows.
+    value_shared: frozenset[str] = frozenset()
 
     def sort_key(self) -> tuple[Any, ...]:
         lead = (
@@ -544,28 +610,33 @@ def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
     """The RowRank of each row of one scope, in the order given."""
     apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
     apn_current: dict[tuple[str, str], set[str]] = defaultdict(set)
+    apn_shared: dict[tuple[str, str], set[str]] = defaultdict(set)
     for record in records:
         apn = str(record["apn"]).casefold()
         for apn_type, sources in record.get("_support", {}).items():
             apn_sources[(apn, apn_type)].update(sources)
         for apn_type, sources in record.get("_current", {}).items():
             apn_current[(apn, apn_type)].update(sources)
+        for apn_type, sources in record.get("_shared", {}).items():
+            apn_shared[(apn, apn_type)].update(sources)
     ranks: list[RowRank] = []
     for record in records:
         types = set(apn_row_types(record["type"]))
         lead_type = next((apn_type for apn_type in APN_TYPE_PRIORITY if apn_type in types), None)
         apn = str(record["apn"]).casefold()
+        placeholder = placeholder_apn(record["apn"])
         if lead_type is None:
-            ranks.append(RowRank(None, apn in PLACEHOLDER_APNS, frozenset(), frozenset()))
+            ranks.append(RowRank(None, placeholder, frozenset(), frozenset()))
             continue
         ranks.append(
             RowRank(
                 lead_type,
-                apn in PLACEHOLDER_APNS,
+                placeholder,
                 frozenset(apn_sources.get((apn, lead_type), set())),
                 frozenset(record.get("_support", {}).get(lead_type, frozenset())),
                 frozenset(apn_current.get((apn, lead_type), set())),
                 frozenset(record.get("_current", {}).get(lead_type, frozenset())),
+                frozenset(apn_shared.get((apn, lead_type), set())),
             )
         )
     return ranks
@@ -577,9 +648,12 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     that serves the internet leads with "default". Rows are grouped by lead
     type in that order. Within a group, for the lead type:
 
-    1. a real APN before a placeholder such as "default",
+    1. a real APN before a placeholder such as "default" or a malformed
+       value (placeholder_apn),
     2. an APN value a current vendor (apn_row_current) gives for that type in
-       this scope before one no current vendor gives,
+       this scope before one no current vendor gives; a Samsung value from
+       an old build only, or a Google value from its shared file only that
+       no maintained per-carrier source confirms, does not count,
     3. the APN value more source families give for that type in this scope,
     4. an APN value a primary APN source gives,
     5. a row a current vendor backs, so among the variants of one value the
@@ -617,7 +691,7 @@ def leave_out_stale_attach(records: list[dict[str, Any]]) -> int:
             if not sources:
                 continue
             vendor_apns.add(apn)
-            if apn_type in {"default", "ia"} and apn not in PLACEHOLDER_APNS:
+            if apn_type in {"default", "ia"} and not placeholder_apn(record["apn"]):
                 covered = True
     if not covered:
         return 0

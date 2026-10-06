@@ -1020,6 +1020,9 @@ UNKNOWN_CAPABILITY_GATES = {
 # The vendor sources whose observations are dated by firmware build, which an
 # APN fact's old_build_sources may name.
 OLD_BUILD_SOURCES = {"samsung_omc", "samsung_ims"}
+# The vendor sources with a shared carrier file, which an APN fact's
+# shared_file_sources may name: Google's "others" file.
+SHARED_FILE_SOURCES = ["google_carriersettings"]
 # The CarrierConfig keys the importers treat as a capability's Android switch.
 # Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
 CAPABILITY_GATING_CONFIG_KEYS = {
@@ -1635,7 +1638,11 @@ def validate_evidence_index(
         for fact_index, fact in enumerate(fact_sources):
             label = f"profiles[{index}].fact_sources[{fact_index}]"
             require_type(path, fact, dict, label)
-            if set(fact) - {"old_build_sources"} != {"section", "key", "sources"}:
+            if set(fact) - {"old_build_sources", "shared_file_sources"} != {
+                "section",
+                "key",
+                "sources",
+            }:
                 raise ValidationError(f"{path}: {label} has invalid keys")
             section = fact.get("section")
             # Capabilities are in capability_sources, with on and off lists.
@@ -1664,7 +1671,18 @@ def validate_evidence_index(
                     or not set(old_builds) <= set(fact_source_names) & OLD_BUILD_SOURCES
                 ):
                     raise ValidationError(f"{path}: {label}.old_build_sources is invalid")
-            elif fact_source_names == sources:
+            shared_file = fact.get("shared_file_sources")
+            if shared_file is not None:
+                # Google gives this APN fact only from its shared carrier file,
+                # and no maintained per-carrier source confirms the value; the
+                # APN ranking does not count Google as a current vendor for it.
+                if (
+                    section != "android_apns"
+                    or shared_file != SHARED_FILE_SOURCES
+                    or not set(shared_file) <= set(fact_source_names)
+                ):
+                    raise ValidationError(f"{path}: {label}.shared_file_sources is invalid")
+            if old_builds is None and shared_file is None and fact_source_names == sources:
                 # An absent fact means every profile source supports it.
                 raise ValidationError(f"{path}: {label} is a redundant override")
             actual_fact_keys.append((section, key))
