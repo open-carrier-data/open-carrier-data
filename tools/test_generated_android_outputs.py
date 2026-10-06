@@ -2169,6 +2169,168 @@ def check_shared_file_and_malformed_values() -> None:
         )
 
 
+def check_proxy_free_first() -> None:
+    """Among the rows that lead with "default", a row without an HTTP proxy
+    comes before a row with one, right after the current-vendor key. An MMS
+    proxy never counts, rows that lead with another type never move, and no
+    row is removed or retyped."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    def profile(profile_id: str, mccmnc: str, *rows: dict) -> dict:
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": {"mccmnc": [mccmnc]},
+            "android_apns": list(rows),
+        }
+
+    google = "google_carriersettings"
+    pixel = "google_pixel_vendor_carriersettings"
+    mbpi = "mobile_broadband_provider_info"
+    # 62006 (Airtel Ghana): Google's shared file, its frozen Pixel copy and
+    # Fairphone give "wap" with a WAP proxy, and it is the only row with
+    # "ia"; Apple and MBPI give "internet". No current vendor gives either.
+    airtel = profile(
+        "open.62006.a",
+        "62006",
+        apn("wap", ("default", "ia", "supl"), proxy="10.93.85.88", port=9201),
+        apn("internet", ("default", "supl")),
+    )
+    # 61002 (Orange Mali): Google's per-carrier file gives only "wap", with a
+    # proxy; old copies give "internet".
+    orange = profile(
+        "open.61002.a",
+        "61002",
+        apn("wap", ("default", "supl"), proxy="10.109.4.35", port=8080, user="wap", password="wap"),
+        apn("internet", ("default", "supl")),
+    )
+    # 40439 (BSNL): Google gives both, "bsnllive" with a WAP proxy, which
+    # sorts first by name, and "bsnlnet".
+    bsnl = profile(
+        "open.40439.a",
+        "40439",
+        apn("bsnllive", ("default", "ia", "supl"), proxy="10.220.67.131", port=8080),
+        apn("bsnlnet", ("default", "ia", "supl")),
+    )
+    # 60503: two variants of one value; more families give the proxied one.
+    variants = profile(
+        "open.60503.a",
+        "60503",
+        apn("internet.example", ("default", "supl"), proxy="10.3.2.99", port=8080),
+        apn("internet.example", ("default", "supl"), name="bare"),
+    )
+    # 20408: MMS rows with a proxy or an MMS proxy keep their place, and so
+    # does an internet row that carries only an MMS proxy.
+    mms = profile(
+        "open.20408.a",
+        "20408",
+        apn("web.example", ("default", "mms"), mmsc="http://mms.example", mmsproxy="10.0.0.1", mmsport=8080),
+        apn("web2.example", ("default",)),
+        apn("mms.example", ("mms",), mmsc="http://mms.example", proxy="10.0.0.2", port=8080),
+        apn("mms2.example", ("mms",), mmsc="http://mms2.example"),
+    )
+    # 21910: every internet row carries a proxy; the families decide, as
+    # before.
+    all_proxied = profile(
+        "open.21910.a",
+        "21910",
+        apn("wap.b", ("default",), proxy="10.0.0.3", port=8080),
+        apn("wap.a", ("default",), proxy="10.0.0.4", port=8080),
+    )
+    profiles = [airtel, orange, bsnl, variants, mms, all_proxied]
+    row_sources = {
+        "open.62006.a": [(google, pixel, "fairphone_official_source"), ("apple_carrier_bundles", mbpi)],
+        "open.61002.a": [(google, pixel, "lineageos"), ("lineageos", "apple_carrier_bundles", mbpi)],
+        "open.40439.a": [(google, pixel), (google, pixel)],
+        "open.60503.a": [("lineageos", mbpi), ("apple_carrier_bundles",)],
+        "open.20408.a": [("lineageos", mbpi), ("apple_carrier_bundles",), ("lineageos", mbpi), ("apple_carrier_bundles",)],
+        "open.21910.a": [("lineageos", mbpi), ("apple_carrier_bundles",)],
+    }
+    shared_rows = {"open.62006.a": {0}}
+    records = []
+    for item in profiles:
+        sources = row_sources[item["profile_id"]]
+        everything = sorted({source for group in sources for source in group})
+        facts = []
+        for row_index, (row, group) in enumerate(zip(item["android_apns"], sources, strict=True)):
+            for apn_type in row["types"]:
+                fact = {
+                    "section": "android_apns",
+                    "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                    "sources": sorted(group),
+                }
+                if row_index in shared_rows.get(item["profile_id"], set()):
+                    fact["shared_file_sources"] = [google]
+                facts.append(fact)
+        records.append({"profile_id": item["profile_id"], "sources": everything, "fact_sources": sorted(facts, key=lambda fact: fact["key"])})
+
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        rows = generate_android_outputs.apn_xml_rows(
+            profiles, generate_android_outputs.load_apn_evidence(evidence_path)
+        )
+
+        def scope(mccmnc: str) -> list[tuple[str, str, str]]:
+            return [
+                (record["apn"], record["type"], str(record.get("proxy", "")))
+                for record in rows.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            ]
+
+        def first(mccmnc: str, apn_type: str) -> tuple[str, str, str]:
+            return next(row for row in scope(mccmnc) if apn_type in row[1].split(","))
+
+        assert_true(
+            [row[0] for row in scope("62006")] == ["internet", "wap"],
+            f"a proxy-free internet row comes before the shared file's WAP row: {scope('62006')}",
+        )
+        assert_true(
+            first("62006", "ia")[0] == "wap",
+            f"the attach row stays the only row with ia: {scope('62006')}",
+        )
+        assert_true(
+            [row[0] for row in scope("61002")] == ["wap", "internet"],
+            f"a current vendor's only internet value still leads with its proxy: {scope('61002')}",
+        )
+        assert_true(
+            [row[0] for row in scope("40439")] == ["bsnlnet", "bsnllive"]
+            and first("40439", "ia")[0] == "bsnlnet",
+            f"of two current values the proxy-free one leads and attaches: {scope('40439')}",
+        )
+        assert_true(
+            [row[2] for row in scope("60503")] == ["", "10.3.2.99"],
+            f"the proxy-free variant of one value comes first: {scope('60503')}",
+        )
+        assert_true(
+            [row[0] for row in scope("20408")] == ["web.example", "web2.example", "mms.example", "mms2.example"],
+            f"an MMS proxy never counts and MMS rows never move: {scope('20408')}",
+        )
+        assert_true(
+            [row[0] for row in scope("21910")] == ["wap.b", "wap.a"],
+            f"a scope with no proxy-free internet row keeps its order: {scope('21910')}",
+        )
+        written = sorted((record["apn"], record["type"], str(record.get("proxy", ""))) for record in rows.records)
+        given = sorted(
+            (row["apn"], ",".join(sorted(row["types"])), str(row.get("proxy", "")))
+            for item in profiles
+            for row in item["android_apns"]
+        )
+        assert_true(
+            written == given,
+            f"no row is removed and no type set changes: {written} != {given}",
+        )
+        ranks = generate_android_outputs.scope_row_ranks(
+            [record for record in rows.records if record.get("mcc") == "204"]
+        )
+        assert_true(
+            [rank.proxied for rank in ranks] == [False, False, False, False],
+            f"neither an MMS proxy nor a proxy on an MMS row makes a row proxied: {ranks}",
+        )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -3879,6 +4041,8 @@ def main() -> int:
     print("current vendor and attach type tests passed")
     check_shared_file_and_malformed_values()
     print("shared-file and malformed APN value tests passed")
+    check_proxy_free_first()
+    print("proxy-free internet row tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
