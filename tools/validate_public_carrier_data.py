@@ -948,13 +948,26 @@ def validate_source_versions(
         raise ValidationError(f"{path}: {label} must name each source once, sorted")
 
 
+# A capability that rests on one source family whose newest entry is more than
+# five years old, withheld for its age alone.
 STALE_CAPABILITY_GATE = "stale_single_source_entry"
+# The same kind of old single-family value, withheld on evidence instead of age:
+# only a frozen copy of a source gives it (frozen_source_only), or no
+# observation with an entry inside the five-year window covers the profile's
+# own scope, its network code or its SIM selector (unseen_scope).
+FROZEN_SOURCE_ONLY_GATE = "frozen_source_only"
+UNSEEN_SCOPE_GATE = "unseen_scope"
 # An off that one source family alone gives, which is not the operator's own
 # configuration: the capability is published as unknown, and a false
 # capability-gating CarrierConfig key is left out.
 SINGLE_FAMILY_OFF_GATE = "single_family_off"
 # The gates that publish a capability as unknown although a source gives it.
-UNKNOWN_CAPABILITY_GATES = {STALE_CAPABILITY_GATE, SINGLE_FAMILY_OFF_GATE}
+UNKNOWN_CAPABILITY_GATES = {
+    STALE_CAPABILITY_GATE,
+    FROZEN_SOURCE_ONLY_GATE,
+    UNSEEN_SCOPE_GATE,
+    SINGLE_FAMILY_OFF_GATE,
+}
 # The CarrierConfig keys the importers treat as a capability's Android switch.
 # Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
 CAPABILITY_GATING_CONFIG_KEYS = {
@@ -1122,8 +1135,10 @@ def validate_stale_capability_gates(
     config_keys: set[str] | None = None,
 ) -> None:
     """A capability withheld because its only source family's newest entry is
-    over five years old, or because one source family alone turns it off,
-    names a real capability that the profile publishes as unknown. A
+    over five years old (for its age alone, or because only a frozen copy
+    gives it, or because no fresh observation covers the profile's scope), or
+    because one source family alone turns it off, names a real capability
+    that the profile publishes as unknown. A
     single-family gate on a CarrierConfig key names a capability-gating key
     the profile does not publish."""
     for gate_index, gate in enumerate(gates):

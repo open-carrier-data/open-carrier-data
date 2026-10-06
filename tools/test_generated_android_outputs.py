@@ -450,6 +450,23 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
             dated(quality_gates=[gate("stale_single_source_entry:vonr", "android_apns")]),
             "a stale gate outside the capabilities section passed",
         )
+        # The evidence version of the five-year rule withholds VoLTE, VoWiFi,
+        # MMS and Wi-Fi calling while roaming under two gates of its own,
+        # checked like the age gate.
+        for name in ("frozen_source_only", "unseen_scope"):
+            validate(dated(quality_gates=[gate(f"{name}:vonr")]))
+            expect_failure(
+                dated(quality_gates=[gate(f"{name}:mms")]),
+                f"a {name} gate for a capability the profile still publishes passed",
+            )
+            expect_failure(
+                dated(quality_gates=[gate(f"{name}:telepathy")]),
+                f"a {name} gate for an unknown capability name passed",
+            )
+            expect_failure(
+                dated(quality_gates=[gate(f"{name}:vonr", "android_carrier_config")]),
+                f"a {name} gate outside the capabilities section passed",
+            )
 
         # A withheld capability keeps its date (report item #5), and flags
         # mark old single-source values and the CarrierConfig key of a
@@ -591,6 +608,8 @@ def check_capability_sources(
         withheld = {**new_sources, "vonr": {"off": ["lineageos"]}}
         validate(shaped(withheld, [gate("single_family_off:vonr")]))
         validate(shaped(withheld, [gate("stale_single_source_entry:vonr")]))
+        validate(shaped(withheld, [gate("frozen_source_only:vonr")]))
+        validate(shaped(withheld, [gate("unseen_scope:vonr")]))
         expect_failure(
             shaped(withheld), "an unknown capability with sources but no gate passed"
         )
