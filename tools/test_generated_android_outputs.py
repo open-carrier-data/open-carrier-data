@@ -2419,6 +2419,203 @@ def check_malformed_values_stay() -> None:
     )
 
 
+def check_best_row_last() -> None:
+    """Rows TelephonyProvider stores as one (equal on its unique fields) are
+    written together at the best-ranked row's place, the best row last and
+    the others before it in reverse rank order, so the stored row takes the
+    best row's values and only what it leaves unset from the others. No row
+    is removed, no value changes, and rows that differ in a unique field are
+    not grouped (rule decisions of 2026-10-06, round 5, change 17)."""
+
+    google = "google_carriersettings"
+    samsung = "samsung_omc"
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    scopes: dict[str, list[tuple[dict, tuple[str, ...]]]] = {
+        # RACC shape: Samsung's bare row is the best; LineageOS's row with
+        # CLIENTERACC/RACC is lower.
+        "21406": [
+            (apn("internet.racc.es", ("default", "supl")), (samsung,)),
+            (apn("internet.racc.es", user="CLIENTERACC", password="RACC", authtype=1), ("lineageos",)),
+        ],
+        # 20825 shape: the best row has the user "lmfr", a lower one the typo
+        # "Imfr".
+        "20825": [
+            (apn("data.lycamobile.fr", user="lmfr", password="plus", authtype=1), (google, "lineageos")),
+            (apn("data.lycamobile.fr", user="Imfr", password="plus", authtype=1), ("mobile_broadband_provider_info",)),
+        ],
+        # 722340 shape: best datos/datos with PAP, lower gprs/adgj without.
+        "722340": [
+            (apn("datos.personal.example", user="datos", password="datos", authtype=1), (google,)),
+            (apn("datos.personal.example", user="gprs", password="adgj", authtype=0), ("lineageos", "sony_open_devices_aosp")),
+        ],
+        # LRA shape: VZWINTERNET in an eHRPD (bearer 13) and an LTE (bearer 14)
+        # row.
+        "311490": [
+            (apn("VZWINTERNET", bearer_bitmask="13"), ("lineageos",)),
+            (apn("VZWINTERNET", bearer_bitmask="14", user_visible=False), ("lineageos", "sony_open_devices_aosp")),
+        ],
+        # Rows that differ in proxy, protocol, carrier id, user_editable or
+        # APN letter case are other rows to Android and are not grouped.
+        "23415": [
+            (apn("web.example", user="a", password="a"), (google, "lineageos")),
+            (apn("web.example", proxy="10.0.0.1", port=8080, user="b", password="b"), ("lineageos",)),
+            (apn("web.example", protocol="IPV4V6", user="c", password="c"), ("lineageos",)),
+            (apn("web.example", carrier_id=1234, user="d", password="d"), ("lineageos",)),
+            (apn("web.example", user_editable=False, user="e", password="e"), ("lineageos",)),
+            (apn("Web.example", user="f", password="f"), ("lineageos",)),
+        ],
+        # A group sits at its best row's place and the other rows keep their
+        # order: x.example (best) and y.example tie on the value, the lower
+        # x.example row ranks after y.example.
+        "26202": [
+            (apn("x.example"), (google, "lineageos")),
+            (apn("x.example", user="u", password="p"), ("sony_open_devices_aosp",)),
+            (apn("y.example"), (google, "lineageos")),
+            (apn("z.example"), ("mobile_broadband_provider_info",)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append(
+            {
+                "profile_id": profile_id,
+                "display_name": profile_id,
+                "match": {"mccmnc": [mccmnc]},
+                "android_apns": [row for row, _ in rows],
+            }
+        )
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                "sources": sorted(sources),
+            }
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append(
+            {
+                "profile_id": profile_id,
+                "sources": sorted({source for _, sources in rows for source in sources}),
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+            }
+        )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+        apns_path = Path(tmp) / "apns-conf.xml"
+        count = generate_android_outputs.write_apns(apns_path, profiles, 8, evidence)
+        written = [dict(element.attrib) for element in ET.parse(apns_path).getroot()]
+
+    def provider_store(file_rows: list[dict]) -> list[dict]:
+        """TelephonyProvider's load: a row equal to an earlier one on the
+        unique fields merges into it at its place, types united, bitmasks
+        OR-ed (none when either has none), written attributes overwriting."""
+        stored: dict[tuple[str, ...], dict] = {}
+        for row in file_rows:
+            key = generate_android_outputs.android_unique_key(row)
+            old = stored.get(key)
+            if old is None:
+                stored[key] = dict(row)
+                continue
+            types = old["type"].split(",")
+            types += [apn_type for apn_type in row["type"].split(",") if apn_type not in types]
+            masks = [item.get("bearer_bitmask") for item in (old, row)]
+            merged = {**old, **row, "type": ",".join(types)}
+            if all(masks):
+                merged["bearer_bitmask"] = "|".join(
+                    sorted({part for mask in masks for part in str(mask).split("|")}, key=int)
+                )
+            else:
+                merged.pop("bearer_bitmask", None)
+            stored[key] = merged
+        return list(stored.values())
+
+    def scope(mccmnc: str) -> list[dict]:
+        return [row for row in written if row["mcc"] + row["mnc"] == mccmnc]
+
+    def stored(mccmnc: str) -> list[dict]:
+        return provider_store(scope(mccmnc))
+
+    racc = scope("21406")
+    assert_true(
+        [row.get("user", "") for row in racc] == ["CLIENTERACC", ""],
+        f"the lower row with the credentials comes first and the best bare row last: {racc}",
+    )
+    [racc_stored] = stored("21406")
+    assert_true(
+        (racc_stored.get("user"), racc_stored.get("password"), racc_stored["type"])
+        == ("CLIENTERACC", "RACC", "default,supl"),
+        f"the stored row keeps the credentials the best row leaves unset: {racc_stored}",
+    )
+    [lyca] = stored("20825")
+    assert_true(lyca["user"] == "lmfr", f"the best row's user is stored, not the typo: {lyca}")
+    [personal] = stored("722340")
+    assert_true(
+        (personal["user"], personal["password"], personal["authtype"]) == ("datos", "datos", "1"),
+        f"the stored row is the best row's PAP datos: {personal}",
+    )
+    lra = scope("311490")
+    [lra_stored] = stored("311490")
+    assert_true(
+        len(lra) == 2 and set(lra_stored["bearer_bitmask"].split("|")) == {"13", "14"},
+        f"both VZWINTERNET rows are written and the stored bitmask covers LTE: {lra} {lra_stored}",
+    )
+    apart = scope("23415")
+    assert_true(
+        sorted(row["user"] for row in apart) == ["a", "b", "c", "d", "e", "f"]
+        and len({generate_android_outputs.android_unique_key(row) for row in apart}) == 6
+        and len(stored("23415")) == 6,
+        f"rows that differ in a unique field stay apart: {apart}",
+    )
+    order = [(row["apn"], row.get("user", "")) for row in scope("26202")]
+    assert_true(
+        order == [("x.example", "u"), ("x.example", ""), ("y.example", ""), ("z.example", "")],
+        f"a group sits at its best row's place and other rows keep their order: {order}",
+    )
+    marked = sorted(
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"], str(record.get("user", "")))
+        for record in rows.records
+        if record.get("_stored_with_best_row")
+    )
+    assert_true(
+        marked
+        == [
+            ("20825", "data.lycamobile.fr", "Imfr"),
+            ("21406", "internet.racc.es", "CLIENTERACC"),
+            ("26202", "x.example", "u"),
+            ("311490", "VZWINTERNET", ""),
+            ("722340", "datos.personal.example", "gprs"),
+        ],
+        f"rows written before their group's best row are marked: {marked}",
+    )
+    given = sorted(
+        json.dumps(
+            {
+                key: str(value).lower() if isinstance(value, bool) else str(value)
+                for key, value in {**row, "type": ",".join(row["types"])}.items()
+                if key not in {"name", "types"}
+            },
+            sort_keys=True,
+        )
+        for items in scopes.values()
+        for row, _ in items
+    )
+    got = sorted(
+        json.dumps({key: value for key, value in row.items() if key not in {"carrier", "mcc", "mnc"}}, sort_keys=True)
+        for row in written
+    )
+    assert_true(count == len(given) and got == given, f"the rows and their values do not change: {got} != {given}")
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -4133,6 +4330,8 @@ def main() -> int:
     print("proxy-free internet row tests passed")
     check_malformed_values_stay()
     print("malformed APN value tests passed")
+    check_best_row_last()
+    print("best row last tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")

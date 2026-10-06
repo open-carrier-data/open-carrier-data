@@ -370,6 +370,38 @@ ANDROID_APN_DEFAULTS: dict[str, Any] = {
 # Defaults LineageOS's apns-conf.xsd does not accept as values. They are left
 # out of the row, which TelephonyProvider reads the same way.
 SCHEMA_OMITTED_DEFAULTS = {"authtype": -1, "skip_464xlat": -1}
+# TelephonyProvider's CARRIERS_UNIQUE_FIELDS as XML attributes, with the value
+# a row without the attribute gets (LineageOS 23.2, TelephonyProvider.java:
+# 276-417; numeric is mcc and mnc, and owned_by is no XML attribute). Rows
+# equal on all of them are one row to Android: loadApns inserts rows in file
+# order, and a row that conflicts with an earlier one goes to
+# mergeFieldsAndUpdateDb, which keeps the earlier row's _id and so its place,
+# unites the types, merges the bearer and network type bitmasks, and lets
+# every attribute the later row writes overwrite (putAll). mvno_type and
+# mvno_match_data count only when a row has both.
+ANDROID_UNIQUE_DEFAULTS: dict[str, str] = {
+    "mcc": "",
+    "mnc": "",
+    "apn": "",
+    "proxy": "",
+    "port": "",
+    "mmsproxy": "",
+    "mmsport": "",
+    "mmsc": "",
+    "carrier_enabled": "1",
+    "bearer": "0",
+    "mvno_type": "",
+    "mvno_match_data": "",
+    "profile_id": "0",
+    "protocol": "IP",
+    "roaming_protocol": "IP",
+    "user_editable": "1",
+    "apn_set_id": "0",
+    "carrier_id": "-1",
+    "infrastructure_bitmask": "3",
+    "esim_bootstrap_provisioning": "0",
+}
+INFRASTRUCTURE_BITS = {"cellular": 1, "satellite": 2}
 
 
 class ProfileEvidence(NamedTuple):
@@ -521,7 +553,12 @@ def collapse_android_duplicates(records: list[dict[str, Any]]) -> list[dict[str,
     """Rows that differ only in their label, in a type set, or in an attribute
     that repeats TelephonyProvider's default become one row with the union of
     their types, which is what TelephonyProvider makes of them when it loads
-    them. The first row in fallback order gives the label."""
+    them. The first row in fallback order gives the label. Rows that differ in
+    other attributes stay apart here, but TelephonyProvider still stores them
+    as one when they are equal on its unique fields (android_unique_key): one
+    row at the first row's place, each later row's written attributes
+    overwriting, types united and bitmasks merged. write_android_groups_best_last
+    writes the best-ranked of them last so its values win."""
     merged: dict[str, dict[str, Any]] = {}
     for record in sorted(records, key=fallback_order_key):
         key = android_settings_key(record)
@@ -539,6 +576,63 @@ def collapse_android_duplicates(records: list[dict[str, Any]]) -> list[dict[str,
                     merged_field[apn_type] = merged_field.get(apn_type, frozenset()) | sources
                 kept[field] = merged_field
     return list(merged.values())
+
+
+def android_unique_key(record: dict[str, Any]) -> tuple[str, ...]:
+    """The row's values of ANDROID_UNIQUE_DEFAULTS as TelephonyProvider
+    compares them: exact strings, not case-folded, booleans as 1 or 0, the
+    infrastructure names as bits, and the default for a missing attribute.
+    Rows with the same key are stored as one row."""
+    attributes = written_attributes(record)
+    has_mvno = "mvno_type" in attributes and "mvno_match_data" in attributes
+    key: list[str] = []
+    for field, default in ANDROID_UNIQUE_DEFAULTS.items():
+        value = attributes.get(field)
+        if field in {"mvno_type", "mvno_match_data"} and not has_mvno:
+            value = None
+        if value is None:
+            key.append(default)
+        elif isinstance(value, bool):
+            key.append("1" if value else "0")
+        elif field == "infrastructure_bitmask":
+            bits = 0
+            for name in str(value).split("|"):
+                bits |= INFRASTRUCTURE_BITS.get(name.strip(), 0)
+            key.append(str(bits))
+        elif field in {"carrier_enabled", "user_editable", "esim_bootstrap_provisioning"}:
+            key.append({"true": "1", "false": "0"}.get(str(value).lower(), str(value)))
+        else:
+            key.append(str(value))
+    return tuple(key)
+
+
+def write_android_groups_best_last(ranked: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Write the rows of a ranked scope that TelephonyProvider stores as one
+    (android_unique_key) next to each other, once, at the place of the
+    group's best-ranked row, with the best-ranked row last and the others
+    before it in reverse rank order. TelephonyProvider keeps the first row's
+    place, unites the types and merges the bitmasks, and lets each later row's
+    written attributes overwrite, so the best row's values win and it takes
+    from the others only what it leaves unset. Rows written before their
+    group's best row are marked "_stored_with_best_row", which is never
+    written. No row is removed and no value changes; rows of other groups
+    keep their order."""
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in ranked:
+        groups[android_unique_key(record)].append(record)
+    written: list[dict[str, Any]] = []
+    done: set[tuple[str, ...]] = set()
+    for record in ranked:
+        key = android_unique_key(record)
+        if key in done:
+            continue
+        done.add(key)
+        best, *others = groups[key]
+        for other in reversed(others):
+            other["_stored_with_best_row"] = True
+            written.append(other)
+        written.append(best)
+    return written
 
 
 def fallback_order_key(record: dict[str, Any]) -> tuple[Any, ...]:
@@ -687,7 +781,14 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     A row is backed for a type by the sources whose observations support it.
     Rows still tied keep the fallback order: APN, types, label.
-    scope_row_ranks gives the reasons, which the resolver's --explain prints."""
+    scope_row_ranks gives the reasons, which the resolver's --explain prints.
+
+    Android stores rows equal on TelephonyProvider's unique fields as one row,
+    at the first row's place, each later row's written attributes
+    overwriting, types united and bitmasks merged. So apn_xml_rows then
+    writes such rows together at the best row's place with the best row last
+    (write_android_groups_best_last), and it takes from the others only what
+    it leaves unset."""
     ranked = zip(scope_row_ranks(records), records)
     return [
         record
@@ -738,7 +839,13 @@ def apn_xml_rows(
     """Every APN XML row of these profiles in file order: rows LineageOS's
     apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
     network code and MVNO selector order, a stale attach type left out
-    (leave_out_stale_attach), and each scope ranked by its evidence."""
+    (leave_out_stale_attach), each scope ranked by its evidence, and last the
+    rows Android stores as one written together with the best-ranked one last
+    (write_android_groups_best_last). TelephonyProvider stores such rows as
+    one at the first row's place, each later row's written attributes
+    overwrite, types unite and bitmasks merge, so the best row goes last and
+    takes from the others only what it leaves unset. A group's first row in
+    the file is therefore not what the phone uses; its last row's values are."""
     records: list[dict[str, Any]] = []
     schema_rejected = 0
     for profile in profiles:
@@ -757,7 +864,7 @@ def apn_xml_rows(
     ia_left_out = 0
     for scope in sorted(scopes):
         ia_left_out += leave_out_stale_attach(scopes[scope])
-        ordered.extend(rank_scope(scopes[scope]))
+        ordered.extend(write_android_groups_best_last(rank_scope(scopes[scope])))
     return ApnRows(ordered, schema_rejected, ia_left_out)
 
 
