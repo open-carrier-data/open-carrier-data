@@ -253,6 +253,9 @@ def explain(
                 "lead_type": rank.lead_type,
                 "reasons": {
                     "real_apn": not rank.placeholder,
+                    "value_from_current_vendor": bool(rank.value_current),
+                    "row_from_current_vendor": bool(rank.row_current),
+                    "ia_left_out": bool(row.get("_ia_left_out")),
                     "value_families": sorted(generator.source_families(rank.value_sources)),
                     "value_from_primary_source": bool(rank.value_sources & generator.PRIMARY_APN_SOURCES),
                     "row_families": sorted(generator.source_families(rank.row_sources)),

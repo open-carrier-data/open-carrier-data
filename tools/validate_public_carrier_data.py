@@ -968,6 +968,9 @@ UNKNOWN_CAPABILITY_GATES = {
     UNSEEN_SCOPE_GATE,
     SINGLE_FAMILY_OFF_GATE,
 }
+# The vendor sources whose observations are dated by firmware build, which an
+# APN fact's old_build_sources may name.
+OLD_BUILD_SOURCES = {"samsung_omc", "samsung_ims"}
 # The CarrierConfig keys the importers treat as a capability's Android switch.
 # Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
 CAPABILITY_GATING_CONFIG_KEYS = {
@@ -1588,7 +1591,7 @@ def validate_evidence_index(
         for fact_index, fact in enumerate(fact_sources):
             label = f"profiles[{index}].fact_sources[{fact_index}]"
             require_type(path, fact, dict, label)
-            if set(fact) != {"section", "key", "sources"}:
+            if set(fact) - {"old_build_sources"} != {"section", "key", "sources"}:
                 raise ValidationError(f"{path}: {label} has invalid keys")
             section = fact.get("section")
             # Capabilities are in capability_sources, with on and off lists.
@@ -1605,7 +1608,19 @@ def validate_evidence_index(
             validate_canonical_list(path, fact_source_names, f"{label}.sources")
             if not fact_source_names or not set(fact_source_names) <= set(sources):
                 raise ValidationError(f"{path}: {label}.sources is invalid")
-            if fact_source_names == sources:
+            old_builds = fact.get("old_build_sources")
+            if old_builds is not None:
+                # The vendor sources that give an APN fact only from firmware
+                # builds more than three years old; the APN ranking does not
+                # count them as current vendors.
+                validate_canonical_list(path, old_builds, f"{label}.old_build_sources")
+                if (
+                    section != "android_apns"
+                    or not old_builds
+                    or not set(old_builds) <= set(fact_source_names) & OLD_BUILD_SOURCES
+                ):
+                    raise ValidationError(f"{path}: {label}.old_build_sources is invalid")
+            elif fact_source_names == sources:
                 # An absent fact means every profile source supports it.
                 raise ValidationError(f"{path}: {label} is a redundant override")
             actual_fact_keys.append((section, key))
@@ -1825,12 +1840,17 @@ def validate_android_metadata(
         "apn_rows_rejected_by_lineageos_schema",
         "carrier_config_profile_ids_with_unrepresentable_match",
         "carrier_config_profiles_with_unrepresentable_match",
+        "ia_types_left_out_not_vendor_current",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
-    rejected = omissions["apn_rows_rejected_by_lineageos_schema"]
-    if not isinstance(rejected, int) or isinstance(rejected, bool) or rejected < 0:
-        raise ValidationError(f"{metadata_path}: rejected APN row count is invalid")
+    for key, what in (
+        ("apn_rows_rejected_by_lineageos_schema", "rejected APN row count"),
+        ("ia_types_left_out_not_vendor_current", "count of rows without their attach type"),
+    ):
+        count = omissions[key]
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValidationError(f"{metadata_path}: {what} is invalid")
     for prefix in ("apn", "carrier_config"):
         count = omissions[f"{prefix}_profiles_with_unrepresentable_match"]
         profile_ids = omissions[f"{prefix}_profile_ids_with_unrepresentable_match"]

@@ -127,8 +127,9 @@ def apn_records(
     evidence: dict[str, ProfileEvidence] | None = None,
 ) -> list[dict[str, Any]]:
     """The APN XML rows of one profile. With evidence, each row also carries
-    "_support", the sources behind it per type, which only orders rows and is
-    never written."""
+    "_support", the sources behind it per type, and "_current", the current
+    vendors among them (apn_row_current), which only order rows and are never
+    written."""
     records: list[dict[str, Any]] = []
     match = profile.get("match", {})
     mccmncs = match.get("mccmnc", [])
@@ -212,6 +213,7 @@ def apn_records(
             base["carrier_id"] = -1
         if evidence is not None:
             base["_support"] = apn_row_support(apn, profile_evidence)
+            base["_current"] = apn_row_current(apn, profile_evidence)
 
         if not valid_mccmncs:
             for carrier_id in effective_carrier_ids:
@@ -245,8 +247,9 @@ def apn_records(
 # How APN rows are ordered. Android 16 gives a SIM the rows of its scope (its
 # network code and, when rows name one, its MVNO selector) in file order, and
 # without a preferred APN it tries the first row that can serve a request
-# first. So within a scope the row most sources back comes first. The
-# evidence index names the sources behind every published APN fact.
+# first. So within a scope a value a current vendor ships comes first, then
+# the row most sources back. The evidence index names the sources behind every
+# published APN fact.
 
 # Lanes that copy one upstream list count as one source family, as in the
 # display-name vote: the two Google lanes; the LineageOS, Sony and Fairphone
@@ -274,6 +277,18 @@ PRIMARY_APN_SOURCES = frozenset(
         "sony_open_devices_aosp",
     }
 )
+# Sources whose maker confirms their files are current: Google's CarrierSettings
+# lane is checked against Google's update service and Samsung's firmware lanes
+# against Samsung's firmware service, so a value they give is one a current
+# Pixel or Galaxy ships. Apple's index keeps retired bundles, the TheMuppets
+# Pixel files and Sony's and Fairphone's trees are frozen copies, and
+# LineageOS's list keeps whatever nobody removed, so none of them is in it.
+# Samsung's service also confirms the last build of a phone it stopped
+# updating years ago, so a Samsung value counts only where the evidence index
+# does not name the source in the fact's old_build_sources: the sanitizer
+# lists a Samsung source there when every observation of it behind the fact
+# comes from a build more than three years old.
+CURRENT_VENDOR_APN_SOURCES = frozenset({"google_carriersettings", "samsung_omc", "samsung_ims"})
 # APN values that name no network: a list writes them where it knows no APN.
 PLACEHOLDER_APNS = frozenset({"default"})
 # One file order serves every request type, so types are ranked in this order:
@@ -329,11 +344,14 @@ SCHEMA_OMITTED_DEFAULTS = {"authtype": -1, "skip_464xlat": -1}
 class ProfileEvidence(NamedTuple):
     sources: frozenset[str]
     apn_fact_sources: dict[str, frozenset[str]]
+    # Per APN fact, the vendor sources that give it only from old builds.
+    apn_fact_old_build_sources: dict[str, frozenset[str]]
 
 
 class ApnRows(NamedTuple):
     records: list[dict[str, Any]]
     schema_rejected: int
+    ia_left_out: int = 0
 
 
 def canonical_json(value: Any) -> str:
@@ -355,12 +373,16 @@ def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvid
         return None
     evidence: dict[str, ProfileEvidence] = {}
     for profile in load_json(evidence_index_path).get("profiles", []):
+        apn_facts = [
+            fact for fact in profile.get("fact_sources", []) if fact.get("section") == "android_apns"
+        ]
         evidence[profile["profile_id"]] = ProfileEvidence(
             frozenset(profile.get("sources", [])),
+            {fact["key"]: frozenset(fact["sources"]) for fact in apn_facts},
             {
-                fact["key"]: frozenset(fact["sources"])
-                for fact in profile.get("fact_sources", [])
-                if fact.get("section") == "android_apns"
+                fact["key"]: frozenset(fact["old_build_sources"])
+                for fact in apn_facts
+                if fact.get("old_build_sources")
             },
         )
     return evidence
@@ -388,6 +410,26 @@ def apn_row_support(
         for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
             support[served] = support.get(served, frozenset()) | sources
     return support
+
+
+def apn_row_current(
+    apn: dict[str, Any], profile_evidence: ProfileEvidence | None
+) -> dict[str, frozenset[str]]:
+    """The current vendors behind each type of a profile row: its sources in
+    CURRENT_VENDOR_APN_SOURCES, less the Samsung sources that give the fact
+    only from builds more than three years old (old_build_sources)."""
+    if profile_evidence is None:
+        return {}
+    current: dict[str, frozenset[str]] = {}
+    for apn_type in apn.get("types", []):
+        key = apn_fact_key(apn, apn_type)
+        sources = profile_evidence.apn_fact_sources.get(key, profile_evidence.sources)
+        vendors = (
+            sources & CURRENT_VENDOR_APN_SOURCES
+        ) - profile_evidence.apn_fact_old_build_sources.get(key, frozenset())
+        for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
+            current[served] = current.get(served, frozenset()) | vendors
+    return current
 
 
 def source_families(sources: frozenset[str] | set[str]) -> set[str]:
@@ -427,11 +469,12 @@ def collapse_android_duplicates(records: list[dict[str, Any]]) -> list[dict[str,
         kept["type"] = ",".join(
             sorted(set(kept["type"].split(",")) | set(record["type"].split(",")))
         )
-        if "_support" in kept or "_support" in record:
-            support = dict(kept.get("_support", {}))
-            for apn_type, sources in record.get("_support", {}).items():
-                support[apn_type] = support.get(apn_type, frozenset()) | sources
-            kept["_support"] = support
+        for field in ("_support", "_current"):
+            if field in kept or field in record:
+                merged_field = dict(kept.get(field, {}))
+                for apn_type, sources in record.get(field, {}).items():
+                    merged_field[apn_type] = merged_field.get(apn_type, frozenset()) | sources
+                kept[field] = merged_field
     return list(merged.values())
 
 
@@ -464,12 +507,15 @@ class RowRank(NamedTuple):
     """Why a row sits where it does in its scope, for its lead type: the first
     type of APN_TYPE_PRIORITY it serves (None when it serves none of them).
     The sources are those that give this APN value for the lead type anywhere
-    in the scope, and those that back this exact row."""
+    in the scope, and those that back this exact row; the current ones are the
+    current vendors among them (apn_row_current)."""
 
     lead_type: str | None
     placeholder: bool
     value_sources: frozenset[str]
     row_sources: frozenset[str]
+    value_current: frozenset[str] = frozenset()
+    row_current: frozenset[str] = frozenset()
 
     def sort_key(self) -> tuple[Any, ...]:
         lead = (
@@ -483,8 +529,10 @@ class RowRank(NamedTuple):
             lead,
             (
                 self.placeholder,
+                not self.value_current,
                 -len(source_families(self.value_sources)),
                 not self.value_sources & PRIMARY_APN_SOURCES,
+                not self.row_current,
                 -len(source_families(self.row_sources)),
                 not self.row_sources & PRIMARY_APN_SOURCES,
                 -len(self.row_sources),
@@ -495,10 +543,13 @@ class RowRank(NamedTuple):
 def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
     """The RowRank of each row of one scope, in the order given."""
     apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
+    apn_current: dict[tuple[str, str], set[str]] = defaultdict(set)
     for record in records:
         apn = str(record["apn"]).casefold()
         for apn_type, sources in record.get("_support", {}).items():
             apn_sources[(apn, apn_type)].update(sources)
+        for apn_type, sources in record.get("_current", {}).items():
+            apn_current[(apn, apn_type)].update(sources)
     ranks: list[RowRank] = []
     for record in records:
         types = set(apn_row_types(record["type"]))
@@ -513,6 +564,8 @@ def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
                 apn in PLACEHOLDER_APNS,
                 frozenset(apn_sources.get((apn, lead_type), set())),
                 frozenset(record.get("_support", {}).get(lead_type, frozenset())),
+                frozenset(apn_current.get((apn, lead_type), set())),
+                frozenset(record.get("_current", {}).get(lead_type, frozenset())),
             )
         )
     return ranks
@@ -525,11 +578,15 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     type in that order. Within a group, for the lead type:
 
     1. a real APN before a placeholder such as "default",
-    2. the APN value more source families give for that type in this scope,
-    3. an APN value a primary APN source gives,
-    4. the row more source families back,
-    5. a row a primary APN source backs,
-    6. the row more sources back.
+    2. an APN value a current vendor (apn_row_current) gives for that type in
+       this scope before one no current vendor gives,
+    3. the APN value more source families give for that type in this scope,
+    4. an APN value a primary APN source gives,
+    5. a row a current vendor backs, so among the variants of one value the
+       one a current Pixel or Galaxy ships comes first,
+    6. the row more source families back,
+    7. a row a primary APN source backs,
+    8. the row more sources back.
 
     A row is backed for a type by the sources whose observations support it.
     Rows still tied keep the fallback order: APN, types, label.
@@ -543,14 +600,48 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
+def leave_out_stale_attach(records: list[dict[str, Any]]) -> int:
+    """Take the "ia" type off the rows of one scope whose APN value no current
+    vendor gives, when a current vendor gives a real APN for "default" or "ia"
+    there. Android attaches with the first row that serves "ia", whatever the
+    ranking says, so an old copy's attach row would otherwise beat the APN a
+    current Pixel or Galaxy attaches with. A row keeps "ia" when a current
+    vendor gives its APN value for any type in the scope, or when "ia" is its
+    only type. The row itself stays, with its other types. Each changed row is
+    marked "_ia_left_out", which is never written. Returns the rows changed."""
+    vendor_apns: set[str] = set()
+    covered = False
+    for record in records:
+        apn = str(record["apn"]).casefold()
+        for apn_type, sources in record.get("_current", {}).items():
+            if not sources:
+                continue
+            vendor_apns.add(apn)
+            if apn_type in {"default", "ia"} and apn not in PLACEHOLDER_APNS:
+                covered = True
+    if not covered:
+        return 0
+    changed = 0
+    for record in records:
+        types = record["type"].split(",")
+        if "ia" not in types or types == ["ia"]:
+            continue
+        if str(record["apn"]).casefold() in vendor_apns:
+            continue
+        record["type"] = ",".join(apn_type for apn_type in types if apn_type != "ia")
+        record["_ia_left_out"] = True
+        changed += 1
+    return changed
+
+
 def apn_xml_rows(
     profiles: list[dict[str, Any]],
     evidence: dict[str, ProfileEvidence] | None = None,
 ) -> ApnRows:
     """Every APN XML row of these profiles in file order: rows LineageOS's
     apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
-    network code and MVNO selector order, and each scope ranked by its
-    evidence."""
+    network code and MVNO selector order, a stale attach type left out
+    (leave_out_stale_attach), and each scope ranked by its evidence."""
     records: list[dict[str, Any]] = []
     schema_rejected = 0
     for profile in profiles:
@@ -566,9 +657,11 @@ def apn_xml_rows(
     for record in collapse_android_duplicates(records):
         scopes[apn_scope_key(record)].append(record)
     ordered: list[dict[str, Any]] = []
+    ia_left_out = 0
     for scope in sorted(scopes):
+        ia_left_out += leave_out_stale_attach(scopes[scope])
         ordered.extend(rank_scope(scopes[scope]))
-    return ApnRows(ordered, schema_rejected)
+    return ApnRows(ordered, schema_rejected, ia_left_out)
 
 
 def apn_xml_records(
@@ -950,6 +1043,7 @@ def write_metadata(
     freshness: dict[str, str],
     apn_rows_schema_rejected: int = 0,
     digest: str | None = None,
+    ia_types_left_out: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -986,6 +1080,10 @@ def write_metadata(
             "carrier_config_profiles_with_unrepresentable_match": len(
                 config_unrepresentable_ids
             ),
+            # Rows of apns-conf.xml whose "ia" type leave_out_stale_attach
+            # took off: no current vendor gives their APN value in a scope
+            # where one gives the attach APN. Profile JSON keeps the type.
+            "ia_types_left_out_not_vendor_current": ia_types_left_out,
         },
         **freshness,
     }
@@ -1059,13 +1157,15 @@ def main(argv: list[str]) -> int:
         freshness,
         rows_schema_rejected,
         digest,
+        apn_rows.ia_left_out,
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
         f"generated Android output for {len(profiles)} profile(s): "
         f"{apn_count} APN row(s), {config_count} CarrierConfig profile(s), "
         f"{config_xml_count} CarrierConfig XML block(s), "
-        f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them"
+        f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them, "
+        f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives"
     )
     return 0
 

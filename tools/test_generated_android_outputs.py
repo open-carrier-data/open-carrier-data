@@ -1101,6 +1101,36 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ]
 
         expect_failure(display_name_entry, "display-name provenance entries must be rejected")
+
+        # old_build_sources: the Samsung sources that give an APN fact only
+        # from builds over three years old. Such an entry may repeat the
+        # profile's sources.
+        def old_build(entry: dict) -> Callable[[dict], None]:
+            def mutate(value: dict) -> None:
+                profile = value["profiles"][0]
+                profile["sources"] = ["lineageos", "samsung_omc"]
+                profile["fact_sources"] = [entry]
+            return mutate
+
+        base_entry = {
+            "section": "android_apns",
+            "key": "sha256:0123456789abcdef",
+            "sources": ["lineageos", "samsung_omc"],
+            "old_build_sources": ["samsung_omc"],
+        }
+        accepted = load_json(evidence_path)
+        old_build(base_entry)(accepted)
+        write_profile(evidence_path, accepted)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        evidence_path.write_text(good_text, encoding="utf-8")
+        for entry, message in (
+            ({**base_entry, "old_build_sources": ["lineageos"]}, "a non-vendor old build source passed"),
+            ({**base_entry, "old_build_sources": []}, "an empty old_build_sources passed"),
+            ({**base_entry, "sources": ["lineageos"]}, "an old build source the fact does not name passed"),
+            ({**base_entry, "section": "android_carrier_config", "key": "enabledMMS"}, "old_build_sources outside APN facts passed"),
+            ({**base_entry, "old_build_sources": "samsung_omc"}, "a string old_build_sources passed"),
+        ):
+            expect_failure(old_build(entry), message)
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
         check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
@@ -1340,6 +1370,21 @@ def check_provenance_and_lookup(carriers_dir: Path, generated_dir: Path) -> None
         lookup_path.write_text(lookup_text.replace('"newest_entry": "2019-03"', '"newest_entry": "2019-3"'), encoding="utf-8")
         expect_failure("a malformed lookup newest_entry passed", "newest_entry")
         lookup_path.write_text(lookup_text, encoding="utf-8")
+        validate()
+
+        metadata_text = metadata_path.read_text(encoding="utf-8")
+        metadata = json.loads(metadata_text)
+        assert_true(
+            metadata["omissions"]["ia_types_left_out_not_vendor_current"] == 0,
+            "metadata counts the rows that lost their attach type",
+        )
+        metadata["omissions"]["ia_types_left_out_not_vendor_current"] = -1
+        write_profile(metadata_path, metadata)
+        expect_failure("a negative count of rows without their attach type passed", "attach type")
+        del metadata["omissions"]["ia_types_left_out_not_vendor_current"]
+        write_profile(metadata_path, metadata)
+        expect_failure("metadata without the attach type count passed", "omission fields")
+        metadata_path.write_text(metadata_text, encoding="utf-8")
         validate()
     finally:
         validate_public_carrier_data.utc_today = real_today
@@ -1722,6 +1767,193 @@ def check_apn_ranking() -> None:
             [record["apn"] for record in plain if record.get("mnc") == "01" and record.get("mcc") == "262"][0]
             == "internet.t-d1.de",
             "without evidence rows keep the fallback order, by APN",
+        )
+
+
+def check_current_vendor_attach() -> None:
+    """A value a current vendor (Google CarrierSettings, Samsung) gives comes
+    first in its lead type, and apns-conf.xml takes the attach type off a row
+    whose APN no current vendor gives, when a current vendor gives the
+    network's attach or internet APN. No row is removed."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    def profile(profile_id: str, mccmnc: str, *rows: dict) -> dict:
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": {"mccmnc": [mccmnc]},
+            "android_apns": list(rows),
+        }
+
+    google = "google_carriersettings"
+    # 26203: Fairphone's frozen E-Plus row is the only one typed "ia"; Google's
+    # current file gives "internet".
+    eplus = profile(
+        "open.26203.a",
+        "26203",
+        apn("internet.eplus.de", ("default", "ia", "supl"), user="eplus", password="internet"),
+        apn("internet", ("default",)),
+    )
+    # 310410: old copies agree on "broadband"; Google's current file says
+    # "nxtgenphone". More families give the old value.
+    att = profile(
+        "open.310410.a",
+        "310410",
+        apn("broadband", ("default", "mms"), mmsc="http://mmsc.example"),
+        apn("nxtgenphone", ("default", "mms"), mmsc="http://mmsc.example", protocol="IPV4V6"),
+    )
+    # 311480: an IMS row typed "ims,ia" keeps "ia" when a current vendor gives
+    # that APN for "ims".
+    verizon = profile(
+        "open.311480.a",
+        "311480",
+        apn("vzwinternet", ("default",)),
+        apn("vzwims", ("ia", "ims")),
+        apn("vzwims", ("ims",), protocol="IPV6"),
+    )
+    # 23415: a row whose only type is "ia" keeps it.
+    attach_only = profile(
+        "open.23415.a",
+        "23415",
+        apn("internet.example", ("default",)),
+        apn("attach.example", ("ia",)),
+    )
+    # 20408: no current vendor gives anything here, so nothing changes.
+    untouched = profile(
+        "open.20408.a",
+        "20408",
+        apn("old.example", ("default", "ia", "supl")),
+        apn("web.example", ("default",)),
+    )
+    profiles = [eplus, att, verizon, attach_only, untouched]
+    row_sources = {
+        "open.26203.a": [("fairphone_official_source",), (google,)],
+        "open.310410.a": [
+            ("lineageos", "apple_carrier_bundles", "mobile_broadband_provider_info"),
+            (google,),
+        ],
+        "open.311480.a": [(google,), ("lineageos",), (google,)],
+        "open.23415.a": [("samsung_omc",), ("lineageos",)],
+        "open.20408.a": [("lineageos",), ("apple_carrier_bundles",)],
+    }
+    # 24007 (Tele2 Sweden, SPN Tele2comviq): a Samsung build from 2017 gives
+    # "4g.tele2.se", a current Samsung build "internet.tele2.se". The evidence
+    # index names samsung_omc in the old fact's old_build_sources, so only the
+    # current build's value counts as a current vendor's.
+    tele2 = profile(
+        "open.24007.a",
+        "24007",
+        apn("4g.tele2.se", ("default", "ia")),
+        apn("internet.tele2.se", ("default",)),
+    )
+    # 73003 (Claro Chile): one value, two variants. A current Samsung build
+    # gives IPV4V6; an old build and two old copies give IP. The current
+    # build's variant leads although more families back the other.
+    claro = profile(
+        "open.73003.a",
+        "73003",
+        apn("bam.clarochile.cl", ("default",), protocol="IP"),
+        apn("bam.clarochile.cl", ("default",), protocol="IPV4V6"),
+    )
+    profiles += [tele2, claro]
+    row_sources["open.24007.a"] = [("samsung_omc", "lineageos", "apple_carrier_bundles"), ("samsung_omc",)]
+    row_sources["open.73003.a"] = [("samsung_omc", "lineageos", "apple_carrier_bundles"), ("samsung_omc",)]
+    old_builds = {
+        "open.24007.a": {0: ["samsung_omc"]},
+        "open.73003.a": {0: ["samsung_omc"]},
+    }
+    records = []
+    for item in profiles:
+        sources = row_sources[item["profile_id"]]
+        everything = sorted({source for group in sources for source in group})
+        facts = []
+        for row_index, (row, group) in enumerate(zip(item["android_apns"], sources, strict=True)):
+            old = old_builds.get(item["profile_id"], {}).get(row_index)
+            for apn_type in row["types"]:
+                if sorted(group) == everything and not old:
+                    continue
+                fact = {
+                    "section": "android_apns",
+                    "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                    "sources": sorted(group),
+                }
+                if old:
+                    fact["old_build_sources"] = old
+                facts.append(fact)
+        records.append({"profile_id": item["profile_id"], "sources": everything, "fact_sources": facts})
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence-index.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+        plain = generate_android_outputs.apn_xml_rows(profiles)
+
+        def scope(mccmnc: str, result: object = rows) -> list[tuple[str, str]]:
+            return [
+                (record["apn"], record["type"])
+                for record in result.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            ]
+
+        assert_true(
+            scope("26203") == [("internet", "default"), ("internet.eplus.de", "default,supl")],
+            "the current vendor's APN comes first and the frozen E-Plus row stays "
+            f"without the attach type: {scope('26203')}",
+        )
+        assert_true(
+            [value for value, _ in scope("310410")] == ["nxtgenphone", "broadband"],
+            "a value a current vendor gives beats one more old copies give: "
+            f"{scope('310410')}",
+        )
+        assert_true(
+            ("vzwims", "ia,ims") in scope("311480"),
+            f"an IMS attach row keeps ia when a current vendor gives its APN: {scope('311480')}",
+        )
+        assert_true(
+            ("attach.example", "ia") in scope("23415"),
+            f"a row whose only type is ia keeps it: {scope('23415')}",
+        )
+        assert_true(
+            scope("20408") == scope("20408", plain)
+            and ("old.example", "default,ia,supl") in scope("20408"),
+            f"a scope no current vendor covers is unchanged: {scope('20408')}",
+        )
+        assert_true(
+            scope("24007") == [("internet.tele2.se", "default"), ("4g.tele2.se", "default")],
+            "a value only an old Samsung build gives is not a current vendor's: it ranks "
+            f"after the current build's value and loses ia: {scope('24007')}",
+        )
+        claro_rows = [
+            record.get("protocol")
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == "73003"
+        ]
+        assert_true(
+            claro_rows == ["IPV4V6", "IP"],
+            f"among the variants of one value the current build's comes first: {claro_rows}",
+        )
+        assert_true(
+            len(rows.records) == len(plain.records) and rows.ia_left_out == 2,
+            f"no row is removed and two rows lose ia: {len(rows.records)}, {rows.ia_left_out}",
+        )
+        assert_true(
+            plain.ia_left_out == 0,
+            "without evidence no row loses its attach type",
+        )
+        eplus_row = next(record for record in rows.records if record["apn"] == "internet.eplus.de")
+        assert_true(eplus_row.get("_ia_left_out") is True, "the changed row is marked for --explain")
+
+        android_dir = Path(tmp) / "android"
+        generate_android_outputs.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        written = ET.parse(android_dir / "apns-conf.xml").getroot()
+        assert_true(
+            all(
+                not any(key.startswith("_") for key in element.attrib)
+                for element in written
+            ),
+            "the attach mark is never written",
         )
 
 
@@ -3395,6 +3627,8 @@ def main() -> int:
     print("LineageOS schema rule tests passed")
     check_apn_ranking()
     print("APN ranking tests passed")
+    check_current_vendor_attach()
+    print("current vendor and attach type tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
