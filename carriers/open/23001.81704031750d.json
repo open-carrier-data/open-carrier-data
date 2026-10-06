@@ -29,10 +29,39 @@
   },
   "android_apns": [
     {
+      "apn": "HOS",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.0.10",
+      "name": "T-Mobile EPDG",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
       "apn": "IMS",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "T-Mobile IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -66,7 +95,7 @@
     {
       "apn": "internet.t-mobile.cz",
       "name": "Internet",
-      "protocol": "IP",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "default"
@@ -74,11 +103,12 @@
     },
     {
       "apn": "internet.t-mobile.cz",
-      "name": "Internet",
-      "protocol": "IPV4V6",
+      "name": "internet.t-mobile.cz",
+      "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "default",
+        "xcap"
       ]
     },
     {
@@ -101,6 +131,16 @@
       "name": "MMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.t-mobile.cz",
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.10",
+      "name": "T-Mobile MMS",
       "types": [
         "mms"
       ]
