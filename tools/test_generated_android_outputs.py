@@ -376,10 +376,12 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
     )
     old_shape = evidence_path.read_text(encoding="utf-8")
 
+    config_keys: dict[str, set[str]] = {}
+
     def validate(value: dict) -> None:
         write_profile(evidence_path, value)
         validate_public_carrier_data.validate_evidence_index(
-            evidence_path, profile_ids, None, capabilities
+            evidence_path, profile_ids, None, capabilities, config_keys or None
         )
 
     def dated(**fields: object) -> dict:
@@ -468,9 +470,28 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
                 f"a {name} gate outside the capabilities section passed",
             )
 
+        # A withheld label takes its switch with it (rule decisions of
+        # 2026-10-06, change 6): no withholding gate sits next to the
+        # capability's gating key. A single-family off is not such a gate.
+        for name in ("stale_single_source_entry", "frozen_source_only", "unseen_scope"):
+            config_keys[dated_id] = {"carrier_vt_available_bool", "maxMessageSize"}
+            expect_failure(
+                dated(quality_gates=[gate(f"{name}:video_calling")]),
+                f"a {name} gate next to its capability's switch passed",
+            )
+            config_keys[dated_id] = {"maxMessageSize"}
+            validate(dated(quality_gates=[gate(f"{name}:video_calling")]))
+        config_keys[dated_id] = {"support_conference_call_bool"}
+        expect_failure(
+            dated(quality_gates=[gate("stale_single_source_entry:ims_conference")]),
+            "a withheld ims_conference label next to support_conference_call_bool passed",
+        )
+        config_keys[dated_id] = {"carrier_vt_available_bool"}
+        validate(dated(quality_gates=[gate("single_family_off:video_calling")]))
+        config_keys.clear()
+
         # A withheld capability keeps its date (report item #5), and flags
-        # mark old single-source values and the CarrierConfig key of a
-        # withheld label without withholding anything.
+        # mark old single-source values without withholding anything.
         base = json.loads(old_shape)
         sources = next(
             profile["sources"] for profile in base["profiles"] if profile["profile_id"] == dated_id
@@ -498,7 +519,6 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
             return {"section": section, "key": key, "flag": name}
 
         flags = [
-            flag("android_carrier_config", "carrier_vt_available_bool", "capability_label_withheld"),
             flag("capabilities", "mms", "old_single_source"),
             flag("capabilities", "video_calling", "old_single_source"),
         ]
@@ -510,12 +530,8 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
             ([flag("capabilities", "mms", "stale")], "an unknown flag passed"),
             ([flag("android_carrier_config", "mms", "old_single_source")], "a flag in the wrong section passed"),
             (
-                [flag("android_carrier_config", "carrier_volte_available_bool", "capability_label_withheld")],
-                "a key flag whose label is not withheld passed",
-            ),
-            (
-                [flag("android_carrier_config", "wfc_spn_format_idx_int", "capability_label_withheld")],
-                "a flag on a key that gates no capability passed",
+                [flag("android_carrier_config", "carrier_vt_available_bool", "capability_label_withheld")],
+                "the retired capability_label_withheld flag passed",
             ),
             ([{**flags[0], "gate": "stale_single_source_entry"}], "a flag with an unknown key passed"),
         ):
