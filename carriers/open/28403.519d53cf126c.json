@@ -24,6 +24,16 @@
   "android_apns": [
     {
       "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1400,
@@ -31,11 +41,9 @@
       "port": 8090,
       "protocol": "IPV4V6",
       "proxy": "xcap.ims.mnc003.mcc284.pub.3gppnetwork.org",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ims",
@@ -61,16 +69,6 @@
     },
     {
       "apn": "internet.vivacom.bg",
-      "name": "VIVACOM",
-      "password": "VIVACOM",
-      "types": [
-        "default",
-        "dun"
-      ],
-      "user": "VIVACOM"
-    },
-    {
-      "apn": "internet.vivacom.bg",
       "authtype": 1,
       "carrier_id": 1999,
       "name": "VIVACOM Internet",
@@ -86,7 +84,7 @@
       "apn": "internet.vivacom.bg",
       "authtype": 0,
       "carrier_enabled": true,
-      "name": "Internet Vivacom",
+      "name": "internet.vivacom.bg",
       "password": "VIVACOM",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -99,7 +97,7 @@
     {
       "apn": "internet.vivacom.bg",
       "authtype": 1,
-      "name": "VIVACOM Internet",
+      "name": "internet.vivacom.bg",
       "password": "vivacom",
       "types": [
         "default",
@@ -109,12 +107,10 @@
     },
     {
       "apn": "internet.vivacom.bg",
-      "authtype": 0,
-      "name": "VIVACOM Internet",
+      "name": "VIVACOM",
       "password": "VIVACOM",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ],
       "user": "VIVACOM"
     },

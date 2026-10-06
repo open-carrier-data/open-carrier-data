@@ -17,14 +17,12 @@
       "apn": "cmnet",
       "authtype": 3,
       "name": "cmnet",
-      "password": "guest",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
-      ],
-      "user": "guest"
+      ]
     },
     {
       "apn": "cmnet",
@@ -32,18 +30,6 @@
       "types": [
         "dun"
       ]
-    },
-    {
-      "apn": "cmwap",
-      "authtype": 3,
-      "name": "cmwap",
-      "password": "guest",
-      "port": 80,
-      "proxy": "10.0.0.172",
-      "types": [
-        "default"
-      ],
-      "user": "guest"
     },
     {
       "apn": "cmwap",
@@ -59,6 +45,17 @@
     },
     {
       "apn": "cmwap",
+      "authtype": 3,
+      "name": "cmwap",
+      "port": 80,
+      "proxy": "10.0.0.172",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "cmwap",
       "carrier_id": 1435,
       "mmsc": "http://mmsc.monternet.com",
       "mmsport": 80,
@@ -74,7 +71,6 @@
     },
     {
       "apn": "cmwap",
-      "authtype": 3,
       "mmsc": "http://mmsc.monternet.com",
       "mmsport": 80,
       "mmsproxy": "10.0.0.172",
@@ -90,11 +86,12 @@
     {
       "apn": "cmwap",
       "authtype": 3,
+      "mmsc": "http://mmsc.monternet.com",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.172",
       "name": "cmwap",
-      "port": 80,
-      "proxy": "10.0.0.172",
       "types": [
-        "supl"
+        "mms"
       ]
     },
     {

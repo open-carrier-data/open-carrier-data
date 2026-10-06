@@ -50,14 +50,17 @@
       "protocol": "IPV4V6",
       "server": "*",
       "types": [
+        "cbs",
         "default",
+        "fota",
+        "hipri",
         "supl"
       ]
     },
     {
       "apn": "ctlte",
       "authtype": 3,
-      "name": "\u4e2d\u56fd\u7535\u4fe1\u4e92\u8054\u7f51\u8bbe\u7f6eCTLTE",
+      "name": "ctlte",
       "password": "vnet.mobi",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
@@ -126,10 +129,12 @@
     {
       "apn": "ctwap",
       "authtype": 0,
+      "carrier_id": 2237,
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
       "mmsproxy": "10.0.0.200",
       "name": "CTWAP",
+      "port": 80,
       "protocol": "IPV4V6",
       "server": "*",
       "types": [
@@ -153,16 +158,26 @@
     {
       "apn": "ctwap",
       "authtype": 0,
+      "mmsc": "http://mmsc.vnet.mobi",
+      "mmsport": 80,
+      "mmsproxy": "10.0.0.200",
+      "name": "CTWAP",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ctwap",
       "carrier_id": 2237,
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
       "mmsproxy": "10.0.0.200",
       "mtu": 1380,
-      "name": "ctwap",
+      "name": "\u4e2d\u56fd\u7535\u4fe1\u5f69\u4fe1",
       "password": "vnet.mobi",
-      "port": 80,
       "protocol": "IPV4V6",
-      "server": "*",
       "types": [
         "mms"
       ],

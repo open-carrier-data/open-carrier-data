@@ -3,12 +3,13 @@
     {
       "apn": "etisalat",
       "authtype": 3,
-      "name": "Etisalat Internet",
+      "name": "etisalat",
       "types": [
         "cbs",
         "fota",
         "hipri",
-        "ims"
+        "ims",
+        "supl"
       ]
     },
     {
@@ -18,10 +19,10 @@
       "mmsport": 8080,
       "mmsproxy": "10.71.170.5",
       "name": "etisalat",
-      "port": 8080,
-      "proxy": "10.71.170.5",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "mms"
       ]
     },
     {
@@ -38,14 +39,12 @@
     },
     {
       "apn": "etisalat",
-      "authtype": 3,
-      "mmsc": "http://10.71.170.30:38090/was",
-      "mmsport": 8080,
-      "mmsproxy": "10.71.170.5",
-      "name": "etisalat",
+      "name": "etisalat WAP",
+      "port": 8080,
+      "proxy": "10.71.170.5",
       "types": [
-        "dun",
-        "mms"
+        "default",
+        "supl"
       ]
     },
     {
@@ -55,16 +54,6 @@
       "name": "etisalat MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "etisalat",
-      "authtype": 3,
-      "name": "etisalat",
-      "port": 8080,
-      "proxy": "10.71.170.5",
-      "types": [
-        "supl"
       ]
     }
   ],

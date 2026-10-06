@@ -15,12 +15,22 @@
     },
     {
       "apn": "bam.entelpcs.cl",
-      "authtype": 1,
       "name": "Internet Movil",
       "password": "entelpcs",
       "port": 8080,
-      "protocol": "IPV4V6",
       "proxy": "10.99.0.10",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "entelpcs"
+    },
+    {
+      "apn": "bam.entelpcs.cl",
+      "authtype": 1,
+      "name": "Internet Movil",
+      "password": "entelpcs",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -69,13 +79,11 @@
     },
     {
       "apn": "mms.entelpcs.cl",
-      "authtype": 1,
       "mmsc": "http://mmsc.entelpcs.cl",
       "mmsport": 8080,
       "mmsproxy": "10.99.0.10",
       "name": "MMS Entel PCS",
-      "password": "entelpcs",
-      "protocol": "IPV4V6",
+      "password": "entelmms",
       "types": [
         "mms"
       ],
@@ -83,11 +91,13 @@
     },
     {
       "apn": "mms.entelpcs.cl",
+      "authtype": 1,
       "mmsc": "http://mmsc.entelpcs.cl",
       "mmsport": 8080,
       "mmsproxy": "10.99.0.10",
       "name": "MMS Entel PCS",
-      "password": "entelmms",
+      "password": "entelpcs",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],

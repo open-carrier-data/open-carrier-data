@@ -84,16 +84,26 @@
     },
     {
       "apn": "talkmobile.co.uk",
+      "mmsc": "http://mms.talkmobile.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "name": "Talkmobile",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "talkmobile.co.uk",
       "authtype": 1,
       "mmsc": "http://mms.talkmobile.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.12",
-      "name": "talkmobile.co.uk",
+      "name": "Talkmob WAP",
       "password": "wap",
       "port": 8799,
-      "protocol": "IPV4V6",
       "proxy": "212.183.137.12",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -104,13 +114,21 @@
     },
     {
       "apn": "talkmobile.co.uk",
+      "authtype": 1,
       "mmsc": "http://mms.talkmobile.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.12",
-      "name": "Talkmobile",
+      "name": "talkmobile.co.uk",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
-      ]
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "wap",
+      "user_editable": false
     },
     {
       "apn": "xcap",
@@ -153,7 +171,19 @@
       "carrier_enabled": true,
       "mvno_match_data": "C1",
       "mvno_type": "gid",
-      "name": "talkmobile.co.uk",
+      "name": "Talkmob Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "talkmobile.co.uk",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Talkmobile Data",
       "password": "wap",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",

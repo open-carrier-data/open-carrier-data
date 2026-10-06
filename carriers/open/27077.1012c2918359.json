@@ -45,10 +45,20 @@
     },
     {
       "apn": "internet",
-      "authtype": 1,
       "mmsc": "http://mms.tango.lu",
       "mmsport": 8080,
       "mmsproxy": "212.66.75.3",
+      "name": "Tango Internet",
+      "password": "tango",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "tango"
+    },
+    {
+      "apn": "internet",
       "name": "internet",
       "password": "tango",
       "port": 8080,
@@ -61,15 +71,12 @@
     },
     {
       "apn": "internet",
-      "mmsc": "http://mms.tango.lu",
-      "mmsport": 8080,
-      "mmsproxy": "212.66.75.3",
-      "name": "Tango Internet",
-      "password": "tango",
+      "authtype": 1,
+      "name": "internet",
       "types": [
-        "mms"
-      ],
-      "user": "tango"
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "internet2",
@@ -104,16 +111,6 @@
       "mmsport": 8080,
       "mmsproxy": "212.66.75.3",
       "name": "Tango MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms",
-      "mmsc": "http://mms.tango.lu",
-      "mmsport": 8080,
-      "mmsproxy": "212.66.75.3",
-      "name": "Tango MMS",
       "password": "tango",
       "types": [
         "mms"
@@ -132,6 +129,16 @@
         "mms"
       ],
       "user": "tango"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.tango.lu",
+      "mmsport": 8080,
+      "mmsproxy": "212.66.75.3",
+      "name": "Tango MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "netgprs.com",

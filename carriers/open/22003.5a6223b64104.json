@@ -67,9 +67,7 @@
       "carrier_enabled": true,
       "name": "gprswap",
       "password": "064",
-      "port": 8080,
       "protocol": "IPV4V6",
-      "proxy": "172.17.88.198",
       "types": [
         "default"
       ],
@@ -91,6 +89,19 @@
     },
     {
       "apn": "gprswap",
+      "authtype": 1,
+      "name": "gprswap",
+      "password": "064",
+      "port": 8080,
+      "proxy": "172.17.88.198",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "mts"
+    },
+    {
+      "apn": "gprswap",
       "name": "mt:s",
       "password": "064",
       "types": [
@@ -100,12 +111,9 @@
     },
     {
       "apn": "gprswap",
-      "authtype": 1,
-      "name": "gprswap",
+      "name": "internet",
       "password": "064",
-      "port": 8080,
       "protocol": "IPV4V6",
-      "proxy": "172.17.88.198",
       "types": [
         "supl"
       ],
@@ -156,19 +164,8 @@
     },
     {
       "apn": "mms",
-      "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "172.17.85.131",
-      "name": "mms",
-      "password": "064",
-      "types": [
-        "mms"
-      ],
-      "user": "mts"
-    },
-    {
-      "apn": "mms",
       "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.17.85.131",
@@ -176,33 +173,6 @@
       "password": "064",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ],
-      "user": "mts"
-    },
-    {
-      "apn": "mms",
-      "authtype": 1,
-      "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "172.17.85.131",
-      "name": "mt:s mms",
-      "password": "064",
-      "types": [
-        "mms"
-      ],
-      "user": "mts"
-    },
-    {
-      "apn": "mms",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
-      "mmsport": 8080,
-      "mmsproxy": "172.17.85.131",
-      "name": "mt:s mms",
-      "password": "064",
       "types": [
         "mms"
       ],

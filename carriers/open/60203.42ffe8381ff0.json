@@ -18,12 +18,13 @@
       "mmsc": "http://10.71.131.7:38090",
       "mmsport": 8080,
       "mmsproxy": "10.71.130.29",
-      "name": "Etisalat WAP",
+      "name": "etisalat",
       "types": [
         "cbs",
         "fota",
         "hipri",
-        "ims"
+        "ims",
+        "supl"
       ]
     },
     {
@@ -33,12 +34,12 @@
       "mmsport": 8080,
       "mmsproxy": "10.71.130.29",
       "name": "etisalat",
-      "port": 8080,
       "protocol": "IPV4V6",
-      "proxy": "10.71.130.29",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "mms"
       ]
     },
     {
@@ -55,16 +56,12 @@
     },
     {
       "apn": "etisalat",
-      "authtype": 1,
-      "mmsc": "http://10.71.131.7:38090",
-      "mmsport": 8080,
-      "mmsproxy": "10.71.130.29",
-      "name": "etisalat",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "name": "Etisalat WAP",
+      "port": 8080,
+      "proxy": "10.71.130.29",
       "types": [
-        "dun",
-        "mms"
+        "default",
+        "supl"
       ]
     },
     {
@@ -76,19 +73,6 @@
       "name": "Etisalat MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "etisalat",
-      "authtype": 1,
-      "mmsc": "http://10.71.131.7:38090",
-      "mmsport": 8080,
-      "mmsproxy": "10.71.130.29",
-      "name": "etisalat",
-      "port": 8080,
-      "proxy": "10.71.130.29",
-      "types": [
-        "supl"
       ]
     }
   ],

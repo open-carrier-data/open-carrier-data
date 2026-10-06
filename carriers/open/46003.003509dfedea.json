@@ -50,6 +50,20 @@
       "password": "vnet.mobi",
       "server": "*",
       "types": [
+        "cbs",
+        "fota"
+      ],
+      "user": "ctnet@mycdma.cn"
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 3,
+      "name": "ctnet",
+      "password": "vnet.mobi",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
         "default",
         "hipri"
       ],
@@ -63,8 +77,6 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "hipri",
         "supl"
       ],
       "user": "ctnet@mycdma.cn"
@@ -119,11 +131,14 @@
       "mmsc": "http://mmsc.vnet.mobi",
       "mmsport": 80,
       "mmsproxy": "10.0.0.200",
-      "name": "CTWAP",
+      "name": "ctwap",
       "password": "vnet.mobi",
       "server": "*",
       "types": [
+        "cbs",
         "default",
+        "fota",
+        "hipri",
         "mms",
         "supl"
       ],
@@ -143,19 +158,6 @@
         "default",
         "mms",
         "supl"
-      ],
-      "user": "ctwap@mycdma.cn"
-    },
-    {
-      "apn": "ctwap",
-      "authtype": 3,
-      "mmsc": "http://mmsc.vnet.mobi",
-      "mmsport": 80,
-      "mmsproxy": "10.0.0.200",
-      "name": "\u4e2d\u56fd\u7535\u4fe1\u5f69\u4fe1 (China Telecom)",
-      "password": "vnet.mobi",
-      "types": [
-        "mms"
       ],
       "user": "ctwap@mycdma.cn"
     },

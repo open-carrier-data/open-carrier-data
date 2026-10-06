@@ -61,28 +61,10 @@
     },
     {
       "apn": "internet",
-      "name": "GSMAland wap",
-      "port": 8080,
-      "proxy": "194.110.177.70",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet",
       "authtype": 0,
       "name": "Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "\u00c5lcom Internet",
       "types": [
         "default"
       ]
@@ -98,6 +80,26 @@
     },
     {
       "apn": "internet",
+      "name": "GSMAland wap",
+      "port": 8080,
+      "proxy": "194.110.177.70",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.amt.aland.fi",
@@ -106,17 +108,6 @@
       "name": "\u00c5lcom MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "carrier_enabled": true,
-      "name": "internet",
-      "port": 8080,
-      "proxy": "194.110.177.70",
-      "types": [
-        "supl"
       ]
     },
     {

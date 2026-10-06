@@ -91,6 +91,7 @@
       "apn": "internet",
       "name": "A1 SRB Internet",
       "types": [
+        "default",
         "supl"
       ]
     },
@@ -99,12 +100,20 @@
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.a1.rs",
-      "name": "mms",
+      "name": "A1 SRB MMS",
       "password": "mms",
       "types": [
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.a1.rs",
+      "name": "A1 SRB mms",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "vipmobile",
@@ -121,10 +130,21 @@
     {
       "apn": "vipmobile",
       "authtype": 1,
-      "name": "vipmobile",
+      "name": "Vip GPRS",
       "password": "vipmobile",
       "port": 8080,
       "proxy": "212.15.182.82",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "vipmobile"
+    },
+    {
+      "apn": "vipmobile",
+      "authtype": 1,
+      "name": "vipmobile",
+      "password": "vipmobile",
       "types": [
         "default",
         "supl"

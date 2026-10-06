@@ -2,11 +2,21 @@
   "android_apns": [
     {
       "apn": "eezone",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "EE",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "eezone",
       "authtype": 1,
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
-      "name": "eezone",
+      "name": "MMS",
       "password": "secure",
       "types": [
         "mms",
@@ -14,14 +24,6 @@
       ],
       "user": "eesecure",
       "user_editable": false
-    },
-    {
-      "apn": "everywhere",
-      "name": "EE",
-      "protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
     },
     {
       "apn": "everywhere",
@@ -89,6 +91,14 @@
     },
     {
       "apn": "ims",
+      "name": "EE",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -104,7 +114,7 @@
     {
       "apn": "ims",
       "authtype": 1,
-      "name": "ims",
+      "name": "IMS",
       "password": "secure",
       "protocol": "IPV6",
       "types": [

@@ -21,10 +21,19 @@
     {
       "apn": "ctm-mobile",
       "name": "ctm-mobile",
-      "port": 8080,
       "protocol": "IPV4V6",
-      "proxy": "192.168.99.2",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctm-mobile",
+      "name": "CTM",
+      "port": 8080,
+      "proxy": "192.168.99.2",
       "types": [
         "default",
         "supl"
@@ -36,15 +45,6 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
-      ]
-    },
-    {
-      "apn": "ctm-mobile",
-      "name": "CTM Data",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ia"
       ]
     },
     {

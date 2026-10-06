@@ -39,6 +39,18 @@
     },
     {
       "apn": "bsnlmms",
+      "mmsc": "http://bsnlmmsc.in:8514",
+      "mmsport": 8080,
+      "mmsproxy": "10.210.10.11",
+      "name": "BSNL-mms",
+      "port": 8080,
+      "proxy": "10.210.10.11",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "bsnlmms",
       "carrier_id": 1549,
       "mmsc": "http://bsnlmmsc.in:8514",
       "mmsport": 8080,
@@ -56,9 +68,7 @@
       "mmsport": 8080,
       "mmsproxy": "10.210.10.11",
       "name": "bsnlmms",
-      "port": 8080,
       "protocol": "IPV4V6",
-      "proxy": "10.210.10.11",
       "types": [
         "mms"
       ]
@@ -77,16 +87,24 @@
     },
     {
       "apn": "bsnlnet",
-      "authtype": 1,
-      "name": "bsnlnet",
+      "name": "BSNL",
       "password": "MSISDN",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
       ],
       "user": "MSISDN"
+    },
+    {
+      "apn": "bsnlnet",
+      "authtype": 1,
+      "name": "bsnlnet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "ims",
