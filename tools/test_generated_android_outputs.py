@@ -2331,6 +2331,94 @@ def check_proxy_free_first() -> None:
         )
 
 
+def check_malformed_values_stay() -> None:
+    """A malformed APN value is kept and ranks with the placeholders: a scope
+    whose only MMS row or only internet row has one still writes it, and a
+    malformed default row never comes before a valid one, however many
+    sources give it (rule decisions of 2026-10-06, round 4, change 13)."""
+
+    def profile(profile_id: str, mccmnc: str, *rows: dict) -> dict:
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": {"mccmnc": [mccmnc]},
+            "android_apns": list(rows),
+        }
+
+    profiles = [
+        # 21404 SPN Pepephone shape: the only MMS row has a URL for an APN.
+        profile(
+            "open.21404.a",
+            "21404",
+            {"name": "Internet", "apn": "gprsmov.pepephone.com", "types": ["default"]},
+            {"name": "MMS", "apn": "http://mms.pepephone.com", "types": ["mms"], "mmsc": "http://mms.pepephone.com/servlets/mms"},
+        ),
+        # 62125 shape: the only internet row is the CDMA dial string.
+        profile(
+            "open.62125.a",
+            "62125",
+            {"name": "Visafone", "apn": "#777", "types": ["default", "supl"]},
+        ),
+        # A malformed internet value more families give than the valid one.
+        profile(
+            "open.20408.a",
+            "20408",
+            {"name": "Web", "apn": "web example", "types": ["default"]},
+            {"name": "Web", "apn": "web.example", "types": ["default"]},
+        ),
+    ]
+    evidence = {
+        "profiles": [
+            {"profile_id": "open.21404.a", "sources": ["lineageos"], "fact_sources": []},
+            {"profile_id": "open.62125.a", "sources": ["lineageos", "sony_open_devices_aosp"], "fact_sources": []},
+            {
+                "profile_id": "open.20408.a",
+                "sources": ["apple_carrier_bundles", "lineageos", "mobile_broadband_provider_info"],
+                "fact_sources": sorted(
+                    [
+                        {
+                            "section": "android_apns",
+                            "key": generate_android_outputs.apn_fact_key(profiles[2]["android_apns"][0], "default"),
+                            "sources": ["apple_carrier_bundles", "lineageos", "mobile_broadband_provider_info"],
+                        },
+                        {
+                            "section": "android_apns",
+                            "key": generate_android_outputs.apn_fact_key(profiles[2]["android_apns"][1], "default"),
+                            "sources": ["lineageos"],
+                        },
+                    ],
+                    key=lambda fact: fact["key"],
+                ),
+            },
+        ]
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
+        apns_path = Path(tmp) / "apns-conf.xml"
+        count = generate_android_outputs.write_apns(
+            apns_path, profiles, 8, generate_android_outputs.load_apn_evidence(evidence_path)
+        )
+        written = [dict(element.attrib) for element in ET.parse(apns_path).getroot()]
+
+    def scope(mccmnc: str) -> list[tuple[str, str]]:
+        return [(row["apn"], row["type"]) for row in written if row["mcc"] + row["mnc"] == mccmnc]
+
+    assert_true(count == 5, f"no malformed row is dropped: {written}")
+    assert_true(
+        ("http://mms.pepephone.com", "mms") in scope("21404"),
+        f"a scope whose only MMS row is malformed still writes it: {scope('21404')}",
+    )
+    assert_true(
+        scope("62125") == [("#777", "default,supl")],
+        f"a scope whose only internet row is malformed still writes it: {scope('62125')}",
+    )
+    assert_true(
+        [apn for apn, _ in scope("20408")] == ["web.example", "web example"],
+        f"a malformed internet row never comes before a valid one: {scope('20408')}",
+    )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -4043,6 +4131,8 @@ def main() -> int:
     print("shared-file and malformed APN value tests passed")
     check_proxy_free_first()
     print("proxy-free internet row tests passed")
+    check_malformed_values_stay()
+    print("malformed APN value tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
