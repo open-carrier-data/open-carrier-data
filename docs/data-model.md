@@ -59,7 +59,7 @@ Every capability takes one of four values. A value says what carrier tables conf
 | `supported` | at least one phone maker's or OS carrier table turns the feature on for this SIM, and none turns it off. It may still be off on a given phone, or on phones the carrier has not approved |
 | `unsupported` | the operator's own configuration turns it off, or at least two independent source families turn it off and none turns it on |
 | `conditional` | sources disagree, also between the devices of one source |
-| `unknown` | no usable source. That includes a single maker or maintainer turning the feature off, and a capability whose only source family's newest entry is older than five years |
+| `unknown` | no usable source. That includes a single maker or maintainer turning the feature off, and a capability whose only source family's newest entry is older than five years, withheld for its age or, for VoLTE, VoWiFi, MMS and Wi-Fi calling while roaming, on the evidence [how-it-is-built.md](how-it-is-built.md) describes |
 
 Apple and Samsung publish only what they turn on, so their offs never count. Source names that copy one origin count as one family: the LineageOS, Sony and Fairphone APN lists, the two Google lanes, and Samsung's three lanes (OMC, IMS and CarrierConfig). The operator's own configuration is Google's settings for its Google Fi service and an AOSP CarrierConfig file the carrier itself submitted; [how-it-is-built.md](how-it-is-built.md) lists them. `capability_sources` in the evidence index names, for each capability, the source families that turn it on and those that turn it off.
 
