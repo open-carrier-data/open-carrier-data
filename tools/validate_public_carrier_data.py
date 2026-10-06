@@ -1002,6 +1002,14 @@ UNSEEN_SCOPE_GATE = "unseen_scope"
 # configuration: the capability is published as unknown, and a false
 # capability-gating CarrierConfig key is left out.
 SINGLE_FAMILY_OFF_GATE = "single_family_off"
+# The gates that withhold an old single-family value. Since 2026-10-06 the
+# capability-gating CarrierConfig key of a capability they withhold is left
+# out with the label, so no profile publishes a switch next to such a label.
+WITHHOLDING_CAPABILITY_GATES = {
+    STALE_CAPABILITY_GATE,
+    FROZEN_SOURCE_ONLY_GATE,
+    UNSEEN_SCOPE_GATE,
+}
 # The gates that publish a capability as unknown although a source gives it.
 UNKNOWN_CAPABILITY_GATES = {
     STALE_CAPABILITY_GATE,
@@ -1182,9 +1190,11 @@ def validate_stale_capability_gates(
     over five years old (for its age alone, or because only a frozen copy
     gives it, or because no fresh observation covers the profile's scope), or
     because one source family alone turns it off, names a real capability
-    that the profile publishes as unknown. A
-    single-family gate on a CarrierConfig key names a capability-gating key
-    the profile does not publish."""
+    that the profile publishes as unknown. The profile publishes no
+    capability-gating key of a capability the first three gates withhold: a
+    withheld label takes its switch with it. A single-family gate on a
+    CarrierConfig key names a capability-gating key the profile does not
+    publish."""
     for gate_index, gate in enumerate(gates):
         name, _, key = gate["key"].partition(":")
         if name not in UNKNOWN_CAPABILITY_GATES:
@@ -1206,6 +1216,17 @@ def validate_stale_capability_gates(
             raise ValidationError(
                 f"{path}: {label} withholds {key}, but the profile publishes it"
             )
+        if name in WITHHOLDING_CAPABILITY_GATES and config_keys is not None:
+            switches = sorted(
+                config_key
+                for config_key, capability in CAPABILITY_GATING_CONFIG_KEYS.items()
+                if capability == key and config_key in config_keys
+            )
+            if switches:
+                raise ValidationError(
+                    f"{path}: {label} withholds {key}, but the profile publishes its switch "
+                    f"{', '.join(switches)}"
+                )
 
 
 def validate_capability_sources(
@@ -1276,13 +1297,11 @@ def validate_capability_sources(
 # Informational flags on a profile's facts. They withhold nothing.
 # old_single_source: the capability's value rests on one source family whose
 # newest entry behind it is more than five years old; capability_newest_entries
-# gives the month. capability_label_withheld: a capability-gating CarrierConfig
-# key the profile publishes whose capability label a quality gate withheld
-# (published as unknown); a phone that applies the key still switches the
-# feature on.
+# gives the month. Until 2026-10-06 capability_label_withheld marked a
+# capability-gating CarrierConfig key published next to a withheld label;
+# such a key is now left out, and the flag is refused.
 FLAG_SECTIONS = {
     "old_single_source": "capabilities",
-    "capability_label_withheld": "android_carrier_config",
 }
 
 
@@ -1295,9 +1314,7 @@ def validate_flags(
 ) -> None:
     """flags is optional: a non-empty list of section, key and flag, sorted and
     unique. old_single_source names a capability that capability_sources names
-    and capability_newest_entries dates. capability_label_withheld names a
-    capability-gating CarrierConfig key the profile publishes, whose
-    capability the profile publishes as unknown under a quality gate."""
+    and capability_newest_entries dates."""
     if "flags" not in evidence:
         return
     label = f"profiles[{index}].flags"
@@ -1305,11 +1322,6 @@ def validate_flags(
     require_type(path, items, list, label)
     if not items:
         raise ValidationError(f"{path}: {label} is empty")
-    withheld = {
-        gate["key"].partition(":")[2]
-        for gate in evidence.get("quality_gates", [])
-        if gate["section"] == "capabilities"
-    }
     keys: list[tuple[str, str, str]] = []
     for item_index, item in enumerate(items):
         item_label = f"{label}[{item_index}]"
@@ -1319,21 +1331,12 @@ def validate_flags(
         flag, section, key = item["flag"], item["section"], item["key"]
         if FLAG_SECTIONS.get(flag) != section:
             raise ValidationError(f"{path}: {item_label} is not a valid flag")
-        if flag == "old_single_source":
-            if (
-                key not in CAPABILITY_KEYS
-                or key not in (evidence.get("capability_sources") or {})
-                or key not in (evidence.get("capability_newest_entries") or {})
-            ):
-                raise ValidationError(f"{path}: {item_label} flags an undated or unsourced capability")
-        else:
-            capability = CAPABILITY_GATING_CONFIG_KEYS.get(key)
-            if capability is None or (config_keys is not None and key not in config_keys):
-                raise ValidationError(f"{path}: {item_label} flags a key the profile does not publish")
-            if capability not in withheld or (
-                capabilities is not None and capabilities.get(capability, "unknown") != "unknown"
-            ):
-                raise ValidationError(f"{path}: {item_label} flags a key whose label is not withheld")
+        if (
+            key not in CAPABILITY_KEYS
+            or key not in (evidence.get("capability_sources") or {})
+            or key not in (evidence.get("capability_newest_entries") or {})
+        ):
+            raise ValidationError(f"{path}: {item_label} flags an undated or unsourced capability")
         keys.append((section, key, flag))
     if keys != sorted(set(keys)):
         raise ValidationError(f"{path}: {label} must be sorted and unique")
