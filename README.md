@@ -118,7 +118,7 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 ## How to contribute
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data through a maintained source, or a maintainer changes an importer, mapping or source with the evidence in the pull request; per-carrier overrides do not exist yet and will be built when the first verified report needs one.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data through a maintained source, or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides.
 
 ## License
 

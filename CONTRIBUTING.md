@@ -27,7 +27,7 @@ Use this path when you know an upstream that automation could import.
 2. Name the source, its owner, and what carrier facts it holds.
 3. State its license or usage terms if known.
 
-A usable source is public and kept current by its owner (carrier, OEM, OS or public data project), can be refreshed by automation, and its terms allow publishing derived facts without the raw files.
+A usable source is public and preferably kept current by its owner (carrier, OEM, OS or public data project), can be refreshed by automation, and its terms allow publishing derived facts without the raw files.
 
 ## Improve tooling or docs
 
@@ -39,7 +39,7 @@ Open a pull request for schema, validator, generator, test, or documentation cha
 
 ## How a correction reaches stable data
 
-A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request; per-carrier overrides do not exist yet and will be built when the first verified report needs one.
+A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides.
 
 ## Run the local checks
 

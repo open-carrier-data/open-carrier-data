@@ -48,7 +48,7 @@ The first five fields identify the profile and say when it applies.
 | `sms_over_ims` | SMS carried over IMS |
 | `mms` | multimedia messaging |
 | `rcs` | rich communication services |
-| `esim` | embedded SIM support |
+| `esim` | embedded SIM support. No source gives it today, so it is `unknown` in every profile |
 | `ims_conference` | IMS conference calls |
 | `wifi_calling_roaming` | Wi-Fi calling while roaming |
 
@@ -56,7 +56,7 @@ Every capability takes one of four values. A value says what carrier tables conf
 
 | Value | Meaning |
 | --- | --- |
-| `supported` | at least one phone maker's or OS carrier table turns the feature on for this SIM, and none turns it off. It may still be off on a given phone, or on phones the carrier has not approved |
+| `supported` | at least one phone maker's or OS carrier table turns the feature on for this SIM, or for Samsung VoNR offers the user its switch (`capability_basis` names that weaker basis), and no source whose off counts turns it off. Samsung's and Apple's offs never count, including a Samsung carrier pack that switches a feature off on some phone models. It is a configuration, not a test result: the feature may still be off on a given phone, or on phones the carrier has not approved |
 | `unsupported` | the operator's own configuration turns it off, or at least two independent source families turn it off and none turns it on |
 | `conditional` | sources disagree, also between the devices of one source |
 | `unknown` | no usable source. That includes a single maker or maintainer turning the feature off, and a capability whose only source family's newest entry is older than five years, withheld for its age or, for VoLTE, VoWiFi, MMS and Wi-Fi calling while roaming, on the evidence [how-it-is-built.md](how-it-is-built.md) describes |
@@ -149,7 +149,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 `generated/index.json` has `schema_version` and a `profiles` array. Each entry has `profile_id`, `display_name`, and `path`. `path` is the profile file relative to the repo root.
 
-`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`. An entry whose sources carry a check date also has `checks_through` and `stale_after`, the freshness window of that one profile. The file-level window in `generated/android/metadata.json` is the oldest of these, so a consumer that keeps only some profiles can read the per-profile dates instead. An entry also has `newest_entry`, the month (`YYYY-MM`) of the newest upstream entry behind the profile, wherever the evidence index publishes one; it tells you how old the profile's data is, which the check dates do not. The validator checks that it matches the evidence index.
+`generated/android/lookup.json` has `schema_version`, `match_semantics`, `resolution_order`, and `profiles`. Each entry repeats `profile_id`, `display_name`, `path`, `match`, and `capabilities`, and adds `specificity`, `android_apn_count`, and `has_android_carrier_config`. An entry whose sources carry a check date also has `checks_through` and `stale_after`, the freshness window of that one profile. A profile's `stale_after` is the earliest day any of its observations could expire; values are not dated one by one. The file-level window in `generated/android/metadata.json` is the oldest of these, so a consumer that keeps only some profiles can read the per-profile dates instead. An entry also has `newest_entry`, the month (`YYYY-MM`) of the newest upstream entry behind the profile, wherever the evidence index publishes one; it tells you how old the profile's data is, which the check dates do not. The validator checks that it matches the evidence index.
 
 `generated/android/metadata.json` has `schema_version`, `target`, `output`, `omissions`, `data_digest`, and the file-level `checks_through` and `stale_after`. `target` names the APN database version and says that profiles needing a GID or ICCID match are left out of `carrier-config-list.xml` (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`). `data_digest` is `sha256:` and the SHA-256 over the profile files, `generated/evidence-index.json` and the generator's source; `apns-conf.xml` and `carrier-config-list.xml` repeat it with the licence and the freshness window in the comment they start with.
 
