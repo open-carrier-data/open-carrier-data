@@ -212,6 +212,8 @@ def check_explain() -> None:
         assert rows[1]["reasons"]["value_families"] == ["aosp_apn_lists"], rows[1]
         assert rows[1]["reasons"]["row_sources"] == ["lineageos"]
         assert rows[0]["reasons"]["value_from_current_vendor"] is True, rows[0]
+        assert rows[0]["reasons"]["row_from_current_vendor"] is True, rows[0]
+        assert rows[1]["reasons"]["row_from_current_vendor"] is False, rows[1]
         assert rows[0]["reasons"]["ia_left_out"] is False, rows[0]
         assert rows[1]["reasons"]["value_from_current_vendor"] is False, rows[1]
         assert rows[1]["reasons"]["ia_left_out"] is True, (

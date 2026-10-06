@@ -1101,6 +1101,36 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ]
 
         expect_failure(display_name_entry, "display-name provenance entries must be rejected")
+
+        # old_build_sources: the Samsung sources that give an APN fact only
+        # from builds over three years old. Such an entry may repeat the
+        # profile's sources.
+        def old_build(entry: dict) -> Callable[[dict], None]:
+            def mutate(value: dict) -> None:
+                profile = value["profiles"][0]
+                profile["sources"] = ["lineageos", "samsung_omc"]
+                profile["fact_sources"] = [entry]
+            return mutate
+
+        base_entry = {
+            "section": "android_apns",
+            "key": "sha256:0123456789abcdef",
+            "sources": ["lineageos", "samsung_omc"],
+            "old_build_sources": ["samsung_omc"],
+        }
+        accepted = load_json(evidence_path)
+        old_build(base_entry)(accepted)
+        write_profile(evidence_path, accepted)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        evidence_path.write_text(good_text, encoding="utf-8")
+        for entry, message in (
+            ({**base_entry, "old_build_sources": ["lineageos"]}, "a non-vendor old build source passed"),
+            ({**base_entry, "old_build_sources": []}, "an empty old_build_sources passed"),
+            ({**base_entry, "sources": ["lineageos"]}, "an old build source the fact does not name passed"),
+            ({**base_entry, "section": "android_carrier_config", "key": "enabledMMS"}, "old_build_sources outside APN facts passed"),
+            ({**base_entry, "old_build_sources": "samsung_omc"}, "a string old_build_sources passed"),
+        ):
+            expect_failure(old_build(entry), message)
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
         check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
@@ -1808,26 +1838,51 @@ def check_current_vendor_attach() -> None:
         "open.23415.a": [("samsung_omc",), ("lineageos",)],
         "open.20408.a": [("lineageos",), ("apple_carrier_bundles",)],
     }
+    # 24007 (Tele2 Sweden, SPN Tele2comviq): a Samsung build from 2017 gives
+    # "4g.tele2.se", a current Samsung build "internet.tele2.se". The evidence
+    # index names samsung_omc in the old fact's old_build_sources, so only the
+    # current build's value counts as a current vendor's.
+    tele2 = profile(
+        "open.24007.a",
+        "24007",
+        apn("4g.tele2.se", ("default", "ia")),
+        apn("internet.tele2.se", ("default",)),
+    )
+    # 73003 (Claro Chile): one value, two variants. A current Samsung build
+    # gives IPV4V6; an old build and two old copies give IP. The current
+    # build's variant leads although more families back the other.
+    claro = profile(
+        "open.73003.a",
+        "73003",
+        apn("bam.clarochile.cl", ("default",), protocol="IP"),
+        apn("bam.clarochile.cl", ("default",), protocol="IPV4V6"),
+    )
+    profiles += [tele2, claro]
+    row_sources["open.24007.a"] = [("samsung_omc", "lineageos", "apple_carrier_bundles"), ("samsung_omc",)]
+    row_sources["open.73003.a"] = [("samsung_omc", "lineageos", "apple_carrier_bundles"), ("samsung_omc",)]
+    old_builds = {
+        "open.24007.a": {0: ["samsung_omc"]},
+        "open.73003.a": {0: ["samsung_omc"]},
+    }
     records = []
     for item in profiles:
         sources = row_sources[item["profile_id"]]
         everything = sorted({source for group in sources for source in group})
-        records.append(
-            {
-                "profile_id": item["profile_id"],
-                "sources": everything,
-                "fact_sources": [
-                    {
-                        "section": "android_apns",
-                        "key": generate_android_outputs.apn_fact_key(row, apn_type),
-                        "sources": sorted(group),
-                    }
-                    for row, group in zip(item["android_apns"], sources, strict=True)
-                    for apn_type in row["types"]
-                    if sorted(group) != everything
-                ],
-            }
-        )
+        facts = []
+        for row_index, (row, group) in enumerate(zip(item["android_apns"], sources, strict=True)):
+            old = old_builds.get(item["profile_id"], {}).get(row_index)
+            for apn_type in row["types"]:
+                if sorted(group) == everything and not old:
+                    continue
+                fact = {
+                    "section": "android_apns",
+                    "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                    "sources": sorted(group),
+                }
+                if old:
+                    fact["old_build_sources"] = old
+                facts.append(fact)
+        records.append({"profile_id": item["profile_id"], "sources": everything, "fact_sources": facts})
     with tempfile.TemporaryDirectory() as tmp:
         evidence_path = Path(tmp) / "evidence-index.json"
         evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
@@ -1866,8 +1921,22 @@ def check_current_vendor_attach() -> None:
             f"a scope no current vendor covers is unchanged: {scope('20408')}",
         )
         assert_true(
-            len(rows.records) == len(plain.records) and rows.ia_left_out == 1,
-            f"no row is removed and one row loses ia: {len(rows.records)}, {rows.ia_left_out}",
+            scope("24007") == [("internet.tele2.se", "default"), ("4g.tele2.se", "default")],
+            "a value only an old Samsung build gives is not a current vendor's: it ranks "
+            f"after the current build's value and loses ia: {scope('24007')}",
+        )
+        claro_rows = [
+            record.get("protocol")
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == "73003"
+        ]
+        assert_true(
+            claro_rows == ["IPV4V6", "IP"],
+            f"among the variants of one value the current build's comes first: {claro_rows}",
+        )
+        assert_true(
+            len(rows.records) == len(plain.records) and rows.ia_left_out == 2,
+            f"no row is removed and two rows lose ia: {len(rows.records)}, {rows.ia_left_out}",
         )
         assert_true(
             plain.ia_left_out == 0,
