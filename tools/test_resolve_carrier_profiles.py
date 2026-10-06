@@ -359,11 +359,67 @@ def check_explain_proxy_free_first() -> None:
         assert rows[2]["reasons"]["proxy_free_first"] is False, rows[2]
 
 
+def check_explain_stored_with_best_row() -> None:
+    """--explain notes a row written before a better-ranked row Android stores
+    as one with it (stored_with_best_row): the phone keeps the later, best
+    row's values."""
+    plain = carrier(
+        {"mccmnc": ["21406"]},
+        {},
+        android_apns=[
+            {"name": "RACC", "apn": "internet.racc.es", "types": ["default", "supl"]},
+            {"name": "RACC old", "apn": "internet.racc.es", "types": ["default"], "user": "CLIENTERACC", "password": "RACC", "authtype": 1},
+            {"name": "Other", "apn": "other.example", "types": ["default"]},
+        ],
+    )
+    rows_in = plain["android_apns"]
+    sources = [["samsung_omc"], ["lineageos"], ["mobile_broadband_provider_info"]]
+    facts = [
+        {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group}
+        for row, group in zip(rows_in, sources)
+        for apn_type in row["types"]
+    ]
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 3,
+                "verified_observation_count": 0,
+                "sources": sorted({source for group in sources for source in group}),
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "21406"}, root, root / "generated" / "evidence-index.json")
+        rows = result["apns"]["rows"]
+        assert [(row["row"]["apn"], row["row"].get("user")) for row in rows] == [
+            ("internet.racc.es", "CLIENTERACC"),
+            ("internet.racc.es", None),
+            ("other.example", None),
+        ], rows
+        assert [row["reasons"]["stored_with_best_row"] for row in rows] == [True, False, False], rows
+        assert rows[1]["reasons"]["row_from_current_vendor"] is True, rows[1]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
     check_explain_shared_file()
     check_explain_proxy_free_first()
+    check_explain_stored_with_best_row()
     print("carrier profile resolver tests passed")
     return 0
 

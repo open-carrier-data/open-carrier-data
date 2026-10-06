@@ -262,6 +262,10 @@ def explain(
                     "proxy_free_first": rank.lead_type == "default" and not rank.proxied,
                     "row_from_current_vendor": bool(rank.row_current),
                     "ia_left_out": bool(row.get("_ia_left_out")),
+                    # Android stores this row as one with a better-ranked row
+                    # written after it, whose values win: a group's first row
+                    # in the file is not what the phone uses.
+                    "stored_with_best_row": bool(row.get("_stored_with_best_row")),
                     "value_families": sorted(generator.source_families(rank.value_sources)),
                     "value_from_primary_source": bool(rank.value_sources & generator.PRIMARY_APN_SOURCES),
                     "row_families": sorted(generator.source_families(rank.row_sources)),
