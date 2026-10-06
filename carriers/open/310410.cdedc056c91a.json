@@ -14,13 +14,12 @@
     },
     {
       "apn": "att.mvno",
-      "authtype": 1,
       "mmsc": "http://mmsc.cingular.com",
       "mmsport": 80,
-      "mmsproxy": "66.209.11.33",
-      "name": "Black Wireless",
+      "mmsproxy": "66.209.11.32",
+      "name": "Consumer Cellular 3G",
       "port": 80,
-      "proxy": "66.209.11.33",
+      "proxy": "66.209.11.32",
       "types": [
         "default",
         "fota",
@@ -30,12 +29,13 @@
     },
     {
       "apn": "att.mvno",
+      "authtype": 1,
       "mmsc": "http://mmsc.cingular.com",
       "mmsport": 80,
-      "mmsproxy": "66.209.11.32",
-      "name": "Consumer Cellular 3G",
+      "mmsproxy": "66.209.11.33",
+      "name": "att.mvno",
       "port": 80,
-      "proxy": "66.209.11.32",
+      "proxy": "66.209.11.33",
       "types": [
         "default",
         "fota",
@@ -89,20 +89,6 @@
       "mmsproxy": "66.209.11.33",
       "name": "StraightTalk ATT.mvno",
       "port": 80,
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "att.mvno",
-      "mmsc": "http://mmsc.cingular.com",
-      "mmsport": 80,
-      "mmsproxy": "66.209.11.33",
-      "name": "att.mvno",
-      "port": 80,
-      "proxy": "66.209.11.33",
       "types": [
         "default",
         "mms",
@@ -246,8 +232,20 @@
       "mmsc": "http://mms-tf.net",
       "mmsport": 80,
       "mmsproxy": "mms3.tracfone.com",
-      "name": "tfdata",
+      "name": "StraightTalk ATT",
       "port": 80,
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "tfdata",
+      "mmsc": "http://mms-tf.net",
+      "mmsport": 80,
+      "mmsproxy": "mms3.tracfone.com",
+      "name": "tfdata",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
@@ -268,23 +266,6 @@
         "supl"
       ],
       "user": "WAP@CINGULARGPRS.COM"
-    },
-    {
-      "apn": "wap.cingular",
-      "mmsc": "http://mmsc.cingular.com/",
-      "mmsproxy": "wireless.cingular.com",
-      "name": "ATT WAP",
-      "port": 80,
-      "protocol": "IPV4V6",
-      "proxy": "wireless.cingular.com",
-      "roaming_protocol": "IPV4V6",
-      "server": "cingulargprs.com",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
     },
     {
       "apn": "wap.cingular",

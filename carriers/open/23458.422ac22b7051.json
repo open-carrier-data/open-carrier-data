@@ -39,12 +39,20 @@
     {
       "apn": "3gpronto",
       "mmsc": "http://mms.manxpronto.net:8002",
-      "name": "3gpronto",
+      "name": "Manx Telecom",
       "port": 8080,
       "proxy": "195.10.99.46",
       "types": [
         "default",
         "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "3gpronto",
+      "name": "3gpronto",
+      "types": [
+        "default",
         "supl"
       ]
     },
@@ -225,7 +233,17 @@
       "apn": "web.prontogo.net",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "web.prontogo.net",
+      "name": "Internet",
+      "password": "webgo",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "webgo"
+    },
+    {
+      "apn": "web.prontogo.net",
+      "name": "Manx Internet(Pre)",
       "password": "webgo",
       "port": 8080,
       "proxy": "195.10.99.51",

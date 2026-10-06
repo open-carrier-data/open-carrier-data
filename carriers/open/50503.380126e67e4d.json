@@ -81,14 +81,15 @@
     },
     {
       "apn": "live.vodafone.com",
-      "name": "Vodafone AU",
+      "name": "live.vodafone.com",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "cbs",
         "default",
         "fota",
-        "hipri"
+        "hipri",
+        "supl"
       ],
       "user_editable": false
     },
@@ -103,21 +104,27 @@
     },
     {
       "apn": "live.vodafone.com",
-      "name": "Vodafone Live!",
-      "port": 8080,
-      "proxy": "10.202.2.60",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "live.vodafone.com",
       "name": "voda AU",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
+    },
+    {
+      "apn": "live.vodafone.com",
+      "mmsc": "http://pxt.vodafone.net.au/pxtsend",
+      "mmsport": 8080,
+      "mmsproxy": "10.202.2.60",
+      "name": "voda AU",
+      "password": "live",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "live"
     },
     {
       "apn": "live.vodafone.com",
@@ -143,36 +150,20 @@
       "server": "*",
       "types": [
         "default",
-        "mms"
+        "mms",
+        "supl"
       ],
       "user": "*"
     },
     {
       "apn": "live.vodafone.com",
-      "mmsc": "http://pxt.vodafone.net.au/pxtsend",
-      "mmsport": 8080,
-      "mmsproxy": "10.202.2.60",
-      "name": "voda AU",
-      "password": "live",
+      "name": "Vodafone Live!",
+      "port": 8080,
+      "proxy": "10.202.2.60",
       "types": [
         "default",
-        "mms"
-      ],
-      "user": "live"
-    },
-    {
-      "apn": "live.vodafone.com",
-      "mmsc": "http://pxt.vodafone.net.au/pxtsend",
-      "mmsport": 8080,
-      "mmsproxy": "10.202.2.60",
-      "name": "voda AU",
-      "password": "live",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "dun"
-      ],
-      "user": "live"
+        "supl"
+      ]
     },
     {
       "apn": "live.vodafone.com",
@@ -183,24 +174,6 @@
       "types": [
         "mms"
       ]
-    },
-    {
-      "apn": "live.vodafone.com",
-      "mmsc": "http://pxt.vodafone.net.au/pxtsend",
-      "mmsport": 8080,
-      "mmsproxy": "10.202.2.60",
-      "name": "live.vodafone.com",
-      "password": "*",
-      "port": 8080,
-      "protocol": "IPV4V6",
-      "proxy": "10.202.2.60",
-      "roaming_protocol": "IPV4V6",
-      "server": "*",
-      "types": [
-        "supl"
-      ],
-      "user": "*",
-      "user_editable": false
     }
   ],
   "android_carrier_config": {

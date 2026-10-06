@@ -2,8 +2,16 @@
   "android_apns": [
     {
       "apn": "bconnected",
-      "name": "bconnected",
+      "name": "BMobile Prepaid",
       "port": 8080,
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "bconnected",
+      "name": "Prepaid Data",
       "server": "http://www.google.com",
       "types": [
         "default",
@@ -71,15 +79,21 @@
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "name": "internet",
-      "password": "wap",
+      "name": "BMobile Postpaid",
       "port": 8080,
       "types": [
         "default",
         "supl"
-      ],
-      "user": "wap"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "Bmobile internet",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "mms",

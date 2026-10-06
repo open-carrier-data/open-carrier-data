@@ -102,22 +102,6 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "dun"
-      ]
-    },
-    {
-      "apn": "internet",
       "carrier_id": 1644,
       "name": "KPN Mobiel Internet",
       "protocol": "IPV4V6",
@@ -125,17 +109,6 @@
       "types": [
         "default",
         "ia"
-      ]
-    },
-    {
-      "apn": "internet",
-      "mmsc": "http://mms",
-      "mmsport": 8080,
-      "name": "Telfort Internet",
-      "types": [
-        "default",
-        "mms",
-        "supl"
       ]
     },
     {
@@ -152,7 +125,9 @@
       "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "KPN Internet",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -164,10 +139,17 @@
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "name": "Telfort Internet",
+      "types": [
+        "mms"
       ]
     },
     {

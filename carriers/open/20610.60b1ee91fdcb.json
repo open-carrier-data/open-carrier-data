@@ -18,17 +18,9 @@
   "android_apns": [
     {
       "apn": "iew.be",
-      "name": "iew.be",
-      "password": "mobistar",
-      "types": [
-        "default"
-      ],
-      "user": "mobistar"
-    },
-    {
-      "apn": "iew.be",
       "name": "Orange B",
       "types": [
+        "default",
         "dun"
       ]
     },
@@ -69,17 +61,28 @@
     {
       "apn": "mms.be",
       "authtype": 1,
+      "mmsc": "http://mmsc.mobistar.be",
+      "mmsport": 8080,
+      "mmsproxy": "212.65.63.143",
+      "name": "Mobistar MMS",
+      "password": "mobistar",
+      "types": [
+        "mms"
+      ],
+      "user": "mobistar"
+    },
+    {
+      "apn": "mms.be",
+      "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mmsc.mobistar.be",
       "mmsport": 8080,
       "mmsproxy": "212.65.63.143",
       "name": "mms.be",
-      "password": "mobistar",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
-      ],
-      "user": "mobistar"
+      ]
     },
     {
       "apn": "mworld.be",
@@ -108,16 +111,8 @@
       "apn": "mworld.be",
       "authtype": 0,
       "carrier_enabled": true,
-      "name": "Orange Internet",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mworld.be",
       "name": "mworld.be",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
