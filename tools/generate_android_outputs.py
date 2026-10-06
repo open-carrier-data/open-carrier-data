@@ -582,6 +582,9 @@ class RowRank(NamedTuple):
     # The sources that give this APN value for the lead type in the scope
     # only from an unconfirmed shared file. They do not order rows.
     value_shared: frozenset[str] = frozenset()
+    # The row leads with "default" and carries an HTTP proxy ("proxy"; an MMS
+    # proxy never counts).
+    proxied: bool = False
 
     def sort_key(self) -> tuple[Any, ...]:
         lead = (
@@ -596,6 +599,22 @@ class RowRank(NamedTuple):
             (
                 self.placeholder,
                 not self.value_current,
+                # A proxy-free internet row before a proxied one. Android makes
+                # an APN's proxy the data network's HTTP proxy (DataNetwork),
+                # and without a preferred APN it tries the internet rows in
+                # file order and keeps the first that connects as the
+                # preferred APN (DataProfileManager), so a proxied first row
+                # that connects stays preferred even where its WAP gateway is
+                # dead. Behind a proxy-free row the proxied one stays in the
+                # list as a fallback. Vendors order their files the same way:
+                # measured on 2026-10-06, 42 of the 44 Google per-carrier
+                # entries with a proxied default row also ship a proxy-free
+                # one, first in raw file order in 10 of 11 files, and so do
+                # 24 of 28 such entries of Samsung builds of three years or
+                # less. The key comes after the current-vendor key, so a
+                # current vendor's only internet value still leads with its
+                # proxy (Orange Mali 61002, "wap").
+                self.proxied,
                 -len(source_families(self.value_sources)),
                 not self.value_sources & PRIMARY_APN_SOURCES,
                 not self.row_current,
@@ -637,6 +656,7 @@ def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
                 frozenset(apn_current.get((apn, lead_type), set())),
                 frozenset(record.get("_current", {}).get(lead_type, frozenset())),
                 frozenset(apn_shared.get((apn, lead_type), set())),
+                lead_type == "default" and bool(str(record.get("proxy") or "").strip()),
             )
         )
     return ranks
@@ -654,13 +674,16 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
        this scope before one no current vendor gives; a Samsung value from
        an old build only, or a Google value from its shared file only that
        no maintained per-carrier source confirms, does not count,
-    3. the APN value more source families give for that type in this scope,
-    4. an APN value a primary APN source gives,
-    5. a row a current vendor backs, so among the variants of one value the
+    3. a row without an HTTP proxy before one with a proxy, only among the
+       rows that lead with "default"; an MMS proxy never counts, and rows
+       that lead with another type never move for it,
+    4. the APN value more source families give for that type in this scope,
+    5. an APN value a primary APN source gives,
+    6. a row a current vendor backs, so among the variants of one value the
        one a current Pixel or Galaxy ships comes first,
-    6. the row more source families back,
-    7. a row a primary APN source backs,
-    8. the row more sources back.
+    7. the row more source families back,
+    8. a row a primary APN source backs,
+    9. the row more sources back.
 
     A row is backed for a type by the sources whose observations support it.
     Rows still tied keep the fallback order: APN, types, label.

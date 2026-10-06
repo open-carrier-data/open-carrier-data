@@ -257,6 +257,9 @@ def explain(
                     # Google gives the value only from its shared file, and no
                     # maintained per-carrier source confirms it.
                     "shared_file_unconfirmed": bool(rank.value_shared - rank.value_current),
+                    # An internet row without an HTTP proxy, which comes
+                    # before the scope's proxied internet rows.
+                    "proxy_free_first": rank.lead_type == "default" and not rank.proxied,
                     "row_from_current_vendor": bool(rank.row_current),
                     "ia_left_out": bool(row.get("_ia_left_out")),
                     "value_families": sorted(generator.source_families(rank.value_sources)),

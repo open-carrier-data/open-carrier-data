@@ -305,10 +305,65 @@ def check_explain_shared_file() -> None:
         assert rows[1]["reasons"]["row_sources"] == ["google_carriersettings"], rows[1]
 
 
+def check_explain_proxy_free_first() -> None:
+    """--explain says an internet row without an HTTP proxy comes before a
+    proxied one (proxy_free_first), here although more families give the
+    proxied value and no current vendor gives either; an MMS row never
+    counts."""
+    plain = carrier(
+        {"mccmnc": ["62006"]},
+        {},
+        android_apns=[
+            {"name": "WAP", "apn": "wap", "types": ["default", "supl"], "proxy": "10.93.85.88", "port": 9201},
+            {"name": "Internet", "apn": "internet", "types": ["default", "supl"]},
+            {"name": "MMS", "apn": "mms", "types": ["mms"], "mmsc": "http://mms.example", "mmsproxy": "10.93.85.88", "mmsport": 9201},
+        ],
+    )
+    keys = [generate_android_outputs.apn_fact_key(row, row["types"][0]) for row in plain["android_apns"]]
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 4,
+                "verified_observation_count": 0,
+                "sources": ["apple_carrier_bundles", "lineageos", "mobile_broadband_provider_info"],
+                "fact_sources": sorted(
+                    [
+                        {"section": "android_apns", "key": keys[0], "sources": ["lineageos", "mobile_broadband_provider_info"]},
+                        {"section": "android_apns", "key": keys[1], "sources": ["apple_carrier_bundles"]},
+                        {"section": "android_apns", "key": keys[2], "sources": ["lineageos"]},
+                    ],
+                    key=lambda fact: fact["key"],
+                ),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "62006"}, root, root / "generated" / "evidence-index.json")
+        rows = result["apns"]["rows"]
+        assert [row["row"]["apn"] for row in rows] == ["internet", "wap", "mms"], rows
+        assert rows[0]["reasons"]["proxy_free_first"] is True, rows[0]
+        assert rows[1]["reasons"]["proxy_free_first"] is False, rows[1]
+        assert rows[2]["reasons"]["proxy_free_first"] is False, rows[2]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
     check_explain_shared_file()
+    check_explain_proxy_free_first()
     print("carrier profile resolver tests passed")
     return 0
 
