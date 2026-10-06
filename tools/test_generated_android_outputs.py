@@ -3573,6 +3573,42 @@ def main() -> int:
         else:
             raise AssertionError("string-valued boolean CarrierConfig should fail")
 
+        def unassigned_profile(codes: list[str]) -> dict:
+            value = {
+                "schema_version": 1,
+                "display_name": "Example",
+                "match": {"mccmnc": codes},
+                "capabilities": {},
+                "android_apns": [{"name": "Example", "apn": "internet.example", "types": ["default"]}],
+            }
+            value["profile_id"] = validate_public_carrier_data.canonical_profile_id(value["match"])
+            return value
+
+        # Sony's "Virgin Mobile US" on 200053, NRJ on 20901 and Samsung IMS's
+        # "MOBILY SA" on 96654: no SIM carries these MCCs.
+        for codes in (["200053"], ["20901"], ["96654"], ["000000"], ["25851", "96656"]):
+            try:
+                validate_public_carrier_data.validate_profile_object(
+                    root / "unassigned.json", unassigned_profile(codes)
+                )
+            except validate_public_carrier_data.ValidationError as exc:
+                assert_true("ITU-T E.212" in str(exc), f"wrong unassigned MCC error: {exc}")
+            else:
+                raise AssertionError(f"a profile on unassigned MCCs only passed: {codes}")
+        # The shared code 901, private networks (999), the test MCC 001 and a
+        # profile with one assigned code pass this check.
+        for codes in (["90137"], ["99999"], ["00101"], ["26202", "96654"]):
+            validate_public_carrier_data.validate_profile_object(
+                root / "assigned.json", unassigned_profile(sorted(codes))
+            )
+        assert_true(
+            len(validate_public_carrier_data.ASSIGNED_MCCS) == 242
+            and {"001", "901", "902", "991", "999"} <= validate_public_carrier_data.ASSIGNED_MCCS
+            and not {"000", "200", "209", "233", "254", "258", "966"}
+            & validate_public_carrier_data.ASSIGNED_MCCS,
+            "the validator's MCC list is the ITU list plus 001 and 999",
+        )
+
         duplicate_types_profile = {
             "schema_version": 1,
             "display_name": "Duplicate APN types",
