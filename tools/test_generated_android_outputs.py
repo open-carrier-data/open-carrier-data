@@ -420,7 +420,7 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
         )
         expect_failure(
             dated(capability_newest_entries={"vonr": "2019-03"}),
-            "a date for a capability the profile does not publish passed",
+            "a date for a capability no source gives a value passed",
         )
         expect_failure(
             dated(newest_entry="2019-02", capability_newest_entries={"mms": "2019-03"}),
@@ -450,6 +450,59 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
             dated(quality_gates=[gate("stale_single_source_entry:vonr", "android_apns")]),
             "a stale gate outside the capabilities section passed",
         )
+
+        # A withheld capability keeps its date (report item #5), and flags
+        # mark old single-source values and the CarrierConfig key of a
+        # withheld label without withholding anything.
+        base = json.loads(old_shape)
+        sources = next(
+            profile["sources"] for profile in base["profiles"] if profile["profile_id"] == dated_id
+        )
+        capability_sources = {
+            **next(
+                profile.get("capability_sources", {})
+                for profile in base["profiles"]
+                if profile["profile_id"] == dated_id
+            ),
+            "video_calling": {"on": sources[:1]},
+        }
+        withheld = dict(
+            capability_sources=capability_sources,
+            quality_gates=[gate("stale_single_source_entry:video_calling")],
+            capability_newest_entries={"mms": "2019-03", "video_calling": "2018-05"},
+        )
+        validate(dated(**withheld))
+        expect_failure(
+            dated(**{**withheld, "capability_newest_entries": {"vonr": "2019-03"}}),
+            "a date for a capability no source gives passed",
+        )
+
+        def flag(section: str, key: str, name: str) -> dict:
+            return {"section": section, "key": key, "flag": name}
+
+        flags = [
+            flag("android_carrier_config", "carrier_vt_available_bool", "capability_label_withheld"),
+            flag("capabilities", "mms", "old_single_source"),
+            flag("capabilities", "video_calling", "old_single_source"),
+        ]
+        validate(dated(**withheld, flags=flags))
+        for bad, message in (
+            ([], "an empty flag list passed"),
+            (list(reversed(flags)), "unsorted flags passed"),
+            ([flag("capabilities", "vonr", "old_single_source")], "an undated old_single_source flag passed"),
+            ([flag("capabilities", "mms", "stale")], "an unknown flag passed"),
+            ([flag("android_carrier_config", "mms", "old_single_source")], "a flag in the wrong section passed"),
+            (
+                [flag("android_carrier_config", "carrier_volte_available_bool", "capability_label_withheld")],
+                "a key flag whose label is not withheld passed",
+            ),
+            (
+                [flag("android_carrier_config", "wfc_spn_format_idx_int", "capability_label_withheld")],
+                "a flag on a key that gates no capability passed",
+            ),
+            ([{**flags[0], "gate": "stale_single_source_entry"}], "a flag with an unknown key passed"),
+        ):
+            expect_failure(dated(**withheld, flags=bad), message)
     finally:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
