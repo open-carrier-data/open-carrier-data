@@ -8,6 +8,9 @@
       "gcf_sor": true,
       "network_type_capability": "TMO-XAG-GSM-USA",
       "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
     }
   },
   "android_apns": [
@@ -34,7 +37,8 @@
     {
       "apn": "ims",
       "name": "Mint IMS",
-      "protocol": "IPV6",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -42,8 +46,7 @@
     {
       "apn": "ims",
       "name": "Mint IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ]
