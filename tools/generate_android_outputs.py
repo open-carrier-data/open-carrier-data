@@ -300,7 +300,11 @@ PRIMARY_APN_SOURCES = frozenset(
 #   that comes only from that file counts only where a maintained
 #   per-carrier source (a Google per-carrier file, or a Samsung build at most
 #   three years old) gives the same APN value for the type on the same
-#   network code. Otherwise the fact's shared_file_sources names Google.
+#   network code, or where Google's frozen Pixel copies (TheMuppets) show
+#   that Google edited the entry's values for that type: a copy gives a value
+#   for the type that the current file no longer gives. Otherwise the fact's
+#   shared_file_sources names Google. The private sanitizer decides; this
+#   generator only reads the mark.
 CURRENT_VENDOR_APN_SOURCES = frozenset({"google_carriersettings", "samsung_omc", "samsung_ims"})
 # APN values that name no network: a list writes them where it knows no APN.
 PLACEHOLDER_APNS = frozenset({"default"})
