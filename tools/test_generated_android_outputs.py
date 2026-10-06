@@ -1147,6 +1147,35 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ({**base_entry, "old_build_sources": "samsung_omc"}, "a string old_build_sources passed"),
         ):
             expect_failure(old_build(entry), message)
+        # shared_file_sources: Google gives an APN fact only from its shared
+        # carrier file, unconfirmed. Such an entry may repeat the profile's
+        # sources.
+        def shared_file(entry: dict) -> Callable[[dict], None]:
+            def mutate(value: dict) -> None:
+                profile = value["profiles"][0]
+                profile["sources"] = ["google_carriersettings", "lineageos"]
+                profile["fact_sources"] = [entry]
+            return mutate
+
+        shared_entry = {
+            "section": "android_apns",
+            "key": "sha256:0123456789abcdef",
+            "sources": ["google_carriersettings", "lineageos"],
+            "shared_file_sources": ["google_carriersettings"],
+        }
+        accepted = load_json(evidence_path)
+        shared_file(shared_entry)(accepted)
+        write_profile(evidence_path, accepted)
+        validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+        evidence_path.write_text(good_text, encoding="utf-8")
+        for entry, message in (
+            ({**shared_entry, "shared_file_sources": ["lineageos"]}, "a shared file of another source passed"),
+            ({**shared_entry, "shared_file_sources": []}, "an empty shared_file_sources passed"),
+            ({**shared_entry, "shared_file_sources": "google_carriersettings"}, "a string shared_file_sources passed"),
+            ({**shared_entry, "sources": ["lineageos"]}, "a shared-file source the fact does not name passed"),
+            ({**shared_entry, "section": "android_carrier_config", "key": "enabledMMS"}, "shared_file_sources outside APN facts passed"),
+        ):
+            expect_failure(shared_file(entry), message)
         check_entry_dates(carriers_dir, evidence_path, profile_ids)
         check_capability_sources(carriers_dir, evidence_path, profile_ids)
         check_source_versions(evidence_path, profile_ids)
@@ -1970,6 +1999,173 @@ def check_current_vendor_attach() -> None:
                 for element in written
             ),
             "the attach mark is never written",
+        )
+
+
+def check_shared_file_and_malformed_values() -> None:
+    """A Google value from its shared "others" file that no maintained
+    per-carrier source confirms (shared_file_sources) is not a current
+    vendor's, and a malformed APN value ranks with the placeholders."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    def profile(profile_id: str, mccmnc: str, *rows: dict) -> dict:
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": {"mccmnc": [mccmnc]},
+            "android_apns": list(rows),
+        }
+
+    google = "google_carriersettings"
+    # 64004 (Vodacom Tanzania), plain scope: Google's shared file gives "Wap"
+    # with a WAP proxy; the open lists give "internet". Samsung's current
+    # builds give "internet" only under SPN Vodacom, another scope.
+    vodacom = profile(
+        "open.64004.a",
+        "64004",
+        apn("Wap", ("default", "ia", "supl"), proxy="10.154.0.8", port=9401),
+        apn("internet", ("default", "ia", "supl")),
+    )
+    # 41401 (MPT): the shared file gives "mptnet", and Samsung confirms it
+    # under an SPN, so the sanitizer does not name the fact: it stays current.
+    mpt = profile(
+        "open.41401.a",
+        "41401",
+        apn("mptnet", ("default",)),
+        apn("mpt.old", ("default",)),
+    )
+    # 62006 (Airtel Ghana), MMS: Google's shared file gives "airtelmms.com",
+    # a Google per-carrier file the malformed "mms/airtel mms", and the open
+    # lists "mms".
+    airtel = profile(
+        "open.62006.a",
+        "62006",
+        apn("airtelmms.com", ("mms",)),
+        apn("mms/airtel mms", ("mms",)),
+        apn("mms", ("mms",)),
+    )
+    # 20408: no shared-file fact; nothing changes.
+    untouched = profile(
+        "open.20408.a",
+        "20408",
+        apn("web.example", ("default",)),
+        apn("old.example", ("default",)),
+    )
+    profiles = [vodacom, mpt, airtel, untouched]
+    row_sources = {
+        "open.64004.a": [(google,), ("lineageos", "mobile_broadband_provider_info")],
+        "open.41401.a": [(google,), ("lineageos", "mobile_broadband_provider_info")],
+        "open.62006.a": [(google,), (google,), ("lineageos", "mobile_broadband_provider_info")],
+        "open.20408.a": [(google,), ("lineageos", "mobile_broadband_provider_info")],
+    }
+    shared_rows = {"open.64004.a": {0}, "open.62006.a": {0}}
+
+    def evidence_for(with_shared: bool) -> dict:
+        records = []
+        for item in profiles:
+            sources = row_sources[item["profile_id"]]
+            everything = sorted({source for group in sources for source in group})
+            facts = []
+            for row_index, (row, group) in enumerate(zip(item["android_apns"], sources, strict=True)):
+                shared = with_shared and row_index in shared_rows.get(item["profile_id"], set())
+                for apn_type in row["types"]:
+                    if sorted(group) == everything and not shared:
+                        continue
+                    fact = {
+                        "section": "android_apns",
+                        "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                        "sources": sorted(group),
+                    }
+                    if shared:
+                        fact["shared_file_sources"] = [google]
+                    facts.append(fact)
+            records.append({"profile_id": item["profile_id"], "sources": everything, "fact_sources": sorted(facts, key=lambda fact: fact["key"])})
+        return {"profiles": records}
+
+    with tempfile.TemporaryDirectory() as tmp:
+        results = {}
+        for name, with_shared in (("shared", True), ("plain", False)):
+            evidence_path = Path(tmp) / f"evidence-{name}.json"
+            evidence_path.write_text(json.dumps(evidence_for(with_shared)), encoding="utf-8")
+            results[name] = generate_android_outputs.apn_xml_rows(
+                profiles, generate_android_outputs.load_apn_evidence(evidence_path)
+            )
+        rows, before = results["shared"], results["plain"]
+
+        def scope(mccmnc: str, result: object = rows) -> list[tuple[str, str]]:
+            return [
+                (record["apn"], record["type"])
+                for record in result.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            ]
+
+        assert_true(
+            [value for value, _ in scope("64004", before)] == ["Wap", "internet"],
+            f"without the shared-file mark Google's Wap row leads: {scope('64004', before)}",
+        )
+        first_ia = next(value for value, types in scope("64004") if "ia" in types.split(","))
+        assert_true(
+            [value for value, _ in scope("64004")] == ["internet", "Wap"] and first_ia == "internet",
+            "an unconfirmed shared-file value is not a current vendor's: the WAP-proxy "
+            f"row no longer leads or attaches: {scope('64004')}",
+        )
+        assert_true(
+            [value for value, _ in scope("41401")] == ["mptnet", "mpt.old"],
+            f"a shared-file value a maintained source confirms stays current: {scope('41401')}",
+        )
+        airtel_order = [value for value, _ in scope("62006")]
+        assert_true(
+            airtel_order.index("mms") < airtel_order.index("mms/airtel mms")
+            and airtel_order[-1] == "mms/airtel mms",
+            f"a malformed APN value never comes before a valid one: {airtel_order}",
+        )
+        assert_true(
+            scope("20408") == scope("20408", before),
+            f"a scope with no shared-file fact is unchanged: {scope('20408')}",
+        )
+        assert_true(
+            len(rows.records) == len(before.records),
+            "the shared-file rule removes no row",
+        )
+        wap = next(record for record in rows.records if record["apn"] == "Wap")
+        assert_true(
+            wap.get("_shared") == {"default": frozenset({google}), "ia": frozenset({google}), "supl": frozenset({google})},
+            f"the row carries its shared-file sources for --explain: {wap.get('_shared')}",
+        )
+        wap_rank = generate_android_outputs.scope_row_ranks(
+            [record for record in rows.records if record.get("mnc") == "04" and record.get("mcc") == "640"]
+        )
+        assert_true(
+            any(rank.value_shared == {google} and not rank.value_current for rank in wap_rank),
+            f"the rank names the unconfirmed shared-file source: {wap_rank}",
+        )
+        android_dir = Path(tmp) / "android"
+        evidence = generate_android_outputs.load_apn_evidence(Path(tmp) / "evidence-shared.json")
+        generate_android_outputs.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        written = ET.parse(android_dir / "apns-conf.xml").getroot()
+        assert_true(
+            all(not any(key.startswith("_") for key in element.attrib) for element in written),
+            "the shared-file mark is never written",
+        )
+
+    for value, expected in (
+        ("default", True),
+        ("DEFAULT", True),
+        ("internet", False),
+        ("ims.sos", False),
+        ("internet_1", False),
+        ("web-gprs.example", False),
+        ("mms/airtel mms", True),
+        ("http://mms.pepephone.com", True),
+        ("Orange MMS", True),
+        ("#777", True),
+        ("", True),
+    ):
+        assert_true(
+            generate_android_outputs.placeholder_apn(value) is expected,
+            f"placeholder_apn({value!r}) should be {expected}",
         )
 
 
@@ -3681,6 +3877,8 @@ def main() -> int:
     print("APN ranking tests passed")
     check_current_vendor_attach()
     print("current vendor and attach type tests passed")
+    check_shared_file_and_malformed_values()
+    print("shared-file and malformed APN value tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")

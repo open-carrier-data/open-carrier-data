@@ -254,6 +254,9 @@ def explain(
                 "reasons": {
                     "real_apn": not rank.placeholder,
                     "value_from_current_vendor": bool(rank.value_current),
+                    # Google gives the value only from its shared file, and no
+                    # maintained per-carrier source confirms it.
+                    "shared_file_unconfirmed": bool(rank.value_shared - rank.value_current),
                     "row_from_current_vendor": bool(rank.row_current),
                     "ia_left_out": bool(row.get("_ia_left_out")),
                     "value_families": sorted(generator.source_families(rank.value_sources)),
