@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:b8b853aedcfaf3aae609c701a7b962c5f5eed3e50b9d77696bd0946f9ab9d18e
+    data_digest: sha256:e78ada03a5a9cea450e1e285aa8ad0f511c51ed8f098ca4ed7e151edbe5c1601
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -5970,7 +5970,9 @@
   <apn apn="mms" carrier="T2 MMS" mcc="250" mmsc="http://mms" mmsport="8080" mmsproxy="193.12.40.65" mnc="20" mvno_match_data="T2" mvno_type="spn" type="mms" />
   <apn apn="mms.tele2.ru" carrier="T2 MMS" mcc="250" mmsc="http://mmsc.tele2.ru" mmsport="8080" mmsproxy="193.12.40.65" mnc="20" mvno_match_data="T2" mvno_type="spn" type="mms" />
   <apn apn="IMS" carrier="T2 IMS" mcc="250" mnc="20" mvno_match_data="T2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="T2 IMS" mcc="250" mnc="20" mvno_match_data="T2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="HOS" carrier="T2 XCAP" mcc="250" mnc="20" mvno_match_data="T2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="hos" carrier="T2 XCAP" mcc="250" mnc="20" mvno_match_data="T2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.tele2.ru" carrier="TELE2 Internet" mcc="250" mnc="20" mvno_match_data="TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.tele2.ru" carrier="TELE2 MMS" mcc="250" mmsc="http://mmsc.tele2.ru" mmsport="8080" mmsproxy="193.12.40.65" mnc="20" mvno_match_data="TELE2" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="TELE2 IMS" mcc="250" mnc="20" mvno_match_data="TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -5979,7 +5981,9 @@
   <apn apn="internet.tele2.ru" carrier="TELE2 Internet" mcc="250" mnc="20" mvno_match_data="TELE2" mvno_type="spn" type="xcap" />
   <apn apn="vtb" carrier="VTB Mobile" carrier_id="2448" mcc="250" mnc="26" type="default,ia,supl" />
   <apn apn="vtb" authtype="1" carrier="VTB" mcc="250" mnc="26" type="default,supl" />
-  <apn apn="vtb" carrier="VTB Mobile Internet" mcc="250" mnc="26" mvno_match_data="VTB Mobile" mvno_type="spn" type="default" />
+  <apn apn="vtb" carrier="VTB Mobile Internet" mcc="250" mnc="26" mvno_match_data="VTB Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" carrier="VTB Mobile IMS" mcc="250" mnc="26" mvno_match_data="VTB Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="VTB Mobile HOS" mcc="250" mnc="26" mvno_match_data="VTB Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.letai.ru" carrier="Letai Internet" mcc="250" mnc="27" mvno_match_data="Tattelecom" mvno_type="spn" type="default" />
   <apn apn="mms" carrier="Letai MMS" mcc="250" mmsc="https://mmsс:8002" mmsport="8080" mmsproxy="mmsc" mnc="27" mvno_match_data="Tattelecom" mvno_type="spn" type="mms" />
   <apn apn="vodalte.ru" carrier="VODA internet" carrier_id="1029" mcc="250" mnc="28" type="default,ia,supl" />
@@ -22615,7 +22619,7 @@
   <apn apn="mms.te.eg" carrier="WE mms" mcc="602" mmsc="http://wemmsc.te.eg:8080" mmsport="8080" mmsproxy="wemmsc.te.eg" mnc="04" type="mms" />
   <apn apn="ims" carrier="WE ims" mcc="602" mnc="04" type="ims" />
   <apn apn="internet" carrier="we Internet" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="default" />
-  <apn apn="internet.te.eg" carrier="WE Internet" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="default" />
+  <apn apn="internet.te.eg" carrier="WE Internet" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ims" carrier="ims" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" type="ims" />
   <apn apn="hos" carrier="hos" mcc="602" mnc="04" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet.vodafone.net" authtype="2" carrier="Vodafone GPRS Internet" mcc="602" mnc="12" password="internet" type="default,supl" user="internet" />
@@ -23462,6 +23466,8 @@
   <apn apn="default" carrier="Econet" carrier_id="1880" mcc="648" mnc="04" type="default,ia,supl" />
   <apn apn="default" carrier="Econet" mcc="648" mnc="04" type="default,supl" />
   <apn apn="econet.mms" carrier="ECONET" mcc="648" mmsc="http://172.24.105.180:8080" mmsport="8080" mmsproxy="172.18.0.178" mnc="04" type="mms" />
+  <apn apn="smartsuite.net" carrier="smartsuite.net" mcc="648" mnc="04" mvno_match_data="Econet Wireless Zimbabwe" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ims" carrier="ims" mcc="648" mnc="04" mvno_match_data="Econet Wireless Zimbabwe" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims,xcap" />
   <apn apn="econet.net" carrier="Econet Internet" mcc="648" mnc="04" mvno_match_data="Econet Zimbabwe" mvno_type="spn" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="648" mnc="04" mvno_match_data="Econet Zimbabwe" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="internet" carrier="Tagtel" mcc="648" mnc="12" mvno_match_data="Tagtel Zimbabwe" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
