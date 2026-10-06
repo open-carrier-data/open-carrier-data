@@ -36,6 +36,16 @@
       ]
     },
     {
+      "apn": "bam.clarochile.cl",
+      "name": "BAM Claro",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "IMS Claro",
       "protocol": "IPV4V6",
@@ -43,12 +53,31 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS Claro",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.clarochile.cl",
+      "mmsc": "http://mms.clarochile.cl",
+      "mmsport": 8080,
+      "mmsproxy": "172.23.200.200",
+      "name": "MMS Claro",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
