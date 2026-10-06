@@ -4,10 +4,10 @@ These files are generated from the carrier profiles by `tools/generate_android_o
 
 | File | Meaning |
 | --- | --- |
-| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them |
+| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them, current vendors' values first, and the attach type `ia` only on rows a current vendor backs where one gives the attach APN |
 | `carrier-config-list.xml` | CarrierConfig XML in Android's `vendor.xml` format, blocks in generic-to-specific order |
 | `lookup.json` | every profile with `match`, `capabilities`, `specificity`, counts, its freshness window and the month of its newest upstream entry |
-| `metadata.json` | target version, output counts, the profile IDs left out of each XML, the APN rows LineageOS's schema rejects, the data digest and the freshness window |
+| `metadata.json` | target version, output counts, the profile IDs left out of each XML, the APN rows LineageOS's schema rejects, the rows that lost `ia`, the data digest and the freshness window |
 
 The counts change with every publish, so this page does not repeat them. `metadata.json` carries the APN row and CarrierConfig block counts under `output`. Print them with this command:
 

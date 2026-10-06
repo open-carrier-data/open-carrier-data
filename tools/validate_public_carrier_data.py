@@ -1825,12 +1825,17 @@ def validate_android_metadata(
         "apn_rows_rejected_by_lineageos_schema",
         "carrier_config_profile_ids_with_unrepresentable_match",
         "carrier_config_profiles_with_unrepresentable_match",
+        "ia_types_left_out_not_vendor_current",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
-    rejected = omissions["apn_rows_rejected_by_lineageos_schema"]
-    if not isinstance(rejected, int) or isinstance(rejected, bool) or rejected < 0:
-        raise ValidationError(f"{metadata_path}: rejected APN row count is invalid")
+    for key, what in (
+        ("apn_rows_rejected_by_lineageos_schema", "rejected APN row count"),
+        ("ia_types_left_out_not_vendor_current", "count of rows without their attach type"),
+    ):
+        count = omissions[key]
+        if not isinstance(count, int) or isinstance(count, bool) or count < 0:
+            raise ValidationError(f"{metadata_path}: {what} is invalid")
     for prefix in ("apn", "carrier_config"):
         count = omissions[f"{prefix}_profiles_with_unrepresentable_match"]
         profile_ids = omissions[f"{prefix}_profile_ids_with_unrepresentable_match"]

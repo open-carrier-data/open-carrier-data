@@ -80,7 +80,7 @@ def check_explain() -> None:
         {"volte": "supported", "mms": "supported"},
         android_carrier_config={"carrier_volte_available_bool": True, "maxMessageSize": 300000},
         android_apns=[
-            {"name": "Old", "apn": "internet.old.example", "types": ["default"]},
+            {"name": "Old", "apn": "internet.old.example", "types": ["default", "ia"]},
             {"name": "Web", "apn": "internet.example", "types": ["default", "mms"], "mmsc": "http://mms.example"},
         ],
     )
@@ -96,6 +96,7 @@ def check_explain() -> None:
         android_apns=[{"name": "Other", "apn": "other.example", "types": ["default"]}],
     )
     old_row = generate_android_outputs.apn_fact_key(plain["android_apns"][0], "default")
+    old_attach = generate_android_outputs.apn_fact_key(plain["android_apns"][0], "ia")
     evidence = {
         "schema_version": 1,
         "description": "Test evidence.",
@@ -111,6 +112,11 @@ def check_explain() -> None:
                         {
                             "section": "android_apns",
                             "key": old_row,
+                            "sources": ["lineageos"],
+                        },
+                        {
+                            "section": "android_apns",
+                            "key": old_attach,
                             "sources": ["lineageos"],
                         },
                         {
@@ -205,6 +211,13 @@ def check_explain() -> None:
         assert rows[0]["reasons"]["value_families"] == ["aosp_apn_lists", "apple_carrier_bundles", "samsung_omc"], rows[0]
         assert rows[1]["reasons"]["value_families"] == ["aosp_apn_lists"], rows[1]
         assert rows[1]["reasons"]["row_sources"] == ["lineageos"]
+        assert rows[0]["reasons"]["value_from_current_vendor"] is True, rows[0]
+        assert rows[0]["reasons"]["ia_left_out"] is False, rows[0]
+        assert rows[1]["reasons"]["value_from_current_vendor"] is False, rows[1]
+        assert rows[1]["reasons"]["ia_left_out"] is True, (
+            "Samsung gives this network's internet APN, so the LineageOS-only row loses ia"
+        )
+        assert rows[1]["row"]["type"] == "default", rows[1]
         conf = (root / "generated" / "android" / "apns-conf.xml").read_text(encoding="utf-8")
         assert conf.index('apn="internet.example"') < conf.index('apn="internet.old.example"'), (
             "explain shows the order apns-conf.xml has"
