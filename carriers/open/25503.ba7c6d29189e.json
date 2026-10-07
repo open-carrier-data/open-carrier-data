@@ -37,15 +37,21 @@
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "default",
+        "ims"
       ]
     },
     {
-      "apn": "internet",
-      "name": "Kyivstar Internet",
+      "apn": "mms",
+      "mmsc": "http://mms.kyivstar.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "name": "Kyivstar MMS",
+      "password": "mms",
       "types": [
-        "ims"
-      ]
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "mms",

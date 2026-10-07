@@ -32,7 +32,6 @@
     {
       "apn": "broadband",
       "name": "Connect Mobile",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -40,6 +39,7 @@
     {
       "apn": "broadband",
       "name": "Connect Mobile",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -85,12 +85,33 @@
       "mmsc": "http://mmsc1.mms.telekom.ro:8002",
       "mmsport": 8080,
       "mmsproxy": "10.252.1.62",
+      "name": "Telekom MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
       "name": "mms",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "wnw",
+      "name": "web'n'walk",
+      "password": "wnw",
+      "types": [
+        "default"
+      ],
+      "user": "wnw"
     },
     {
       "apn": "wnw",
