@@ -25,12 +25,37 @@
       ]
     },
     {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "IMS",
       "protocol": "IP",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ooredoodata",
+      "name": "OoredooData",
+      "port": 8080,
+      "proxy": "172.24.10.20",
+      "types": [
+        "default"
       ]
     },
     {
@@ -41,6 +66,16 @@
       "types": [
         "default"
       ]
+    },
+    {
+      "apn": "ooredoodata",
+      "mmsc": "http://mms.ooredoo.mv",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.10.20",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -49,7 +84,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",

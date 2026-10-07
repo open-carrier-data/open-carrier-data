@@ -1,17 +1,35 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "Aliv IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "pda.newcomobile.com",
       "name": "Internet",
+      "protocol": "IPV4V6",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "pda.newcomobile.com",
+      "mmsc": "http://mms.bealiv.com",
+      "name": "Aliv MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
