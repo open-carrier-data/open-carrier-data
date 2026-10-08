@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:212ca51ea963a4dada35b175971a3ca26e540f73c696b47d6a2ae30e6df9d2bf
+    data_digest: sha256:77874d880747ba3f8fdd0d37603efd3d33d03b49ca6ff3dd485fd12f84c9252c
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -26558,6 +26558,7 @@
   <!-- open.20408.0fb043bec7e8 -->
   <carrier_config mcc="204" mnc="08" name="NL KPN" spn="\QNL KPN\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.20412.3a30aa5430ae -->
@@ -28166,11 +28167,6 @@
   <carrier_config mcc="218" mnc="90" name="BH Mobile" spn="\QBH Mobile\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
-  <!-- open.21901.ea184195332c -->
-  <carrier_config mcc="219" mnc="01" name="Bonbon Hr" spn="\QBONBON\E">
-    <boolean name="carrier_volte_available_bool" value="true" />
-    <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
-  </carrier_config>
   <!-- open.21901.a330d193eb53 -->
   <carrier_config mcc="219" mnc="01" name="HT HR" spn="\QHT HR\E">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
@@ -28215,6 +28211,11 @@
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
+  </carrier_config>
+  <!-- open.21901.35ed0922c4fb -->
+  <carrier_config mcc="219" mnc="01" name="bonbon" spn="\Qbonbon\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
   </carrier_config>
   <!-- open.21902.053d8db58c5c -->
   <carrier_config mcc="219" mnc="02" name="TM HR" spn="\QTM HR\E">
@@ -31315,8 +31316,8 @@
   <carrier_config mcc="302" mnc="220" name="Koodo" spn="\QKoodo\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
-  <!-- open.302220.9f365f7bc6b1 -->
-  <carrier_config mcc="302" mnc="220" name="PC mobile" spn="\QPC mobile\E">
+  <!-- open.302220.870d0962b06d -->
+  <carrier_config mcc="302" mnc="220" name="PC mobile" spn="\QPC Mobile\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.302220.6fd5e21107f5 -->
@@ -31344,8 +31345,8 @@
   <carrier_config mcc="302" mnc="221" name="Koodo" spn="\QKoodo\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
-  <!-- open.302221.4756bdbedbbc -->
-  <carrier_config mcc="302" mnc="221" name="PC mobile" spn="\QPC mobile\E">
+  <!-- open.302221.2662d3007cee -->
+  <carrier_config mcc="302" mnc="221" name="PC mobile" spn="\QPC Mobile\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.302221.0d006b993345 -->
@@ -41930,6 +41931,7 @@
   <!-- open.41301.967f6b6e4c1c -->
   <carrier_config mcc="413" mnc="01" name="Mobitel" spn="\QMobitel\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.41302.a02b86d3608d -->
   <carrier_config mcc="413" mnc="02" name="Dialog" spn="\QDialog\E">
@@ -42514,6 +42516,11 @@
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="1048576" />
+  </carrier_config>
+  <!-- open.45201.8267bdc71116 -->
+  <carrier_config mcc="452" mnc="01" name="VN MobiFone" spn="\QVN MobiFone\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.45400.1e017a129dfc -->
   <carrier_config mcc="454" mnc="00" name="1O1O" spn="\Q1O1O\E">
