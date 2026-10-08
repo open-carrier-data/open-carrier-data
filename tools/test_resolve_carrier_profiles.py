@@ -494,6 +494,56 @@ def check_explain_vendor_mms() -> None:
     ], results["26210"]
 
 
+def check_explain_absorbed_mms() -> None:
+    """--explain lists a stale MMS-only row apns-conf.xml leaves out because
+    Android merges it into an earlier row (absorbed_mms_left_out)."""
+    apns = [
+        {"name": "Spark", "apn": "internet", "types": ["default", "supl"]},
+        {"name": "Spark MMS", "apn": "internet", "types": ["mms"], "mmsc": "http://mms.spark.example"},
+        {"name": "Old MMS", "apn": "internet", "types": ["mms"], "mmsc": "http://mms.old.example"},
+    ]
+    sources = [["google_carriersettings"], ["google_carriersettings"], ["lineageos"]]
+    plain = carrier({"mccmnc": ["53005"]}, {}, android_apns=apns)
+    facts = [
+        {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group}
+        for row, group in zip(apns, sources)
+        for apn_type in row["types"]
+    ]
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 3,
+                "verified_observation_count": 0,
+                "sources": ["google_carriersettings", "lineageos"],
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "53005"}, root, root / "generated" / "evidence-index.json")
+        metadata = json.loads((root / "generated" / "android" / "metadata.json").read_text(encoding="utf-8"))
+    rows = result["apns"]["rows"]
+    left_out = result["apns"]["left_out"]
+    assert sorted(row["row"].get("mmsc", "") for row in rows) == ["", "http://mms.spark.example"], rows
+    assert [(row["row"]["mmsc"], row["reasons"]["absorbed_mms_left_out"]) for row in left_out] == [
+        ("http://mms.old.example", True)
+    ], left_out
+    assert metadata["omissions"]["mms_rows_left_out_absorbed_by_android"] == 1, metadata["omissions"]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
@@ -501,6 +551,7 @@ def main() -> int:
     check_explain_proxy_free_first()
     check_explain_stored_with_best_row()
     check_explain_vendor_mms()
+    check_explain_absorbed_mms()
     print("carrier profile resolver tests passed")
     return 0
 

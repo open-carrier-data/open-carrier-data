@@ -1904,6 +1904,7 @@ def validate_android_metadata(
         "carrier_config_profiles_with_unrepresentable_match",
         "ia_types_left_out_not_vendor_current",
         "mms_types_left_out_not_vendor_backed",
+        "mms_rows_left_out_absorbed_by_android",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
@@ -1911,6 +1912,7 @@ def validate_android_metadata(
         ("apn_rows_rejected_by_lineageos_schema", "rejected APN row count"),
         ("ia_types_left_out_not_vendor_current", "count of rows without their attach type"),
         ("mms_types_left_out_not_vendor_backed", "count of rows without their MMS type"),
+        ("mms_rows_left_out_absorbed_by_android", "count of absorbed MMS rows left out"),
     ):
         count = omissions[key]
         if not isinstance(count, int) or isinstance(count, bool) or count < 0:

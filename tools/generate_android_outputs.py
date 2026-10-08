@@ -419,6 +419,8 @@ class ApnRows(NamedTuple):
     schema_rejected: int
     ia_left_out: int = 0
     mms_left_out: int = 0
+    # Stored rows leave_out_absorbed_mms left out, every file row of them.
+    mms_absorbed_left_out: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -617,7 +619,12 @@ def write_android_groups_best_last(ranked: list[dict[str, Any]]) -> list[dict[st
     from the others only what it leaves unset. Rows written before their
     group's best row are marked "_stored_with_best_row", which is never
     written. No row is removed and no value changes; rows of other groups
-    keep their order."""
+    keep their order. Exception on the phone: for the networks of
+    persist_apns_for_plmn (20404, 310004, 310120, 311480, TelephonyProvider's
+    res/values/config.xml), separateRowsNeeded does not merge two such rows
+    whose types differ only by "dun", so there the earlier row keeps its
+    values (204/04 IMSI 204047960 leads with the frozen internet.mvno.mobi
+    row and mvno/mvno). Not handled here; documented in consume.md."""
     groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
     for record in ranked:
         groups[android_unique_key(record)].append(record)
@@ -869,6 +876,19 @@ def apn_row_network_types(record: dict[str, Any]) -> frozenset[int]:
     return frozenset(types) & MMS_NETWORK_TYPES if types - {0} else MMS_NETWORK_TYPES
 
 
+def vendor_mms_row(record: dict[str, Any]) -> bool:
+    """A vendor MMS row: a row a current vendor backs for "mms" (_current),
+    with a real APN and an MMSC, that serves a 3GPP data network type
+    (apn_row_network_types). put_vendor_mms_first and leave_out_absorbed_mms
+    use this one predicate."""
+    return (
+        bool(record.get("_current", {}).get("mms"))
+        and not placeholder_apn(record["apn"])
+        and bool(str(record.get("mmsc") or "").strip())
+        and bool(apn_row_network_types(record))
+    )
+
+
 def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
     current vendor backs for "mms" (_current), with a real APN and an MMSC,
@@ -906,14 +926,6 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     Returns the rows and 1 when a row was retyped."""
     def serves(record: dict[str, Any], apn_type: str) -> bool:
         return apn_type in apn_row_types(record["type"])
-
-    def vendor_mms_row(record: dict[str, Any]) -> bool:
-        return (
-            bool(record.get("_current", {}).get("mms"))
-            and not placeholder_apn(record["apn"])
-            and bool(str(record.get("mmsc") or "").strip())
-            and bool(apn_row_network_types(record))
-        )
 
     vendor = [record for record in ranked if vendor_mms_row(record)]
     if not vendor:
@@ -953,6 +965,140 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     return moved, retyped
 
 
+# ApnSetting.similar (ApnSetting.java:1427-1458), which
+# DataProfileManager.dedupeDataProfiles (DataProfileManager.java:877-897)
+# uses to merge two stored rows into one profile at the earlier row's place:
+# the same APN, no shared type, neither serving dun, these fields unset on one
+# side or equal, the auth type equal as ApnSetting resolves it
+# (android_auth_type), and the rest equal.
+ANDROID_SIMILAR_UNSET_OR_EQUAL = (
+    "proxy", "port", "mmsc", "mmsproxy", "mmsport", "user", "password", "mtu", "mtu_v4", "mtu_v6",
+)
+ANDROID_SIMILAR_EQUAL = (
+    "protocol", "roaming_protocol", "carrier_enabled", "bearer_bitmask",
+    "network_type_bitmask", "lingering_network_type_bitmask", "profile_id", "modem_cognitive",
+    "apn_set_id", "carrier_id", "skip_464xlat", "always_on", "infrastructure_bitmask",
+    "esim_bootstrap_provisioning",
+)
+
+
+def android_auth_type(record: dict[str, Any]) -> int:
+    """The auth type as ApnSetting's constructor resolves it
+    (ApnSetting.java:1054-1058): an explicit value stays, an unset one (-1)
+    becomes 0 without a username and 3 (PAP or CHAP) with one."""
+    try:
+        value = int(record.get("authtype", -1))
+    except (TypeError, ValueError):
+        value = -1
+    if value != -1:
+        return value
+    return 3 if str(record.get("user") or "") else 0
+
+
+def android_stored_rows(written: list[dict[str, Any]]) -> list[tuple[dict[str, Any], list[int]]]:
+    """What TelephonyProvider stores from one written scope: per
+    android_unique_key, in the order of its first row, the written attributes
+    of its rows in file order, each overwriting the earlier ones, with the
+    types united and the bitmasks merged (an absent bitmask means every
+    network), and the indices of its rows."""
+    stored: dict[tuple[str, ...], tuple[dict[str, Any], list[int]]] = {}
+    for index, record in enumerate(written):
+        key = android_unique_key(record)
+        attributes = written_attributes(record)
+        if key not in stored:
+            stored[key] = (dict(attributes), [index])
+            continue
+        row, indices = stored[key]
+        types = row["type"].split(",")
+        types += [apn_type for apn_type in attributes["type"].split(",") if apn_type not in types]
+        for field in ("bearer_bitmask", "network_type_bitmask"):
+            old, new = row.get(field), attributes.get(field)
+            attributes[field] = (
+                None
+                if old is None or new is None
+                else "|".join(sorted(set(str(old).split("|")) | set(str(new).split("|")), key=int))
+            )
+        row.update(attributes)
+        row["type"] = ",".join(types)
+        indices.append(index)
+    return list(stored.values())
+
+
+def android_similar(first: dict[str, Any], second: dict[str, Any]) -> bool:
+    """ApnSetting.similar on two stored rows (ANDROID_SIMILAR_*)."""
+    first_types = set(apn_row_types(first["type"]))
+    second_types = set(apn_row_types(second["type"]))
+    if "dun" in first_types | second_types or first_types & second_types:
+        return False
+    if first["apn"] != second["apn"]:
+        return False
+    if android_auth_type(first) != android_auth_type(second):
+        return False
+    for field in ANDROID_SIMILAR_UNSET_OR_EQUAL:
+        a, b = first.get(field), second.get(field)
+        if a not in (None, "", 0, "0") and b not in (None, "", 0, "0") and str(a) != str(b):
+            return False
+    for field in ANDROID_SIMILAR_EQUAL:
+        default = ANDROID_APN_DEFAULTS.get(field, ANDROID_UNIQUE_DEFAULTS.get(field))
+        if str(first.get(field, default)) != str(second.get(field, default)):
+            return False
+    return True
+
+
+def mms_setting(record: dict[str, Any]) -> tuple[str, ...]:
+    """Where an MMS goes: APN, MMSC, MMS proxy and MMS port."""
+    return tuple(str(record.get(field, "")) for field in ("apn", "mmsc", "mmsproxy", "mmsport"))
+
+
+def leave_out_absorbed_mms(written: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Leave out of one written scope a stored row (every file row of one
+    android_unique_key, android_stored_rows) when all of these hold:
+
+    1. it serves only "mms";
+    2. its MMS setting (APN, MMSC, MMS proxy, MMS port) is no vendor MMS
+       row's (vendor_mms_row) in the scope;
+    3. the vendor MMS rows together serve every 3GPP network type it serves
+       (apn_row_network_types);
+    4. ApnSetting.similar holds between it and an earlier stored row of the
+       scope (android_similar, auth types resolved).
+
+    Android never keeps such a row as a profile of its own.
+    DataProfileManager.dedupeDataProfiles reads the earlier row once (`first`,
+    DataProfileManager.java:880) and merges every later similar row with it
+    as it was read (mergeDataProfiles, 960-1040), so the merged profile takes
+    the stale MMSC at the earlier row's place, ahead of the vendor's MMS row,
+    and when several rows are similar to one row the last one wins and
+    replaces the merges before it. Rule decisions of 2026-10-06, round 6,
+    change 19: measured on 2026-10-08 on public 575632c1 with change 18, 50
+    rows in 39 scopes, all absorbed or replaced on the phone; phone MMS moves
+    to a current vendor's exact setting in 15 more scopes on all 11 network
+    types and no scope loses a profile. The vendor rows already serve every
+    network the row served, so this stays right if Android stops merging.
+    Profile JSON keeps these rows; only apns-conf.xml leaves them out.
+    Returns the rows kept and the rows left out, each marked
+    "_absorbed_mms_left_out" for --explain."""
+    vendor = [record for record in written if vendor_mms_row(record)]
+    if not vendor:
+        return written, []
+    settings = {mms_setting(record) for record in vendor}
+    covered = frozenset().union(*(apn_row_network_types(record) for record in vendor))
+    left_out: set[int] = set()
+    stored = android_stored_rows(written)
+    for position, (row, indices) in enumerate(stored):
+        if set(apn_row_types(row["type"])) != {"mms"} or mms_setting(row) in settings:
+            continue
+        if not apn_row_network_types(row) <= covered:
+            continue
+        if any(android_similar(earlier, row) for earlier, _ in stored[:position]):
+            left_out.update(indices)
+    for index in left_out:
+        written[index]["_absorbed_mms_left_out"] = True
+    return (
+        [record for index, record in enumerate(written) if index not in left_out],
+        [record for index, record in enumerate(written) if index in left_out],
+    )
+
+
 def apn_xml_rows(
     profiles: list[dict[str, Any]],
     evidence: dict[str, ProfileEvidence] | None = None,
@@ -962,8 +1108,10 @@ def apn_xml_rows(
     network code and MVNO selector order, a stale attach type left out
     (leave_out_stale_attach), each scope ranked by its evidence, MMS sent to a
     current vendor's MMS row that serves a mobile network
-    (put_vendor_mms_first), and last the rows Android stores as one written
-    together with the best-ranked one last (write_android_groups_best_last). TelephonyProvider stores such rows as
+    (put_vendor_mms_first), the rows Android stores as one written together
+    with the best-ranked one last (write_android_groups_best_last), and last
+    a stale MMS-only row Android merges into another row left out
+    (leave_out_absorbed_mms). TelephonyProvider stores such rows as
     one at the first row's place, each later row's written attributes
     overwrite, types unite and bitmasks merge, so the best row goes last and
     takes from the others only what it leaves unset. A group's first row in
@@ -985,12 +1133,15 @@ def apn_xml_rows(
     ordered: list[dict[str, Any]] = []
     ia_left_out = 0
     mms_left_out = 0
+    mms_absorbed: list[dict[str, Any]] = []
     for scope in sorted(scopes):
         ia_left_out += leave_out_stale_attach(scopes[scope])
         ranked, retyped = put_vendor_mms_first(rank_scope(scopes[scope]))
         mms_left_out += retyped
-        ordered.extend(write_android_groups_best_last(ranked))
-    return ApnRows(ordered, schema_rejected, ia_left_out, mms_left_out)
+        kept, absorbed = leave_out_absorbed_mms(write_android_groups_best_last(ranked))
+        ordered.extend(kept)
+        mms_absorbed.extend(absorbed)
+    return ApnRows(ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed))
 
 
 def apn_xml_records(
@@ -1374,6 +1525,7 @@ def write_metadata(
     digest: str | None = None,
     ia_types_left_out: int = 0,
     mms_types_left_out: int = 0,
+    mms_rows_left_out_absorbed: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -1419,6 +1571,10 @@ def write_metadata(
             # MMS, and current vendors' MMS rows serve every mobile network
             # type they serve. Profile JSON keeps the type.
             "mms_types_left_out_not_vendor_backed": mms_types_left_out,
+            # Rows of apns-conf.xml leave_out_absorbed_mms left out: stale
+            # MMS-only rows Android merges into an earlier row, whose MMS
+            # setting no current vendor gives. Profile JSON keeps them.
+            "mms_rows_left_out_absorbed_by_android": mms_rows_left_out_absorbed,
         },
         **freshness,
     }
@@ -1494,6 +1650,7 @@ def main(argv: list[str]) -> int:
         digest,
         apn_rows.ia_left_out,
         apn_rows.mms_left_out,
+        len(apn_rows.mms_absorbed_left_out),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -1502,7 +1659,8 @@ def main(argv: list[str]) -> int:
         f"{config_xml_count} CarrierConfig XML block(s), "
         f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them, "
         f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
-        f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs"
+        f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs, "
+        f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out"
     )
     return 0
 
