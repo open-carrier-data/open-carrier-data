@@ -9,7 +9,9 @@ on:
         default: ""
   push:
     branches: [main]
+  # edited: a phone-guard-accept line added to the body checks again.
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   schedule:
     - cron: "17 4 * * *"
 
@@ -34,6 +36,10 @@ jobs:
         run: python3 tools/test_resolve_carrier_profiles.py
       - name: Test the apns-conf diff
         run: python3 tools/test_diff_apns_conf.py
+      - name: Test the Android phone model
+        run: python3 tools/test_android_phone_model.py
+      - name: Test the phone-level guard
+        run: python3 tools/test_phone_guard.py
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8
@@ -44,6 +50,39 @@ jobs:
             echo "$untracked" >&2
             exit 1
           fi
+      - name: Phone-level guard
+        # Holds a pull request whose apns-conf.xml takes a phone's internet,
+        # attach or working MMS away, or moves MMS off a current vendor's
+        # tuple, unless the body has the line `phone-guard-accept: DIGEST`
+        # for exactly these trips. The body is read from the environment,
+        # never put into the script text.
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          base_xml="$RUNNER_TEMP/base-apns-conf.xml"
+          git show "$BASE_SHA:generated/android/apns-conf.xml" > "$base_xml"
+          accept=()
+          while IFS= read -r line; do
+            accept+=(--accept "${line#phone-guard-accept: }")
+          done < <(printf '%s\n' "$PR_BODY" | tr -d '\r' | grep -oE '^phone-guard-accept: [0-9a-f]{16}$' || true)
+          status=0
+          python3 tools/check_phone_guard.py "$base_xml" generated/android/apns-conf.xml \
+            --generator . "${accept[@]}" > "$RUNNER_TEMP/phone-guard.txt" 2>&1 || status=$?
+          cat "$RUNNER_TEMP/phone-guard.txt"
+          {
+            echo "## Phone-level guard"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/phone-guard.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -ne 0 ]; then
+            echo "::error::The phone-level guard holds this pull request (exit $status). Fix the trips, or add the line 'phone-guard-accept: DIGEST' to the body after a review rules them intended."
+          fi
+          exit "$status"
       - name: Check the APN file against LineageOS's apns-conf.xsd
         run: |
           if ! command -v xmllint >/dev/null; then
@@ -138,6 +177,8 @@ jobs:
             echo "Pushes and pull requests keep passing, because their check runs the validators in warn mode. Consumers who run the validators with \`--freshness fail\` get the same error. Refresh the sources and publish a new snapshot, or read \`docs/consume.md\` for what a stale snapshot means."
             echo
             echo "An error that says the pipeline looks stopped names each late lane. A weekly lane is late when its source was not checked for more than 21 days, three missed weekly imports; a Samsung lane (samsung_omc, samsung_ims), which runs daily on the self-hosted runner, after 10 days. The alarm also fires when no data was published for more than 21 days. Check the private import and publish workflows and the self-hosted runner. For a deliberate pause, set the repository variable \`LIVENESS_SNOOZE_UNTIL\` to the last day of the pause; the alarm then only warns."
+            echo
+            echo "If a \`publish-held\` pull request is open, a publish is held by the phone-level guard; read its body first."
             echo
             echo '```'
             cat strict.log
