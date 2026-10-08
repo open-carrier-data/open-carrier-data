@@ -230,9 +230,10 @@ def explain(
         for item in lookup.get("profiles", [])
         if mccmnc in item.get("match", {}).get("mccmnc", [])
     ]
-    rows = generator.apn_xml_rows(
+    generated_rows = generator.apn_xml_rows(
         network_profiles, generator.load_apn_evidence(evidence_index_path)
-    ).records
+    )
+    rows = generated_rows.records
     network_rows = [row for row in rows if row.get("mcc", "") + row.get("mnc", "") == mccmnc]
     mvno_rows = [row for row in network_rows if row.get("mvno_type") and mvno_row_matches(row, identity)]
     chosen = mvno_rows or [row for row in network_rows if not row.get("mvno_type")]
@@ -243,6 +244,7 @@ def explain(
     for scope_rows in scopes.values():
         for row, rank in zip(scope_rows, generator.scope_row_ranks(scope_rows)):
             ranks[id(row)] = rank
+    chosen_scopes = {generator.apn_scope_key(row) for row in chosen}
     apn_rows = []
     for position, row in enumerate(chosen, start=1):
         rank = ranks[id(row)]
@@ -294,6 +296,14 @@ def explain(
         "apns": {
             "scope": "mvno" if mvno_rows else "network",
             "rows": apn_rows,
+            # Rows of this SIM's scope that apns-conf.xml leaves out: stale
+            # MMS-only rows Android merges into an earlier row
+            # (absorbed_mms_left_out). The profile JSON keeps them.
+            "left_out": [
+                {"row": generator.written_attributes(row), "reasons": {"absorbed_mms_left_out": True}}
+                for row in generated_rows.mms_absorbed_left_out
+                if generator.apn_scope_key(row) in chosen_scopes
+            ],
         },
     }
 

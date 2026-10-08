@@ -2887,6 +2887,200 @@ def check_vendor_mms_first() -> None:
     )
 
 
+def check_leave_out_absorbed_mms() -> None:
+    """apns-conf.xml leaves out a stored row that serves only "mms", whose
+    MMS setting no vendor MMS row gives, whose network types the vendor MMS
+    rows serve, and that ApnSetting.similar ties to an earlier stored row
+    (auth types resolved): DataProfileManager would merge it there (rule
+    decisions of 2026-10-06, round 6, change 19). The rows of one stored row
+    go together, the other rows keep their order, and profile JSON keeps
+    every row."""
+
+    google = "google_carriersettings"
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    scopes: dict[str, list[tuple[dict, tuple[str, ...]]]] = {
+        # 238/02 shape: a lower default row, a stale MMS-only row with its
+        # APN (two file rows Android stores as one), and a vendor MMS row with
+        # another APN. The stale row merges into the lower default row.
+        "23802": [
+            (apn("internet", ("default", "ia", "supl")), (google, "lineageos")),
+            (apn("telia", ("default",)), ("lineageos",)),
+            (apn("telia", ("mms",), mmsc="http://mms.old.example"), ("lineageos", "mobile_broadband_provider_info")),
+            (apn("telia", ("mms",), mmsc="http://mms.old.example", mtu=1500), ("sony_open_devices_aosp",)),
+            (apn("mms.telia.example", ("mms",), mmsc="http://mms.telia.example"), (google,)),
+        ],
+        # 530/05 shape: a vendor internet row and a vendor MMS row with the
+        # same APN, and a stale MMS row of that APN with another MMSC.
+        "53005": [
+            (apn("internet", ("default", "supl")), (google,)),
+            (apn("internet", ("mms",), mmsc="http://mms.spark.example"), (google,)),
+            (apn("internet", ("mms",), mmsc="http://mms.old.example"), ("lineageos",)),
+        ],
+        # Talkmobile shape: an MMS-only row with a username and no auth type
+        # (3) next to a default row with neither (0). Not similar: it stays.
+        "23415": [
+            (apn("payg.talkmobile.co.uk", ("default",)), ("lineageos",)),
+            (apn("payg.talkmobile.co.uk", ("mms",), mmsc="http://mms.old.example", user="wap", password="wap"), ("lineageos",)),
+            (apn("mms.example", ("mms",), mmsc="http://mms.example"), (google,)),
+        ],
+        # 208/01 Orange shape: the earlier row serves dun. It stays.
+        "20801": [
+            (apn("orange", ("default", "dun")), (google,)),
+            (apn("orange", ("mms",), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("orange.mms", ("mms",), mmsc="http://mms.orange.example"), (google,)),
+        ],
+        # 466/89 shape: the MMS row's setting equals a vendor's. It stays.
+        "46689": [
+            (apn("internet", ("default",)), ("lineageos",)),
+            (apn("internet", ("mms",), mmsc="http://mms.example"), ("lineageos",)),
+            (apn("internet", ("mms",), mmsc="http://mms.example", protocol="IPV4V6"), (google,)),
+        ],
+        # Bell shape: the only vendor MMS row is Wi-Fi only. It stays.
+        "30263": [
+            (apn("pda.bell.ca", ("default",)), ("lineageos",)),
+            (apn("pda.bell.ca", ("mms",), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("apps.bell.ca", ("mms",), mmsc="http://mms.bell.example", bearer_bitmask="18"), (google,)),
+        ],
+        # A same-APN row with another protocol is not similar. It stays.
+        "26201": [
+            (apn("web", ("default",), protocol="IPV4V6"), (google,)),
+            (apn("web", ("mms",), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("mms", ("mms",), mmsc="http://mms.example"), (google,)),
+        ],
+        # The vendor MMS row serves LTE only; the stale row serves every
+        # network type. It stays.
+        "26202": [
+            (apn("web", ("default",)), (google,)),
+            (apn("web", ("mms",), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("mms", ("mms",), mmsc="http://mms.example", bearer_bitmask="14"), (google,)),
+        ],
+        # 73404 shape: no vendor MMS row, nothing changes.
+        "73404": [
+            (apn("internet", ("default",)), ("lineageos",)),
+            (apn("internet", ("mms",), mmsc="http://mms.old.example"), ("apple_carrier_bundles",)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append(
+            {
+                "profile_id": profile_id,
+                "display_name": profile_id,
+                "match": {"mccmnc": [mccmnc]},
+                "android_apns": [row for row, _ in rows],
+            }
+        )
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                "sources": sorted(sources),
+            }
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append(
+            {
+                "profile_id": profile_id,
+                "sources": sorted({source for _, sources in rows for source in sources}),
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+            }
+        )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        rows = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+
+    def scope(mccmnc: str) -> list[tuple[str, str, str]]:
+        return [
+            (record["apn"], record["type"], str(record.get("mmsc", "")))
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+        ]
+
+    def given(mccmnc: str) -> list[tuple[str, str, str]]:
+        return sorted(
+            (row["apn"], ",".join(row["types"]), str(row.get("mmsc", ""))) for row, _ in scopes[mccmnc]
+        )
+
+    left = sorted(
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"], str(record.get("mmsc", "")), str(record.get("mtu", "")))
+        for record in rows.mms_absorbed_left_out
+    )
+    assert_true(
+        left
+        == [
+            ("23802", "telia", "http://mms.old.example", ""),
+            ("23802", "telia", "http://mms.old.example", "1500"),
+            ("53005", "internet", "http://mms.old.example", ""),
+        ],
+        f"the stale MMS-only rows Android absorbs are left out, both file rows of a stored row: {left}",
+    )
+    assert_true(
+        all(record.get("_absorbed_mms_left_out") for record in rows.mms_absorbed_left_out),
+        "left-out rows are marked for --explain",
+    )
+    assert_true(
+        sorted(scope("23802"))
+        == sorted(
+            [
+                ("internet", "default,ia,supl", ""),
+                ("telia", "default", ""),
+                ("mms.telia.example", "mms", "http://mms.telia.example"),
+            ]
+        )
+        and sorted(scope("53005"))
+        == sorted([("internet", "default,supl", ""), ("internet", "mms", "http://mms.spark.example")]),
+        f"the rest of 238/02 and 530/05 stays: {scope('23802')}, {scope('53005')}",
+    )
+    for mccmnc in ("23415", "20801", "46689", "30263", "26201", "26202", "73404"):
+        assert_true(
+            sorted(scope(mccmnc)) == given(mccmnc),
+            f"{mccmnc}: every row stays: {scope(mccmnc)} != {given(mccmnc)}",
+        )
+    # Without the rule every row is written; with it, the same rows in the
+    # same order, minus the left-out ones.
+    rule = generate_android_outputs.leave_out_absorbed_mms
+    try:
+        generate_android_outputs.leave_out_absorbed_mms = lambda written: (written, [])
+        with tempfile.TemporaryDirectory() as tmp:
+            evidence_path = Path(tmp) / "evidence.json"
+            evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+            plain = generate_android_outputs.apn_xml_rows(
+                deepcopy(profiles), generate_android_outputs.load_apn_evidence(evidence_path)
+            )
+    finally:
+        generate_android_outputs.leave_out_absorbed_mms = rule
+    line = generate_android_outputs.apn_row_line
+    left_lines = {line(record) for record in rows.mms_absorbed_left_out}
+    assert_true(
+        [line(record) for record in rows.records]
+        == [line(record) for record in plain.records if line(record) not in left_lines]
+        and len(plain.records) == sum(len(items) for items in scopes.values()),
+        "only the absorbed rows are left out and the other rows keep their order",
+    )
+    stored = generate_android_outputs.android_stored_rows(
+        [record for record in rows.records if record.get("mcc", "") + record.get("mnc", "") == "23415"]
+    )
+    assert_true(
+        [generate_android_outputs.android_auth_type(row) for row, _ in stored if row["apn"] == "payg.talkmobile.co.uk"]
+        == [0, 3],
+        "auth types resolve as ApnSetting does: 0 without a user, 3 with one",
+    )
+    assert_true(
+        generate_android_outputs.android_auth_type({"authtype": 0, "user": "u"}) == 0
+        and generate_android_outputs.android_auth_type({"authtype": "1"}) == 1,
+        "an explicit auth type stays",
+    )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -4605,6 +4799,8 @@ def main() -> int:
     print("best row last tests passed")
     check_vendor_mms_first()
     print("vendor MMS row tests passed")
+    check_leave_out_absorbed_mms()
+    print("absorbed MMS row tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
