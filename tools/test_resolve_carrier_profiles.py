@@ -414,12 +414,93 @@ def check_explain_stored_with_best_row() -> None:
         assert rows[1]["reasons"]["row_from_current_vendor"] is True, rows[1]
 
 
+def check_explain_vendor_mms() -> None:
+    """--explain says when the first internet row lost "mms" (mms_left_out),
+    when a current vendor's MMS row moved ahead (vendor_mms_ahead), and when
+    an internet row kept "mms" because no vendor MMS row serves all its
+    mobile network types (mms_kept_no_vendor_coverage)."""
+    cases = {
+        # 234/30 shape: EE's internet row carries a stale MMS setting; Google
+        # gives eezone.
+        "23430": (
+            [
+                {"name": "EE", "apn": "everywhere", "types": ["default", "mms"], "mmsc": "http://mms.ee.example"},
+                {"name": "T-Mobile", "apn": "general.t-mobile.uk", "types": ["default", "mms"], "mmsc": "http://mmsc.t-mobile.example"},
+                {"name": "EE MMS", "apn": "eezone", "types": ["mms"], "mmsc": "http://mms/", "mmsproxy": "149.254.201.135", "mmsport": 8080},
+            ],
+            [{"default": ["google_carriersettings"], "mms": ["lineageos"]}, {"default": ["lineageos"], "mms": ["lineageos"]}, {"mms": ["google_carriersettings"]}],
+        ),
+        # The only vendor MMS row serves LTE and NR; the internet row serves
+        # every network type and keeps "mms".
+        "26210": (
+            [
+                {"name": "Web", "apn": "web.example", "types": ["default", "mms"], "mmsc": "http://mms.old.example"},
+                {"name": "MMS", "apn": "mms.example", "types": ["mms"], "mmsc": "http://mms.example", "bearer_bitmask": "14|20"},
+            ],
+            [{"default": ["lineageos"], "mms": ["lineageos"]}, {"mms": ["google_carriersettings"]}],
+        ),
+    }
+    results = {}
+    for mccmnc, (apns, sources) in cases.items():
+        plain = carrier({"mccmnc": [mccmnc]}, {}, android_apns=apns)
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group[apn_type]}
+            for row, group in zip(apns, sources)
+            for apn_type in row["types"]
+        ]
+        evidence = {
+            "schema_version": 1,
+            "description": "Test evidence.",
+            "source_snapshots": [],
+            "profiles": [
+                {
+                    "profile_id": plain["profile_id"],
+                    "observation_count": len(apns),
+                    "verified_observation_count": 0,
+                    "sources": sorted({source for fact in facts for source in fact["sources"]}),
+                    "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                    "capability_sources": {},
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+            write_json(root / "generated" / "evidence-index.json", evidence)
+            with contextlib.redirect_stdout(io.StringIO()):
+                generate_android_outputs.main(
+                    ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+                )
+            lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+            result = resolver.explain(lookup, {"mccmnc": mccmnc}, root, root / "generated" / "evidence-index.json")
+        results[mccmnc] = [
+            (
+                row["row"]["apn"],
+                row["row"]["type"],
+                row["reasons"]["mms_left_out"],
+                row["reasons"]["vendor_mms_ahead"],
+                row["reasons"]["mms_kept_no_vendor_coverage"],
+            )
+            for row in result["apns"]["rows"]
+        ]
+    assert results["23430"] == [
+        ("everywhere", "default", True, False, False),
+        ("eezone", "mms", False, True, False),
+        ("general.t-mobile.uk", "default,mms", False, False, False),
+    ], results["23430"]
+    assert results["26210"] == [
+        ("web.example", "default,mms", False, False, True),
+        ("mms.example", "mms", False, False, False),
+    ], results["26210"]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
     check_explain_shared_file()
     check_explain_proxy_free_first()
     check_explain_stored_with_best_row()
+    check_explain_vendor_mms()
     print("carrier profile resolver tests passed")
     return 0
 

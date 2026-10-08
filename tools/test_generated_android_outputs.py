@@ -2616,6 +2616,277 @@ def check_best_row_last() -> None:
     assert_true(count == len(given) and got == given, f"the rows and their values do not change: {got} != {given}")
 
 
+def check_vendor_mms_first() -> None:
+    """MMS goes to a current vendor's MMS row that serves a mobile network
+    (rule decisions of 2026-10-06, round 6, change 18). A vendor MMS row is a
+    row a current vendor backs for "mms", with a real APN and an MMSC, that
+    serves a 3GPP data network type; it counts for the types it serves. The
+    first internet row loses "mms" when no current vendor backs it for MMS
+    and the vendor MMS rows together serve every such type it serves; then
+    the best vendor MMS row moves just before the first row that still
+    serves "mms" when that row is no vendor MMS row. No row is removed, and
+    no type other than one "mms" changes."""
+
+    google = "google_carriersettings"
+    samsung = "samsung_omc"
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    # Each row: (row, sources for every type) or (row, {type: sources}).
+    scopes: dict[str, list[tuple[dict, object]]] = {
+        # 65507 shape: a LineageOS and Sony "internet" row typed "*" with an
+        # MMSC; Google gives only "mms". The "*" row loses "mms", so Google's
+        # row is the first MMS row.
+        "65507": [
+            (apn("internet", ("*",), mmsc="http://mms.old.example"), ("lineageos", "sony_open_devices_aosp")),
+            (apn("mms", ("mms",), mmsc="http://mms.vodacom.example"), (google,)),
+        ],
+        # 50501 shape: "telstra.wap" leads; LineageOS's "mdata.net.au"
+        # (default, mms) sits above Samsung's "telstra.mms", a vendor row
+        # without a bitmask, which moves just before it.
+        "50501": [
+            (apn("telstra.wap", ("default", "ia", "supl")), (samsung, google)),
+            (apn("mdata.net.au", ("default", "mms"), mmsc="http://mmsc.old.example"), ("lineageos",)),
+            (apn("telstra.mms", ("mms",), mmsc="http://mmsc.telstra.example", mmsproxy="10.1.1.180", mmsport=80), (samsung,)),
+        ],
+        # 63902 shape: the first internet row "safaricom" serves "mms" with
+        # an MMSC no vendor gives; Google backs it only for "default".
+        "63902": [
+            (apn("safaricom", ("default", "mms"), mmsc="http://old.safaricom.example"), {"default": (google,), "mms": ("lineageos",)}),
+            (apn("safaricom", ("mms",), mmsc="http://mms.gprs.safaricom.example"), (google,)),
+        ],
+        # 234/30 shape: only the first internet row loses "mms"; a lower
+        # default and mms row no vendor backs keeps it, and "eezone" moves
+        # ahead of it.
+        "23430": [
+            (apn("everywhere", ("default", "mms"), mmsc="http://mms.ee.example"), {"default": (google,), "mms": ("lineageos",)}),
+            (apn("general.t-mobile.uk", ("default", "mms"), mmsc="http://mmsc.t-mobile.example"), ("lineageos", "mobile_broadband_provider_info")),
+            (apn("eezone", ("mms",), mmsc="http://mms/", mmsproxy="149.254.201.135", mmsport=8080), (google,)),
+        ],
+        # A first internet row a current vendor backs for "mms" keeps it,
+        # and nothing moves.
+        "21401": [
+            (apn("web.example", ("default", "mms"), mmsc="http://mms.web.example"), (google,)),
+            (apn("mms.example", ("mms",), mmsc="http://mms.other.example"), (samsung,)),
+        ],
+        # 73404 shape: no current vendor MMS row, nothing changes.
+        "73404": [
+            (apn("internet.example", ("default", "mms"), mmsc="http://mms.a.example"), ("lineageos",)),
+            (apn("mms.example", ("mms",), mmsc="http://mms.b.example"), ("apple_carrier_bundles",)),
+        ],
+        # Bell shape: the only vendor MMS row is Wi-Fi only (bearer 18), so
+        # it never counts and nothing changes.
+        "30263": [
+            (apn("pda.bell.ca", ("default", "mms"), mmsc="http://mms.bell.example"), ("lineageos",)),
+            (apn("apps.bell.ca", ("mms",), mmsc="http://mms.bell.example", bearer_bitmask="18"), (google,)),
+        ],
+        # The same with network_type_bitmask 18.
+        "30264": [
+            (apn("pda.bell.ca", ("default", "mms"), mmsc="http://mms.bell.example"), ("lineageos",)),
+            (apn("apps.bell.ca", ("mms",), mmsc="http://mms.bell.example", network_type_bitmask="18"), (google,)),
+        ],
+        # A vendor MMS row for LTE and NR only (bearer 14|20) next to an
+        # internet row without a bitmask: the internet row keeps "mms",
+        # because no vendor MMS row serves UMTS, HSPA or EDGE.
+        "26210": [
+            (apn("web.lte.example", ("default", "mms"), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("mms.lte.example", ("mms",), mmsc="http://mms.lte.example", bearer_bitmask="14|20"), (google,)),
+        ],
+        # CDMA-only and eHRPD-only vendor MMS rows do not count.
+        "31000": [
+            (apn("web.cdma.example", ("default", "mms"), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("mms.cdma.example", ("mms",), mmsc="http://mms.cdma.example", bearer_bitmask="4|5|6|7|8|12"), (google,)),
+        ],
+        "31001": [
+            (apn("web.ehrpd.example", ("default", "mms"), mmsc="http://mms.old.example"), ("lineageos",)),
+            (apn("mms.ehrpd.example", ("mms",), mmsc="http://mms.ehrpd.example", bearer_bitmask="13"), (google,)),
+        ],
+        # Verizon shape: VZWINTERNET leads; Google's CDMA-only "internet"
+        # row (default, mms) is the first MMS row and is no vendor MMS row,
+        # so VZWAPP moves just before it, ahead of T-Mobile's row.
+        "310590": [
+            (apn("VZWINTERNET", ("default", "supl")), (google, samsung, "lineageos")),
+            (apn("internet", ("default", "mms"), mmsc="http://mms.vtext.example/servlets/mms", bearer_bitmask="4|5|6|7|8|12"), (google,)),
+            (apn("fast.t-mobile.com", ("default", "mms"), mmsc="http://mms.msg.eng.t-mobile.example/mms/wapenc"), ("google_pixel_vendor_carriersettings", "fairphone_official_source")),
+            (apn("VZWAPP", ("mms", "cbs"), mmsc="http://mms.vtext.example/servlets/mms"), (google,)),
+        ],
+        # A moved row with a TelephonyProvider twin that serves "default"
+        # stays behind the first internet row.
+        "23410": [
+            (apn("web.example", ("default", "supl")), (google, "lineageos")),
+            (apn("old.mms.example", ("default", "mms"), mmsc="http://mms.old.example"), ("lineageos", "mobile_broadband_provider_info")),
+            (apn("mms.example", ("mms",), mmsc="http://mms.example"), (google,)),
+            (apn("mms.example", ("default",), mmsc="http://mms.example", user="wap", password="wap"), ("apple_carrier_bundles",)),
+        ],
+    }
+
+    def sources_for(sources: object, apn_type: str) -> tuple[str, ...]:
+        return sources[apn_type] if isinstance(sources, dict) else sources  # type: ignore[index,return-value]
+
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = validate_public_carrier_data.canonical_profile_id({"mccmnc": [mccmnc]})
+        profiles.append(
+            {
+                "profile_id": profile_id,
+                "display_name": profile_id,
+                "match": {"mccmnc": [mccmnc]},
+                "android_apns": [row for row, _ in rows],
+            }
+        )
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                "sources": sorted(sources_for(sources, apn_type)),
+            }
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append(
+            {
+                "profile_id": profile_id,
+                "sources": sorted({source for fact in facts for source in fact["sources"]}),
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+            }
+        )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        rows = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+        generated = Path(tmp) / "generated"
+        carriers = Path(tmp) / "carriers"
+        for item in profiles:
+            write_carrier_profile(carriers, {**item, "capabilities": {}})
+        shutil.copy(evidence_path, Path(tmp) / "evidence-index.json")
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                [
+                    "generate_android_outputs.py",
+                    str(carriers),
+                    str(generated),
+                    "--evidence-index",
+                    str(Path(tmp) / "evidence-index.json"),
+                ]
+            )
+        metadata = load_json(generated / "android" / "metadata.json")
+
+    def scope(mccmnc: str) -> list[tuple[str, list[str]]]:
+        return [
+            (record["apn"], generate_android_outputs.apn_row_types(record["type"]))
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+        ]
+
+    def first(mccmnc: str, apn_type: str) -> str:
+        return next(value for value, types in scope(mccmnc) if apn_type in types)
+
+    def given(mccmnc: str) -> list[tuple[str, list[str]]]:
+        return [
+            (row["apn"], generate_android_outputs.apn_row_types(row["types"]))
+            for row, _ in scopes[mccmnc]
+        ]
+
+    def unchanged(mccmnc: str) -> bool:
+        return sorted(scope(mccmnc)) == sorted(given(mccmnc))
+
+    retyped = {
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"])
+        for record in rows.records
+        if record.get("_mms_left_out")
+    }
+    moved = {
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"])
+        for record in rows.records
+        if record.get("_vendor_mms_ahead")
+    }
+    kept = {
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"])
+        for record in rows.records
+        if record.get("_mms_kept_no_vendor_coverage")
+    }
+    internet_65507 = dict(scope("65507"))["internet"]
+    assert_true(
+        "mms" not in internet_65507 and "default" in internet_65507 and first("65507", "mms") == "mms",
+        f"65507: the '*' row loses only mms and Google's row is the first MMS row: {scope('65507')}",
+    )
+    assert_true(
+        first("50501", "mms") == "telstra.mms"
+        and first("50501", "default") == "telstra.wap"
+        and first("50501", "ia") == "telstra.wap"
+        and unchanged("50501"),
+        f"50501: telstra.mms moves ahead, internet and attach rows stay: {scope('50501')}",
+    )
+    assert_true(
+        scope("63902") == [("safaricom", ["default"]), ("safaricom", ["mms"])]
+        and next(r for r in rows.records if r.get("mcc", "") + r.get("mnc", "") == "63902" and r["type"] == "mms")["mmsc"]
+        == "http://mms.gprs.safaricom.example",
+        f"63902: the first internet row loses mms, Google's MMS row comes first: {scope('63902')}",
+    )
+    assert_true(
+        scope("23430")
+        == [
+            ("everywhere", ["default"]),
+            ("eezone", ["mms"]),
+            ("general.t-mobile.uk", ["default", "mms"]),
+        ],
+        f"234/30: only the first internet row loses mms, eezone moves ahead: {scope('23430')}",
+    )
+    for mccmnc in ("21401", "73404", "30263", "30264", "26210", "31000", "31001"):
+        assert_true(
+            scope(mccmnc) == given(mccmnc),
+            f"{mccmnc}: nothing changes: {scope(mccmnc)} != {given(mccmnc)}",
+        )
+    assert_true(
+        [value for value, _ in scope("310590")] == ["VZWINTERNET", "VZWAPP", "internet", "fast.t-mobile.com"]
+        and unchanged("310590"),
+        f"Verizon: VZWAPP moves just before Google's CDMA-only internet row: {scope('310590')}",
+    )
+    assert_true(
+        first("23410", "default") == "web.example" and first("23410", "mms") == "mms.example",
+        f"a moved row's twin that serves default stays behind the first internet row: {scope('23410')}",
+    )
+    assert_true(
+        retyped == {("65507", "internet"), ("63902", "safaricom"), ("23430", "everywhere")}
+        and rows.mms_left_out == 3
+        and metadata["omissions"]["mms_types_left_out_not_vendor_backed"] == 3,
+        f"three first internet rows lose mms and are counted: {retyped}, {rows.mms_left_out}",
+    )
+    assert_true(
+        moved == {("50501", "telstra.mms"), ("23430", "eezone"), ("310590", "VZWAPP"), ("23410", "mms.example")},
+        f"the moved vendor rows are marked for --explain: {moved}, {scope('23410')}",
+    )
+    assert_true(
+        kept == {("26210", "web.lte.example")},
+        f"only the LTE-only vendor row leaves an internet row with mms for want of coverage: {kept}",
+    )
+    without_mms = sorted(
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"], tuple(t for t in generate_android_outputs.apn_row_types(record["type"]) if t != "mms"))
+        for record in rows.records
+    )
+    given_without_mms = sorted(
+        (mccmnc, row["apn"], tuple(t for t in generate_android_outputs.apn_row_types(row["types"]) if t != "mms"))
+        for mccmnc, items in scopes.items()
+        for row, _ in items
+    )
+    assert_true(
+        len(rows.records) == sum(len(items) for items in scopes.values()) and without_mms == given_without_mms,
+        f"no row is removed and no type other than mms changes: {without_mms} != {given_without_mms}",
+    )
+    assert_true(
+        generate_android_outputs.apn_row_network_types({"bearer_bitmask": "18"}) == frozenset()
+        and generate_android_outputs.apn_row_network_types({"network_type_bitmask": "18"}) == frozenset()
+        and generate_android_outputs.apn_row_network_types({"bearer_bitmask": "14|20"}) == frozenset({13, 20})
+        and generate_android_outputs.apn_row_network_types({}) == generate_android_outputs.MMS_NETWORK_TYPES
+        and generate_android_outputs.apn_row_network_types({"bearer_bitmask": "13"}) == frozenset(),
+        "network types: Wi-Fi and eHRPD serve none, LTE and NR stay, no bitmask serves all",
+    )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -4332,6 +4603,8 @@ def main() -> int:
     print("malformed APN value tests passed")
     check_best_row_last()
     print("best row last tests passed")
+    check_vendor_mms_first()
+    print("vendor MMS row tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
