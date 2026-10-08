@@ -266,6 +266,16 @@ def explain(
                     # written after it, whose values win: a group's first row
                     # in the file is not what the phone uses.
                     "stored_with_best_row": bool(row.get("_stored_with_best_row")),
+                    # The first internet row lost "mms": no current vendor
+                    # backs it for MMS and current vendors' MMS rows serve
+                    # every mobile network type it serves.
+                    "mms_left_out": bool(row.get("_mms_left_out")),
+                    # A current vendor's MMS row moved ahead of the first row
+                    # that served "mms", so MMS goes to it.
+                    "vendor_mms_ahead": bool(row.get("_vendor_mms_ahead")),
+                    # The first internet row kept "mms" because no current
+                    # vendor's MMS row serves some mobile network type it serves.
+                    "mms_kept_no_vendor_coverage": bool(row.get("_mms_kept_no_vendor_coverage")),
                     "value_families": sorted(generator.source_families(rank.value_sources)),
                     "value_from_primary_source": bool(rank.value_sources & generator.PRIMARY_APN_SOURCES),
                     "row_families": sorted(generator.source_families(rank.row_sources)),

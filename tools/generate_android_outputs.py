@@ -418,6 +418,7 @@ class ApnRows(NamedTuple):
     records: list[dict[str, Any]]
     schema_rejected: int
     ia_left_out: int = 0
+    mms_left_out: int = 0
 
 
 def canonical_json(value: Any) -> str:
@@ -719,8 +720,12 @@ class RowRank(NamedTuple):
         )
 
 
-def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
-    """The RowRank of each row of one scope, in the order given."""
+def scope_row_ranks(
+    records: list[dict[str, Any]], lead_type: str | None = None
+) -> list[RowRank]:
+    """The RowRank of each row of one scope, in the order given. With
+    lead_type, every row is read for that type (put_vendor_mms_first)."""
+    forced_lead = lead_type
     apn_sources: dict[tuple[str, str], set[str]] = defaultdict(set)
     apn_current: dict[tuple[str, str], set[str]] = defaultdict(set)
     apn_shared: dict[tuple[str, str], set[str]] = defaultdict(set)
@@ -735,7 +740,9 @@ def scope_row_ranks(records: list[dict[str, Any]]) -> list[RowRank]:
     ranks: list[RowRank] = []
     for record in records:
         types = set(apn_row_types(record["type"]))
-        lead_type = next((apn_type for apn_type in APN_TYPE_PRIORITY if apn_type in types), None)
+        lead_type = forced_lead or next(
+            (apn_type for apn_type in APN_TYPE_PRIORITY if apn_type in types), None
+        )
         apn = str(record["apn"]).casefold()
         placeholder = placeholder_apn(record["apn"])
         if lead_type is None:
@@ -832,6 +839,120 @@ def leave_out_stale_attach(records: list[dict[str, Any]]) -> int:
     return changed
 
 
+# Network types (TelephonyManager.NETWORK_TYPE_*) of a RIL radio technology
+# in "bearer_bitmask" (ServiceState.rilRadioTechnologyToNetworkType).
+# TelephonyProvider.getRow reads "network_type_bitmask" when a row has it and
+# converts "bearer_bitmask" otherwise; neither means every network type.
+RIL_RADIO_TECH_NETWORK_TYPES = {
+    1: 1, 2: 2, 3: 3, 4: 4, 5: 4, 6: 7, 7: 5, 8: 6, 9: 8, 10: 9, 11: 10,
+    12: 12, 13: 14, 14: 13, 15: 15, 16: 16, 17: 17, 18: 18, 19: 19, 20: 20,
+}
+# The 3GPP data network types a phone reports: GPRS, EDGE, UMTS, HSDPA, HSUPA,
+# HSPA, LTE, HSPA+ and NR. LTE_CA is reported as LTE
+# (NetworkRegistrationInfo.setAccessNetworkTechnology), GSM carries no data,
+# IWLAN is Wi-Fi, and TD-SCDMA and the CDMA types are retired networks.
+MMS_NETWORK_TYPES = frozenset({1, 2, 3, 8, 9, 10, 13, 15, 20})
+
+
+def apn_row_network_types(record: dict[str, Any]) -> frozenset[int]:
+    """The network types a row serves, as TelephonyProvider reads them, cut
+    to MMS_NETWORK_TYPES. A row without a bitmask serves all of them."""
+    def parse(value: Any) -> set[int]:
+        return {int(part) for part in str(value).split("|") if part.strip().isdigit()}
+
+    if str(record.get("network_type_bitmask") or "").strip():
+        types = parse(record["network_type_bitmask"])
+    elif str(record.get("bearer_bitmask") or "").strip():
+        types = {RIL_RADIO_TECH_NETWORK_TYPES.get(bearer, 0) for bearer in parse(record["bearer_bitmask"])}
+    else:
+        return MMS_NETWORK_TYPES
+    return frozenset(types) & MMS_NETWORK_TYPES if types - {0} else MMS_NETWORK_TYPES
+
+
+def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
+    current vendor backs for "mms" (_current), with a real APN and an MMSC,
+    that serves a 3GPP data network type (apn_row_network_types); it counts
+    only for the network types it serves, so a Wi-Fi-only row (bearer 18) or
+    a CDMA-only row never counts.
+
+    1. Stop unless the scope has a vendor MMS row.
+    2. When the first internet row serves "mms" and no current vendor backs
+       it for "mms", take "mms" off it, but only when the vendor MMS rows
+       together serve every network type it serves. Otherwise it keeps "mms",
+       because Android sends MMS over the internet network when its APN serves
+       "mms" (DataNetworkController 1372 and 1429) and else over the first
+       profile that serves "mms" on the current network type
+       (DataProfileManager 726-800): a type no vendor MMS row serves would be
+       left without MMS (302/630 and 302/640 GID 40 and 42, where Google's
+       only MMS row, apps.bell.ca, is Wi-Fi only).
+    3. Stop when the first row that serves "mms" is that internet row or a
+       vendor MMS row.
+    4. Move the best vendor MMS row that serves neither "default" nor "ia"
+       (RowRank read for "mms", then fallback_order_key) to just before it.
+
+    Only the first internet row is retyped; retyping every row no vendor
+    backs lets DataProfileManager merge EE's stale T-Mobile rows in 234/30.
+    MmsService then reads the MMSC from the APN of the network that carries
+    MMS (MmsRequest 209-231). Rule decisions of 2026-10-06, round 6, change
+    18, which replaces change 15: measured on 2026-10-08 (public 575632c1),
+    change 15 without the network types left 302/630 and 302/640 GID 40 and
+    42 without MMS on every mobile network, because apps.bell.ca is Wi-Fi
+    only; with them, phone MMS moves to a current vendor's exact MMS setting
+    in 31 scopes on LTE, NR, HSPA, UMTS and EDGE (34 on all 11 network
+    types), no scope loses MMS, and no internet or attach row changes.
+    The coverage test of step 2 kept "mms" in no scope that day; a kept row
+    is marked "_mms_kept_no_vendor_coverage" for --explain.
+    Returns the rows and 1 when a row was retyped."""
+    def serves(record: dict[str, Any], apn_type: str) -> bool:
+        return apn_type in apn_row_types(record["type"])
+
+    def vendor_mms_row(record: dict[str, Any]) -> bool:
+        return (
+            bool(record.get("_current", {}).get("mms"))
+            and not placeholder_apn(record["apn"])
+            and bool(str(record.get("mmsc") or "").strip())
+            and bool(apn_row_network_types(record))
+        )
+
+    vendor = [record for record in ranked if vendor_mms_row(record)]
+    if not vendor:
+        return ranked, 0
+    retyped = 0
+    internet = next((record for record in ranked if serves(record, "default")), None)
+    if (
+        internet is not None
+        and serves(internet, "mms")
+        and not internet.get("_current", {}).get("mms")
+    ):
+        if apn_row_network_types(internet) <= frozenset().union(
+            *(apn_row_network_types(record) for record in vendor)
+        ):
+            internet["type"] = ",".join(t for t in apn_row_types(internet["type"]) if t != "mms")
+            internet["_mms_left_out"] = True
+            retyped = 1
+        else:
+            internet["_mms_kept_no_vendor_coverage"] = True
+    first = next((record for record in ranked if serves(record, "mms")), None)
+    if first is None or first is internet or vendor_mms_row(first):
+        return ranked, retyped
+    candidates = [
+        record for record in vendor if not serves(record, "default") and not serves(record, "ia")
+    ]
+    if not candidates:
+        return ranked, retyped
+    ranks = scope_row_ranks(ranked, lead_type="mms")
+    position = {id(record): index for index, record in enumerate(ranked)}
+    best = min(
+        candidates,
+        key=lambda record: (*ranks[position[id(record)]].sort_key(), fallback_order_key(record)),
+    )
+    moved = [record for record in ranked if record is not best]
+    moved.insert(next(i for i, record in enumerate(moved) if record is first), best)
+    best["_vendor_mms_ahead"] = True
+    return moved, retyped
+
+
 def apn_xml_rows(
     profiles: list[dict[str, Any]],
     evidence: dict[str, ProfileEvidence] | None = None,
@@ -839,9 +960,10 @@ def apn_xml_rows(
     """Every APN XML row of these profiles in file order: rows LineageOS's
     apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
     network code and MVNO selector order, a stale attach type left out
-    (leave_out_stale_attach), each scope ranked by its evidence, and last the
-    rows Android stores as one written together with the best-ranked one last
-    (write_android_groups_best_last). TelephonyProvider stores such rows as
+    (leave_out_stale_attach), each scope ranked by its evidence, MMS sent to a
+    current vendor's MMS row that serves a mobile network
+    (put_vendor_mms_first), and last the rows Android stores as one written
+    together with the best-ranked one last (write_android_groups_best_last). TelephonyProvider stores such rows as
     one at the first row's place, each later row's written attributes
     overwrite, types unite and bitmasks merge, so the best row goes last and
     takes from the others only what it leaves unset. A group's first row in
@@ -862,10 +984,13 @@ def apn_xml_rows(
         scopes[apn_scope_key(record)].append(record)
     ordered: list[dict[str, Any]] = []
     ia_left_out = 0
+    mms_left_out = 0
     for scope in sorted(scopes):
         ia_left_out += leave_out_stale_attach(scopes[scope])
-        ordered.extend(write_android_groups_best_last(rank_scope(scopes[scope])))
-    return ApnRows(ordered, schema_rejected, ia_left_out)
+        ranked, retyped = put_vendor_mms_first(rank_scope(scopes[scope]))
+        mms_left_out += retyped
+        ordered.extend(write_android_groups_best_last(ranked))
+    return ApnRows(ordered, schema_rejected, ia_left_out, mms_left_out)
 
 
 def apn_xml_records(
@@ -1248,6 +1373,7 @@ def write_metadata(
     apn_rows_schema_rejected: int = 0,
     digest: str | None = None,
     ia_types_left_out: int = 0,
+    mms_types_left_out: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -1288,6 +1414,11 @@ def write_metadata(
             # took off: no current vendor gives their APN value in a scope
             # where one gives the attach APN. Profile JSON keeps the type.
             "ia_types_left_out_not_vendor_current": ia_types_left_out,
+            # First internet rows of apns-conf.xml whose "mms" type
+            # put_vendor_mms_first took off: no current vendor backs them for
+            # MMS, and current vendors' MMS rows serve every mobile network
+            # type they serve. Profile JSON keeps the type.
+            "mms_types_left_out_not_vendor_backed": mms_types_left_out,
         },
         **freshness,
     }
@@ -1362,6 +1493,7 @@ def main(argv: list[str]) -> int:
         rows_schema_rejected,
         digest,
         apn_rows.ia_left_out,
+        apn_rows.mms_left_out,
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -1369,7 +1501,8 @@ def main(argv: list[str]) -> int:
         f"{apn_count} APN row(s), {config_count} CarrierConfig profile(s), "
         f"{config_xml_count} CarrierConfig XML block(s), "
         f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them, "
-        f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives"
+        f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
+        f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs"
     )
     return 0
 
