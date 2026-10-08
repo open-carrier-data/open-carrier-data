@@ -46,10 +46,33 @@
       "mmsport": 3130,
       "mmsproxy": "203.162.21.114",
       "name": "VN MobiFone MMS",
+      "password": "mms",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "m-i090",
+      "mmsc": "http://203.162.21.114/mmsc",
+      "mmsport": 3130,
+      "mmsproxy": "203.162.21.114",
+      "name": "VN MobiFone MMS",
       "protocol": "IPV4V6",
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "m-wap",
+      "name": "VN MobiFone Email",
+      "password": "mms",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "mms"
     },
     {
       "apn": "m-wap",
@@ -78,16 +101,20 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true,
+    "carrier_wfc_ims_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
     "mms": "supported",
     "rcs": "unknown",
-    "sms_over_ims": "unknown",
+    "sms_over_ims": "supported",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "VN MobiFone",

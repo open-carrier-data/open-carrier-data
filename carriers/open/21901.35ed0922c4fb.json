@@ -1,11 +1,43 @@
 {
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mms.t-mobile.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.4",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet.ht.hr",
+      "authtype": 1,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user_editable": false
+    },
+    {
       "apn": "internet.ht.hr",
       "authtype": 1,
       "name": "Internet",
       "types": [
-        "default",
         "dun",
         "fota",
         "supl"
@@ -40,15 +72,15 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Bonbon Hr",
+  "display_name": "bonbon",
   "match": {
     "mccmnc": [
       "21901"
     ],
     "spn": [
-      "BONBON"
+      "bonbon"
     ]
   },
-  "profile_id": "open.21901.ea184195332c",
+  "profile_id": "open.21901.35ed0922c4fb",
   "schema_version": 1
 }

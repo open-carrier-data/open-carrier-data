@@ -61,7 +61,8 @@
     {
       "apn": "sp.telus.com",
       "name": "TELUS SP",
-      "protocol": "IPV4V6",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ]
@@ -69,8 +70,7 @@
     {
       "apn": "sp.telus.com",
       "name": "TELUS SP",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -93,6 +93,18 @@
       "mmsproxy": "mmscproxy.mobility.ca",
       "name": "TELUS MMS",
       "protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sp.telus.com",
+      "mmsc": "http://aliasredirect.net/proxy/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "TELUS MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]
