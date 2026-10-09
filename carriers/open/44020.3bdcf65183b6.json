@@ -377,6 +377,7 @@
     }
   ],
   "android_carrier_config": {
+    "allow_hold_call_during_emergency_bool": false,
     "call_barring_supports_deactivate_all_bool": false,
     "call_barring_supports_password_change_bool": false,
     "carrier_default_wfc_ims_roaming_enabled_bool": false,
@@ -385,6 +386,11 @@
     "enabledMMS": true,
     "ignore_data_enabled_changed_for_video_calls": true,
     "ims_dtmf_tone_delay_int": 300,
+    "ims_reasoninfo_mapping_string_array": [
+      "332||510",
+      "332|q.850|510",
+      "510|Call completed elsewhere|1014"
+    ],
     "imssms.sms_over_ims_supported_bool": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "is_ims_conference_size_enforced_bool": true,

@@ -189,6 +189,7 @@
   ],
   "android_carrier_config": {
     "allow_emergency_video_calls_bool": true,
+    "allow_hold_call_during_emergency_bool": false,
     "allow_merging_rtt_calls_bool": true,
     "carrier_allow_turnoff_ims_bool": false,
     "carrier_default_wfc_ims_mode_int": 1,
@@ -199,8 +200,15 @@
     "editable_wfc_mode_bool": false,
     "enableGroupMms": true,
     "enableSMSDeliveryReports": false,
+    "hide_enhanced_4g_lte_bool": true,
     "hide_ims_apn_bool": true,
     "ims_dtmf_tone_delay_int": 120,
+    "ims_reasoninfo_mapping_string_array": [
+      "332|service not allowed in this location|1623",
+      "352|emergency calls over wifi not allowed in this location|1622",
+      "510|Call completed elsewhere|1014",
+      "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+    ],
     "imsvoice.conference_factory_uri_string": "sip:n-way_voice@#HOME_DOMAIN#",
     "iwlan.epdg_static_address_string": "epdg.epc.att.net",
     "maxImageHeight": 1944,
@@ -212,6 +220,7 @@
       "ims"
     ],
     "recipientLimit": 20,
+    "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "support_pause_ims_video_calls_bool": false,
     "support_video_conference_call_bool": true,
