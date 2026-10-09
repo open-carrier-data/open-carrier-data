@@ -836,6 +836,12 @@ def validate_generated_files(generated_dir: Path) -> None:
 
 
 RESOLUTION_ITEM_KEYS = {"kind", "section", "key", "observed_value_count", "resolution"}
+# A conflict that Google's current CarrierSettings file settled: Google's
+# frozen Pixel copies of the file disagreed with it and do not count for a key
+# the current file gives (rule decisions of 2026-10-09, how-it-is-built.md).
+SUPERSEDED_DEVICE_FILE = "superseded_device_file"
+SUPERSEDED_DEVICE_FILE_SECTIONS = {"capabilities", "android_carrier_config"}
+RESOLUTIONS = {"conditional", "omitted_from_stable", "published_variants", SUPERSEDED_DEVICE_FILE}
 APN_FACT_KEY_RE = re.compile(r"sha256:[0-9a-f]{16}")
 
 
@@ -859,8 +865,15 @@ def validate_resolution_items(
         count = item["observed_value_count"]
         if not isinstance(count, int) or isinstance(count, bool) or count < 1:
             raise ValidationError(f"{path}: {label}.observed_value_count is invalid")
-        if item["resolution"] not in {"conditional", "omitted_from_stable", "published_variants"}:
+        if item["resolution"] not in RESOLUTIONS:
             raise ValidationError(f"{path}: {label}.resolution is invalid")
+        if item["resolution"] == SUPERSEDED_DEVICE_FILE and (
+            item["kind"] != "conflict" or item["section"] not in SUPERSEDED_DEVICE_FILE_SECTIONS
+        ):
+            raise ValidationError(
+                f"{path}: {label}: {SUPERSEDED_DEVICE_FILE} belongs only to capability and "
+                "CarrierConfig conflicts"
+            )
         if "variant_sources" in item:
             validate_variant_sources(path, item, label, sources)
 
