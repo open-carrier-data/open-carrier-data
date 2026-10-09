@@ -978,6 +978,47 @@ def check_apn_variant_sources_and_removal_gates(
             ),
             "variant_sources outside an APN variant conflict passed",
         )
+        # A conflict Google's current file settled against its frozen Pixel
+        # copies: only a capability or CarrierConfig conflict.
+        superseded = {
+            "kind": "conflict",
+            "section": "capabilities",
+            "key": "vowifi",
+            "observed_value_count": 2,
+            "resolution": "superseded_device_file",
+        }
+        validate(shaped([superseded]))
+        validate(
+            shaped(
+                [
+                    {
+                        **superseded,
+                        "section": "android_carrier_config",
+                        "key": "carrier_wfc_ims_available_bool",
+                    }
+                ]
+            )
+        )
+        expect_failure(
+            shaped([{**superseded, "section": "android_apns"}]),
+            "a superseded_device_file conflict in the APN section passed",
+        )
+        expect_failure(
+            shaped([{**superseded, "section": "addons"}]),
+            "a superseded_device_file conflict in the add-ons passed",
+        )
+        expect_failure(
+            shaped(gates=[{**superseded, "kind": "quality_gate"}]),
+            "a superseded_device_file quality gate passed",
+        )
+        expect_failure(
+            shaped([{**superseded, "superseded_sources": ["google_pixel_vendor_carriersettings"]}]),
+            "a superseded_device_file conflict with an extra key passed",
+        )
+        expect_failure(
+            shaped([{**superseded, "resolution": "superseded_by_current_version"}]),
+            "an unknown resolution passed",
+        )
         validate(shaped(gates=[gate("lineageos_apn_removed:" + commit)]))
         validate(
             shaped(
