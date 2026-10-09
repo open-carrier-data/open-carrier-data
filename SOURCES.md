@@ -43,7 +43,7 @@ A source family that turns a capability on makes it `supported`, as long as none
 
 | Source name | Its offs |
 | --- | --- |
-| `apple_carrier_bundles`, `samsung_omc`, `samsung_ims`, `samsung_carrier_config` | never published; these lanes publish only what they turn on |
+| `apple_carrier_bundles`, `samsung_omc`, `samsung_ims`, `samsung_carrier_config` | never published; both makers write an off almost always as a missing entry, and their written offs describe phones or defaults, not the carrier ([data-model.md](docs/data-model.md)) |
 | `google_carriersettings`, `google_pixel_vendor_carriersettings` | one family; the operator's own for Google Fi |
 | `aosp` | one family; the operator's own only for a file the carrier submitted, on 2026-10-04 SETAR's |
 | `lineageos`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list |
