@@ -52,7 +52,7 @@ The first five fields identify the profile and say when it applies.
 | `ims_conference` | IMS conference calls |
 | `wifi_calling_roaming` | Wi-Fi calling while roaming |
 
-Every capability takes one of four values. A value says what carrier tables configure for the SIM. It is a configuration, not a test result: no profile has been checked on a phone.
+Every capability takes one of four values. A value says what carrier tables configure for the SIM. It is a configuration, not a test result and not a statement that the operator still offers the service: no profile has been checked on a phone, and carrier tables can keep a service long after the operator ends it.
 
 | Value | Meaning |
 | --- | --- |
