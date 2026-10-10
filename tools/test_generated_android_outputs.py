@@ -1347,10 +1347,12 @@ def check_subscriber_prefix_rules(root: Path) -> None:
         )
 
     def profile_with_mvno(mvno_type: str, mvno_match_data: str) -> dict:
+        # An IMSI selector must fit one of the profile's network codes.
+        code = mvno_match_data[:5] if mvno_type == "imsi" else "00197"
         profile = {
             "schema_version": 1,
             "display_name": "Subscriber prefix",
-            "match": {"mccmnc": ["00197"]},
+            "match": {"mccmnc": [code]},
             "capabilities": {},
             "android_apns": [
                 {
@@ -1406,6 +1408,97 @@ def check_subscriber_prefix_rules(root: Path) -> None:
             pass
         else:
             raise AssertionError(f"match.{key} {value!r} should fail")
+
+
+def check_selectors_and_values_android_defines(root: Path) -> None:
+    """An IMSI selector fits one of the profile's own network codes, x
+    matching any digit, unless an APN row carries a carrier_id; and a
+    CarrierConfig value is one Android defines for its key (rule decisions of
+    2026-10-10, round 8, changes 34 and 35)."""
+
+    def profile(match: dict, **facts: object) -> dict:
+        value = {
+            "schema_version": 1,
+            "display_name": "Example",
+            "match": match,
+            "capabilities": {},
+            **facts,
+        }
+        value["profile_id"] = validate_public_carrier_data.canonical_profile_id(match)
+        return value
+
+    def row(imsi: str, **fields: object) -> dict:
+        return {
+            "name": "ims",
+            "apn": "ims",
+            "types": ["ims"],
+            "mvno_type": "imsi",
+            "mvno_match_data": imsi,
+            **fields,
+        }
+
+    def expect(value: dict, message: str | None, label: str) -> None:
+        try:
+            validate_public_carrier_data.validate_profile_object(root / "selector.json", value)
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(message is not None, f"{label} should pass: {exc}")
+            assert_true(message in str(exc), f"wrong error for {label}: {exc}")
+        else:
+            assert_true(message is None, f"{label} should fail")
+
+    fits = validate_public_carrier_data.imsi_fits_network
+    assert_true(fits("31026097", "310260"), "31026097 fits 310260")
+    assert_true(fits("3102609x", "310260"), "x matches any digit")
+    assert_true(fits("26xx1", "26201"), "x matches any digit inside the code")
+    assert_true(fits("26201X9", "26201"), "an upper-case X matches too")
+    assert_true(not fits("2620739", "26208"), "2620739 does not fit 26208")
+    assert_true(not fits("44474553", "21405"), "a GID1 written as an IMSI fits nothing")
+
+    expect(profile({"mccmnc": ["310260"], "imsi_prefix_patterns": ["31026097"]}), None, "a fitting pattern")
+    expect(
+        profile({"mccmnc": ["99901", "99902"], "imsi_prefix_patterns": ["99901x9"]}),
+        None,
+        "a pattern that fits one of two codes",
+    )
+    expect(
+        profile({"mccmnc": ["21405"], "imsi_prefix_patterns": ["44474553"]}),
+        "cannot match a SIM",
+        "DIGI Spain's GID1 as an IMSI pattern",
+    )
+    expect(
+        profile({"mccmnc": ["26207"]}, android_apns=[row("2620739")]),
+        None,
+        "O2's IMS row on its own code",
+    )
+    expect(
+        profile({"mccmnc": ["26208"]}, android_apns=[row("2620739")]),
+        "cannot match a SIM",
+        "O2's IMS row on 26208",
+    )
+    expect(
+        profile({"mccmnc": ["26208"]}, android_apns=[row("2620739", carrier_id=1234)]),
+        None,
+        "a row that carries a carrier_id",
+    )
+
+    for key in ("carrier_default_wfc_ims_mode_int", "carrier_default_wfc_ims_roaming_mode_int"):
+        for mode in (0, 1, 2):
+            expect(
+                profile({"mccmnc": ["26201"]}, android_carrier_config={key: mode}),
+                None,
+                f"{key} {mode}",
+            )
+        for mode in (10, -1, 3):
+            expect(
+                profile({"mccmnc": ["26201"]}, android_carrier_config={key: mode}),
+                "has a value Android does not define",
+                f"{key} {mode}",
+            )
+    expect(
+        profile({"mccmnc": ["26201"]}, android_carrier_config={"default_mtu_int": 10}),
+        None,
+        "a key without a closed set",
+    )
 
 
 def check_provenance_and_lookup(carriers_dir: Path, generated_dir: Path) -> None:
@@ -5000,6 +5093,7 @@ def main() -> int:
             raise AssertionError("duplicate APN types should fail")
 
         check_subscriber_prefix_rules(root)
+        check_selectors_and_values_android_defines(root)
 
     print("generated Android output tests passed")
     with tempfile.TemporaryDirectory() as tmp:
