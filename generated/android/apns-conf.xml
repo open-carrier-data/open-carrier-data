@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:9eb6bfcd6d5117ec6bfd528799b211a70db4768244524b7f98e7da613002ad83
+    data_digest: sha256:7e94c22fd0c7bc56498d08bb6197b97b6f1e975d43d6948ccfa5078fb69d95ec
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -374,8 +374,8 @@
   <apn apn="IMS" carrier="Visible IMS NEW" mcc="204" mnc="04" mvno_match_data="Visible" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="us.vodafone.com" carrier="Vodafone" mcc="204" mnc="04" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="us.vodafone.com" carrier="Vodafone MMS" mcc="204" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="04" mvno_match_data="Vodafone" mvno_type="spn" protocol="IPV4V6" type="mms" />
-  <apn apn="live.vodafone.com" carrier="Vodafone Internet" mcc="204" mnc="04" mvno_match_data="vodafone NL" mvno_type="spn" password="vodafone" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" user="vodafone" />
   <apn apn="live.vodafone.com" carrier="live.vodafone.com" mcc="204" mnc="04" mvno_match_data="vodafone NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="live.vodafone.com" carrier="live.vodafone.com" mcc="204" mnc="04" mvno_match_data="vodafone NL" mvno_type="spn" password="vodafone" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" user="vodafone" />
   <apn apn="ims" carrier="IMS" mcc="204" mnc="04" mvno_match_data="vodafone NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="VZWADMIN" carrier="Verizon FOTA" mcc="204" mnc="04" mvno_match_data="VZW" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="VZWAPP" carrier="Verizon CBS" mcc="204" mnc="04" mvno_match_data="VZW" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
@@ -508,20 +508,23 @@
   <apn apn="mms.ben" authtype="1" carrier="Ben MMS" mcc="204" mmsc="http://benmms/" mmsport="8080" mmsproxy="10.10.10.11" mnc="16" mvno_match_data="Ben NL" mvno_type="spn" type="mms" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="ims" mcc="204" mnc="16" mvno_match_data="Ben NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="Ben NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Ben NL" mvno_type="spn" password="tmobilemms" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user="tmobilemms" />
   <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Ben NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user_visible="false" />
   <apn apn="internet.mobiel" authtype="1" carrier="Internet" mcc="204" mnc="16" mvno_match_data="Odido" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="ims" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="204" mnc="16" mvno_match_data="Odido" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="Odido" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Odido" mvno_type="spn" password="tmobilemms" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user="tmobilemms" />
   <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Odido" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user_visible="false" />
   <apn apn="internet.mobiel" carrier="Internet" mcc="204" mnc="16" mvno_match_data="Simpel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="Simpel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Simpel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Simpel" mvno_type="spn" password="tmobilemms" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user="tmobilemms" />
   <apn apn="smartsites.t-mobile" carrier="smartsites.t-mobile" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="IMS" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
-  <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" password="tmobilemms" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user="tmobilemms" />
   <apn apn="hos" carrier="hos" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
+  <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="T-Mobile NL" mvno_type="spn" password="tmobilemms" protocol="IPV4V6" roaming_protocol="IP" type="xcap" user="tmobilemms" />
   <apn apn="internet.tele2.nl" carrier="Tele2 Internet" mcc="204" mnc="16" mvno_match_data="Tele2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" />
   <apn apn="IMS" carrier="IMS" mcc="204" mnc="16" mvno_match_data="Tele2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Tele2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
@@ -682,8 +685,8 @@
   <apn apn="internet.proximus.be" authtype="0" carrier="NRJWEB" mcc="206" mnc="01" mvno_match_data="NRJ MOBILE" mvno_type="spn" type="default,dun,fota,supl" user_editable="false" />
   <apn apn="event.proximus.be" authtype="0" carrier="NRJMMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="NRJ MOBILE" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="internet.proximus.be" carrier="Proximus Internet" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus" mvno_type="spn" password="mms" roaming_protocol="IPV4V6" type="mms" user="mms" />
   <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="event.proximus.be" carrier="Proximus MMS" mcc="206" mmsc="http://mmsc.proximus.be/mms" mmsport="8080" mmsproxy="10.55.14.75" mnc="01" mvno_match_data="Proximus" mvno_type="spn" password="mms" roaming_protocol="IPV4V6" type="mms" user="mms" />
   <apn apn="ims" carrier="Proximus IMS" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="HOS" carrier="Proximus XCAP" mcc="206" mnc="01" mvno_match_data="Proximus" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.proximus.be" carrier="internet.proximus.be" mcc="206" mnc="01" mvno_match_data="Proximus (BTBD)" mvno_type="spn" type="default" />
@@ -718,16 +721,15 @@
   <apn apn="web.iusacellgsm.mx" authtype="0" carrier="Internet" mcc="206" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="default" user="iusacellgsm" />
   <apn apn="mms.iusacellgsm.mx" authtype="0" carrier="MMS" mcc="206" mmsc="http://mms.iusacell3g.com/" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
   <apn apn="modem.iusacellgsm.mx" authtype="0" carrier="MODEM" mcc="206" mnc="01" mvno_match_data="UNEFON" mvno_type="spn" password="iusacellgsm" type="dun" user="iusacellgsm" user_editable="false" />
-  <apn apn="Internet.at.upcmobile.com" carrier="UPC mobiles Internet" mcc="206" mnc="01" mvno_match_data="UPC AT" mvno_type="spn" type="default" />
   <apn apn="internet.ch.upcmobile.com" carrier="upcnet" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="default,xcap" />
   <apn apn="mms.ch.upcmobile.com" carrier="upcmms" mcc="206" mmsc="http://mms.ch.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="upc ch" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="206" mnc="01" mvno_match_data="upc ch" mvno_type="spn" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="Internet.hu.upcmobile.com" carrier="UPC Mobil Internet" mcc="206" mnc="01" mvno_match_data="UPC HU" mvno_type="spn" type="default" />
   <apn apn="mms.hu.upcmobile.com" carrier="UPC MMS" mcc="206" mmsc="http://mms.hu.upcmobile.com:8080/servlets/mms" mmsport="8080" mmsproxy="62.179.127.18" mnc="01" mvno_match_data="UPC HU" mvno_type="spn" type="mms" />
-  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="default" />
-  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
+  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="mms" />
+  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="01" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
   <apn apn="ims" carrier="ims" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="hos" mcc="206" mnc="01" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="Internet" carrier="Virgin Media" mcc="206" mnc="01" mvno_match_data="Virgin Media IE" mvno_type="spn" type="default" />
@@ -829,17 +831,17 @@
   <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="206" mnc="20" mtu="1280" mvno_match_data="2800000000000000" mvno_type="gid" protocol="IPV4V6" type="xcap" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="894443" mvno_type="iccid" type="default,dun,mms" />
   <apn apn="ims" carrier="Virgin" mcc="206" mnc="20" mvno_match_data="894443" mvno_type="iccid" type="ims" />
-  <apn apn="gprs.BASE.be" carrier="BASE Internet" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="gprs.BASE.be" carrier="BASE Internet" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" password="BASE" roaming_protocol="IPV4V6" type="default" user="BASE" />
-  <apn apn="mms.BASE.be" carrier="BASE MMS" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" mvno_match_data="BASE" mvno_type="spn" password="BASE" roaming_protocol="IPV4V6" type="mms" user="BASE" />
+  <apn apn="gprs.BASE.be" carrier="BASE Internet" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.BASE.be" carrier="BASE MMS" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.BASE.be" carrier="BASE MMS" mcc="206" mmsc="http://mmsc.BASE.be" mmsport="8080" mmsproxy="217.72.235.1" mnc="20" mvno_match_data="BASE" mvno_type="spn" password="BASE" roaming_protocol="IPV4V6" type="mms" user="BASE" />
   <apn apn="ims" carrier="BASE IMS" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="BASE IMS" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="XCAP" carrier="BASE XCAP" mcc="206" mnc="20" mvno_match_data="BASE" mvno_type="spn" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="default" />
-  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
+  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="mms" />
+  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="206" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="20" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
   <apn apn="ims" carrier="ims" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="hos" mcc="206" mnc="20" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="bicsapn" carrier="BICS Internet" carrier_id="2132" mcc="206" mnc="28" type="default,ia,supl" />
@@ -980,12 +982,12 @@
   <apn apn="internet" carrier="Monaco Telecom" mcc="208" mnc="01" mvno_match_data="Monaco Telecom" mvno_type="spn" type="default,xcap" />
   <apn apn="internet" carrier="Monaco Telecom MMS" mcc="208" mmsc="http://mms.monaco-telecom.mc" mnc="01" mvno_match_data="Monaco Telecom" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="208" mnc="01" mvno_match_data="Monaco Telecom" mvno_type="spn" protocol="IPV4V6" type="ims" />
-  <apn apn="orange" carrier="orange" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" password="orange" protocol="IP" type="default,xcap" user="orange" />
   <apn apn="orange" carrier="orange" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" protocol="IP" type="default,xcap" />
+  <apn apn="orange" carrier="orange" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" password="orange" protocol="IP" type="default,xcap" user="orange" />
   <apn apn="internet" carrier="internet" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" type="default" />
   <apn apn="orange.fr" carrier="Orange Internet" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" password="orange" protocol="IP" type="default" user="orange" />
-  <apn apn="orange" carrier="orange" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" password="orange" protocol="IP" type="mms" user="orange" />
   <apn apn="orange" carrier="orange" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" protocol="IP" type="mms" />
+  <apn apn="orange" carrier="orange" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" password="orange" protocol="IP" type="mms" user="orange" />
   <apn apn="ims" carrier="IMS" mcc="208" mnc="01" mvno_match_data="Monaco Telecom Roaming" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="ofnew.fr" carrier="RSO WEB" mcc="208" mnc="01" mvno_match_data="NRJ (ORANGE)" mvno_type="spn" type="default" />
   <apn apn="ofnew.fr" carrier="RSO WEB" mcc="208" mnc="01" mvno_match_data="NRJ (ORANGE)" mvno_type="spn" password="orange" type="default" user="orange" />
@@ -998,14 +1000,14 @@
   <apn apn="orange" carrier="Orange World" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" protocol="IPV6" type="default,xcap" user="orange" />
   <apn apn="orange" authtype="1" carrier="Orange World" carrier_enabled="true" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" protocol="IPV6" type="default,dun,supl,xcap" user="orange" />
   <apn apn="orange" carrier="Orange World" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="default,xcap" />
-  <apn apn="orange-mib" carrier="Orange entreprises" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" type="default" user="orange" />
   <apn apn="orange-mib" carrier="Orange entreprises" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" type="default" />
+  <apn apn="orange-mib" carrier="Orange entreprises" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" type="default" user="orange" />
   <apn apn="orange-mib" authtype="1" carrier="Orange entreprises" carrier_enabled="true" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" type="default" user="orange" />
   <apn apn="orange.fr" carrier="Orange Internet" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" type="default" />
   <apn apn="orange.fr" authtype="1" carrier="Orange Internet" carrier_enabled="true" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" type="default,dun,supl" user="orange" />
   <apn apn="orange-mib" carrier="Orange entreprises" mcc="208" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" port="8000" proxy="172.16.2.8" type="default" user="orange" />
-  <apn apn="orange" carrier="Orange MMS" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" protocol="IPV6" type="mms" user="orange" />
   <apn apn="orange" carrier="Orange MMS" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" protocol="IPV6" type="mms" />
+  <apn apn="orange" carrier="Orange MMS" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" protocol="IPV6" type="mms" user="orange" />
   <apn apn="orange" authtype="1" carrier="Orange MMS" carrier_enabled="true" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" password="orange" protocol="IPV6" type="mms" user="orange" />
   <apn apn="orange" carrier="Orange MMS" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="vowifiorange" carrier="Orange F VoWiFi" mcc="208" mmsc="http://mms.orange.fr/" mnc="01" mvno_match_data="Orange F" mvno_type="spn" protocol="IPV4V6" type="mms" />
@@ -2053,10 +2055,10 @@
   <apn apn="ims" carrier="DIGI Spain IMS" mcc="214" mnc="05" mvno_match_data="DIGI Spain" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.movil.es" authtype="0" carrier="internet.movil.es" carrier_enabled="true" mcc="214" mnc="05" mvno_match_data="MI OPERADOR" mvno_type="spn" type="default,supl" />
   <apn apn="ims" authtype="0" carrier="ims" carrier_enabled="true" mcc="214" mnc="05" mvno_match_data="MI OPERADOR" mvno_type="spn" protocol="IP" type="ims" />
-  <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="05" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="default" user="telefonica" />
   <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="05" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" type="default" />
-  <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="05" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="mms" user="telefonica" />
+  <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="05" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="default" user="telefonica" />
   <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="05" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" type="mms" />
+  <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="05" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="mms" user="telefonica" />
   <apn apn="ims" carrier="Movistar IMS" mcc="214" mnc="05" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="XCAP" carrier="XCAP" mcc="214" mnc="05" mvno_match_data="Movistar" mvno_type="spn" type="xcap" />
   <apn apn="internet.ono.com" authtype="0" carrier="ONO" carrier_enabled="true" mcc="214" mnc="05" mvno_match_data="ONO" mvno_type="spn" type="default,supl" />
@@ -2073,11 +2075,11 @@
   <apn apn="mms.telecable.es" carrier="telecable MMS" mcc="214" mmsc="http://mms.telecable.es/mms/" mmsport="8080" mmsproxy="212.89.0.84" mnc="05" mvno_match_data="telecable" mvno_type="spn" password="telecable" type="mms" user="telecable" />
   <apn apn="mms.telecable.es" carrier="telecable MMS" mcc="214" mmsc="http://mms.telecable.es/mms/" mmsport="8080" mmsproxy="212.89.0.84" mnc="05" mvno_match_data="telecable" mvno_type="spn" type="mms" />
   <apn apn="mms.telecable.es" authtype="1" carrier="telecable MMS" carrier_enabled="true" mcc="214" mmsc="http://mms.telecable.es/mms/" mmsport="8080" mmsproxy="212.89.0.84" mnc="05" mvno_match_data="telecable" mvno_type="spn" password="telecable" type="mms" user="telecable" />
-  <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" authtype="1" carrier="Tuenti" carrier_enabled="true" mcc="214" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" type="default" />
-  <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
+  <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" type="mms" />
+  <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
   <apn apn="tuenti.com" authtype="1" carrier="Tuenti MMS" carrier_enabled="true" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
   <apn apn="tuenti.com" authtype="1" carrier="Tuenti" carrier_id="2357" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="05" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,ia,mms,supl" user="tuenti" />
   <apn apn="enabler.es" authtype="0" carrier="Internet" carrier_enabled="true" mcc="214" mnc="06" type="default,supl" />
@@ -2259,10 +2261,10 @@
   <apn apn="jazzmms" carrier="Jazztel MMS" mcc="214" mmsc="http://jazztelmms.com/servlets/mms" mmsport="8080" mmsproxy="37.132.0.10" mnc="07" mvno_match_data="JAZZTEL" mvno_type="spn" type="mms" />
   <apn apn="IMS" carrier="Orange IMS" mcc="214" mnc="07" mvno_match_data="JAZZTEL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="IMS" authtype="1" carrier="Orange IMS" carrier_enabled="true" mcc="214" mnc="07" mvno_match_data="JAZZTEL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="default" user="telefonica" />
   <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" type="default" />
-  <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="07" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="mms" user="telefonica" />
+  <apn apn="telefonica.es" carrier="Movistar" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="default" user="telefonica" />
   <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="07" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" type="mms" />
+  <apn apn="telefonica.es" carrier="Movistar MMS" mcc="214" mmsc="http://mms.movistar.com" mmsport="8080" mmsproxy="10.138.255.5" mnc="07" mvno_match_data="Movistar" mvno_type="spn" password="telefonica" protocol="IPV4V6" type="mms" user="telefonica" />
   <apn apn="ims" carrier="Movistar IMS" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Movistar IMS" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="XCAP" carrier="XCAP" mcc="214" mnc="07" mvno_match_data="Movistar" mvno_type="spn" type="xcap" />
@@ -2400,11 +2402,11 @@
   <apn apn="hos" carrier="hos" mcc="214" mnc="27" mvno_match_data="Truphone ES" mvno_type="spn" type="xcap" />
   <apn apn="hos" carrier="hos" mcc="214" mnc="27" mvno_match_data="Truphone ES" mvno_type="spn" port="443" proxy="xcap.ims.truphone.net" type="xcap" />
   <apn apn="internetmas" carrier="Masmovil" mcc="214" mnc="32" type="default,supl" />
-  <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" authtype="1" carrier="Tuenti" carrier_enabled="true" mcc="214" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" type="default" />
-  <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
+  <apn apn="tuenti.com" carrier="Tuenti" mcc="214" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="default,supl" user="tuenti" />
   <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" type="mms" />
+  <apn apn="tuenti.com" carrier="Tuenti MMS" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
   <apn apn="tuenti.com" authtype="1" carrier="Tuenti MMS" carrier_enabled="true" mcc="214" mmsc="http://tuenti.com" mmsport="8080" mmsproxy="10.138.255.43" mnc="32" mvno_match_data="Tuenti" mvno_type="spn" password="tuenti" type="mms" user="tuenti" />
   <apn apn="inet.es" carrier="INET Internet" mcc="214" mnc="34" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,fota,hipri,supl" />
   <apn apn="inet.es" carrier="INET Internet" mcc="214" mnc="34" protocol="IPV4V6" type="ia" />
@@ -2778,10 +2780,10 @@
   <apn apn="gprswap" carrier="mt:s" mcc="220" mnc="03" password="064" type="dun" user="mts" />
   <apn apn="hos" carrier="HOS" mcc="220" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="HOS" carrier="HOS" carrier_enabled="true" mcc="220" mnc="03" mtu="1500" protocol="IPV4V6" type="xcap" />
-  <apn apn="gprswap" carrier="mt:s wap" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" password="064" type="default" user="mts" />
   <apn apn="gprswap" carrier="mt:s wap" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" type="default" />
-  <apn apn="mms" carrier="mt:s mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" mvno_match_data="mt:s" mvno_type="spn" password="064" type="mms" user="mts" />
+  <apn apn="gprswap" carrier="mt:s wap" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" password="064" type="default" user="mts" />
   <apn apn="mms" carrier="mt:s mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" mvno_match_data="mt:s" mvno_type="spn" type="mms" />
+  <apn apn="mms" carrier="mt:s mms" mcc="220" mmsc="http://mms.mts064.telekom.rs/mms/wapenc" mmsport="8080" mmsproxy="172.17.85.131" mnc="03" mvno_match_data="mt:s" mvno_type="spn" password="064" type="mms" user="mts" />
   <apn apn="IMS" carrier="IMS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="220" mnc="03" mvno_match_data="mt:s" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="tmcg-wnw" carrier="Telekom.me" mcc="220" mnc="04" password="38267" type="default,dun" user="38267" />
@@ -3008,8 +3010,8 @@
   <apn apn="web.noverca.it" authtype="0" carrier="NOVERCA WEB" mcc="222" mnc="01" mvno_match_data="NOVERCA" mvno_type="spn" type="default,dun,fota,supl" />
   <apn apn="mms.noverca.it" authtype="0" carrier="NOVERCA MMS" mcc="222" mmsc="http://mms.noverca.it/" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="NOVERCA" mvno_type="spn" type="mms" />
   <apn apn="ibox.tim.it" carrier="TIM WEB" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="default" />
-  <apn apn="wap.tim.it" carrier="WAP TIM" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" password="WAPTIM" type="default" user="WAPTIM" />
   <apn apn="wap.tim.it" carrier="WAP TIM" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="default" />
+  <apn apn="wap.tim.it" carrier="WAP TIM" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" password="WAPTIM" type="default" user="WAPTIM" />
   <apn apn="unico.tim.it" carrier="iTIM" mcc="222" mmsc="http://mms.tim.it/servlets/mms" mmsport="80" mmsproxy="213.230.130.89" mnc="01" mvno_match_data="TIM" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap.tim.it" carrier="XCAP" mcc="222" mnc="01" mvno_match_data="TIM" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
@@ -3583,8 +3585,8 @@
   <apn apn="xcap" bearer_bitmask="14|18|20" carrier="XCAP" mcc="228" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="xcap" carrier="Sunrise Ut" carrier_id="1413" mcc="228" mnc="02" type="xcap" user_visible="false" />
   <apn apn="internet" carrier="Sunrise internet" mcc="228" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" type="default" />
-  <apn apn="mms.sunrise.ch" carrier="Sunrise MMS" mcc="228" mmsc="http://mmsc.sunrise.ch" mmsport="8080" mmsproxy="212.35.34.75" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms.sunrise.ch" carrier="Sunrise MMS" mcc="228" mmsc="http://mmsc.sunrise.ch" mmsport="8080" mmsproxy="212.35.34.75" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" type="mms" />
+  <apn apn="mms.sunrise.ch" carrier="Sunrise MMS" mcc="228" mmsc="http://mmsc.sunrise.ch" mmsport="8080" mmsproxy="212.35.34.75" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="ims" carrier="Sunrise IMS" mcc="228" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="Sunrise xcap" mcc="228" mnc="02" mvno_match_data="Sunrise" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="228" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
@@ -3767,8 +3769,8 @@
   <apn apn="ims" carrier="Telekom SK" mcc="231" mnc="02" roaming_protocol="IPV6" type="ims" />
   <apn apn="internet" carrier="Telekom SK" mcc="231" mnc="02" roaming_protocol="IP" type="dun" />
   <apn apn="internet" carrier="internet" mcc="231" mnc="02" mvno_match_data="T-Mobile SK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="231" mmsc="http://mmsc.telekom.sk" mnc="02" mvno_match_data="T-Mobile SK" mvno_type="spn" password="mms" protocol="IP" roaming_protocol="IP" type="mms,xcap" user="mms" />
   <apn apn="hos" carrier="HOS" mcc="231" mmsc="http://mmsc.telekom.sk" mnc="02" mvno_match_data="T-Mobile SK" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="231" mmsc="http://mmsc.telekom.sk" mnc="02" mvno_match_data="T-Mobile SK" mvno_type="spn" password="mms" protocol="IP" roaming_protocol="IP" type="mms,xcap" user="mms" />
   <apn apn="IMS" carrier="IMS" mcc="231" mnc="02" mvno_match_data="T-Mobile SK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet" carrier="internet" mcc="231" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="231" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -3833,21 +3835,15 @@
   <apn apn="ims" carrier="A1 IMS" carrier_id="14" mcc="232" mnc="01" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="232" mnc="01" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="232" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" password="ppp" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" user="ppp@a1plus.at" />
-  <apn apn="A1.net" carrier="A1.net" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="A1.net" carrier="A1.net" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" type="default" />
   <apn apn="A1.net" carrier="A1.net" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="A1.net" carrier="A1.net" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" user="ppp@a1plus.at" />
+  <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" password="ppp" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" user="ppp@a1plus.at" />
+  <apn apn="A1.net" carrier="A1.net" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="free.A1.net" carrier="free.A1.net" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="mms" />
   <apn apn="free.A1.net" carrier="free.A1.net" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="A1" mvno_type="spn" password="ppp" protocol="IP" roaming_protocol="IP" type="mms" user="ppp@a1plus.at" />
-  <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" type="ims" />
+  <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="aon.at" carrier="A1 Mobil Start" mcc="232" mnc="01" mvno_match_data="aon" mvno_type="spn" type="default" />
-  <apn apn="mms.aon.at" carrier="A1 Mobil Start MMS" mcc="232" mmsc="http://mmsc.aon.at" mmsport="8001" mmsproxy="194.48.124.134" mnc="01" mvno_match_data="aon" mvno_type="spn" type="mms" />
-  <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="B.Free Internet" mvno_type="spn" type="default" />
-  <apn apn="free.A1.net" carrier="MMS" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="B.Free Internet" mvno_type="spn" type="mms" />
   <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" type="default" />
   <apn apn="free.A1.net" carrier="MMS" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" type="mms" />
   <apn apn="a1.net" authtype="1" carrier="A1 Internet" mcc="232" mnc="02" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="ppp@a1plus.at" />
@@ -3889,16 +3885,17 @@
   <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="232" mnc="03" mtu="1500" mvno_match_data="76" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="uros.iot" carrier="Goodspeed" mcc="232" mnc="03" mvno_match_data="C5" mvno_type="gid" type="default" />
   <apn apn="uros.iot" carrier="Goodspeed" carrier_id="2512" mcc="232" mnc="03" mvno_match_data="C5" mvno_type="gid" type="default,ia" />
-  <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
+  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="web" carrier="tele.ring web" mcc="232" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -3988,19 +3985,18 @@
   <apn apn="mmsaut" carrier="0677 mms" mcc="232" mmsc="http://mmsaut.at/send" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="HoT_76" mvno_type="spn" type="mms" />
   <apn apn="webaut" carrier="0677 web" mcc="232" mnc="07" mvno_match_data="HoT_799" mvno_type="spn" type="default" />
   <apn apn="mmsaut" carrier="0677 mms" mcc="232" mmsc="http://mmsaut.at/send" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="HoT_799" mvno_type="spn" type="mms" />
-  <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="t-mobile" />
+  <apn apn="internet.t-mobile.at" carrier="Internet" mcc="232" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="HoT_AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
+  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="web" carrier="tele.ring web" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="data.lycamobile.at" authtype="1" carrier="lycamobile" mcc="232" mnc="08" mvno_match_data="Lycamobile" mvno_type="spn" type="default,supl" />
   <apn apn="data.lycamobile.at" authtype="1" carrier="Lycamobile" carrier_id="2404" mcc="232" mnc="08" mvno_match_data="Lycamobile" mvno_type="spn" type="default,ia,supl" />
@@ -4047,8 +4043,6 @@
   <apn apn="drei.at" carrier="Planet3" mcc="232" mnc="10" mvno_match_data="3 AT" mvno_type="spn" type="xcap" />
   <apn apn="hos" carrier="HOS" mcc="232" mnc="10" mvno_match_data="3 AT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="eety.at" carrier="eety" mcc="232" mnc="10" mvno_match_data="eety" mvno_type="spn" type="default" />
-  <apn apn="MMmobil" carrier="MediaMarkt mobil" mcc="232" mnc="10" mvno_match_data="MediaMarkt" mvno_type="spn" type="default" />
-  <apn apn="SATURNmobil" carrier="SATURNmobil" mcc="232" mnc="10" mvno_match_data="SATURNmobil" mvno_type="spn" type="default" />
   <apn apn="bob.at" authtype="3" carrier="data.bob" mcc="232" mnc="11" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="data@bob.at" />
   <apn apn="bob.at" authtype="1" carrier="data.bob" carrier_enabled="true" mcc="232" mnc="11" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user="data@bob.at" />
   <apn apn="bob.at" authtype="1" carrier="data.bob" carrier_id="14" mcc="232" mnc="11" password="ppp" protocol="IPV4V6" type="default,ia,supl" user="data@bob.at" />
@@ -4099,9 +4093,8 @@
   <apn apn="gprsmms" authtype="1" carrier="T-Mobile A MMS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="13" password="tm" type="mms" user="t-mobile" />
   <apn apn="internet.t-mobile.at" authtype="1" carrier="Internet" carrier_enabled="true" mcc="232" mnc="13" mtu="1500" mvno_match_data="75" mvno_type="gid" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" user="T" />
   <apn apn="Internet.at.upcmobile.com" carrier="UPC mobiles Internet" mcc="232" mnc="13" mvno_match_data="75617431" mvno_type="gid" type="default,ia,supl" />
-  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="13" mvno_match_data="Magenta-T-" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="13" mvno_match_data="Magenta-T-" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="Internet.at.upcmobile.com" carrier="UPC mobiles Internet" mcc="232" mnc="13" mvno_match_data="UPC AT" mvno_type="spn" type="default" />
+  <apn apn="internet.t-mobile.at" carrier="internet.t-mobile.at" mcc="232" mnc="13" mvno_match_data="Magenta-T-" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="default" user="T" />
   <apn apn="drei.at" authtype="0" carrier="drei.at" carrier_enabled="true" mcc="232" mmsc="http://mmsc" mmsport="8799" mmsproxy="213.94.78.133" mnc="14" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="drei.at" authtype="0" carrier="drei.at" carrier_enabled="true" mcc="232" mmsc="http://mmsc" mmsport="8799" mmsproxy="213.94.78.133" mnc="14" mtu="1500" type="xcap" />
   <apn apn="drei.at" carrier="Planet 3" mcc="232" mmsc="http://mmsc" mmsport="8799" mmsproxy="213.94.78.133" mnc="14" type="ia" />
@@ -4184,10 +4177,10 @@
   <apn apn="wap.o2.co.uk" carrier="O2 MMS Postpay" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="02" password="password" type="mms" user="o2wap" />
   <apn apn="payandgo.o2.co.uk" carrier="O2 MMS Prepay" carrier_id="1492" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="02" password="password" type="mms" user="payandgo" />
   <apn apn="ims" authtype="1" carrier="IMS" carrier_enabled="true" mcc="234" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="mobile.o2.co.uk" carrier="O2 Pay Monthly" mcc="234" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" password="p" protocol="IPV4V6" type="default,xcap" user="o2" />
   <apn apn="mobile.o2.co.uk" carrier="O2 Pay Monthly" mcc="234" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" protocol="IPV4V6" type="default,xcap" />
-  <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" password="p" protocol="IPV4V6" type="mms" user="o2" />
+  <apn apn="mobile.o2.co.uk" carrier="O2 Pay Monthly" mcc="234" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" password="p" protocol="IPV4V6" type="default,xcap" user="o2" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" protocol="IPV4V6" type="mms" />
+  <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" password="p" protocol="IPV4V6" type="mms" user="o2" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="02" mvno_match_data="O2 Pay Monthly" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="spitfire1" carrier="spitfire1" mcc="234" mnc="05" mvno_match_data="Spitfire" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="234" mnc="05" mvno_match_data="Spitfire" mvno_type="spn" proxy="10.202.0.1" type="ims" user_visible="false" />
@@ -4303,28 +4296,29 @@
   <apn apn="internet" carrier="Spark NZ" mcc="234" mmsc="http://lsmmsc.xtra.co.nz" mmsport="80" mmsproxy="210.55.11.73" mnc="10" mvno_match_data="896405" mvno_type="iccid" type="default,dun,mms" />
   <apn apn="wbdata" carrier="Webbing" mcc="234" mnc="10" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
   <apn apn="travelfy" carrier="travelfy" mcc="234" mnc="10" mvno_match_data="2341040991" mvno_type="imsi" type="default,supl" />
-  <apn apn="giffgaff.com" authtype="1" carrier="giffgaff" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="p" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms" user="gg" />
+  <apn apn="giffgaff.com" authtype="1" carrier="giffgaff.com" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="p" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms" user="gg" />
+  <apn apn="giffgaff.com" carrier="giffgaff" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" type="default" user="giffgaff" />
+  <apn apn="giffgaff.com" carrier="giffgaff" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="p" protocol="IPV4V6" type="xcap" user="gg" />
   <apn apn="giffgaff.com" carrier="giffgaff" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" protocol="IPV4V6" type="default,xcap" />
   <apn apn="giffgaff.com" authtype="1" carrier="giffgaff" carrier_id="2118" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mmsport="8080" mmsproxy="193.113.200.195" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="password" type="default" user="giffgaff" />
-  <apn apn="giffgaff.com" carrier="giffgaff" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" type="default" user="giffgaff" />
   <apn apn="giffgaff.com" carrier="giffgaff" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="password" type="default,dun,hipri,mms,supl" user="giffgaff" />
   <apn apn="giffgaff.com" carrier="giffgaff MMS" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" protocol="IPV4V6" type="mms" />
   <apn apn="giffgaff.com" authtype="1" carrier="giffgaff" mcc="234" mmsc="http://mmsc.mediamessaging.co.uk:8002" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="p" protocol="IPV4V6" roaming_protocol="IP" type="default,hipri,ims,mms,supl" user="gg" />
   <apn apn="giffgaff.com" authtype="1" carrier="giffgaff GPRS" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" password="password" port="8080" proxy="193.113.200.195" type="default,supl" user="giffgaff" />
-  <apn apn="giffgaff.com" carrier="giffgaff MMS" mcc="234" mmsc="http://mmsc.mms.mediamessaging.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" type="mms" user="giffgaff" />
   <apn apn="giffgaff.com" carrier="giffgaff MMS" mcc="234" mmsc="http://mmsc.mms.mediamessaging.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" type="mms" />
+  <apn apn="giffgaff.com" carrier="giffgaff MMS" mcc="234" mmsc="http://mmsc.mms.mediamessaging.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" type="mms" user="giffgaff" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="234" mnc="10" mvno_match_data="giffgaff" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="mobiledata" authtype="0" carrier="Jump UK" carrier_id="2138" mcc="234" mnc="10" mvno_match_data="Jump" mvno_type="spn" type="default" />
   <apn apn="internet" carrier="Internet" mcc="234" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" type="default" />
-  <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" type="mms" />
+  <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="234" mnc="10" mvno_match_data="Manx Telecom Contract" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="webgo" type="default" user="webgo" />
   <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" type="default" />
-  <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="mmsgo" type="mms" user="mmsgo" />
+  <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="webgo" type="default" user="webgo" />
   <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" type="mms" />
+  <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="mmsgo" type="mms" user="mmsgo" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="234" mnc="10" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="m-bb.o2.co.uk" carrier="O2 Mobile Broadband" mcc="234" mnc="10" mvno_match_data="O2 Pay &amp; Go" mvno_type="spn" protocol="IPV4V6" type="default" />
@@ -4348,20 +4342,22 @@
   <apn apn="mobile.o2.co.uk" carrier="O2 Pay Monthly" mcc="234" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" password="p" type="xcap" user="o2" />
   <apn apn="mobile.o2.co.uk" carrier="mobile.o2.co.uk" mcc="234" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" type="default,xcap" />
   <apn apn="mobile.o2.co.uk" carrier="O2 Mobile Web" mcc="234" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" password="password" type="default,xcap" user="o2web" />
-  <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" password="password" type="mms" user="o2web" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" type="mms" />
+  <apn apn="mobile.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" password="password" type="mms" user="o2web" />
   <apn apn="wap.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" type="mms" />
   <apn apn="wap.o2.co.uk" carrier="O2 MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" password="password" type="mms" user="o2wap" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="10" mvno_match_data="O2 UK Pay Monthly" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="mobile.talktalk.co.uk" carrier="TalkTalk WAP" mcc="234" mnc="10" mvno_match_data="TalkTalk" mvno_type="spn" type="default" />
   <apn apn="mobile.talktalk.co.uk" carrier="TalkTalk MMS" mcc="234" mmsc="http://mms.talktalk.co.uk/servlets/mms" mmsport="8799" mmsproxy="212.183.137.12" mnc="10" mvno_match_data="TalkTalk" mvno_type="spn" type="mms" />
   <apn apn="prepay.tesco-mobile.com" carrier="prepay.tesco-mobile.com" mcc="234" mnc="10" mvno_match_data="TESCO" mvno_type="spn" protocol="IPV4V6" type="default,xcap" />
+  <apn apn="prepay.tesco-mobile.com" carrier="TESCO" mcc="234" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="p" protocol="IPV4V6" type="default,xcap" user="tm" />
   <apn apn="prepay.tesco-mobile.com" carrier="TESCO Mobile" mcc="234" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="password" port="8080" proxy="193.113.200.195" type="default" user="tescowap" />
   <apn apn="prepay.tesco-mobile.com" carrier="TESCO MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="193.113.200.195" mnc="10" mvno_match_data="TESCO" mvno_type="spn" type="mms" />
   <apn apn="prepay.tesco-mobile.com" carrier="TESCO MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mmsport="8080" mmsproxy="193.113.200.195" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="password" type="mms" user="tescowap" />
   <apn apn="prepay.tesco-mobile.com" authtype="1" carrier="Tesco Mobile" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:10021/mmsc" mmsport="8080" mmsproxy="193.113.200.195" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="password" port="8080" proxy="193.113.200.195" type="default,mms,supl" user="tescowap" />
   <apn apn="prepay.tesco-mobile.com" carrier="Tesco UK" mcc="234" mmsc="http://mmsc.mms.02.co.uk:8002" mmsport="8080" mmsproxy="193.113.200.195" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="password" port="8080" proxy="193.113.200.195" type="default,mms,supl" user="tescowap" />
   <apn apn="prepay.tesco-mobile.com" carrier="TESCO MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="10" mvno_match_data="TESCO" mvno_type="spn" protocol="IPV4V6" type="mms" />
+  <apn apn="prepay.tesco-mobile.com" carrier="TESCO MMS" mcc="234" mmsc="http://mmsc.mms.o2.co.uk:8002" mnc="10" mvno_match_data="TESCO" mvno_type="spn" password="p" protocol="IPV4V6" type="mms" user="tm" />
   <apn apn="IMS" carrier="IMS" mcc="234" mnc="10" mvno_match_data="TESCO" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MOBILE WEB" carrier_id="1492" mcc="234" mnc="11" password="O2web" type="default,ia,supl" user="O2web" />
   <apn apn="mobile.o2.co.uk" carrier="O2 MOBILE WEB" mcc="234" mnc="11" password="O2web" type="default,supl" user="O2web" />
@@ -4728,13 +4724,13 @@
   <apn apn="SOS" authtype="1" carrier="BT Emergency" carrier_id="2101" mcc="234" mnc="30" mvno_match_data="C3" mvno_type="gid" protocol="IPV6" type="emergency" />
   <apn apn="everywhere" authtype="1" carrier="ASDA Internet" mcc="234" mnc="30" mvno_match_data="ASDA Mobile" mvno_type="spn" password="secure" type="default,supl" user="eesecure" />
   <apn apn="eezone" authtype="1" carrier="ASDA MMS" mcc="234" mmsc="http://mms" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="ASDA Mobile" mvno_type="spn" password="secure" type="mms" user="eesecure" />
-  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="btmobile.bt.com" carrier="BT Mobile Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" password="bt" type="default" user="bt" />
   <apn apn="btmobile.bt.com" carrier="BT One Phone Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" type="default,supl" />
   <apn apn="btmobile.bt.com" authtype="1" carrier="BT Internet" mcc="234" mnc="30" mvno_match_data="BT" mvno_type="spn" password="bt" type="default,supl" user="bt" />
-  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="BT" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="BT" mvno_type="spn" type="mms" />
+  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="BT" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="mms.bt.com" authtype="1" carrier="BT MMS" mcc="234" mmsc="http://mms" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="BT" mvno_type="spn" password="bt" type="mms" user="bt" />
   <apn apn="mms.bt.com" carrier="BT MMS" mcc="234" mmsc="http://MMS/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="BT" mvno_type="spn" password="bt" type="mms" user="bt" />
   <apn apn="mms.btonephone.com" carrier="BT MMS" mcc="234" mmsc="http://mmsc" mmsport="8080" mmsproxy="proxy.btonephone.com" mnc="30" mvno_match_data="BT" mvno_type="spn" type="mms" />
@@ -4749,12 +4745,12 @@
   <apn apn="IMS" carrier="IMS" mcc="234" mnc="30" mvno_match_data="BTOP Roaming" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="30" mvno_match_data="BTOP Roaming" mvno_type="spn" type="ims" />
   <apn apn="Xcap" carrier="Xcap" mcc="234" mnc="30" mvno_match_data="BTOP Roaming" mvno_type="spn" type="xcap" />
-  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="everywhere" authtype="1" carrier="EE Internet" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" type="default,supl" user="eesecure" />
-  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="eezone" authtype="1" carrier="EE MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="EE" mvno_type="spn" type="mms" />
+  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="30" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="30" mvno_match_data="EE" mvno_type="spn" protocol="IPV6" type="ims" />
@@ -4819,12 +4815,12 @@
   <apn apn="SOS" authtype="1" carrier="EE Emergency" carrier_id="718" mcc="234" mnc="33" protocol="IPV6" type="emergency" />
   <apn apn="sos" carrier="EE Emergency" mcc="234" mnc="33" protocol="IPV6" roaming_protocol="IPV6" type="emergency" user_visible="false" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="234" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="33" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
-  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="everywhere" carrier="Internet" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="eesecure" />
   <apn apn="everywhere" authtype="1" carrier="EE Internet" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" protocol="IPV4V6" type="default,dun,supl" user="eesecure" />
-  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="eezone" authtype="1" carrier="EE MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="EE" mvno_type="spn" type="mms" />
+  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="33" mvno_match_data="EE" mvno_type="spn" protocol="IPV6" type="ims" />
@@ -4849,7 +4845,9 @@
   <apn apn="NowMobileNet" carrier="Now PAYG" mcc="234" mnc="33" mvno_match_data="Now PAYG" mvno_type="spn" type="default,supl" />
   <apn apn="NowMobileMMS" carrier="Now PAYG MMS" mcc="234" mmsc="http://mms" mmsport="8080" mmsproxy="193.35.133.194" mnc="33" mvno_match_data="Now PAYG" mvno_type="spn" type="mms" />
   <apn apn="everywhere" carrier="Internet" mcc="234" mnc="33" mvno_match_data="Orange UK" mvno_type="spn" type="default" />
+  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="33" mvno_match_data="Orange UK" mvno_type="spn" password="secure" type="default" user="eesecure" />
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="Orange UK" mvno_type="spn" type="mms" />
+  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="33" mvno_match_data="Orange UK" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="everywhere" authtype="1" carrier="EE Internet" mcc="234" mnc="34" password="secure" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,supl" user="eesecure" />
   <apn apn="orangeinternet" carrier="Orange Internet" mcc="234" mnc="34" type="default,supl" />
   <apn apn="orangewap" carrier="Orange WAP" mcc="234" mnc="34" password="Multimedia" port="8080" proxy="192.168.71.35" type="default,supl" user="Orange" />
@@ -4867,10 +4865,10 @@
   <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="234" mnc="38" mtu="1280" protocol="IPV4V6" type="xcap" />
   <apn apn="hos" bearer_bitmask="14" carrier="XCAP" mcc="234" mnc="38" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="goto.virginmobile.uk" authtype="1" carrier="Virgin Media Mobile Internet" mcc="234" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="38" mvno_match_data="28000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user="user" />
-  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="default" />
-  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="234" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
+  <apn apn="goto.virginmobile.uk" carrier="Virgin Media Mobile Internet" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="default" user="user" />
   <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="234" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="mms" />
+  <apn apn="goto.virginmobile.uk" carrier="VM Picture messaging" mcc="234" mmsc="http://mms.virginmobile.co.uk:8002" mmsport="8080" mmsproxy="193.30.166.2" mnc="38" mvno_match_data="Virgin" mvno_type="spn" type="mms" user="user" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="hos" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="gamma" authtype="0" carrier="GAMMA" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" type="default,dun,supl" user_editable="false" />
@@ -4913,8 +4911,8 @@
   <apn apn="ims" carrier="Truphone IMS" mcc="234" mnc="50" mvno_match_data="234500008" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="em" carrier="EMnify" carrier_id="2326" mcc="234" mnc="50" mvno_match_data="234500022" mvno_type="imsi" type="default,ia,supl" />
   <apn apn="pepper" carrier="pepper" mcc="234" mnc="50" mvno_match_data="JT" mvno_type="spn" type="default" />
-  <apn apn="mms" carrier="mms" mcc="234" mmsc="http://mms.surfmail.com/mmsc" mmsport="3130" mmsproxy="212.9.19.199" mnc="50" mvno_match_data="JT" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms" carrier="mms" mcc="234" mmsc="http://mms.surfmail.com/mmsc" mmsport="3130" mmsproxy="212.9.19.199" mnc="50" mvno_match_data="JT" mvno_type="spn" type="mms" />
+  <apn apn="mms" carrier="mms" mcc="234" mmsc="http://mms.surfmail.com/mmsc" mmsport="3130" mmsproxy="212.9.19.199" mnc="50" mvno_match_data="JT" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="globaldata" carrier="globaldata" mcc="234" mmsc="http://mms.mobileuc.global/" mmsport="8008" mmsproxy="37.18.129.98" mnc="53" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,fota,hipri,ia,mms,supl" user_editable="false" />
   <apn apn="globaldata" carrier="MobileUC" carrier_id="10031" mcc="234" mmsc="http://mms.mobileuc.global/" mmsport="8008" mmsproxy="37.18.129.98" mnc="53" type="default,fota,hipri,ia,mms,supl" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="234" mnc="53" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -5000,14 +4998,14 @@
   <apn apn="mms.prontogo.net" authtype="3" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002" mmsport="8080" mmsproxy="195.10.99.41" mnc="58" mvno_match_data="23458851" mvno_type="imsi" password="mmsgo" type="mms" user="mmsgo" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="234" mnc="58" mvno_match_data="23458851" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" carrier="Internet" mcc="234" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" type="default" />
-  <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" type="mms" />
+  <apn apn="mms.manxpronto.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.46" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="234" mnc="58" mvno_match_data="Manx Telecom Contract" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="webgo" type="default" user="webgo" />
   <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" type="default" />
-  <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="mmsgo" type="mms" user="mmsgo" />
+  <apn apn="web.prontogo.net" carrier="Internet" mcc="234" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="webgo" type="default" user="webgo" />
   <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" type="mms" />
+  <apn apn="mms.prontogo.net" carrier="MMS" mcc="234" mmsc="http://mms.manxpronto.net:8002/" mmsport="8080" mmsproxy="195.10.99.41" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" password="mmsgo" type="mms" user="mmsgo" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="234" mnc="58" mvno_match_data="Manx Telecom PrePay" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="71" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
@@ -5028,7 +5026,9 @@
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="86" mvno_match_data="EE" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="ims" carrier="ims" mcc="234" mnc="86" mvno_match_data="EE" mvno_type="spn" protocol="IPV6" type="ims" />
   <apn apn="everywhere" carrier="Internet" mcc="234" mnc="86" mvno_match_data="Orange UK" mvno_type="spn" type="default" />
+  <apn apn="everywhere" carrier="Internet" mcc="234" mnc="86" mvno_match_data="Orange UK" mvno_type="spn" password="secure" type="default" user="eesecure" />
   <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="86" mvno_match_data="Orange UK" mvno_type="spn" type="mms" />
+  <apn apn="eezone" carrier="MMS" mcc="234" mmsc="http://mms/" mmsport="8080" mmsproxy="149.254.201.135" mnc="86" mvno_match_data="Orange UK" mvno_type="spn" password="secure" type="mms" user="eesecure" />
   <apn apn="uk.lebara.mobi" authtype="1" carrier="Lebara Internet" mcc="234" mmsc="http://mms.lebara.co.uk/servlets/mms" mmsport="8799" mmsproxy="212.183.137.12" mnc="87" password="wap" type="default,mms,supl" user="wap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="234" mnc="87" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="Internet" authtype="0" carrier="Internet" carrier_enabled="true" mcc="234" mnc="87" mvno_match_data="Lebara" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
@@ -6017,10 +6017,10 @@
   <apn apn="ims" carrier="Telia LT" mcc="246" mnc="01" protocol="IPV4V6" type="ims" />
   <apn apn="omnitel" authtype="1" carrier="omnitel" carrier_enabled="true" mcc="246" mnc="01" password="omni" protocol="IPV4V6" type="supl" user="omni" />
   <apn apn="hos" authtype="0" carrier="hos" carrier_enabled="true" mcc="246" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_editable="false" user_visible="false" />
-  <apn apn="omnitel" carrier="Omnitel Internet" mcc="246" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="omnitel" carrier="Omnitel Internet" mcc="246" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" password="omni" type="default" user="omni" />
-  <apn apn="gprs.mms.lt" carrier="Omnitel MMS" mcc="246" mmsc="http://mms.omnitel.net:8002/" mmsport="8080" mmsproxy="194.176.32.149" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" password="mms" type="mms" user="mms" />
+  <apn apn="omnitel" carrier="Omnitel Internet" mcc="246" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="gprs.mms.lt" carrier="Omnitel MMS" mcc="246" mmsc="http://mms.omnitel.net:8002/" mmsport="8080" mmsproxy="194.176.32.149" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" type="mms" />
+  <apn apn="gprs.mms.lt" carrier="Omnitel MMS" mcc="246" mmsc="http://mms.omnitel.net:8002/" mmsport="8080" mmsproxy="194.176.32.149" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="IMS" carrier="IMS" mcc="246" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="246" mnc="01" mvno_match_data="LT Omnitel" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="246" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="supl" />
@@ -6062,10 +6062,10 @@
   <apn apn="ims" carrier="ims" carrier_enabled="true" mcc="246" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="246" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="hos" carrier="hos" carrier_enabled="true" mcc="246" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="internet.tele2.lt" carrier="Tele2 LT Internet" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet.tele2.lt" carrier="Tele2 LT Internet" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" password="wap" type="default" user="wap" />
-  <apn apn="internet.tele2.lt" carrier="Tele2 LT MMS" mcc="246" mmsc="http://mmsc.tele2.lt" mmsport="8080" mmsproxy="193.12.40.29" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="internet.tele2.lt" carrier="Tele2 LT Internet" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet.tele2.lt" carrier="Tele2 LT MMS" mcc="246" mmsc="http://mmsc.tele2.lt" mmsport="8080" mmsproxy="193.12.40.29" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" password="wap" type="mms" user="wap" />
+  <apn apn="internet.tele2.lt" carrier="Tele2 LT MMS" mcc="246" mmsc="http://mmsc.tele2.lt" mmsport="8080" mmsproxy="193.12.40.29" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="Tele2 LT IMS" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Tele2 LT IMS" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="hos" carrier="Tele2 LT XCAP" mcc="246" mnc="03" mvno_match_data="LT TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
@@ -6101,11 +6101,11 @@
   <apn apn="ims" carrier="Tele2 LV IMS" carrier_enabled="true" mcc="247" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="247" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="hos" carrier="hos" carrier_enabled="true" mcc="247" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="internet.tele2.lv" carrier="Tele2 LV Internet" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" password="wap" type="default" user="wap" />
   <apn apn="internet.tele2.lv" carrier="Tele2 LV Internet" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mobileinternet.tele2.lv" carrier="Tele2 LV LTE" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet.tele2.lv" carrier="Tele2 LV Internet" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" password="wap" type="default" user="wap" />
-  <apn apn="mms.tele2.lv" carrier="Tele2 LV MMS" mcc="247" mmsc="http://mmsc.tele2.lv" mmsport="8080" mmsproxy="193.12.40.38" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" password="wap" type="mms" user="wap" />
   <apn apn="mms.tele2.lv" carrier="Tele2 LV MMS" mcc="247" mmsc="http://mmsc.tele2.lv" mmsport="8080" mmsproxy="193.12.40.38" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" type="mms" />
+  <apn apn="mms.tele2.lv" carrier="Tele2 LV MMS" mcc="247" mmsc="http://mmsc.tele2.lv" mmsport="8080" mmsproxy="193.12.40.38" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" password="wap" type="mms" user="wap" />
   <apn apn="ims" carrier="Tele2 LV IMS" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Tele2 LV IMS" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="hos" carrier="Tele2 LV XCAP" mcc="247" mnc="02" mvno_match_data="LV TELE2" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
@@ -6125,8 +6125,8 @@
   <apn apn="mms" carrier="Bite" mcc="247" mmsc="http://mmsc/" mmsport="8080" mmsproxy="192.168.150.2" mnc="05" mvno_match_data="8937105" mvno_type="iccid" password="mms" type="mms" user="mms@mms" />
   <apn apn="ims" carrier="Bite" mcc="247" mnc="05" mvno_match_data="8937105" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet" carrier="Bite LV Internet" mcc="247" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" type="default" />
-  <apn apn="mms" carrier="Bite LV MMS" mcc="247" mmsc="http://mmsc/servlets/mms" mmsport="8080" mmsproxy="192.168.150.2" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" password="mms" type="mms" user="mms@mms" />
   <apn apn="mms" carrier="Bite LV MMS" mcc="247" mmsc="http://mmsc/servlets/mms" mmsport="8080" mmsproxy="192.168.150.2" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" type="mms" />
+  <apn apn="mms" carrier="Bite LV MMS" mcc="247" mmsc="http://mmsc/servlets/mms" mmsport="8080" mmsproxy="192.168.150.2" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" password="mms" type="mms" user="mms@mms" />
   <apn apn="ims" carrier="Bite LV IMS" mcc="247" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Bite LV IMS" mcc="247" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="IMS" mcc="247" mnc="05" mvno_match_data="LV BITE" mvno_type="spn" protocol="IPV4V6" type="ims" />
@@ -6436,7 +6436,6 @@
   <apn apn="xcap" carrier="A1 XCAP" mcc="257" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="vmi.velcom.by" carrier="Velcom Internet" mcc="257" mnc="01" mvno_match_data="Velcom" mvno_type="spn" type="default" />
   <apn apn="mms.velcom.by" carrier="Velcom MMS" mcc="257" mmsc="http://mms.velcom.by/servlets/mms" mmsport="8080" mmsproxy="10.200.15.15" mnc="01" mvno_match_data="Velcom" mvno_type="spn" password="mms" type="mms" user="mms" />
-  <apn apn="mms.velcom.by" carrier="Velcom MMS" mcc="257" mmsc="http://mms.velcom.by/servlets/mms" mmsport="8080" mmsproxy="10.200.15.15" mnc="01" mvno_match_data="Velcom" mvno_type="spn" type="mms" />
   <apn apn="ims" carrier="Velcom IMS" mcc="257" mnc="01" mvno_match_data="Velcom" mvno_type="spn" type="ims" />
   <apn apn="mts" carrier="mts" mcc="257" mmsc="http://mmsc" mmsport="8080" mmsproxy="192.168.192.168" mnc="02" password="mts" protocol="IPV4V6" type="dun,mms" user="mts" />
   <apn apn="mts" authtype="1" carrier="mts" mcc="257" mmsc="http://mmsc" mmsport="8080" mmsproxy="192.168.192.168" mnc="02" password="mts" protocol="IPV4V6" type="default" user="mts" />
@@ -6558,11 +6557,11 @@
   <apn apn="fastaccess" carrier="Prime Mobile" mcc="260" mnc="03" mvno_match_data="2636" mvno_type="gid" type="default,dun" />
   <apn apn="global.telcoequity" carrier="DENT" mcc="260" mnc="03" mvno_match_data="3597BFD533" mvno_type="gid" type="default,dun" user_editable="false" />
   <apn apn="global.dentwireless" carrier="DENT" mcc="260" mnc="03" mvno_match_data="3597BFD533" mvno_type="gid" type="default,dun" />
-  <apn apn="internetipv6" carrier="nju INTERNET" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" password="internet" protocol="IPV6" type="default" user="internet" />
   <apn apn="internetipv6" authtype="0" carrier="nju INTERNET" carrier_enabled="true" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" password="internet" protocol="IPV6" type="default,supl" user="internet" />
   <apn apn="internetipv6" carrier="nju INTERNET" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV6" type="default" />
-  <apn apn="mms" carrier="nju MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="nju" mvno_type="spn" password="mms" type="mms" user="mms" />
+  <apn apn="internetipv6" carrier="nju INTERNET" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" password="internet" protocol="IPV6" type="default" user="internet" />
   <apn apn="mms" carrier="nju MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="nju" mvno_type="spn" type="mms" />
+  <apn apn="mms" carrier="nju MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="nju" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms" authtype="0" carrier="nju MMS" carrier_enabled="true" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="nju" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="IMS" carrier="nju IMS" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="nju IMS" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
@@ -6573,11 +6572,11 @@
   <apn apn="HOS" authtype="0" carrier="nju SERVICES" carrier_enabled="true" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="hos" carrier="nju SERVICES" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="hos" authtype="0" carrier="nju SERVICES" carrier_enabled="true" mcc="260" mnc="03" mvno_match_data="nju" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="internetipv6" carrier="Orange INTERNET" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="internet" protocol="IPV6" type="default" user="internet" />
   <apn apn="internetipv6" authtype="0" carrier="Orange INTERNET" carrier_enabled="true" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="internet" protocol="IPV6" type="default,supl" user="internet" />
   <apn apn="internetipv6" carrier="Orange INTERNET" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" protocol="IPV6" type="default" />
-  <apn apn="mms" carrier="Orange MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="mms" type="mms" user="mms" />
+  <apn apn="internetipv6" carrier="Orange INTERNET" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="internet" protocol="IPV6" type="default" user="internet" />
   <apn apn="mms" carrier="Orange MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="Orange" mvno_type="spn" type="mms" />
+  <apn apn="mms" carrier="Orange MMS" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="mms" authtype="0" carrier="Orange MMS" carrier_enabled="true" mcc="260" mmsc="http://mms.orange.pl" mmsport="8080" mmsproxy="192.168.6.104" mnc="03" mvno_match_data="Orange" mvno_type="spn" password="mms" type="mms" user="mms" />
   <apn apn="ims" carrier="Orange IMS" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" authtype="0" carrier="Orange IMS" carrier_enabled="true" mcc="260" mnc="03" mvno_match_data="Orange" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
@@ -6699,10 +6698,10 @@
   <apn apn="internet.t-mobile" carrier="Lebara" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="172.28.23.131" mnc="01" mvno_match_data="Lebara" mvno_type="spn" password="tm" type="default,mms,supl" user="t-mobile" />
   <apn apn="internet.telekom" carrier="Telekom Internet" mcc="262" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="internet.telekom" carrier="Telekom Internet" mcc="262" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
-  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="HOS" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="HOS" carrier="Telekom EPDG" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" type="mms,xcap" user="telekom" />
+  <apn apn="HOS" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="mms,xcap" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="mmsproxy.telekom.de" mnc="01" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
@@ -6798,10 +6797,10 @@
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="fraenk" mvno_type="spn" protocol="IPV4V6" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="mmsproxy.telekom.de" mnc="06" mvno_match_data="fraenk" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="IMS" carrier="fraenk IMS" mcc="262" mnc="06" mvno_match_data="fraenk" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="mms,xcap" user="telekom" />
+  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="mms,xcap" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="mmsproxy.telekom.de" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="IMS" carrier="Telekom IMS" mcc="262" mnc="06" mvno_match_data="Telekom.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet" authtype="1" carrier="internet" mcc="262" mmsc="http://10.81.0.7:8002" mmsport="8080" mmsproxy="82.113.100.5" mnc="07" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl,xcap" />
@@ -7087,8 +7086,8 @@
   <apn apn="joinmms" carrier="Join MMS" mcc="270" mmsc="http://joinmms" mmsport="8080" mmsproxy="joinproxy" mnc="01" mvno_match_data="Join" mvno_type="spn" type="mms" />
   <apn apn="web.pt.lu" carrier="POST Internet" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="web.pt.lu" carrier="POST Internet" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="mms.pt.lu" carrier="POST MMS" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" mvno_match_data="POST" mvno_type="spn" password="mms" protocol="IP" roaming_protocol="IPV4V6" type="mms" user="mms" />
   <apn apn="mms.pt.lu" carrier="POST MMS" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.pt.lu" carrier="POST MMS" mcc="270" mmsc="http://mmsc.pt.lu" mmsport="8080" mmsproxy="194.154.192.88" mnc="01" mvno_match_data="POST" mvno_type="spn" password="mms" protocol="IP" roaming_protocol="IPV4V6" type="mms" user="mms" />
   <apn apn="ims" carrier="POST IMS" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="POST XCAP" mcc="270" mnc="01" mvno_match_data="POST" mvno_type="spn" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet" carrier="internet" mcc="270" mnc="02" protocol="IPV4V6" type="default,ia,supl" />
@@ -7110,11 +7109,11 @@
   <apn apn="hos" carrier="Tango XCAP" mcc="270" mnc="77" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="270" mnc="77" mvno_match_data="BB00" mvno_type="gid" password="tsl" type="default,ia,supl" user="tsl" />
   <apn apn="netgprs.com" carrier="netgprs.com" carrier_id="2271" mcc="270" mnc="77" mvno_match_data="LU-Transatel" mvno_type="spn" password="tsl" type="default,ia,supl" user="tsl" />
-  <apn apn="internet" carrier="Tango Internet" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="default" user="tango" />
   <apn apn="internet" authtype="0" carrier="Tango Internet" carrier_enabled="true" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="default,supl" user="tango" />
   <apn apn="internet" carrier="Tango Internet" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="mms" user="tango" />
+  <apn apn="internet" carrier="Tango Internet" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="default" user="tango" />
   <apn apn="internet" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="internet" carrier="Tango MMS" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="mms" user="tango" />
   <apn apn="internet" authtype="0" carrier="Tango MMS" carrier_enabled="true" mcc="270" mmsc="http://mms.tango.lu" mmsport="8080" mmsproxy="212.66.75.3" mnc="77" mvno_match_data="Tango" mvno_type="spn" password="tango" roaming_protocol="IPV4V6" type="mms" user="tango" />
   <apn apn="ims" carrier="Tango IMS" mcc="270" mnc="77" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Tango IMS" carrier_enabled="true" mcc="270" mnc="77" mtu="1500" mvno_match_data="Tango" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -7366,8 +7365,8 @@
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="VFAL IMS" mcc="276" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="hos" carrier="VFAL XCAP" mcc="276" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="hos" carrier="XCAP" mcc="276" mnc="02" protocol="IP" type="xcap" />
-  <apn apn="vodafoneweb" carrier="VFAL Internet" mcc="276" mnc="02" mvno_match_data="Vodafone AL" mvno_type="spn" password="web" type="default" user="web" />
   <apn apn="vodafoneweb" carrier="VFAL Internet" mcc="276" mnc="02" mvno_match_data="Vodafone AL" mvno_type="spn" type="default" />
+  <apn apn="vodafoneweb" carrier="VFAL Internet" mcc="276" mnc="02" mvno_match_data="Vodafone AL" mvno_type="spn" password="web" type="default" user="web" />
   <apn apn="ims" carrier="IMS" mcc="276" mnc="02" mvno_match_data="Vodafone AL" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="hos" carrier="XCAP" mcc="276" mnc="02" mvno_match_data="Vodafone AL" mvno_type="spn" protocol="IP" type="xcap" />
   <apn apn="internet.one" carrier="internet" mcc="276" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
@@ -7767,10 +7766,10 @@
   <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="Telekom XCAP" mcc="294" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="hos" authtype="0" carrier="HOS" carrier_enabled="true" mcc="294" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
-  <apn apn="internet" carrier="Telekom MK Internet" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" password="t-mobile" protocol="IPV4V6" roaming_protocol="IP" type="default" user="internet" />
   <apn apn="internet" carrier="internet" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="mms" carrier="Telekom MK MMS" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" password="mms" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="mms" />
+  <apn apn="internet" carrier="Telekom MK Internet" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" password="t-mobile" protocol="IPV4V6" roaming_protocol="IP" type="default" user="internet" />
   <apn apn="mms" carrier="mms" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
+  <apn apn="mms" carrier="Telekom MK MMS" mcc="294" mmsc="http://mms.t-mobile.com.mk" mmsport="8080" mmsproxy="62.162.155.227" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" password="mms" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="mms" />
   <apn apn="IMS" carrier="IMS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="294" mnc="01" mvno_match_data="Telekom MK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet" carrier="Telekom MK Internet" mcc="294" mnc="01" mvno_match_data="Telekom.mk" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
@@ -7884,8 +7883,8 @@
   <apn apn="IMS" carrier="IMS" mcc="297" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" authtype="1" carrier="HOS" mcc="297" mnc="02" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="HOS" carrier="HOS" mcc="297" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="tmcg-4g" carrier="Telekom Internet" mcc="297" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" password="38267" protocol="IPV4V6" roaming_protocol="IP" type="default" user="38267" />
   <apn apn="tmcg-4g" carrier="tmcg-4g" mcc="297" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
+  <apn apn="tmcg-4g" carrier="Telekom Internet" mcc="297" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" password="38267" protocol="IPV4V6" roaming_protocol="IP" type="default" user="38267" />
   <apn apn="mms" carrier="Telekom MMS" mcc="297" mmsc="http://192.168.180.100/servlets/mms" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" type="mms" />
   <apn apn="mms" carrier="Telekom MMS" mcc="297" mmsc="http://192.168.180.100/servlets/mms" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" password="38267" type="mms" user="38267" />
   <apn apn="IMS" carrier="IMS" mcc="297" mnc="02" mvno_match_data="Telekom.me" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -7898,10 +7897,10 @@
   <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="297" mnc="03" mtu="1358" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="297" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="hos" carrier="HOS" carrier_enabled="true" mcc="297" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="mtelinternet" carrier="Mtel internet" mcc="297" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" password="068" type="default" user="internet" />
   <apn apn="mtelinternet" carrier="Mtel internet" mcc="297" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" type="default" />
-  <apn apn="mtelmms" carrier="Mtel MMS" mcc="297" mmsc="http://mm.mmsmtel.com/" mmsproxy="172.25.25.23" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" password="068" type="mms" user="mms" />
+  <apn apn="mtelinternet" carrier="Mtel internet" mcc="297" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" password="068" type="default" user="internet" />
   <apn apn="mtelmms" carrier="Mtel MMS" mcc="297" mmsc="http://mm.mmsmtel.com/" mmsproxy="172.25.25.23" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" type="mms" />
+  <apn apn="mtelmms" carrier="Mtel MMS" mcc="297" mmsc="http://mm.mmsmtel.com/" mmsproxy="172.25.25.23" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" password="068" type="mms" user="mms" />
   <apn apn="ims" carrier="IMS" mcc="297" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="297" mnc="03" mvno_match_data="m:tel MNE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.xploremobile.com" carrier="Xplore Mobility" mcc="302" mnc="130" mvno_match_data="Xplore Mobile" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
@@ -16298,9 +16297,9 @@
   <apn apn="orangeweb" carrier="orangeweb" mcc="340" mnc="01" password="orange" type="dun,supl" user="orange" />
   <apn apn="orangeut" authtype="1" carrier="HOS" mcc="340" mnc="01" protocol="IPV4V6" type="xcap" />
   <apn apn="orangeweb" carrier="Orange World Caraïbe" mcc="340" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" protocol="IPV6" type="default" />
-  <apn apn="orangeweb" carrier="Orange World Caraïbe" mcc="340" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" password="orange" type="default" user="orange" />
-  <apn apn="orangewap" carrier="Orange MMS Caraïbe" mcc="340" mmsc="http://193.251.160.246/servlets/mms" mmsport="8082" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" password="orange" type="mms" user="orange" />
+  <apn apn="orangeweb" carrier="Orange World Caraïbe" mcc="340" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" password="orange" protocol="IPV6" type="default" user="orange" />
   <apn apn="orangewap" carrier="Orange MMS Caraïbe" mcc="340" mmsc="http://193.251.160.246/servlets/mms" mmsport="8082" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" type="mms" />
+  <apn apn="orangewap" carrier="Orange MMS Caraïbe" mcc="340" mmsc="http://193.251.160.246/servlets/mms" mmsport="8082" mmsproxy="10.0.0.10" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" password="orange" type="mms" user="orange" />
   <apn apn="ims" carrier="IMS" mcc="340" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="orangeut" carrier="HOS" mcc="340" mnc="01" mvno_match_data="Orange (340 01)" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="internet.sfr" authtype="1" carrier="Internet" carrier_enabled="true" mcc="340" mnc="02" type="default" />
@@ -20928,6 +20927,7 @@
   <apn apn="ntnet" carrier="NtcHTTP" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="default,xcap" />
   <apn apn="ntmms" carrier="Ntmms" mcc="429" mmsc="http://192.80.11.180" mmsport="8000" mmsproxy="192.80.7.133" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="ims" />
+  <apn apn="IMS" carrier="IMS" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" type="ims,xcap" />
   <apn apn="web" carrier="web" mcc="429" mnc="02" type="default,dun,supl" />
   <apn apn="web" carrier="web" mcc="429" mnc="02" port="8080" proxy="192.168.19.15" type="default,supl" />
   <apn apn="ntwap" carrier="Nepal Telecom WAP" mcc="429" mnc="02" port="8000" proxy="192.80.7.133" type="default,supl" />
@@ -22457,7 +22457,7 @@
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="470" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Grameenphone IMS" carrier_id="1362" mcc="470" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="gpinternet" carrier="GP-INTERNET" mcc="470" mnc="01" mvno_match_data="Grameenphone" mvno_type="spn" protocol="IPV4V6" type="default" />
-  <apn apn="gpmms" carrier="GP MMS" mcc="470" mmsc="http://mmsc.grameenphone.com/servlets/mms" mnc="01" mvno_match_data="Grameenphone" mvno_type="spn" type="mms" />
+  <apn apn="gpmms" carrier="GP MMS" mcc="470" mmsc="http://mmsc.grameenphone.com/servlets/mms" mnc="01" mvno_match_data="Grameenphone" mvno_type="spn" protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="470" mnc="01" mvno_match_data="Grameenphone" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="internet" bearer_bitmask="14|20" carrier="Internet" mcc="470" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="internet" mcc="470" mnc="02" type="default,supl" />
@@ -24484,8 +24484,8 @@
   <apn apn="internet" carrier="MTC Internet" mcc="649" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="MTC MMS" mcc="649" mmsc="http://www.mtcmobile.com.na/" mmsport="80" mmsproxy="10.40.10.252" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="mms" carrier="MTC MMS" mcc="649" mmsc="http://www.mtcmobile.com.na/" mmsport="80" mmsproxy="10.40.10.252" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" password="mmsc" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="mmsc" />
-  <apn apn="mms" carrier="MTC MMS" mcc="649" mmsc="http://www.mtcmobile.com.na/" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" password="mmsc" roaming_protocol="IPV4V6" type="mms" user="mmsc" />
   <apn apn="mms" carrier="MTC MMS" mcc="649" mmsc="http://www.mtcmobile.com.na/" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms" carrier="MTC MMS" mcc="649" mmsc="http://www.mtcmobile.com.na/" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" password="mmsc" roaming_protocol="IPV4V6" type="mms" user="mmsc" />
   <apn apn="ims" carrier="IMS" mcc="649" mnc="01" mvno_match_data="MTC Namibia" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="default" carrier="switch" carrier_id="2214" mcc="649" mnc="02" type="default,ia,supl" />
   <apn apn="default" carrier="switch" mcc="649" mnc="02" type="default,supl" />
@@ -25705,13 +25705,15 @@
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="732" mnc="101" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="732" mnc="101" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
   <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" password="COMCELWEB" protocol="IPV4V6" type="default" user="COMCELWEB" />
+  <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" password="COMCELWEB" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="COMCELWEB" />
   <apn apn="mms.comcel.com.co" carrier="MMS Comcel 3GSM" mcc="732" mmsc="http://www.comcel.com.co/mms/" mmsport="8799" mmsproxy="198.228.90.225" mnc="101" mvno_match_data="Claro" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
-  <apn apn="mms.comcel.com.co" carrier="MMS Comcel 3GSM" mcc="732" mmsc="http://www.comcel.com.co/mms/" mmsport="8799" mmsproxy="198.228.90.225" mnc="101" mvno_match_data="Claro" mvno_type="spn" password="COMCELMMS" protocol="IPV4V6" type="mms" user="COMCELMMS" />
+  <apn apn="mms.comcel.com.co" carrier="MMS Comcel 3GSM" mcc="732" mmsc="http://www.comcel.com.co/mms/" mmsport="8799" mmsproxy="198.228.90.225" mnc="101" mvno_match_data="Claro" mvno_type="spn" password="COMCELMMS" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="COMCELMMS" />
   <apn apn="ims" carrier="IMS" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="sos" carrier="sos" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
   <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro_CO" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro_CO" mvno_type="spn" password="COMCELWEB" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="COMCELWEB" />
   <apn apn="mms.comcel.com.co" carrier="MMS Comcel 3GSM" mcc="732" mmsc="http://www.comcel.com.co/mms/" mmsport="8799" mmsproxy="198.228.90.225" mnc="101" mvno_match_data="Claro_CO" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="mms.comcel.com.co" carrier="MMS Comcel 3GSM" mcc="732" mmsc="http://www.comcel.com.co/mms/" mmsport="8799" mmsproxy="198.228.90.225" mnc="101" mvno_match_data="Claro_CO" mvno_type="spn" password="COMCELMMS" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="COMCELMMS" />
   <apn apn="ims" carrier="IMS" mcc="732" mnc="101" mvno_match_data="Claro_CO" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.movistar.com.co" carrier="internet.movistar.com.co" mcc="732" mnc="102" password="movistar" type="default,supl" user="movistar" />
   <apn apn="web.colombiamovil.com.co" authtype="1" carrier="TIGO WEB" carrier_id="624" mcc="732" mnc="103" type="default,ia,supl" />
