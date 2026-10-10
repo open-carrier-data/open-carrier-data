@@ -114,6 +114,15 @@
     },
     {
       "apn": "hos",
+      "name": "Inland Cellular",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "bearer_bitmask": "14|20",
       "name": "Inland XCAP",
       "protocol": "IPV4V6",
@@ -134,8 +143,9 @@
     },
     {
       "apn": "ims",
-      "name": "Inland IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
@@ -150,9 +160,38 @@
     },
     {
       "apn": "internet.inland.com",
+      "name": "Inland Cellular",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland Cellular",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland Cellular",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
       "authtype": 3,
       "mmsc": "http://mms.inland3g.com/inland/mms.php",
-      "name": "internet.inland.com",
+      "name": "Inland Cellular",
       "types": [
         "default",
         "mms"
@@ -164,6 +203,16 @@
       "mmsc": "http://mms.inland3g.com/inland/mms.php",
       "name": "Inland",
       "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland",
       "types": [
         "default",
         "mms",
@@ -184,11 +233,11 @@
       ]
     },
     {
-      "apn": "internet.inland.com",
-      "mmsc": "http://mms.inland3g.com/inland/mms.php",
-      "name": "Inland",
+      "apn": "modem.inland.com",
+      "name": "Inland Cellular",
+      "protocol": "IP",
       "types": [
-        "supl"
+        "dun"
       ]
     },
     {
@@ -229,6 +278,15 @@
         "fota"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "Inland Cellular",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {

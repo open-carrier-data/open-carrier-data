@@ -35,6 +35,13 @@
       "apn": "hos",
       "authtype": 1,
       "carrier_enabled": true,
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -42,6 +49,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "mobitel",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "ims",
@@ -57,28 +72,10 @@
     {
       "apn": "ims",
       "name": "mobitel",
+      "protocol": "IP",
       "types": [
         "ims"
       ]
-    },
-    {
-      "apn": "internet",
-      "name": "internet",
-      "password": "internet",
-      "types": [
-        "default"
-      ],
-      "user": "mobitel"
-    },
-    {
-      "apn": "internet",
-      "mmsc": "http://mms.telekom.si",
-      "name": "mobitel",
-      "password": "internet",
-      "types": [
-        "default"
-      ],
-      "user": "mobitel"
     },
     {
       "apn": "internet",
@@ -113,6 +110,43 @@
     },
     {
       "apn": "internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "mobitel",
+      "password": "internet",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "mobitel",
+      "password": "internet",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.telekom.si",
+      "name": "Mobilni Internet",
+      "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "mobitel"
+    },
+    {
+      "apn": "internet",
       "name": "Mobitel Internet",
       "password": "internet",
       "port": 8080,
@@ -140,24 +174,12 @@
     },
     {
       "apn": "internet",
-      "mmsc": "http://mms.telekom.si",
-      "name": "Mobilni Internet",
-      "password": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "mobitel"
-    },
-    {
-      "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.telekom.si",
       "name": "internet",
       "password": "internet",
+      "protocol": "IP",
       "types": [
         "dun"
       ],
@@ -168,10 +190,8 @@
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.telekom.si",
-      "name": "internet",
+      "name": "Mobitel MMS",
       "password": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],

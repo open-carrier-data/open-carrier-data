@@ -33,6 +33,17 @@
   "android_apns": [
     {
       "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "Elisa IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV6",
@@ -55,11 +66,17 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "ims",
+      "name": "elisa",
       "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "elisa",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -88,7 +105,8 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "name": "elisa",
+      "protocol": "IPV4V6",
       "types": [
         "dun"
       ]
@@ -112,6 +130,7 @@
       "mmsport": 80,
       "mmsproxy": "213.161.41.57",
       "name": "mms",
+      "protocol": "IP",
       "types": [
         "mms"
       ]
@@ -121,6 +140,15 @@
       "authtype": 0,
       "carrier_enabled": true,
       "name": "Elisa XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "elisa",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
@@ -212,7 +240,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "ELISA",
+  "display_name": "Elisa",
   "match": {
     "mccmnc": [
       "24405"

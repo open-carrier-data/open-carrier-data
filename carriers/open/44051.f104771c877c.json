@@ -2,6 +2,15 @@
   "android_apns": [
     {
       "apn": "IMS",
+      "name": "KDDI",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
       "name": "KDDI JP IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -290,6 +299,19 @@
       "user": "au@uad5gn.au-net.ne.jp"
     },
     {
+      "apn": "unij.au-net.ne.jp",
+      "authtype": 2,
+      "mmsc": "http://mms.ezweb.ne.jp/mmsc/MMS",
+      "name": "KDDI",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "685840734641020@uno.au-net.ne.jp"
+    },
+    {
       "apn": "unitrg.au-net.ne.jp",
       "apn_set_id": 2,
       "authtype": 2,
@@ -353,6 +375,15 @@
         "supl"
       ],
       "user": "uq@uqmobile.jp"
+    },
+    {
+      "apn": "xcap",
+      "name": "KDDI",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -383,7 +414,9 @@
     "imssms.sms_over_ims_supported_bool": true,
     "imsvoice.conference_factory_uri_string": "mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org",
     "is_ims_conference_size_enforced_bool": true,
+    "maxMessageSize": 2350000,
     "read_only_apn_types_string_array": [],
+    "recipientLimit": 200,
     "show_apn_setting_cdma_bool": true,
     "support_ims_conference_event_package_bool": false,
     "support_video_conference_call_bool": true

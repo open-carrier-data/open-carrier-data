@@ -16,16 +16,8 @@
       "protocol": "IP",
       "types": [
         "default",
+        "dun",
         "mms"
-      ]
-    },
-    {
-      "apn": "pda2.stm.sk.ca",
-      "mmsc": "http://mms.sasktel.com",
-      "mmsproxy": "mig.sasktel.com",
-      "name": "SaskTel",
-      "types": [
-        "dun"
       ]
     },
     {
@@ -39,7 +31,8 @@
   ],
   "android_carrier_config": {
     "enabledMMS": true,
-    "maxMessageSize": 2097152
+    "maxMessageSize": 2097152,
+    "recipientLimit": 30
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,19 +1,24 @@
 {
   "android_apns": [
     {
-      "apn": "internet",
+      "apn": "event.proximus.be",
+      "mmsc": "http://mmsc.telcooi.re:9091",
       "name": "Free",
+      "password": "mms",
+      "protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "internet.proximus.be",
+      "name": "Free",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "default",
         "dun"
-      ]
-    },
-    {
-      "apn": "mms",
-      "mmsc": "http://mmsc.telcooi.re:9091",
-      "name": "Free",
-      "types": [
-        "mms"
       ]
     }
   ],

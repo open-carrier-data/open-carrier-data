@@ -24,6 +24,8 @@
     {
       "apn": "isp.telus.com",
       "name": "TELUS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "dun"
       ]
@@ -54,20 +56,23 @@
       "mmsc": "http://aliasredirect.net/proxy/mmsc",
       "mmsport": 80,
       "mmsproxy": "74.49.0.18",
-      "name": "sp.telus.com",
+      "name": "TELUS",
       "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
-        "default"
+        "default",
+        "mms"
       ]
     },
     {
       "apn": "sp.telus.com",
       "mmsc": "http://aliasredirect.net/proxy/mmsc",
-      "mmsport": 80,
-      "mmsproxy": "74.49.0.18",
-      "name": "TELUS",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "name": "sp.telus.com",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
+        "default",
         "mms"
       ]
     },

@@ -22,12 +22,12 @@
     },
     {
       "apn": "media.ng",
-      "mmsc": "http://media.videotron.com",
-      "name": "media.ng",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
+      "mmsc": "http://media.videotron.com/",
+      "name": "Videotron",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "mms"
       ]
     },
     {
@@ -39,6 +39,16 @@
       "types": [
         "default",
         "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "mmsc": "http://media.videotron.com",
+      "name": "Media",
+      "types": [
+        "default",
         "mms",
         "supl"
       ]
@@ -57,15 +67,6 @@
       "user_editable": false
     },
     {
-      "apn": "media.ng",
-      "mmsc": "http://media.videotron.com",
-      "name": "Media",
-      "types": [
-        "mms",
-        "supl"
-      ]
-    },
-    {
       "apn": "media.videotron",
       "mmsc": "http://media.videotron.com/",
       "mmsport": 8080,
@@ -75,6 +76,15 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "media.videotron",
+      "mmsc": "http://media.videotron.com/",
+      "name": "Videotron",
+      "types": [
+        "dun",
+        "mms"
       ]
     },
     {
@@ -96,6 +106,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "Videotron",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "xcap",

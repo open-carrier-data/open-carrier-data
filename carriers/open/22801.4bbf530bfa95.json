@@ -32,13 +32,6 @@
   "android_apns": [
     {
       "apn": "event.swisscom.ch",
-      "name": "event.swisscom.ch",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "event.swisscom.ch",
       "carrier_id": 2366,
       "mmsc": "http://mms.natel.ch:8079",
       "mmsport": 8080,
@@ -62,16 +55,7 @@
     {
       "apn": "gprs.swisscom.ch",
       "name": "Swisscom",
-      "password": "password",
-      "types": [
-        "default",
-        "dun"
-      ],
-      "user": "username"
-    },
-    {
-      "apn": "gprs.swisscom.ch",
-      "name": "Swisscom",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
@@ -149,6 +133,23 @@
     },
     {
       "apn": "hos",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "Swisscom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "carrier_id": 2366,
       "name": "Swisscom Ut",
       "types": [
@@ -160,13 +161,12 @@
       "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
-      "name": "hos",
+      "name": "Swisscom hos",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ims",
@@ -179,6 +179,7 @@
     {
       "apn": "ims",
       "name": "Swisscom",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
