@@ -1,9 +1,11 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
+      "contacts_operator_style": "MOB",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -23,6 +25,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [

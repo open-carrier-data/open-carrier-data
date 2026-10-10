@@ -1,4 +1,101 @@
 {
+  "addons": {
+    "ims": {
+      "contacts_operator_style": "EVR",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "EE",
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "EEZONE",
+      "authtype": 0,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "eezone",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "mvno_match_data": "EC",
+      "mvno_type": "gid",
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_enabled_bool": false,
     "carrier_default_wfc_ims_mode_int": 2,
@@ -10,13 +107,12 @@
     "editable_wfc_roaming_mode_bool": true,
     "enhanced_4g_lte_on_by_default_bool": true,
     "hide_enhanced_4g_lte_bool": false,
-    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 1
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -25,7 +121,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 23433",
+  "display_name": "EE",
   "match": {
     "gid1_prefixes": [
       "EC"

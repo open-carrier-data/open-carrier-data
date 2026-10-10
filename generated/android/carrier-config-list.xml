@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:ec959c1693d2bfc18ddbb3fda05e1cd4f6ba4a86a49d3af896cf7a1a6523f13c
+    data_digest: sha256:dc0e6a5867e383c0d4a6098d1d651b997ac61fe7f5ce74b3e259aff8bd20493d
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -166,6 +166,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -204,6 +206,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -328,6 +331,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -368,6 +372,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enableGroupMms" value="false" />
@@ -431,6 +438,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -543,6 +551,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -798,7 +807,10 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -817,7 +829,10 @@
   <carrier_config mcc="208" mnc="21" name="Bouygues Telecom">
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -985,6 +1000,8 @@
   <carrier_config mcc="208" mnc="88" name="Bouygues Telecom">
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="2" />
@@ -1042,6 +1059,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -1073,6 +1092,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -1102,6 +1122,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="false" />
@@ -1617,6 +1638,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1710,6 +1732,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableMMSDeliveryReports" value="false" />
@@ -1825,6 +1849,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -1852,6 +1878,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -1977,6 +2005,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -2044,6 +2073,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -2112,6 +2142,7 @@
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
@@ -2177,6 +2208,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -2218,6 +2250,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -2282,7 +2315,10 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
@@ -2485,6 +2521,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -2576,6 +2613,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -3110,6 +3148,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
@@ -3221,6 +3261,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -3633,6 +3675,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
@@ -3822,6 +3865,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -3849,6 +3893,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
@@ -4050,7 +4095,9 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -4205,7 +4252,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -4241,7 +4290,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -4525,6 +4576,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -4589,6 +4641,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -4615,7 +4668,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -4698,6 +4753,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
@@ -4710,6 +4767,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -4730,6 +4788,7 @@
   <carrier_config mcc="250" mnc="50" name="SberMobile">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.25062.125f84ccfafd -->
@@ -4919,6 +4978,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -4988,8 +5048,10 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -5129,6 +5191,7 @@
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -5160,6 +5223,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
@@ -5204,6 +5268,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -5259,6 +5324,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -5287,6 +5353,7 @@
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -5312,6 +5379,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -5461,6 +5529,7 @@
   </carrier_config>
   <!-- open.26601.e851d5e56994 -->
   <carrier_config mcc="266" mnc="01" name="Gibtel">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -5479,6 +5548,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -5718,6 +5788,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -5786,6 +5857,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -6041,6 +6113,9 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
@@ -6173,7 +6248,10 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -6196,7 +6274,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -6229,7 +6309,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -6875,6 +6957,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -6948,6 +7031,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <int name="cdma_3waycall_flash_delay_int" value="300" />
@@ -7014,6 +7098,7 @@
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="drop_video_call_when_answering_audio_call_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enableMMSReadReports" value="false" />
@@ -7114,6 +7199,7 @@
     <boolean name="allow_emergency_video_calls_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="rtt_supported_bool" value="true" />
   </carrier_config>
@@ -7205,6 +7291,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -7307,6 +7394,7 @@
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
@@ -7377,6 +7465,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="false" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="cdma_3waycall_flash_delay_int" value="0" />
@@ -7445,7 +7534,9 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableSMSDeliveryReports" value="false" />
@@ -7476,9 +7567,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7520,7 +7613,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -7574,9 +7669,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7621,9 +7718,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="true" />
@@ -7667,9 +7766,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7714,9 +7815,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7761,9 +7864,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7807,9 +7912,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7887,6 +7994,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
@@ -7933,9 +8041,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -7976,7 +8086,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -8017,6 +8129,7 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -8047,9 +8160,11 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -8095,9 +8210,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="true" />
@@ -8131,6 +8248,7 @@
   </carrier_config>
   <!-- open.310320.bd0dd3b9d85d -->
   <carrier_config mcc="310" mnc="320" name="CellOne NEAZ">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
@@ -8167,7 +8285,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -8208,7 +8328,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -8277,9 +8399,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -8329,8 +8453,11 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -8368,7 +8495,9 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="true" />
@@ -8421,6 +8550,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -8464,11 +8594,13 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_override_wfc_provisioning_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="false" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="drop_video_call_when_answering_audio_call_bool" value="true" />
@@ -8789,8 +8921,11 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -8819,6 +8954,10 @@
     </string-array>
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
+  <!-- open.310650.1c2b41f5c399 -->
+  <carrier_config mcc="310" mnc="650" name="Carrier 310650">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.310660.371536e6191b -->
   <carrier_config mcc="310" mnc="660" name="T-Mobile">
     <boolean name="allow_adding_apns_bool" value="true" />
@@ -8832,9 +8971,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -8883,7 +9024,9 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
@@ -8903,6 +9046,7 @@
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -8980,9 +9124,11 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -9044,6 +9190,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_override_wfc_provisioning_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="false" />
@@ -9137,6 +9284,7 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
@@ -9214,6 +9362,7 @@
   <carrier_config mcc="310" mnc="980" name="ATT Broadband">
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="enableSMSDeliveryReports" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -9253,6 +9402,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <int name="cdma_3waycall_flash_delay_int" value="300" />
@@ -9340,8 +9490,10 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -9765,6 +9917,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_override_wfc_provisioning_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="false" />
@@ -10175,11 +10328,13 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_override_wfc_provisioning_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_provisioning_required_bool" value="false" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="drop_video_call_when_answering_audio_call_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -10701,6 +10856,7 @@
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vowifi_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -11068,6 +11224,10 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
   </carrier_config>
+  <!-- open.312190.b8c4c2102227 -->
+  <carrier_config mcc="312" mnc="190" name="Carrier 312190">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.312230.cc6abacd5853 -->
   <carrier_config mcc="312" mnc="230" name="SRT">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
@@ -11216,6 +11376,7 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="false" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -11263,6 +11424,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -11316,6 +11478,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -11427,6 +11590,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -11481,6 +11645,8 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -11529,6 +11695,8 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -11579,6 +11747,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -11633,6 +11802,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -11888,6 +12058,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -12534,6 +12705,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12553,6 +12725,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -12575,6 +12748,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -12597,6 +12771,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12633,6 +12809,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12652,6 +12829,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12677,6 +12856,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -12716,6 +12896,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12735,6 +12916,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12771,6 +12954,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12791,6 +12975,8 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12827,6 +13013,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12846,6 +13033,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -12879,6 +13067,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12915,6 +13105,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -12934,6 +13125,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12953,6 +13146,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12994,6 +13189,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13040,6 +13236,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13059,6 +13256,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -13126,6 +13324,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -13175,6 +13374,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13194,6 +13394,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13212,6 +13414,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -13254,6 +13457,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13273,6 +13477,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -13339,6 +13544,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13399,6 +13606,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13457,6 +13665,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -13506,6 +13715,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -13752,6 +13962,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13795,6 +14007,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13837,6 +14051,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13879,6 +14094,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13898,6 +14114,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13934,6 +14152,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -13953,6 +14172,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -13971,6 +14192,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -14001,6 +14223,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14023,6 +14246,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14045,6 +14269,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14067,6 +14292,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14089,6 +14315,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14111,6 +14338,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14133,6 +14361,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14252,6 +14481,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14274,6 +14504,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14296,6 +14527,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14318,6 +14550,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14340,6 +14573,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14362,6 +14596,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -14416,6 +14651,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14435,6 +14672,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14450,6 +14688,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14465,6 +14704,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14480,6 +14720,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14495,6 +14736,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14510,6 +14752,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14525,6 +14768,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -14540,6 +14784,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14637,7 +14883,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -14661,6 +14909,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14680,6 +14930,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14711,6 +14963,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14730,6 +14984,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14749,6 +15005,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14780,6 +15038,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14799,6 +15059,8 @@
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -14831,7 +15093,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -14868,7 +15132,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -14905,7 +15171,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -14942,7 +15210,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -14979,7 +15249,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15016,7 +15288,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15053,7 +15327,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15091,7 +15367,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15132,7 +15410,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15169,7 +15449,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15206,7 +15488,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15243,7 +15527,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15280,7 +15566,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15317,7 +15605,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15354,7 +15644,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15391,7 +15683,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15428,7 +15722,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15465,7 +15761,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15502,7 +15800,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15539,7 +15839,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -15577,7 +15879,9 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -16664,6 +16968,7 @@
   </carrier_config>
   <!-- open.44000.2f4c38391fcf -->
   <carrier_config mcc="440" mnc="00" name="e-mobile">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="300" />
     <int name="maxImageHeight" value="1944" />
@@ -16708,6 +17013,8 @@
       <item value="default" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -16781,6 +17088,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="disable_dun_apn_while_roaming_with_preset_apn_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -17074,6 +17382,7 @@
   </carrier_config>
   <!-- open.44120.d3948e778f15 -->
   <carrier_config mcc="441" mnc="20" name="Carrier 44120">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="ims_dtmf_tone_delay_int" value="300" />
     <int name="maxImageHeight" value="1944" />
@@ -17094,6 +17403,7 @@
   </carrier_config>
   <!-- open.45000.471ac36d66ff -->
   <carrier_config mcc="450" mnc="00" name="Carrier 45000">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="1048576" />
@@ -17117,6 +17427,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="false" />
     <boolean name="enableMMSReadReports" value="false" />
@@ -17160,6 +17471,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -17195,6 +17507,8 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="false" />
     <boolean name="enableMMSReadReports" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -17229,7 +17543,9 @@
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -17368,6 +17684,8 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -17450,6 +17768,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -17492,6 +17811,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -17527,6 +17847,7 @@
   <carrier_config mcc="454" mnc="06" name="SmarTone">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
@@ -17611,6 +17932,8 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -17650,6 +17973,8 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
@@ -17830,6 +18155,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -17904,6 +18230,7 @@
   <!-- open.45431.9aed89961092 -->
   <carrier_config mcc="454" mnc="31" name="CTExcel">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -17956,8 +18283,11 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -18029,8 +18359,11 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -18107,6 +18440,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18134,6 +18468,8 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -18164,6 +18500,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18198,7 +18535,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18243,7 +18582,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18264,6 +18605,8 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -18278,6 +18621,7 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -18295,6 +18639,7 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -18319,6 +18664,8 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enableGroupMms" value="false" />
@@ -18356,7 +18703,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18396,7 +18745,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -18431,6 +18782,8 @@
     <boolean name="allow_hold_video_call_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="false" />
@@ -18612,6 +18965,7 @@
   <carrier_config mcc="466" mnc="11" name="CHT TW">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.46612.cdf135f2d252 -->
@@ -18675,6 +19029,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
@@ -18716,6 +19071,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19013,6 +19369,8 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19050,6 +19408,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19095,6 +19454,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -19131,6 +19491,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -19154,6 +19515,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19239,6 +19601,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -19275,6 +19638,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -19328,6 +19692,7 @@
   <!-- open.51009.5e95ed52fc49 -->
   <carrier_config mcc="510" mnc="09" name="Smartfren">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.51010.71c745473f31 -->
@@ -19360,6 +19725,7 @@
   <!-- open.51028.20eee8f372df -->
   <carrier_config mcc="510" mnc="28" name="Smartfren">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <boolean name="support_video_conference_call_bool" value="true" />
   </carrier_config>
@@ -19491,6 +19857,8 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
   </carrier_config>
   <!-- open.52001.3727757edc79 -->
@@ -19510,6 +19878,9 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19532,7 +19903,10 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19563,6 +19937,8 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19588,6 +19964,9 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -19629,6 +20008,9 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="ignore_data_enabled_changed_for_video_calls" value="true" />
     <int name="maxMessageSize" value="512000" />
@@ -19687,7 +20069,9 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19714,6 +20098,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="4">
       <item value="338|busy everywhere|1404" />
@@ -19743,6 +20128,7 @@
       <item value="fota" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
@@ -19769,6 +20155,8 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -21251,6 +21639,7 @@
   <!-- open.72402.50b08008a919 -->
   <carrier_config mcc="724" mnc="02" name="TIM">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
@@ -21268,6 +21657,7 @@
   <!-- open.72403.f1ea18c288e9 -->
   <carrier_config mcc="724" mnc="03" name="TIM">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
@@ -21279,6 +21669,7 @@
   <!-- open.72404.039c96ecfe58 -->
   <carrier_config mcc="724" mnc="04" name="TIM">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
@@ -21586,6 +21977,9 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -21710,6 +22104,9 @@
   <carrier_config mcc="738" mnc="00" name="Carrier 73800">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.738002.68843fe0e1a1 -->
   <carrier_config mcc="738" mnc="002" name="GT&amp;T">
@@ -21860,6 +22257,10 @@
   </carrier_config>
   <!-- open.90112.a4f7366a9c6a -->
   <carrier_config mcc="901" mnc="12" name="Telenor Maritime">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.90118.94fec5d70172 -->
+  <carrier_config mcc="901" mnc="18" name="Carrier 90118">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.90128.20f761047147 -->
@@ -27464,6 +27865,7 @@
   </carrier_config>
   <!-- open.99999.15f56cf7e50d -->
   <carrier_config mcc="999" mnc="99" name="Carrier 99999">
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
   </carrier_config>
   <!-- open.999990.fa2c453b40e8 -->
@@ -28636,7 +29038,7 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.21403.607ebb2b5591 -->
-  <carrier_config mcc="214" mnc="03" name="Avatel ES" spn="\QCORREOS TL\E">
+  <carrier_config mcc="214" mnc="03" name="Avatel" spn="\QCORREOS TL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -28668,7 +29070,7 @@
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.21403.185ceef23ed3 -->
-  <carrier_config mcc="214" mnc="03" name="Avatel ES" spn="\QFIBRACAT\E">
+  <carrier_config mcc="214" mnc="03" name="Avatel" spn="\QFIBRACAT\E">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -29046,7 +29448,7 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.21405.53d70e9311c4 -->
-  <carrier_config mcc="214" mnc="05" name="Avatel ES" spn="\QCORREOS TL\E">
+  <carrier_config mcc="214" mnc="05" name="Avatel" spn="\QCORREOS TL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -29056,7 +29458,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.21405.17a15ab63ef3 -->
-  <carrier_config mcc="214" mnc="05" name="Avatel ES" spn="\QFIBRACAT\E">
+  <carrier_config mcc="214" mnc="05" name="Avatel" spn="\QFIBRACAT\E">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -29224,6 +29626,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="maxMessageSize" value="1048576" />
     <int name="smsToMmsTextThreshold" value="10" />
@@ -29302,6 +29705,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="2">
@@ -29325,6 +29729,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -32667,6 +33072,8 @@
   <carrier_config imsi="302490500[0-9]*" mcc="302" mnc="490" name="Shaw Ca">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
     <int name="ims_conference_size_limit_int" value="2" />
@@ -32687,6 +33094,8 @@
   <carrier_config imsi="302490400[0-9]*" mcc="302" mnc="490" name="Shaw Ca">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_promote_wfc_on_call_fail_bool" value="false" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
     <int name="ims_conference_size_limit_int" value="2" />
