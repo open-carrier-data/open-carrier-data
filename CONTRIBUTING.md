@@ -39,7 +39,7 @@ Open a pull request for schema, validator, generator, test, or documentation cha
 
 ## How a correction reaches stable data
 
-A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides.
+A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides. A report from the OCD Check app goes in the `Wrong or missing carrier data` form as the app writes it. It starts the same review and is never copied into the data or counted. The issue is public under your GitHub account, and public archives of GitHub can keep a copy after the issue is deleted.
 
 ## Run the local checks
 

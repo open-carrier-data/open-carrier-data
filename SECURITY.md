@@ -13,3 +13,5 @@ This is the one list of private values. The contribution guide, the issue forms,
 - IMEI, serial numbers, Android ID, or other device identifiers
 - private vendor responses or firmware dumps
 - whole logs or bugreports; short excerpts with all identifiers removed are fine
+- location of any kind: GPS coordinates, cell or tracking-area IDs, Wi-Fi network names, IP addresses
+- IMS or SIP identities (IMPI, IMPU, SIP or tel URIs)
