@@ -376,7 +376,7 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
     )
     old_shape = evidence_path.read_text(encoding="utf-8")
 
-    config_keys: dict[str, set[str]] = {}
+    config_keys: dict[str, dict[str, object]] = {}
 
     def validate(value: dict) -> None:
         write_profile(evidence_path, value)
@@ -474,19 +474,19 @@ def check_entry_dates(carriers_dir: Path, evidence_path: Path, profile_ids: set[
         # 2026-10-06, change 6): no withholding gate sits next to the
         # capability's gating key. A single-family off is not such a gate.
         for name in ("stale_single_source_entry", "frozen_source_only", "unseen_scope"):
-            config_keys[dated_id] = {"carrier_vt_available_bool", "maxMessageSize"}
+            config_keys[dated_id] = {"carrier_vt_available_bool": True, "maxMessageSize": 307200}
             expect_failure(
                 dated(quality_gates=[gate(f"{name}:video_calling")]),
                 f"a {name} gate next to its capability's switch passed",
             )
-            config_keys[dated_id] = {"maxMessageSize"}
+            config_keys[dated_id] = {"maxMessageSize": 307200}
             validate(dated(quality_gates=[gate(f"{name}:video_calling")]))
-        config_keys[dated_id] = {"support_conference_call_bool"}
+        config_keys[dated_id] = {"support_conference_call_bool": True}
         expect_failure(
             dated(quality_gates=[gate("stale_single_source_entry:ims_conference")]),
             "a withheld ims_conference label next to support_conference_call_bool passed",
         )
-        config_keys[dated_id] = {"carrier_vt_available_bool"}
+        config_keys[dated_id] = {"carrier_vt_available_bool": True}
         validate(dated(quality_gates=[gate("single_family_off:video_calling")]))
         config_keys.clear()
 
@@ -554,7 +554,7 @@ def check_capability_sources(
     }
     capabilities = {profile_id: profile["capabilities"] for profile_id, profile in profiles.items()}
     config_keys = {
-        profile_id: set(profile.get("android_carrier_config") or {})
+        profile_id: dict(profile.get("android_carrier_config") or {})
         for profile_id, profile in profiles.items()
     }
     target = next(
@@ -670,6 +670,29 @@ def check_capability_sources(
                 [gate("single_family_off:carrier_volte_available_bool", "android_carrier_config")],
             )
         )
+        # The gate names a false left out (change 33 of 2026-10-10): a lone
+        # off no longer withdraws another family's true for VoLTE, Wi-Fi
+        # calling or video calling, so the key may be published true next to
+        # it, never false.
+        published_config = config_keys[target]
+        try:
+            config_keys[target] = {**published_config, "carrier_volte_available_bool": True}
+            validate(
+                shaped(
+                    new_sources,
+                    [gate("single_family_off:carrier_volte_available_bool", "android_carrier_config")],
+                )
+            )
+            config_keys[target] = {**published_config, "carrier_volte_available_bool": False}
+            expect_failure(
+                shaped(
+                    new_sources,
+                    [gate("single_family_off:carrier_volte_available_bool", "android_carrier_config")],
+                ),
+                "a single-family gate next to the false it withholds passed",
+            )
+        finally:
+            config_keys[target] = published_config
         expect_failure(
             shaped(new_sources, [gate("single_family_off:rtt_supported_bool", "android_carrier_config")]),
             "a single-family gate on a key that gates no capability passed",
