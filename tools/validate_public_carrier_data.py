@@ -1036,6 +1036,10 @@ OLD_BUILD_SOURCES = {"samsung_omc", "samsung_ims"}
 # The vendor sources with a shared carrier file, which an APN fact's
 # shared_file_sources may name: Google's "others" file.
 SHARED_FILE_SOURCES = ["google_carriersettings"]
+# The vendor sources whose observations name the device model, which an APN
+# fact's data_device_sources may name: Samsung OMC, whose tablet packs
+# configure data-only devices.
+DATA_DEVICE_SOURCES = {"samsung_omc"}
 # The CarrierConfig keys the importers treat as a capability's Android switch.
 # Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
 CAPABILITY_GATING_CONFIG_KEYS = {
@@ -1651,7 +1655,7 @@ def validate_evidence_index(
         for fact_index, fact in enumerate(fact_sources):
             label = f"profiles[{index}].fact_sources[{fact_index}]"
             require_type(path, fact, dict, label)
-            if set(fact) - {"old_build_sources", "shared_file_sources"} != {
+            if set(fact) - {"old_build_sources", "shared_file_sources", "data_device_sources"} != {
                 "section",
                 "key",
                 "sources",
@@ -1695,7 +1699,25 @@ def validate_evidence_index(
                     or not set(shared_file) <= set(fact_source_names)
                 ):
                     raise ValidationError(f"{path}: {label}.shared_file_sources is invalid")
-            if old_builds is None and shared_file is None and fact_source_names == sources:
+            data_devices = fact.get("data_device_sources")
+            if data_devices is not None:
+                # The vendor sources that give an APN fact from the packs of
+                # data-only devices (Samsung tablets) and from no phone build
+                # at most three years old; the APN ranking does not count them
+                # as current vendors.
+                validate_canonical_list(path, data_devices, f"{label}.data_device_sources")
+                if (
+                    section != "android_apns"
+                    or not data_devices
+                    or not set(data_devices) <= set(fact_source_names) & DATA_DEVICE_SOURCES
+                ):
+                    raise ValidationError(f"{path}: {label}.data_device_sources is invalid")
+            if (
+                old_builds is None
+                and shared_file is None
+                and data_devices is None
+                and fact_source_names == sources
+            ):
                 # An absent fact means every profile source supports it.
                 raise ValidationError(f"{path}: {label} is a redundant override")
             actual_fact_keys.append((section, key))
