@@ -1188,6 +1188,39 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ({**base_entry, "old_build_sources": "samsung_omc"}, "a string old_build_sources passed"),
         ):
             expect_failure(old_build(entry), message)
+        # data_device_sources: Samsung OMC gives an APN fact only from tablet
+        # packs. Such an entry may repeat the profile's sources, and may come
+        # with old_build_sources.
+        def data_device(entry: dict) -> Callable[[dict], None]:
+            def mutate(value: dict) -> None:
+                profile = value["profiles"][0]
+                profile["sources"] = ["lineageos", "samsung_ims", "samsung_omc"]
+                profile["fact_sources"] = [entry]
+            return mutate
+
+        tablet_entry = {
+            "section": "android_apns",
+            "key": "sha256:0123456789abcdef",
+            "sources": ["lineageos", "samsung_ims", "samsung_omc"],
+            "data_device_sources": ["samsung_omc"],
+        }
+        for entry in (tablet_entry, {**tablet_entry, "old_build_sources": ["samsung_omc"]}):
+            accepted = load_json(evidence_path)
+            data_device(entry)(accepted)
+            write_profile(evidence_path, accepted)
+            validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+            evidence_path.write_text(good_text, encoding="utf-8")
+        for entry, message in (
+            ({**tablet_entry, "data_device_sources": ["lineageos"]}, "a non-vendor data-device source passed"),
+            ({**tablet_entry, "data_device_sources": ["samsung_ims"]}, "a data-device source without device packs passed"),
+            ({**tablet_entry, "data_device_sources": []}, "an empty data_device_sources passed"),
+            ({**tablet_entry, "data_device_sources": "samsung_omc"}, "a string data_device_sources passed"),
+            ({**tablet_entry, "data_device_sources": ["samsung_omc", "samsung_omc"]}, "a repeated data-device source passed"),
+            ({**tablet_entry, "sources": ["lineageos", "samsung_ims"]}, "a data-device source the fact does not name passed"),
+            ({**tablet_entry, "section": "android_carrier_config", "key": "enabledMMS"}, "data_device_sources outside APN facts passed"),
+            ({**tablet_entry, "data_devices": ["samsung_omc"]}, "an unknown fact key passed"),
+        ):
+            expect_failure(data_device(entry), message)
         # shared_file_sources: Google gives an APN fact only from its shared
         # carrier file, unconfirmed. Such an entry may repeat the profile's
         # sources.
@@ -2040,6 +2073,147 @@ def check_current_vendor_attach() -> None:
                 for element in written
             ),
             "the attach mark is never written",
+        )
+
+
+def check_data_device_values() -> None:
+    """A Samsung value that tablet packs give and no current phone build
+    (data_device_sources) is not a current vendor's: a tablet's pack
+    configures a data-only device (rule decisions of 2026-10-06, round 7,
+    change 29)."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    def profile(profile_id: str, mccmnc: str, *rows: dict, spn: str | None = None) -> dict:
+        match: dict = {"mccmnc": [mccmnc]}
+        if spn:
+            match["spn"] = [spn]
+        return {
+            "profile_id": profile_id,
+            "display_name": profile_id,
+            "match": match,
+            "android_apns": list(rows),
+        }
+
+    samsung = "samsung_omc"
+    # 310410 SPN ATT: Samsung's tablet packs (SM-X) give "broadband", its
+    # phone packs "nxtgenphone"; Samsung is the only source.
+    att = profile(
+        "open.310410.att",
+        "310410",
+        apn("broadband", protocol="IPV4V6"),
+        apn("nxtgenphone", ("default", "xcap"), protocol="IPV4V6"),
+        apn("nxtgenphone", ("mms",), protocol="IPV4V6", mmsc="http://mmsc.example"),
+        spn="ATT",
+    )
+    # 310280 plain: a tablet pack gives "broadband" with IP, a phone pack the
+    # same value with IPV4V6; two old copies give "old.example". The value is
+    # a current vendor's through the phone pack, and the phone's row comes
+    # first among its variants.
+    mixed = profile(
+        "open.310280.a",
+        "310280",
+        apn("broadband", protocol="IP"),
+        apn("broadband", protocol="IPV4V6"),
+        apn("old.example"),
+    )
+    profiles = [att, mixed]
+
+    def evidence_for(data_devices: bool) -> dict:
+        tablet = {"data_device_sources": [samsung]} if data_devices else {}
+        records = [
+            {
+                "profile_id": att["profile_id"],
+                "sources": [samsung],
+                "fact_sources": sorted(
+                    (
+                        [
+                            {
+                                "section": "android_apns",
+                                "key": generate_android_outputs.apn_fact_key(att["android_apns"][0], "default"),
+                                "sources": [samsung],
+                                **tablet,
+                            }
+                        ]
+                        if data_devices
+                        else []
+                    ),
+                    key=lambda fact: fact["key"],
+                ),
+            },
+            {
+                "profile_id": mixed["profile_id"],
+                "sources": ["apple_carrier_bundles", "lineageos", samsung],
+                "fact_sources": sorted(
+                    [
+                        {
+                            "section": "android_apns",
+                            "key": generate_android_outputs.apn_fact_key(mixed["android_apns"][0], "default"),
+                            "sources": [samsung],
+                            **tablet,
+                        },
+                        {
+                            "section": "android_apns",
+                            "key": generate_android_outputs.apn_fact_key(mixed["android_apns"][1], "default"),
+                            "sources": [samsung],
+                        },
+                        {
+                            "section": "android_apns",
+                            "key": generate_android_outputs.apn_fact_key(mixed["android_apns"][2], "default"),
+                            "sources": ["apple_carrier_bundles", "lineageos"],
+                        },
+                    ],
+                    key=lambda fact: fact["key"],
+                ),
+            },
+        ]
+        return {"profiles": records}
+
+    with tempfile.TemporaryDirectory() as tmp:
+        results = {}
+        for data_devices in (False, True):
+            evidence_path = Path(tmp) / f"evidence-{data_devices}.json"
+            evidence_path.write_text(json.dumps(evidence_for(data_devices)), encoding="utf-8")
+            evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+            results[data_devices] = generate_android_outputs.apn_xml_rows(profiles, evidence)
+
+        def scope(mccmnc: str, data_devices: bool = True) -> list[tuple[str, str, str]]:
+            return [
+                (record["apn"], record["type"], record.get("protocol", ""))
+                for record in results[data_devices].records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            ]
+
+        assert_true(
+            scope("310410", False)[0][0] == "broadband",
+            f"without the mark the tablet value leads on the fallback order: {scope('310410', False)}",
+        )
+        assert_true(
+            [value for value, _, _ in scope("310410")] == ["nxtgenphone", "broadband", "nxtgenphone"]
+            and scope("310410")[0][1] == "default,xcap",
+            "a value only tablet packs give is not a current vendor's: the phone packs' "
+            f"value leads: {scope('310410')}",
+        )
+        assert_true(
+            [(value, protocol) for value, _, protocol in scope("310280")]
+            == [("broadband", "IPV4V6"), ("broadband", "IP"), ("old.example", "")],
+            "a value a phone pack gives too stays a current vendor's and leads over the "
+            f"value more old copies give, the phone's variant first: {scope('310280')}",
+        )
+        assert_true(
+            scope("310280", False)[0][0] == "broadband" and scope("310280", False)[-1][0] == "old.example",
+            f"without the mark the value leads too: {scope('310280', False)}",
+        )
+        evidence = generate_android_outputs.load_apn_evidence(Path(tmp) / "evidence-True.json")
+        current = generate_android_outputs.apn_row_current(att["android_apns"][0], evidence[att["profile_id"]])
+        assert_true(
+            current == {"default": frozenset()},
+            f"the tablet fact has no current vendor: {current}",
+        )
+        assert_true(
+            len(results[True].records) == len(results[False].records),
+            "the mark removes no row",
         )
 
 
@@ -4830,6 +5004,8 @@ def main() -> int:
     print("APN ranking tests passed")
     check_current_vendor_attach()
     print("current vendor and attach type tests passed")
+    check_data_device_values()
+    print("data-device pack tests passed")
     check_shared_file_and_malformed_values()
     print("shared-file and malformed APN value tests passed")
     check_proxy_free_first()

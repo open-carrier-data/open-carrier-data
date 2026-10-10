@@ -290,21 +290,26 @@ PRIMARY_APN_SOURCES = frozenset(
 # content was written: measured on 2026-10-06, its newest bundles carry
 # APNs made for iPhones and old names forward, and agree with the Android
 # vendors less often than older ones (private rule decisions of 2026-10-06).
-# Two exceptions, both named per APN fact by the evidence index:
+# Three exceptions, each named per APN fact by the evidence index:
 # - Samsung's service also confirms the last build of a phone it stopped
 #   updating years ago, so a Samsung value does not count where the fact's
 #   old_build_sources names the source: every observation of it behind the
 #   fact comes from a build more than three years old.
+# - A Samsung tablet's carrier pack (model SM-X, SM-T or SM-P) configures a
+#   data-only device: on AT&T it gives "broadband" where Samsung's phone
+#   packs give "nxtgenphone". So a Samsung value does not count where the
+#   fact's data_device_sources names the source: a tablet's pack gives the
+#   fact and no phone build at most three years old does.
 # - Google's update service confirms its shared "others" file as a whole, not
 #   each entry: in two years 5 of its 688 entries changed. A Google value
 #   that comes only from that file counts only where a maintained
-#   per-carrier source (a Google per-carrier file, or a Samsung build at most
-#   three years old) gives the same APN value for the type on the same
-#   network code, or where Google's frozen Pixel copies (TheMuppets) show
-#   that Google edited the entry's values for that type: a copy gives a value
-#   for the type that the current file no longer gives. Otherwise the fact's
-#   shared_file_sources names Google. The private sanitizer decides; this
-#   generator only reads the mark.
+#   per-carrier source (a Google per-carrier file, or a Samsung phone build
+#   at most three years old) gives the same APN value for the type on the
+#   same network code, or where Google's frozen Pixel copies (TheMuppets)
+#   show that Google edited the entry's values for that type: a copy gives a
+#   value for the type that the current file no longer gives. Otherwise the
+#   fact's shared_file_sources names Google.
+# The private sanitizer decides each mark; this generator only reads them.
 CURRENT_VENDOR_APN_SOURCES = frozenset({"google_carriersettings", "samsung_omc", "samsung_ims"})
 # APN values that name no network: a list writes them where it knows no APN.
 PLACEHOLDER_APNS = frozenset({"default"})
@@ -412,6 +417,9 @@ class ProfileEvidence(NamedTuple):
     # Per APN fact, the vendor sources that give it only from a shared file
     # no maintained per-carrier source confirms.
     apn_fact_shared_file_sources: dict[str, frozenset[str]] = {}
+    # Per APN fact, the vendor sources that give it from a data-only
+    # device's pack (a Samsung tablet) and from no current phone build.
+    apn_fact_data_device_sources: dict[str, frozenset[str]] = {}
 
 
 class ApnRows(NamedTuple):
@@ -458,6 +466,11 @@ def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvid
                 for fact in apn_facts
                 if fact.get("shared_file_sources")
             },
+            {
+                fact["key"]: frozenset(fact["data_device_sources"])
+                for fact in apn_facts
+                if fact.get("data_device_sources")
+            },
         )
     return evidence
 
@@ -491,7 +504,8 @@ def apn_row_current(
 ) -> dict[str, frozenset[str]]:
     """The current vendors behind each type of a profile row: its sources in
     CURRENT_VENDOR_APN_SOURCES, less the Samsung sources that give the fact
-    only from builds more than three years old (old_build_sources) and the
+    only from builds more than three years old (old_build_sources) or from
+    tablet packs and no current phone build (data_device_sources), and the
     Google source that gives it only from its unconfirmed shared file
     (shared_file_sources)."""
     if profile_evidence is None:
@@ -503,6 +517,7 @@ def apn_row_current(
         vendors = (
             (sources & CURRENT_VENDOR_APN_SOURCES)
             - profile_evidence.apn_fact_old_build_sources.get(key, frozenset())
+            - profile_evidence.apn_fact_data_device_sources.get(key, frozenset())
             - profile_evidence.apn_fact_shared_file_sources.get(key, frozenset())
         )
         for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):
@@ -780,8 +795,9 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
        value (placeholder_apn),
     2. an APN value a current vendor (apn_row_current) gives for that type in
        this scope before one no current vendor gives; a Samsung value from
-       an old build only, or a Google value from its shared file only that
-       no maintained per-carrier source confirms, does not count,
+       old builds only or from tablet packs and old builds only, or a Google
+       value from its shared file only that no maintained per-carrier source
+       confirms, does not count,
     3. a row without an HTTP proxy before one with a proxy, only among the
        rows that lead with "default"; an MMS proxy never counts, and rows
        that lead with another type never move for it,
