@@ -29,7 +29,7 @@ The first five fields identify the profile and say when it applies.
 | `gid1_prefixes` | no | string | 1 to 32 hex characters, unique |
 | `gid2_prefixes` | no | string | 1 to 32 hex characters, unique |
 | `iccid_prefixes` | no | string | 5 to 13 digits, unique |
-| `imsi_prefix_patterns` | no | string | 5 to 10 characters from digits and `x`, unique |
+| `imsi_prefix_patterns` | no | string | 5 to 10 characters from digits and `x`, unique, starting with one of the profile's `mccmnc` (`x` matches any digit) |
 | `spn` | no | string | 1 to 80 characters, unique |
 | `android_carrier_ids` | no | integer | 0 to 1000000, unique |
 
@@ -85,6 +85,8 @@ The value type follows the key suffix.
 
 Thirty keys carry no type suffix. The schema types each of them by name. Examples are `enabledMMS` as boolean, `maxMessageSize` as integer, and `httpParams` as string.
 
+A key whose value Android reads as one of a closed set of constants takes only those values (`CONFIG_VALUE_DOMAINS` in `tools/carrier_config_types.py`). Today that is `carrier_default_wfc_ims_mode_int` and `carrier_default_wfc_ims_roaming_mode_int`: 0 (Wi-Fi only), 1 (cellular preferred) or 2 (Wi-Fi preferred), Android's `ImsMmTelManager.WIFI_MODE_*`. The validator refuses any other value.
+
 ## Add-ons
 
 `addons` holds neutral facts that do not map to one Android key. Each namespace is an object. Its keys match `^[a-z][a-z0-9_]{2,80}$`.
@@ -139,7 +141,7 @@ An add-on value is a boolean, an integer from -1000000 to 1000000, or a string o
 | `always_on` | boolean | |
 | `esim_bootstrap_provisioning` | boolean | |
 | `mvno_type` | string | `spn`, `gid`, `imsi`, or `iccid` |
-| `mvno_match_data` | string | 1 to 120 characters |
+| `mvno_match_data` | string | 1 to 120 characters; an `imsi` value starts with one of the profile's `mccmnc` (`x` matches any digit) unless the row has a `carrier_id` |
 | `protocol` | string | `IP`, `IPV6`, `IPV4V6`, `PPP`, `NON-IP`, or `UNSTRUCTURED` |
 | `roaming_protocol` | string | same values as `protocol` |
 

@@ -17,7 +17,11 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any, NamedTuple
 
-from carrier_config_types import config_value_has_expected_type, expected_config_type
+from carrier_config_types import (
+    config_value_has_expected_type,
+    config_value_in_domain,
+    expected_config_type,
+)
 from lineageos_apns import fits_lineageos_schema
 
 
@@ -497,6 +501,17 @@ ASSIGNED_MCCS = frozenset(
 )
 
 
+def imsi_fits_network(pattern: str, code: str) -> bool:
+    """Whether an IMSI prefix pattern can start an IMSI of the network code:
+    every digit it has where the code has one is the code's, x matching any.
+    An IMSI starts with its MCC and MNC, and Android compares the pattern from
+    the first digit, so a pattern that fits none of a profile's codes matches
+    no SIM (imsi_fits_network in the private sanitizer, rule decisions of
+    2026-10-10, round 8, change 35)."""
+    pattern = pattern.lower()
+    return all(pattern[i] in ("x", code[i]) for i in range(min(len(pattern), len(code))))
+
+
 def validate_profile(path: Path) -> dict[str, Any]:
     data = load_json(path)
     return validate_profile_object(path, data)
@@ -584,6 +599,10 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             or any(char not in "0123456789xX" for char in imsi)
         ):
             raise ValidationError(f"{path}: invalid IMSI prefix pattern {imsi!r}")
+        if not any(imsi_fits_network(imsi, code) for code in match["mccmnc"]):
+            raise ValidationError(
+                f"{path}: IMSI prefix pattern {imsi!r} cannot match a SIM of {match['mccmnc']}"
+            )
     for spn in match.get("spn", []):
         validate_clean_text(path, spn, "match.spn[]", 80)
     android_carrier_ids = match.get("android_carrier_ids", [])
@@ -629,6 +648,12 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
             if not config_value_has_expected_type(key, value):
                 raise ValidationError(
                     f"{path}: android_carrier_config.{key} must be {expected}"
+                )
+            # A value outside the set Android defines for its key, such as
+            # Qualcomm's Wi-Fi calling mode 10 (CONFIG_VALUE_DOMAINS; change 34).
+            if not config_value_in_domain(key, value):
+                raise ValidationError(
+                    f"{path}: android_carrier_config.{key} has a value Android does not define"
                 )
 
     addons = data.get("addons")
@@ -712,6 +737,20 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
                     raise ValidationError(
                         f"{path}: android_apns[{index}].mvno_match_data is not "
                         f"an {mvno_type.upper()} prefix"
+                    )
+                # A row's own IMSI selector must fit one of the profile's
+                # codes, unless the row carries a carrier_id (change 35).
+                if (
+                    mvno_type == "imsi"
+                    and apn.get("carrier_id") is None
+                    and not any(
+                        imsi_fits_network(apn["mvno_match_data"], code)
+                        for code in data["match"]["mccmnc"]
+                    )
+                ):
+                    raise ValidationError(
+                        f"{path}: android_apns[{index}].mvno_match_data cannot match a SIM "
+                        "of the profile's network codes"
                     )
             for key in ("protocol", "roaming_protocol"):
                 if key in apn and apn[key] not in APN_PROTOCOLS:

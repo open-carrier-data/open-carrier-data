@@ -75,3 +75,22 @@ def config_value_has_expected_type(key: str, value: Any) -> bool:
         )
     return False
 
+
+# Keys whose value Android reads as one of a closed set of constants. A value
+# outside the set is not an Android value: Settings, QNS and the IMS service
+# have no case for it. The Wi-Fi calling modes are ImsMmTelManager.WIFI_MODE_*
+# (0 Wi-Fi only, 1 cellular preferred, 2 Wi-Fi preferred), which
+# CarrierConfigManager documents for both keys. Qualcomm-based LineageOS
+# device trees write 10, Qualcomm's own "IMS preferred" mode, which only their
+# vendor Settings and IMS stack read (rule decisions, round 8, change 34).
+CONFIG_VALUE_DOMAINS = {
+    "carrier_default_wfc_ims_mode_int": frozenset({0, 1, 2}),
+    "carrier_default_wfc_ims_roaming_mode_int": frozenset({0, 1, 2}),
+}
+
+
+def config_value_in_domain(key: str, value: Any) -> bool:
+    """Whether value is one Android defines for key; a key without a closed
+    set in CONFIG_VALUE_DOMAINS accepts every value of its type."""
+    domain = CONFIG_VALUE_DOMAINS.get(key)
+    return domain is None or value in domain
