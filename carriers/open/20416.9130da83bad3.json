@@ -2,12 +2,22 @@
   "android_apns": [
     {
       "apn": "hos",
-      "name": "HOS",
+      "name": "hos",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Tele2 NL",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -40,6 +50,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.nl",
+      "name": "Tele2 NL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -89,7 +109,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Tmobile Nl",
+  "display_name": "Tele2 NL",
   "match": {
     "gid1_prefixes": [
       "8F"

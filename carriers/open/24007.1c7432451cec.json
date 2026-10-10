@@ -2,14 +2,21 @@
   "android_apns": [
     {
       "apn": "4g.tele2.se",
+      "mmsc": "http://mmsc.tele2.se",
+      "mmsport": 8080,
+      "mmsproxy": "mmsproxy.tele2.se",
       "name": "Tele2",
+      "protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun",
+        "mms"
       ]
     },
     {
       "apn": "emergency",
       "name": "Tele2",
+      "protocol": "IPV4V6",
       "types": [
         "emergency"
       ]
@@ -17,6 +24,7 @@
     {
       "apn": "ims",
       "name": "Tele2",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ]

@@ -29,13 +29,22 @@
     },
     {
       "apn": "ims",
-      "name": "U.S. Cellular IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "sos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "usccinternet",
@@ -151,6 +160,28 @@
         "dun",
         "fota",
         "hipri",
+        "mms"
+      ]
+    },
+    {
+      "apn": "usccinternet",
+      "mmsc": "http://mmsc1.uscc.net/mmsc/MMS",
+      "name": "UScellular",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "usccinternet",
+      "mmsc": "http://mmsc1.uscc.net/mmsc/MMS",
+      "name": "UScellular",
+      "protocol": "IP",
+      "types": [
+        "dun",
         "mms"
       ]
     }

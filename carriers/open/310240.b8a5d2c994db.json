@@ -15,6 +15,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Boost",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -26,6 +35,24 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "service",
+      "name": "Boost",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Boost",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "always_on": true,
@@ -46,6 +73,17 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "wireless.dish.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Boost",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
     },
     {
       "apn": "wireless.dish.com",
@@ -132,7 +170,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Dish_MVNO_US",
+  "display_name": "Boost",
   "match": {
     "gid1_prefixes": [
       "6434"

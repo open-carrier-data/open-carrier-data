@@ -1,27 +1,27 @@
 {
   "android_apns": [
     {
-      "apn": "idata.o2.co.uk",
+      "apn": "ims",
+      "name": "Sky",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mobile.o2.co.uk",
       "mmsc": "http://mmsc-ac.mms.o2.co.uk:10021/mmsc",
       "mmsport": 8080,
       "mmsproxy": "82.132.254.1",
-      "name": "O2",
-      "password": "password",
-      "protocol": "IPV4V6",
+      "name": "Sky",
+      "password": "*",
+      "protocol": "IP",
       "types": [
         "default",
         "dun",
         "mms"
       ],
-      "user": "vertigo"
-    },
-    {
-      "apn": "ims",
-      "name": "O2",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
+      "user": "o2"
     }
   ],
   "android_carrier_config": {
@@ -41,7 +41,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "O2",
+  "display_name": "Sky",
   "match": {
     "gid1_prefixes": [
       "520F"

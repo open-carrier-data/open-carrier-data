@@ -90,11 +90,21 @@
     },
     {
       "apn": "ims",
-      "name": "movistar",
+      "name": "ims",
       "protocol": "IPV6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "movistar.es",
+      "authtype": 1,
+      "name": "Conexi\u00f3n Compartida",
+      "password": "MOVISTAR",
+      "types": [
+        "dun"
+      ],
+      "user": "MOVISTAR"
     },
     {
       "apn": "movistar.es",
@@ -108,16 +118,6 @@
       ],
       "user": "movistar",
       "user_visible": false
-    },
-    {
-      "apn": "movistar.es",
-      "authtype": 1,
-      "name": "movistar.es",
-      "password": "MOVISTAR",
-      "types": [
-        "dun"
-      ],
-      "user": "MOVISTAR"
     },
     {
       "apn": "telefonica.es",
@@ -187,6 +187,19 @@
     },
     {
       "apn": "telefonica.es",
+      "mmsc": "http://mms.movistar.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.5",
+      "name": "Movistar",
+      "password": "telefonica",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "telefonica"
+    },
+    {
+      "apn": "telefonica.es",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.movistar.com",
@@ -206,6 +219,14 @@
       "name": "Movistar",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Movistar",
+      "protocol": "IP",
       "types": [
         "xcap"
       ]

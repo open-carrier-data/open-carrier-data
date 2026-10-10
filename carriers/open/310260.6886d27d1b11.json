@@ -11,6 +11,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "CC",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -47,12 +55,32 @@
       "user_visible": false
     },
     {
+      "apn": "service",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "CC",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "wholesale",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
       "mmsport": 80,
-      "name": "Consumer Cellular",
+      "name": "wholesale",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 80,
+      "name": "wholesale",
+      "types": [
         "hipri",
         "mms",
         "supl"

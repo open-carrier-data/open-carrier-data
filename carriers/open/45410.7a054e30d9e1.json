@@ -30,6 +30,14 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "1O1O / csl",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 0,
       "name": "internet",
@@ -40,10 +48,14 @@
     },
     {
       "apn": "mobile",
-      "name": "CSL",
+      "mmsc": "http://192.168.58.171:8002",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.59.51",
+      "name": "mobile",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "mms"
       ]
     },
     {

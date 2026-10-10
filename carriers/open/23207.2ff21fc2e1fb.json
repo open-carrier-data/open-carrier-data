@@ -1,6 +1,48 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "mmsc": "http://mmsc.t-mobile.at/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.12.0.20",
+      "name": "Magenta-T-",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://relay.mms.telering.at",
+      "mmsport": 80,
+      "mmsproxy": "212.95.31.50",
+      "name": "tele.ring",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "name": "Magenta-T-",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
       "apn": "mms",
       "mmsc": "http://relay.mms.telering.at",
       "mmsport": 80,
@@ -13,6 +55,19 @@
       "user": "wap@telering.at"
     },
     {
+      "apn": "mms",
+      "mmsc": "http://relay.mms.telering.at",
+      "mmsport": 80,
+      "mmsproxy": "212.95.31.50",
+      "name": "tele.ring",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@telering.net"
+    },
+    {
       "apn": "web",
       "name": "tele.ring",
       "password": "web",
@@ -21,6 +76,15 @@
         "dun"
       ],
       "user": "web@telering.at"
+    },
+    {
+      "apn": "web",
+      "name": "tele.ring",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {

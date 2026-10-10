@@ -13,6 +13,14 @@
     },
     {
       "apn": "3gprs",
+      "name": "3",
+      "types": [
+        "default",
+        "dun"
+      ]
+    },
+    {
+      "apn": "3gprs",
       "authtype": 1,
       "carrier_id": 1966,
       "name": "3-SNS",
@@ -45,6 +53,18 @@
         "supl"
       ],
       "user": "3gprs"
+    },
+    {
+      "apn": "3mms",
+      "mmsc": "http://mms.three.co.id",
+      "mmsport": 3128,
+      "mmsproxy": "10.4.0.10",
+      "name": "3",
+      "password": "3mms",
+      "types": [
+        "mms"
+      ],
+      "user": "3mms"
     },
     {
       "apn": "3mms",
@@ -97,26 +117,6 @@
         "mms"
       ],
       "user": "3mms"
-    },
-    {
-      "apn": "indosatmms",
-      "mmsc": "http://mmsc.indosat.com",
-      "mmsport": 8080,
-      "mmsproxy": "10.19.19.19",
-      "name": "INDOSAT",
-      "password": "indosat",
-      "types": [
-        "mms"
-      ],
-      "user": "indosat"
-    },
-    {
-      "apn": "internet",
-      "name": "INDOSAT",
-      "types": [
-        "default",
-        "dun"
-      ]
     }
   ],
   "android_carrier_config": {
@@ -138,7 +138,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "INDOSAT",
+  "display_name": "3",
   "match": {
     "mccmnc": [
       "51089"

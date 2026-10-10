@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:b69dde3c9b4d226d1d9a396769ffd18b9f33e3909c2d1276c1d571ab44a22526
+    data_digest: sha256:ec959c1693d2bfc18ddbb3fda05e1cd4f6ba4a86a49d3af896cf7a1a6523f13c
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -196,7 +196,7 @@
     </string-array>
   </carrier_config>
   <!-- open.20408.79d679c5823f -->
-  <carrier_config mcc="204" mnc="08" name="KPN">
+  <carrier_config mcc="204" mnc="08" name="KPN NL">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
@@ -2028,6 +2028,7 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
@@ -4111,7 +4112,7 @@
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.24405.82902b66c391 -->
-  <carrier_config mcc="244" mnc="05" name="ELISA">
+  <carrier_config mcc="244" mnc="05" name="Elisa">
     <boolean name="allow_adding_apns_bool" value="true" />
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
@@ -5163,7 +5164,6 @@
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
-    <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -5262,7 +5262,6 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
-    <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -6731,6 +6730,7 @@
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxSubjectLength" value="80" />
+    <int name="recipientLimit" value="20" />
     <int name="volte_replacement_rat_int" value="3" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
@@ -6758,6 +6758,7 @@
     <int name="maxSubjectLength" value="80" />
     <string-array name="read_only_apn_types_string_array" num="0">
     </string-array>
+    <int name="recipientLimit" value="20" />
     <boolean name="show_ims_registration_status_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="8" />
     <int name="volte_replacement_rat_int" value="3" />
@@ -6781,6 +6782,7 @@
     <int name="maxSubjectLength" value="80" />
     <string-array name="read_only_apn_types_string_array" num="0">
     </string-array>
+    <int name="recipientLimit" value="20" />
     <boolean name="show_ims_registration_status_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="8" />
     <int name="volte_replacement_rat_int" value="3" />
@@ -6879,6 +6881,7 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
+    <int name="recipientLimit" value="30" />
   </carrier_config>
   <!-- open.302781.ec50efd661c7 -->
   <carrier_config mcc="302" mnc="781" name="SaskTel">
@@ -7401,7 +7404,7 @@
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.310130.62401902acb9 -->
-  <carrier_config mcc="310" mnc="130" name="Carolina West Wireless">
+  <carrier_config mcc="310" mnc="130" name="Carolina West">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -7747,7 +7750,7 @@
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.310240.25c6dcd2afb6 -->
-  <carrier_config mcc="310" mnc="240" name="Ting">
+  <carrier_config mcc="310" mnc="240" name="T-Mobile">
     <boolean name="allow_adding_apns_bool" value="true" />
     <boolean name="allow_emergency_video_calls_bool" value="true" />
     <boolean name="apn_expand_bool" value="true" />
@@ -11454,7 +11457,7 @@
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.313110.3706361bcea0 -->
-  <carrier_config mcc="313" mnc="110" name="DOCOMO PACIFIC">
+  <carrier_config mcc="313" mnc="110" name="FirstNet">
     <boolean name="allow_adding_apns_bool" value="true" />
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
@@ -15816,7 +15819,7 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.41406.9362b6995e72 -->
-  <carrier_config mcc="414" mnc="06" name="Telenor">
+  <carrier_config mcc="414" mnc="06" name="Telenor Myanmar">
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -16003,7 +16006,7 @@
     <int name="recipientLimit" value="25" />
   </carrier_config>
   <!-- open.41904.209677401b87 -->
-  <carrier_config mcc="419" mnc="04" name="VIVA">
+  <carrier_config mcc="419" mnc="04" name="stc KW">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
@@ -16412,6 +16415,7 @@
   <!-- open.42521.dd66959f2701 -->
   <carrier_config mcc="425" mnc="21" name="Xphone Il">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
@@ -16826,8 +16830,10 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string name="imsvoice.conference_factory_uri_string">mmtel@3pty-factory.ims.mnc051.mcc440.3gppnetwork.org</string>
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
+    <int name="maxMessageSize" value="2350000" />
     <string-array name="read_only_apn_types_string_array" num="0">
     </string-array>
+    <int name="recipientLimit" value="200" />
     <boolean name="show_apn_setting_cdma_bool" value="true" />
     <boolean name="support_ims_conference_event_package_bool" value="false" />
     <boolean name="support_video_conference_call_bool" value="true" />
@@ -16882,6 +16888,8 @@
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
+    <int name="maxMessageSize" value="2350000" />
+    <int name="recipientLimit" value="200" />
     <boolean name="support_ims_conference_event_package_bool" value="false" />
   </carrier_config>
   <!-- open.44056.634a3abe3211 -->
@@ -17894,7 +17902,7 @@
     </string-array>
   </carrier_config>
   <!-- open.45431.9aed89961092 -->
-  <carrier_config mcc="454" mnc="31" name="CTNET">
+  <carrier_config mcc="454" mnc="31" name="CTExcel">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -19356,7 +19364,7 @@
     <boolean name="support_video_conference_call_bool" value="true" />
   </carrier_config>
   <!-- open.51089.0b4016c56c50 -->
-  <carrier_config mcc="510" mnc="89" name="INDOSAT">
+  <carrier_config mcc="510" mnc="89" name="3">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19834,7 +19842,7 @@
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
   <!-- open.53005.bf373d4fe671 -->
-  <carrier_config mcc="530" mnc="05" name="Spark">
+  <carrier_config mcc="530" mnc="05" name="Spark NZ">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -20624,7 +20632,9 @@
   <carrier_config mcc="649" mnc="01" name="MTC">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
   <!-- open.64903.e5cb812092f4 -->

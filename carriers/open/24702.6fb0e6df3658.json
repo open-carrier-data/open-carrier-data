@@ -25,8 +25,25 @@
   "android_apns": [
     {
       "apn": "hos",
+      "name": "Tele2",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "carrier_enabled": true,
-      "name": "hos",
+      "name": "Tele2 LV XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "xcap",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -57,11 +74,11 @@
     },
     {
       "apn": "internet.tele2.lv",
-      "name": "internet.tele2.lv",
+      "name": "Tele2",
+      "protocol": "IP",
       "types": [
         "default",
-        "dun",
-        "supl"
+        "dun"
       ]
     },
     {
@@ -101,6 +118,14 @@
       "types": [
         "default",
         "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.lv",
+      "name": "Tele2 LV Internet",
+      "types": [
+        "default",
         "supl"
       ]
     },

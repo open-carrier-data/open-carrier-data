@@ -1,6 +1,14 @@
 {
   "android_apns": [
     {
+      "apn": "SOS",
+      "name": "One NZ",
+      "protocol": "IP",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -23,6 +31,13 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "One NZ",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "live.vodafone.com",
       "carrier_id": 2364,
       "mmsc": "http://pxt.vodafone.net.nz/pxtsend",
@@ -39,6 +54,7 @@
       "mmsport": 8080,
       "mmsproxy": "172.30.38.3",
       "name": "live.vodafone.com",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -72,7 +88,7 @@
     },
     {
       "apn": "xcap",
-      "name": "XCAP",
+      "name": "xcap",
       "types": [
         "xcap"
       ],

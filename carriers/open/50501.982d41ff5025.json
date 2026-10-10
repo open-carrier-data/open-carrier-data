@@ -61,6 +61,7 @@
       "authtype": 0,
       "mtu": 1460,
       "name": "hos",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
@@ -117,6 +118,15 @@
       ]
     },
     {
+      "apn": "sos",
+      "name": "Telstra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
       "apn": "telstra.internet",
       "mmsc": "http://mmsc.telstra.com:8002",
       "mmsport": 80,
@@ -143,12 +153,27 @@
     {
       "apn": "telstra.internet",
       "authtype": 0,
+      "mmsc": "http://mmsc.telstra.com:8002",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.180",
       "mtu": 1460,
       "name": "telstra.internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "telstra.internet",
+      "mmsc": "http://mmsc.telstra.com:8002",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.180",
+      "name": "Telstra",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -176,9 +201,11 @@
     },
     {
       "apn": "telstra.mms",
+      "authtype": 0,
       "mmsc": "http://mmsc.telstra.com:8002",
       "mmsport": 80,
       "mmsproxy": "10.1.1.180",
+      "mtu": 1460,
       "name": "Telstra MMS",
       "types": [
         "mms"
@@ -186,12 +213,10 @@
     },
     {
       "apn": "telstra.mms",
-      "authtype": 0,
       "mmsc": "http://mmsc.telstra.com:8002",
       "mmsport": 80,
       "mmsproxy": "10.1.1.180",
-      "mtu": 1460,
-      "name": "Telstra MMS",
+      "name": "telstra.mms",
       "types": [
         "mms"
       ]
@@ -226,7 +251,8 @@
       "apn": "telstra.wap",
       "name": "telstra.wap",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     },
     {

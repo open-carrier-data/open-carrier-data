@@ -20,7 +20,8 @@
     },
     {
       "apn": "ims",
-      "name": "T Star-IMS",
+      "bearer_bitmask": "14|18|20",
+      "name": "ims",
       "types": [
         "ims"
       ],
@@ -28,8 +29,8 @@
     },
     {
       "apn": "ims",
-      "bearer_bitmask": "14|18|20",
       "name": "ims",
+      "protocol": "IP",
       "types": [
         "ims"
       ],
@@ -64,6 +65,7 @@
       "mmsport": 8080,
       "mmsproxy": "172.24.128.36",
       "name": "\u53f0\u7063\u4e4b\u661f",
+      "protocol": "IPV4V6",
       "types": [
         "dun"
       ]
@@ -100,6 +102,14 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "supl"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "\u53f0\u7063\u4e4b\u661f",
+      "protocol": "IP",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -162,6 +172,13 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "\u53f0\u7063\u4e4b\u661f",
+      "types": [
+        "xcap"
       ]
     }
   ],
