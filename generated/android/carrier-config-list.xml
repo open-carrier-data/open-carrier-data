@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:dc0e6a5867e383c0d4a6098d1d651b997ac61fe7f5ce74b3e259aff8bd20493d
+    data_digest: sha256:299950c00c296ec75602179c7101240392afc5597869847eaf42a34697c88848
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -50,8 +50,6 @@
   <!-- open.20205.e4feabd15821 -->
   <carrier_config mcc="202" mnc="05" name="Vodafone">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -244,6 +242,8 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1440,6 +1440,7 @@
   <!-- open.21670.1b3b9f7d0a6f -->
   <carrier_config mcc="216" mnc="70" name="Vodafone">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -1494,6 +1495,8 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
@@ -1555,6 +1558,8 @@
   <carrier_config mcc="219" mnc="20" name="HT HR">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1841,8 +1846,8 @@
   <!-- open.22288.e4485ecb2ecb -->
   <carrier_config mcc="222" mnc="88" name="WINDTRE">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1865,8 +1870,8 @@
   <!-- open.22299.7f1a6ccbc007 -->
   <carrier_config mcc="222" mnc="99" name="WINDTRE">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1896,6 +1901,7 @@
   <carrier_config mcc="226" mnc="01" name="Vodafone">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1924,7 +1930,7 @@
   <carrier_config mcc="226" mnc="03" name="Telekom">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -1969,8 +1975,6 @@
   <carrier_config mcc="226" mnc="06" name="Telekom">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -2025,7 +2029,9 @@
   <!-- open.22801.4bbf530bfa95 -->
   <carrier_config mcc="228" mnc="01" name="Swisscom">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_ims_gba_required_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
@@ -2270,7 +2276,9 @@
   <carrier_config mcc="231" mnc="02" name="Telekom SK">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -2509,6 +2517,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
@@ -2601,6 +2610,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
@@ -2707,6 +2717,7 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_roaming_apn_types_strings" num="4">
@@ -4976,6 +4987,7 @@
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <int name="call_barring_default_service_class_int" value="0" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -5009,7 +5021,6 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
       <item value="default" />
@@ -5145,6 +5156,7 @@
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
@@ -5280,6 +5292,7 @@
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <string-array name="carrier_metered_roaming_apn_types_strings" num="3">
       <item value="default" />
@@ -5495,7 +5508,7 @@
   <carrier_config mcc="262" mnc="98" name="Airbus De">
     <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
+    <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="dun" />
@@ -16860,6 +16873,7 @@
   <!-- open.42901.008234ba61eb -->
   <carrier_config mcc="429" mnc="01" name="Nepal Telecom">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17681,6 +17695,7 @@
   </carrier_config>
   <!-- open.45400.6339af84db1e -->
   <carrier_config mcc="454" mnc="00" name="CSL">
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -17708,6 +17723,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
@@ -17794,6 +17810,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
@@ -17831,6 +17848,7 @@
   </carrier_config>
   <!-- open.45405.9336c3d1496c -->
   <carrier_config mcc="454" mnc="05" name="Carrier 45405">
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17888,6 +17906,7 @@
   </carrier_config>
   <!-- open.45410.7a054e30d9e1 -->
   <carrier_config mcc="454" mnc="10" name="CSL">
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -17991,6 +18010,7 @@
   </carrier_config>
   <!-- open.45414.7302fbe0bc39 -->
   <carrier_config mcc="454" mnc="14" name="3-DB-GPRS">
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -18032,6 +18052,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
@@ -18095,6 +18116,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
@@ -18138,6 +18160,7 @@
     <boolean name="apn_expand_bool" value="true" />
     <boolean name="auto_retry_failed_wifi_emergency_call" value="true" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
     <string-array name="carrier_metered_apn_types_strings" num="4">
@@ -18217,6 +18240,7 @@
   </carrier_config>
   <!-- open.45430.97b47b9361cb -->
   <carrier_config mcc="454" mnc="30" name="CMHK HK">
+    <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -29437,10 +29461,6 @@
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
-  <!-- open.21405.e680dc64d908 -->
-  <carrier_config imsi="44474553[0-9]*" mcc="214" mnc="05" name="DIGI Spain">
-    <boolean name="carrier_volte_available_bool" value="true" />
-  </carrier_config>
   <!-- open.21405.e5b1fa5d4a67 -->
   <carrier_config mcc="214" mnc="05" name="Avatel" spn="\QAVATEL\E">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -30305,10 +30325,6 @@
   </carrier_config>
   <!-- open.22603.d43528eae743 -->
   <carrier_config mcc="226" mnc="03" name="COSMOTE" spn="\QCOSMOTE\E">
-    <boolean name="carrier_volte_available_bool" value="true" />
-  </carrier_config>
-  <!-- open.22605.fd3edc5fa58f -->
-  <carrier_config imsi="44474553[0-9]*" mcc="226" mnc="05" name="DIGI Spain">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.22605.d14122705d40 -->
@@ -31935,8 +31951,6 @@
   </carrier_config>
   <!-- open.26201.c249d3cc39c3 -->
   <carrier_config mcc="262" mnc="01" name="Carrier 26201" spn="\QT-Campus\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
@@ -31993,8 +32007,6 @@
   </carrier_config>
   <!-- open.26206.8158cd2e4bde -->
   <carrier_config mcc="262" mnc="06" name="Carrier 26206" spn="\QT-Campus\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
@@ -32111,8 +32123,6 @@
   </carrier_config>
   <!-- open.26298.b2842dc3d80a -->
   <carrier_config mcc="262" mnc="98" name="Carrier 26298" spn="\QBusiness\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
@@ -32123,8 +32133,6 @@
   </carrier_config>
   <!-- open.26298.148355576f15 -->
   <carrier_config mcc="262" mnc="98" name="Carrier 26298" spn="\QPrivat\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
@@ -32135,8 +32143,6 @@
   </carrier_config>
   <!-- open.26298.651800e724b1 -->
   <carrier_config mcc="262" mnc="98" name="Carrier 26298" spn="\QT-Campus\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
@@ -32147,8 +32153,6 @@
   </carrier_config>
   <!-- open.26298.ac8c0de0ddc5 -->
   <carrier_config mcc="262" mnc="98" name="Carrier 26298" spn="\QT-Mobile D\E">
-    <int name="carrier_default_wfc_ims_mode_int" value="10" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="10" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
