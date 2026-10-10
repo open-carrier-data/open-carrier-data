@@ -1013,7 +1013,11 @@ FROZEN_SOURCE_ONLY_GATE = "frozen_source_only"
 UNSEEN_SCOPE_GATE = "unseen_scope"
 # An off that one source family alone gives, which is not the operator's own
 # configuration: the capability is published as unknown, and a false
-# capability-gating CarrierConfig key is left out.
+# capability-gating CarrierConfig key is left out. Since 2026-10-10 (rule
+# decisions, round 8, change 33) such a false of VoLTE, Wi-Fi calling or video
+# calling no longer withdraws another observation's true as a conflict, so the
+# key can be published true next to the gate; the gate forbids only a
+# published false.
 SINGLE_FAMILY_OFF_GATE = "single_family_off"
 # The gates that withhold an old single-family value. Since 2026-10-06 the
 # capability-gating CarrierConfig key of a capability they withhold is left
@@ -1204,7 +1208,7 @@ def validate_stale_capability_gates(
     gates: list[dict[str, Any]],
     index: int,
     capabilities: dict[str, str] | None,
-    config_keys: set[str] | None = None,
+    config_keys: dict[str, Any] | None = None,
 ) -> None:
     """A capability withheld because its only source family's newest entry is
     over five years old (for its age alone, or because only a frozen copy
@@ -1214,7 +1218,9 @@ def validate_stale_capability_gates(
     capability-gating key of a capability the first three gates withhold: a
     withheld label takes its switch with it. A single-family gate on a
     CarrierConfig key names a capability-gating key the profile does not
-    publish."""
+    publish false: the false was left out, and the key may be published true
+    (change 33). config_keys is the profile's published CarrierConfig, key to
+    value."""
     for gate_index, gate in enumerate(gates):
         name, _, key = gate["key"].partition(":")
         if name not in UNKNOWN_CAPABILITY_GATES:
@@ -1225,9 +1231,9 @@ def validate_stale_capability_gates(
         if name == SINGLE_FAMILY_OFF_GATE and gate["section"] == "android_carrier_config":
             if key not in CAPABILITY_GATING_CONFIG_KEYS:
                 raise ValidationError(f"{path}: {label} names no capability-gating key")
-            if config_keys is not None and key in config_keys:
+            if config_keys is not None and config_keys.get(key) is False:
                 raise ValidationError(
-                    f"{path}: {label} withholds {key}, but the profile publishes it"
+                    f"{path}: {label} withholds {key}, but the profile publishes it false"
                 )
             continue
         if gate["section"] != "capabilities" or key not in CAPABILITY_KEYS:
@@ -1330,7 +1336,7 @@ def validate_flags(
     evidence: dict[str, Any],
     index: int,
     capabilities: dict[str, str] | None,
-    config_keys: set[str] | None,
+    config_keys: dict[str, Any] | None,
 ) -> None:
     """flags is optional: a non-empty list of section, key and flag, sorted and
     unique. old_single_source names a capability that capability_sources names
@@ -1508,7 +1514,7 @@ def validate_evidence_index(
     expected_profile_ids: set[str],
     index_window: FreshnessWindow | None = None,
     profile_capabilities: dict[str, dict[str, str]] | None = None,
-    profile_config_keys: dict[str, set[str]] | None = None,
+    profile_config_keys: dict[str, dict[str, Any]] | None = None,
 ) -> FreshnessWindow | None:
     data = load_json(path)
     require_type(path, data, dict, "evidence index")
@@ -2141,7 +2147,7 @@ def main(argv: list[str]) -> int:
             for profile in profiles_by_path.values()
         },
         {
-            profile["profile_id"]: set(profile.get("android_carrier_config") or {})
+            profile["profile_id"]: dict(profile.get("android_carrier_config") or {})
             for profile in profiles_by_path.values()
         },
     )

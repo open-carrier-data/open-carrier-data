@@ -56,6 +56,8 @@ A key this file leaves out is not neutral. The phone keeps the value its own lay
 
 So for VoLTE, Wi-Fi calling and video calling, a key OCD leaves out usually means off on a phone whose own layers do not set it. For example, LIDL Connect resolves to carrier ID 2397, which has no AOSP asset. A false OCD publishes for `enabledMMS` makes Android refuse every MMS send and download at once.
 
+For these three switches a single family's off therefore does not take out a true that another source sets: since 2026-10-10 OCD publishes the true, and the capability stays `conditional`. Such a switch is still left out only when the operator's own configuration or two independent families turn the feature off, or when the true rests on old single-source evidence that OCD withholds (see [how-it-is-built.md](how-it-is-built.md)). A device whose own tree turns one of them off has a reason OCD does not see, so put the device's own `vendor.xml` blocks after OCD's: the last matching block wins.
+
 ### Installing a newer apns-conf.xml does not change an APN a phone already uses
 
 Android remembers the APN the SIM connected with (the preferred APN) by its content, and finds that row again after a newer `apns-conf.xml` replaces the database. New rows and a new order therefore take effect for a newly inserted SIM, or after Settings, Access Point Names, Reset to default. A user who added or edited an APN keeps it until that reset. If the preferred row stops working, Android retries it instead of moving to the next row, and the status bar shows signal bars without a "4G" label. Picking another row in the APN list, or Reset to default, recovers.
