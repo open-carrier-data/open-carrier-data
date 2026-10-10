@@ -1,13 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "broadband",
-      "name": "AT&T",
-      "types": [
-        "default"
-      ]
-    },
-    {
       "apn": "hotspot",
       "name": "ATT Hotspot",
       "protocol": "IPV4V6",
@@ -30,7 +23,7 @@
     },
     {
       "apn": "ims",
-      "name": "ATT IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -54,7 +47,7 @@
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
       "mtu": 1410,
-      "name": "ATT Nextgenphone",
+      "name": "nxtgenphone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -65,6 +58,17 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "nxtgenphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "AT&T",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "nxtgenphone",
@@ -95,6 +99,15 @@
         "supl"
       ],
       "user": "privuser"
+    },
+    {
+      "apn": "sos",
+      "name": "AT&T",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "truphone.com",

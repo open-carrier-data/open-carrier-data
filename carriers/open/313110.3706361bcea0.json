@@ -1,14 +1,6 @@
 {
   "android_apns": [
     {
-      "apn": "apple.internet",
-      "name": "DOCOMO PACIFIC",
-      "types": [
-        "default",
-        "dun"
-      ]
-    },
-    {
       "apn": "firstnet-hotspot",
       "name": "firstnet-hotspot",
       "protocol": "IPV4V6",
@@ -34,6 +26,13 @@
     },
     {
       "apn": "firstnet-phone",
+      "name": "FirstNet",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "firstnet-phone",
       "name": "ATT FirstNet-Phone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -56,7 +55,7 @@
     },
     {
       "apn": "ims",
-      "name": "DOCOMO PACIFIC",
+      "name": "FirstNet",
       "protocol": "IP",
       "types": [
         "ims"
@@ -93,6 +92,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "FirstNet",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "xcap",
@@ -163,7 +170,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "DOCOMO PACIFIC",
+  "display_name": "FirstNet",
   "match": {
     "mccmnc": [
       "313110"

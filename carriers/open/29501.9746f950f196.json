@@ -1,9 +1,11 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
+      "contacts_operator_style": "SWC",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -69,8 +71,8 @@
       "authtype": 1,
       "carrier_enabled": true,
       "name": "Swisscom IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -80,8 +82,8 @@
       "authtype": 1,
       "carrier_enabled": true,
       "name": "Swisscom IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]

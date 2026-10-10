@@ -44,16 +44,34 @@
     },
     {
       "apn": "home.cww.com",
-      "name": "Carolina West Wireless",
+      "name": "Carolina West",
       "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
         "default"
       ]
     },
     {
+      "apn": "home.cww.com",
+      "name": "Carolina West Wireless",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "home.cww.com",
+      "mmsc": "http://mms.cwwmms.com/cww/mms.php",
+      "name": "home.cww.com",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
       "apn": "hos",
-      "name": "Carolina West XCAP",
+      "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -94,7 +112,7 @@
     {
       "apn": "mms",
       "mmsc": "http://mms.cwwmms.com/cww/mms.php",
-      "name": "Carolina West Wireless MMS",
+      "name": "mms",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -150,6 +168,14 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "tethering.cww.com",
+      "name": "tethering.cww.com",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -181,7 +207,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Carolina West Wireless",
+  "display_name": "Carolina West",
   "match": {
     "mccmnc": [
       "310130"

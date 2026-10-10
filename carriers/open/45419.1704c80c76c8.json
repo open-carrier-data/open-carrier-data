@@ -1,11 +1,31 @@
 {
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "csl",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "csl",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mobile",
-      "name": "csl.",
+      "mmsc": "http://mms.hkcsl.com:8080",
+      "mmsport": 8080,
+      "mmsproxy": "10.140.14.10",
+      "name": "mobile",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "mms"
       ]
     },
     {

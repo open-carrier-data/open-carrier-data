@@ -50,23 +50,16 @@
     },
     {
       "apn": "data.tre.se",
-      "name": "3 SE",
-      "protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "data.tre.se",
       "mmsc": "http://mms.tre.se",
       "mmsport": 8799,
       "mmsproxy": "mmsproxy.tre.se",
-      "name": "data.tre.se",
+      "name": "3 SE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
-        "mms",
-        "supl"
+        "mms"
       ]
     },
     {
@@ -126,6 +119,18 @@
       "name": "3",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.tre.se",
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
+      "name": "data.tre.se",
       "types": [
         "default",
         "mms",
@@ -241,6 +246,26 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "services",
+      "name": "3 SE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "services",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mtu": 1440,
+      "name": "3 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
         "xcap"
       ]
     },

@@ -1,4 +1,37 @@
 {
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "KDDI",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "uio5gn.au-net.ne.jp",
+      "authtype": 2,
+      "mmsc": "http://mms.ezweb.ne.jp/mmsc/MMS",
+      "name": "KDDI",
+      "password": "KpyrR6BP",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ],
+      "user": "685840734641020@uio5gn.au-net.ne.jp"
+    },
+    {
+      "apn": "xcap",
+      "name": "KDDI",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_roaming_enabled_bool": false,
     "carrier_volte_available_bool": true,
@@ -7,6 +40,8 @@
     "enabledMMS": true,
     "enhanced_4g_lte_on_by_default_bool": true,
     "hide_enhanced_4g_lte_bool": true,
+    "maxMessageSize": 2350000,
+    "recipientLimit": 200,
     "support_ims_conference_event_package_bool": false
   },
   "capabilities": {

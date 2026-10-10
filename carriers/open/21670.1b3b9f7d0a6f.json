@@ -27,7 +27,8 @@
   "android_apns": [
     {
       "apn": "hos",
-      "name": "HOS",
+      "name": "hos",
+      "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
@@ -86,7 +87,15 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "name": "vodafone HU",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "vodafone HU",
+      "protocol": "IP",
       "types": [
         "default"
       ]
@@ -94,10 +103,9 @@
     {
       "apn": "internet",
       "authtype": 0,
-      "name": "internet",
+      "name": "Internet",
       "types": [
         "default",
-        "dun",
         "supl"
       ]
     },
@@ -110,6 +118,15 @@
         "default",
         "supl",
         "xcap"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "name": "internet",
+      "protocol": "IP",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -157,12 +174,33 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mms.one.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.one.hu/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "80.244.97.2",
       "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://message.mms.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "vodafone HU",
+      "protocol": "IP",
       "types": [
         "mms"
       ]

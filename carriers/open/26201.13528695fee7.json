@@ -65,6 +65,17 @@
     },
     {
       "apn": "hos",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsproxy": "mmsproxy.telekom.de",
+      "name": "Telekom.de",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.t-mobile.de/servlets/mms",
@@ -224,6 +235,15 @@
       "user": "0"
     },
     {
+      "apn": "ims",
+      "name": "Telekom.de",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.t-d1.de",
       "name": "Lebara Internet",
       "types": [
@@ -262,12 +282,15 @@
       "user": "telekom"
     },
     {
-      "apn": "internet.telekom",
-      "name": "Telekom.de",
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "internet.v6.telekom",
       "password": "telekom",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
-        "mms"
+        "default"
       ],
       "user": "telekom"
     },
@@ -300,19 +323,6 @@
     {
       "apn": "internet.v6.telekom",
       "authtype": 1,
-      "carrier_enabled": true,
-      "name": "Internet",
-      "password": "telekom",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "telekom"
-    },
-    {
-      "apn": "internet.v6.telekom",
-      "authtype": 1,
       "name": "internet.v6.telekom",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -320,6 +330,29 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "name": "Telekom.de",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "dun"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "name": "Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ],
+      "user": "telekom"
     },
     {
       "apn": "hos",

@@ -2,6 +2,19 @@
   "android_apns": [
     {
       "apn": "e-ideas",
+      "mmsc": "http://mms.singtel.com:10021/mmsc",
+      "name": "Singtel",
+      "password": "65ideas",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ],
+      "user": "65ideas"
+    },
+    {
+      "apn": "e-ideas",
       "carrier_id": 31,
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "mmsport": 8080,
@@ -122,11 +135,21 @@
     },
     {
       "apn": "ims",
-      "name": "Singtel ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "stm-ut",
+      "name": "Singtel",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "stm-ut",

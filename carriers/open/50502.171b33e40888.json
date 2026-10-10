@@ -32,11 +32,20 @@
   },
   "android_apns": [
     {
-      "apn": "CONNECTME",
+      "apn": "HOS",
       "name": "OPTUS",
+      "protocol": "IP",
       "types": [
-        "default",
-        "dun"
+        "xcap"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "OPTUS",
+      "password": "password",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -177,7 +186,7 @@
       "mmsc": "http://mmsc.optus.com.au:8002/",
       "mmsport": 8070,
       "mmsproxy": "61.88.190.10",
-      "name": "Optus MMS",
+      "name": "mms",
       "types": [
         "mms"
       ]
@@ -193,7 +202,7 @@
     {
       "apn": "sos",
       "authtype": 0,
-      "name": "Emergency",
+      "name": "sos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -246,12 +255,10 @@
     },
     {
       "apn": "yesinternet",
-      "authtype": 1,
-      "name": "Optus Yes Internet",
+      "name": "OPTUS",
+      "protocol": "IP",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "default"
       ]
     },
     {
@@ -306,10 +313,28 @@
     },
     {
       "apn": "yesinternet",
+      "authtype": 1,
+      "name": "Optus Yes Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
       "name": "yesinternet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
+      "authtype": 1,
+      "name": "yesinternet",
+      "protocol": "IP",
+      "types": [
+        "dun"
       ]
     },
     {
