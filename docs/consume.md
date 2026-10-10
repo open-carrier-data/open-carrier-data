@@ -42,6 +42,24 @@ The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_
 
 `carrier-config-list.xml` has the format of the CarrierConfig app's `res/xml/vendor.xml`. That file is not one carrier's config: `DefaultCarrierConfigService` first reads the per-carrier asset AOSP ships for the SIM, then applies every matching block of `vendor.xml` on top with `putAll`, so each key here overrides AOSP's own value for that carrier on every device that installs it. A build has one `vendor.xml`, and devices often ship their own (the S20 tree's overlay has one), so merge the blocks into it instead of replacing it, and keep only keys you have reason to apply. Profiles whose match needs a GID or ICCID prefix are left out, because `vendor.xml` matches GID1 only exactly; `metadata.json` says so (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`) and lists them. No value in this file has been tested on a phone.
 
+A key this file leaves out is not neutral. The phone keeps the value its own layers give: AOSP's per-carrier asset, the device's `vendor.xml`, a carrier app, or Android's default. OCD leaves a capability switch out when it withholds a single family's off, when sources conflict, or when no source gives it. Android's defaults for the switches that turn a feature on or off (`CarrierConfigManager`, Android 16):
+
+| Key | Default | Without a value from anywhere, the phone |
+|---|---|---|
+| `carrier_volte_available_bool` | false | hides the VoLTE switch; calls use 2G/3G |
+| `carrier_wfc_ims_available_bool` | false | hides Wi-Fi calling |
+| `carrier_vt_available_bool` | false | offers no video calling |
+| `vonr_enabled_bool` | false | uses no VoNR (OCD publishes no VoNR key) |
+| `enabledMMS` | true | sends and receives MMS |
+| `imssms.sms_over_ims_supported_bool` | true | sends SMS over IMS when registered |
+| `support_ims_conference_call_bool` | true | offers "Merge" on IMS calls |
+
+So for VoLTE, Wi-Fi calling and video calling, a key OCD leaves out usually means off on a phone whose own layers do not set it. For example, LIDL Connect resolves to carrier ID 2397, which has no AOSP asset. A false OCD publishes for `enabledMMS` makes Android refuse every MMS send and download at once.
+
+### Installing a newer apns-conf.xml does not change an APN a phone already uses
+
+Android remembers the APN the SIM connected with (the preferred APN) by its content, and finds that row again after a newer `apns-conf.xml` replaces the database. New rows and a new order therefore take effect for a newly inserted SIM, or after Settings, Access Point Names, Reset to default. A user who added or edited an APN keeps it until that reset. If the preferred row stops working, Android retries it instead of moving to the next row, and the status bar shows signal bars without a "4G" label. Picking another row in the APN list, or Reset to default, recovers.
+
 The checked-in `apns-conf.xml` carries `version="8"`. Android's TelephonyProvider expects the APN database version to match the build. To generate for a different version, write into a scratch directory so the checked-in files stay untouched. Pass the evidence index, because the generator orders APN rows by it:
 
 ```bash
