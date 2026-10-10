@@ -143,7 +143,7 @@ An add-on value is a boolean, an integer from -1000000 to 1000000, or a string o
 | `protocol` | string | `IP`, `IPV6`, `IPV4V6`, `PPP`, `NON-IP`, or `UNSTRUCTURED` |
 | `roaming_protocol` | string | same values as `protocol` |
 
-The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `fota`, `ims`, `cbs`, `ia`, `emergency`, `mcx`, `xcap`, `vsim`, `bip`, `enterprise`, and `rcs`.
+The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `fota`, `ims`, `cbs`, `ia`, `emergency`, `mcx`, `xcap`, `vsim`, `bip`, `enterprise`, and `rcs`. `cbs` is Android's type for carrier branded services, not cell broadcast: OCD publishes no emergency-alert (cell broadcast) channels, which Android takes from its own per-country and per-carrier CellBroadcastReceiver configuration.
 
 ## Stable index entries
 
