@@ -10,6 +10,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause,DisplayRatInfoForManualSearch"
@@ -123,21 +126,22 @@
     {
       "apn": "internet",
       "authtype": 1,
-      "carrier_id": 2536,
-      "name": "1and1 Internet",
+      "carrier_enabled": true,
+      "mtu": 1500,
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
+        "rcs",
         "supl"
       ]
     },
     {
       "apn": "internet",
       "authtype": 1,
-      "carrier_enabled": true,
-      "mtu": 1500,
-      "name": "internet",
+      "carrier_id": 2536,
+      "name": "1and1 Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
