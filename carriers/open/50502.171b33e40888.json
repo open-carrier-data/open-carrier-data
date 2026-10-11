@@ -24,6 +24,7 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
+      "indicator_icon_branding": "XSA",
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -69,9 +70,16 @@
     },
     {
       "apn": "connectcap",
+      "authtype": 1,
       "name": "connectcap",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "connectcap",
+      "name": "connectcap",
+      "types": [
         "supl"
       ]
     },
@@ -135,9 +143,11 @@
     },
     {
       "apn": "internet",
+      "authtype": 1,
       "name": "internet",
       "types": [
         "default",
+        "dun",
         "supl"
       ]
     },
@@ -193,9 +203,16 @@
     },
     {
       "apn": "preconnect",
+      "authtype": 1,
       "name": "preconnect",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "preconnect",
+      "name": "preconnect",
+      "types": [
         "supl"
       ]
     },
@@ -245,11 +262,20 @@
     },
     {
       "apn": "yesbusiness",
+      "authtype": 1,
+      "name": "yesbusiness",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "yesbusiness",
       "name": "Optus Business Mobile Broadband",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ]
     },
