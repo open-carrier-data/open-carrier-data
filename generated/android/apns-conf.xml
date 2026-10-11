@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:9fe6a503a411acd2c6bb4d4ccb53a96d88f8b85a76907ef74d8e1ba8cb9b64a6
+    data_digest: sha256:8ff9d67a10a8f19219f3bcc1b66e3c6a0a5de858ea9f7ce8b15d00f4e4459ed6
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -4026,8 +4026,8 @@
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
-  <apn apn="web" carrier="tele.ring web" mcc="232" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
+  <apn apn="web" carrier="tele.ring web" mcc="232" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" password="web" protocol="IPV4V6" roaming_protocol="IP" type="default" user="web@telering.at" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" password="wap" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="wap@telering.at" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="03" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.t-mobile.at" carrier="Magenta-T-" mcc="232" mnc="04" protocol="IPV4V6" roaming_protocol="IP" type="default,dun" />
   <apn apn="internet.t-mobile.at" authtype="1" carrier="internet.t-mobile.at" mcc="232" mnc="04" password="tm" protocol="IPV4V6" type="default,ia,supl" user="t-mobile" />
@@ -4170,10 +4170,8 @@
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://mmsc.t-mobile.at/servlets/mms" mmsport="80" mmsproxy="10.12.0.20" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" password="tm" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="t-mobile" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="T-Mobile A" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="web" carrier="tele.ring web" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="web" carrier="tele.ring web" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" password="web" protocol="IPV4V6" roaming_protocol="IP" type="default" user="web@telering.at" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
-  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" password="wap" protocol="IPV4V6" roaming_protocol="IP" type="mms" user="wap@telering.at" />
+  <apn apn="hos" carrier="HOS" mcc="232" mmsc="http://relay.mms.telering.at" mmsport="80" mmsproxy="212.95.31.50" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" password="wap" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" user="wap@telering.at" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="07" mvno_match_data="tele.ring" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="data.lycamobile.at" authtype="1" carrier="lycamobile" mcc="232" mnc="08" mvno_match_data="Lycamobile" mvno_type="spn" type="default,supl" />
   <apn apn="data.lycamobile.at" authtype="1" carrier="Lycamobile" carrier_id="2404" mcc="232" mnc="08" mvno_match_data="Lycamobile" mvno_type="spn" type="default,ia,supl" />
@@ -6978,7 +6976,9 @@
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="262" mnc="01" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="262" mnc="01" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Congstar IMS" carrier_id="2092" mcc="262" mnc="01" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" type="default" />
+  <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="mms,xcap" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="mmsproxy.telekom.de" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="IMS" carrier="congstar IMS" mcc="262" mnc="01" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -7083,7 +7083,9 @@
   <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="IMS" mcc="262" mnc="06" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="262" mnc="06" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="262" mnc="06" mvno_match_data="44" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="default" user="telekom" />
   <apn apn="internet.v6.telekom" carrier="Internet" mcc="262" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" type="default" />
+  <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" password="telekom" protocol="IPV4V6" type="mms,xcap" user="telekom" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="109.237.176.193" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" mcc="262" mmsc="http://mms.t-mobile.de/servlets/mms" mmsport="8008" mmsproxy="mmsproxy.telekom.de" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="IMS" carrier="congstar IMS" mcc="262" mnc="06" mvno_match_data="congstar.de" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -7173,7 +7175,7 @@
   <apn apn="internet" carrier="internet" mcc="262" mnc="22" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="262" mnc="22" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" carrier="1&amp;1" mcc="262" mnc="23" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" />
-  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="262" mnc="23" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
+  <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="262" mnc="23" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,rcs,supl" />
   <apn apn="internet" authtype="1" carrier="1and1 Internet" carrier_id="2536" mcc="262" mnc="23" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="mms" carrier="MMS" mcc="262" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="23" protocol="IPV6" roaming_protocol="IPV6" type="mms" />
   <apn apn="mms" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="MMS" mcc="262" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="23" protocol="IPV6" roaming_protocol="IPV6" type="mms" />

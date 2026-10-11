@@ -10,7 +10,12 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "network_type_capability": "EUR-EUR-GSM-EUR"
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause,DisplayRatInfoForManualSearch"
     },
     "operator_display": {
       "five_g_icon_branding": "5GAvailable",
@@ -60,7 +65,8 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 5
   },
   "capabilities": {
     "esim": "unknown",
