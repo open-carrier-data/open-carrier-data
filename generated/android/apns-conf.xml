@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:86a21d394b27210ae03f528d3065389a27d313d7bd9cb8f32f6ef7bcd7c8d1ee
+    data_digest: sha256:8883d49ab6824660755eba6ba2766462c6b603f62a015252494900402a40c301
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -18,8 +18,8 @@
   <apn apn="mms" authtype="0" carrier="Cosmote MMS" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IP" type="mms" />
   <apn apn="mms" carrier="mms" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="mms" carrier="Cosmote Mms" carrier_id="747" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" type="mms" />
+  <apn apn="hos" authtype="1" carrier="HOS" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="hos" bearer_bitmask="18" carrier="hos" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" protocol="IPV4V6" type="mms,xcap" user_visible="false" />
-  <apn apn="hos" authtype="1" carrier="hos" carrier_enabled="true" mcc="202" mmsc="http://mmsc.cosmote.gr:8002" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" mtu="1500" protocol="IPV4V6" roaming_protocol="IP" type="mms,xcap" />
   <apn apn="hos" carrier="HOS" carrier_id="747" mcc="202" mmsc="http://mmsc.cosmote.gr" mmsport="8080" mmsproxy="10.10.10.20" mnc="01" network_type_bitmask="18" protocol="IPV4V6" type="mms" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="202" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -161,22 +161,19 @@
   <apn apn="pda.stm.sk.ca" carrier="SaskTel" mcc="204" mmsc="http://mms.sasktel.com/" mmsport="80" mmsproxy="mig.sasktel.com" mnc="04" mvno_match_data="5A" mvno_type="gid" protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="204" mnc="04" mvno_match_data="5A" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="gigsky" carrier="GigSky" mcc="204" mnc="04" mvno_match_data="6F" mvno_type="gid" type="default,dun" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" carrier="LTE - VZW Roaming Internet" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia" />
   <apn apn="VZWINTERNET" bearer_bitmask="13" carrier="EHRPD - VZW Roaming Internet" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia" />
   <apn apn="VZWINTERNET" carrier="LTE - VZW Roaming Internet" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" />
   <apn apn="VZWINTERNET" bearer_bitmask="13" carrier="EHRPD - VZW Roaming Internet" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
+  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" roaming_protocol="IP" type="cbs,mms" user_visible="false" />
+  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" carrier="LTE - VZW Roaming IMS" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia,ims" />
   <apn apn="IMS" bearer_bitmask="13" carrier="EHRPD - VZW Roaming IMS" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia,ims" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" roaming_protocol="IP" type="cbs,mms" user_visible="false" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" carrier="LTE - VZW Roaming CBS" max_conns="1023" max_conns_time="300" mcc="204" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,mms" />
   <apn apn="VZWAPP" bearer_bitmask="13" carrier="EHRPD - VZW Roaming CBS" max_conns="1023" max_conns_time="300" mcc="204" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,mms" />
   <apn apn="VZWAPP" carrier="LTE - VZW Roaming CBS" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mmsc="http://mms.vtext.com/servlets/mms" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,mms" />
@@ -185,7 +182,6 @@
   <apn apn="VZWIMS" bearer_bitmask="13" carrier="EHRPD - VZW Roaming IMS" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="VZWIMS" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="204" mnc="04" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" roaming_protocol="IP" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" carrier="LTE - VZW Roaming FOTA" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="204" mnc="04" modem_cognitive="true" mvno_match_data="BAE0000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
@@ -579,9 +575,8 @@
   <apn apn="hos" carrier="HOS" mcc="204" mnc="16" mvno_match_data="Tele2 NL" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet.lebara.nl" carrier="Lebara" mcc="204" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="Internet" authtype="1" carrier="Lebara Internet" carrier_enabled="true" mcc="204" mnc="17" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="IMS" authtype="0" carrier="Lebara IMS" carrier_enabled="true" mcc="204" mnc="17" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="204" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="204" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="Lebara IMS" carrier_enabled="true" mcc="204" mnc="17" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="XCAP" authtype="1" carrier="Lebara XCAP" carrier_enabled="true" mcc="204" mnc="17" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="Internet" carrier="Lebara Internet" mcc="204" mnc="17" mvno_match_data="Lebara" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="IMS" carrier="Lebara IMS" mcc="204" mnc="17" mvno_match_data="Lebara" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -677,8 +672,6 @@
   <apn apn="Internet" authtype="1" carrier="Virgin Media" carrier_enabled="true" mcc="206" mnc="01" mvno_match_data="75" mvno_type="gid" type="default,supl" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Internet" mcc="206" mnc="01" mvno_match_data="B6" mvno_type="gid" type="default,supl" />
   <apn apn="mms.mobi.eastlink.ca" carrier="MMS" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="B6" mvno_type="gid" type="mms" />
-  <apn apn="internet" carrier="Only Internet" mcc="206" mnc="01" mvno_match_data="F004" mvno_type="gid" type="default,dun,supl" />
-  <apn apn="mms" carrier="Only MMS" mcc="206" mmsc="http://mmsc.telcooi.re:9091" mnc="01" mvno_match_data="F004" mvno_type="gid" type="mms" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink" mcc="206" mnc="01" mvno_match_data="891035" mvno_type="iccid" type="default,dun" />
   <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink" mcc="206" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="01" mvno_match_data="891035" mvno_type="iccid" type="mms" />
   <apn apn="bicsapn" carrier="BICS" mcc="206" mnc="01" mvno_match_data="893204" mvno_type="iccid" type="default,dun" />
@@ -838,8 +831,8 @@
   <apn apn="IMS" carrier="DIGI IMS" mcc="206" mnc="12" mvno_match_data="DIGI" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="connect.citymesh.com" carrier="Citymesh Connect" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
   <apn apn="connect.citymesh.com" authtype="0" carrier="connect.citymesh.com" carrier_enabled="true" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="ims" authtype="0" carrier="Citymesh IMS" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="0" carrier="Citymesh IMS" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="hotspot.citymesh.com" carrier="hotspot" mcc="206" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="HOS" authtype="0" carrier="Citymesh XCAP" carrier_enabled="true" mcc="206" mnc="13" protocol="IP" roaming_protocol="IP" type="xcap" />
   <apn apn="internet" authtype="0" carrier="internet" carrier_enabled="true" mcc="206" mnc="14" protocol="IP" roaming_protocol="IP" type="default,supl" />
@@ -956,11 +949,8 @@
   <apn apn="internet-entreprise" carrier="Internet Entreprise" mcc="208" mnc="01" password="orange" type="dun" user="orange" />
   <apn apn="vowifiorange" bearer_bitmask="18" carrier="vowifiorange" mcc="208" mmsc="http://mms.orange.fr" mnc="01" type="xcap" user_visible="false" />
   <apn apn="sos" carrier="Orange France" mcc="208" mnc="01" protocol="IPV4V6" type="emergency" />
-  <apn apn="orange" authtype="1" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Orange World" infrastructure_bitmask="cellular" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="01" mvno_type="gid" password="orange" protocol="IPV6" type="default,dun,mms,supl,xcap" user="orange" user_editable="false" />
   <apn apn="orange" authtype="1" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Orange World" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="01" mvno_type="gid" password="orange" protocol="IPV6" type="default,dun,mms,supl,xcap" user="orange" user_editable="false" />
-  <apn apn="vowifiorange" bearer_bitmask="18" carrier="vowifiorange" infrastructure_bitmask="cellular" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="01" mvno_type="gid" type="mms,xcap" user_visible="false" />
   <apn apn="vowifiorange" bearer_bitmask="18" carrier="vowifiorange" mcc="208" mmsc="http://mms.orange.fr" mnc="01" mvno_match_data="01" mvno_type="gid" type="mms,xcap" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="Orange Fr IMS" infrastructure_bitmask="cellular" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="208" mnc="01" mtu="1300" mvno_match_data="01" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="Orange Fr IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="208" mnc="01" mtu="1300" mvno_match_data="01" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ofnew.fr" authtype="1" carrier="Carrefour WAP" carrier_enabled="true" mcc="208" mnc="01" mvno_match_data="33" mvno_type="gid" password="orange" type="default" user="orange" />
   <apn apn="ofnew.fr" authtype="1" carrier="Carrefour WAP" mcc="208" mnc="01" mvno_match_data="33" mvno_type="gid" password="orange" port="8080" proxy="192.168.10.100" type="default,supl" user="orange" />
@@ -999,9 +989,8 @@
   <apn apn="internet" carrier="1&amp;1" mcc="208" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" />
   <apn apn="internet" authtype="1" carrier="internet" mcc="208" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="internet" authtype="1" carrier="internet" carrier_enabled="true" mcc="208" mnc="01" mtu="1500" mvno_match_data="894936" mvno_type="iccid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="mms" carrier="MMS" mcc="208" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="mms" />
-  <apn apn="mms" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="MMS" mcc="208" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="mms" />
   <apn apn="mms" authtype="1" carrier="MMS" carrier_enabled="true" mcc="208" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="01" mtu="1500" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="mms" />
+  <apn apn="mms" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="MMS" mcc="208" mmsc="http://mms.1und1-mobilfunk.de/" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV6" type="mms" />
   <apn apn="mms" carrier="1&amp;1" mcc="208" mmsc="http://mms.1und1-mobilfunk.de" mmsport="80" mmsproxy="2a00:0fbc:2200:c999:0109:1f87:2:1" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="1&amp;1" mcc="208" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="1&amp;1 DE IMS" mcc="208" mnc="01" mvno_match_data="894936" mvno_type="iccid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -1625,7 +1614,6 @@
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues Telecom" mcc="208" mmsc="http://mms.bouyguestelecom.fr/mms/wapenc" mnc="20" protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="20" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues Telecom" carrier_enabled="true" mcc="208" mnc="20" protocol="IPV4V6" type="default,xcap" />
-  <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="20" protocol="IPV6" type="xcap" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="mmsbouygtel.com" carrier_enabled="true" mcc="208" mnc="20" protocol="IPV6" type="default,xcap" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues Telecom" mcc="208" mmsc="http://mms.bouyguestelecom.fr/mms/wapenc" mnc="20" protocol="IPV6" type="default,mms,supl" />
   <apn apn="mmsbouygtel.com" carrier="Web" mcc="208" mmsc="http://wap.bouygtel.fr/" mnc="20" type="default,supl" />
@@ -1667,7 +1655,6 @@
   <apn apn="ims" carrier="Bouygues Telecom IMS" mcc="208" mnc="21" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="21" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" carrier_id="1487" mcc="208" mnc="21" protocol="IPV4V6" type="xcap" />
-  <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="21" protocol="IPV6" type="xcap" user_visible="false" />
   <apn apn="mobiledata" carrier="mobiledata" mcc="208" mmsc="http://mms" mnc="22" type="default,ia,mms,supl" />
   <apn apn="netgprs.com" carrier="netgprs.com" mcc="208" mnc="22" mvno_match_data="FR-Transatel" mvno_type="spn" password="tsl" type="default,ia,supl" user="tsl" />
   <apn apn="virgin-mobile.fr" carrier="virgin-mobile.fr" mcc="208" mmsc="http://virginmms.fr" mmsport="8080" mmsproxy="10.6.10.1" mnc="23" type="default,dun,mms" />
@@ -1774,7 +1761,6 @@
   <apn apn="ims" carrier="Bouygues Telecom IMS" mcc="208" mnc="88" protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="88" protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" carrier_id="1487" mcc="208" mnc="88" protocol="IPV4V6" type="xcap" />
-  <apn apn="mmsbouygtel.com" authtype="1" carrier="Bouygues XCAP" mcc="208" mnc="88" protocol="IPV6" type="xcap" user_visible="false" />
   <apn apn="internet" carrier="Internet" mcc="208" mnc="89" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="208" mnc="89" protocol="IPV4V6" type="ims,xcap" />
   <apn apn="internet" carrier="Internet" mcc="208" mnc="89" mvno_match_data="HubOne" mvno_type="spn" type="default" />
@@ -2048,11 +2034,10 @@
   <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="EUSKALTEL" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="internet" authtype="0" carrier="Internet" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="default,supl" />
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="default,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="ims" />
-  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="hos" carrier="HOS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="xcap" />
+  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="GUUK" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="internet" authtype="0" carrier="Internet" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="LEBARA" mvno_type="spn" type="default,supl" />
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="LEBARA" mvno_type="spn" type="default,ia,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="214" mnc="04" mvno_match_data="LEBARA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -2061,8 +2046,8 @@
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" type="default,ia,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" type="ims" />
-  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="hos" carrier="HOS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" type="xcap" />
+  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="LLAMAYA" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="Lyca" mvno_type="spn" type="default" />
   <apn apn="internet" authtype="0" carrier="Internet" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="Lyca" mvno_type="spn" type="default,supl" />
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="Lycamobile" mvno_type="spn" type="default,ia,supl" />
@@ -2108,8 +2093,8 @@
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" type="default,ia,supl" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" type="ims" />
-  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="hos" carrier="HOS" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" type="xcap" />
+  <apn apn="hos" carrier="hos" mcc="214" mnc="04" mvno_match_data="Sweno" mvno_type="spn" type="xcap" user_visible="false" />
   <apn apn="internet" carrier="Internet" mcc="214" mnc="04" mvno_match_data="telecable" mvno_type="spn" type="default,ia,supl" />
   <apn apn="internet" authtype="0" carrier="Internet" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="telecable" mvno_type="spn" type="default,supl" />
   <apn apn="datos" authtype="0" carrier="Datos" carrier_enabled="true" mcc="214" mnc="04" mvno_match_data="telecable" mvno_type="spn" type="default,supl" />
@@ -2636,18 +2621,18 @@
   <apn apn="IMS" carrier="Telekom HU IMS" mcc="216" mnc="30" mvno_match_data="Telekom HU" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="IMS" carrier="Telekom HU IMS" mcc="216" mnc="30" mvno_match_data="Telekom HU" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.vodafone.net" carrier="internet.vodafone.net" mcc="216" mnc="70" type="default,supl" />
-  <apn apn="internet.vodafone.net" authtype="0" carrier="Vodafone Internet" mcc="216" mnc="70" type="default,supl,xcap" />
+  <apn apn="internet.vodafone.net" authtype="0" carrier="Vodafone Internet" mcc="216" mnc="70" type="default,supl" />
   <apn apn="internet.vodafone.net" authtype="1" carrier="Vodafone Internet" carrier_enabled="true" mcc="216" mnc="70" type="default,supl,xcap" />
   <apn apn="internet.vodafone.net" carrier="Vodafone Internet" carrier_id="1535" mcc="216" mnc="70" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" user_editable="false" />
   <apn apn="internet" carrier="vodafone HU" mcc="216" mnc="70" protocol="IP" type="default" />
   <apn apn="internet" authtype="1" carrier="Internet" carrier_enabled="true" mcc="216" mnc="70" type="default,supl,xcap" />
   <apn apn="internet" authtype="0" carrier="Internet" mcc="216" mnc="70" type="default,dun,supl" />
   <apn apn="vitamax.internet.vodafone.net" carrier="vitamax.internet.vodafone.net" mcc="216" mnc="70" type="default,supl" />
+  <apn apn="mms" carrier="MMS" mcc="216" mmsc="http://mms.one.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
+  <apn apn="mms" authtype="1" carrier="MMS" carrier_enabled="true" mcc="216" mmsc="http://mms.one.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
   <apn apn="mms.vodafone.net" carrier="Vodafone HU MMS" mcc="216" mmsc="http://mms.vodafone.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
   <apn apn="mms.vodafone.net" authtype="0" carrier="Vodafone MMS" mcc="216" mmsc="http://mms.vodafone.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
   <apn apn="mms.vodafone.net" authtype="1" carrier="Vodafone MMS" carrier_enabled="true" mcc="216" mmsc="http://mms.vodafone.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
-  <apn apn="mms" carrier="MMS" mcc="216" mmsc="http://mms.one.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
-  <apn apn="mms" authtype="1" carrier="MMS" carrier_enabled="true" mcc="216" mmsc="http://mms.one.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
   <apn apn="mms.vodafone.net" carrier="Vodafone MMS" carrier_id="1535" mcc="216" mmsc="http://mms.vodafone.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" type="mms" />
   <apn apn="mms" carrier="vodafone HU" mcc="216" mmsc="http://message.mms.hu/servlets/mms" mmsport="8080" mmsproxy="80.244.97.2" mnc="70" protocol="IP" type="mms" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="216" mnc="70" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -2699,10 +2684,10 @@
   <apn apn="mtelmms" authtype="1" carrier="mtelmms" carrier_enabled="true" mcc="218" mmsc="http://mmsc.mtel.ba/mms/wapenc" mmsport="80" mmsproxy="192.168.61.11" mnc="05" protocol="IP" type="mms" />
   <apn apn="mtelmms" carrier="mtelmms" carrier_id="1358" mcc="218" mmsc="http://mmsc.mtel.ba/mms/wapenc" mmsport="80" mmsproxy="192.168.61.11" mnc="05" type="mms" />
   <apn apn="mtelmms" carrier="M-tel mms" mcc="218" mmsc="http://mmsc.mtel.ba/mms/wapenc" mmsport="8080" mmsproxy="192.168.61.11" mnc="05" type="mms" />
-  <apn apn="IMS" carrier="IMS" carrier_enabled="true" mcc="218" mnc="05" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="218" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="XCAP" carrier="XCAP" carrier_enabled="true" mcc="218" mnc="05" protocol="IP" roaming_protocol="IP" type="xcap" />
+  <apn apn="IMS" carrier="IMS" carrier_enabled="true" mcc="218" mnc="05" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="xcap" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="XCAP" mcc="218" mnc="05" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="XCAP" carrier="XCAP" carrier_enabled="true" mcc="218" mnc="05" protocol="IP" roaming_protocol="IP" type="xcap" />
   <apn apn="mtelsmart" carrier="mtelgprs" mcc="218" mnc="05" mvno_match_data="m:tel" mvno_type="spn" type="default" />
   <apn apn="mtelmms" carrier="mtelmms" mcc="218" mmsc="http://mmsc.mtel.ba/mms/wapenc" mmsport="80" mmsproxy="192.168.61.11" mnc="05" mvno_match_data="m:tel" mvno_type="spn" type="mms" />
   <apn apn="IMS" carrier="IMS" mcc="218" mnc="05" mvno_match_data="m:tel" mvno_type="spn" protocol="IP" roaming_protocol="IP" type="ims" />
@@ -2802,9 +2787,8 @@
   <apn apn="internet.tele2.hr" carrier="Tele2" carrier_id="1529" mcc="219" mmsc="http://mmsc.tele2.hr" mmsport="8080" mmsproxy="mmsproxy.tele2.hr" mnc="02" type="default,mms,supl" />
   <apn apn="internet.tele2.hr" carrier="Tele2" mcc="219" mmsc="http://mmsc.tele2.hr" mmsport="8080" mmsproxy="193.12.40.66" mnc="02" type="default,mms,supl" />
   <apn apn="wap.tele2.hr" carrier="Tele2 HR" mcc="219" mmsc="http://mmsc.tele2.hr" mmsport="8080" mmsproxy="193.12.40.66" mnc="02" type="default,mms,supl" />
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="219" mnc="02" mtu="1358" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="219" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="219" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="219" mnc="02" mtu="1358" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="219" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="HOS" authtype="0" carrier="HOS" carrier_enabled="true" mcc="219" mnc="02" mtu="1358" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="internet.tele2.hr" carrier="Tele2 Internet" mcc="219" mnc="02" mvno_match_data="TELE2" mvno_type="spn" type="default" />
@@ -4508,7 +4492,6 @@
   <apn apn="mobile.o2.co.uk" carrier="Sky" mcc="234" mmsc="http://mmsc-ac.mms.o2.co.uk:10021/mmsc" mmsport="8080" mmsproxy="82.132.254.1" mnc="10" mvno_match_data="520F" mvno_type="gid" password="*" protocol="IP" type="default,dun,mms" user="o2" />
   <apn apn="ims" carrier="Sky" mcc="234" mnc="10" mvno_match_data="520F" mvno_type="gid" protocol="IPV6" type="ims" />
   <apn apn="wbdata" carrier="Webbing" mcc="234" mnc="10" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="234" mnc="10" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="truphone.com" carrier="truphone.com" mcc="234" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="10" mvno_match_data="547275554B3030656E" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
   <apn apn="ims" carrier="Truphone IMS" mcc="234" mnc="10" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="Truphone IMS" mcc="234" mnc="10" mvno_match_data="547275554B3030656E" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -4835,14 +4818,14 @@
   <apn apn="IMS" carrier="ims" mcc="234" mnc="20" mtu="1500" mvno_match_data="0309" mvno_type="gid" protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="gamma" authtype="0" carrier="GAMMA" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mvno_match_data="030B" mvno_type="gid" type="default,dun,supl" user_editable="false" />
   <apn apn="gamma" authtype="1" carrier="gamma" carrier_enabled="true" mcc="234" mnc="20" mvno_match_data="030B" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,supl" />
-  <apn apn="three.co.uk" carrier="Gamma MMS" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" type="mms,xcap" user_editable="false" />
   <apn apn="three.co.uk" bearer_bitmask="1|2|3|9|10|11|13|15|18" carrier="Gamma Services" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" type="mms" user_editable="false" />
+  <apn apn="three.co.uk" carrier="Gamma MMS" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" type="mms" user_editable="false" />
   <apn apn="three.co.uk" authtype="1" carrier="MMS" carrier_enabled="true" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mvno_match_data="030B" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="three.co.uk" bearer_bitmask="14|20" carrier="Gamma Services over LTE" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" type="mms" user_visible="false" />
   <apn apn="IMS" bearer_bitmask="14|18|20" carrier="ims" mcc="234" mnc="20" mtu="1500" mvno_match_data="030B" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" authtype="0" carrier="IMS" carrier_enabled="true" mcc="234" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="three.co.uk" authtype="0" carrier="3" carrier_enabled="true" mcc="234" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" port="80" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="three.co.uk" bearer_bitmask="14|20" carrier="Gamma XCAP" mcc="234" mnc="20" mtu="1500" mvno_match_data="030B" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
+  <apn apn="three.co.uk" authtype="0" carrier="3" carrier_enabled="true" mcc="234" mnc="20" mtu="1440" mvno_match_data="030B" mvno_type="gid" port="80" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="mobile.connect" authtype="0" carrier="Superdrug MMS" carrier_enabled="true" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mtu="1440" mvno_match_data="0310" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="mobile.connect" carrier="Superdrug" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="20" mvno_match_data="0310" mvno_type="gid" protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="mobile.connect" authtype="0" carrier="mobile.connect" carrier_enabled="true" mcc="234" mnc="20" mtu="1440" mvno_match_data="0310" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,supl,xcap" />
@@ -4921,8 +4904,8 @@
   <apn apn="data.lycamobile.co.uk" authtype="1" carrier="UK - Lycamobile Web" mcc="234" mnc="26" mvno_match_data="Lycamobile" mvno_type="spn" password="plus" type="default,supl" user="lmuk" />
   <apn apn="move.dataxs.mobi" carrier="TCL MOVE" mcc="234" mnc="27" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" />
   <apn apn="move.dataxs.mobi" authtype="0" carrier="move.dataxs.mobi" carrier_enabled="true" mcc="234" mnc="27" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="234" mnc="27" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="234" mnc="27" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="IMS" authtype="0" carrier="IMS" carrier_enabled="true" mcc="234" mnc="27" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="move.dataxs.mobi" carrier="Internet" mcc="234" mnc="27" mvno_match_data="Tata Communications MOVE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="234" mnc="27" mvno_match_data="Tata Communications MOVE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="everywhere" authtype="1" carrier="EE Internet" mcc="234" mnc="30" password="secure" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="eesecure" user_editable="false" />
@@ -5176,8 +5159,8 @@
   <apn apn="hos" carrier="hos" mcc="234" mnc="38" mvno_match_data="Virgin" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="gamma" authtype="0" carrier="GAMMA" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" type="default,dun,supl" user_editable="false" />
   <apn apn="gamma.co.uk" carrier="Gamma Data" carrier_id="2137" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" protocol="IP" roaming_protocol="IP" type="default" />
-  <apn apn="three.co.uk" carrier="Gamma MMS" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms,xcap" user_editable="false" />
   <apn apn="three.co.uk" bearer_bitmask="1|2|3|9|10|11|13|15|18" carrier="Gamma Services" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms" user_editable="false" />
+  <apn apn="three.co.uk" carrier="Gamma MMS" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms" user_editable="false" />
   <apn apn="gamma.co.uk" carrier="Gamma Data" mcc="234" mmsc="http://mms.gamma.co.uk/servlets/mms" mmsport="80" mmsproxy="164.39.236.69" mnc="39" protocol="IP" roaming_protocol="IP" type="cbs,default,dun,fota,hipri,ims,mms,supl" />
   <apn apn="three.co.uk" bearer_bitmask="14|20" carrier="Gamma Services over LTE" mcc="234" mmsc="http://mms.um.three.co.uk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.co.uk" mnc="39" mtu="1440" type="mms" user_visible="false" />
   <apn apn="IMS" bearer_bitmask="14|18|20" carrier="ims" mcc="234" mnc="39" mtu="1500" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -7342,7 +7325,6 @@
   <apn apn="ims" carrier="IMS" carrier_enabled="true" mcc="268" mnc="02" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet" carrier="Digi PT" mcc="268" mnc="02" mvno_match_data="DIGI PT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,hipri,ia,supl" />
   <apn apn="internet" carrier="Digi.Mobil" mcc="268" mnc="02" mvno_match_data="DIGI PT" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="268" mnc="02" mvno_match_data="DIGI PT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="268" mnc="02" mvno_match_data="DIGI PT" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="IMS" mcc="268" mnc="02" mvno_match_data="DIGI PT" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="umts" carrier="Internet" mcc="268" mmsc="http://mmsc:10021/mmsc" mmsport="8799" mmsproxy="62.169.66.5" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" user_editable="false" />
@@ -8118,10 +8100,9 @@
   <apn apn="internet.t-2.net" authtype="1" carrier="internet.t-2.net" carrier_enabled="true" mcc="293" mmsc="http://www.mms.t-2.net:8002" mmsport="8080" mmsproxy="172.20.18.137" mnc="64" type="default,mms,supl" />
   <apn apn="internet.t-2.net" carrier="T2" carrier_id="1711" mcc="293" mmsc="http://www.mms.t-2.net:8002" mmsport="8080" mmsproxy="172.20.18.137" mnc="64" type="default,ia,mms,supl" />
   <apn apn="mms.t-2.net" carrier="mms.t-2.net" mcc="293" mmsc="http://www.mms.t-2.net:8002" mmsport="8080" mmsproxy="172.20.18.137" mnc="64" type="mms" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" authtype="1" carrier="IMS" carrier_enabled="true" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" lingering_network_type_bitmask="1|2|3|8|9|10|13|14|15|18|20" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" authtype="1" carrier="IMS" carrier_enabled="true" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.t-2.net" authtype="1" carrier="T-2 Internet" carrier_enabled="true" mcc="293" mnc="64" type="dun,hipri,ims,rcs" />
   <apn apn="hos" authtype="1" carrier="XCAP" carrier_enabled="true" mcc="293" mnc="64" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="internet.t-2.net" carrier="T-2 Internet" mcc="293" mnc="64" mvno_match_data="T-2" mvno_type="spn" type="default,ims" />
@@ -8628,7 +8609,6 @@
   <apn apn="ims" carrier="Eastlink IMS" carrier_id="2252" mcc="302" mnc="270" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" skip_464xlat="1" type="ims" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink" carrier_id="2252" mcc="302" mnc="270" mtu="1500" skip_464xlat="1" type="dun,fota,hipri" />
   <apn apn="services" carrier="Eastlink XCAP" mcc="302" mnc="270" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
-  <apn apn="services" bearer_bitmask="14|20" carrier="Eastlink XCAP" mcc="302" mnc="270" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="services" carrier="Eastlink XCAP" carrier_id="2252" mcc="302" mnc="270" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" skip_464xlat="1" type="xcap" />
   <apn apn="wisp.mobi.eastlink.ca" carrier="Eastlink Internet" mcc="302" mnc="270" mvno_match_data="Eastlink" mvno_type="spn" type="default" />
   <apn apn="mms.mobi.eastlink.ca" carrier="Eastlink MMS" mcc="302" mmsc="http://mmss.mobi.eastlink.ca" mmsport="8080" mmsproxy="10.232.12.49" mnc="270" mvno_match_data="Eastlink" mvno_type="spn" type="mms" />
@@ -9838,17 +9818,14 @@
   <apn apn="VZWADMIN" carrier="Verizon FOTA" mcc="310" mnc="003" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" protocol="IPV4V6" type="ia" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="0" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" carrier="Verizon Internet" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,mms,supl" />
   <apn apn="internet" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" password="*" server="*" type="default,mms,supl" user="*" />
   <apn apn="VZWINTERNET" bearer_bitmask="13|14" carrier="Verizon Internet" max_conns="1023" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="0" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" profile_id="1" protocol="IPV4V6" type="cbs,default,dun,fota,ia,mms,supl" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" modem_cognitive="true" profile_id="4" protocol="IPV4V6" roaming_protocol="IP" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" bearer_bitmask="13|14" carrier="Verizon CBS" max_conns="1023" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="004" modem_cognitive="true" profile_id="4" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,mms" />
@@ -9856,7 +9833,6 @@
   <apn apn="VZWIMS" bearer_bitmask="13|14" carrier="Verizon IMS" max_conns="1023" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="VZWIMS" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" user_visible="false" />
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="310" mnc="004" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="3" protocol="IPV4V6" roaming_protocol="IP" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" bearer_bitmask="13|14" carrier="Verizon FOTA" max_conns="1023" max_conns_time="300" mcc="310" mnc="004" modem_cognitive="true" profile_id="3" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
@@ -10788,11 +10764,9 @@
   <apn always_on="true" apn="sos" carrier="T-Mobile Emergency" mcc="310" mnc="240" mvno_match_data="6230" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Boost Mobile" mcc="310" mnc="240" mvno_match_data="6230" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="emergency" />
   <apn apn="sos" carrier="T-Mobile Emergency" mcc="310" mnc="240" mvno_match_data="6230" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" carrier="Ting Data" carrier_id="2523" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,fota,hipri,mms,supl" />
   <apn apn="wireless.dish.com" carrier="Ting" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,mms" />
-  <apn apn="wireless.dish.com" carrier="Ting" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" type="default,mms" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="240" mtu="1440" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Ting" mcc="310" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -10800,7 +10774,6 @@
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Ting" mcc="310" mnc="240" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" carrier="Boost" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,mms" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
@@ -10811,7 +10784,6 @@
   <apn apn="service" carrier="Boost" mcc="310" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Boost" mcc="310" mnc="240" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" carrier="Boost" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,mms" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
@@ -10822,28 +10794,24 @@
   <apn apn="service" carrier="Boost" mcc="310" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Boost" mcc="310" mnc="240" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="240" mtu="1440" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="240" mtu="1440" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="240" mtu="1440" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="240" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6442" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6442" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="240" mvno_match_data="6442" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="240" mtu="1440" mvno_match_data="6442" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -11552,10 +11520,8 @@
   <apn apn="service" carrier="Boost Mobile" mcc="310" mnc="260" mvno_match_data="6230" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn always_on="true" apn="sos" carrier="T-Mobile Emergency" mcc="310" mnc="260" mvno_match_data="6230" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Boost Mobile" mcc="310" mnc="260" mvno_match_data="6230" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="emergency" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" carrier="Ting" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default,mms" />
-  <apn apn="wireless.dish.com" carrier="Ting" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6430" mvno_type="gid" type="default,mms" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Ting" mcc="310" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -11563,42 +11529,36 @@
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="Ting" mcc="310" mnc="260" mvno_match_data="6430" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6432" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6434" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6436" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6438" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="tethering.dish.com" carrier="Hotspot" mcc="310" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV4V6" type="dun" user_visible="false" />
   <apn apn="xcap" carrier="xcap" mcc="310" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="xcap" user_editable="false" />
   <apn always_on="true" apn="sos" carrier="Emergency" mcc="310" mnc="260" mvno_match_data="6440" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="wireless.dish.com" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6442" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="wireless.dish.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Internet" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6442" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" user_editable="false" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="DISH MMS" mcc="310" mmsc="http://wholesale.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="6442" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" user_editable="false" user_visible="false" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="6442" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -13198,18 +13158,15 @@
   <apn apn="fast.t-mobile.com" carrier="T-Mobile MMS LTE" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="580" mvno_match_data="T-Mobile" mvno_type="spn" protocol="IPV6" type="mms" />
   <apn apn="tmus" carrier="T-Mobile MMS EPDG" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="580" mvno_match_data="T-Mobile" mvno_type="spn" protocol="IPV6" type="mms" />
   <apn apn="ims" carrier="T-Mobile IMS" mcc="310" mnc="580" mvno_match_data="T-Mobile" mvno_type="spn" protocol="IPV6" type="ims" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="vzwinternet" carrier="Verizon" mcc="310" mnc="590" protocol="IPV4V6" type="default" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
+  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
   <apn apn="fast.t-mobile.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="T-Mobile US" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="590" mtu="1440" protocol="IPV6" type="default,mms,supl" user_editable="false" />
   <apn apn="fast.t-mobile.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17" carrier="T-Mobile US" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="590" mtu="1440" protocol="IPV6" type="default,mms,supl" user_editable="false" />
   <apn apn="fast.t-mobile.com" carrier="T-Mobile US 590" carrier_id="1" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="590" mtu="1440" protocol="IPV6" roaming_protocol="IP" type="default,mms,supl" />
   <apn apn="fast.t-mobile.com" carrier="T-Mobile US" mcc="310" mnc="590" mtu="1440" protocol="IPV6" type="default,supl" user_editable="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="vzwapp" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" protocol="IPV4V6" type="mms" />
   <apn apn="cellular1wap" carrier="CellularOne MMS" carrier_id="1" mcc="310" mmsc="http://mmsc" mmsport="8799" mmsproxy="172.23.1.252" mnc="590" type="mms" />
   <apn apn="cellular1wap" carrier="CellularOne MMS" mcc="310" mmsc="http://mmsc" mmsport="8799" mmsproxy="172.23.1.252" mnc="590" type="mms" />
@@ -13227,7 +13184,6 @@
   <apn apn="vzwemergency" carrier="Verizon" mcc="310" mnc="590" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
   <apn always_on="true" apn="sos" carrier="T-Mobile Emergency" mcc="310" mnc="590" protocol="IPV6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="sos" carrier="T-Mobile Emergency" mcc="310" mnc="590" protocol="IPV6" roaming_protocol="IPV6" type="emergency" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="fast.metropcs.com" carrier="MetroPCS 590" carrier_id="1949" mcc="310" mmsc="http://metropcs.mmsmvno.com/mms/wapenc" mnc="590" mvno_match_data="6D" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="default,ia,mms,supl" />
   <apn apn="fast.metropcs.com" carrier="MetroPCS 590" carrier_id="1949" mcc="310" mnc="590" mvno_match_data="6D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
@@ -13365,19 +13321,15 @@
   <apn apn="VZWINTERNET" carrier="VZWINTERNET" mcc="310" mnc="598" mvno_match_data="Tracfone" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="VZWAPP" carrier="Tracfone MMS" mcc="310" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="598" mvno_match_data="Tracfone" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="IMS" carrier="Tracfone IMS" mcc="310" mnc="598" mvno_match_data="Tracfone" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="vzwinternet" carrier="Verizon" mcc="310" mnc="599" protocol="IPV4V6" type="default" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="599" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
-  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="599" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="599" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
+  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="599" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
+  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="vzwapp" carrier="Verizon" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="599" protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="Verizon" mcc="310" mnc="599" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="310" mnc="599" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="vzwemergency" carrier="Verizon" mcc="310" mnc="599" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mnc="599" modem_cognitive="true" mvno_match_data="BA01270000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="599" modem_cognitive="true" mvno_match_data="BA01270000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
@@ -14486,15 +14438,11 @@
   <apn apn="cwc.apn" carrier="Internet" mcc="311" mnc="240" mvno_match_data="CordovaWireless" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,xcap" />
   <apn apn="cwc.mms" carrier="MMS" mcc="311" mmsc="http://mms.cordova.mobi" mmsport="80" mmsproxy="mms.cordova.mobi" mnc="240" mvno_match_data="CordovaWireless" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="311" mnc="240" mvno_match_data="CordovaWireless" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="270" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
-  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="270" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="270" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
+  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="270" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
+  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="311" mnc="270" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="270" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="cdma" carrier="Tracfone CDMA" mcc="311" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="270" mvno_match_data="TFNCDMA" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default,ims,mms" />
   <apn apn="VZWADMIN" carrier="Verizon FOTA" mcc="311" mnc="270" mvno_match_data="VZW" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
@@ -14505,15 +14453,11 @@
   <apn apn="IMS" carrier="Verizon IMS" mcc="311" mnc="270" mvno_match_data="VZW" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="cdma" carrier="Verizon CDMA" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="270" mvno_match_data="VZWCDMA" mvno_type="spn" type="default,mms" />
   <apn apn="cdma" carrier="Verizon CDMA" mcc="311" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="270" mvno_match_data="VZWCDMA" mvno_type="spn" type="default,mms" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="280" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
-  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="280" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="280" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
+  <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Verizon" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="280" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
+  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="311" mnc="280" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="280" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWINTERNET" bearer_bitmask="14" carrier="Leaco" carrier_id="1842" mcc="311" mmsc="http://204.181.155.217/mms/" mnc="310" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,mms,supl" />
   <apn apn="VZWINTERNET" bearer_bitmask="13" carrier="Leaco" carrier_id="1842" mcc="311" mmsc="http://204.181.155.217/mms/" mnc="310" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,mms,supl" />
@@ -14739,7 +14683,6 @@
   <apn apn="internet" carrier="PTCI2" mcc="311" mmsc="http://mms.ic.ptci.mobi/mmsc" mnc="450" mvno_match_data="PTCI2" mvno_type="spn" protocol="IPV4V6" type="default,mms,xcap" />
   <apn apn="ims" carrier="PTCI2 IMS" mcc="311" mnc="450" mvno_match_data="PTCI2" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" carrier_id="1839" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="0" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,supl" />
-  <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="0" protocol="IPV4V6" roaming_protocol="IP" type="default,dun,supl" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="vzwinternet" carrier="vzwinternet" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="480" protocol="IPV4V6" type="default" />
@@ -14751,11 +14694,9 @@
   <apn apn="COMCAST.RSLR.VZWENTP" carrier="XFINITY Mobile" mcc="311" mnc="480" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="TRACFONE.VZWENTP" carrier="StraightTalk Verizon" mcc="311" mnc="480" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" carrier_id="1839" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
-  <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" bearer_bitmask="1|2|3|9|10|11|13|14|15" carrier="Verizon" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia,ims" user_visible="false" />
-  <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="480" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="480" modem_cognitive="true" profile_id="4" protocol="IPV4V6" roaming_protocol="IP" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="480" modem_cognitive="true" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="VZWAPP" bearer_bitmask="1|2|3|9|10|11|13|14|15" carrier="Verizon" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="311" mmsc="http://mms.vtext.com/servlets/mms" mnc="480" modem_cognitive="true" profile_id="4" protocol="IPV4V6" roaming_protocol="IPV4V6" type="cbs,mms" user_visible="false" />
@@ -14766,7 +14707,6 @@
   <apn apn="VZWEMERGENCY" carrier="Verizon Emergency" mcc="311" mnc="480" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="vzwemergency" carrier="Verizon" mcc="311" mnc="480" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" carrier_id="1839" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="3" protocol="IPV4V6" roaming_protocol="IP" type="fota" user_visible="false" />
-  <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" infrastructure_bitmask="cellular" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="3" protocol="IPV4V6" roaming_protocol="IP" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Verizon" max_conns="20" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" bearer_bitmask="1|2|3|9|10|11|13|14|15" carrier="Verizon" carrier_id="1839" max_conns="1023" max_conns_time="300" mcc="311" mnc="480" modem_cognitive="true" profile_id="3" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" user_visible="false" />
@@ -15455,7 +15395,6 @@
   <apn apn="VZWADMIN" bearer_bitmask="14" carrier="United FOTA" mcc="311" mnc="650" mvno_match_data="UNITEDWIRELESS" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="VZWADMIN" bearer_bitmask="13" carrier="United FOTA" mcc="311" mnc="650" mvno_match_data="UNITEDWIRELESS" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="fast.t-mobile.com" carrier="T-Mobile US" mcc="311" mnc="660" mtu="1440" protocol="IPV4V6" type="default" />
-  <apn apn="fast.t-mobile.com" carrier="T-Mobile US" mcc="311" mnc="660" mtu="1440" protocol="IPV6" type="default" />
   <apn apn="fast.t-mobile.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="T-Mobile US" mcc="311" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="660" mtu="1440" protocol="IPV6" type="default,ia,mms,supl" user_editable="false" />
   <apn apn="fast.t-mobile.com" carrier="T-Mobile" mcc="311" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="660" protocol="IPV6" roaming_protocol="IP" type="default,mms" />
   <apn apn="beta" carrier="T-Mobile" mcc="311" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="660" type="default,mms" />
@@ -16159,152 +16098,152 @@
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="340" mvno_match_data="Dish 5G Data only" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="Internet" mcc="313" mnc="340" mvno_match_data="Dish 5G Data only" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ota" carrier="OTA" mcc="313" mnc="340" mvno_match_data="Dish 5G Data only" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="350" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6332" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6336" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6538" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6630" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6636" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6638" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6732" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6736" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6738" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6830" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6836" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="6838" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
   <apn apn="sos" carrier="SOS" mcc="313" mnc="360" mvno_match_data="7330" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_editable="false" />
-  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl" user_editable="false" />
+  <apn apn="internet" carrier="internet" mcc="313" mnc="360" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user_editable="false" />
   <apn apn="xcap" carrier="xcap" mcc="313" mmsc="http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc" mnc="360" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="IMS" mcc="313" mnc="360" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_editable="false" />
   <apn apn="hotspot" carrier="hotspot" mcc="313" mnc="360" mvno_match_data="7530" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="dun" user_editable="false" />
@@ -16741,7 +16680,6 @@
   <apn apn="ims" carrier="Yonder" carrier_id="2491" mcc="334" mnc="140" mvno_match_data="YO" mvno_type="spn" type="ims" />
   <apn apn="ims" carrier="Yonder" mcc="334" mnc="140" mvno_match_data="YO" mvno_type="spn" type="ims" />
   <apn apn="mvne.izzi.mx" carrier="INTERNET" mcc="334" mnc="160" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" user_editable="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="334" mnc="160" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="mvne.izzi.mx" carrier="mvne.izzi.mx" mcc="334" mnc="160" mvno_match_data="IZZI" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="Internet" mcc="334" mnc="170" type="default,dun,fota,xcap" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="334" mnc="170" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -17632,7 +17570,6 @@
   <apn apn="mms.setar.aw" carrier="Setar MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
   <apn apn="mms.setar.aw" carrier="SETAR" mcc="363" mmsc="http://mms.setar.aw/" mmsport="8081" mmsproxy="209.88.130.210" mnc="01" type="mms" />
   <apn apn="internet.setar.aw" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="internet.setar.aw" bearer_bitmask="14|20" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="mms.setar.aw" authtype="3" carrier="SETAR MMS" mcc="363" mmsc="http://mms.setar.aw" mmsport="8081" mmsproxy="201.229.65.204" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="IMS" bearer_bitmask="14|20" carrier="IMS" mcc="363" mnc="01" mvno_match_data="3630100" mvno_type="imsi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet.setar.aw" carrier="SETAR Internet" mcc="363" mnc="01" mvno_match_data="SETAR" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
@@ -21271,8 +21208,8 @@
   <apn apn="SOS" carrier="Etisalat" mcc="412" mnc="50" protocol="IP" type="emergency" />
   <apn apn="etisalat.af.web" carrier="etisalat.af.web" mcc="412" mnc="50" mvno_match_data="412509378" mvno_type="imsi" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="412" mnc="50" mvno_match_data="412509378" mvno_type="imsi" type="ims" user_visible="false" />
-  <apn apn="Etisalat" carrier="Etisalat internet" mcc="412" mnc="50" mvno_match_data="Etisalat" mvno_type="spn" type="default" />
   <apn apn="etisalat.af.web" carrier="etisalat.af.web" mcc="412" mnc="50" mvno_match_data="Etisalat" mvno_type="spn" type="default" />
+  <apn apn="Etisalat" carrier="Etisalat internet" mcc="412" mnc="50" mvno_match_data="Etisalat" mvno_type="spn" type="default" />
   <apn apn="Etisalat" carrier="Etisalat internet" mcc="412" mnc="50" mvno_match_data="Etisalat" mvno_type="spn" port="8080" proxy="10.12.0.32" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="412" mnc="50" mvno_match_data="Etisalat" mvno_type="spn" type="ims" user_visible="false" />
   <apn apn="salaam" carrier="Salaam internet" mcc="412" mnc="80" mvno_match_data="Salaam" mvno_type="spn" type="default" />
@@ -22917,7 +22854,6 @@
   <apn apn="mobile.lte.three.com.hk" authtype="1" carrier="mobile.lte.three.com.hk" mcc="454" mmsc="http://mms.um.three.com.hk:10021/mmsc" mmsport="8799" mmsproxy="mms.three.com.hk" mnc="03" type="default,mms,supl" />
   <apn apn="imobile.lte.three.com.hk" carrier="3" mcc="454" mnc="03" type="default" />
   <apn apn="imobile.three.com.hk" carrier="3" mcc="454" mnc="03" type="default,dun" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="454" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="454" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="3" mcc="454" mnc="03" protocol="IPV6" type="ims" />
   <apn apn="share.lte.three.com.hk" authtype="1" carrier="share.lte.three.com.hk" mcc="454" mnc="03" type="dun" />
@@ -24430,7 +24366,6 @@
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="520" mnc="01" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" carrier="AIS" mcc="520" mnc="01" protocol="IPV6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="520" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="520" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" authtype="0" carrier="internet" mcc="520" mnc="01" type="supl" />
   <apn apn="xcap" carrier="AIS" mcc="520" mnc="01" protocol="IPV6" type="xcap" />
   <apn apn="internet" carrier="AIS Internet" mcc="520" mnc="01" mvno_match_data="AIS" mvno_type="spn" protocol="IPV4V6" type="default" />
@@ -24452,7 +24387,6 @@
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="520" mnc="03" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="IMS" carrier="AIS" mcc="520" mnc="03" protocol="IPV6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="520" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
-  <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="520" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="xcap" carrier="AIS" mcc="520" mnc="03" protocol="IPV6" type="xcap" />
   <apn apn="internet" carrier="AIS Internet" mcc="520" mnc="03" mvno_match_data="AIS 3G2100" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="AIS MMS" mcc="520" mmsc="http://mms.mobilelife.co.th" mmsport="8080" mmsproxy="203.170.229.34" mnc="03" mvno_match_data="AIS 3G2100" mvno_type="spn" type="mms" />
@@ -25272,7 +25206,6 @@
   <apn apn="default" carrier="Mobitel" carrier_id="1076" mcc="619" mnc="25" type="default,ia,supl" />
   <apn apn="default" carrier="Mobitel" mcc="619" mnc="25" type="default,supl" />
   <apn apn="internet" carrier="internet" mcc="620" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
-  <apn apn="internet" bearer_bitmask="14|20" carrier="MTN Internet GH" mcc="620" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="internet" carrier="MTN Internet GH" carrier_id="1515" mcc="620" mnc="01" type="default,ia" />
   <apn apn="WAP" carrier="MTN INTERNET" mcc="620" mnc="01" port="8080" proxy="172.17.3.5" type="default,supl" />
   <apn apn="mms" authtype="0" carrier="MTN MMS" mcc="620" mmsc="http://172.17.3.7" mmsport="8080" mmsproxy="172.17.3.7" mnc="01" type="mms" />
@@ -25280,7 +25213,6 @@
   <apn apn="mms" carrier="MTN" mcc="620" mmsc="http://172.17.3.7" mmsport="8080" mmsproxy="172.17.3.5" mnc="01" type="mms" />
   <apn apn="mtn mms" authtype="0" carrier="MTN MMS" carrier_id="1515" mcc="620" mmsc="http://172.17.3.7" mmsport="8080" mmsproxy="172.17.3.7" mnc="01" type="mms" />
   <apn apn="mtn mms" authtype="0" carrier="MTN MMS" mcc="620" mmsc="http://172.17.3.7" mmsport="8080" mmsproxy="172.17.3.7" mnc="01" type="mms" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="620" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="620" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" carrier="MTN" mcc="620" mnc="01" type="dun" />
   <apn apn="internet" carrier="MTN" mcc="620" mnc="01" mvno_match_data="MTN GH" mvno_type="spn" type="default" />
@@ -25532,8 +25464,8 @@
   <apn apn="ktrn.rw" carrier="ktrn.rw" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" type="ims" user_visible="false" />
   <apn apn="ims" carrier="ims" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="XCAP" carrier="XCAP" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="xcap" carrier="XCAP" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" type="xcap" user_visible="false" />
+  <apn apn="XCAP" carrier="XCAP" mcc="635" mnc="17" mvno_match_data="KTRN" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="etc.com" carrier="MTN" mcc="636" mnc="01" password="etc" type="cbs,default,dun,fota,hipri,ims,supl" user="etc" />
   <apn apn="default" carrier="ETH-MTN" carrier_id="681" mcc="636" mnc="01" type="default,ia,supl" />
   <apn apn="default" carrier="ETH-MTN" mcc="636" mnc="01" type="default,supl" />
@@ -27008,7 +26940,6 @@
   <apn apn="ims" carrier="TIM IMS" carrier_id="1385" mcc="724" mnc="54" protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="TIM IMS" mcc="724" mnc="54" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="724" mnc="54" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="724" mnc="54" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="724" mnc="54" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
   <apn apn="portoconecta.br" carrier="Porto Internet" mcc="724" mnc="54" mvno_match_data="Porto Conecta" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="truphone.com" carrier="DATA" mcc="724" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="55" mvno_match_data="314747454E45524943" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
@@ -27149,7 +27080,6 @@
   <apn apn="ims" carrier="Claro" mcc="732" mnc="101" protocol="IPV4V6" type="ims" />
   <apn apn="internet.comcel.com.co" carrier="Claro" mcc="732" mnc="101" password="COMCELWEB" type="dun" user="COMCELWEB" />
   <apn apn="wbdata" carrier="Webbing" mcc="732" mnc="101" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="732" mnc="101" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="wbdata" carrier="Webbing" mcc="732" mnc="101" mvno_match_data="8985235" mvno_type="iccid" type="default,dun" />
   <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet.comcel.com.co" carrier="WEB Comcel 3GSM" mcc="732" mnc="101" mvno_match_data="Claro" mvno_type="spn" password="COMCELWEB" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" user="COMCELWEB" />
@@ -27587,8 +27517,6 @@
   <apn apn="bicsapn" carrier="BICS Internet" carrier_id="2132" mcc="901" mnc="58" type="default,ia,supl" />
   <apn apn="bicsapn" carrier="BICS Internet" mcc="901" mnc="58" type="default,ia,supl" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="BICS IMS" mcc="901" mnc="58" type="ims" />
-  <apn apn="wbdata" carrier="Webbing" mcc="901" mnc="61" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl" />
-  <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="901" mnc="61" mvno_match_data="536E617065" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="internet" carrier="internet" mcc="901" mnc="91" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia" />
   <apn apn="hos" carrier="hos" mcc="901" mmsc="http://mms.worldmobile.net" mnc="91" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms,xcap" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="ims" mcc="901" mnc="91" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
