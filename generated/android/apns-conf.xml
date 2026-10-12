@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:954d51ae2c409d07cf1119b693c350738581aa6f5b3cb7deb2c97f71bea1beee
+    data_digest: sha256:031b524e2dca9377da265625cf0a63b739d0ddbeb0eaf5bbb174d5aacdc808d7
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -7638,6 +7638,7 @@
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="272" mnc="25" mvno_match_data="Sky IE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ut.mobile.sky" bearer_bitmask="14|18|20" carrier="Sky IE Ut" mcc="272" mnc="25" mvno_match_data="Sky IE" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
   <apn apn="ut.mobile.sky" carrier="Sky IE Ut" mcc="272" mnc="25" mvno_match_data="Sky IE" mvno_type="spn" type="xcap" />
+  <apn apn="truphone.com" carrier="Lidl Connect IE" mcc="272" mnc="27" type="default,supl" />
   <apn apn="truphone.com" carrier="DATA" mcc="272" mmsc="http://mmsc.truphone.com:1981/mm1" mnc="27" mvno_match_data="314747454E45524943" mvno_type="gid" type="default,dun,mms,supl" user_editable="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="272" mnc="27" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" bearer_bitmask="14|18|20" carrier="HOS" mcc="272" mnc="27" mvno_match_data="314747454E45524943" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
@@ -21981,23 +21982,27 @@
   <apn apn="ims" carrier="MobiCom IMS" mcc="428" mnc="99" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="XCAP" carrier="MobiCom XCAP" mcc="428" mnc="99" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
   <apn apn="xcap" carrier="MobiCom XCAP" mcc="428" mnc="99" mvno_match_data="MobiCom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
+  <apn apn="ntnet" carrier="Nepal Telecom Internet" carrier_id="962" mcc="429" mnc="01" type="default,supl" />
   <apn apn="ntnet" carrier="ntnet" mcc="429" mnc="01" type="default,dun,supl" />
-  <apn apn="ntwap" carrier="GPRS APN" mcc="429" mnc="01" port="8000" proxy="192.80.7.133" type="default,supl" />
   <apn apn="default" carrier="Namaste / NT Mobile" carrier_id="962" mcc="429" mnc="01" type="default,ia,supl" />
   <apn apn="default" carrier="Namaste / NT Mobile" mcc="429" mnc="01" type="default,supl" />
+  <apn apn="ntmms" carrier="Nepal Telecom MMS" carrier_id="962" mcc="429" mmsc="http://192.80.11.180" mmsport="8000" mmsproxy="192.80.7.133" mnc="01" type="mms" />
   <apn apn="ntmms" carrier="ntmms" mcc="429" mmsc="http://192.80.11.180" mmsport="8000" mmsproxy="192.80.7.133" mnc="01" type="mms" />
+  <apn apn="ims" carrier="Nepal Telecom IMS" carrier_id="962" mcc="429" mnc="01" type="ims" />
   <apn apn="ntnet" carrier="NtcHTTP" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="default,xcap" />
   <apn apn="ntmms" carrier="Ntmms" mcc="429" mmsc="http://192.80.11.180" mmsport="8000" mmsproxy="192.80.7.133" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="429" mnc="01" mvno_match_data="Nepal Telecom" mvno_type="spn" type="ims,xcap" />
+  <apn apn="web" carrier="Ncell Internet" carrier_id="1923" mcc="429" mnc="02" type="default,supl" />
   <apn apn="web" carrier="web" mcc="429" mnc="02" type="default,dun,supl" />
   <apn apn="web" carrier="web" mcc="429" mnc="02" port="8080" proxy="192.168.19.15" type="default,supl" />
-  <apn apn="ntwap" carrier="Nepal Telecom WAP" mcc="429" mnc="02" port="8000" proxy="192.80.7.133" type="default,supl" />
   <apn apn="default" authtype="1" carrier="Ncell" mcc="429" mnc="02" type="default,supl" />
   <apn apn="default" carrier="Ncell" carrier_id="1923" mcc="429" mnc="02" type="default,ia,supl" />
-  <apn apn="mms" carrier="mms" mcc="429" mmsc="http://192.168.19.15" mmsport="8080" mmsproxy="192.168.19.15" mnc="02" type="mms" />
+  <apn apn="mms" carrier="Ncell MMS" carrier_id="1923" mcc="429" mmsc="http://192.168.19.15" mmsport="8080" mmsproxy="192.168.19.15" mnc="02" type="mms" />
   <apn apn="mms" carrier="Ncell" mcc="429" mmsc="http://10.68.1.149" mmsport="8080" mmsproxy="10.68.1.149" mnc="02" type="mms" />
+  <apn apn="mms" carrier="mms" mcc="429" mmsc="http://192.168.19.15" mmsport="8080" mmsproxy="192.168.19.15" mnc="02" type="mms" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="429" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
+  <apn apn="ims" carrier="Ncell IMS" carrier_id="1923" mcc="429" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="web" carrier="Ncellgprs" mcc="429" mnc="02" mvno_match_data="NCELL" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="NcellMMS" mcc="429" mmsc="http://192.168.19.15" mmsport="8080" mmsproxy="192.168.19.15" mnc="02" mvno_match_data="NCELL" mvno_type="spn" protocol="IPV4V6" type="mms" />
   <apn apn="IMS" carrier="IMS" mcc="429" mnc="02" mvno_match_data="NCELL" mvno_type="spn" protocol="IPV4V6" type="ims" />
