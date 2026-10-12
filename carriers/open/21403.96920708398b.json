@@ -38,6 +38,36 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "Telecable IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "orangemms",
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "name": "Telecable MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangeworld",
+      "name": "Telecable Internet M\u00f3vil",
+      "password": "orange",
+      "types": [
+        "default"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
       "mvno_match_data": "Telecable",

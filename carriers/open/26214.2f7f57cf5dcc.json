@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause,DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,6 +29,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Lebara IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.lebara.de",
       "name": "internet.lebara.de",
       "protocol": "IPV4V6",
@@ -19,6 +45,15 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Lebara xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],
@@ -42,7 +77,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Lebara De",
+  "display_name": "Lebara",
   "match": {
     "mccmnc": [
       "26214"
