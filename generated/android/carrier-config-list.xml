@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:2474cf0c014495e9b85e1aa96ff6eabaa7c034aea99d341b898e66fd4adac37a
+    data_digest: sha256:3a1c433bfaf7b4cebf92e70f5e510e9fc696120bd0338b33899c9086b0a90eb2
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -20590,6 +20590,7 @@
   <carrier_config mcc="608" mnc="01" name="Orange">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
+    <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <string-array name="read_only_apn_types_string_array" num="1">
       <item value="mms" />
     </string-array>
@@ -45701,6 +45702,7 @@
   <!-- open.65101.d6dcd44b530e -->
   <carrier_config mcc="651" mnc="01" name="Vodacom Lesotho" spn="\QVodacom Lesotho\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.65102.bc5c37365b2f -->
   <carrier_config mcc="651" mnc="02" name="Econet Telecom Lesotho" spn="\QEconet Telecom Lesotho\E">
@@ -45729,6 +45731,7 @@
   <!-- open.65501.2abdaa7970a9 -->
   <carrier_config mcc="655" mnc="01" name="Vodacom" spn="\QVodacom\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.65502.7749f2789c7c -->
   <carrier_config mcc="655" mnc="02" name="TelkomSA" spn="\QTelkomSA\E">
@@ -46251,6 +46254,10 @@
   <carrier_config mcc="724" mnc="11" name="VIVO" spn="\QVIVO\E">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
+  <!-- open.72415.62d62a2e5e3d -->
+  <carrier_config mcc="724" mnc="15" name="Sercomtel" spn="\QSercomtel\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.72416.96e6a2a033ff -->
   <carrier_config mcc="724" mnc="16" name="Oi" spn="\QOi\E">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -46322,6 +46329,10 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
+  <!-- open.73001.35c6e8f5670f -->
+  <carrier_config mcc="730" mnc="01" name="ENTEL" spn="\QENTEL\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.73002.b61058e42e84 -->
   <carrier_config mcc="730" mnc="02" name="movistar_CH" spn="\Qmovistar_CH\E">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -46335,6 +46346,10 @@
   <carrier_config cid="1428" mcc="730" mnc="07" name="Movistar">
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
+  </carrier_config>
+  <!-- open.73010.a0a9213bae0c -->
+  <carrier_config mcc="730" mnc="10" name="ENTEL" spn="\QENTEL\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.732101.fff0e709d80e -->
   <carrier_config mcc="732" mnc="101" name="Claro_CO" spn="\QClaro_CO\E">
