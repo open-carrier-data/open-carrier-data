@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:ebe2fdf4eeaa858178e52649ef378176a09901e6fbbcedc41af96503db58f301
+    data_digest: sha256:90c8b31e366662b37bd85c8380999d0c2ba2aaf2c481ba9c4cbc529eb63a1ea2
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -3980,7 +3980,9 @@
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="IMS" carrier="IMS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="hos" carrier="HOS" mcc="232" mnc="01" mvno_match_data="A1" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
+  <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" password="ppp" type="default" user="ppp@a1plus.at" />
   <apn apn="A1.net" carrier="Internet" mcc="232" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" type="default" />
+  <apn apn="free.A1.net" carrier="MMS" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" password="ppp" type="mms" user="ppp@a1plus.at" />
   <apn apn="free.A1.net" carrier="MMS" mcc="232" mmsc="http://mmsc.A1.net" mmsport="8001" mmsproxy="194.48.124.71" mnc="01" mvno_match_data="Red Bull MOBILE" mvno_type="spn" type="mms" />
   <apn apn="a1.net" authtype="1" carrier="A1 Internet" mcc="232" mnc="02" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="ppp@a1plus.at" />
   <apn apn="A1.net" authtype="1" carrier="A1.net" carrier_enabled="true" mcc="232" mnc="02" password="ppp" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl,xcap" user="ppp@a1plus.at" />
@@ -4761,9 +4763,7 @@
   <apn apn="ims" carrier="IMS" mcc="234" mnc="15" mvno_match_data="Vodafone UK Data" mvno_type="spn" protocol="IP" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="15" mvno_match_data="Vodafone UK Data" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="xcap" carrier="XCAP" mcc="234" mnc="15" mvno_match_data="Vodafone UK Data" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
-  <apn apn="pp.vodafone.co.uk" carrier="Pay as You Go/VOXI Data" mcc="234" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" type="default" />
   <apn apn="pp.vodafone.co.uk" carrier="Pay as You Go/VOXI Data" mcc="234" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" password="wap" type="default" user="wap" />
-  <apn apn="pp.vodafone.co.uk" carrier="PAYG MMS" mcc="234" mmsc="http://mms.vodafone.co.uk/servlets/mms" mmsport="8799" mmsproxy="212.183.137.12" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" type="mms" />
   <apn apn="pp.vodafone.co.uk" carrier="PAYG MMS" mcc="234" mmsc="http://mms.vodafone.co.uk/servlets/mms" mmsport="8799" mmsproxy="212.183.137.12" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" password="wap" type="mms" user="wap" />
   <apn apn="ims" carrier="IMS" mcc="234" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" protocol="IP" type="ims" />
   <apn apn="xcap" carrier="XCAP" mcc="234" mnc="15" mvno_match_data="vodafone UK Prepaid" mvno_type="spn" type="xcap" />
@@ -22922,9 +22922,7 @@
   <apn apn="ims" carrier="3" mcc="454" mnc="04" protocol="IPV6" type="ims" />
   <apn apn="share.lte.three.com.hk" carrier="3" mcc="454" mnc="04" type="dun" />
   <apn apn="share.three.com.hk" carrier="3" mcc="454" mnc="04" type="dun" />
-  <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="default" />
   <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" port="8080" proxy="10.30.3.151" type="default" />
-  <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" type="mms" />
   <apn apn="mms-g.three.com.hk" carrier="3-DB-MMS" mcc="454" mmsc="http://10.30.15.51:10021/mmsc" mmsport="8080" mmsproxy="10.30.15.53" mnc="04" mvno_match_data="3(2G)" mvno_type="spn" password="1234" type="mms" user="3" />
   <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" type="default" />
   <apn apn="web-g.three.com.hk" carrier="3-DB-GPRS" mcc="454" mnc="04" mvno_match_data="3(3G)" mvno_type="spn" port="8080" proxy="10.30.3.151" type="default" />
@@ -23410,7 +23408,6 @@
   <apn apn="ctnet" authtype="3" carrier="CTNET" mcc="460" mnc="01" mvno_match_data="China Telecom" mvno_type="spn" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,xcap" user="ctnet@mycdma.cn" />
   <apn apn="ims" carrier="IMS" mcc="460" mnc="01" mvno_match_data="China Telecom" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
-  <apn apn="3gwap" carrier="沃宽带用户手机上网" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="3gwap" carrier="沃宽带用户手机上网" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" port="80" protocol="IPV4V6" proxy="10.0.0.172" type="default" />
   <apn apn="3gwap" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="01" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -23506,7 +23503,6 @@
   <apn apn="ims" carrier="中国联通" mcc="460" mnc="09" protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="联通IMS" mcc="460" mnc="09" protocol="IPV4V6" type="ims" />
   <apn apn="3gnet" carrier="沃宽带用户连接互联网" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
-  <apn apn="3gwap" carrier="沃宽带用户手机上网" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" type="default" />
   <apn apn="3gwap" carrier="沃宽带用户手机上网" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" port="80" protocol="IPV4V6" proxy="10.0.0.172" type="default" />
   <apn apn="3gwap" carrier="3gwap" mcc="460" mmsc="http://mmsc.myuni.com.cn" mmsport="80" mmsproxy="10.0.0.172" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="09" mvno_match_data="中国联通" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
