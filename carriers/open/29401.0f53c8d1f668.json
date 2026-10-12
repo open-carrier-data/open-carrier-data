@@ -42,6 +42,15 @@
     },
     {
       "apn": "internet",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "internet",
       "password": "t-mobile",
       "protocol": "IPV4V6",
@@ -52,12 +61,15 @@
       "user": "internet"
     },
     {
-      "apn": "internet",
-      "name": "internet",
+      "apn": "mms",
+      "mmsc": "http://mms.t-mobile.com.mk",
+      "mmsport": 8080,
+      "mmsproxy": "62.162.155.227",
+      "name": "MMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
-        "default"
+        "mms"
       ]
     },
     {
@@ -73,18 +85,6 @@
         "mms"
       ],
       "user": "mms"
-    },
-    {
-      "apn": "mms",
-      "mmsc": "http://mms.t-mobile.com.mk",
-      "mmsport": 8080,
-      "mmsproxy": "62.162.155.227",
-      "name": "mms",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "mms"
-      ]
     }
   ],
   "android_carrier_config": {
