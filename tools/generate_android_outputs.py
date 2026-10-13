@@ -290,7 +290,7 @@ PRIMARY_APN_SOURCES = frozenset(
 # content was written: measured on 2026-10-06, its newest bundles carry
 # APNs made for iPhones and old names forward, and agree with the Android
 # vendors less often than older ones (private rule decisions of 2026-10-06).
-# Three exceptions, each named per APN fact by the evidence index:
+# Four exceptions, each named per APN fact by the evidence index:
 # - Samsung's service also confirms the last build of a phone it stopped
 #   updating years ago, so a Samsung value does not count where the fact's
 #   old_build_sources names the source: every observation of it behind the
@@ -300,15 +300,21 @@ PRIMARY_APN_SOURCES = frozenset(
 #   packs give "nxtgenphone". So a Samsung value does not count where the
 #   fact's data_device_sources names the source: a tablet's pack gives the
 #   fact and no phone build at most three years old does.
+# - A Samsung carrier pack whose SIM rule the newest OMC version of its sales
+#   code states only under another, settled network name: a Samsung value
+#   does not count where the fact's superseded_pack_sources names the
+#   source, for the types that newest version gives (private rule decisions
+#   of 2026-10-06, round 15).
 # - Google's update service confirms its shared "others" file as a whole, not
 #   each entry: in two years 5 of its 688 entries changed. A Google value
 #   that comes only from that file counts only where a maintained
 #   per-carrier source (a Google per-carrier file, or a Samsung phone build
-#   at most three years old) gives the same APN value for the type on the
-#   same network code, or where Google's frozen Pixel copies (TheMuppets)
-#   show that Google edited the entry's values for that type: a copy gives a
-#   value for the type that the current file no longer gives. Otherwise the
-#   fact's shared_file_sources names Google.
+#   at most three years old from a pack not superseded for that type) gives
+#   the same APN value for the type on the same network code, or where
+#   Google's frozen Pixel copies (TheMuppets) show that Google edited the
+#   entry's values for that type: a copy gives a value for the type that the
+#   current file no longer gives. Otherwise the fact's shared_file_sources
+#   names Google.
 # The private sanitizer decides each mark; this generator only reads them.
 CURRENT_VENDOR_APN_SOURCES = frozenset({"google_carriersettings", "samsung_omc", "samsung_ims"})
 # APN values that name no network: a list writes them where it knows no APN.
@@ -420,6 +426,10 @@ class ProfileEvidence(NamedTuple):
     # Per APN fact, the vendor sources that give it from a data-only
     # device's pack (a Samsung tablet) and from no current phone build.
     apn_fact_data_device_sources: dict[str, frozenset[str]] = {}
+    # Per APN fact, the vendor sources that give it only from carrier packs
+    # the newest version of their sales code's configuration superseded for
+    # the fact's type, or from old builds.
+    apn_fact_superseded_pack_sources: dict[str, frozenset[str]] = {}
 
 
 class ApnRows(NamedTuple):
@@ -471,6 +481,11 @@ def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvid
                 for fact in apn_facts
                 if fact.get("data_device_sources")
             },
+            {
+                fact["key"]: frozenset(fact["superseded_pack_sources"])
+                for fact in apn_facts
+                if fact.get("superseded_pack_sources")
+            },
         )
     return evidence
 
@@ -504,10 +519,11 @@ def apn_row_current(
 ) -> dict[str, frozenset[str]]:
     """The current vendors behind each type of a profile row: its sources in
     CURRENT_VENDOR_APN_SOURCES, less the Samsung sources that give the fact
-    only from builds more than three years old (old_build_sources) or from
-    tablet packs and no current phone build (data_device_sources), and the
-    Google source that gives it only from its unconfirmed shared file
-    (shared_file_sources)."""
+    only from builds more than three years old (old_build_sources), from
+    tablet packs and no current phone build (data_device_sources), or only
+    from carrier packs superseded for the fact's type and old builds
+    (superseded_pack_sources), and the Google source that gives it only from
+    its unconfirmed shared file (shared_file_sources)."""
     if profile_evidence is None:
         return {}
     current: dict[str, frozenset[str]] = {}
@@ -518,6 +534,7 @@ def apn_row_current(
             (sources & CURRENT_VENDOR_APN_SOURCES)
             - profile_evidence.apn_fact_old_build_sources.get(key, frozenset())
             - profile_evidence.apn_fact_data_device_sources.get(key, frozenset())
+            - profile_evidence.apn_fact_superseded_pack_sources.get(key, frozenset())
             - profile_evidence.apn_fact_shared_file_sources.get(key, frozenset())
         )
         for served in ANDROID_WILDCARD_TYPES if apn_type == "*" else (apn_type,):

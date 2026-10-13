@@ -1083,6 +1083,11 @@ SHARED_FILE_SOURCES = ["google_carriersettings"]
 # fact's data_device_sources may name: Samsung OMC, whose tablet packs
 # configure data-only devices.
 DATA_DEVICE_SOURCES = {"samsung_omc"}
+# The vendor sources whose carrier packs a newer version of the same sales
+# code's configuration can supersede, which an APN fact's
+# superseded_pack_sources names: Samsung OMC, whose packs state each SIM rule
+# under a network name (private rule decisions of 2026-10-06, round 15).
+SUPERSEDED_PACK_SOURCES = ["samsung_omc"]
 # The CarrierConfig keys the importers treat as a capability's Android switch.
 # Mirrors CAPABILITY_GATING_CONFIG_KEYS in the private sanitizer.
 CAPABILITY_GATING_CONFIG_KEYS = {
@@ -1700,7 +1705,12 @@ def validate_evidence_index(
         for fact_index, fact in enumerate(fact_sources):
             label = f"profiles[{index}].fact_sources[{fact_index}]"
             require_type(path, fact, dict, label)
-            if set(fact) - {"old_build_sources", "shared_file_sources", "data_device_sources"} != {
+            if set(fact) - {
+                "old_build_sources",
+                "shared_file_sources",
+                "data_device_sources",
+                "superseded_pack_sources",
+            } != {
                 "section",
                 "key",
                 "sources",
@@ -1757,10 +1767,26 @@ def validate_evidence_index(
                     or not set(data_devices) <= set(fact_source_names) & DATA_DEVICE_SOURCES
                 ):
                     raise ValidationError(f"{path}: {label}.data_device_sources is invalid")
+            superseded = fact.get("superseded_pack_sources")
+            if superseded is not None:
+                # Samsung gives this APN fact only from carrier packs that the
+                # newest OMC version of their sales code superseded for the
+                # fact's type (it states their SIM rule only under another,
+                # settled network name), or from old builds, and from at least
+                # one such pack; the APN ranking does not count Samsung as a
+                # current vendor for it. An old build alone is old_build_sources.
+                if (
+                    section != "android_apns"
+                    or superseded != SUPERSEDED_PACK_SOURCES
+                    or not set(superseded) <= set(fact_source_names)
+                    or set(superseded) & set(old_builds or [])
+                ):
+                    raise ValidationError(f"{path}: {label}.superseded_pack_sources is invalid")
             if (
                 old_builds is None
                 and shared_file is None
                 and data_devices is None
+                and superseded is None
                 and fact_source_names == sources
             ):
                 # An absent fact means every profile source supports it.

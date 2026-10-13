@@ -1244,6 +1244,47 @@ def check_evidence_format(carriers_dir: Path, generated_dir: Path) -> None:
             ({**tablet_entry, "data_devices": ["samsung_omc"]}, "an unknown fact key passed"),
         ):
             expect_failure(data_device(entry), message)
+        # superseded_pack_sources: Samsung OMC gives an APN fact only from
+        # carrier packs superseded for the fact's type, or from old builds.
+        # Such an entry may repeat the profile's sources, and may come with
+        # data_device_sources, never with old_build_sources naming Samsung.
+        def superseded_pack(entry: dict) -> Callable[[dict], None]:
+            def mutate(value: dict) -> None:
+                profile = value["profiles"][0]
+                profile["sources"] = ["lineageos", "samsung_ims", "samsung_omc"]
+                profile["fact_sources"] = [entry]
+            return mutate
+
+        superseded_entry = {
+            "section": "android_apns",
+            "key": "sha256:0123456789abcdef",
+            "sources": ["lineageos", "samsung_ims", "samsung_omc"],
+            "superseded_pack_sources": ["samsung_omc"],
+        }
+        for entry in (
+            superseded_entry,
+            {**superseded_entry, "data_device_sources": ["samsung_omc"]},
+            {**superseded_entry, "old_build_sources": ["samsung_ims"]},
+        ):
+            accepted = load_json(evidence_path)
+            superseded_pack(entry)(accepted)
+            write_profile(evidence_path, accepted)
+            validate_public_carrier_data.validate_evidence_index(evidence_path, profile_ids)
+            evidence_path.write_text(good_text, encoding="utf-8")
+        for entry, message in (
+            ({**superseded_entry, "section": "android_carrier_config", "key": "enabledMMS"}, "superseded_pack_sources outside APN facts passed"),
+            ({**superseded_entry, "section": "addons", "key": "rcs.chat_enabled"}, "superseded_pack_sources on an add-on fact passed"),
+            ({**superseded_entry, "superseded_pack_sources": ["samsung_ims"]}, "a superseded pack source other than Samsung OMC passed"),
+            ({**superseded_entry, "superseded_pack_sources": ["lineageos"]}, "a non-vendor superseded pack source passed"),
+            ({**superseded_entry, "superseded_pack_sources": []}, "an empty superseded_pack_sources passed"),
+            ({**superseded_entry, "superseded_pack_sources": "samsung_omc"}, "a string superseded_pack_sources passed"),
+            ({**superseded_entry, "superseded_pack_sources": ["samsung_omc", "samsung_omc"]}, "a repeated superseded pack source passed"),
+            ({**superseded_entry, "sources": ["lineageos", "samsung_ims"]}, "a superseded pack source the fact does not name passed"),
+            ({**superseded_entry, "old_build_sources": ["samsung_omc"]}, "superseded_pack_sources with old_build_sources naming Samsung OMC passed"),
+            ({**superseded_entry, "old_build_sources": ["samsung_ims", "samsung_omc"]}, "superseded_pack_sources with old_build_sources naming Samsung OMC passed"),
+            ({**superseded_entry, "superseded_packs": ["samsung_omc"]}, "an unknown fact key passed"),
+        ):
+            expect_failure(superseded_pack(entry), message)
         # shared_file_sources: Google gives an APN fact only from its shared
         # carrier file, unconfirmed. Such an entry may repeat the profile's
         # sources.
@@ -2326,6 +2367,106 @@ def check_data_device_values() -> None:
         assert_true(
             current == {"default": frozenset()},
             f"the tablet fact has no current vendor: {current}",
+        )
+        assert_true(
+            len(results[True].records) == len(results[False].records),
+            "the mark removes no row",
+        )
+
+
+def check_superseded_pack_values() -> None:
+    """A Samsung value that only carrier packs superseded for the fact's type
+    give, with old builds (superseded_pack_sources), is not a current
+    vendor's for that type: the newest OMC version of the pack's sales code
+    states its SIM rule only under another, settled network name (private
+    rule decisions of 2026-10-06, round 15). The mark is per APN fact, so a
+    row's other types keep Samsung as a current vendor."""
+
+    def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    samsung = "samsung_omc"
+    # 27601 plain: Samsung's older "Telekom.al" packs give "internet.t", with
+    # MMS on the same row; Apple and LineageOS give it too. Samsung's newest
+    # "One.al" packs give "internet.one" and no MMS row, so the old packs
+    # are superseded for default only.
+    old_row = apn("internet.t", ("default", "mms"), mmsc="http://mms.example")
+    new_row = apn("internet.one")
+    profile = {
+        "profile_id": "open.27601.a",
+        "display_name": "open.27601.a",
+        "match": {"mccmnc": ["27601"]},
+        "android_apns": [old_row, new_row],
+    }
+    everything = ["apple_carrier_bundles", "lineageos", samsung]
+
+    def evidence_for(superseded: bool) -> dict:
+        mark = {"superseded_pack_sources": [samsung]} if superseded else {}
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(old_row, "default"),
+                "sources": everything,
+                **mark,
+            },
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(new_row, "default"),
+                "sources": [samsung],
+            },
+        ]
+        facts = [fact for fact in facts if fact["sources"] != everything or len(fact) > 3]
+        return {
+            "profiles": [
+                {
+                    "profile_id": profile["profile_id"],
+                    "sources": everything,
+                    "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                }
+            ]
+        }
+
+    with tempfile.TemporaryDirectory() as tmp:
+        results = {}
+        evidence = {}
+        for superseded in (False, True):
+            evidence_path = Path(tmp) / f"evidence-{superseded}.json"
+            evidence_path.write_text(json.dumps(evidence_for(superseded)), encoding="utf-8")
+            evidence[superseded] = generate_android_outputs.load_apn_evidence(evidence_path)
+            results[superseded] = generate_android_outputs.apn_xml_rows([profile], evidence[superseded])
+
+        def internet(superseded: bool) -> list[str]:
+            return [
+                record["apn"]
+                for record in results[superseded].records
+                if "default" in record["type"].split(",")
+            ]
+
+        assert_true(
+            internet(False)[0] == "internet.t",
+            f"without the mark the value more sources give leads: {internet(False)}",
+        )
+        assert_true(
+            internet(True) == ["internet.one", "internet.t"],
+            "a value only superseded packs give is not a current vendor's: the newest "
+            f"pack's value leads: {internet(True)}",
+        )
+        evidence_profile = evidence[True][profile["profile_id"]]
+        assert_true(
+            evidence_profile.apn_fact_superseded_pack_sources
+            == {generate_android_outputs.apn_fact_key(old_row, "default"): frozenset({samsung})},
+            f"the mark is read per APN fact: {evidence_profile.apn_fact_superseded_pack_sources}",
+        )
+        current = generate_android_outputs.apn_row_current(old_row, evidence_profile)
+        assert_true(
+            current == {"default": frozenset(), "mms": frozenset({samsung})},
+            "the mark drops Samsung only for the fact's own type; the row's MMS fact "
+            f"keeps it: {current}",
+        )
+        before = generate_android_outputs.apn_row_current(old_row, evidence[False][profile["profile_id"]])
+        assert_true(
+            before == {"default": frozenset({samsung}), "mms": frozenset({samsung})},
+            f"without the mark Samsung is current for both types: {before}",
         )
         assert_true(
             len(results[True].records) == len(results[False].records),
@@ -5123,6 +5264,8 @@ def main() -> int:
     print("current vendor and attach type tests passed")
     check_data_device_values()
     print("data-device pack tests passed")
+    check_superseded_pack_values()
+    print("superseded pack tests passed")
     check_shared_file_and_malformed_values()
     print("shared-file and malformed APN value tests passed")
     check_proxy_free_first()
