@@ -11,7 +11,7 @@ The first five fields identify the profile and say when it applies.
 | Field | Required | Type | Rule |
 | --- | --- | --- | --- |
 | `schema_version` | yes | integer | always `1` |
-| `profile_id` | yes | string | `open.<mccmnc>.<12 hex>`, matches the file name. It is a hash of the match set, so a change of selectors replaces IDs: when Samsung's networks moved from network-name SPN selectors to Samsung's own SIM rules (change 32), about 2,150 profiles keyed by a network name left, about 510 profiles under Samsung's rules were added, and the profile count fell from 7,997 to about 6,360 |
+| `profile_id` | yes | string | `open.<mccmnc>.<12 hex>`, matches the file name. It is a hash of the match set, so a change of selectors replaces IDs: when Samsung's networks moved from network-name SPN selectors to Samsung's own SIM rules (change 32), 2,149 profiles keyed by a network name left, 512 profiles under Samsung's rules were added, and the profile count fell from 7,997 to 6,360 (dry run of 2026-10-13) |
 | `display_name` | yes | string | 1 to 120 characters |
 | `match` | yes | object | see the match selector table |
 | `capabilities` | yes | object | see the capabilities table |
