@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "MMS",
@@ -13,6 +33,7 @@
     {
       "apn": "hos",
       "name": "hos",
+      "protocol": "IP",
       "types": [
         "xcap"
       ],
@@ -31,7 +52,7 @@
     },
     {
       "apn": "ims",
-      "name": "Zain BH",
+      "name": "ims",
       "protocol": "IP",
       "types": [
         "ims"
@@ -102,6 +123,18 @@
       "mmsport": 80,
       "mmsproxy": "172.18.85.34",
       "name": "Zain BH MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://172.18.83.129",
+      "mmsport": 80,
+      "mmsproxy": "172.18.85.34",
+      "name": "Zain MMS",
       "password": "mms",
       "types": [
         "mms"

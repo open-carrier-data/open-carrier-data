@@ -1,4 +1,48 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-CHA-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "CHA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Charter IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "name": "Charter MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "VZWINTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
@@ -7,16 +51,16 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "VZW US CHA",
+  "display_name": "CHA",
   "match": {
     "gid1_prefixes": [
       "BA01490000000000"

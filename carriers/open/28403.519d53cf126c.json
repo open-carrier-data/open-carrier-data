@@ -24,16 +24,6 @@
   "android_apns": [
     {
       "apn": "hos",
-      "name": "HOS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1400,
@@ -44,6 +34,16 @@
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -66,6 +66,26 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "internet.vivacom.bg",
+      "name": "Internet Vivacom",
+      "password": "VIVACOM",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "VIVACOM"
+    },
+    {
+      "apn": "internet.vivacom.bg",
+      "name": "Internet Vivacom",
+      "password": "VIVACOM",
+      "types": [
+        "default"
+      ],
+      "user": "VIVACOM"
     },
     {
       "apn": "internet.vivacom.bg",
@@ -187,6 +207,18 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.123.123",
       "name": "Vivacom MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms.vivacom.bg",
+      "mmsc": "http://mmsc.vivacom.bg",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.123.123",
+      "name": "mms.vivacom.bg",
       "password": "mms",
       "types": [
         "mms"

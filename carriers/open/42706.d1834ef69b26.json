@@ -1,4 +1,47 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "moitelecom",
+      "name": "Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "pcs",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
@@ -17,7 +60,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "MOI QA",
+  "display_name": "Ministry of Interior",
   "match": {
     "mccmnc": [
       "42706"

@@ -1,10 +1,30 @@
 {
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "data",
+      "name": "data",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
     {
       "apn": "data",
       "name": "DigiCell",
       "types": [
-        "default",
         "dun"
       ]
     },
@@ -24,6 +44,15 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     }
   ],

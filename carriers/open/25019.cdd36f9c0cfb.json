@@ -1,4 +1,48 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "alfa",
+      "name": "Alfa Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Alfa IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "xcap.alfa",
+      "name": "Alfa XCAP",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
@@ -17,7 +61,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Alfa RU",
+  "display_name": "Alfa",
   "match": {
     "mccmnc": [
       "25019"

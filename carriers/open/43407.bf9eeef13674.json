@@ -1,5 +1,32 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Mobiuz IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "mms.mts.uz",
       "authtype": 1,
@@ -35,6 +62,16 @@
       ]
     },
     {
+      "apn": "mms.ums.uz",
+      "mmsc": "http://mmsc/was",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.0.10",
+      "name": "mms.ums.uz",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "net.mts.uz",
       "authtype": 1,
       "carrier_id": 1869,
@@ -57,6 +94,21 @@
         "supl"
       ],
       "user": "mts"
+    },
+    {
+      "apn": "net.ums.uz",
+      "name": "net.ums.uz",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Mobiuz XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

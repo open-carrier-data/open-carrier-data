@@ -1,5 +1,32 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "datos.personal.com",
+      "authtype": 1,
+      "name": "datos.personal.com",
+      "password": "datos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "datos"
+    },
     {
       "apn": "datos.personal.com",
       "authtype": 1,
@@ -19,7 +46,6 @@
       "name": "datos.personal.com",
       "password": "datos",
       "types": [
-        "default",
         "supl"
       ],
       "user": "datos"
@@ -34,14 +60,6 @@
     },
     {
       "apn": "ims",
-      "name": "Personal",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|20",
       "name": "Personal IMS",
       "protocol": "IPV4V6",
@@ -52,12 +70,22 @@
       "user_visible": false
     },
     {
-      "apn": "internet.personal.com",
-      "name": "Personal",
-      "password": "internet",
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun"
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.personal.com",
+      "name": "internet.personal.com",
+      "password": "internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
       ],
       "user": "internet"
     },
@@ -95,6 +123,15 @@
     },
     {
       "apn": "internet.personal.com",
+      "name": "Personal",
+      "password": "internet",
+      "types": [
+        "dun"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet.personal.com",
       "authtype": 1,
       "name": "Personal Internet Movil",
       "password": "internet",
@@ -120,6 +157,19 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.personal.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.7.31",
+      "name": "Personal MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mms.personal.com/",
       "mmsport": 9201,
       "mmsproxy": "172.25.7.31",
@@ -132,12 +182,37 @@
     },
     {
       "apn": "mms",
-      "authtype": 1,
       "mmsc": "http://mms.personal.com",
       "mmsport": 8080,
       "mmsproxy": "172.25.7.31",
       "name": "mms",
       "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.personal.com/",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.7.31",
+      "name": "mms",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.personal.com/",
+      "mmsport": 8080,
+      "mmsproxy": "172.25.7.31",
+      "name": "mms",
+      "password": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],

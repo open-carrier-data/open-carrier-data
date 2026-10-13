@@ -1,4 +1,65 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "hos",
+      "name": "Motiv XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Motiv IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "inet.ycc.ru",
+      "name": "inet.ycc.ru",
+      "password": "motiv",
+      "types": [
+        "default"
+      ],
+      "user": "motiv"
+    },
+    {
+      "apn": "mms.ycc.ru",
+      "mmsc": "http://mms.ycc.ru",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.2.10",
+      "name": "Motiv MMS",
+      "password": "motiv",
+      "types": [
+        "mms"
+      ],
+      "user": "motiv"
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_default_wfc_ims_mode_int": 1,
@@ -11,7 +72,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",

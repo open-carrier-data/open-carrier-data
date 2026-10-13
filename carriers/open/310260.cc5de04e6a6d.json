@@ -1,4 +1,15 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
   "android_apns": [
     {
       "always_on": true,
@@ -49,9 +60,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Vodafone US IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "service",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "name": "Vodafone US Service",
+      "name": "service",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
@@ -61,7 +80,7 @@
     {
       "apn": "us.vodafone.com",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "name": "Vodafone US",
+      "name": "us.vodafone.com",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
       "types": [
@@ -71,6 +90,14 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "us.vodafone.com",
+      "name": "Vodafone US",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -96,11 +123,11 @@
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 310260",
+  "display_name": "Vodafone US",
   "match": {
     "gid1_prefixes": [
       "2801"

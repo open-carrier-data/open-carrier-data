@@ -1,55 +1,6 @@
 {
-  "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto"
-    },
-    "network_policy": {
-      "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall",
-        "+autoSwitchNr5gMode"
-      ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "SJP-SJP-GSM-JPN"
-    },
-    "operator_display": {
-      "five_g_icon_branding": "UseOneShapedIcon",
-      "indicator_icon_branding": "XJP"
-    }
-  },
-  "android_apns": [
-    {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "rakuten.jp",
-      "name": "\u697d\u5929(rakuten.jp)",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "rakuten.jp",
-      "mmsc": "https://mms.rakuten.jp:8443/mmsc",
-      "name": "\u697d\u5929(rakuten.jp) mms",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms"
-      ]
-    }
-  ],
   "android_carrier_config": {
-    "allow_merge_wifi_calls_when_vowifi_off_bool": false,
-    "carrier_volte_available_bool": true
+    "allow_merge_wifi_calls_when_vowifi_off_bool": false
   },
   "capabilities": {
     "esim": "unknown",
@@ -58,12 +9,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "supported",
+    "volte": "unknown",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Rakuten",
+  "display_name": "Carrier 44011",
   "match": {
     "mccmnc": [
       "44011"

@@ -10,14 +10,12 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall_sim_mobility"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
       "five_g_icon_configuration": [
         "connected_mmwave:5G",
         "connected:5G",
@@ -64,6 +62,14 @@
     },
     {
       "apn": "telstra.internet",
+      "name": "Telstra Broadband",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "telstra.internet",
       "authtype": 0,
       "mtu": 1460,
       "name": "Telstra Broadband",
@@ -75,6 +81,16 @@
     {
       "apn": "telstra.mms",
       "mmsc": "http://mmsc.telstra.com:8002/",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.180",
+      "name": "Telstra MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "telstra.mms",
+      "mmsc": "http://mmsc.telstra.com:8002",
       "mmsport": 80,
       "mmsproxy": "10.1.1.180",
       "name": "Telstra MMS",

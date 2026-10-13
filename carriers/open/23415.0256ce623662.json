@@ -1,8 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -77,10 +74,28 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "IMS",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
@@ -99,7 +114,7 @@
     },
     {
       "apn": "ims",
-      "name": "vodafone UK",
+      "name": "ims",
       "protocol": "IP",
       "types": [
         "ims"
@@ -125,6 +140,23 @@
       "port": 8799,
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "mobile.talktalk.co.uk",
+      "name": "TalkTalk WAP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mobile.talktalk.co.uk",
+      "mmsc": "http://mms.talktalk.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "name": "TalkTalk MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -295,9 +327,29 @@
     },
     {
       "apn": "wap.vodafone.co.uk",
+      "name": "Vodafone UK Data",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.vodafone.co.uk",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "Vodafone UK Data",
+      "password": "wap",
+      "types": [
+        "default"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.vodafone.co.uk",
+      "name": "wap.vodafone.co.uk",
       "password": "wap",
       "types": [
         "default"
@@ -442,6 +494,20 @@
       "apn": "wap.vodafone.co.uk",
       "authtype": 1,
       "carrier_enabled": true,
+      "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "name": "Vodafone UK MMS",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.vodafone.co.uk",
       "mmsc": "http://mms.vodafone.co.uk/servlets/mms",
       "mmsport": 8799,
       "mmsproxy": "212.183.137.12",

@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hmms",
@@ -53,6 +70,18 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mms.truelife.com:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "10.4.7.39",
+      "name": "True GPRS MMS",
+      "password": "true",
+      "types": [
+        "mms"
+      ],
+      "user": "true"
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mms.trueworld.net:8002",
       "mmsport": 8080,
       "mmsproxy": "10.4.7.39",
@@ -75,6 +104,7 @@
       "supl",
       "dun"
     ],
+    "carrier_volte_available_bool": true,
     "ignore_data_enabled_changed_for_video_calls": true
   },
   "capabilities": {
@@ -84,7 +114,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

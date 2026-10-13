@@ -1,5 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "csprefer"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XFA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "Orangeworld",
       "name": "Orange World",
@@ -13,8 +45,15 @@
     {
       "apn": "my.t",
       "name": "my.t",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "my.t",
+      "name": "my.t",
+      "types": [
         "dun"
       ]
     },

@@ -9,6 +9,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-preferrednetworkmode"
+      ],
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -23,6 +26,21 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ims",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mass.at",
+      "name": "HELP mobile",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "ims",
       "authtype": 0,

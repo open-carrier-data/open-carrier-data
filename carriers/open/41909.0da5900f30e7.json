@@ -1,5 +1,33 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -11,7 +39,7 @@
     },
     {
       "apn": "internet",
-      "name": "Internet",
+      "name": "internet",
       "types": [
         "default"
       ]

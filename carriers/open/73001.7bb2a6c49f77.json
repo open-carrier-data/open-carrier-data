@@ -1,5 +1,42 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+autoSwitchNr5gMode",
+        "disableAutoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "CHL",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
+    {
+      "apn": "bam.entelpcs.cl",
+      "authtype": 1,
+      "name": "Internet Movil",
+      "password": "entelpcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "entelpcs"
+    },
     {
       "apn": "bam.entelpcs.cl",
       "authtype": 1,
@@ -32,7 +69,6 @@
       "password": "entelpcs",
       "protocol": "IPV4V6",
       "types": [
-        "default",
         "supl"
       ],
       "user": "entelpcs"
@@ -66,6 +102,15 @@
         "supl"
       ],
       "user": "entelpcs"
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -128,8 +173,9 @@
     },
     {
       "apn": "sos",
-      "name": "entel",
+      "name": "sos",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
       ]

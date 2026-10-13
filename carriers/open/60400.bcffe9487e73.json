@@ -1,5 +1,53 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:NONE"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.orange.ma",
+      "name": "Internet",
+      "password": "MEDINET",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "MEDINET"
+    },
     {
       "apn": "internet.orange.ma",
       "name": "Orange",
@@ -51,6 +99,18 @@
       "mmsport": 8080,
       "mmsproxy": "10.8.8.9",
       "name": "mms.meditel.ma",
+      "password": "MEDIMMS",
+      "types": [
+        "mms"
+      ],
+      "user": "MEDIMMS"
+    },
+    {
+      "apn": "mms.orange.ma",
+      "mmsc": "http://mms.meditel.ma:8088/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.8.8.9",
+      "name": "GPRS MMS",
       "password": "MEDIMMS",
       "types": [
         "mms"

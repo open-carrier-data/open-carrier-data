@@ -1,4 +1,55 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "HOS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "wap",
+      "mmsc": "http://mms.digicelgroup.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.7.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.digiceljamaica.com",
+      "name": "DIGICEL",
+      "types": [
+        "default"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
@@ -8,7 +59,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -17,7 +68,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Digicel JM",
+  "display_name": "Digicel Jamaica",
   "match": {
     "imsi_prefix_patterns": [
       "3380500"

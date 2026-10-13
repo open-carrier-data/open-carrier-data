@@ -1,4 +1,23 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "-voltecall_sim_mobility"
+      ],
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "gprs.oi.com.br",
@@ -8,15 +27,6 @@
       "types": [
         "default",
         "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "gprs.oi.com.br",
-      "name": "Oi GPRS Internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
         "supl"
       ]
     },
@@ -33,6 +43,15 @@
         "supl"
       ],
       "user": "oi"
+    },
+    {
+      "apn": "gprs.oi.com.br",
+      "name": "gprs.oi.com.br",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "gprs.oi.com.br",
@@ -77,6 +96,19 @@
       "mmsport": 3128,
       "mmsproxy": "192.168.10.50",
       "name": "MMS GPRS",
+      "password": "oioioi",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "oimms"
+    },
+    {
+      "apn": "mmsgprs.oi.com.br",
+      "mmsc": "http://200.222.42.204:8002/",
+      "mmsport": 3128,
+      "mmsproxy": "192.168.10.50",
+      "name": "OI MMS",
       "password": "oioioi",
       "protocol": "IPV4V6",
       "types": [
@@ -139,6 +171,7 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "hide_ims_apn_bool": false,
     "maxMessageSize": 307200,
@@ -153,7 +186,7 @@
     "rcs": "supported",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

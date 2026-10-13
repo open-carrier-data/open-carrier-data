@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "5g.yomobile.mx",
@@ -22,6 +35,24 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "modem.yomobile.mx",
+      "name": "modem",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "modem.yomobile.mx",
       "name": "modem",
       "protocol": "IPV4V6",
@@ -30,6 +61,15 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "movil.yomobile.mx",
+      "name": "YO",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -58,7 +98,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Yomobile Mx",
+  "display_name": "Yo Mobile",
   "match": {
     "gid1_prefixes": [
       "594FFFFFFFFFFFFFFF"

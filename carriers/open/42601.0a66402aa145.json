@@ -1,11 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Batelco.com",
       "mmsc": "http://192.168.36.10/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "192.168.1.2",
-      "name": "Batelco",
+      "name": "Batelco.com",
       "types": [
         "default",
         "dun",
@@ -34,9 +54,24 @@
     },
     {
       "apn": "hos",
+      "name": "Batelco",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IP",
       "types": [
         "xcap"
       ]
@@ -61,6 +96,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.batelco.com",
       "carrier_id": 1372,
       "name": "Batelco Internet",
@@ -76,6 +119,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms.batelco.com",
+      "mmsc": "http://192.168.36.10/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "192.168.1.2",
+      "name": "BAT MMS",
+      "types": [
+        "mms"
       ]
     },
     {

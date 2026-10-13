@@ -1,45 +1,5 @@
 {
-  "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto"
-    },
-    "ims": {
-      "support_ims_clir_overriding": true
-    },
-    "network_policy": {
-      "display_antenna_limited": true,
-      "gcf_sor": true,
-      "network_type_capability": "EUR-EUR-GSM-EUR"
-    },
-    "operator_display": {
-      "five_g_icon_configuration": [
-        "connected_mmwave:5G",
-        "connected:5G",
-        "not_restricted_rrc_idle:NONE",
-        "not_restricted_rrc_con:NONE"
-      ],
-      "refer_eons_without_lac": true
-    }
-  },
   "android_apns": [
-    {
-      "apn": "HOS",
-      "name": "Telavox XCAP",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "xcap"
-      ]
-    },
-    {
-      "apn": "MMS",
-      "mmsc": "http://mms.media/",
-      "name": "Telavox MMS",
-      "roaming_protocol": "IP",
-      "types": [
-        "mms"
-      ]
-    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -51,24 +11,6 @@
       ],
       "user_editable": false,
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "Telavox IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "internet",
-      "name": "Telavox Internet",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "default"
-      ]
     },
     {
       "apn": "internet",
@@ -98,7 +40,6 @@
     "iwlan.epdg_static_address_string": "epdg.epc.mnc014.mcc206.pub.3gppnetwork.org",
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
-    "smsToMmsTextThreshold": 10,
     "wfc_spn_format_idx_int": 7
   },
   "capabilities": {
@@ -113,7 +54,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telavox",
+  "display_name": "Telavox Be",
   "match": {
     "mccmnc": [
       "20614"

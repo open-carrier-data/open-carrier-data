@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -32,6 +29,15 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -42,6 +48,24 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet",
@@ -56,7 +80,9 @@
     {
       "apn": "mms",
       "mmsc": "http://mms.media",
-      "name": "Telavox MMS",
+      "name": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]

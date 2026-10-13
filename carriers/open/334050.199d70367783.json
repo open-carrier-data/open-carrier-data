@@ -1,12 +1,18 @@
 {
-  "android_apns": [
-    {
-      "apn": "ims",
-      "name": "AT&T",
-      "types": [
-        "ims"
-      ]
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
     },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -28,6 +34,39 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.attmex.mx",
+      "mmsc": "http://mms.att.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.attmex.mx",
+      "mmsc": "http://mms.att.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "mms.attmex.mx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.iusacellgsm.mx",
@@ -63,6 +102,24 @@
     {
       "apn": "modem.attmex.mx",
       "name": "Modem",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "modem.attmex.mx",
+      "name": "modem.attmex.mx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "modem.attmex.mx",
+      "name": "Modem",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -83,13 +140,40 @@
     },
     {
       "apn": "web.5g.attmex.mx",
-      "name": "Internet 5G",
+      "name": "web.5g.attmex.mx",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "web.attmex.mx",
+      "name": "AT&T MX Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "web.attmex.mx",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "web.iusacellgsm.mx",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "web.iusacellgsm.mx",

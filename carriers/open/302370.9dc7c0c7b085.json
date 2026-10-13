@@ -77,6 +77,15 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "carrier_id": 1962,
       "name": "Rogers IMS",
       "protocol": "IPV4V6",
@@ -100,6 +109,14 @@
         "default",
         "dun",
         "supl"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "LTE Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -228,6 +245,28 @@
       ]
     },
     {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "netsvcs",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido ePDG",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
       "mmsc": "http://mms.fido.ca",
@@ -255,15 +294,6 @@
         "xcap"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "netsvcs",
-      "name": "Fido",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ]
     },
     {
       "apn": "netsvcs",
@@ -300,6 +330,15 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "netsvcs",
+      "name": "netsvcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",

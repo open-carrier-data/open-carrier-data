@@ -1,5 +1,40 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "PWG",
+      "name": "PWG",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "PWG",
+      "mmsc": "http://pwg.mmsmvno.com/mms/wapenc",
+      "name": "PWG MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "hotspot",
       "name": "PWG Tethering",
@@ -22,6 +57,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "PWG IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "pwg",
@@ -95,7 +139,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Pwg Us",
+  "display_name": "PWG",
   "match": {
     "gid1_prefixes": [
       "4358"

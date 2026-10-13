@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -88,6 +85,15 @@
       "name": "Oister MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
+      "name": "3 Locked",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -198,6 +204,18 @@
     },
     {
       "apn": "data.tre.dk",
+      "mmsc": "http://mms.3.dk",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "3mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "data.tre.dk",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.3.dk",
@@ -214,6 +232,23 @@
       "apn": "ims",
       "name": "3 DK",
       "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -270,6 +305,15 @@
     },
     {
       "apn": "services",
+      "name": "3 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "services",
       "authtype": 1,
       "carrier_enabled": true,
       "mtu": 1440,
@@ -291,6 +335,18 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "services",
+      "mmsc": "http://mms.3.dk",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.3.dk",
+      "name": "services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",

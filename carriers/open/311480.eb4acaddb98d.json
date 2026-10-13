@@ -1,4 +1,13 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-LRA-GLB-USA"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -18,6 +27,24 @@
       "user_visible": false
     },
     {
+      "apn": "IMS",
+      "name": "Thumb IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "name": "Thumb FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "VZWADMIN",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
@@ -33,6 +60,15 @@
       "user_visible": false
     },
     {
+      "apn": "VZWAPP",
+      "name": "Thumb CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "VZWEMERGENCY",
       "name": "ThumbCellular Emergency",
       "protocol": "IPV4V6",
@@ -41,6 +77,15 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "Thumb",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -58,6 +103,16 @@
         "dun",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://mms.thumbcell.com/thumb/mms.php",
+      "name": "Thumb MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     }
   ],
@@ -165,7 +220,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Thumbcellular Us",
+  "display_name": "Thumb",
   "match": {
     "gid1_prefixes": [
       "BA00050000000000"

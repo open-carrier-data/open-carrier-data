@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -13,10 +27,38 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "movistar",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "internet.movistar.mx",
+      "authtype": 1,
+      "name": "internet.movistar.mx",
+      "password": "movistar",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "movistar"
     },
     {
       "apn": "internet.movistar.mx",
@@ -33,21 +75,30 @@
     },
     {
       "apn": "internet.movistar.mx",
+      "name": "movistar",
+      "password": "movistar",
+      "types": [
+        "dun"
+      ],
+      "user": "movistar"
+    },
+    {
+      "apn": "internet.movistar.mx",
       "authtype": 1,
       "name": "internet.movistar.mx",
       "password": "movistar",
       "types": [
-        "default",
         "supl"
       ],
       "user": "movistar"
     },
     {
       "apn": "internet.movistar.mx",
-      "name": "movistar",
+      "name": "Movistar INTERNET",
       "password": "movistar",
+      "protocol": "IPV4V6",
       "types": [
-        "dun"
+        "xcap"
       ],
       "user": "movistar"
     },
@@ -73,6 +124,7 @@
       "mmsproxy": "10.2.20.1",
       "name": "Movistar MMS",
       "password": "movistar",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],

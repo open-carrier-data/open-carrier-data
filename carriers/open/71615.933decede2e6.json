@@ -1,4 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "bitel",
@@ -16,7 +40,7 @@
     {
       "apn": "bitel",
       "authtype": 1,
-      "name": "Bitel - Internet",
+      "name": "bitel",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
@@ -44,11 +68,20 @@
       "mmsc": "http://181.176.241.99:8080",
       "mmsport": 8000,
       "mmsproxy": "10.121.144.3",
-      "name": "Bitel - MMS",
+      "name": "bitel-mms",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     }
   ],

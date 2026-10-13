@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Wap",
@@ -8,6 +22,20 @@
       "name": "Digicel",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -26,6 +54,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "wap.digicelsv.com",
+      "mmsc": "http://mms.digicelgroup.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.26.5.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -80,10 +118,20 @@
     },
     {
       "apn": "web.digicelsv.com",
-      "name": "Digicel Internet",
+      "name": "web.digicelsv.com",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.digicelsv.com",
+      "mmsc": "http://172.26.5.132/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.26.5.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
       ]
     }
   ],

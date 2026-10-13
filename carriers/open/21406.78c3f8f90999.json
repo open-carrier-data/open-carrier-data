@@ -1,15 +1,18 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
+      "contacts_operator_style": "AMO",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "SupportDualDataRoam"
@@ -21,10 +24,36 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
+      "indicator_icon_branding": "ORANGE",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "empresas.neosky.omv.es",
+      "name": "Neo Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms.neosky.omv.es",
+      "mmsc": "http://mms.neosky.omv.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "name": "Neo MMS",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "empresas.neosky.omv.es",
       "authtype": 1,
@@ -53,7 +82,8 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 10
   },
   "capabilities": {
     "esim": "unknown",

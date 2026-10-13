@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "indicator_icon_branding": "TGY",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,6 +37,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "wbdata",
       "name": "Webbing",
       "protocol": "IPV4V6",
@@ -21,6 +55,15 @@
         "dun",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

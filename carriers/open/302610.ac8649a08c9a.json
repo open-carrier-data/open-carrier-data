@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ]
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "apps.bell.ca",
@@ -11,6 +27,22 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "connect",
+      "name": "Internet",
+      "protocol": "IPV6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "connect",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "connect",
@@ -82,12 +114,41 @@
       "user_editable": false
     },
     {
-      "apn": "ims",
-      "name": "Lucky",
+      "apn": "connect",
+      "name": "connect",
       "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
+      "roaming_protocol": "IP",
       "types": [
-        "ims"
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "connect",
+      "mmsc": "http://mms.luckymobile.ca/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "connect",
+      "mmsc": "http://mms.luckymobile.ca/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "connect",
+      "mmsc": "http://mms.luckymobile.ca/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -100,6 +161,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "sos",

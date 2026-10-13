@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "4g.entel",
@@ -6,6 +20,21 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ENTELIMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "int.movil.com.bo",
+      "name": "ENTEL2G",
+      "types": [
+        "default"
       ]
     },
     {

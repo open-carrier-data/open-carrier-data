@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL,EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": false
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "BRI-BRI-GSM-TPE"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "BRI",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "aurorawap",
@@ -20,6 +43,29 @@
     },
     {
       "apn": "ims",
+      "name": "T STAR-IMS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "T STAR-IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "T Star-IMS",
+      "types": [
+        "ims"
+      ],
+      "user_editable": false
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "types": [
@@ -30,11 +76,19 @@
     {
       "apn": "ims",
       "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "\u53f0\u7063\u4e4b\u661f",
       "protocol": "IP",
       "types": [
         "ims"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "internet",

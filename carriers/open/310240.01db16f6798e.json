@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-SPT-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "SPT"
+    }
+  },
   "android_apns": [
     {
       "apn": "hotspot",
@@ -25,7 +41,7 @@
     },
     {
       "apn": "ims",
-      "name": "Spectrum",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -50,6 +66,15 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -85,6 +110,16 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Charter MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {

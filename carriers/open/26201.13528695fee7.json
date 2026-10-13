@@ -31,10 +31,26 @@
       "operator_style_tokens": [
         "WFC_TITLE_FROM_CSC",
         "WFC_DT"
-      ]
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom"
+    },
     {
       "apn": "IMS",
       "authtype": 0,
@@ -84,6 +100,7 @@
       "name": "hos",
       "password": "telekom",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],
@@ -141,6 +158,19 @@
     },
     {
       "apn": "hos",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "hos",
       "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.t-mobile.de/servlets/mms",
@@ -161,6 +191,34 @@
       "mmsc": "http://mms.t-mobile.de/servlets/mms",
       "mmsport": 8008,
       "mmsproxy": "mmsproxy.telekom.de",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "mmsproxy.telekom.de",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
       "name": "HOS",
       "password": "telekom",
       "protocol": "IPV4V6",
@@ -278,6 +336,27 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.telekom",
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "109.237.176.193",
+      "name": "T-Mobile MMS",
+      "password": "telekom",
+      "types": [
+        "mms"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.telekom",
+      "name": "Telekom Internet",
+      "password": "telekom",
+      "types": [
+        "xcap"
       ],
       "user": "telekom"
     },

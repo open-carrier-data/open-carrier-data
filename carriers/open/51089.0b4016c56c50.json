@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "3data",
@@ -10,6 +33,18 @@
         "supl"
       ],
       "user": "3data"
+    },
+    {
+      "apn": "3gprs",
+      "authtype": 1,
+      "name": "3gprs",
+      "password": "3gprs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "3gprs"
     },
     {
       "apn": "3gprs",
@@ -49,7 +84,6 @@
       "name": "3gprs",
       "password": "3gprs",
       "types": [
-        "default",
         "supl"
       ],
       "user": "3gprs"
@@ -73,6 +107,20 @@
       "mmsproxy": "10.4.0.10",
       "name": "3 ID MMS",
       "password": "3mms",
+      "types": [
+        "mms"
+      ],
+      "user": "3mms"
+    },
+    {
+      "apn": "3mms",
+      "mmsc": "http://mms.three.co.id",
+      "mmsport": 3128,
+      "mmsproxy": "10.4.0.10",
+      "name": "3 MMS",
+      "password": "3mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -117,6 +165,24 @@
         "mms"
       ],
       "user": "3mms"
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

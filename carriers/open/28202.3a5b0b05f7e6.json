@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "3g.ge",
@@ -17,7 +37,7 @@
       "mmsc": "http://mms.magticom.ge",
       "mmsport": 9401,
       "mmsproxy": "81.95.160.16",
-      "name": "MAGTICOM",
+      "name": "3g.ge",
       "types": [
         "dun",
         "mms"
@@ -31,6 +51,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Magticom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {

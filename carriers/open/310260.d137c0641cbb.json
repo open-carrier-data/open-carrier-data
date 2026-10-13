@@ -1,9 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "helium-mobile",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "name": "Helium",
+      "name": "helium-mobile",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -14,6 +29,15 @@
       "user_editable": false
     },
     {
+      "apn": "helium-mobile",
+      "name": "Helium",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "hotspot",
       "name": "Helium Tethering",
       "protocol": "IPV4V6",
@@ -22,6 +46,15 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Helium IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,
@@ -95,7 +128,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Helium Us",
+  "display_name": "Helium",
   "match": {
     "gid1_prefixes": [
       "6907"

@@ -29,6 +29,32 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "IMS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.ch.upcmobile.com",
+      "name": "upcnet",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "mms.ch.upcmobile.com",
+      "mmsc": "http://mms.ch.upcmobile.com:8080/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "62.179.127.18",
+      "name": "upcmms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
       "mvno_match_data": "75",

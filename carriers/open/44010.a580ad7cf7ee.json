@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "+autoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "SJP-SJP-GSM-JPN"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "XJP"
+    }
+  },
   "android_apns": [
     {
       "apn": "3g-d-2.ocn.ne.jp",
@@ -388,6 +406,15 @@
     },
     {
       "apn": "ims",
+      "name": "lte_ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "\u30c9\u30b3\u30e2",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
@@ -665,6 +692,16 @@
         "hipri",
         "ia",
         "supl"
+      ],
+      "user": "mobileid@ocn"
+    },
+    {
+      "apn": "ocn.ne.jp",
+      "name": "OCN\u30e2\u30d0\u30a4\u30ebONE",
+      "password": "mobile",
+      "protocol": "IP",
+      "types": [
+        "default"
       ],
       "user": "mobileid@ocn"
     },

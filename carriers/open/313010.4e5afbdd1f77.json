@@ -1,8 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "Bravado Wireless XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
-      "name": "Bravado Wireless",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -21,7 +43,7 @@
     {
       "apn": "tuligw",
       "mmsc": "http://mms.bravadowireless.com",
-      "name": "Bravado Wireless",
+      "name": "tuligw",
       "protocol": "IPV4V6",
       "types": [
         "default",

@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -33,6 +30,24 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "IMS",
       "authtype": 0,
@@ -104,6 +119,21 @@
       ],
       "user": "t-mobile",
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://relay.mms.telering.at",
+      "mmsport": 80,
+      "mmsproxy": "212.95.31.50",
+      "name": "HOS",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "wap@telering.at"
     },
     {
       "apn": "ims",
@@ -180,6 +210,17 @@
     },
     {
       "apn": "internet.t-mobile.at",
+      "name": "internet.t-mobile.at",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "T"
+    },
+    {
+      "apn": "internet.t-mobile.at",
       "name": "Magenta-T-",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -239,6 +280,17 @@
         "supl"
       ],
       "user": "t-mobile"
+    },
+    {
+      "apn": "web",
+      "name": "tele.ring web",
+      "password": "web",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "web@telering.at"
     },
     {
       "apn": "uros.iot",

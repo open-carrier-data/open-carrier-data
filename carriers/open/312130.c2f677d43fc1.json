@@ -1,5 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "4g.myawi.com",
+      "name": "Appalachian",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "4g.myawi.com",
       "name": "Appalachian",
@@ -45,6 +66,15 @@
       "types": [
         "default",
         "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "4g.myawi.com",
+      "mmsc": "http://mms.ekn.com",
+      "name": "Appalachian MMS",
+      "protocol": "IPV4V6",
+      "types": [
         "mms"
       ]
     },
@@ -98,12 +128,29 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "Appalachian IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.myawi.com",
       "bearer_bitmask": "18",
       "mmsc": "http://mms.ekn.com",
       "name": "Appalachian MMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.myawi.com",
+      "mmsc": "http://mms.ekn.com",
+      "name": "Appalachian MMS EPDG",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ]

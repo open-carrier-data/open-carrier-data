@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,EndPreviousCall,E911Wificall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "voice_network_setting_style": "UsaGsmNetworkSetting,AutoSelectionWhenBootup,CdmaSubscriptionEnable,SupportDataPopup,SupportInternationalRoamingNotification,NetworkSetting_TMO"
+    },
+    "wifi_calling": {
+      "operator_branding": "T-Mobile"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -15,15 +29,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "Boost",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -37,8 +42,63 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "service",
-      "name": "Boost",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "MMS EPDG",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "MMS EPDG",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "name": "XCAP EPDG",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "service",
+      "name": "service",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
@@ -64,6 +124,22 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "tethering.dish.com",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "tethering.dish.com",
+      "name": "Hotspot",
+      "protocol": "IPV6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "tethering.dish.com",
@@ -98,6 +174,42 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "wireless.dish.com",
+      "name": "wireless.dish.com",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wireless.dish.com",
+      "name": "wireless.dish.com",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wireless.dish.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wireless.dish.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "xcap",

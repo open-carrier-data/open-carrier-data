@@ -1,5 +1,42 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "ONDO IMS",
+      "port": 8888,
+      "protocol": "IP",
+      "proxy": "10.10.1.21",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "name": "ONDO XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -16,6 +53,15 @@
       "name": "Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "ONDO Internet",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ]

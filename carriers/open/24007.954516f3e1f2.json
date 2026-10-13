@@ -1,11 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -23,6 +18,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -47,6 +45,32 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms.mobile.sky",
@@ -75,10 +99,25 @@
       ]
     },
     {
-      "apn": "mobile.sky",
-      "name": "SKY Internet",
+      "apn": "mms.mobile.sky",
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "Sky MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.mobile.sky",
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "mms.mobile.sky",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -91,7 +130,14 @@
     },
     {
       "apn": "mobile.sky",
-      "name": "SKY Internet",
+      "name": "mobile.sky",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mobile.sky",
+      "name": "mobile.sky",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -112,6 +158,15 @@
       "user_visible": false
     },
     {
+      "apn": "ut.mobile.sky",
+      "name": "Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "wifi.mms.mobile.sky",
       "authtype": 0,
       "bearer_bitmask": "18",
@@ -126,6 +181,16 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "wifi.mms.mobile.sky",
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "Sky MMS VoWiFi",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "ims",

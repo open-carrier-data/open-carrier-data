@@ -1,7 +1,6 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "csprefer",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -11,7 +10,6 @@
       "display_antenna_limited": true,
       "gcf_sor": true,
       "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause"
     },
     "operator_display": {
@@ -30,6 +28,17 @@
       "authtype": 1,
       "carrier_enabled": true,
       "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims-emergency",
+      "name": "IMS Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -39,6 +48,8 @@
       "authtype": 1,
       "carrier_enabled": true,
       "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]

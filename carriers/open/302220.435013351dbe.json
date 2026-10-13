@@ -1,5 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "DSG-DSG-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_AIO"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hotspot",
+      "name": "hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "hotspot",
       "name": "Boost",
@@ -10,16 +31,27 @@
     },
     {
       "apn": "ims",
-      "name": "Boost",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
     },
     {
       "apn": "internet",
-      "name": "Boost",
+      "name": "internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ota",
+      "name": "OTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -36,14 +68,18 @@
     {
       "apn": "xcap",
       "mmsc": "http://mms.mnc340.mcc313.pub.3gppnetwork.org/mmsc",
-      "name": "Boost",
+      "mmsport": 8080,
+      "name": "xcap",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "mms"
+        "mms",
+        "xcap"
       ]
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "maxMessageSize": 1048576,
     "recipientLimit": 20,

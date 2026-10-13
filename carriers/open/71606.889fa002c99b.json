@@ -1,4 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -10,6 +34,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -78,6 +111,16 @@
       "password": "movistar",
       "types": [
         "dun"
+      ],
+      "user": "movistar@datos"
+    },
+    {
+      "apn": "movistar.pe",
+      "name": "movistar.pe",
+      "password": "movistar",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ],
       "user": "movistar@datos"
     }

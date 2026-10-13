@@ -1,5 +1,33 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "+datapreferduringcalling",
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "TGY",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "NWMOBILE",
       "authtype": 3,
@@ -30,8 +58,9 @@
     },
     {
       "apn": "ims",
-      "name": "1O1O / csl",
+      "name": "ims",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -79,7 +108,18 @@
       "mmsproxy": "192.168.59.51",
       "name": "mobile",
       "types": [
-        "dun"
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile",
+      "mmsc": "http://192.168.58.171:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.59.51",
+      "name": "csl MMS",
+      "types": [
+        "mms"
       ]
     },
     {

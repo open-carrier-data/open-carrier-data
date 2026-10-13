@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL,EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": false
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "BRI-BRI-GSM-TPE"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "BRI",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Internet",
@@ -23,7 +46,9 @@
     },
     {
       "apn": "hos",
-      "name": "XCAP",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
@@ -59,7 +84,16 @@
     },
     {
       "apn": "ims",
-      "name": "\u53f0\u7063\u5927\u54e5\u5927",
+      "name": "TWM IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
       "protocol": "IPV6",
       "types": [
         "ims"
@@ -69,11 +103,52 @@
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "types": [
         "dun",
         "hipri",
         "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.catch.net.tw/",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.2",
+      "name": "TWM MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.catch.net.tw/",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.2",
+      "name": "TWM MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.catch.net.tw/",
+      "mmsport": 80,
+      "mmsproxy": "10.1.1.2",
+      "name": "TWM MMS",
+      "types": [
+        "mms"
       ]
     },
     {

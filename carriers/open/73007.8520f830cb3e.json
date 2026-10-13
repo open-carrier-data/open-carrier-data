@@ -1,0 +1,55 @@
+{
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "imovil.virginmobile.cl",
+      "name": "Virgin Internet Movil",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mmsc.virginmobile.cl",
+      "mmsc": "http://mms.virginmobile.cl:1981/mms",
+      "name": "Virgin MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "unknown",
+    "vonr": "unknown",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "virgin mobile",
+  "match": {
+    "imsi_prefix_patterns": [
+      "7300702"
+    ],
+    "mccmnc": [
+      "73007"
+    ]
+  },
+  "profile_id": "open.73007.8520f830cb3e",
+  "schema_version": 1
+}

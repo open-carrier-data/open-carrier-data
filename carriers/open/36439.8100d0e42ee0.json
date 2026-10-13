@@ -1,8 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.btcbahamas.com",
-      "name": "BTC",
+      "name": "internet.btcbahamas.com",
       "types": [
         "default",
         "dun"
@@ -20,7 +43,7 @@
       "mmsc": "http://mmsc/",
       "mmsport": 8080,
       "mmsproxy": "172.16.30.23",
-      "name": "BTC",
+      "name": "mms1.btcbahamas.com",
       "password": "btc",
       "types": [
         "mms"

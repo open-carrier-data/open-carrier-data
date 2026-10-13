@@ -1,14 +1,14 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -45,8 +45,6 @@
     {
       "apn": "internet",
       "name": "internet",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -63,8 +61,7 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true,
-    "smsToMmsTextThreshold": 10
+    "carrier_volte_available_bool": true
   },
   "capabilities": {
     "esim": "unknown",

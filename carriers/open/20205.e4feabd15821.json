@@ -1,7 +1,6 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
       "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
@@ -82,7 +81,7 @@
     },
     {
       "apn": "ims",
-      "name": "vf GR",
+      "name": "ims",
       "types": [
         "ims"
       ]
@@ -164,20 +163,33 @@
     },
     {
       "apn": "internet.vodafone.gr",
-      "name": "Vf Mobile Internet",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet.vodafone.gr",
       "authtype": 3,
       "name": "Vodafone Web",
       "password": "pass",
       "types": [
         "default",
         "supl"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "internet.vodafone.gr",
+      "name": "internet.vodafone.gr",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.gr",
+      "name": "Vf Internet",
+      "password": "pass",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
       ],
       "user": "user"
     },
@@ -236,6 +248,20 @@
     },
     {
       "apn": "mms.vodafone.net",
+      "mmsc": "http://mms.vodafone.gr",
+      "mmsport": 5080,
+      "mmsproxy": "213.249.19.49",
+      "name": "Vf MMS",
+      "password": "pass",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "mms.vodafone.net",
       "authtype": 0,
       "carrier_enabled": true,
       "mmsc": "http://mms.vodafone.gr",
@@ -255,7 +281,7 @@
       "mmsc": "http://mms.vodafone.gr",
       "mmsport": 5080,
       "mmsproxy": "213.249.19.49",
-      "name": "vf GR",
+      "name": "mms.vodafone.net",
       "password": "pass",
       "types": [
         "mms"

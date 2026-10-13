@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -12,6 +26,26 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "Wholesale",
+      "name": "Mint",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Mint MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "fast.t-mobile.com",
@@ -50,6 +84,31 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Mint IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Mint IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Mint IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,

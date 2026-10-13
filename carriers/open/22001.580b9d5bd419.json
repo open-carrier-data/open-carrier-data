@@ -17,12 +17,6 @@
       "voice_network_setting_style": "DisplayRatInfoForManualSearch"
     },
     "operator_display": {
-      "five_g_icon_configuration": [
-        "connected_mmwave:5G",
-        "connected:5G",
-        "not_restricted_rrc_idle:5G",
-        "not_restricted_rrc_con:5G"
-      ],
       "refer_eons_without_lac": true
     }
   },
@@ -42,7 +36,9 @@
       "apn": "ims",
       "carrier_enabled": true,
       "mtu": 1300,
-      "name": "Yettel IMS",
+      "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
       ]
@@ -151,6 +147,18 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mms.yettel.rs/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "217.65.192.33",
+      "name": "Yettel MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mms.telenor.rs/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "217.65.192.33",
@@ -161,14 +169,37 @@
     },
     {
       "apn": "xcap",
-      "carrier_enabled": true,
-      "name": "xcap",
+      "name": "XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "carrier_enabled": true,
+      "name": "Yettel XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "Yettel XCAP",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

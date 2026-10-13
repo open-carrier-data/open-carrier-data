@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "etisalat",
@@ -45,6 +65,14 @@
       "name": "etisalat",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "etisalat.ae",
+      "name": "DATA Package",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -99,6 +127,17 @@
     },
     {
       "apn": "etisalat.ae",
+      "mmsc": "http://mms/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.0.32",
+      "name": "Etisalat MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "etisalat.ae",
       "authtype": 1,
       "mmsc": "http://mms/servlets/mms",
       "mmsport": 8080,
@@ -135,7 +174,7 @@
     },
     {
       "apn": "ims",
-      "name": "etisalat",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
       "types": [
@@ -157,13 +196,28 @@
     },
     {
       "apn": "ut",
-      "name": "ut",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "name": "Etisalat XCAP",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ut",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ut",
+      "name": "etisalat",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

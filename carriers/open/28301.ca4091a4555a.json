@@ -1,5 +1,46 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hos",
+      "name": "Team XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Team IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Team Internet",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "internet.beeline.am",
       "name": "Beeline",
@@ -17,6 +58,16 @@
         "supl"
       ],
       "user": "internet"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "10.3.2.205",
+      "name": "Team MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.beeline.am",

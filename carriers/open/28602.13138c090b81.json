@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "4_5G",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "TUR",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "HOS",
@@ -7,6 +25,50 @@
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "VODAFONE IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "VODAFONE IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "VODAFONE TR",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "name": "Vodafone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user_visible": false
     },
     {
       "apn": "ims",
@@ -19,14 +81,20 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
       "name": "ims",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "name": "Vodafone Internet",
+      "password": "vodafone",
+      "types": [
+        "default"
+      ],
+      "user": "vodafone"
     },
     {
       "apn": "internet",
@@ -86,7 +154,7 @@
     },
     {
       "apn": "internet",
-      "name": "Vodafone TR",
+      "name": "internet",
       "password": "vodafone",
       "protocol": "IPV4V6",
       "types": [
@@ -196,7 +264,7 @@
       "mmsc": "http://217.31.233.18:6001/MM1Servlet",
       "mmsport": 9401,
       "mmsproxy": "217.31.233.18",
-      "name": "Vodafone TR MMS",
+      "name": "mms",
       "password": "vodafone",
       "types": [
         "mms"

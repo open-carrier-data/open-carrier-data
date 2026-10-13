@@ -1,8 +1,33 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "Viya IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "hos",
-      "name": "VIYA",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ]
@@ -16,6 +41,25 @@
       "protocol": "IP",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "mms.viya.vi",
+      "mmsc": "http://mms.viyavi.com",
+      "mmsport": 80,
+      "mmsproxy": "65.172.54.73",
+      "name": "Viya MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "web.viya.vi",
+      "name": "Viya",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {

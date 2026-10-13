@@ -1,4 +1,61 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-LRA-GLB-USA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Northwest Missouri IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "name": "Northwest Missouri FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "name": "Northwest Missouri CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "Northwest Missouri",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://mmsc.hawkeyeswitch.net/mms/",
+      "name": "Northwest Missouri MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
@@ -8,7 +65,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -17,7 +74,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "VZW US NorthWest",
+  "display_name": "Northwest Missouri",
   "match": {
     "gid1_prefixes": [
       "BA00150000000000"

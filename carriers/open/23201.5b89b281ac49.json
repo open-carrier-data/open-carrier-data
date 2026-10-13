@@ -11,9 +11,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -31,6 +28,16 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "A1.net",
+      "name": "A1.net",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "ppp@a1plus.at"
+    },
     {
       "apn": "A1.net",
       "name": "A1",
@@ -86,11 +93,61 @@
       "user": "ppp@A1plus.at"
     },
     {
+      "apn": "A1.net",
+      "name": "A1.net",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "ppp@a1plus.at"
+    },
+    {
+      "apn": "A1.net",
+      "name": "Internet",
+      "password": "ppp",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "ppp@a1plus.at"
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "IMS",
       "carrier_enabled": true,
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -140,22 +197,6 @@
     {
       "apn": "free.A1.net",
       "authtype": 1,
-      "carrier_enabled": true,
-      "mmsc": "http://mmsc.A1.net",
-      "mmsport": 8001,
-      "mmsproxy": "194.48.124.71",
-      "name": "A1 MMS",
-      "password": "ppp",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "mms"
-      ],
-      "user": "ppp@a1plus.at"
-    },
-    {
-      "apn": "free.A1.net",
-      "authtype": 1,
       "mmsc": "http://mmsc.A1.net",
       "mmsport": 8001,
       "mmsproxy": "194.48.124.71",
@@ -165,6 +206,22 @@
         "mms"
       ],
       "user": "ppp@A1plus.at"
+    },
+    {
+      "apn": "free.A1.net",
+      "authtype": 1,
+      "carrier_enabled": true,
+      "mmsc": "http://mmsc.A1.net",
+      "mmsport": 8001,
+      "mmsproxy": "194.48.124.71",
+      "name": "free.A1.net",
+      "password": "ppp",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "ppp@a1plus.at"
     },
     {
       "apn": "free.a1.net",

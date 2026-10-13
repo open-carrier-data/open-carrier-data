@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -95,6 +109,15 @@
       "user_editable": false
     },
     {
+      "apn": "hos",
+      "name": "Truphone XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -153,6 +176,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Truphone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "pcweb.tmobile.com",
@@ -219,9 +251,27 @@
     {
       "apn": "truphone.com",
       "name": "Truphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "name": "Truphone",
+      "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "name": "Truphone MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {

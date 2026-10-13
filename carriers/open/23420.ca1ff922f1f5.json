@@ -1,18 +1,17 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR"
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
     },
     "operator_display": {
       "five_g_icon_branding": "5GAvailable",
@@ -23,6 +22,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -49,6 +51,32 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mob.asm.net",
       "bearer_bitmask": "1|2|3|9|10|11|13|15|18",
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
@@ -56,20 +84,6 @@
       "mmsproxy": "mms.three.co.uk",
       "name": "SMARTY",
       "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "mob.asm.net",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "name": "SMARTY",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "mms",
@@ -96,9 +110,13 @@
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "mms.three.co.uk",
-      "name": "SMARTY",
+      "name": "mob.asm.net",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
+        "default",
+        "mms",
+        "supl",
         "xcap"
       ]
     },
@@ -164,7 +182,6 @@
       "*|Call is dropped due to Wi-Fi signal is degraded|1407"
     ],
     "maxMessageSize": 3145728,
-    "smsToMmsTextThreshold": 10,
     "volte_replacement_rat_int": 3,
     "wfc_operator_error_codes_string_array": [
       "REG09|0"

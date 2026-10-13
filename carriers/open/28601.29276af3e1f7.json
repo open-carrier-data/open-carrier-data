@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "4_5G",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "TUR",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Internet",
@@ -29,6 +47,23 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "TURKCELL-IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "TURKCELL-IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -72,7 +107,7 @@
     {
       "apn": "internet",
       "authtype": 1,
-      "name": "Turkcell Internet",
+      "name": "internet",
       "password": "gprs",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",

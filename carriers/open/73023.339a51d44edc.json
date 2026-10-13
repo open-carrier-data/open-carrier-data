@@ -1,4 +1,85 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+autoSwitchNr5gMode",
+        "disableAutoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "CHL",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "bam.clarochile.cl",
+      "name": "BAM Claro",
+      "password": "clarochile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "clarochile"
+    },
+    {
+      "apn": "bam.clarochile.cl",
+      "name": "BAM Claro",
+      "password": "clarochile",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "clarochile"
+    },
+    {
+      "apn": "ims",
+      "name": "IMS Claro",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS Claro",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.clarochile.cl",
+      "mmsc": "http://mms.clarochile.cl",
+      "mmsport": 8080,
+      "mmsproxy": "172.23.200.200",
+      "name": "MMS Claro",
+      "password": "clarochile",
+      "types": [
+        "mms"
+      ],
+      "user": "clarochile"
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_default_wfc_ims_mode_int": 1,
@@ -10,7 +91,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -19,7 +100,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Claro CL",
+  "display_name": "Claro",
   "match": {
     "mccmnc": [
       "73023"

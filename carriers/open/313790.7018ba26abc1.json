@@ -1,11 +1,58 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G_PLUS",
+        "connected:5G_PLUS",
+        "not_restricted_rrc_idle:NONE",
+        "not_restricted_rrc_con:NONE",
+        "connected_mmwave_2nd:5G_PLUS",
+        "connected_2nd:5G",
+        "not_restricted_rrc_idle_2nd:5G",
+        "not_restricted_rrc_con_2nd:5G"
+      ],
+      "indicator_icon_branding": "ATT",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
-      "name": "Liberty",
+      "name": "hos",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "hotspot",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "hotspot",
+      "name": "hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
       ]
     },
     {
@@ -31,7 +78,7 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
+      "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -40,8 +87,61 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Liberty",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ATT LLA IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims",
+        "xcap"
+      ]
+    },
+    {
       "apn": "internet",
-      "name": "internet",
+      "name": "Liberty",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Liberty Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Liberty Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Liberty Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -73,6 +173,30 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.mobilecore.lla.com",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobilecore.lla.com",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.mobilecore.lla.com",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobilecore.lla.com",
+      "name": "MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "sos",

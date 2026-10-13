@@ -1,5 +1,43 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "OLB",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -39,19 +77,31 @@
     },
     {
       "apn": "yesnet",
-      "name": "yesnet",
+      "name": "YES",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
       "types": [
-        "default"
+        "default",
+        "dun"
       ]
     },
     {
       "apn": "yesnet",
-      "name": "YES",
+      "name": "yesnet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "yesnet",
+      "name": "yesnet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "default",
+        "xcap"
       ]
     }
   ],

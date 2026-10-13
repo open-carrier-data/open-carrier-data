@@ -1,9 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -30,12 +26,35 @@
   },
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "Internet.btonephone.com",
       "name": "BT-OP",
       "protocol": "IPV4V6",
       "types": [
         "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "Xcap",
+      "name": "Xcap",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -49,8 +68,16 @@
     {
       "apn": "internet.btonephone.com",
       "name": "internet.btonephone.com",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.btonephone.com",
+      "name": "internet.btonephone.com",
+      "types": [
         "dun",
         "supl"
       ]

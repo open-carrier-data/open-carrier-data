@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -150,6 +147,17 @@
       "apn": "telenor.smart",
       "authtype": 1,
       "carrier_enabled": true,
+      "mmsc": "http://mmsc/",
+      "mmsport": 8080,
+      "mmsproxy": "mms-proxy.telenor.no",
+      "name": "Telenor MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "telenor.smart",
       "mmsc": "http://mmsc/",
       "mmsport": 8080,
       "mmsproxy": "mms-proxy.telenor.no",

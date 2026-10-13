@@ -1,5 +1,35 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "STATE_UPDATE_AFTER_DIAL"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "+datapreferduringcalling",
+        "-voltecall"
+      ],
+      "network_selection_menu_style": "NUMERIC"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "TGY",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "SOS",
+      "name": "SmarTone Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
     {
       "apn": "SmarTone",
       "authtype": 3,
@@ -52,7 +82,9 @@
     },
     {
       "apn": "ims",
-      "name": "SMC HK",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -77,7 +109,9 @@
     },
     {
       "apn": "smt",
-      "name": "SMC HK",
+      "name": "smt",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ]

@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -25,13 +38,29 @@
     },
     {
       "apn": "ims",
-      "name": "ims",
-      "protocol": "IP",
+      "name": "IMS",
       "types": [
         "ims"
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "WOM",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "internet",
@@ -42,6 +71,15 @@
         "default"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "internet",
+      "name": "Internet WOM",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet",

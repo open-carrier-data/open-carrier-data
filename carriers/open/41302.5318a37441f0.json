@@ -1,5 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "default",
       "carrier_id": 1599,
@@ -36,6 +60,7 @@
       "mmsproxy": "192.168.122.2",
       "name": "dialogbb",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "server": "dialog",
       "types": [
         "default"
@@ -47,7 +72,16 @@
       "name": "Dialog",
       "protocol": "IPV4V6",
       "types": [
-        "dun",
+        "dun"
+      ]
+    },
+    {
+      "apn": "dialogbb",
+      "mmsc": "http://mms.dialog.lk:3130/mmsc",
+      "name": "dialogbb",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
         "mms"
       ]
     },
@@ -81,6 +115,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ppwap",

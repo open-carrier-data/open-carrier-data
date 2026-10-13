@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,EndPreviousCall,E911Wificall,NoWaitInSvcE911"
+    },
+    "ims": {
+      "contacts_operator_style": "TMK"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-MTR-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,AutoSelectionWhenBootup,CdmaSubscriptionEnable,SupportDataPopup,SupportInternationalRoamingNotification,NetworkSetting_TMO"
+    },
+    "wifi_calling": {
+      "operator_branding": "MetroPCS"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -17,7 +35,7 @@
       "apn": "fast.metropcs.com",
       "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
       "mtu": 1440,
-      "name": "MetroPCS",
+      "name": "fast.metropcs.com",
       "protocol": "IPV6",
       "types": [
         "default",
@@ -42,6 +60,23 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "name": "Metro US LTE XCAP",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Metro IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,
@@ -89,6 +124,40 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "Metro MMS EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "name": "Metro XCAP EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "tmus",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "Metro MMS EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "tmus",
+      "name": "Metro XCAP EPDG",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -139,7 +208,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Metropcs Us",
+  "display_name": "Metro",
   "match": {
     "gid1_prefixes": [
       "6D38"

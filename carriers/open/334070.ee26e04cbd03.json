@@ -1,4 +1,46 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ott.iot.attmex.mx",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ott.iot.attmex.mx",
+      "name": "ott.iot.attmex.mx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_supports_ss_over_ut_bool": true,
@@ -24,7 +66,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Att ius MX",
+  "display_name": "ATT IOT",
   "match": {
     "mccmnc": [
       "334070"

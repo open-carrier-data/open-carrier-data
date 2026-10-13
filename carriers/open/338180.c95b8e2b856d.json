@@ -1,5 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "jamims",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "internet",
       "authtype": 1,
@@ -31,9 +53,10 @@
     },
     {
       "apn": "internet",
-      "name": "FLOW",
+      "name": "internet",
       "types": [
-        "dun"
+        "dun",
+        "xcap"
       ]
     },
     {
@@ -90,10 +113,11 @@
     },
     {
       "apn": "ppinternet",
-      "name": "Lime Internet Prepaid",
+      "name": "ppinternet",
       "types": [
         "default",
-        "supl"
+        "supl",
+        "xcap"
       ]
     },
     {

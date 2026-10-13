@@ -1,53 +1,5 @@
 {
-  "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
-    },
-    "ims": {
-      "support_ims_clir_overriding": true
-    },
-    "network_policy": {
-      "display_antenna_limited": true,
-      "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
-      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
-    },
-    "operator_display": {
-      "five_g_icon_branding": "5GAvailable,UseDisplayTimer",
-      "refer_eons_without_lac": true
-    },
-    "wifi_calling": {
-      "operator_branding": "WiFi poziv",
-      "operator_style_tokens": [
-        "WFC_TITLE_FROM_CSC",
-        "WFC_DT"
-      ]
-    }
-  },
   "android_apns": [
-    {
-      "apn": "IMS",
-      "name": "Telekom IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "IMS",
-      "name": "Telekom IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
     {
       "apn": "hos",
       "authtype": 1,
@@ -56,7 +8,6 @@
       "mmsproxy": "10.12.0.4",
       "name": "HOS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],
@@ -71,7 +22,6 @@
       "mmsproxy": "10.12.0.4",
       "name": "HOS",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],
@@ -104,17 +54,8 @@
       "authtype": 1,
       "name": "Internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.ht.hr",
-      "authtype": 1,
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "types": [
+        "default",
         "supl"
       ]
     }
@@ -128,7 +69,6 @@
     "hide_enhanced_4g_lte_bool": true,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
-    "smsToMmsTextThreshold": 13,
     "wfc_spn_format_idx_int": 4
   },
   "capabilities": {
@@ -143,7 +83,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "HT HR",
+  "display_name": "Telekom Hr",
   "match": {
     "mccmnc": [
       "21920"

@@ -9,9 +9,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
     "operator_display": {
@@ -30,8 +27,15 @@
   },
   "android_apns": [
     {
+      "apn": "IMS",
+      "name": "Next 360 IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "Internet",
-      "name": "Internet setting",
+      "name": "Next 360 Internet",
       "types": [
         "default"
       ]
@@ -41,7 +45,7 @@
       "mmsc": "http://mms.cmobile.co.za",
       "mmsport": 8080,
       "mmsproxy": "196.31.116.250",
-      "name": "MMS Setting",
+      "name": "Next 360 MMS",
       "types": [
         "mms"
       ]
@@ -62,7 +66,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Next 360",
+  "display_name": "MVNX Next 360",
   "match": {
     "mccmnc": [
       "65507"

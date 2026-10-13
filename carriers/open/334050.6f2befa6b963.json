@@ -1,14 +1,36 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "bait5g.wm.com",
-      "name": "bait_5g",
+      "name": "bait5g.wm.com",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "baitmod.wm.com",
+      "name": "Modem",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "baitmod.wm.com",
@@ -30,6 +52,24 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internetat.wm.com",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -58,7 +98,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Bait Mx",
+  "display_name": "BAIT",
   "match": {
     "gid1_prefixes": [
       "62616974FFFFFFFFFF"

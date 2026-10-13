@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Internet",
@@ -11,8 +28,17 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
-      "name": "Ooredoo",
+      "name": "internet",
       "types": [
         "default",
         "dun"

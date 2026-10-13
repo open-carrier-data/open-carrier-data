@@ -1,5 +1,88 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "T2 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "T2 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims.tele2.ru",
+      "name": "TELE2 IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "T2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.tele2.ru",
+      "authtype": 1,
+      "name": "internet.tele2.ru",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "internet.tele2.ru",
       "carrier_id": 1028,
@@ -12,18 +95,36 @@
     },
     {
       "apn": "internet.tele2.ru",
+      "name": "Tele2",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet.tele2.ru",
       "authtype": 1,
       "name": "internet.tele2.ru",
       "types": [
-        "default",
         "supl"
       ]
     },
     {
       "apn": "internet.tele2.ru",
-      "name": "Tele2",
+      "name": "TELE2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "xcap"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms",
+      "mmsport": 8080,
+      "mmsproxy": "193.12.40.65",
+      "name": "T2 MMS",
+      "types": [
+        "mms"
       ]
     },
     {

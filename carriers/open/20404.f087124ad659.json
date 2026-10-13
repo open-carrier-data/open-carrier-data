@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -12,6 +25,58 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "mmsc": "http://mms.sasktel.com/",
+      "mmsport": 80,
+      "mmsproxy": "mig.sasktel.com",
+      "name": "pda.stm.sk.ca",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "mmsc": "http://mms.sasktel.com",
+      "mmsport": 80,
+      "mmsproxy": "mig.sasktel.com",
+      "name": "pda.stm.sk.ca",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "mmsc": "http://mms.sasktel.com",
+      "mmsport": 80,
+      "mmsproxy": "mig.sasktel.com",
+      "name": "pda.stm.sk.ca",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "pda.stm.sk.ca",
       "mmsc": "http://mms.sasktel.com/",
       "mmsport": 80,
@@ -19,9 +84,17 @@
       "name": "SaskTel",
       "protocol": "IPV4V6",
       "types": [
-        "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],
@@ -52,7 +125,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Sasktel Ca",
+  "display_name": "SaskTel",
   "match": {
     "gid1_prefixes": [
       "5A"

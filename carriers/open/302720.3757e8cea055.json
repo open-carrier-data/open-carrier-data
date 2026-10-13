@@ -1,5 +1,53 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ltedata.apn",
+      "name": "Cityfone Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "Cityfone Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "name": "Cityfone Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "name": "Cityfone Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "ltemobile.apn",
       "mmsc": "http://mms.gprs.rogers.com",
@@ -9,12 +57,36 @@
         "default",
         "mms"
       ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Cityfone MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Cityfone MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
     "call_forwarding_map_non_number_to_voicemail_bool": true,
     "carrier_default_wfc_ims_roaming_enabled_bool": true,
     "carrier_supports_ss_over_ut_bool": false,
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_factory_uri_string": "mmtel@conf-factory.ims.mnc720.mcc302.3gppnetwork.org",
@@ -34,7 +106,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "conditional",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "supported"

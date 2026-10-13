@@ -1,5 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "kolbi3g",
       "name": "kolbi3g",
@@ -38,6 +61,15 @@
       "name": "kolbimundo",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "IMS XCAP",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
       ]
     }
   ],

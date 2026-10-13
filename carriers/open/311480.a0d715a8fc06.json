@@ -1,4 +1,61 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-LRA-GLB-USA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Chat Mobility IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "name": "Chat Mobility FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "name": "Chat Mobility CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "Chat Mobility",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://mms.chatmobility.com/mms/",
+      "name": "Chat Mobility MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_metered_apn_types_strings": [
       "default",
@@ -23,7 +80,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -32,7 +89,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "VZW US ChatMobility",
+  "display_name": "Chat Mobility",
   "match": {
     "gid1_prefixes": [
       "BA00130000000000"

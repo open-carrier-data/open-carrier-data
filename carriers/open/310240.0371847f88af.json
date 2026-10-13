@@ -1,0 +1,72 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "Wholesale",
+      "name": "RED POCKET",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "216.155.165.50",
+      "name": "RED POCKET MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Red Pocket IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "supported",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Red Pocket",
+  "match": {
+    "gid1_prefixes": [
+      "4201"
+    ],
+    "mccmnc": [
+      "310240"
+    ]
+  },
+  "profile_id": "open.310240.0371847f88af",
+  "schema_version": 1
+}

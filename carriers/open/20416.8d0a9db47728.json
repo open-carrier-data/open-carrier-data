@@ -1,54 +1,5 @@
 {
-  "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto"
-    },
-    "ims": {
-      "contacts_operator_style": "PHN",
-      "support_ims_clir_overriding": true
-    },
-    "network_policy": {
-      "display_antenna_limited": true,
-      "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR"
-    },
-    "operator_display": {
-      "five_g_icon_branding": "5GAvailable,UseDisplayTimer",
-      "refer_eons_without_lac": true
-    },
-    "wifi_calling": {
-      "operator_style_tokens": [
-        "WFC_TITLE_FROM_CSC",
-        "WFC_DT"
-      ],
-      "show_vowifi_end_call": true
-    }
-  },
   "android_apns": [
-    {
-      "apn": "IMS",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "hos",
-      "name": "HOS",
-      "password": "tmobilemms",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "xcap"
-      ],
-      "user": "tmobilemms"
-    },
     {
       "apn": "hos",
       "name": "HOS",
@@ -75,17 +26,8 @@
       "authtype": 1,
       "name": "Internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet.mobiel",
-      "authtype": 1,
-      "name": "Internet",
-      "protocol": "IPV4V6",
-      "types": [
+        "default",
         "supl"
       ]
     }
@@ -120,7 +62,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Odido",
+  "display_name": "Tmobile Nl",
   "match": {
     "mccmnc": [
       "20416"

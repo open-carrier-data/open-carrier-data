@@ -1,8 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
-      "name": "Strata XCAP",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "rinawireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -23,11 +45,19 @@
     },
     {
       "apn": "ims",
-      "name": "STRATA",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "name": "rinawireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -63,6 +93,15 @@
       "types": [
         "default",
         "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "rinawireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
         "mms"
       ]
     },

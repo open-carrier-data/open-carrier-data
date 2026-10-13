@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "csprefer"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XFA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "default",
@@ -19,10 +42,27 @@
       ]
     },
     {
+      "apn": "ims.unitel.co.ao",
+      "name": "ims.unitel.co.ao",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.unitel.co.ao",
+      "name": "internet.unitel.co.ao",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet.unitel.co.ao",
       "name": "internet.unitel.co.ao",
       "types": [
-        "default",
         "dun",
         "supl"
       ]
@@ -35,6 +75,15 @@
       "name": "mms.unitel.co.ao",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "xcap.unitel.co.ao",
+      "name": "xcap.unitel.co.ao",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

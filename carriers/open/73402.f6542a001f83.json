@@ -1,4 +1,14 @@
 {
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "expresate.digitel.ve",
@@ -58,6 +68,24 @@
       "user_editable": false
     },
     {
+      "apn": "ims",
+      "name": "DigitelIMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.digitel.ve",
+      "name": "internet.digitel.ve",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet.digitel.ve",
       "carrier_id": 1871,
       "name": "Digitel 412",
@@ -71,7 +99,6 @@
       "apn": "internet.digitel.ve",
       "name": "Digitel 412",
       "types": [
-        "default",
         "supl"
       ]
     }

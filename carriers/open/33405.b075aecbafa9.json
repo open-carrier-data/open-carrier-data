@@ -1,10 +1,38 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-IUS-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
-      "name": "AT&T",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "mms.attmex.mx",
+      "mmsc": "http://mms.att.com.mx",
+      "mmsport": 8080,
+      "mmsproxy": "129.192.129.104",
+      "name": "MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -28,6 +56,15 @@
       "user": "mmsiusacellgsm"
     },
     {
+      "apn": "modem.attmex.mx",
+      "name": "Modem",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "modem.iusacellgsm.mx",
       "name": "modem.iusacellgsm.mx",
       "password": "iusacellgsm",
@@ -35,6 +72,15 @@
         "dun"
       ],
       "user": "iusacellgsm"
+    },
+    {
+      "apn": "web.attmex.mx",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "web.iusacellgsm.mx",

@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -102,6 +99,22 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "Vodafone",
       "protocol": "IP",
       "types": [
@@ -112,6 +125,16 @@
       "apn": "mms.gprs.is",
       "authtype": 0,
       "carrier_enabled": true,
+      "mmsc": "http://mmsc.c.is",
+      "mmsport": 8080,
+      "mmsproxy": "10.22.0.10",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.gprs.is",
       "mmsc": "http://mmsc.c.is",
       "mmsport": 8080,
       "mmsproxy": "10.22.0.10",

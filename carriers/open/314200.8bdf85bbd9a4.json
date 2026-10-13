@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-XMO-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "CCT"
+    }
+  },
   "android_apns": [
     {
       "apn": "admin.comcast",
@@ -13,6 +26,7 @@
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "default"
       ]

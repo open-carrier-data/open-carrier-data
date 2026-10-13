@@ -1,5 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "DSG-DSG-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_AIO"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hotspot",
+      "name": "hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "hotspot",
       "name": "hotspot",
@@ -32,6 +53,15 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ota",
+      "name": "OTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "sos",
@@ -93,7 +123,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Dish5Gsa Us",
+  "display_name": "Dish 5G Data only",
   "match": {
     "gid1_prefixes": [
       "6738"

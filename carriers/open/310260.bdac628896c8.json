@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -51,6 +65,14 @@
       "user_editable": false
     },
     {
+      "apn": "ims",
+      "name": "Multibrand IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "always_on": true,
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -87,6 +109,24 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "multibrand",
+      "name": "Multibrand",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "multibrand",
+      "mmsc": "http://gsmt.mmsmvno.com/mms/wapenc",
+      "name": "Multibrand MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "pcweb.tmobile.com",
@@ -166,7 +206,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Tmomvno Us",
+  "display_name": "Multibrand",
   "match": {
     "gid1_prefixes": [
       "4753"

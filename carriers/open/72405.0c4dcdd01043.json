@@ -1,4 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "indicator_icon_branding": "AMX",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Chamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "claro.com.br",
@@ -32,13 +58,39 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Claro IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Claro IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "java.claro.com.br",
       "name": "java.claro.com.br",
       "password": "claro",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun"
+        "default"
       ],
       "user": "claro"
     },
@@ -51,6 +103,16 @@
         "default",
         "ia",
         "supl"
+      ],
+      "user": "claro"
+    },
+    {
+      "apn": "java.claro.com.br",
+      "name": "Claro Brasil",
+      "password": "claro",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ],
       "user": "claro"
     },
@@ -121,6 +183,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "Claro XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

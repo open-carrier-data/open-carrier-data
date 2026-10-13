@@ -1,4 +1,51 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.ky",
+      "name": "DIGICEL",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "wap",
+      "mmsc": "http://mms.digicelgroup.com",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.7.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "imssms.sms_over_ims_supported_bool": true
@@ -6,7 +53,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -15,7 +62,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Digicel DI",
+  "display_name": "Digicel Cayman",
   "match": {
     "imsi_prefix_patterns": [
       "3380506"

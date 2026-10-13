@@ -1,10 +1,40 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.setar.aw",
+      "name": "internet.setar.aw",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "internet.setar.aw",
       "name": "SETAR",
       "types": [
-        "default",
         "dun"
       ]
     },
@@ -14,6 +44,18 @@
       "mmsport": 8081,
       "mmsproxy": "209.88.130.210",
       "name": "SETAR",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.setar.aw",
+      "mmsc": "http://mms.setar.aw",
+      "mmsport": 8081,
+      "mmsproxy": "201.229.65.204",
+      "name": "SETAR MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

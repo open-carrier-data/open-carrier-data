@@ -1,4 +1,63 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "TRUE-H UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hmms",
+      "mmsc": "http://mms.trueh.com:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "10.4.7.39",
+      "name": "TRUE-H MMS",
+      "password": "true",
+      "types": [
+        "mms"
+      ],
+      "user": "true"
+    },
+    {
+      "apn": "ims",
+      "name": "TRUE-H IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "TRUE-H INTERNET",
+      "password": "true",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "true"
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
@@ -8,7 +67,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -17,7 +76,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Truemove TH",
+  "display_name": "True Move H",
   "match": {
     "imsi_prefix_patterns": [
       "5200020"

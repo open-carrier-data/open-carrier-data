@@ -1,5 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "HOS",
+      "name": "Viaero XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -10,6 +33,23 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Viaero IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.vedge.com",
+      "name": "internet.vedge.com",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet.vedge.com",
@@ -23,7 +63,9 @@
     },
     {
       "apn": "internet.vedge.com",
-      "name": "Viaero Connect",
+      "name": "Viero",
+      "port": 9401,
+      "proxy": "10.168.3.23",
       "types": [
         "default",
         "supl"
@@ -31,11 +73,8 @@
     },
     {
       "apn": "internet.vedge.com",
-      "name": "Viero",
-      "port": 9401,
-      "proxy": "10.168.3.23",
+      "name": "Viaero Connect",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -56,6 +95,17 @@
       "mmsport": 9401,
       "mmsproxy": "10.168.3.23",
       "name": "Viaero MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.viaero.com",
+      "mmsport": 9401,
+      "mmsproxy": "10.168.3.23",
+      "name": "Viaero MMS",
+      "protocol": "IP",
       "types": [
         "mms"
       ]

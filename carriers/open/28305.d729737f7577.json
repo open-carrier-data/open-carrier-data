@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "connect.vivacell.am",
@@ -9,12 +29,31 @@
       ]
     },
     {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "inet.vivacell.am",
       "authtype": 1,
       "name": "inet.vivacell.am",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "default"
       ]
     },
     {
@@ -22,6 +61,14 @@
       "name": "MTS Armenia",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "inet.vivacell.am",
+      "authtype": 1,
+      "name": "inet.vivacell.am",
+      "types": [
+        "supl"
       ]
     },
     {

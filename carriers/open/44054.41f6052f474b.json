@@ -1,5 +1,33 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "+autoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "KDI-KDI-GSM-JPN",
+      "voice_network_setting_style": "ManualSearchForKDI,SupportDataPopup,DataEnableFunctionWithoutDBUpdate"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "KDI"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "LTE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "IMS",
       "bearer_bitmask": "14|18|20",
@@ -47,6 +75,16 @@
     },
     {
       "apn": "uqmobile.jp",
+      "name": "UQ mobile",
+      "password": "uq",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "uq@uqmobile.jp"
+    },
+    {
+      "apn": "uqmobile.jp",
       "authtype": 2,
       "mmsc": "http://mms.ezweb.ne.jp/MMS",
       "name": "UQ mobile",
@@ -77,6 +115,27 @@
       ],
       "user": "uq@uqmobile.jp",
       "user_editable": false
+    },
+    {
+      "apn": "uqmobile.jp",
+      "mmsc": "http://mms.ezweb.ne.jp/MMS",
+      "mmsport": 80,
+      "name": "UQ mobile MMS",
+      "password": "uq",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "uq@uqmobile.jp"
+    },
+    {
+      "apn": "xcap",
+      "name": "LTE XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "xcap",
@@ -117,7 +176,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Uqmobile Jp",
+  "display_name": "UQ Mobile SA",
   "match": {
     "gid1_prefixes": [
       "20"

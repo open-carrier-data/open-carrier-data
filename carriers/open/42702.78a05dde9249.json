@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -13,7 +33,7 @@
     },
     {
       "apn": "ims",
-      "name": "Vodafone QA",
+      "name": "ims",
       "protocol": "IP",
       "types": [
         "ims"
@@ -99,17 +119,17 @@
     },
     {
       "apn": "xcap",
-      "name": "Vodafone QA",
-      "protocol": "IP",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ]
     },
     {
       "apn": "xcap",
-      "name": "XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "xcap",
+      "protocol": "IP",
       "types": [
         "xcap"
       ]

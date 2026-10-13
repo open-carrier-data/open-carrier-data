@@ -1,12 +1,62 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "bconnected",
+      "name": "bconnected",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "http://www.google.com",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "bconnected",
       "name": "Prepaid Data",
       "server": "http://www.google.com",
       "types": [
-        "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "bmobile",
+      "name": "bmobile LTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -18,6 +68,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -36,7 +96,6 @@
       "authtype": 1,
       "name": "Bmobile internet",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -59,6 +118,8 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.210.104",
       "name": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

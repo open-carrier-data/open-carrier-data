@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -33,11 +30,28 @@
   "android_apns": [
     {
       "apn": "ims",
+      "name": "Elisa IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "Elisa IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Elisa IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -68,15 +82,15 @@
       "apn": "ims",
       "name": "elisa",
       "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
     },
     {
       "apn": "ims",
-      "name": "elisa",
+      "name": "ims",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -148,7 +162,15 @@
     },
     {
       "apn": "xcap",
-      "name": "elisa",
+      "name": "Elisa XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [

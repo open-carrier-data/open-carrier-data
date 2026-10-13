@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -52,10 +69,9 @@
     {
       "apn": "www.dtac.co.th",
       "name": "www.dtac.co.th",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "default"
       ]
     },
     {
@@ -65,6 +81,14 @@
       "types": [
         "default",
         "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "www.dtac.co.th",
+      "name": "www.dtac.co.th",
+      "types": [
+        "dun",
         "supl"
       ]
     }

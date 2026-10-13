@@ -1,5 +1,54 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "ATT-ATT-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_ATT"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ATT"
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "firstnet-5gcbroadband",
+      "name": "firstnet-5gcbroadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "firstnet-5gcphone",
+      "name": "firstnet-5gcphone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "firstnet-5gcphone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "ATT FirstNet 5GC Phone MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "firstnet-phone",
       "mmsc": "http://mmsc.mobile.att.net",
@@ -14,7 +63,7 @@
     },
     {
       "apn": "ims",
-      "name": "FirstNet",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -32,6 +81,7 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "maxMessageSize": 1048576,
     "recipientLimit": 20

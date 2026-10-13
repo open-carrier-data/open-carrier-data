@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -96,7 +110,7 @@
     },
     {
       "apn": "ims",
-      "name": "PTCI",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -106,11 +120,12 @@
     {
       "apn": "internet",
       "mmsc": "http://mms.ic.ptci.mobi/mmsc",
-      "name": "PTCI",
+      "name": "internet",
       "protocol": "IPV4V6",
       "types": [
         "default",
-        "mms"
+        "mms",
+        "xcap"
       ]
     },
     {

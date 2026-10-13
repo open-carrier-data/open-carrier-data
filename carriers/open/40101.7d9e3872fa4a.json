@@ -1,5 +1,50 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "Beeline XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Beeline IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.beeline.kz",
+      "authtype": 1,
+      "name": "Beeline Internet",
+      "password": "beeline",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "@internet.beeline"
+    },
     {
       "apn": "internet.beeline.kz",
       "name": "Beeline",
@@ -36,7 +81,6 @@
       "name": "Beeline Internet",
       "password": "beeline",
       "types": [
-        "default",
         "supl"
       ],
       "user": "@internet.beeline"

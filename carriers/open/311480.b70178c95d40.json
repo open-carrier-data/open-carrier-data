@@ -1,4 +1,52 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-LRA-GLB-USA"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Copper Valley IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "name": "Copper Valley FOTA",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "Copper Valley",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "mmsc": "http://cvwmms.com/servlets/mms",
+      "name": "Copper Valley MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_metered_apn_types_strings": [
       "default",
@@ -23,7 +71,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -32,7 +80,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "VZW US CopperValley",
+  "display_name": "Copper Valley",
   "match": {
     "gid1_prefixes": [
       "BA00170000000000"

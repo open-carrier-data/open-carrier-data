@@ -1,11 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -23,9 +18,29 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "mobile.talktalk.co.uk",
+      "name": "TalkTalk WAP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mobile.talktalk.co.uk",
+      "mmsc": "http://mms.talktalk.co.uk/servlets/mms",
+      "mmsport": 8799,
+      "mmsproxy": "212.183.137.12",
+      "name": "TalkTalk MMS",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "mobile.talktalk.co.uk",
       "authtype": 1,

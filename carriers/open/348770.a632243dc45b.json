@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Wap",
@@ -11,8 +25,39 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.vg",
+      "name": "DIGICEL",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "wap",
       "mmsc": "http://mmc.digiceljamaica.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.7.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap",
+      "mmsc": "http://mms.digicelgroup.com",
       "mmsport": 8080,
       "mmsproxy": "172.16.7.12",
       "name": "Digicel MMS",
