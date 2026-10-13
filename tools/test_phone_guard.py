@@ -167,6 +167,54 @@ class PassTests(GuardCase):
         self.assertIn("unchanged", out)
 
 
+class CredentialsLostTests(GuardCase):
+    """Report-only (rule decisions, round 14): a lead that stops sending
+    credentials it sent before, judged on the resolved auth type."""
+
+    CREDS = WEB + ' user="u" password="p"'
+    SAMSUNG = {"mcc": "262", "mnc": "01", "apn": "web", "type": "default", "user": "u", "password": "p",
+               "_current": {"default": ["samsung"]}}
+    WARNING = ("WARNING: 262/01 {} lead web: sends no credentials, every current vendor row of this APN "
+               "carries credentials")
+
+    def test_lost_credentials_warn_when_every_current_row_of_the_apn_has_them(self) -> None:
+        code, out, result = self.run_guard(xml(self.CREDS), xml(WEB), [self.SAMSUNG])
+        self.assertEqual((code, result["verdict"], result["trips"], result["digest"]), (0, "pass", [], None))
+        self.assertIn("credentials lost on the internet lead: 1: 262/01", out)
+        self.assertIn("credentials lost on the attach lead: 1: 262/01", out)
+        self.assertIn(self.WARNING.format("internet"), out)
+        self.assertIn(self.WARNING.format("attach"), out)
+
+    def test_lost_credentials_without_warning_when_a_current_vendor_gives_the_apn_bare(self) -> None:
+        google = {"mcc": "262", "mnc": "01", "apn": "web", "type": "default", "_current": {"default": ["google"]}}
+        code, out, result = self.run_guard(xml(self.CREDS), xml(WEB), [self.SAMSUNG, google])
+        self.assertEqual((code, result["trips"]), (0, []))
+        self.assertIn("credentials lost on the internet lead: 1: 262/01", out)
+        self.assertNotIn("sends no credentials", out)
+
+    def test_credentials_kept_with_auth_type_0_are_lost(self) -> None:
+        held = self.CREDS + ' authtype="0"'
+        code, out, result = self.run_guard(xml(self.CREDS), xml(held), [self.SAMSUNG])
+        self.assertEqual((code, result["trips"]), (0, []))
+        self.assertIn("credentials lost on the internet lead: 1: 262/01", out)
+        self.assertIn(self.WARNING.format("internet"), out)
+        code, out, _ = self.run_guard(xml(held), xml(WEB), [self.SAMSUNG])
+        self.assertEqual(code, 0)
+        self.assertNotIn("credentials lost", out)
+
+    def test_lost_credentials_leave_trips_verdict_and_digest_unchanged(self) -> None:
+        _, plain_out, plain = self.run_guard(xml(WEB, MMS), xml(WEB), [self.SAMSUNG])
+        code, out, result = self.run_guard(xml(self.CREDS, MMS), xml(WEB), [self.SAMSUNG])
+        self.assertNotIn("credentials lost", plain_out)
+        self.assertIn("credentials lost on the internet lead: 1: 262/01", out)
+        self.assertIn(self.WARNING.format("internet"), out)
+        self.assertEqual((code, result["verdict"]), (1, "hold"))
+        self.assertEqual((result["trips"], result["digest"]), (plain["trips"], plain["digest"]))
+        code, _, accepted = self.run_guard(xml(self.CREDS, MMS), xml(WEB), [self.SAMSUNG],
+                                           extra=["--accept", plain["digest"]])
+        self.assertEqual((code, accepted["verdict"]), (0, "accepted"))
+
+
 class DigestTests(GuardCase):
     def test_exact_digest_passes(self) -> None:
         code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB))
