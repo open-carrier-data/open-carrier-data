@@ -31,13 +31,29 @@
   "android_apns": [
     {
       "apn": "broadband",
+      "name": "Connect Mobile",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "broadband",
       "authtype": 0,
       "carrier_enabled": true,
-      "name": "broadband",
+      "name": "Internet",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "broadband",
+      "name": "broadband",
+      "types": [
+        "default",
+        "dun"
       ]
     },
     {
@@ -52,18 +68,30 @@
     },
     {
       "apn": "broadband",
-      "name": "TELEKOM.RO",
-      "types": [
-        "dun"
-      ]
-    },
-    {
-      "apn": "broadband",
       "name": "broadband",
       "protocol": "IP",
       "roaming_protocol": "IP",
       "types": [
+        "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -76,6 +104,15 @@
       "roaming_protocol": "IP",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -113,8 +150,6 @@
     },
     {
       "apn": "mms",
-      "authtype": 1,
-      "carrier_enabled": true,
       "mmsc": "http://mmsc1.mms.telekom.ro:8002",
       "mmsport": 8080,
       "mmsproxy": "10.252.1.62",
@@ -129,11 +164,15 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
+      "carrier_enabled": true,
       "mmsc": "http://mmsc1.mms.telekom.ro:8002",
       "mmsport": 8080,
       "mmsproxy": "10.252.1.62",
-      "name": "TELEKOM.RO",
+      "name": "MMS",
       "password": "mms",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],
@@ -161,6 +200,18 @@
       "mmsport": 8080,
       "mmsproxy": "10.252.1.62",
       "name": "Telekom Romania MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc1.mms.telekom.ro:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.252.1.62",
+      "name": "mms",
       "password": "mms",
       "types": [
         "mms"

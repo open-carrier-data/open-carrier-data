@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -25,6 +39,14 @@
       "protocol": "IP",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "pda.newcomobile.com",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -66,6 +88,15 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "pda.newcomobile.com",
+      "mmsc": "http://mms.bealiv.com",
+      "name": "Aliv MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "sos",

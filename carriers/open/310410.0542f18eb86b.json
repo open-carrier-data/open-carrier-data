@@ -1,4 +1,32 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "contacts_operator_style": "AIO"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G_PLUS",
+        "connected:5G_PLUS",
+        "not_restricted_rrc_idle:NONE",
+        "not_restricted_rrc_con:NONE",
+        "connected_mmwave_2nd:5G_PLUS",
+        "connected_2nd:5G",
+        "not_restricted_rrc_idle_2nd:5G",
+        "not_restricted_rrc_con_2nd:5G"
+      ]
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "11478.mcs",
@@ -39,7 +67,7 @@
     },
     {
       "apn": "ims",
-      "name": "ATT IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -64,6 +92,28 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "reseller",
+      "name": "reseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "reseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "reseller",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "resellermht",

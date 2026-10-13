@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ancel",
@@ -10,7 +23,7 @@
     },
     {
       "apn": "antel.lte",
-      "name": "antel.lte",
+      "name": "Vera 1",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -19,8 +32,18 @@
     },
     {
       "apn": "antel.lte",
-      "name": "Antel",
+      "name": "Vera 1",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "antel.lte",
+      "name": "antel.lte",
+      "types": [
+        "default",
         "dun"
       ]
     },
@@ -61,6 +84,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "imsANTEL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms",
@@ -150,8 +182,9 @@
     },
     {
       "apn": "xcap",
-      "name": "XCAP",
+      "name": "xcap",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],

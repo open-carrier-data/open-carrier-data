@@ -1,4 +1,23 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:NONE"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "gprs.tn",
@@ -37,10 +56,10 @@
     {
       "apn": "internet.tn",
       "name": "internet.tn",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "default"
       ]
     },
     {
@@ -50,6 +69,14 @@
       "types": [
         "default",
         "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.tn",
+      "name": "internet.tn",
+      "types": [
+        "dun",
         "supl"
       ]
     },
@@ -65,16 +92,6 @@
     },
     {
       "apn": "mms.tn",
-      "mmsc": "http://192.168.0.3:19090/was",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.0.2",
-      "name": "Tunisia Telecom MMS",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms.tn",
       "authtype": 1,
       "carrier_id": 1731,
       "mmsc": "http://192.168.0.3:19090/was",
@@ -99,6 +116,16 @@
         "mms"
       ],
       "user": "mms@tt1"
+    },
+    {
+      "apn": "mms.tn",
+      "mmsc": "http://192.168.0.3:19090/was",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.0.2",
+      "name": "mms.tn",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "wap.tn",

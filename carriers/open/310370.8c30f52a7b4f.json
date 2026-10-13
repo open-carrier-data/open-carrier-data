@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "apple.internet",
@@ -10,20 +24,28 @@
     },
     {
       "apn": "ims",
-      "name": "DOCOMO PACIFIC",
-      "protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14",
       "name": "DPAC IMS",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "DOCOMO",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet",
@@ -40,6 +62,7 @@
       "apn": "xcap",
       "name": "xcap",
       "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],

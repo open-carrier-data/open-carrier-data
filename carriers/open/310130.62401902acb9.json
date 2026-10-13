@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "home.cww.com",
@@ -61,6 +74,14 @@
     },
     {
       "apn": "home.cww.com",
+      "name": "Carolina West Wireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "home.cww.com",
       "mmsc": "http://mms.cwwmms.com/cww/mms.php",
       "name": "home.cww.com",
       "protocol": "IP",
@@ -76,15 +97,6 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "Carolina West Wireless",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
       ]
     },
     {
@@ -108,6 +120,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms",
@@ -139,6 +160,14 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "tethering.cww.com",
+      "name": "Carolina West Wireless Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "tethering.cww.com",

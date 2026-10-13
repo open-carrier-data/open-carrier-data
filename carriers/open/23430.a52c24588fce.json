@@ -1,9 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -30,6 +26,14 @@
   },
   "android_apns": [
     {
+      "apn": "EEZONE",
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "eezone",
       "mmsc": "http://mms/",
       "mmsport": 8080,
@@ -53,6 +57,35 @@
       ],
       "user": "eesecure",
       "user_editable": false
+    },
+    {
+      "apn": "eezone",
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "everywhere",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "eesecure"
     },
     {
       "apn": "everywhere",
@@ -120,14 +153,6 @@
     },
     {
       "apn": "ims",
-      "name": "EE",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "authtype": 1,
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
@@ -153,6 +178,32 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "sos",
       "name": "EE",
       "protocol": "IPV6",
@@ -169,6 +220,15 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "EEZONE",

@@ -1,5 +1,28 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "TEF",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "emergency",
+      "name": "movistar",
+      "protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -10,6 +33,24 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Movistar IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Movistar IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -59,6 +100,16 @@
     },
     {
       "apn": "wap.tmovil.cl",
+      "name": "wap.tmovil.cl",
+      "password": "wap",
+      "types": [
+        "default",
+        "dun"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.tmovil.cl",
       "authtype": 1,
       "carrier_id": 1428,
       "name": "Movistar APLICACIONES",
@@ -83,10 +134,37 @@
     },
     {
       "apn": "wap.tmovil.cl",
-      "name": "movistar",
+      "name": "Movistar INTERNET",
       "password": "wap",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "default",
+        "xcap"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.tmovil.cl",
+      "name": "Movistar INTERNET",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "wap.tmovil.cl",
+      "name": "Movistar INTERNET",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
       ],
       "user": "wap"
     },

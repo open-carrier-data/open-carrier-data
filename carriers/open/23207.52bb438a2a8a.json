@@ -1,4 +1,59 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-preferrednetworkmode"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mmsc": "http://mmsc.t-mobile.at/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "10.12.0.20",
+      "name": "HOS",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "t-mobile"
+    },
+    {
+      "apn": "internet.t-mobile.at",
+      "name": "Internet",
+      "password": "tm",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "T"
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
@@ -7,7 +62,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -16,7 +71,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "TMobile AT",
+  "display_name": "AIRALO",
   "match": {
     "gid1_prefixes": [
       "73"

@@ -1,7 +1,8 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto"
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -12,7 +13,8 @@
       "mobile_network_setting_menu_tokens": [
         "-voltecall"
       ],
-      "network_type_capability": "EUR-EUR-GSM-EUR"
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause"
     },
     "operator_display": {
       "five_g_icon_configuration": [
@@ -22,6 +24,9 @@
         "not_restricted_rrc_con:NONE"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -60,11 +65,37 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
-      "carrier_enabled": true,
-      "name": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 0,
+      "carrier_enabled": true,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -106,6 +137,30 @@
       "mmsport": 8080,
       "mmsproxy": "84.225.255.1",
       "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.telenor.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Telenor MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.yettel.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Yettel MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]
@@ -174,14 +229,6 @@
     },
     {
       "apn": "online",
-      "name": "online",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "online",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "Yettel Online",
@@ -201,6 +248,25 @@
       "types": [
         "default",
         "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "online",
+      "name": "online",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "online",
+      "name": "online",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
         "xcap"
       ]
     },

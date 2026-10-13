@@ -1,5 +1,50 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -65,6 +110,18 @@
     },
     {
       "apn": "mms.pelephone.net.il",
+      "mmsc": "http://mmsu.pelephone.net.il",
+      "name": "MMS Pelephone",
+      "password": "pcl",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "pcl@3g"
+    },
+    {
+      "apn": "mms.pelephone.net.il",
       "authtype": 3,
       "carrier_id": 798,
       "mmsc": "http://mmsu.pelephone.net.il",
@@ -97,6 +154,33 @@
       "mmsproxy": "10.170.252.104",
       "name": "Multimedia Pelephone",
       "password": "pcl",
+      "types": [
+        "mms"
+      ],
+      "user": "pcl@3g"
+    },
+    {
+      "apn": "mms.pelephone.net.il",
+      "mmsc": "http://mmsu.pelephone.net.il",
+      "mmsport": 9093,
+      "mmsproxy": "10.170.252.104",
+      "name": "Multimedia Pelephone",
+      "password": "pcl",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "pcl@3g"
+    },
+    {
+      "apn": "mms.pelephone.net.il",
+      "mmsc": "http://mmsu.pelephone.net.il",
+      "mmsport": 9093,
+      "mmsproxy": "10.170.252.104",
+      "name": "Multimedia Pelephone",
+      "password": "pcl",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],

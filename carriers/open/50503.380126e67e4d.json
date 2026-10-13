@@ -10,14 +10,12 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall_sim_mobility"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
       "five_g_icon_configuration": [
         "connected_mmwave:5G",
         "connected:5G",
@@ -40,6 +38,18 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "HOS",
+      "mmsc": "http://pxt.vodafone.net.au/pxtsend",
+      "mmsport": 8080,
+      "mmsproxy": "10.202.2.60",
+      "name": "Vodafone AU MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "HOS",

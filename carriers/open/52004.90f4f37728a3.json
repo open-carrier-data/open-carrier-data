@@ -1,5 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "TRUE-H UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "hmms",
       "mmsc": "http://mms.trueh.com:8002/",
@@ -76,6 +102,26 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "TRUE-H IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "name": "internet",
+      "password": "true",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "true"
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "carrier_id": 1997,
@@ -90,21 +136,20 @@
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "name": "internet",
+      "name": "TRUE-H",
       "password": "true",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ],
       "user": "true"
     },
     {
       "apn": "internet",
-      "name": "TRUE-H",
+      "authtype": 1,
+      "name": "TRUE-H INTERNET",
       "password": "true",
       "types": [
-        "dun"
+        "supl"
       ],
       "user": "true"
     },

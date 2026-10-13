@@ -1,5 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "admin.lte.ntwls.com",
+      "name": "Nex Tech Wireless FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "admin.lte.ntwls.com",
       "bearer_bitmask": "13",
@@ -58,6 +79,15 @@
     },
     {
       "apn": "hos",
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "Nex Tech Wireless Service EPDG",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -90,7 +120,7 @@
     },
     {
       "apn": "ims",
-      "name": "NTW",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -137,9 +167,10 @@
     },
     {
       "apn": "modem.lte.ntwls.com",
-      "name": "NTW",
+      "name": "modem.lte.ntwls.com",
       "protocol": "IPV4V6",
       "types": [
+        "default",
         "dun"
       ]
     },

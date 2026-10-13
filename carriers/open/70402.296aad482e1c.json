@@ -1,12 +1,36 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "XCAP TIGO GT",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "broadband.tigo.gt",
       "name": "broadband.tigo.gt",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun",
-        "supl"
+        "default"
       ]
     },
     {
@@ -17,6 +41,22 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "broadband.tigo.gt",
+      "name": "broadband.tigo.gt",
+      "types": [
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS TIGO GT",
+      "protocol": "IP",
+      "types": [
+        "ims"
       ]
     },
     {

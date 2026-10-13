@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "default",
@@ -19,6 +36,13 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms",
       "mmsc": "http://mmsc",
       "mmsport": 8080,
@@ -29,15 +53,29 @@
       ]
     },
     {
+      "apn": "mms",
+      "mmsc": "http://mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.12.9.156",
+      "name": "Smart MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "smart",
-      "name": "Smart",
+      "name": "smart",
       "types": [
         "default",
         "dun",
-        "supl"
+        "supl",
+        "xcap"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",

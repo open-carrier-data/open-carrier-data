@@ -31,14 +31,31 @@
   },
   "android_apns": [
     {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
-      "name": "Vodafone IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.pt",
+      "name": "Internet Vodafone",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -72,6 +89,23 @@
       "mmsproxy": "iproxy.vodafone.pt",
       "name": "Vodafone MMS",
       "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "umts",
+      "name": "Internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "umts",
+      "mmsc": "http://mmsc:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "62.169.66.5",
+      "name": "MMS",
       "types": [
         "mms"
       ]

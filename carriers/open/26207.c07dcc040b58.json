@@ -10,6 +10,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause,DisplayRatInfoForManualSearch"
@@ -23,6 +26,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -48,15 +54,6 @@
     },
     {
       "apn": "ims",
-      "name": "O2 DE IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "ims",
       "protocol": "IPV4V6",
@@ -65,6 +62,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -79,6 +85,14 @@
     },
     {
       "apn": "ims",
+      "name": "o2 IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "o2-de",
       "protocol": "IPV6",
       "types": [
@@ -87,7 +101,14 @@
     },
     {
       "apn": "internet",
-      "name": "o2-de",
+      "name": "internet",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -100,7 +121,7 @@
       "mmsc": "http://10.81.0.7:8002",
       "mmsport": 8080,
       "mmsproxy": "82.113.100.5",
-      "name": "o2 Internet",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -148,6 +169,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "o2 MMS",
+      "types": [
+        "mms"
       ]
     },
     {

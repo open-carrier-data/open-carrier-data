@@ -1,5 +1,26 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "Pine Belt IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "carrier_id": 2160,
@@ -29,6 +50,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "lte.internet.pinebelt.net",
+      "name": "Pine Belt Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "lte.internet.pinebelt.net",
@@ -69,6 +98,23 @@
       ]
     },
     {
+      "apn": "lte.internet.pinebelt.net",
+      "mmsc": "http://mmsc.pinebelt.net:6672/",
+      "name": "Pine Belt MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "lte.ota.pinebelt.net",
+      "name": "Pine Belt FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "lte.ota.pinebelt.net",
       "carrier_id": 2160,
       "name": "Pine Belt",
@@ -85,6 +131,14 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "fota"
+      ]
+    },
+    {
+      "apn": "lte.tether.pinebelt.net",
+      "name": "Pine Belt Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {

@@ -1,9 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "corrgprs",
-      "name": "Corr Wap",
+      "name": "corrgprs",
       "port": 9201,
+      "protocol": "IPV4V6",
       "proxy": "74.112.57.172",
       "server": "http://w.iot1.com/corr/wml.php",
       "types": [
@@ -20,6 +35,17 @@
       "types": [
         "default",
         "ia"
+      ]
+    },
+    {
+      "apn": "corrmms",
+      "mmsc": "http://m.iot1.com/corr/mms.php",
+      "mmsport": 9201,
+      "mmsproxy": "74.112.57.173",
+      "name": "Corr MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {

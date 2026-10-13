@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "edge.viva.net.do",
@@ -12,6 +26,13 @@
         "supl"
       ],
       "user": "viva"
+    },
+    {
+      "apn": "internet.nuevatel.com",
+      "name": "internet.nuevatel.com",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet.nuevatel.com",

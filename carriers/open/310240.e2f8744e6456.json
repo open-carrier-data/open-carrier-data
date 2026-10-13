@@ -1,4 +1,19 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry,E911Wificall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -11,6 +26,24 @@
         "mms"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "Wholesale",
+      "name": "Ultra",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Ultra MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "fast.t-mobile.com",
@@ -49,6 +82,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Ultra Mobile IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,
@@ -159,7 +200,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Ultra Us",
+  "display_name": "Ultra Mobile",
   "match": {
     "gid1_prefixes": [
       "7601"

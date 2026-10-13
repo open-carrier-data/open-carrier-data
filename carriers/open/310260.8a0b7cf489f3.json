@@ -1,5 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "Qlink",
+      "name": "Qlink",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ims",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Qlink",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "Qlink MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "always_on": true,
       "apn": "ims",
@@ -12,6 +44,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Qlink IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "qlink",
@@ -81,11 +121,11 @@
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Qlink Us",
+  "display_name": "Qlink",
   "match": {
     "gid1_prefixes": [
       "514C"

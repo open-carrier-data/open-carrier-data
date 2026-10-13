@@ -1,4 +1,27 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+dataenabled",
+        "-preferrednetworkmode",
+        "-voltecall"
+      ],
+      "network_type_capability": "ATT-AIO-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,NetworkSetting_AIO"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "AIO_OPEN"
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "endo",
@@ -29,7 +52,7 @@
     },
     {
       "apn": "endo",
-      "name": "XCAP",
+      "name": "endo",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

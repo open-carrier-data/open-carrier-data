@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-VZW-GLB-USA",
+      "voice_network_setting_style": "ManualSelectionWhenBootup,SystemSelectionAutoAB,SupportDataPopup"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseDisplayTimer"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -35,6 +48,15 @@
       "user_visible": false
     },
     {
+      "apn": "IMS",
+      "name": "Verizon IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "VZWADMIN",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18",
@@ -99,6 +121,16 @@
         "mms"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon CBS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "VZWEMERGENCY",
@@ -126,6 +158,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "VZWINTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -298,7 +339,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Verizon Us",
+  "display_name": "VZW",
   "match": {
     "gid1_prefixes": [
       "BAE0000000000000"

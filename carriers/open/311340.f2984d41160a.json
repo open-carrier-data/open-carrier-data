@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -14,6 +27,15 @@
       ]
     },
     {
+      "apn": "HOS",
+      "name": "Illinois Valley Cellular XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "VZWADMIN",
       "bearer_bitmask": "13",
       "carrier_id": 1263,
@@ -89,6 +111,31 @@
         "ia",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Illinois Valley Cellular IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ivc.mymobiletxt.com",
+      "name": "Illinois Valley Cellular",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ivc.mymobiletxt.com",
+      "mmsc": "http://mms.ivcel.com/ivc/mms.php",
+      "name": "Illinois Valley Cellular MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     }
   ],

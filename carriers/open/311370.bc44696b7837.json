@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "hos.gci",
@@ -13,10 +27,51 @@
       ]
     },
     {
+      "apn": "hos.gci",
+      "mmsc": "http://mmsc.gci.net",
+      "mmsport": 9201,
+      "mmsproxy": "24.237.158.34",
+      "name": "GCI MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos.gci",
+      "mmsc": "http://mmsc.gci.net",
+      "mmsport": 9201,
+      "mmsproxy": "24.237.158.34",
+      "name": "GCI MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos.gci",
+      "name": "GCI XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "GCI",
       "protocol": "IP",
       "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "GCI IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -32,6 +87,18 @@
       ]
     },
     {
+      "apn": "service",
+      "mmsc": "http://mmsc.gci.net",
+      "mmsport": 9201,
+      "mmsproxy": "24.237.158.34",
+      "name": "GCI Service EPDG",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
       "apn": "sos",
       "name": "GCI",
       "protocol": "IP",
@@ -42,9 +109,16 @@
     },
     {
       "apn": "web.gci",
+      "name": "web.gci",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "web.gci",
       "name": "GCI",
       "types": [
-        "default",
         "dun"
       ]
     }

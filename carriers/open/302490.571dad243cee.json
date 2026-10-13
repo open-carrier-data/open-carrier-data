@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ]
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -12,6 +28,15 @@
       "user_visible": false
     },
     {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "e911.mobilefrdm.ca",
       "name": "EMERGENCY",
       "protocol": "IPV4V6",
@@ -20,6 +45,15 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms.shaw.ca",
@@ -56,6 +90,7 @@
     {
       "apn": "xcap.freedommobile.ca",
       "name": "XCAP",
+      "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
@@ -95,7 +130,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Shaw Ca",
+  "display_name": "Shaw Mobile",
   "match": {
     "gid1_prefixes": [
       "53"

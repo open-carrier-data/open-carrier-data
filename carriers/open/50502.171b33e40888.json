@@ -1,8 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -10,14 +9,12 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall_sim_mobility"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
       "five_g_icon_configuration": [
         "connected_mmwave:5G",
         "connected:5G",
@@ -28,7 +25,8 @@
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
-      "operator_branding": "YES OPTUS"
+      "operator_branding": "YES OPTUS",
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -133,6 +131,15 @@
     },
     {
       "apn": "ims",
+      "name": "Optus IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "name": "Optus IMS",
       "protocol": "IPV6",
@@ -219,8 +226,26 @@
     {
       "apn": "sos",
       "authtype": 0,
-      "name": "sos",
+      "name": "Emergency",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "OPTUS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Optus Emergency",
+      "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"

@@ -1,4 +1,20 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-allowReasonEnable2g"
+      ],
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "apnmms.movistar.com.uy",
@@ -44,6 +60,7 @@
       "mmsproxy": "10.0.2.29",
       "name": "apnmms.movistar.com.uy",
       "password": "mmsuy",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -57,6 +74,34 @@
         "default",
         "dun",
         "supl"
+      ],
+      "user": "movistar"
+    },
+    {
+      "apn": "ims",
+      "name": "IMS APN",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS APN",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "webapn.movistar.com.uy",
+      "authtype": 1,
+      "name": "webapn.movistar.com.uy",
+      "password": "movistar",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ],
       "user": "movistar"
     },
@@ -87,7 +132,6 @@
       "name": "webapn.movistar.com.uy",
       "password": "movistar",
       "types": [
-        "default",
         "supl"
       ],
       "user": "movistar"

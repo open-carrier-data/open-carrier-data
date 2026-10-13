@@ -19,7 +19,6 @@
       "voice_network_setting_style": "SupportDualDataRoam"
     },
     "operator_display": {
-      "five_g_icon_branding": "UseOneShapedIcon",
       "refer_eons_without_lac": true
     },
     "wifi_calling": {
@@ -27,6 +26,22 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "IMS",
       "authtype": 0,
@@ -107,6 +122,14 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "protocol": "IP",
+      "types": [
+        "xcap"
       ]
     },
     {

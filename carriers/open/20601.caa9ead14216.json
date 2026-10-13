@@ -1,11 +1,9 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
+      "e911_routing_policy": "csprefer"
     },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -26,6 +24,13 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "Internet",
+      "name": "Virgin Media",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "Internet",
       "authtype": 1,

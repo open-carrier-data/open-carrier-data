@@ -14,10 +14,11 @@
       "mobile_network_setting_menu_tokens": [
         "-voltecall"
       ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR"
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
     },
     "operator_display": {
+      "five_g_icon_branding": "5GAvailable,UseDisplayTimer",
       "five_g_icon_configuration": [
         "connected_mmwave:5G",
         "connected:5G",
@@ -52,7 +53,6 @@
       "name": "HOS",
       "password": "telekom",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "mms",
         "xcap"
@@ -75,21 +75,8 @@
       "user": "telekom"
     },
     {
-      "apn": "hos",
-      "mmsc": "http://mms.t-mobile.de/servlets/mms",
-      "mmsport": 8008,
-      "mmsproxy": "109.237.176.193",
-      "name": "HOS",
-      "password": "telekom",
-      "protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user": "telekom"
-    },
-    {
       "apn": "internet.v6.telekom",
-      "name": "internet.v6.telekom",
+      "name": "Internet",
       "password": "telekom",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -100,7 +87,8 @@
     }
   ],
   "android_carrier_config": {
-    "carrier_volte_available_bool": true
+    "carrier_volte_available_bool": true,
+    "smsToMmsTextThreshold": 13
   },
   "capabilities": {
     "esim": "unknown",

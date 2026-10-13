@@ -1,16 +1,43 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "indicator_icon_branding": "XFA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "hos",
-      "name": "MTN",
+      "name": "hos",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ]
     },
     {
       "apn": "ims",
-      "name": "MTN",
+      "name": "ims",
       "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
       ]
@@ -21,6 +48,21 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "myMTN",
+      "name": "MTN Data",
+      "types": [
+        "default"
+      ],
+      "user": "mtn"
+    },
+    {
+      "apn": "myMTN",
+      "name": "MTN Data",
+      "types": [
+        "default"
       ]
     },
     {
@@ -111,6 +153,18 @@
       "user": "mtnmms"
     },
     {
+      "apn": "myMTN",
+      "mmsc": "http://mms.mtn.co.za/mms/wapenc",
+      "mmsport": 8080,
+      "mmsproxy": "196.11.240.241",
+      "name": "MTN MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "mymtn",
       "mmsc": "http://mms.mtn.co.za/mms/wapenc",
       "mmsport": 8080,
@@ -120,6 +174,15 @@
         "default",
         "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "MTN SOS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "emergency"
       ]
     }
   ],

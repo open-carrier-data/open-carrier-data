@@ -1,5 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ]
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "internet.mts",
+      "name": "MTS Tethering",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "internet.mts",
       "name": "MTS Tethering",
@@ -7,6 +32,23 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sp.mts",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "name": "MTS Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "sp.mts",
@@ -21,10 +63,34 @@
         "mms",
         "supl"
       ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sp.mts",
+      "mmsc": "http://mmsc2.mts.net/",
+      "mmsport": 9201,
+      "mmsproxy": "wapgw1.mts.net",
+      "name": "MTS MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
     "call_forwarding_map_non_number_to_voicemail_bool": true,
+    "carrier_volte_available_bool": true,
     "maxImageHeight": 1944,
     "maxImageWidth": 2592,
     "maxMessageSize": 1048576,
@@ -36,15 +102,15 @@
     "esim": "unknown",
     "ims_conference": "unknown",
     "mms": "supported",
-    "rcs": "unknown",
-    "sms_over_ims": "unknown",
+    "rcs": "supported",
+    "sms_over_ims": "supported",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Mts Ca",
+  "display_name": "MTB",
   "match": {
     "gid1_prefixes": [
       "2C"

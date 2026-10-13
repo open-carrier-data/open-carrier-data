@@ -1,5 +1,34 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "hos",
+      "name": "Cellfie Mobile XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -12,8 +41,17 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Cellfie Mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
-      "name": "Cellfie Mobile Internet",
+      "name": "internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -22,7 +60,7 @@
     },
     {
       "apn": "internet.ge.beeline.net",
-      "name": "Beeline",
+      "name": "internet.ge.beeline.net",
       "types": [
         "default",
         "dun"
@@ -33,7 +71,7 @@
       "mmsc": "http://mms.ge.beeline.net/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.30.141.119",
-      "name": "Beeline",
+      "name": "mms.ge.beeline.net",
       "types": [
         "mms"
       ]

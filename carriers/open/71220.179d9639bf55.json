@@ -1,4 +1,14 @@
 {
+  "addons": {
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "datos.fullmovil.cr",
@@ -7,6 +17,15 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "movil5g",
+      "name": "kolbi5G",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     }
   ],

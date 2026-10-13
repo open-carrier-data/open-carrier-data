@@ -1,13 +1,24 @@
 {
-  "android_apns": [
-    {
-      "apn": "ims",
-      "name": "Videotron",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
     },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
+  "android_apns": [
     {
       "apn": "ims",
       "carrier_id": 2008,
@@ -19,6 +30,31 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "name": "Videotron",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "name": "Videotron",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "media.ng",
@@ -45,16 +81,6 @@
     },
     {
       "apn": "media.ng",
-      "mmsc": "http://media.videotron.com",
-      "name": "Media",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "media.ng",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "carrier_id": 2008,
       "mmsc": "http://media.videotron.com",
@@ -65,6 +91,26 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "media.ng",
+      "mmsc": "http://media.videotron.com",
+      "name": "media.ng",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "media.ng",
+      "mmsc": "http://media.videotron.com",
+      "name": "VideotronMMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "media.videotron",
@@ -97,6 +143,17 @@
     },
     {
       "apn": "xcap",
+      "mmsc": "http://media.videotron.com",
+      "name": "Videotron EPDG",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
       "bearer_bitmask": "18",
       "carrier_id": 2008,
       "mmsc": "http://media.videotron.com",
@@ -117,6 +174,23 @@
     },
     {
       "apn": "xcap",
+      "mmsc": "http://media.videotron.com",
+      "name": "Videotron EPDG",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "mmsc": "http://media.videotron.com",
+      "name": "Videotron EPDG",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "carrier_id": 2008,
       "name": "Videotron XCAP",
@@ -124,6 +198,23 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "ims",

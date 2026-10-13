@@ -1,8 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -25,6 +22,9 @@
       ],
       "indicator_icon_branding": "OVF",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -108,6 +108,15 @@
     },
     {
       "apn": "live.vodafone.com",
+      "name": "live.vodafone.com",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "live.vodafone.com",
       "carrier_id": 2387,
       "name": "Vodafone IE",
       "types": [
@@ -159,14 +168,6 @@
     },
     {
       "apn": "live.vodafone.com",
-      "name": "Vodafone IE",
-      "types": [
-        "default",
-        "supl"
-      ]
-    },
-    {
-      "apn": "live.vodafone.com",
       "authtype": 0,
       "name": "Vodafone IE-Internet",
       "types": [
@@ -187,9 +188,17 @@
     },
     {
       "apn": "live.vodafone.com",
-      "name": "Vodafone WAP",
+      "name": "live.vodafone.com",
       "port": 80,
       "proxy": "10.24.59.100",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "live.vodafone.com",
+      "name": "live.vodafone.com",
       "types": [
         "default",
         "supl"

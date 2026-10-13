@@ -1,10 +1,48 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "Broadband",
       "name": "ATT Broadband",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "OTZ IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "OTZ Browser",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.otz.mobi",
+      "name": "OTZ MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {

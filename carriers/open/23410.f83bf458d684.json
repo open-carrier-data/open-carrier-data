@@ -1,8 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -22,9 +19,21 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
@@ -37,10 +46,20 @@
       "user_visible": false
     },
     {
+      "apn": "m-bb.o2.co.uk",
+      "name": "O2 Mobile Broadband",
+      "password": "password",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "o2bb"
+    },
+    {
       "apn": "payandgo.o2.co.uk",
       "authtype": 1,
       "mmsc": "http://mmsc.mms.o2.co.uk:8002",
-      "name": "O2 Pay As You Go",
+      "name": "payandgo.o2.co.uk",
       "password": "p",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",

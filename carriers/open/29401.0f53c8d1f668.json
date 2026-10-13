@@ -1,26 +1,4 @@
 {
-  "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
-    },
-    "ims": {
-      "support_ims_clir_overriding": true
-    },
-    "network_policy": {
-      "display_antenna_limited": true,
-      "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
-      "network_selection_menu_style": "NUMERIC",
-      "network_type_capability": "EUR-EUR-GSM-EUR",
-      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
-    },
-    "operator_display": {
-      "refer_eons_without_lac": true
-    }
-  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -42,7 +20,7 @@
     },
     {
       "apn": "internet",
-      "name": "internet",
+      "name": "Telekom MK Internet",
       "password": "t-mobile",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -56,7 +34,7 @@
       "mmsc": "http://mms.t-mobile.com.mk",
       "mmsport": 8080,
       "mmsproxy": "62.162.155.227",
-      "name": "mms",
+      "name": "Telekom MK MMS",
       "password": "mms",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -66,9 +44,6 @@
       "user": "mms"
     }
   ],
-  "android_carrier_config": {
-    "carrier_volte_available_bool": true
-  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -76,7 +51,7 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "supported",
+    "volte": "unknown",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"

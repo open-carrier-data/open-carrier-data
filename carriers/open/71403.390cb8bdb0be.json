@@ -1,11 +1,42 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ba.amx",
+      "name": "ba.amx",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "ba.amx",
       "name": "Claro 3G",
       "types": [
-        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -73,6 +104,18 @@
     {
       "apn": "web.claro.com.pa",
       "authtype": 1,
+      "name": "web.claro.com.pa",
+      "password": "CLAROWEB",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "CLAROWEB"
+    },
+    {
+      "apn": "web.claro.com.pa",
+      "authtype": 1,
       "carrier_id": 1925,
       "name": "WEB Claro",
       "password": "CLAROWEB",
@@ -85,21 +128,20 @@
     },
     {
       "apn": "web.claro.com.pa",
-      "authtype": 1,
-      "name": "web.claro.com.pa",
+      "name": "CLARO PA",
       "password": "CLAROWEB",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ],
       "user": "CLAROWEB"
     },
     {
       "apn": "web.claro.com.pa",
-      "name": "CLARO PA",
+      "authtype": 1,
+      "name": "web.claro.com.pa",
       "password": "CLAROWEB",
       "types": [
-        "dun"
+        "supl"
       ],
       "user": "CLAROWEB"
     }

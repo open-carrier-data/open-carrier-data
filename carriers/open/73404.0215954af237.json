@@ -1,13 +1,25 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
-      "apn": "internet.movistar.ve",
-      "carrier_id": 1873,
-      "name": "Movistar INTERNET",
+      "apn": "ims",
+      "name": "Movistar IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
-        "default",
-        "ia",
-        "supl"
+        "ims"
       ]
     },
     {
@@ -16,9 +28,19 @@
       "mmsport": 9001,
       "mmsproxy": "200.35.64.73",
       "name": "internet.movistar.ve",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.movistar.ve",
+      "carrier_id": 1873,
+      "name": "Movistar INTERNET",
       "types": [
         "default",
-        "mms",
+        "ia",
         "supl"
       ]
     },
@@ -36,6 +58,17 @@
       "name": "movistar",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet.movistar.ve",
+      "mmsc": "http://mms.movistar.ve",
+      "mmsport": 9001,
+      "mmsproxy": "200.35.64.73",
+      "name": "internet.movistar.ve",
+      "types": [
+        "mms",
+        "supl"
       ]
     },
     {

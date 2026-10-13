@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
     {
       "apn": "home.beeline.ru",
@@ -13,10 +33,40 @@
     },
     {
       "apn": "ims",
-      "name": "Beeline",
+      "name": "Beeline IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "ims",
+      "name": "Beeline IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.beeline.ru",
+      "authtype": 1,
+      "name": "internet.beeline.ru",
+      "password": "beeline",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "beeline"
     },
     {
       "apn": "internet.beeline.ru",
@@ -33,17 +83,6 @@
     },
     {
       "apn": "internet.beeline.ru",
-      "authtype": 1,
-      "name": "internet.beeline.ru",
-      "password": "beeline",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "beeline"
-    },
-    {
-      "apn": "internet.beeline.ru",
       "name": "Beeline",
       "password": "beeline",
       "types": [
@@ -52,14 +91,12 @@
       "user": "beeline"
     },
     {
-      "apn": "mms.beeline.ru",
-      "mmsc": "http://mms/",
-      "mmsport": 8080,
-      "mmsproxy": "192.168.94.23",
-      "name": "Beeline",
+      "apn": "internet.beeline.ru",
+      "authtype": 1,
+      "name": "internet.beeline.ru",
       "password": "beeline",
       "types": [
-        "mms"
+        "supl"
       ],
       "user": "beeline"
     },
@@ -71,6 +108,18 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.94.23",
       "name": "Beeline MMS",
+      "password": "beeline",
+      "types": [
+        "mms"
+      ],
+      "user": "beeline"
+    },
+    {
+      "apn": "mms.beeline.ru",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.94.23",
+      "name": "mms.beeline.ru",
       "password": "beeline",
       "types": [
         "mms"
@@ -92,7 +141,9 @@
     },
     {
       "apn": "xcap.beeline.ru",
-      "name": "Beeline",
+      "name": "xcap.beeline.ru",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ]

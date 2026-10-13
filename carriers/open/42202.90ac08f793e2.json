@@ -1,5 +1,41 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "IMS",
       "name": "OMANTEL",
@@ -7,6 +43,20 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.omanmobile.om:10021/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.203.35",
+      "name": "Oman Mobile MMS",
+      "password": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "MMS"
     },
     {
       "apn": "ims",
@@ -61,6 +111,18 @@
     {
       "apn": "taif",
       "authtype": 1,
+      "name": "taif",
+      "password": "taif",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "taif"
+    },
+    {
+      "apn": "taif",
+      "authtype": 1,
       "carrier_id": 970,
       "name": "Oman Mobile Internet",
       "password": "taif",
@@ -73,21 +135,20 @@
     },
     {
       "apn": "taif",
-      "authtype": 1,
-      "name": "taif",
+      "name": "OMANTEL",
       "password": "taif",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ],
       "user": "taif"
     },
     {
       "apn": "taif",
-      "name": "OMANTEL",
+      "authtype": 1,
+      "name": "taif",
       "password": "taif",
       "types": [
-        "dun"
+        "supl"
       ],
       "user": "taif"
     },

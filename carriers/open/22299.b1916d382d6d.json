@@ -24,11 +24,37 @@
   },
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.it",
+      "name": "internet.it",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "internet.it",
       "name": "Very",
       "types": [
-        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "mms.it",
+      "mmsc": "http://mms.windtre.it",
+      "mmsport": 8080,
+      "mmsproxy": "mmsproxy.windtre.it",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -39,6 +65,14 @@
       "name": "Very",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IP",
+      "types": [
+        "xcap"
       ]
     },
     {

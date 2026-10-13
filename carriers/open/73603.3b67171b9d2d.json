@@ -1,5 +1,44 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "SOS",
+      "name": "SOSTIGO",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "name": "XCAPTIGO",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMSTIGO",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "name": "TIGO",
@@ -42,6 +81,16 @@
       "authtype": 1,
       "mmsc": "http://mms",
       "mmsport": 8080,
+      "mmsproxy": "172.25.100.8",
+      "name": "MMSTIGO",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.tigo.bo",
+      "mmsc": "http://mms/",
+      "mmsport": 8888,
       "mmsproxy": "172.25.100.8",
       "name": "MMSTIGO",
       "types": [

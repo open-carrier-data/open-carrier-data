@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "+autoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "SJP-SJP-GSM-JPN"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseOneShapedIcon",
+      "indicator_icon_branding": "XJP"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -165,12 +183,40 @@
       "password": "4g",
       "types": [
         "cbs",
-        "default",
         "fota",
         "hipri",
         "ia",
         "mms",
         "supl"
+      ],
+      "user": "plus"
+    },
+    {
+      "apn": "plus.4g",
+      "authtype": 3,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "andmms.softbank.ne.jp",
+      "name": "plus.4g",
+      "password": "4g",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "plus"
+    },
+    {
+      "apn": "plus.4g",
+      "mmsc": "http://mms-s",
+      "mmsport": 8080,
+      "mmsproxy": "andmms.plusacs.ne.jp",
+      "name": "softbank mms",
+      "password": "4g",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ],
       "user": "plus"
     },

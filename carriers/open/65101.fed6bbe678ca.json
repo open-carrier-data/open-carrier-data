@@ -1,5 +1,38 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "indicator_icon_branding": "XFA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "MMS",
       "mmsc": "http://mmsc.vodacom4me.co.za",
@@ -15,9 +48,9 @@
       "apn": "internet",
       "name": "internet",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
-        "dun"
+        "default"
       ]
     },
     {
@@ -28,6 +61,14 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Vodacom",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -57,11 +98,32 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc.vodacom4me.co.za/",
+      "mmsport": 8080,
+      "mmsproxy": "10.113.63.12",
+      "name": "VCL MMS GPRS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
+    "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
     "imssms.sms_over_ims_supported_bool": true
   },
@@ -69,12 +131,12 @@
     "esim": "unknown",
     "ims_conference": "unknown",
     "mms": "supported",
-    "rcs": "unknown",
+    "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "supported",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Vodacom",

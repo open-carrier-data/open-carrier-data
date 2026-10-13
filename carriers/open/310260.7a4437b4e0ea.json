@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "always_on": true,
@@ -50,6 +64,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "Tracfone - T Mobile IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "service",
       "bearer_bitmask": "18",
       "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
@@ -58,6 +81,16 @@
         "mms"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
+      "name": "service",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "wap.tracfone",
@@ -81,6 +114,44 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "name": "TFWAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "name": "TFWAP",
+      "protocol": "IP",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
+      "name": "Tracfone - T Mobile MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
+      "name": "Tracfone - T Mobile MMS",
+      "protocol": "IP",
+      "types": [
+        "mms"
       ]
     }
   ],
@@ -111,11 +182,11 @@
     "sms_over_ims": "supported",
     "video_calling": "unknown",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Tracfonetmo Us",
+  "display_name": "Tracfone - T Mobile",
   "match": {
     "gid1_prefixes": [
       "DEFF"

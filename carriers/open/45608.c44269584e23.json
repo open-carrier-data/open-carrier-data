@@ -1,4 +1,21 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Metfone",
@@ -27,8 +44,15 @@
       ]
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "metfone",
-      "name": "Metfone",
+      "name": "metfone",
       "types": [
         "default",
         "dun"
@@ -39,7 +63,7 @@
       "mmsc": "http://192.168.24.10:38090",
       "mmsport": 8080,
       "mmsproxy": "192.168.23.85",
-      "name": "Metfone MMS",
+      "name": "mms",
       "types": [
         "mms"
       ]

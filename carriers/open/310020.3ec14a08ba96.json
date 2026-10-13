@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "SMART.COM",
@@ -43,7 +57,7 @@
     },
     {
       "apn": "ims",
-      "name": "Union",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -126,6 +140,15 @@
         "mms"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "union.mms.com",
+      "mmsc": "http://mms.unionwireless.com",
+      "name": "Union Wireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "union.wap.com",

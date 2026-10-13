@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -114,6 +127,16 @@
     },
     {
       "apn": "hos",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "Inland Cellular",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -130,6 +153,14 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "name": "Inland XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "ims",
@@ -156,6 +187,14 @@
       "name": "Inland IMS",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet.inland.com",
+      "name": "Inland",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -233,6 +272,23 @@
       ]
     },
     {
+      "apn": "internet.inland.com",
+      "mmsc": "http://mms.inland3g.com/inland/mms.php",
+      "name": "Inland MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "modem.inland.com",
+      "name": "Inland Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "modem.inland.com",
       "name": "Inland Cellular",
       "protocol": "IP",
@@ -260,6 +316,14 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ota.inland.com",
+      "name": "Inland FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "ota.inland.com",

@@ -82,15 +82,6 @@
     },
     {
       "apn": "internet",
-      "name": "Kyivstar",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "internet",
       "authtype": 0,
       "carrier_id": 1747,
       "name": "UA-KYIVSTAR Internet",
@@ -106,6 +97,16 @@
     },
     {
       "apn": "internet",
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -113,6 +114,18 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.kyivstar.net",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.10",
+      "name": "Kyivstar MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
     },
     {
       "apn": "mms.kyivstar.net",

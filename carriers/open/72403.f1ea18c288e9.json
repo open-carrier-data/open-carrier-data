@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "-voltecall_sim_mobility"
+      ],
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "indicator_icon_branding": "ZTM",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "ims",
@@ -10,14 +30,6 @@
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "TIM",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "apn": "ims",
@@ -39,6 +51,23 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "TIM IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.tim.br",
       "authtype": 1,
       "mmsc": "http://mms.tim.br",
@@ -58,6 +87,16 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "tim"
+    },
+    {
+      "apn": "timbrasil.br",
+      "name": "TIM Connect",
+      "password": "tim",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ],
       "user": "tim"
     },

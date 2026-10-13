@@ -1,5 +1,38 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS TIGO PY",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.tigo.py",
+      "authtype": 1,
+      "name": "internet.tigo.py",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "internet.tigo.py",
       "authtype": 1,
@@ -13,18 +46,17 @@
     },
     {
       "apn": "internet.tigo.py",
-      "authtype": 1,
-      "name": "internet.tigo.py",
+      "name": "TIGO",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ]
     },
     {
       "apn": "internet.tigo.py",
-      "name": "TIGO",
+      "authtype": 1,
+      "name": "internet.tigo.py",
       "types": [
-        "dun"
+        "supl"
       ]
     },
     {
@@ -62,6 +94,24 @@
       "name": "mms.tigo.py",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "EMERGENCY TIGO PY",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "IMS XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

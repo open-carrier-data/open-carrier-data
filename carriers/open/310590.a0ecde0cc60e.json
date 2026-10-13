@@ -1,4 +1,9 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -16,6 +21,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "name": "Tracfone IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "VZWADMIN",
@@ -50,6 +64,16 @@
       "user_visible": false
     },
     {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "name": "Tracfone MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "VZWEMERGENCY",
       "name": "Verizon Emergency",
       "protocol": "IPV4V6",
@@ -58,6 +82,15 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "VZWINTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -179,11 +212,11 @@
     "sms_over_ims": "supported",
     "video_calling": "unknown",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Tracfoneverizon Us",
+  "display_name": "Tracfone",
   "match": {
     "gid1_prefixes": [
       "BA01270000000000"

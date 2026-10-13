@@ -1,4 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "ba.amx",
@@ -13,6 +37,16 @@
       "authtype": 1,
       "name": "CLARO DATOS",
       "password": "claro",
+      "types": [
+        "default"
+      ],
+      "user": "claro"
+    },
+    {
+      "apn": "claro.pe",
+      "name": "CLARO DATOS",
+      "password": "claro",
+      "protocol": "IPV4V6",
       "types": [
         "default"
       ],
@@ -66,6 +100,18 @@
       "user": "claro"
     },
     {
+      "apn": "claro.pe",
+      "name": "CLARO DATOS",
+      "password": "claro",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "claro"
+    },
+    {
       "apn": "ims",
       "name": "CLARO PERU",
       "protocol": "IP",
@@ -83,6 +129,30 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mms.claro.pe",
@@ -118,8 +188,9 @@
       "mmsc": "http://claro/servlets/mms",
       "mmsport": 80,
       "mmsproxy": "192.168.231.30",
-      "name": "CLARO PERU",
+      "name": "CLARO MMS",
       "password": "claro",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -133,6 +204,18 @@
       "name": "CLARO PERU",
       "password": "claro",
       "protocol": "IP",
+      "types": [
+        "mms"
+      ],
+      "user": "claro"
+    },
+    {
+      "apn": "mms.claro.pe",
+      "mmsc": "http://claro/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "192.168.231.30",
+      "name": "mms.claro.pe",
+      "password": "claro",
       "types": [
         "mms"
       ],

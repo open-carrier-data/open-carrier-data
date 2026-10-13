@@ -1,15 +1,53 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "entel.pe",
       "authtype": 0,
-      "name": "entel.pe",
-      "protocol": "IP",
+      "name": "Entel PE",
       "types": [
-        "default",
-        "dun"
+        "default"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "entel.pe",
+      "authtype": 0,
+      "name": "Entel PE",
+      "protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "entel.pe",
+      "name": "entel.pe",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "entel.pe",
@@ -28,16 +66,29 @@
       "authtype": 0,
       "name": "Entel Internet",
       "types": [
+        "default",
         "supl"
       ]
     },
     {
-      "apn": "ims",
-      "name": "Entel",
+      "apn": "entel.pe",
+      "name": "Entel PE",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "ims"
+        "default",
+        "xcap"
       ]
+    },
+    {
+      "apn": "entel.pe",
+      "authtype": 0,
+      "name": "entel.pe",
+      "protocol": "IP",
+      "types": [
+        "dun"
+      ],
+      "user_editable": false
     },
     {
       "apn": "ims",
@@ -57,6 +108,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "location.entel.pe",
@@ -122,6 +181,15 @@
       "name": "Entel MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     }
   ],

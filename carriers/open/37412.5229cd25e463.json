@@ -1,5 +1,47 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "bconnected",
+      "name": "bconnected",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "http://www.google.com",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "bconnected",
       "name": "BMobile Prepaid",
@@ -14,7 +56,6 @@
       "name": "Prepaid Data",
       "server": "http://www.google.com",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -22,8 +63,16 @@
       "apn": "bmobile",
       "name": "bmobile",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "bmobile",
+      "name": "bmobile",
+      "protocol": "IPV4V6",
+      "types": [
         "dun"
       ]
     },
@@ -69,6 +118,16 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
       "carrier_id": 1739,
       "name": "Bmobile internet",
       "types": [
@@ -91,7 +150,6 @@
       "authtype": 1,
       "name": "Bmobile internet",
       "types": [
-        "default",
         "supl"
       ]
     },
@@ -114,6 +172,8 @@
       "mmsport": 8080,
       "mmsproxy": "192.168.210.104",
       "name": "mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

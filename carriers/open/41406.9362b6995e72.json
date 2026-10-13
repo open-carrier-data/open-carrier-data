@@ -1,18 +1,61 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "THL",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
-      "name": "Telenor Myanmar",
+      "name": "IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
     },
     {
       "apn": "Internet",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "Internet",
       "name": "Telenor Myanmar",
       "types": [
-        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ATOM",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "Telenor INTERNET",
+      "types": [
+        "default",
+        "xcap"
       ]
     },
     {

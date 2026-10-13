@@ -1,5 +1,49 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "ATT-ATT-GSM-USA"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G_PLUS",
+        "connected:5G_PLUS",
+        "not_restricted_rrc_idle:NONE",
+        "not_restricted_rrc_con:NONE",
+        "connected_mmwave_2nd:5G_PLUS",
+        "connected_2nd:5G",
+        "not_restricted_rrc_idle_2nd:5G",
+        "not_restricted_rrc_con_2nd:5G"
+      ]
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "5gcbroadband",
+      "name": "5gcbroadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "broadband",
+      "name": "broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "hotspot",
       "name": "ATT Hotspot",
@@ -33,6 +77,15 @@
       "user_visible": false
     },
     {
+      "apn": "lwaactivate",
+      "name": "ATT activation",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "nrhotspot",
       "name": "ATT Nrhotspot",
       "protocol": "IPV4V6",
@@ -48,7 +101,7 @@
       "mmsc": "http://mmsc.mobile.att.net",
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
-      "name": "ATT Nrphone",
+      "name": "nrphone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -62,7 +115,7 @@
     {
       "always_on": true,
       "apn": "nrphone",
-      "name": "ATT XCAP",
+      "name": "nrphone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -76,7 +129,7 @@
       "mmsport": 80,
       "mmsproxy": "proxy.mobile.att.net",
       "mtu": 1410,
-      "name": "ATT Nextgenphone",
+      "name": "nxtgenphone",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -87,6 +140,15 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "nxtgenphone",
+      "name": "ATT UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "sos",

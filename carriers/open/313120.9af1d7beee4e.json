@@ -1,5 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "ATT-ATT-GSM-USA"
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "firstnet-broadband",
+      "name": "firstnet-broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "firstnet-hotspot",
+      "name": "ATT FirstNet Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "firstnet-hotspot",
       "name": "firstnet-hotspot",
@@ -47,6 +79,27 @@
       "user_editable": false
     },
     {
+      "apn": "firstnet-phone",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "firstnet-phone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "firstnet-phone",
+      "name": "ATT FirstNet UT",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "bearer_bitmask": "3|9|10|11|14|15|18|20",
       "name": "ims",
@@ -69,13 +122,22 @@
     },
     {
       "apn": "service",
-      "name": "xcap",
+      "name": "service",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "name": "ATT FirstNet Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     }
   ],
   "android_carrier_config": {

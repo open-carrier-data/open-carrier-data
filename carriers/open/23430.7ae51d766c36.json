@@ -1,9 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -29,6 +25,72 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "EEZONE",
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "eezone",
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "MMS",
+      "password": "secure",
+      "types": [
+        "mms"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
+      ]
+    },
     {
       "apn": "EEZONE",
       "authtype": 0,

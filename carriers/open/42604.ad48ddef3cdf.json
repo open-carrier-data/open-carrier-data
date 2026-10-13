@@ -1,4 +1,24 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -20,6 +40,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "sos",
       "name": "stc",
       "protocol": "IP",
@@ -29,7 +57,7 @@
     },
     {
       "apn": "stc.bh",
-      "name": "stc",
+      "name": "stc.bh",
       "types": [
         "default",
         "dun"
@@ -40,7 +68,7 @@
       "mmsc": "http://mms.stc.com.bh:38090",
       "mmsport": 8080,
       "mmsproxy": "172.18.142.36",
-      "name": "stc",
+      "name": "stcwap.bh",
       "types": [
         "mms"
       ]
@@ -104,6 +132,14 @@
       "name": "vivawap.bh",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

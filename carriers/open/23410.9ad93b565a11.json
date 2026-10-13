@@ -1,8 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -22,6 +19,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -56,6 +56,15 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "IMS",
@@ -67,8 +76,8 @@
     },
     {
       "apn": "ims",
-      "name": "O2",
-      "protocol": "IPV6",
+      "name": "IMS",
+      "protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -116,6 +125,14 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mobile.o2.co.uk",

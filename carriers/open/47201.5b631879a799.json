@@ -1,5 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "default",
       "carrier_id": 1624,
@@ -20,7 +44,9 @@
     },
     {
       "apn": "ims",
-      "name": "DHIRAAGU",
+      "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -31,10 +57,28 @@
       "mmsport": 8080,
       "mmsproxy": "172.24.97.4",
       "name": "internet.dhimobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.dhimobile",
+      "mmsc": "http://mms.dhimobile.com.mv",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.97.4",
+      "name": "internet.dhimobile",
+      "types": [
         "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "wap.dhimobile",
+      "name": "Dhiraagu",
+      "types": [
+        "default"
       ]
     },
     {

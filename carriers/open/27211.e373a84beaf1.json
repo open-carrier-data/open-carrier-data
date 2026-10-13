@@ -1,9 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
       "support_ims_clir_overriding": true
     },
@@ -22,6 +18,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -35,6 +34,15 @@
         "default",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "tescomobile.liffeytelecom.com",
+      "name": "Tesco Mobile Internet",
+      "port": 8080,
+      "proxy": "10.1.11.19",
+      "types": [
+        "default"
       ]
     },
     {
@@ -55,6 +63,16 @@
       "mmsport": 8080,
       "mmsproxy": "10.1.11.19",
       "name": "TMI APN",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "tescomobile.liffeytelecom.com",
+      "mmsc": "http://10.1.11.68/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.11.19",
+      "name": "Tesco MMS",
       "types": [
         "mms"
       ]

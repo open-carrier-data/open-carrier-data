@@ -11,6 +11,9 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR",
       "voice_network_setting_style": "StopNetworkSearchingOnPause"
@@ -27,6 +30,30 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "mmssfr",
+      "mmsc": "http://mms1",
+      "mmsport": 8080,
+      "mmsproxy": "10.151.0.1",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "sl2sfr",
+      "name": "SFR webphone",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "websfr",
+      "name": "SFR option modem",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "mmssfr",
       "authtype": 1,

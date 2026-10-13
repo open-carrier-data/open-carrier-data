@@ -1,11 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -23,9 +18,62 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "giffgaff.com",
+      "name": "giffgaff",
+      "types": [
+        "default"
+      ],
+      "user": "giffgaff"
+    },
+    {
+      "apn": "giffgaff.com",
+      "name": "giffgaff",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "gg"
+    },
+    {
+      "apn": "giffgaff.com",
+      "mmsc": "http://mmsc.mms.mediamessaging.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.132.254.1",
+      "name": "giffgaff MMS",
+      "types": [
+        "mms"
+      ],
+      "user": "giffgaff"
+    },
+    {
+      "apn": "giffgaff.com",
+      "mmsc": "http://mmsc.mediamessaging.co.uk:8002",
+      "name": "giffgaff MMS",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "gg"
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "giffgaff.com",
       "authtype": 1,

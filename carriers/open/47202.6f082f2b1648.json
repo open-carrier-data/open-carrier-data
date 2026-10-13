@@ -1,5 +1,37 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "MMS",
       "mmsc": "http://mms.ooredoo.mv",
@@ -8,6 +40,13 @@
       "name": "Ooredoo",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "OoredooData",
+      "name": "OoredooData",
+      "types": [
+        "default"
       ]
     },
     {
@@ -51,6 +90,23 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "name": "Ooredoo",
       "types": [
         "ims"
@@ -58,10 +114,37 @@
     },
     {
       "apn": "ooredoodata",
+      "name": "OoredooData",
+      "port": 8080,
+      "proxy": "172.24.10.20",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ooredoodata",
+      "name": "ooredoodata",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ooredoodata",
       "name": "Ooredoo",
       "types": [
-        "default",
         "dun"
+      ]
+    },
+    {
+      "apn": "ooredoodata",
+      "mmsc": "http://mms.ooredoo.mv",
+      "mmsport": 8080,
+      "mmsproxy": "172.24.10.20",
+      "name": "ooredoodata",
+      "types": [
+        "mms"
       ]
     }
   ],

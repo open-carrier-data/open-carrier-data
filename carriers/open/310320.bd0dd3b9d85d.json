@@ -1,5 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ISP IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims.cellularoneaz.net",
       "bearer_bitmask": "14|18|20",
@@ -10,6 +33,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "isp.cellularoneaz.net",
+      "authtype": 0,
+      "name": "isp.cellularoneaz.net",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "isp.cellularoneaz.net",
@@ -26,8 +59,16 @@
       "authtype": 0,
       "name": "isp.cellularoneaz.net",
       "types": [
-        "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "isp.cellularoneaz.net",
+      "name": "ISP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -48,6 +89,8 @@
       "mmsport": 9401,
       "mmsproxy": "209.4.229.94",
       "name": "wap.c1csky.net",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

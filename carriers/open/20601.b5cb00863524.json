@@ -1,24 +1,77 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ]
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "Eastlink VoLTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "mms.mobi.eastlink.ca",
       "mmsc": "http://mmss.mobi.eastlink.ca",
       "mmsport": 8080,
       "mmsproxy": "10.232.12.49",
-      "name": "MMS",
+      "name": "mms.mobi.eastlink.ca",
       "types": [
         "mms"
       ]
     },
     {
+      "apn": "services",
+      "name": "Eastlink Xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "services",
+      "name": "Eastlink Xcap",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "services",
+      "name": "Eastlink Xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "wisp.mobi.eastlink.ca",
-      "name": "Internet",
+      "name": "wisp.mobi.eastlink.ca",
       "types": [
         "default",
         "supl"
       ]
     }
   ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
@@ -26,12 +79,12 @@
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
+    "volte": "supported",
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Carrier 20601",
+  "display_name": "Eastlink",
   "match": {
     "gid1_prefixes": [
       "B6"

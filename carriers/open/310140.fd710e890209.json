@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -14,6 +28,15 @@
       "name": "GTA",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "GTA IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -33,7 +56,9 @@
     },
     {
       "apn": "service",
-      "name": "GTA Service",
+      "name": "service",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],

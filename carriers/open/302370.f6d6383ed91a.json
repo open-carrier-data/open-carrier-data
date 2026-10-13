@@ -1,4 +1,29 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseEnlargedIcon",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_ROGERS"
+      ]
+    }
+  },
   "android_apns": [
     {
       "apn": "fido-core-appl1.apn",
@@ -40,10 +65,45 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "isp.fido.apn",
       "name": "fido",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "Fido Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltedata.apn",
+      "name": "ltedata.apn",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -74,6 +134,23 @@
     {
       "apn": "lteinternet.apn",
       "name": "fido",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "name": "Fido Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "name": "ltemobile.apn",
+      "protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -134,6 +211,41 @@
       "user_editable": false
     },
     {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ltemobile.apn",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "netsvcs",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido ePDG",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
       "mmsc": "http://mms.fido.ca",
@@ -159,6 +271,15 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "netsvcs",
+      "name": "Netsvcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "netsvcs",
@@ -213,7 +334,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "fido",
+  "display_name": "Fido",
   "match": {
     "gid1_prefixes": [
       "DD"

@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "hotspot",
@@ -9,14 +23,6 @@
         "dun"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "name": "CC",
-      "protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
     },
     {
       "always_on": true,
@@ -44,6 +50,14 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "service",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
       "name": "CC",
@@ -66,11 +80,27 @@
     {
       "apn": "wholesale",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "name": "wholesale",
+      "name": "Consumer Cellular",
       "types": [
         "hipri",
-        "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "name": "wholesale",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wholesale",
+      "name": "CONSUMER",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],
@@ -123,7 +153,7 @@
     "sms_over_ims": "unknown",
     "video_calling": "conditional",
     "volte": "supported",
-    "vonr": "unknown",
+    "vonr": "supported",
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },

@@ -1,9 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,EndPreviousCall,E911Wificall,NoWaitInSvcE911"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-ASR-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,AutoSelectionWhenBootup,CdmaSubscriptionEnable,SupportDataPopup,SupportInternationalRoamingNotification,NetworkSetting_TMO"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "UseDisplayTimer",
+      "indicator_icon_branding": "ASR"
+    },
+    "wifi_calling": {
+      "operator_branding": "MetroPCS"
+    }
+  },
   "android_apns": [
     {
       "apn": "asw.data",
       "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
-      "name": "Data",
+      "name": "asw.data",
       "protocol": "IPV6",
       "types": [
         "default",
@@ -71,6 +90,32 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "Assurance IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "Assurance ePDG MMS",
+      "protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "name": "Assurance ePDG XCAP",
+      "protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -121,7 +166,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Assurance Us",
+  "display_name": "Assurance",
   "match": {
     "gid1_prefixes": [
       "1A53"

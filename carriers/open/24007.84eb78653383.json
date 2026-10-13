@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -33,6 +30,16 @@
   "android_apns": [
     {
       "apn": "4g.tele2.se",
+      "authtype": 0,
+      "name": "4g.tele2.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "4g.tele2.se",
       "carrier_id": 1696,
       "name": "Tele2 Internet",
       "types": [
@@ -43,12 +50,13 @@
     },
     {
       "apn": "4g.tele2.se",
-      "authtype": 0,
-      "name": "Tele2 Internet",
+      "mmsc": "http://mmsc.tele2.se",
+      "mmsport": 8080,
+      "mmsproxy": "mmsproxy.tele2.se",
+      "name": "Tele2 4G MMS",
       "protocol": "IPV4V6",
       "types": [
-        "default",
-        "supl"
+        "mms"
       ]
     },
     {
@@ -72,6 +80,15 @@
       "protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "4g.tele2.se",
+      "authtype": 0,
+      "name": "Tele2 Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "supl"
       ]
     },
     {
@@ -195,6 +212,28 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
+      "mmsc": "http://mmsc.tele2.se",
+      "mmsport": 8080,
+      "mmsproxy": "mmsproxy.tele2.se",
+      "name": "Tele2 Services",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
+      "name": "Tele2 Services",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms"
       ]
     },
     {

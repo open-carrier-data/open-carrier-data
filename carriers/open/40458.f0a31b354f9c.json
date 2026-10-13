@@ -1,4 +1,30 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [],
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "StopNetworkSearchingOnPause,GetPreferredNTModeForLteOnly"
+    },
+    "operator_display": {
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "indicator_icon_branding": "INU_4G",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "WAPSOUTH.CELLONE.IN",
@@ -45,6 +71,18 @@
       "name": "BSNL-mms",
       "port": 8080,
       "proxy": "10.210.10.11",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "bsnlmms",
+      "mmsc": "http://bsnlmmsc.in",
+      "mmsport": 8080,
+      "mmsproxy": "10.210.10.11",
+      "name": "CelloneWest_mms",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -125,6 +163,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "mmssouth.cellone.in",

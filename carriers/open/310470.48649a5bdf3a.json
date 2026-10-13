@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -71,6 +85,15 @@
     },
     {
       "apn": "ims",
+      "name": "DOCOMO IMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "bearer_bitmask": "14",
       "name": "DPAC IMS",
       "types": [
@@ -91,7 +114,7 @@
     },
     {
       "apn": "internet",
-      "name": "Docomo Pacific",
+      "name": "internet",
       "types": [
         "default",
         "supl"
@@ -249,7 +272,9 @@
     },
     {
       "apn": "xcap",
-      "name": "DPAC XCAP",
+      "name": "xcap",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
         "xcap"
       ],

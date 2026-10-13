@@ -1,5 +1,42 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "+autoSwitchNr5gMode",
+        "disableAutoSwitchNr5gMode"
+      ],
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-LTN-GSM-EUR",
+      "voice_network_setting_style": "SupportDualDataRoam"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "Llamada VoWiFi",
+      "operator_style_tokens": [
+        "WFC_TITLE_FROM_CSC"
+      ]
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
@@ -61,6 +98,16 @@
     {
       "apn": "web.colombiamovil.com.co",
       "authtype": 1,
+      "name": "web.colombiamovil.com.co",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "web.colombiamovil.com.co",
+      "authtype": 1,
       "carrier_id": 624,
       "name": "TIGO WEB",
       "types": [
@@ -71,18 +118,26 @@
     },
     {
       "apn": "web.colombiamovil.com.co",
+      "name": "TIGO WEB",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "web.colombiamovil.com.co",
       "authtype": 1,
       "name": "web.colombiamovil.com.co",
       "types": [
-        "default",
         "supl"
       ]
     },
     {
       "apn": "web.colombiamovil.com.co",
       "name": "TIGO WEB",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "dun"
+        "xcap"
       ]
     },
     {

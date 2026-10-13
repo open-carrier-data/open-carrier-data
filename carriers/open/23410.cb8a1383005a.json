@@ -1,11 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -23,9 +18,84 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
+    {
+      "apn": "IMS",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "name": "TESCO Mobile",
+      "password": "password",
+      "port": 8080,
+      "proxy": "193.113.200.195",
+      "types": [
+        "default"
+      ],
+      "user": "tescowap"
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "name": "TESCO",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ],
+      "user": "tm"
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "name": "TESCO",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.113.200.195",
+      "name": "TESCO MMS",
+      "password": "password",
+      "types": [
+        "mms"
+      ],
+      "user": "tescowap"
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "name": "TESCO MMS",
+      "password": "p",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "tm"
+    },
+    {
+      "apn": "prepay.tesco-mobile.com",
+      "mmsc": "http://mmsc.mms.o2.co.uk:8002",
+      "name": "TESCO MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "IMS",
       "carrier_enabled": true,

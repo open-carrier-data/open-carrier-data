@@ -1,5 +1,27 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "IMS VTR CL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
     {
       "apn": "mms.vtr.com",
       "authtype": 0,
@@ -28,6 +50,18 @@
     {
       "apn": "movil.vtr.com",
       "authtype": 2,
+      "name": "movil.vtr.com",
+      "password": "vtrmovil",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ],
+      "user": "vtrmovil"
+    },
+    {
+      "apn": "movil.vtr.com",
+      "authtype": 2,
       "carrier_id": 2216,
       "name": "Internet",
       "password": "vtrmovil",
@@ -40,21 +74,20 @@
     },
     {
       "apn": "movil.vtr.com",
-      "authtype": 2,
-      "name": "movil.vtr.com",
+      "name": "vtr",
       "password": "vtrmovil",
       "types": [
-        "default",
-        "supl"
+        "dun"
       ],
       "user": "vtrmovil"
     },
     {
       "apn": "movil.vtr.com",
-      "name": "vtr",
+      "authtype": 2,
+      "name": "movil.vtr.com",
       "password": "vtrmovil",
       "types": [
-        "dun"
+        "supl"
       ],
       "user": "vtrmovil"
     },

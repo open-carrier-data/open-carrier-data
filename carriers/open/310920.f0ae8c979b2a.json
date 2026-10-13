@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -95,6 +108,39 @@
         "ia",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "James Valley Cellular XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "James Valley Cellular IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.jvw.net",
+      "name": "internet.jvw.net",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "internet.jvw.net",
+      "mmsc": "http://m.iot1.com/jamesvalley/mms.php",
+      "name": "James Valley Cellular MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     }
   ],

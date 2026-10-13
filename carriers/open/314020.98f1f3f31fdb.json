@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_type_capability": "VZW-SPO-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "CHA"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -92,6 +105,15 @@
         "supl"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "spectrum",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -203,7 +225,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Spectrum Us",
+  "display_name": "CHA_ESIM",
   "match": {
     "gid1_prefixes": [
       "BA01490000000000"

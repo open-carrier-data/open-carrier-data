@@ -1,4 +1,19 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,EndPreviousCall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "ATT-XAR-GSM-USA",
+      "voice_network_setting_style": "UsaGsmNetworkSetting,CdmaSubscriptionEnable,SupportENSNetworkSetting,SupportDataOffNotification,NetworkSetting_AIO"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAR"
+    }
+  },
   "android_apns": [
     {
       "apn": "ereseller",
@@ -31,7 +46,7 @@
     },
     {
       "apn": "ims",
-      "name": "ATT IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -56,6 +71,26 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "reseller",
+      "name": "reseller",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "reseller",
+      "mmsc": "http://mmsc.mobile.att.net",
+      "mmsport": 80,
+      "mmsproxy": "proxy.mobile.att.net",
+      "name": "reseller",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "resellermht",
@@ -142,7 +177,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Attmvnos Us",
+  "display_name": "ATT MVNO",
   "match": {
     "gid1_prefixes": [
       "49FF"

@@ -1,4 +1,31 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall"
+      ],
+      "network_type_capability": "EUR-EUR-GSM-EUR",
+      "voice_network_setting_style": "DisplayRatInfoForManualSearch"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "3hotspot",
@@ -42,6 +69,15 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "three.co.uk",
       "carrier_id": 1505,
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
@@ -73,22 +109,6 @@
     },
     {
       "apn": "three.co.uk",
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "mtu": 1440,
-      "name": "3",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "three.co.uk",
       "bearer_bitmask": "14|20",
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
       "mmsport": 8799,
@@ -109,9 +129,13 @@
       "mmsport": 8799,
       "mmsproxy": "mms.three.co.uk",
       "mtu": 1440,
-      "name": "3",
+      "name": "three.co.uk",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
+        "default",
+        "mms",
+        "supl",
         "xcap"
       ],
       "user_editable": false
@@ -149,7 +173,6 @@
     "maxMessageSize": 3145728,
     "recipientLimit": 20,
     "show_apn_setting_cdma_bool": true,
-    "smsToMmsTextThreshold": 11,
     "support_video_conference_call_bool": true,
     "volte_replacement_rat_int": 3,
     "wfc_data_spn_format_idx_int": 1,

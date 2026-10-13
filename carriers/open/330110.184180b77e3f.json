@@ -1,10 +1,32 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "DisableMuteHold,BlockAddCall,CSRetry"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "XAA-XAA-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAA_OPEN"
+    }
+  },
   "android_apns": [
     {
       "apn": "wap.tracfone",
       "name": "TRACFONE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "name": "TRACFONE",
+      "types": [
         "fota",
         "hipri",
         "supl"
@@ -16,6 +38,16 @@
       "mmsport": 8799,
       "mmsproxy": "10.50.38.3",
       "name": "TRACFONE MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "name": "Tracfone - CLARO MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -55,7 +87,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Tracfone Pr",
+  "display_name": "Tracfone - CLARO",
   "match": {
     "gid1_prefixes": [
       "DEFF"

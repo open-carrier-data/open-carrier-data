@@ -1,11 +1,9 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
-      "contacts_operator_style": "ATL",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -22,8 +20,15 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
-      "indicator_icon_branding": "OVF",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -39,6 +44,16 @@
     },
     {
       "apn": "airtelnet.es",
+      "name": "airtelnet.es",
+      "password": "vodafone",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "vodafone"
+    },
+    {
+      "apn": "airtelnet.es",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "airtelnet.es",
@@ -51,7 +66,7 @@
     },
     {
       "apn": "airtelwap.es",
-      "name": "vf es",
+      "name": "airtelwap.es",
       "password": "wap125",
       "types": [
         "default"
@@ -152,11 +167,35 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "IMS",
       "types": [
         "ims"
       ]
@@ -207,6 +246,18 @@
       "mmsport": 80,
       "mmsproxy": "212.73.32.10",
       "name": "Vodafone ES MMS",
+      "password": "wap125",
+      "types": [
+        "mms"
+      ],
+      "user": "wap@wap"
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "mmsc": "http://mmsc.vodafone.es/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "212.73.32.10",
+      "name": "mms.vodafone.net",
       "password": "wap125",
       "types": [
         "mms"

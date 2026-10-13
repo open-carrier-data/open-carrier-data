@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "cvt01",
@@ -15,18 +28,20 @@
     },
     {
       "apn": "hos",
-      "name": "Copper Valley Telecom",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "Copper Valley MMS",
       "protocol": "IPV4V6",
       "types": [
-        "xcap"
+        "mms"
       ]
     },
     {
-      "apn": "ims",
-      "name": "Copper Valley Telecom",
+      "apn": "hos",
+      "name": "hos",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "ims"
+        "xcap"
       ]
     },
     {
@@ -39,6 +54,32 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "name": "rinawireless",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "rinainternet.rinawireless.com",
+      "mmsc": "http://mms.rinawireless.com",
+      "name": "rinawireless MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "sos",

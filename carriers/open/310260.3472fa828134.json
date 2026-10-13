@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "XAG"
+    }
+  },
   "android_apns": [
     {
       "apn": "TMUS",
@@ -16,7 +30,7 @@
     {
       "apn": "data.lycamobile.com",
       "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
-      "name": "Lyca",
+      "name": "data.lycamobile.com",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -25,6 +39,23 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "data.lycamobile.com",
+      "mmsc": "http://lyca.mmsmvno.com/mms/wapenc",
+      "name": "LYCA MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "data.lycamobile.com",
+      "name": "LYCA",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "fast.t-mobile.com",
@@ -50,6 +81,14 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "LycaMobile IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,
@@ -167,7 +206,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Lyca Us",
+  "display_name": "LycaMobile",
   "match": {
     "gid1_prefixes": [
       "6C79"

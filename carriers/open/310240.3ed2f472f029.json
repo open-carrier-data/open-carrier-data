@@ -1,0 +1,67 @@
+{
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "TMO-XAG-GSM-USA",
+      "voice_network_setting_style": "SupportENSNetworkSettingForMvno,UsaGsmNetworkSetting"
+    }
+  },
+  "android_apns": [
+    {
+      "apn": "Solavei",
+      "name": "Solavei",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "Solavei",
+      "mmsc": "http://solavei.mmsmvno.com/mms/wapenc",
+      "name": "Solavei MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Solavei IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    }
+  ],
+  "android_carrier_config": {
+    "carrier_volte_available_bool": true
+  },
+  "capabilities": {
+    "esim": "unknown",
+    "ims_conference": "unknown",
+    "mms": "supported",
+    "rcs": "unknown",
+    "sms_over_ims": "unknown",
+    "video_calling": "unknown",
+    "volte": "supported",
+    "vonr": "supported",
+    "vowifi": "unknown",
+    "wifi_calling_roaming": "unknown"
+  },
+  "display_name": "Solavei",
+  "match": {
+    "gid1_prefixes": [
+      "7376"
+    ],
+    "mccmnc": [
+      "310240"
+    ]
+  },
+  "profile_id": "open.310240.3ed2f472f029",
+  "schema_version": 1
+}

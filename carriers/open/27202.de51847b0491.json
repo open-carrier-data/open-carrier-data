@@ -1,11 +1,6 @@
 {
   "addons": {
-    "emergency_calling": {
-      "e911_routing_policy": "csprefer",
-      "emergency_dial_call_style": "EndPreviousCall,UseMobileVoiceRegState"
-    },
     "ims": {
-      "contacts_operator_style": "BTU",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -24,6 +19,9 @@
         "not_restricted_rrc_con:5G"
       ],
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -187,6 +185,16 @@
       "mmsport": 8080,
       "mmsproxy": "62.40.32.40",
       "mtu": 1440,
+      "name": "Three MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mmsc": "http://mms.um.3ireland.ie:10021/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "62.40.32.40",
       "name": "Three MMS",
       "types": [
         "mms"

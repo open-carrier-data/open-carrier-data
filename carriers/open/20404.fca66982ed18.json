@@ -1,5 +1,28 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
+    {
+      "apn": "admin.cs4glte.com",
+      "name": "INTL CSpire Admin",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
     {
       "apn": "ims",
       "name": "C Spire",
@@ -8,6 +31,26 @@
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "ims",
+      "name": "INTL CSpire IMS",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "ims.cs4glte.com",
+      "name": "INTL CSpire IMS",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "Uniroam@inet.cs.com"
     },
     {
       "apn": "internet.cs4gLTE.com",
@@ -19,6 +62,27 @@
         "default",
         "mms"
       ]
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "name": "INTL CSpire Internet",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "mmsc": "http://pix.cspire.com",
+      "name": "INTL CSpire MMS",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "Uniroam@inet.cs.com"
     },
     {
       "apn": "sos",
@@ -40,6 +104,16 @@
     },
     {
       "apn": "tethering.cs4glte.com",
+      "name": "INTL CSpire Tethering",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "tethering.cs4glte.com",
       "name": "C Spire",
       "types": [
         "dun"
@@ -47,6 +121,7 @@
     }
   ],
   "android_carrier_config": {
+    "carrier_volte_available_bool": true,
     "enabledMMS": true,
     "maxMessageSize": 1048576,
     "recipientLimit": 25

@@ -1,12 +1,41 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "UseMobileVoiceRegState"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "mobile_network_setting_menu_tokens": [
+        "-voltecall",
+        "-voltecall_sim_mobility"
+      ],
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "algar.br",
       "name": "algar.br",
       "password": "1212",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
-        "default",
+        "default"
+      ],
+      "user": "algar"
+    },
+    {
+      "apn": "algar.br",
+      "name": "Algar TELECOM",
+      "password": "1212",
+      "protocol": "IPV4V6",
+      "types": [
         "dun"
       ],
       "user": "algar"
@@ -68,6 +97,15 @@
       "user": "ctbc"
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "mms.ctbc.br",
       "authtype": 1,
       "mmsc": "http://mms.ctbccelular.com.br/was",
@@ -108,6 +146,14 @@
       "user": "CTBC"
     },
     {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "wap.ctbc.br",
       "mmsc": "http://wap.ctbccelular.com.br",
       "name": "CTBC WAP",
@@ -119,6 +165,15 @@
         "supl"
       ],
       "user": "ctbc"
+    },
+    {
+      "apn": "xcap",
+      "name": "IMS XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

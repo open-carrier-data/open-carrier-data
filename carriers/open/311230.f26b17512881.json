@@ -1,4 +1,17 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "network_selection_menu_style": "GLOBALLTECDMA",
+      "network_type_capability": "USC-ACG-GLB-USA"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "ACG"
+    }
+  },
   "android_apns": [
     {
       "apn": "CdmaNai",
@@ -55,6 +68,14 @@
         "default",
         "dun",
         "mms"
+      ]
+    },
+    {
+      "apn": "admin.cs4glte.com",
+      "name": "C Spire FOTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -195,7 +216,7 @@
     {
       "apn": "internet.cs4glte.com",
       "mmsc": "http://pix.cspire.com/servlets/mms",
-      "name": "C Spire Internet",
+      "name": "internet.cs4glte.com",
       "protocol": "IPV4V6",
       "types": [
         "default",
@@ -218,6 +239,14 @@
       "roaming_protocol": "IP",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "name": "C Spire Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {

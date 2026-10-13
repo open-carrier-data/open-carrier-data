@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "LTE",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "Wap",
@@ -13,6 +27,20 @@
       "user": "wap"
     },
     {
+      "apn": "ims",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "IMS Emergency",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "wap",
       "mmsc": "http://mmc.digiceltt.com/servlets/mms",
       "mmsport": 8080,
@@ -23,6 +51,16 @@
         "mms"
       ],
       "user": "wap"
+    },
+    {
+      "apn": "wap.digiceltt.com",
+      "mmsc": "http://mmc.digiceltt.com/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.6.12",
+      "name": "Digicel MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "wap.digiceltt.com",
@@ -74,7 +112,7 @@
     {
       "apn": "web.digiceltt.com",
       "authtype": 1,
-      "name": "INTERNET Trinidad",
+      "name": "web.digiceltt.com",
       "types": [
         "default",
         "supl"

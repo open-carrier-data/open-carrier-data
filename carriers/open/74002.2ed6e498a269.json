@@ -1,11 +1,52 @@
 {
+  "addons": {
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-LTN-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
+      "apn": "emergency.volte.ims.cnt.net.ec",
+      "name": "CNT Emergency",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "emergency.volte.ims.cnt.net.ec",
+      "name": "CNT Emergency",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "CNT VoLTE",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.cnt.net.ec",
-      "name": "CNT",
+      "name": "internet.cnt.net.ec",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "xcap"
       ]
     },
     {

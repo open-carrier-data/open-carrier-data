@@ -10,9 +10,6 @@
     "network_policy": {
       "display_antenna_limited": true,
       "gcf_sor": true,
-      "mobile_network_setting_menu_tokens": [
-        "-voltecall"
-      ],
       "network_selection_menu_style": "NUMERIC",
       "network_type_capability": "EUR-EUR-GSM-EUR"
     },
@@ -34,6 +31,15 @@
     {
       "apn": "ice.net",
       "name": "ice.net",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "ice.net",
+      "name": "ice.net Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default"
       ]
@@ -91,6 +97,15 @@
     },
     {
       "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1300,
@@ -130,6 +145,16 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "mms.ice.net",
+      "mmsc": "http://mms",
+      "mmsport": 80,
+      "mmsproxy": "10.10.10.10",
+      "name": "ice.net MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.ice.net",

@@ -1,5 +1,53 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "ims": {
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "A1 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mmsc",
+      "name": "A1 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "mms.velcom.by",
       "mmsc": "http://mmsc",
@@ -51,6 +99,18 @@
       "user": "mms"
     },
     {
+      "apn": "mms.velcom.by",
+      "mmsc": "http://mms.velcom.by/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.200.15.15",
+      "name": "Velcom MMS",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
       "apn": "plus.velcom.by",
       "name": "plus.velcom.by",
       "password": "plus",
@@ -62,7 +122,7 @@
     },
     {
       "apn": "vmi.velcom.by",
-      "name": "VELCOM",
+      "name": "vmi.velcom.by",
       "types": [
         "default",
         "dun"
@@ -141,6 +201,15 @@
         "supl"
       ],
       "user": "web3"
+    },
+    {
+      "apn": "xcap",
+      "name": "A1 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {
