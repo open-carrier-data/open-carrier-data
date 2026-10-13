@@ -18,10 +18,15 @@ compared, on the 3GPP data network types of HOLD_TYPES. A trip is one of:
   a trailing `/` on the MMSC is ignored. The vendor tuples come from the
   generator's records of CHECKOUT, the head's checkout.
 
-Everything else is reported, never held: credentials and HTTP proxies on the
-leads, leads that move to an APN no current vendor gives, scopes that leave
-the file, losses only on IWLAN or CDMA, other MMS moves, stored rows and
-`persist_apns_for_plmn` events.
+Everything else is reported, never held: credentials and HTTP proxies gained
+or changed on the leads, credentials lost on the leads, leads that move to an
+APN no current vendor gives, scopes that leave the file, losses only on IWLAN
+or CDMA, other MMS moves, stored rows and `persist_apns_for_plmn` events.
+A lead sends credentials when it has a username or password and its resolved
+auth type is not 0; credentials are lost when the old lead sent them and the
+new lead sends none, with a WARNING when every row a current vendor backs for
+the new lead's APN in the scope carries credentials (rule decisions of
+2026-10-13, round 14).
 
 The digest is the first 16 hex characters of sha256 over the sorted trip
 lines `condition|scope|network types|old value|new value`, joined by and
@@ -129,6 +134,12 @@ def lead_text(lead: tuple | None) -> str:
     return "none" if lead is None else str(lead[0])
 
 
+def sends_credentials(lead: tuple | None) -> bool:
+    """A lead (`android_phone_model.lead_key`) sends credentials when it has a
+    username or password and its resolved auth type is not 0."""
+    return bool(lead and (lead[3] or lead[4]) and lead[5] != 0)
+
+
 def read_rows(path: Path) -> list[dict[str, Any]]:
     """The rows of an apns-conf.xml. The file must be well-formed XML with
     one `<apn>` element per line, as the generator writes it."""
@@ -199,6 +210,12 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict) -
                     if nonempty and (new[3], new[4]) not in vendor_apn["credentials"]:
                         warnings.append(f"WARNING: {s} {role} lead {new[0]}: credentials a current vendor's "
                                         f"credentials for this APN contradict")
+                if sends_credentials(old) and not sends_credentials(new):
+                    items[f"credentials lost on the {role} lead"].add(s)
+                    given = (vendor_apn or {}).get("credentials", ())
+                    if given and all(any(c) for c in given):
+                        warnings.append(f"WARNING: {s} {role} lead {new[0]}: sends no credentials, every current "
+                                        f"vendor row of this APN carries credentials")
                 if new[1] and (not old or old[1] != new[1]):
                     items[f"HTTP proxy gained or changed on the {role} lead"].add(s)
                     if new[1] not in (vendor_apn or {}).get("proxies", ()):
