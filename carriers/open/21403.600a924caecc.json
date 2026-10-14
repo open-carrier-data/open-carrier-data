@@ -1,10 +1,10 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
+      "contacts_operator_style": "AMO",
       "support_ims_clir_overriding": true
     },
     "network_policy": {
@@ -24,7 +24,16 @@
         "not_restricted_rrc_idle:5G",
         "not_restricted_rrc_con:5G"
       ],
+      "indicator_icon_branding": "ORANGE",
       "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_style_tokens": [
+        "WFC_HELP_ADD_OSP",
+        "WFC_HELP_NOTI",
+        "WFC_GPG"
+      ],
+      "show_vowifi_end_call": true
     }
   },
   "android_apns": [
@@ -123,9 +132,10 @@
     },
     {
       "apn": "internet",
-      "name": "Orange Espa\u00f1a",
+      "name": "internet",
       "password": "orange",
       "types": [
+        "default",
         "dun"
       ],
       "user": "orange"
@@ -581,6 +591,7 @@
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
     "show_wifi_calling_icon_in_status_bar_bool": true,
+    "smsToMmsTextThreshold": 10,
     "video_calls_can_be_hd_audio": true,
     "wfc_spn_format_idx_int": 1
   },
