@@ -28,6 +28,8 @@ jobs:
         run: python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness warn
       - name: Validate the device catalog
         run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
+      - name: Validate the device records
+        run: python3 tools/validate_carrier_variants.py . --freshness warn
       - name: Test generated Android outputs
         run: python3 tools/test_generated_android_outputs.py
       - name: Test the carrier relevance contract
@@ -40,6 +42,8 @@ jobs:
         run: python3 tools/test_android_phone_model.py
       - name: Test the phone-level guard
         run: python3 tools/test_phone_guard.py
+      - name: Test the device records validator
+        run: python3 tools/test_validate_carrier_variants.py
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8
@@ -137,6 +141,7 @@ jobs:
           status=0
           python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${liveness[@]}" "${today[@]}" 2>&1 | tee strict.log || status=1
           python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
+          python3 tools/validate_carrier_variants.py . --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
           # Warnings do not fail the alarm, but show on the run: a Samsung
           # build whose values publish under the vendor build grace warns
           # every day until the lane rebuilds them.

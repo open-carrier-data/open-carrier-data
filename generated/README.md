@@ -7,7 +7,7 @@ The Android files under `generated/android/` are produced from the carrier profi
 | `index.json` | stable snapshot, one entry per carrier profile with `profile_id`, `display_name`, `path` |
 | `evidence-index.json` | source snapshot records, per-profile fact sources, observed scope, exact source versions, conflicts, quality gates, newest entry dates |
 | `android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` with the freshness window |
-| `devices/` | the device catalog and the two carrier artifact registries |
+| `devices/` | the device catalog, the two carrier artifact registries, and the device records (`carrier-variants.json`) for VoLTE, Wi-Fi calling, video calling and VoNR |
 
 The Android files come from `python3 tools/generate_android_outputs.py carriers generated --apn-version 8`. The profiles, the evidence index, and the device catalog are published from the private repo.
 
