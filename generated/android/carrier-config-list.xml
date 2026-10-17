@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:3a9843dc0fb7841335357cfe5de0e9b5032f881add913550939657433c0387ba
+    data_digest: sha256:3f4a56bf0f5d14aa3f6832cb3c886bd800096528292863849f9a072e572eab43
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -20993,6 +20993,10 @@
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc001.mcc548.pub.3gppnetwork.org</string>
   </carrier_config>
+  <!-- open.54927.12c96de5e5b1 -->
+  <carrier_config mcc="549" mnc="27" name="BlueSky">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.55299.662ed7f5eefd -->
   <carrier_config mcc="552" mnc="99" name="Carrier 55299">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -28901,7 +28905,7 @@
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.20601.af51e09fd169 -->
-  <carrier_config imsi="20601889[0-9]*" mcc="206" mnc="01" name="Telenet BE">
+  <carrier_config imsi="20601889[0-9]*" mcc="206" mnc="01" name="Telenet">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -39755,6 +39759,10 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
   </carrier_config>
+  <!-- open.544110.cfbbf9631fd7 -->
+  <carrier_config mcc="544" mnc="110" name="Bluesky American Samoa" spn="\QBluesky\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.54715.f1866721f3af -->
   <carrier_config mcc="547" mnc="15" name="Vodafone Pf" spn="\QVodafone PF\E">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -39770,6 +39778,7 @@
   <!-- open.60400.bc43c50a320d -->
   <carrier_config mcc="604" mnc="00" name="Orange MA" spn="\QOrange MA\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.60400.5fc0811e629e -->
   <carrier_config cid="902" mcc="604" mnc="00" name="Méditélécom">
