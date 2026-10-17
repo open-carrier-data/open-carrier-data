@@ -1,4 +1,39 @@
 {
+  "android_apns": [
+    {
+      "apn": "XCAP",
+      "name": "Telenet XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Telenet IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.be",
+      "mmsc": "http://mmsc.telenet.be",
+      "mmsport": 80,
+      "mmsproxy": "195.130.149.100",
+      "name": "Telenet MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "telenetwap.be",
+      "name": "Telenet Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
@@ -7,7 +42,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "supported",
     "video_calling": "unknown",
@@ -16,7 +51,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telenet BE",
+  "display_name": "Telenet",
   "match": {
     "imsi_prefix_patterns": [
       "20601889"
