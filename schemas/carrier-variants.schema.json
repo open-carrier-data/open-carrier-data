@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-carrier-data.github.io/schemas/carrier-variants.schema.json",
+  "title": "Open Carrier Data device records (generated/devices/carrier-variants.json)",
+  "description": "What one device's own carrier file configures for VoLTE, Wi-Fi calling, video calling and VoNR on one carrier profile: every device value OCD publishes, including those that agree with the profile value. Configuration, not a test result. tools/validate_carrier_variants.py checks what a schema cannot: published profiles, catalog devices, capability_sources, the data digest, rule 7 and canonical order.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "description",
+    "based_on_data_digest",
+    "checks_through",
+    "stale_after",
+    "capabilities",
+    "profiles"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "based_on_data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "checks_through": { "type": "string", "format": "date" },
+    "stale_after": { "type": "string", "format": "date" },
+    "capabilities": {
+      "const": ["video_calling", "volte", "vonr", "vowifi"]
+    },
+    "profiles": {
+      "type": "object",
+      "propertyNames": { "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
+      "additionalProperties": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": { "enum": ["video_calling", "volte", "vonr", "vowifi"] },
+        "additionalProperties": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/record" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "source", "stack", "devices"],
+      "properties": {
+        "state": {
+          "enum": ["on", "off", "conditional"],
+          "description": "on or off as the device's own file writes it; conditional when two files of the same device (overlay layers) disagree. A missing key is never a record."
+        },
+        "source": {
+          "enum": [
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos_device_overlays",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ]
+        },
+        "stack": {
+          "enum": ["stock", "lineageos", "aosp"],
+          "description": "The software the value holds for: stock firmware (Samsung, Google, Fairphone), a LineageOS device tree, or Sony's AOSP tree."
+        },
+        "newest_entry": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+          "description": "Month of the newest upstream entry behind the value; absent when an entry is undated. A value whose newest entry is older than five years does not publish, so no record is older."
+        },
+        "devices": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(android:[a-z0-9-]{3,80}|samsung:[A-Z0-9][A-Z0-9._/+-]{1,63})$"
+          },
+          "description": "Sorted. android:<device_id> from generated/devices/android.json, or samsung:<Build.MODEL> for a Samsung model the catalog lists."
+        },
+        "basis": {
+          "const": "samsung_vonr_switch",
+          "description": "Only on vonr from samsung_omc, where the evidence index's capability_basis names it."
+        }
+      }
+    }
+  }
+}

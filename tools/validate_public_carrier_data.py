@@ -181,6 +181,8 @@ GENERATED_FILES = {
     "devices/android.json",
     "devices/apple-carrier-artifacts.json",
     "devices/apple.json",
+    # Device records (round 17), checked by tools/validate_carrier_variants.py.
+    "devices/carrier-variants.json",
     "devices/index.json",
 }
 

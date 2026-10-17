@@ -65,6 +65,8 @@ Samsung's and Apple's offs never count. Both write an off almost always as a mis
 
 Samsung OMC's `vonr` says less than a table that turns VoNR on. It comes from Samsung's carrier pack (OMC): when the pack's Mobile networks menu feature carries the token `+vonrcall`, Samsung's settings offer a "VoNR (Voice over 5G)" switch for that carrier on that model. So `supported` from Samsung OMC means that Samsung offers the switch on the models the evidence index lists. It does not mean VoNR is on by default, and it is not a field test. A model without the token leaves VoNR `unknown`, not `unsupported`: Vodafone Germany, for one, runs VoNR on Samsung phones that show no switch. Test and lab networks (MCC 001, the documented lab codes, test equipment and lab entries) and private networks (MCC 999) get no value, and neither does a SIM that a KT phone dims the switch for, or a network that only Samsung's open-market US pack (XAA) offers it for: an operator's pack lists only that operator's networks and brands, but XAA serves no operator, so there the token describes the phone, not the carrier. The value never becomes a CarrierConfig key, so `carrier-config-list.xml` gets no `vonr_*` key from it. `capability_basis` in the evidence index names this basis with the Samsung sales codes and models behind it. A `vonr` from `samsung_carrier_config` is a table that turns VoNR on: Samsung's own CarrierConfig sets `vonr_enabled_bool` for the carrier. It has no `capability_basis` and adds no `vonr_*` key either.
 
+For `volte`, `vowifi`, `video_calling` and `vonr`, the profile value is a summary: the rules above applied over every source and every device's carrier table. It is never a vote or a count over devices, and no number of devices moves it. Android switches these four features on only where the device and the carrier both allow them, and most phone makers set them per phone model, so a `conditional` here usually means one model's own table differs from others'. `generated/devices/carrier-variants.json` gives one device's own table value, every device value OCD publishes, including those that agree with the profile value; a reader that knows the phone model should show that record next to the profile value ([Device records](#device-records)).
+
 ## Android carrier config
 
 `android_carrier_config` holds a reviewed subset of Android CarrierConfig keys. The schema names 117 allowed keys. Count them with this command:
@@ -157,7 +159,7 @@ The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `f
 
 ## Provenance fields in the evidence index
 
-`generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.
+The evidence index is OCD's per-source record: which families give each value. `generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.
 
 Each `source_snapshots` record describes one source family check.
 
@@ -224,3 +226,57 @@ The key of an APN fact in `fact_sources` is `sha256:` and the first 16 hex digit
 A family appears only where its observations name a version. The git-based families, `aosp`, `lineageos`, and `mobile_broadband_provider_info`, read one commit per snapshot, which `source_snapshots[].revision` names. The validator rejects any other key and any value outside these patterns, so no URL or path can appear.
 
 Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observed_value_count`, and `resolution`. `resolution` is `omitted_from_stable`, `conditional`, `published_variants`, or `superseded_device_file`. Only capabilities become `conditional`. `superseded_device_file` is a capability or CarrierConfig conflict that Google's current CarrierSettings file settled: only Google's frozen Pixel copies (`google_pixel_vendor_carriersettings`) disagreed with it, so the current value is published, and `capability_sources` and `capability_newest_entries` leave the frozen copies out for that capability. Only APN rows become `published_variants`, which means every variant was published. `generated/android/apns-conf.xml` orders the variants by the sources behind each row. A `published_variants` conflict can also carry `variant_sources`: one entry per variant, sorted by `key`, each with the variant's APN fact key (described above, the variant as one row with one type) and `sources`, the profile sources whose observations gave exactly that variant. A variant a gate later removed, such as an uncorroborated generic row, is still listed, because a source gave it. A `lineageos_apn_removed:<commit>` gate counts the APN rows left out of the profile because LineageOS removed them from `android_vendor_apn`. `<commit>` is the full LineageOS commit first seen without the rows. A row is left out when its network code, MVNO selector, APN and type set equal a removed LineageOS row and no observation that gives it has an entry newer than the removal; one newer entry keeps the row with all its sources. A `stale_single_source_entry:<capability>`, `frozen_source_only:<capability>`, `unseen_scope:<capability>` or `single_family_off:<capability>` gate names a capability the profile publishes as `unknown`, and a `single_family_off:<key>` gate in `android_carrier_config` names a false capability-gating key the profile does not publish. Since 2026-10-10 such a false of `carrier_volte_available_bool`, `carrier_wfc_ims_available_bool` or `carrier_vt_available_bool` no longer withdraws another observation's true as a conflict, so the key may be published `true` next to the gate, never `false`; the validator checks both. `capability_sources` agrees with the published value: `supported` has only `on`, `unsupported` only `off`, `conditional` two kinds or `conditional`, and an `unknown` with sources names the gate that withheld it. So a `conditional` VoLTE, Wi-Fi calling or video calling value can come with a true switch: the sources still disagree, and the off that one family alone gives does not switch the feature off. [how-it-is-built.md](how-it-is-built.md) explains the rules.
+
+## Device records
+
+`generated/devices/carrier-variants.json` says what one device's own carrier file configures for one carrier profile, for the four switches Android gates per device and per carrier: `volte`, `vowifi`, `video_calling` and `vonr` (rule decisions of 2026-10-17, round 17). It is configuration, not a test result: no record has been checked on a phone, none says the operator offers the service or that your plan includes it, and none says anything about emergency calls. `schemas/carrier-variants.schema.json` describes it and `tools/validate_carrier_variants.py` checks it.
+
+Which scope each kind of data is published at:
+
+| Data | Published per | Where |
+| --- | --- | --- |
+| APN rows, MMSC and MMS proxy | carrier | `apns-conf.xml`, `android_apns`; per-source APN variants in the evidence index |
+| `mms` and the other capabilities | carrier | the profile value |
+| CarrierConfig keys, the three gating keys among them, and add-ons | carrier | `carrier-config-list.xml`, `android_carrier_config` |
+| `volte`, `vowifi`, `video_calling`, `vonr` | carrier and device | the profile value as the summary; device records in `generated/devices/carrier-variants.json` |
+
+The file is compact JSON with sorted keys, like the evidence index. Its top-level fields:
+
+| Field | Meaning |
+| --- | --- |
+| `schema_version` | `1` |
+| `description` | what the file is |
+| `based_on_data_digest` | the `data_digest` of `generated/android/metadata.json` the records were built with. The file is not part of that digest, so adding it changes no other file |
+| `checks_through`, `stale_after` | the freshness window of `generated/index.json` |
+| `capabilities` | `["video_calling", "volte", "vonr", "vowifi"]` |
+| `profiles` | profile ID to capability to a list of records |
+
+Each record groups the devices whose own files give the same value from the same source, stack and month:
+
+| Field | Meaning |
+| --- | --- |
+| `state` | `on` or `off` as the device's own file writes it, or `conditional` when two files of the same device disagree (two overlay layers of one LineageOS tree) |
+| `source` | the one source family the value comes from, as `capability_sources` names it: `samsung_omc`, `google_carriersettings`, `google_pixel_vendor_carriersettings`, `lineageos_device_overlays`, `sony_open_devices_aosp` or `fairphone_official_source` |
+| `stack` | the software the value holds for: `stock` (Samsung, Google, Fairphone firmware), `lineageos` (a LineageOS device tree) or `aosp` (Sony's AOSP tree) |
+| `newest_entry` | month (`YYYY-MM`) of the newest upstream entry behind the value; absent when an entry is undated |
+| `devices` | sorted. `samsung:<Build.MODEL>` for a Samsung model the device catalog lists, else `android:<device_id>` from `generated/devices/android.json`, whose `device_names` are `Build.DEVICE` values |
+| `basis` | only `samsung_vonr_switch`, on `vonr` from `samsung_omc` where `capability_basis` names it: Samsung offers the VoNR switch, as described above |
+
+How a record is made:
+
+- **The same observations as the profile.** Only observations the profile's merge counts become records: quarantine, the test and lab network gate, Samsung's SIM rules, the Samsung VoNR switch rule, and Google's current file over its frozen Pixel copies where the current file gives a value. Only the step that turns disagreeing sources into `conditional` is done per device instead.
+- **The newest file per device.** Google's current file wins over a frozen copy of the same Pixel. Samsung's newest Android major counts per model and sales code. A LineageOS file keeps only the last block's value for a SIM, as Android's `putAll` does.
+- **Explicit values only.** A key missing from a file is never a record, and a source's own `conditional` is not one either. Samsung's and Apple's offs never publish, so a Samsung record is always `on`. Samsung's IMS table and Samsung's CarrierConfig, which are read from one model's firmware and serve every model of the build, Apple's bundles, which have no per-device split, and the carrier-wide lists (AOSP, LineageOS's APN list, mobile-broadband-provider-info) give no record.
+- **Five years per record.** A value whose newest entry is older than five years does not publish, for every capability (stricter than rule 7's evidence test for VoLTE and Wi-Fi calling). On 2026-10-17 that withheld every Sony value.
+- **Exact device binding.** A codename or model binds by exact case-folded catalog alias. One that two catalog devices share (a codename sold under two brands) gives no record, and neither does a Samsung model the catalog does not list.
+- **Every value listed.** A device value is listed whatever the profile value is, so a record that agrees with the profile value shows that the device's own file was read and agrees (tie-break of 2026-10-17).
+
+What a missing device means: A phone model without a record for a profile and switch has no file OCD reads that sets a value there, or its value is older than five years, or its codename or model does not bind to one catalog device. It never means `off`, and it never means the device agrees with the profile value.
+
+What the records are not:
+
+- **Not confirmed.** Every device value rests on one source family; no device is covered by two families. "Not contradicted" is all a record can say.
+- **Not the phone you hold.** A `stock` record holds for that model's stock firmware, a `lineageos` record for that tree's builds. A stock record shown on a LineageOS build of the same model is "this model's stock firmware", not "this phone".
+- **Not an export.** Never write an `off` from this file into a phone's CarrierConfig. `carrier-config-list.xml` stays the one CarrierConfig file, per carrier.
+
+The validator checks the field list, that every profile is published and every device is in the catalog, one value per profile, capability, device and stack, that each record's source is listed in the profile's `capability_sources` for that capability under its state, no Samsung `off`, `newest_entry` inside five years of `checks_through`, `basis` exactly where `capability_basis` names it, the digest, the freshness window and canonical bytes.

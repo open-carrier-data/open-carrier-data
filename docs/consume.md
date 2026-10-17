@@ -152,6 +152,16 @@ On 2026-10-03 the first lines of the output are:
 
 The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. Overlay APN rows and CarrierConfig keys. For capabilities, report the most specific profile's value; an `unknown` there means no usable source for this brand, and the host network's value is only the host's. A value is what carrier tables configure, not a test result. It is not a statement that the operator still offers the service. `supported` means at least one phone maker's or OS carrier table turns the feature on for this SIM, or for Samsung VoNR offers the user its switch (`capability_basis` names that weaker basis), and no source whose off counts turns it off. The switch counts only where the pack serves the carrier: on a KT phone only for KT's networks, and never from Samsung's open-market US pack (XAA). Samsung's and Apple's offs never count, including a Samsung carrier pack that switches a feature off on some phone models. It is a configuration, not a test result: the feature may still be off on a given phone, or on phones the carrier has not approved. `unsupported` means the operator's own configuration, or two independent source families, turn it off. One maker's off alone is `unknown`. To see which source families turn a capability on and which turn it off, read `capability_sources` in `generated/evidence-index.json`.
 
+### Device records for the four IMS switches
+
+APN rows and MMS settings are per carrier. VoLTE, Wi-Fi calling, video calling and VoNR also have device records in `generated/devices/carrier-variants.json`: what one device's own carrier file sets for the SIM ([data-model.md](data-model.md#device-records)). A tool that knows the phone resolves a value in three steps:
+
+1. SIM to profile, as above, through `lookup.json`.
+2. Phone to device: on a Samsung phone `samsung:` and `Build.MODEL`; otherwise the `generated/devices/android.json` device whose `device_names` list `Build.DEVICE`, compared case-folded, which gives `android:<device_id>`. Pick the records whose `stack` matches the phone's software: `stock` on stock firmware, `lineageos` on a LineageOS build.
+3. The device record if there is one, shown with its source, stack and month next to the profile value, labelled as this device's own file. Otherwise the profile value, labelled as the carrier's. A missing device is never `off`.
+
+A record from another stack can still be shown, with its stack named: a stock record on a LineageOS build of the same model is "this model's stock firmware", not "this phone". Device records are information, not an export: never write a false VoLTE, Wi-Fi calling or video calling switch from them into a phone. Each record rests on one source, is configuration and not a test, and says nothing about emergency calls.
+
 ### Ask why with --explain
 
 `--explain` answers why a SIM gets what it gets. It prints, as JSON:
@@ -244,6 +254,7 @@ Run both validators before you package anything. Both must exit 0. Pass `--fresh
 ```bash
 python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
 python3 tools/validate_device_catalog.py generated/devices --freshness fail
+python3 tools/validate_carrier_variants.py . --freshness fail
 ```
 
 Output on 2026-10-04:
