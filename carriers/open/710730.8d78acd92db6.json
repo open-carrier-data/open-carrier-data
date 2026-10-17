@@ -1,6 +1,15 @@
 {
   "android_apns": [
     {
+      "apn": "ims",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.ideasalo.ni",
       "authtype": 1,
       "name": "internet.ideasalo.ni",
@@ -26,6 +35,13 @@
       "user": "internet"
     },
     {
+      "apn": "internet.ideasclaro",
+      "name": "INTERNET CLARO",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "mms.ideasalo.ni",
       "authtype": 1,
       "mmsc": "http://10.6.32.27/servlets/mms",
@@ -37,6 +53,16 @@
         "mms"
       ],
       "user": "mms"
+    },
+    {
+      "apn": "mms.ideasclaro",
+      "mmsc": "http://10.6.32.27/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "10.6.32.2",
+      "name": "MMS CLARO",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "mms.indeasalo.ni",
