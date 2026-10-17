@@ -17,6 +17,7 @@ from datetime import date
 from pathlib import Path
 from typing import Callable
 
+import android_phone_model
 import generate_android_outputs
 import lineageos_apns
 import validate_device_catalog
@@ -3095,12 +3096,20 @@ def check_vendor_mms_first() -> None:
     serves a 3GPP data network type; it counts for the types it serves. The
     first internet row loses "mms" when no current vendor backs it for MMS
     and the vendor MMS rows together serve every such type it serves; then
-    the best vendor MMS row moves just before the first row that still
-    serves "mms" when that row is no vendor MMS row. No row is removed, and
-    no type other than one "mms" changes."""
+    the best vendor MMS row moves just before the first row Android stores
+    that still serves "mms" when that stored row holds no vendor MMS row: a
+    row serves "mms" on the phone when any row with its android_unique_key
+    does (round 16, 2026-10-17). No row is removed, and no type other than
+    one "mms" changes. The stored-row shapes are checked through
+    write_android_groups_best_last, leave_out_absorbed_mms and the phone
+    model, with DataProfileManager's merge on and off."""
 
     google = "google_carriersettings"
     samsung = "samsung_omc"
+    # A source with this suffix gives the fact only from old builds
+    # (old_build_sources), so it is no current vendor for it.
+    old_build = "@old_build"
+    was = "http://10.71.170.30:38090/was"
 
     def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
         return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
@@ -3191,6 +3200,99 @@ def check_vendor_mms_first() -> None:
             (apn("mms.example", ("mms",), mmsc="http://mms.example"), (google,)),
             (apn("mms.example", ("default",), mmsc="http://mms.example", user="wap", password="wap"), ("apple_carrier_bundles",)),
         ],
+        # Round 16 (2026-10-17), the rows Android stores as one.
+        # 621/60 shape: the internet row serves "mms" with an MMSC only an
+        # old Samsung build gives, so step 2 takes "mms" off it and it is no
+        # longer similar to the vendor's 9mobile MMS row. A stale etisalat
+        # MMS-only row has the android_unique_key of a higher-ranked etisalat
+        # default,dun row, so the two are stored as one row that serves
+        # "mms", written ahead of the vendor row. The vendor row must move
+        # before that stored row.
+        "62160": [
+            (
+                apn("9mobile", ("default", "mms"), mmsc="http://mobile.9mobile.com.ng", mmsproxy="10.71.170.5", mmsport=8080),
+                {"default": (samsung,), "mms": (samsung + old_build,)},
+            ),
+            (
+                apn("etisalat", ("default", "dun"), authtype=3, mmsc=was, mmsproxy="10.71.170.5", mmsport=8080),
+                ("apple_carrier_bundles", "lineageos"),
+            ),
+            (
+                apn("etisalat", ("mms",), mmsc=was, mmsproxy="10.71.170.5", mmsport=8080),
+                ("apple_carrier_bundles", "lineageos"),
+            ),
+            (
+                apn("9mobile", ("mms",), name="9mobile MMS", mmsc=was, mmsproxy="10.71.170.5", mmsport=8080),
+                (samsung,),
+            ),
+        ],
+        # 374/12 shape: a stale MMS-only row with the key of a lower
+        # "default" row (the server attribute keeps them two file rows); the
+        # vendor MMS row moves before that stored row.
+        "37412": [
+            (apn("bconnected", ("default", "supl"), port=8080), (google, samsung)),
+            (
+                apn("buzz", ("default",), mmsc="http://192.168.210.103/operator/wap", proxy="192.168.210.104", port=8080, server="http://192.168.210.103/operator/wap"),
+                ("lineageos",),
+            ),
+            (
+                apn("buzz", ("mms",), name="BMobile Buzz", mmsc="http://192.168.210.103/operator/wap", proxy="192.168.210.104", port=8080),
+                ("lineageos", "apple_carrier_bundles"),
+            ),
+            (
+                apn("mms", ("mms",), name="Bmobile mms", authtype=1, mmsc="http://192.168.210.104/mmrelay.app", mmsproxy="192.168.210.104", mmsport=8080),
+                (google,),
+            ),
+        ],
+        # 748/01 shape: the stale stored row has the vendor's MMSC, MMS
+        # proxy and port; only the APN name differs.
+        "74801": [
+            (apn("prepago.ancel", ("default", "supl"), user="bam", password="bam"), (google, samsung)),
+            (
+                apn("wap", ("default", "supl"), authtype=1, mmsc="http://mmsc.mms.ancelutil.com.uy", mmsproxy="200.40.246.2", mmsport=3128, proxy="200.40.246.2", port=3128),
+                ("lineageos",),
+            ),
+            (
+                apn("wap", ("mms",), name="Antel", mmsc="http://mmsc.mms.ancelutil.com.uy", mmsproxy="200.40.246.2", mmsport=3128, proxy="200.40.246.2", port=3128),
+                ("lineageos", "sony_open_devices_aosp"),
+            ),
+            (
+                apn("mms", ("mms",), name="mmsANCEL", authtype=1, mmsc="http://mmsc.mms.ancelutil.com.uy", mmsproxy="200.40.246.2", mmsport=3128),
+                (google,),
+            ),
+        ],
+        # 454/00 GID 01040000 shape: the first stored row that serves "mms"
+        # already holds the vendor MMS row. Nothing moves, and the ranked
+        # best row of the group is written last (change 17).
+        "45400": [
+            (apn("globalcall", ("default",), name="Global Call"), (samsung,)),
+            (
+                apn("globalcall", ("default", "hipri", "mms"), name="Global Call", authtype=3, mmsc="http://192.168.58.171:8002", mmsproxy="192.168.59.51", mmsport=8080),
+                ("lineageos",),
+            ),
+            (
+                apn("globalcall", ("mms",), name="Global Call MMS", mmsc="http://192.168.58.171:8002", mmsproxy="192.168.59.51", mmsport=8080),
+                (samsung,),
+            ),
+        ],
+        # 274/12 shape, still open (round 6 question 7): a stale MMS-only
+        # row is stored with the current internet row, so the internet row
+        # serves "mms" with the vendor's MMSC, MMS proxy and port under
+        # another APN name. Step 3 stops there and nothing changes.
+        "27412": [
+            (
+                apn("internet.tal.is", ("default", "supl"), authtype=1, mmsc="http://mms.tal.is/servlets/mms", mmsproxy="213.167.138.210", mmsport=8080),
+                (samsung,),
+            ),
+            (
+                apn("internet.tal.is", ("mms",), name="Tal", mmsc="http://mms.tal.is/servlets/mms", mmsproxy="213.167.138.210", mmsport=8080),
+                ("lineageos", "sony_open_devices_aosp"),
+            ),
+            (
+                apn("mms.tal.is", ("mms",), name="Tal MMS", authtype=1, mmsc="http://mms.tal.is/servlets/mms", mmsproxy="213.167.138.210", mmsport=8080),
+                (samsung,),
+            ),
+        ],
     }
 
     def sources_for(sources: object, apn_type: str) -> tuple[str, ...]:
@@ -3212,7 +3314,18 @@ def check_vendor_mms_first() -> None:
             {
                 "section": "android_apns",
                 "key": generate_android_outputs.apn_fact_key(row, apn_type),
-                "sources": sorted(sources_for(sources, apn_type)),
+                "sources": sorted(source.removesuffix(old_build) for source in sources_for(sources, apn_type)),
+                **(
+                    {
+                        "old_build_sources": sorted(
+                            source.removesuffix(old_build)
+                            for source in sources_for(sources, apn_type)
+                            if source.endswith(old_build)
+                        )
+                    }
+                    if any(source.endswith(old_build) for source in sources_for(sources, apn_type))
+                    else {}
+                ),
             }
             for row, sources in rows
             for apn_type in row["types"]
@@ -3225,11 +3338,24 @@ def check_vendor_mms_first() -> None:
             }
         )
 
+    # The ranked rows put_vendor_mms_first receives, per scope, copied before
+    # it changes them.
+    ranked_in: dict[str, list[dict]] = {}
+    step = generate_android_outputs.put_vendor_mms_first
+
+    def capture(ranked: list[dict]) -> tuple[list[dict], int]:
+        ranked_in[ranked[0].get("mcc", "") + ranked[0].get("mnc", "")] = deepcopy(ranked)
+        return step(ranked)
+
     with tempfile.TemporaryDirectory() as tmp:
         evidence_path = Path(tmp) / "evidence.json"
         evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
         evidence = generate_android_outputs.load_apn_evidence(evidence_path)
-        rows = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+        try:
+            generate_android_outputs.put_vendor_mms_first = capture
+            rows = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+        finally:
+            generate_android_outputs.put_vendor_mms_first = step
         generated = Path(tmp) / "generated"
         carriers = Path(tmp) / "carriers"
         for item in profiles:
@@ -3323,13 +3449,22 @@ def check_vendor_mms_first() -> None:
         f"a moved row's twin that serves default stays behind the first internet row: {scope('23410')}",
     )
     assert_true(
-        retyped == {("65507", "internet"), ("63902", "safaricom"), ("23430", "everywhere")}
-        and rows.mms_left_out == 3
-        and metadata["omissions"]["mms_types_left_out_not_vendor_backed"] == 3,
-        f"three first internet rows lose mms and are counted: {retyped}, {rows.mms_left_out}",
+        retyped == {("65507", "internet"), ("63902", "safaricom"), ("23430", "everywhere"), ("62160", "9mobile")}
+        and rows.mms_left_out == 4
+        and metadata["omissions"]["mms_types_left_out_not_vendor_backed"] == 4,
+        f"four first internet rows lose mms and are counted: {retyped}, {rows.mms_left_out}",
     )
     assert_true(
-        moved == {("50501", "telstra.mms"), ("23430", "eezone"), ("310590", "VZWAPP"), ("23410", "mms.example")},
+        moved
+        == {
+            ("50501", "telstra.mms"),
+            ("23430", "eezone"),
+            ("310590", "VZWAPP"),
+            ("23410", "mms.example"),
+            ("62160", "9mobile"),
+            ("37412", "mms"),
+            ("74801", "mms"),
+        },
         f"the moved vendor rows are marked for --explain: {moved}, {scope('23410')}",
     )
     assert_true(
@@ -3349,6 +3484,151 @@ def check_vendor_mms_first() -> None:
         len(rows.records) == sum(len(items) for items in scopes.values()) and without_mms == given_without_mms,
         f"no row is removed and no type other than mms changes: {without_mms} != {given_without_mms}",
     )
+
+    # Round 16: the rows Android stores as one. Each shape is read on the
+    # phone model with DataProfileManager's merge (dedupeDataProfiles) on
+    # and off, because Android says it will stop merging profiles
+    # (DataProfileManager.java:888-890).
+    line = generate_android_outputs.apn_row_line
+
+    def scope_lines(mccmnc: str, records: list[dict]) -> list[str]:
+        return [line(record) for record in records if record.get("mcc", "") + record.get("mnc", "") == mccmnc]
+
+    def phone_mms(lines: list[str], mccmnc: str) -> dict[tuple[bool, str], tuple]:
+        """(merge on, network type) -> (MMS tuple, MMS lead)."""
+        phone_rows = android_phone_model.parse_lines(lines)
+        tables = android_phone_model.provider(phone_rows)
+        stored = android_phone_model.scope_rows(tables, (mccmnc[:3], mccmnc[3:], "", ""))
+        result = {}
+        for dedupe in (True, False):
+            settings = android_phone_model.profiles(stored, dedupe=dedupe)
+            for name, network_type in android_phone_model.MAIN_NETWORK_TYPES.items():
+                _, mms_profile, _ = android_phone_model.leads(settings, network_type)
+                result[(dedupe, name)] = (
+                    android_phone_model.mms_of(mms_profile, stored),
+                    android_phone_model.lead_key(mms_profile),
+                )
+        return result
+
+    def phone_state(lines: list[str]) -> dict:
+        state, _ = android_phone_model.phone_state(
+            android_phone_model.parse_lines(lines), android_phone_model.ALL_NETWORK_TYPES
+        )
+        return state
+
+    def mms_everywhere(mccmnc: str) -> set[tuple]:
+        return {mms for mms, _ in phone_mms(scope_lines(mccmnc, rows.records), mccmnc).values()}
+
+    labels = {
+        mccmnc: [(record["apn"], record["type"], record.get("carrier", "")) for record in rows.records if record.get("mcc", "") + record.get("mnc", "") == mccmnc]
+        for mccmnc in ("62160", "37412", "74801", "45400", "27412")
+    }
+    # 1. 621/60: the vendor row is written before the stale stored row, and
+    #    MMS stays on the vendor's tuple with the merge on and off. Before
+    #    round 16 the generator wrote the etisalat rows first and MMS went
+    #    to etisalat.
+    assert_true(
+        labels["62160"]
+        == [
+            ("9mobile", "default", "9mobile"),
+            ("9mobile", "mms", "9mobile MMS"),
+            ("etisalat", "mms", "etisalat"),
+            ("etisalat", "default,dun", "etisalat"),
+        ],
+        f"621/60: the vendor MMS row is written before the stale etisalat stored row: {labels['62160']}",
+    )
+    assert_true(
+        mms_everywhere("62160") == {("9mobile", was, "10.71.170.5", 8080)},
+        f"621/60: phone MMS is the vendor's 9mobile tuple with the merge on and off: {mms_everywhere('62160')}",
+    )
+    # 2. 374/12 and 748/01: the vendor row moves before the stored row of a
+    #    lower default row and a stale MMS-only row.
+    assert_true(
+        [value for value, _, _ in labels["37412"]] == ["bconnected", "mms", "buzz", "buzz"]
+        and mms_everywhere("37412") == {("mms", "http://192.168.210.104/mmrelay.app", "192.168.210.104", 8080)},
+        f"374/12: phone MMS moves to the vendor's tuple: {labels['37412']}, {mms_everywhere('37412')}",
+    )
+    assert_true(
+        [value for value, _, _ in labels["74801"]] == ["prepago.ancel", "mms", "wap", "wap"]
+        and mms_everywhere("74801") == {("mms", "http://mmsc.mms.ancelutil.com.uy", "200.40.246.2", 3128)},
+        f"748/01: phone MMS moves from wap to the vendor's mms: {labels['74801']}, {mms_everywhere('74801')}",
+    )
+    # 3. 454/00 GID shape: the stored row already holds the vendor MMS row.
+    #    Nothing moves, the ranked best row is written last, and the phone
+    #    sends MMS with the same tuple and credentials as with the vendor
+    #    row written last (the order before round 16); only the stored
+    #    row's label differs.
+    assert_true(
+        labels["45400"]
+        == [
+            ("globalcall", "default", "Global Call"),
+            ("globalcall", "mms", "Global Call MMS"),
+            ("globalcall", "default,hipri,mms", "Global Call"),
+        ]
+        and not any(record.get("_vendor_mms_ahead") for record in rows.records if record.get("mcc", "") + record.get("mnc", "") == "45400"),
+        f"454/00 GID shape: nothing moves and the ranked best row is written last: {labels['45400']}",
+    )
+    gid_lines = scope_lines("45400", rows.records)
+    vendor_last = [gid_lines[0], gid_lines[2], gid_lines[1]]
+    assert_true(
+        phone_mms(gid_lines, "45400") == phone_mms(vendor_last, "45400")
+        and phone_state(gid_lines) == phone_state(vendor_last)
+        and mms_everywhere("45400") == {("globalcall", "http://192.168.58.171:8002", "192.168.59.51", 8080)},
+        f"454/00 GID shape: phone MMS tuple, leads and credentials do not depend on which group row is last: {phone_mms(gid_lines, '45400')}",
+    )
+    # 4. 274/12, still open: the stale MMS twin is stored with the internet
+    #    row, step 3 stops there, and the phone keeps sending MMS over
+    #    internet.tal.is with the vendor's MMSC.
+    assert_true(
+        labels["27412"]
+        == [
+            ("internet.tal.is", "mms", "Tal"),
+            ("internet.tal.is", "default,supl", "internet.tal.is"),
+            ("mms.tal.is", "mms", "Tal MMS"),
+        ]
+        and ("27412", "mms.tal.is") not in moved
+        and mms_everywhere("27412") == {("internet.tal.is", "http://mms.tal.is/servlets/mms", "213.167.138.210", 8080)},
+        f"274/12: nothing changes, the internet row keeps MMS (round 6 question 7): {labels['27412']}, {mms_everywhere('27412')}",
+    )
+    # 5. Invariants in every scope: the first internet row stays, and with
+    #    the moved row taken out, every other stored row is written as
+    #    without step 3, in the same order.
+    for mccmnc, ranked in ranked_in.items():
+        moved_lines = {
+            line(record)
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == mccmnc and record.get("_vendor_mms_ahead")
+        }
+        moved_keys = {
+            generate_android_outputs.android_unique_key(record)
+            for record in rows.records
+            if line(record) in moved_lines
+        }
+
+        def identity(record: dict) -> tuple:
+            return tuple(sorted((k, str(v)) for k, v in generate_android_outputs.written_attributes(record).items() if k != "type"))
+
+        plain, _ = generate_android_outputs.leave_out_absorbed_mms(
+            generate_android_outputs.write_android_groups_best_last(deepcopy(ranked))
+        )
+        written = [
+            record
+            for record in rows.records
+            if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+        ]
+        first_internet = next((record for record in ranked if "default" in generate_android_outputs.apn_row_types(record["type"])), None)
+        written_internet = next((record for record in written if "default" in generate_android_outputs.apn_row_types(record["type"])), None)
+        assert_true(
+            (first_internet is None and written_internet is None)
+            or identity(first_internet) == identity(written_internet),
+            f"{mccmnc}: the first internet row stays: {scope(mccmnc)}",
+        )
+        assert_true(
+            [identity(record) for record in written if generate_android_outputs.android_unique_key(record) not in moved_keys]
+            == [identity(record) for record in plain if generate_android_outputs.android_unique_key(record) not in moved_keys],
+            f"{mccmnc}: the other stored rows keep their order: {scope(mccmnc)}",
+        )
+
     assert_true(
         generate_android_outputs.apn_row_network_types({"bearer_bitmask": "18"}) == frozenset()
         and generate_android_outputs.apn_row_network_types({"network_type_bitmask": "18"}) == frozenset()

@@ -939,10 +939,16 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
        (DataProfileManager 726-800): a type no vendor MMS row serves would be
        left without MMS (302/630 and 302/640 GID 40 and 42, where Google's
        only MMS row, apps.bell.ca, is Wi-Fi only).
-    3. Stop when the first row that serves "mms" is that internet row or a
-       vendor MMS row.
+    3. Stop when the first row Android stores (android_unique_key,
+       write_android_groups_best_last) that serves "mms" is that internet
+       row's or holds a vendor MMS row. A row serves "mms" on the phone when
+       any row of its android_unique_key group serves it, and a group's MMS
+       setting is a vendor's exactly when one of its rows is a vendor MMS
+       row, because the key holds the APN, MMSC, MMS proxy and MMS port.
     4. Move the best vendor MMS row that serves neither "default" nor "ia"
-       (RowRank read for "mms", then fallback_order_key) to just before it.
+       (RowRank read for "mms", then fallback_order_key) to just before the
+       earliest-ranked row of that stored group. The group is written at
+       that row's place, so the moved row comes before the stored row.
 
     Only the first internet row is retyped; retyping every row no vendor
     backs lets DataProfileManager merge EE's stale T-Mobile rows in 234/30.
@@ -956,6 +962,19 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     types), no scope loses MMS, and no internet or attach row changes.
     The coverage test of step 2 kept "mms" in no scope that day; a kept row
     is marked "_mms_kept_no_vendor_coverage" for --explain.
+    Step 3 reads the stored rows since rule decisions round 16 (2026-10-17,
+    round 6 question 7, the TelephonyProvider-group case): it read the file
+    rows, so a non-vendor group written ahead of the vendor MMS row could
+    take MMS (621/60, where a stale etisalat MMS-only row is stored with an
+    etisalat default,dun row and was held by the phone guard from 2026-10-15
+    to 2026-10-17). Measured on public cb895f19 with
+    measure_android_phone.py on all 11 network types, phone MMS moves to a
+    current vendor's tuple only in 374/12 and 748/01, no other MMS, internet
+    or attach lead, credential or auth type changes, and the phone stores
+    22,295 rows either way; on the 2026-10-17 data 621/60 joins them and
+    keeps 9mobile. A stale MMS-only row stored with the internet row itself
+    (274/12, where only the APN name differs from the vendor's) is not
+    reached: step 3 stops there, and it stays round 6 question 7.
     Returns the rows and 1 when a row was retyped."""
     def serves(record: dict[str, Any], apn_type: str) -> bool:
         return apn_type in apn_row_types(record["type"])
@@ -978,8 +997,28 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
             retyped = 1
         else:
             internet["_mms_kept_no_vendor_coverage"] = True
-    first = next((record for record in ranked if serves(record, "mms")), None)
-    if first is None or first is internet or vendor_mms_row(first):
+    # Android stores the rows of one android_unique_key as one row, at the
+    # place of the group's best-ranked row (write_android_groups_best_last),
+    # so a row serves "mms" on the phone when any row of its group does, and
+    # the group's MMS setting is a vendor's when any of its rows is a vendor
+    # MMS row (the unique key holds the APN, MMSC, MMS proxy and MMS port).
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in ranked:
+        groups[android_unique_key(record)].append(record)
+    first = next(
+        (record for record in ranked
+         if any(serves(member, "mms") for member in groups[android_unique_key(record)])),
+        None,
+    )
+    # "first is internet" is already the stored-row test: rank_scope puts
+    # every row that serves "default" first, so the internet row is ranked
+    # first in its scope and is always the earliest row of its own group
+    # (round 16; an explicit key comparison gives the same output).
+    if (
+        first is None
+        or first is internet
+        or any(vendor_mms_row(member) for member in groups[android_unique_key(first)])
+    ):
         return ranked, retyped
     candidates = [
         record for record in vendor if not serves(record, "default") and not serves(record, "ia")
