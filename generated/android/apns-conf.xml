@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:b8043b9b2284faae2b234dd1878ad7ec7acdb68be152e0df658052dfa978a8ea
+    data_digest: sha256:3a9843dc0fb7841335357cfe5de0e9b5032f881add913550939657433c0387ba
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -5833,6 +5833,7 @@
   <apn apn="xcap" carrier="Elisa" mcc="248" mnc="02" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="sos" carrier="Elisa" mcc="248" mnc="02" protocol="IPV4V6" type="emergency" />
   <apn apn="internet.tele2.ee" carrier="Tele2 Internet" carrier_id="669" mcc="248" mnc="03" type="default,ia,supl" />
+  <apn apn="internet.tele2.ee" carrier="Smart/Ultra MMS" carrier_id="669" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="193.12.40.6" mnc="03" type="mms" />
   <apn apn="internet.tele2.ee" carrier="internet.tele2.ee" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="mmsproxy.tele2.ee" mnc="03" password="wap" protocol="IP" type="default,dun,mms" user="wap" />
   <apn apn="internet.tele2.ee" carrier="Tele2 Internet" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="mmsproxy.tele2.ee" mnc="03" type="default,supl" />
   <apn apn="internet.tele2.ee" authtype="1" carrier="Tele2 EE LTE Internet" carrier_enabled="true" mcc="248" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
@@ -5840,7 +5841,6 @@
   <apn apn="internet.tele2.ee" carrier="Tele2 Internet" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="193.12.40.6" mnc="03" type="default,supl" />
   <apn apn="internet.tele2.ee" carrier="internet.tele2.ee" mcc="248" mnc="03" password="wap" type="supl" user="wap" />
   <apn apn="internet.tele2.ee" carrier="internet.tele2.ee" mcc="248" mnc="03" type="default,supl" />
-  <apn apn="internet.tele2.ee" carrier="Smart/Ultra MMS" carrier_id="669" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="193.12.40.6" mnc="03" type="mms" />
   <apn apn="internet.tele2.ee" authtype="1" carrier="internet.tele2.ee" carrier_enabled="true" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="mmsproxy.tele2.ee" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="internet.tele2.ee" authtype="1" carrier="internet.tele2.ee" carrier_enabled="true" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="193.12.40.6" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="mms.tele2.ee" carrier="Tele2 MMS" carrier_id="669" mcc="248" mmsc="http://mmsc.tele2.ee" mmsport="8080" mmsproxy="193.12.40.6" mnc="03" type="mms" />
@@ -16422,9 +16422,9 @@
   <apn apn="bconnected" carrier="bconnected" mcc="374" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" server="http://www.google.com" type="default" />
   <apn apn="bmobile" carrier="bmobile" mcc="374" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="bconnected" carrier="BMobile Prepaid" mcc="374" mnc="12" port="8080" type="default,supl" />
+  <apn apn="mms" authtype="1" carrier="Bmobile mms" carrier_id="1739" mcc="374" mmsc="http://192.168.210.104/mmrelay.app" mmsport="8080" mmsproxy="192.168.210.104" mnc="12" type="mms" />
   <apn apn="buzz" carrier="BMobile Buzz" mcc="374" mmsc="http://192.168.210.103/operator/wap" mnc="12" port="8080" proxy="192.168.210.104" type="mms" />
   <apn apn="buzz" carrier="buzz" mcc="374" mmsc="http://192.168.210.103/operator/wap" mnc="12" port="8080" proxy="192.168.210.104" server="http://192.168.210.103/operator/wap" type="default" />
-  <apn apn="mms" authtype="1" carrier="Bmobile mms" carrier_id="1739" mcc="374" mmsc="http://192.168.210.104/mmrelay.app" mmsport="8080" mmsproxy="192.168.210.104" mnc="12" type="mms" />
   <apn apn="mms" authtype="1" carrier="mms" mcc="374" mmsc="http://192.168.210.104/mmrelay.app" mmsport="8080" mmsproxy="192.168.210.104" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="IMS" carrier="IMS" mcc="374" mnc="12" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="bmobile" mcc="374" mnc="12" protocol="IPV4V6" type="ims" />
@@ -20893,8 +20893,8 @@
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="00" mvno_match_data="01030000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="01030000" mvno_type="gid" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="default" />
-  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="mms" />
+  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="00" mvno_match_data="01040000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="00" mvno_match_data="01040000" mvno_type="gid" type="xcap" />
   <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="00" mvno_match_data="02020001" mvno_type="gid" type="default" />
@@ -21006,8 +21006,8 @@
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="02" mvno_match_data="01030000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="01030000" mvno_type="gid" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="default" />
-  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="mms" />
+  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="02" mvno_match_data="01040000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="02" mvno_match_data="01040000" mvno_type="gid" type="xcap" />
   <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="02" mvno_match_data="02020001" mvno_type="gid" type="default" />
@@ -21269,8 +21269,8 @@
   <apn apn="ims" carrier="SUN Mobile IMS" mcc="454" mnc="18" mvno_match_data="01030000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="01030000" mvno_type="gid" type="xcap" />
   <apn apn="globalcall" carrier="Global Call" mcc="454" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="default" />
-  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="globalcall" carrier="Global Call MMS" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="mms" />
+  <apn apn="globalcall" authtype="3" carrier="Global Call" mcc="454" mmsc="http://192.168.58.171:8002" mmsport="8080" mmsproxy="192.168.59.51" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="default,hipri,mms" />
   <apn apn="ims" carrier="IMS" mcc="454" mnc="18" mvno_match_data="01040000" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="HOS" carrier="HOS" mcc="454" mnc="18" mvno_match_data="01040000" mvno_type="gid" type="xcap" />
   <apn apn="mobile" carrier="HK Prepaid" mcc="454" mnc="18" mvno_match_data="02020001" mvno_type="gid" type="default" />
@@ -21701,13 +21701,13 @@
   <apn apn="internet" authtype="1" carrier="internet" mcc="466" mmsc="http://mms.vibo.net.tw" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="T Star-internet" carrier_id="1886" mcc="466" mnc="89" type="default,ia,supl" />
   <apn apn="vibo" carrier="VIBO-vibo" carrier_id="1886" mcc="466" mnc="89" type="default,supl" />
+  <apn apn="internet" carrier="internet" mcc="466" mmsc="http://mms.vibo.net.tw" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user_editable="false" />
   <apn apn="vibo" authtype="1" carrier="vibo" mcc="466" mmsc="http://mms" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" type="mms" />
   <apn apn="vibo" carrier="vibo" mcc="466" mmsc="http://mms" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" type="default,supl" />
   <apn apn="viboone" authtype="1" carrier="VIBOONE" mcc="466" mnc="89" type="default,supl" />
   <apn apn="viboone" carrier="VIBOONE" carrier_id="1886" mcc="466" mnc="89" type="default,supl" />
   <apn apn="auroraweb" carrier="震旦電信(AURORA) (Internet)" mcc="466" mnc="89" type="default,supl" />
   <apn apn="vibo" authtype="1" carrier="VIBO-vibo" mcc="466" mnc="89" port="8080" proxy="172.24.128.36" type="default,supl" />
-  <apn apn="internet" carrier="internet" mcc="466" mmsc="http://mms.vibo.net.tw" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user_editable="false" />
   <apn apn="internet" carrier="T Star-MMS" carrier_id="1886" mcc="466" mmsc="http://mms.vibo.net.tw" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" type="mms" />
   <apn apn="aurorawap" carrier="震旦電信(AURORA) (MMS)" mcc="466" mmsc="http://auroramms" mmsport="8080" mmsproxy="172.24.128.36" mnc="89" type="mms" />
   <apn apn="ims" carrier="T Star-IMS" mcc="466" mnc="89" type="ims" user_editable="false" />
@@ -23326,11 +23326,11 @@
   <apn apn="glomms" authtype="1" carrier="Glo MMS" mcc="621" mmsc="http://mms.gloworld.com/mmsc" mmsport="8080" mmsproxy="10.100.82.4" mnc="50" password="mms" type="mms" user="mms" />
   <apn apn="glomms" carrier="Glo MMS" mcc="621" mmsc="http://mms.gloworld.com/mmsc" mmsport="3130" mmsproxy="10.100.82.4" mnc="50" password="mms" type="mms" user="mms" />
   <apn apn="9mobile" carrier="9mobile Internet" mcc="621" mnc="60" type="default" />
+  <apn apn="9mobile" carrier="9mobile MMS" mcc="621" mmsc="http://10.71.170.30:38090/was" mmsport="8080" mmsproxy="10.71.170.5" mnc="60" type="mms" />
   <apn apn="etisalat" carrier="etisalat" mcc="621" mmsc="http://10.71.170.30:38090/was" mmsport="8080" mmsproxy="10.71.170.5" mnc="60" type="mms" />
   <apn apn="etisalat" authtype="3" carrier="etisalat" mcc="621" mmsc="http://10.71.170.30:38090/was" mmsport="8080" mmsproxy="10.71.170.5" mnc="60" type="default,dun" />
   <apn apn="etisalat" carrier="etisalat WAP" carrier_id="1979" mcc="621" mnc="60" port="8080" proxy="10.71.170.5" type="default,supl" />
   <apn apn="etisalat" carrier="etisalat WAP" mcc="621" mnc="60" port="8080" proxy="10.71.170.5" type="default,supl" />
-  <apn apn="9mobile" carrier="9mobile MMS" mcc="621" mmsc="http://10.71.170.30:38090/was" mmsport="8080" mmsproxy="10.71.170.5" mnc="60" type="mms" />
   <apn apn="etisalat" authtype="3" carrier="etisalat" mcc="621" mmsc="http://10.71.170.30:38090/was" mnc="60" type="mms" />
   <apn apn="etisalat" authtype="3" carrier="etisalat" mcc="621" mnc="60" type="cbs,fota,hipri,ims,supl" />
   <apn apn="internet.td.airtel.com" carrier="Airtel" mcc="622" mnc="01" type="default,dun" />
@@ -25204,10 +25204,10 @@
   <apn apn="gprs.ancel" authtype="1" carrier="gprs.ancel" mcc="748" mnc="01" type="default,supl" />
   <apn apn="ancel" carrier="Ancel" mcc="748" mnc="01" type="default,supl" />
   <apn apn="prepago.ancel" carrier="BAM Pepaga Antel" mcc="748" mnc="01" password="bam" type="default,supl" user="bam" />
+  <apn apn="mms" authtype="1" carrier="mmsANCEL" carrier_id="1862" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsport="3128" mmsproxy="200.40.246.2" mnc="01" type="mms" />
   <apn apn="wap" carrier="Antel" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsport="3128" mmsproxy="200.40.246.2" mnc="01" port="3128" proxy="200.40.246.2" server="www.dale.com.uy" type="mms" />
   <apn apn="wap" authtype="1" carrier="wap" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsport="3128" mmsproxy="200.40.246.2" mnc="01" port="3128" proxy="200.40.246.2" server="www.dale.com.uy" type="default,supl" />
   <apn apn="wap" authtype="1" carrier="wapANCEL" carrier_id="1862" mcc="748" mnc="01" port="3128" proxy="200.40.246.2" type="default,supl" />
-  <apn apn="mms" authtype="1" carrier="mmsANCEL" carrier_id="1862" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsport="3128" mmsproxy="200.40.246.2" mnc="01" type="mms" />
   <apn apn="mms" authtype="1" carrier="mms" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsport="3128" mmsproxy="200.40.246.2" mnc="01" type="mms" />
   <apn apn="wap" carrier="Antel" mcc="748" mmsc="http://mmsc.mms.ancelutil.com.uy" mmsproxy="200.40.246.2" mnc="01" port="3128" proxy="200.40.246.2" server="www.dale.com.uy" type="mms" />
   <apn apn="ims" carrier="imsANTEL" mcc="748" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
