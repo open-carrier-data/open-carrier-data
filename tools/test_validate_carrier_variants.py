@@ -246,12 +246,23 @@ class ValidateCarrierVariantsTests(unittest.TestCase):
         data["profiles"][PROFILE]["volte"][0]["devices"] = ["android:5ecb137dfd5df943d5b0", "android:09769a7b58e06b05037b"]
         self.assert_rejected(data, "sorted list")
 
-    def test_a_record_repeating_the_carrier_value_is_not_listed(self) -> None:
+    def test_a_record_agreeing_with_the_carrier_value_is_listed(self) -> None:
+        """Every device value is listed (tie-break of 2026-10-17): an on record
+        on a supported profile and an off record on an unsupported one pass."""
         write(
             self.root / "carriers/open/26202.8cebd7550c67.json",
             {"profile_id": PROFILE, "capabilities": {"volte": "supported", "vonr": "unknown"}},
         )
-        self.assert_rejected(variants_file(), "repeats the carrier value supported")
+        data = variants_file()
+        data["profiles"][PROFILE]["volte"] = [data["profiles"][PROFILE]["volte"][1]]
+        self.assertIn("validated 2 device records", self.run_check(data))
+        write(
+            self.root / "carriers/open/26202.8cebd7550c67.json",
+            {"profile_id": PROFILE, "capabilities": {"volte": "unsupported", "vonr": "unknown"}},
+        )
+        data = variants_file()
+        data["profiles"][PROFILE]["volte"] = [data["profiles"][PROFILE]["volte"][0]]
+        self.assertIn("validated 2 device records", self.run_check(data))
 
     def test_basis_only_where_the_evidence_index_names_it(self) -> None:
         data = variants_file()

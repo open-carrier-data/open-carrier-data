@@ -9,7 +9,7 @@ The device catalog records which device identities maintained inventories list, 
 | `apple.json` | Apple product types from Apple's carrier index |
 | `android-carrier-artifacts.json` | Android carrier source artifacts and discovery scope records |
 | `apple-carrier-artifacts.json` | Apple carrier bundle artifacts, all digest verified |
-| `carrier-variants.json` | device records: what one device's own carrier file sets for VoLTE, Wi-Fi calling, video calling and VoNR on one carrier profile, where that differs from the profile value or the profile value is `conditional` or `unknown`. Configuration from one source, not a test result; [docs/data-model.md](../../docs/data-model.md#device-records) describes it |
+| `carrier-variants.json` | device records: what one device's own carrier file sets for VoLTE, Wi-Fi calling, video calling and VoNR on one carrier profile: every device value OCD publishes, including those that agree with the profile value. Configuration from one source, not a test result; [docs/data-model.md](../../docs/data-model.md#device-records) describes it |
 
 The counts change with every publish, so the table does not repeat them. `index.json` carries the device and artifact counts. These commands print the device, artifact, scope record, and source counts:
 

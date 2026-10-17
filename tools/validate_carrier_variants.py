@@ -8,7 +8,7 @@ carrier profile. The checks keep it to that: four capabilities and a closed
 field list; every profile published; every device in the device catalog; one
 value per profile, capability, device and stack; a source the evidence index
 lists for that capability and state; no off from Samsung or Apple; entries
-inside rule 7's five years; the digest of the data it was built with; and
+inside five years; the digest of the data it was built with; and
 canonical bytes.
 
 Usage: validate_carrier_variants.py [REPO_ROOT] [--freshness warn|fail] [--require]
@@ -71,7 +71,6 @@ ANDROID_DEVICE_RE = re.compile(r"android:[a-z0-9-]{3,80}")
 SAMSUNG_DEVICE_RE = re.compile(r"samsung:[A-Z0-9][A-Z0-9._/+-]{1,63}")
 STALE_ENTRY_MAX_AGE_YEARS = 5
 MAX_BYTES = 15_000_000
-CARRIER_STATE = {"supported": "on", "unsupported": "off", "conditional": "conditional"}
 
 
 def load_json(path: Path) -> Any:
@@ -209,7 +208,6 @@ def validate(root: Path, freshness: str, require: bool) -> str:
             raise ValidationError(f"{where}: not a published profile in generated/index.json")
         if not isinstance(capabilities, dict) or not capabilities:
             raise ValidationError(f"{where}: must map capabilities to records")
-        carrier = load_json(root / paths[profile_id]).get("capabilities", {})
         profile_evidence = evidence.get(profile_id, {})
         for capability, items in capabilities.items():
             here = f"{where} {capability}"
@@ -229,11 +227,6 @@ def validate(root: Path, freshness: str, require: bool) -> str:
                     profile_evidence.get("capability_sources", {}).get(capability, {}),
                     profile_evidence.get("capability_basis", {}).get(capability),
                 )
-                carrier_value = carrier.get(capability, "unknown")
-                if CARRIER_STATE.get(carrier_value) == record["state"] and carrier_value != "conditional":
-                    raise ValidationError(
-                        f"{here}: a {record['state']} record repeats the carrier value {carrier_value}"
-                    )
                 for device in record["devices"]:
                     key = (device, record["stack"])
                     if key in seen:

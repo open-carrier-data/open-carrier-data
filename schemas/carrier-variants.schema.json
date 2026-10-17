@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://open-carrier-data.github.io/schemas/carrier-variants.schema.json",
   "title": "Open Carrier Data device records (generated/devices/carrier-variants.json)",
-  "description": "What one device's own carrier file configures for VoLTE, Wi-Fi calling, video calling and VoNR on one carrier profile. Configuration, not a test result. tools/validate_carrier_variants.py checks what a schema cannot: published profiles, catalog devices, capability_sources, the data digest, rule 7 and canonical order.",
+  "description": "What one device's own carrier file configures for VoLTE, Wi-Fi calling, video calling and VoNR on one carrier profile: every device value OCD publishes, including those that agree with the profile value. Configuration, not a test result. tools/validate_carrier_variants.py checks what a schema cannot: published profiles, catalog devices, capability_sources, the data digest, rule 7 and canonical order.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -65,7 +65,7 @@
         "newest_entry": {
           "type": "string",
           "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
-          "description": "Month of the newest upstream entry behind the value; absent when an entry is undated. Rule 7 withholds a value older than five years, so no record is older."
+          "description": "Month of the newest upstream entry behind the value; absent when an entry is undated. A value whose newest entry is older than five years does not publish, so no record is older."
         },
         "devices": {
           "type": "array",
