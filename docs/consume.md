@@ -83,7 +83,7 @@ A key this file leaves out is not neutral. The phone keeps the value its own lay
 
 So for VoLTE, Wi-Fi calling and video calling, a key OCD leaves out usually means off on a phone whose own layers do not set it. For example, LIDL Connect resolves to carrier ID 2397, which has no AOSP asset. A false OCD publishes for `enabledMMS` makes Android refuse every MMS send and download at once.
 
-For these three switches a single family's off therefore does not take out a true that another source sets: since 2026-10-10 OCD publishes the true, and the capability stays `conditional`. Such a switch is still left out only when the operator's own configuration or two independent families turn the feature off, or when the true rests on old single-source evidence that OCD withholds (see [how-it-is-built.md](how-it-is-built.md)). A device whose own tree turns one of them off has a reason OCD does not see, so put the device's own `vendor.xml` blocks after OCD's: the last matching block wins.
+For these three switches a single family's off therefore does not take out a true that another source sets: since 2026-10-10 OCD publishes the true, and the capability stays `conditional`, or, where every such off is an `off` record in `generated/devices/carrier-variants.json`, `supported` (round 17, step 2). Such a switch is still left out only when the operator's own configuration or two independent families turn the feature off, or when the true rests on old single-source evidence that OCD withholds (see [how-it-is-built.md](how-it-is-built.md)). A device whose own tree turns one of them off has a reason OCD does not see, so put the device's own `vendor.xml` blocks after OCD's: the last matching block wins.
 
 ### Emergency calls are not tested
 

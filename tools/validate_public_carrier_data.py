@@ -1102,6 +1102,24 @@ CAPABILITY_GATING_CONFIG_KEYS = {
     "support_conference_call_bool": "ims_conference",
 }
 CAPABILITY_SOURCE_KINDS = {"on", "off", "conditional"}
+# Round 8's label change, made as round 17's step 2 (rule decisions of
+# 2026-10-10 and 2026-10-17): VoLTE, Wi-Fi calling or video calling is
+# published supported against an off that one non-operator family alone
+# gives, when every such off is an off device record in
+# generated/devices/carrier-variants.json. The profile then carries the gate
+# single_family_off:<capability>, and capability_sources keeps the off.
+# validate_carrier_variants.py checks that the off records are there.
+DEVICE_BACKED_LABEL_CAPABILITIES = {"volte", "vowifi", "video_calling"}
+# The sources whose off can be a device record (validate_carrier_variants.py
+# SOURCE_STACKS, without Samsung, whose off never publishes), and the source
+# family each belongs to: the two Google lanes read one origin.
+DEVICE_RECORD_OFF_FAMILIES = {
+    "google_carriersettings": "google_carriersettings",
+    "google_pixel_vendor_carriersettings": "google_carriersettings",
+    "fairphone_official_source": "fairphone_official_source",
+    "lineageos_device_overlays": "lineageos_device_overlays",
+    "sony_open_devices_aosp": "sony_open_devices_aosp",
+}
 # APN rows LineageOS removed from its list, left out of a profile because no
 # source gives them with an entry newer than the removal. The key names the
 # android_vendor_apn commit first seen without the rows; the count is the rows
@@ -1260,7 +1278,9 @@ def validate_stale_capability_gates(
     over five years old (for its age alone, or because only a frozen copy
     gives it, or because no fresh observation covers the profile's scope), or
     because one source family alone turns it off, names a real capability
-    that the profile publishes as unknown. The profile publishes no
+    that the profile publishes as unknown; a single-family gate on VoLTE,
+    Wi-Fi calling or video calling may also sit next to supported, where the
+    off is kept as device records (round 17, step 2). The profile publishes no
     capability-gating key of a capability the first three gates withhold: a
     withheld label takes its switch with it. A single-family gate on a
     CarrierConfig key names a capability-gating key the profile does not
@@ -1284,7 +1304,16 @@ def validate_stale_capability_gates(
             continue
         if gate["section"] != "capabilities" or key not in CAPABILITY_KEYS:
             raise ValidationError(f"{path}: {label} is not a valid {name} gate")
-        if capabilities is not None and capabilities.get(key, "unknown") != "unknown":
+        published = capabilities.get(key, "unknown") if capabilities is not None else "unknown"
+        if (
+            name == SINGLE_FAMILY_OFF_GATE
+            and key in DEVICE_BACKED_LABEL_CAPABILITIES
+            and published == "supported"
+        ):
+            # Round 17's step 2: the off the gate names is kept as device
+            # records next to a supported label (validate_capability_sources).
+            continue
+        if published != "unknown":
             raise ValidationError(
                 f"{path}: {label} withholds {key}, but the profile publishes it"
             )
@@ -1301,6 +1330,19 @@ def validate_stale_capability_gates(
                 )
 
 
+def device_backed_supported(key: str, kinds: dict[str, list[str]], gated: bool) -> bool:
+    """Whether capability_sources supports a supported label under round 17's
+    step 2: VoLTE, Wi-Fi calling or video calling, sources that turn it on
+    and an off from one family whose off can be a device record, with the
+    gate single_family_off:<key>."""
+    if key not in DEVICE_BACKED_LABEL_CAPABILITIES or not gated or set(kinds) != {"on", "off"}:
+        return False
+    off = kinds["off"]
+    return set(off) <= set(DEVICE_RECORD_OFF_FAMILIES) and (
+        len({DEVICE_RECORD_OFF_FAMILIES[name] for name in off}) == 1
+    )
+
+
 def validate_capability_sources(
     path: Path,
     evidence: dict[str, Any],
@@ -1310,9 +1352,11 @@ def validate_capability_sources(
 ) -> None:
     """capability_sources maps every capability that a source gives a value to
     the profile sources that turn it on, turn it off, or call it conditional,
-    and it agrees with the published value: supported has only on, unsupported
-    only off, conditional two kinds or conditional, and unknown names the gate
-    that withheld it. It covers every published capability, so a profile that
+    and it agrees with the published value: supported has only on, or, for
+    VoLTE, Wi-Fi calling and video calling with the gate
+    single_family_off:<capability>, on and one device-record family's off
+    (device_backed_supported); unsupported only off, conditional two kinds or
+    conditional, and unknown names the gate that withheld it. It covers every published capability, so a profile that
     publishes one needs it."""
     if "capability_sources" not in evidence:
         if capabilities is not None and any(
@@ -1333,6 +1377,12 @@ def validate_capability_sources(
         if gate["section"] == "capabilities"
         and gate["key"].partition(":")[0] in UNKNOWN_CAPABILITY_GATES
     }
+    single_family = {
+        gate["key"].partition(":")[2]
+        for gate in evidence.get("quality_gates", [])
+        if gate["section"] == "capabilities"
+        and gate["key"].partition(":")[0] == SINGLE_FAMILY_OFF_GATE
+    }
     for key, kinds in value.items():
         if key not in CAPABILITY_KEYS:
             raise ValidationError(f"{path}: {label} names an unknown capability")
@@ -1347,7 +1397,8 @@ def validate_capability_sources(
             continue
         published = capabilities.get(key, "unknown")
         agrees = {
-            "supported": set(kinds) == {"on"},
+            "supported": set(kinds) == {"on"}
+            or device_backed_supported(key, kinds, key in single_family),
             "unsupported": set(kinds) == {"off"},
             "conditional": len(kinds) >= 2 or "conditional" in kinds,
             "unknown": key in withheld,

@@ -128,6 +128,44 @@ class ValidateCarrierVariantsTests(unittest.TestCase):
     def test_valid_file(self) -> None:
         self.assertIn("validated 3 device records", self.run_check(variants_file()))
 
+    def device_backed(self) -> None:
+        """Round 17's step 2: the profile's VoLTE is supported against the
+        overlays' off, which the gate names."""
+        path = self.root / "generated/evidence-index.json"
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+        evidence["profiles"][0]["capability_sources"]["volte"] = {
+            "off": ["lineageos_device_overlays"],
+            "on": ["samsung_omc"],
+        }
+        evidence["profiles"][0]["quality_gates"] = [
+            {
+                "kind": "quality_gate",
+                "key": "single_family_off:volte",
+                "observed_value_count": 1,
+                "resolution": "omitted_from_stable",
+                "section": "capabilities",
+            }
+        ]
+        write(path, evidence)
+
+    def test_a_supported_label_keeps_its_off_as_a_device_record(self) -> None:
+        self.device_backed()
+        self.assertIn("1 supported labels keep their off", self.run_check(variants_file()))
+
+    def test_a_supported_label_without_its_off_record_is_rejected(self) -> None:
+        self.device_backed()
+        data = variants_file()
+        data["profiles"][PROFILE]["volte"] = [
+            record for record in data["profiles"][PROFILE]["volte"] if record["state"] != "off"
+        ]
+        self.assert_rejected(data, "has no off record from it")
+
+    def test_a_supported_label_needs_the_file(self) -> None:
+        self.device_backed()
+        with self.assertRaises(ValidationError) as caught:
+            check.validate(self.root, "fail", False)
+        self.assertIn("keep their off as device records", str(caught.exception))
+
     def test_missing_file_passes_unless_required(self) -> None:
         self.assertIn("nothing to check", check.validate(self.root, "fail", False))
         with self.assertRaises(ValidationError):

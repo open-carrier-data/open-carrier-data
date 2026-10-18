@@ -702,6 +702,69 @@ def check_capability_sources(
             shaped(new_sources, [gate("single_family_off:vonr", "android_apns")]),
             "a single-family gate outside capabilities and CarrierConfig passed",
         )
+
+        # Round 17's step 2 (round 8's label change): VoLTE, Wi-Fi calling
+        # and video calling publish supported against one device-record
+        # family's off, with the gate single_family_off:<capability> and the
+        # off kept in capability_sources. Nothing else may.
+        def with_sources(value: dict, *names: str) -> dict:
+            for profile in value["profiles"]:
+                if profile["profile_id"] == target:
+                    profile["sources"] = sorted(set(profile["sources"]) | set(names))
+            return value
+
+        published_capabilities = capabilities[target]
+        overlay_off = {"off": ["lineageos_device_overlays"], "on": ["aosp"]}
+        google_off = {"off": ["google_carriersettings", "google_pixel_vendor_carriersettings"], "on": ["aosp"]}
+        extra = ("google_carriersettings", "google_pixel_vendor_carriersettings", "lineageos_device_overlays", "samsung_omc")
+        try:
+            for capability in ("volte", "vowifi", "video_calling"):
+                capabilities[target] = {**published_capabilities, capability: "supported"}
+                for off in (overlay_off, google_off):
+                    validate(
+                        with_sources(
+                            shaped({**new_sources, capability: off}, [gate(f"single_family_off:{capability}")]),
+                            *extra,
+                        )
+                    )
+                expect_failure(
+                    with_sources(shaped({**new_sources, capability: overlay_off}), *extra),
+                    f"a supported {capability} with an off and no single-family gate passed",
+                )
+                for off, message in (
+                    (["aosp", "lineageos_device_overlays"], "an off from two families"),
+                    (["lineageos"], "an off from a carrier-wide APN list"),
+                    (["samsung_omc"], "a Samsung off"),
+                ):
+                    expect_failure(
+                        with_sources(
+                            shaped(
+                                {**new_sources, capability: {"off": off, "on": ["aosp"]}},
+                                [gate(f"single_family_off:{capability}")],
+                            ),
+                            *extra,
+                        ),
+                        f"a supported {capability} with {message} passed",
+                    )
+                capabilities[target] = {**published_capabilities, capability: "conditional"}
+                expect_failure(
+                    with_sources(
+                        shaped({**new_sources, capability: overlay_off}, [gate(f"single_family_off:{capability}")]),
+                        *extra,
+                    ),
+                    f"a single-family gate next to a conditional {capability} passed",
+                )
+            capabilities[target] = published_capabilities
+            for capability in ("mms",):
+                expect_failure(
+                    with_sources(
+                        shaped({**new_sources, capability: overlay_off}, [gate(f"single_family_off:{capability}")]),
+                        *extra,
+                    ),
+                    f"a supported {capability} against an off passed",
+                )
+        finally:
+            capabilities[target] = published_capabilities
     finally:
         evidence_path.write_text(old_shape, encoding="utf-8")
 
