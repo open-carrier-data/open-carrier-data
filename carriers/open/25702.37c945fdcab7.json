@@ -1,8 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -20,6 +19,16 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "mms.life.com.by",
+      "mmsc": "http://mms.life.com.by/mmsc",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "Life MMS",
+      "types": [
+        "mms"
+      ]
+    },
     {
       "apn": "mts",
       "authtype": 1,
