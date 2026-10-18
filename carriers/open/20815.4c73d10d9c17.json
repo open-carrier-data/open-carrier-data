@@ -1,8 +1,5 @@
 {
   "addons": {
-    "emergency_calling": {
-      "emergency_dial_call_style": "EndPreviousCall"
-    },
     "ims": {
       "contacts_operator_style": "TIM",
       "support_ims_clir_overriding": true
@@ -24,6 +21,40 @@
   "android_apns": [
     {
       "apn": "iliad",
+      "name": "Iliad Int",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "iliad",
+      "name": "Iliad Int",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "iliad",
+      "name": "Iliad Int",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "iliad",
+      "mmsc": "http://mms.iliad.it",
+      "name": "iliad",
+      "types": [
+        "default",
+        "dun",
+        "mms"
+      ]
+    },
+    {
+      "apn": "iliad",
       "mmsc": "http://mms.iliad.it",
       "name": "iliad",
       "protocol": "IPV4V6",
@@ -35,9 +66,11 @@
     {
       "apn": "iliad",
       "mmsc": "http://mms.iliad.it",
-      "name": "Iliad",
+      "name": "Iliad Int MMS",
+      "protocol": "IP",
+      "roaming_protocol": "IP",
       "types": [
-        "dun"
+        "mms"
       ]
     },
     {

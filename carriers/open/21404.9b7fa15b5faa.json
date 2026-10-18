@@ -1,8 +1,7 @@
 {
   "addons": {
     "emergency_calling": {
-      "e911_routing_policy": "auto",
-      "emergency_dial_call_style": "EndPreviousCall"
+      "e911_routing_policy": "auto"
     },
     "ims": {
       "support_ims_clir_overriding": true
@@ -28,6 +27,13 @@
     }
   },
   "android_apns": [
+    {
+      "apn": "gprsmov.pepephone.com",
+      "name": "Internet",
+      "types": [
+        "default"
+      ]
+    },
     {
       "apn": "hos",
       "name": "hos",
