@@ -746,6 +746,15 @@ def check_capability_sources(
                         ),
                         f"a supported {capability} with {message} passed",
                     )
+                # Round 22, F6 (the COSMOTE probe): a single-family gate next
+                # to an on-only supported names an off that does not exist.
+                expect_failure(
+                    with_sources(
+                        shaped({**new_sources, capability: {"on": ["aosp"]}}, [gate(f"single_family_off:{capability}")]),
+                        *extra,
+                    ),
+                    f"a single-family gate next to an on-only supported {capability} passed",
+                )
                 capabilities[target] = {**published_capabilities, capability: "conditional"}
                 expect_failure(
                     with_sources(

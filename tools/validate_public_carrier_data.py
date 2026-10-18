@@ -1397,7 +1397,9 @@ def validate_capability_sources(
             continue
         published = capabilities.get(key, "unknown")
         agrees = {
-            "supported": set(kinds) == {"on"}
+            # A single_family_off gate next to supported must name a real
+            # off (round 22, F6): an on-only supported carries no such gate.
+            "supported": (set(kinds) == {"on"} and key not in single_family)
             or device_backed_supported(key, kinds, key in single_family),
             "unsupported": set(kinds) == {"off"},
             "conditional": len(kinds) >= 2 or "conditional" in kinds,

@@ -11,8 +11,8 @@ lists for that capability and state; no off from Samsung or Apple; entries
 inside five years; the digest of the data it was built with; and
 canonical bytes. And every VoLTE, Wi-Fi calling or video calling label
 published supported against a single family's off (round 17, step 2) has an
-off record here from each off source; without the file such a label fails
-even without --require.
+off record here from each off source and at least one on record (round 22);
+without the file such a label fails even without --require.
 
 Usage: validate_carrier_variants.py [REPO_ROOT] [--freshness warn|fail] [--require]
 Without the file the check passes unless --require is given.
@@ -192,9 +192,14 @@ def check_device_backed_labels(
 ) -> None:
     """Each off behind a supported label of round 17's step 2 is visible
     here: the profile and capability hold an off record from every off
-    source capability_sources names."""
+    source capability_sources names, and at least one on record (round 22:
+    the device file shows both sides)."""
     for (profile_id, capability), sources in sorted(labels.items()):
         records = profiles.get(profile_id, {}).get(capability, [])
+        if not any(record["state"] == "on" for record in records):
+            raise ValidationError(
+                f"{path}: {profile_id} {capability} is supported against an off, but the file has no on record"
+            )
         for source in sources:
             if not any(record["state"] == "off" and record["source"] == source for record in records):
                 raise ValidationError(

@@ -160,6 +160,15 @@ class ValidateCarrierVariantsTests(unittest.TestCase):
         ]
         self.assert_rejected(data, "has no off record from it")
 
+    def test_a_supported_label_without_an_on_record_is_rejected(self) -> None:
+        """Round 22: the device file must show both sides."""
+        self.device_backed()
+        data = variants_file()
+        data["profiles"][PROFILE]["volte"] = [
+            record for record in data["profiles"][PROFILE]["volte"] if record["state"] != "on"
+        ]
+        self.assert_rejected(data, "has no on record")
+
     def test_a_supported_label_needs_the_file(self) -> None:
         self.device_backed()
         with self.assertRaises(ValidationError) as caught:
