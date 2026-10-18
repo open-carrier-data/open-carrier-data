@@ -29,18 +29,35 @@ the new lead's APN in the scope carries credentials (rule decisions of
 2026-10-13, round 14).
 
 Also reported, never held, on WATCH_TYPES (HOLD_TYPES plus IWLAN; rule
-decisions of 2026-10-18, round 20): the `ims` lead and the `emergency` lead of
-each scope in both files lost, its APN changed (case-folded), or only its
-protocol or roaming protocol changed, and an APN with an emergency name
-(EMERGENCY_APN_NAMES) becoming the internet or attach lead. The `ims` and
-`emergency` leads are the first data profile that serves the type on the
-network type, as for the internet lead. A scope whose file has no
-`emergency` row shows "none"; Android then adds its own `sos` profile, which
-is not compared against, and a gained `ims` or `emergency` lead is not
-reported. These lines never enter the trips or
-the digest. Each condition prints a count line, then one line per scope and
-value change up to WATCH_LIST_LIMIT; `--report-json` keeps them all under
-`watch`.
+decisions of 2026-10-18, round 20): the `ims` lead of each scope in both
+files lost, its APN changed (case-folded), or only its protocol or roaming
+protocol changed, and an APN with an emergency name (`emergency_named`)
+becoming the internet or attach lead. The `ims` lead is the first data
+profile that serves the type on the network type, as for the internet lead.
+
+The `emergency` lead is what the phone uses (rule decisions of 2026-10-18,
+round 21, S1-A): the first profile that can handle `emergency` (enabled, with
+the type; an empty type is Android's TYPE_ALL, which has no emergency bit),
+serves the network type, has cellular infrastructure and passes the APN set
+filter for preferred set 0 (set -1 or 0). When no profile of the scope can
+handle `emergency` on any network type, Android adds its own DEFAULT EIMS
+profile, `sos` IPV4V6/IPV4V6 with APN set -1 (ANDROID_DEFAULT_EIMS,
+`DataProfileManager.java:339-350, 630-641`). The report prints an emergency
+lead "gained" (Android's default to a row of the file), "lost" (a row of the
+file to Android's default) or "changed" (any other change of the request:
+APN, either protocol, auth type, credentials, MTU, network types,
+`skip_464xlat`, `always_on`, profile ID or modem-cognitive), each value
+labelled against Android's default: `equal`, `carrier name`, `IPv4 only`,
+`IPv6 only`, `request attribute`, or `network-type gap` for a network type
+left without an emergency profile. It also prints "emergency profile
+missing under APN set N" for a scope where a preferred APN set N (0, or the
+set of a row that serves `default`) leaves no emergency profile in the head
+but did not in the base (`DataProfileManager.java:799-808`). Lines that touch
+LTE, NR or IWLAN are listed first.
+
+None of these lines enters the trips or the digest. Each condition prints a
+count line, then one line per scope and value change up to
+WATCH_LIST_LIMIT; `--report-json` keeps them all under `watch`.
 
 The digest is the first 16 hex characters of sha256 over the sorted trip
 lines `condition|scope|network types|old value|new value`, joined by and
@@ -71,8 +88,23 @@ OTHER_TYPES = {"IWLAN": 18, "eHRPD": 14, "EVDO-A": 6, "1xRTT": 7}
 LIST_LIMIT = 15
 # The IMS and emergency report (round 20): the hold types plus Wi-Fi calling.
 WATCH_TYPES = {**HOLD_TYPES, "IWLAN": 18}
-WATCH_APN_TYPES = ("ims", "emergency")
+WATCH_APN_TYPES = ("ims",)
 WATCH_LIST_LIMIT = 30
+# Report lines that touch these network types are listed first (round 21).
+WATCH_FIRST = ("LTE", "NR", "IWLAN")
+# Android's DEFAULT EIMS profile, added when no profile of the SIM can handle
+# `emergency` (DataProfileManager.java:339-350, buildDefaultApnSetting
+# :630-641): APN `sos`, IPV4V6 at home and when roaming, APN set "match all".
+# The keys are those of android_phone_model.apn_setting (rule decisions of
+# 2026-10-18, round 21, S1-A).
+ANDROID_DEFAULT_EIMS: dict[str, Any] = {
+    "srcs": [], "base_srcs": [], "name": "DEFAULT EIMS", "apn": "sos", "proxy": "", "port": -1,
+    "mmsc": None, "mmsproxy": "", "mmsport": -1, "user": "", "password": "", "authtype": 0,
+    "types": frozenset({"emergency"}), "protocol": "IPV4V6", "roaming_protocol": "IPV4V6",
+    "carrier_enabled": 1, "nt": 0, "lingering": 0, "profile_id": 0, "persistent": 0, "apn_set_id": -1,
+    "carrier_id": -1, "skip464": -1, "always_on": 0, "infra": 3, "esim": 0, "mtu4": 0, "mtu6": 0,
+    "merged_from": [], "android_default": True,
+}
 
 
 def fmt(scope: phone.Scope) -> str:
@@ -169,18 +201,98 @@ def protocol_text(lead: tuple | None) -> str:
     return "none" if lead is None else f"{lead[0]} {lead[6]}/{lead[7]}"
 
 
+def handles_emergency(profile: dict[str, Any]) -> bool:
+    """ApnSetting.canHandleType for `emergency` (ApnSetting.java:1271-1287):
+    enabled and carrying the type. An empty type is TYPE_ALL, which has no
+    emergency bit (`android_phone_model.type_set` gives KNOWN_TYPES for it)."""
+    return (bool(profile["carrier_enabled"]) and "emergency" in profile["types"]
+            and profile["types"] != phone.KNOWN_TYPES)
+
+
+def emergency_profiles(settings: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The scope's profiles, plus ANDROID_DEFAULT_EIMS when none of them can
+    handle `emergency` on any network type."""
+    if any(handles_emergency(p) for p in settings):
+        return settings
+    return settings + [ANDROID_DEFAULT_EIMS]
+
+
+def emergency_lead(settings: list[dict[str, Any]], network_type: int,
+                   preferred_set: int = 0) -> dict[str, Any] | None:
+    """The first profile of `emergency_profiles` that handles `emergency` on
+    the network type with cellular infrastructure and passes the APN set
+    filter (`DataProfileManager.java:778-808`): set -1 or the preferred set."""
+    return next((p for p in settings if handles_emergency(p) and phone.serves(p, network_type)
+                 and p["infra"] & 1 and p["apn_set_id"] in (-1, preferred_set)), None)
+
+
+def emergency_key(profile: dict[str, Any] | None) -> tuple | None:
+    """What an emergency lead puts into the request, and whether it is
+    Android's default."""
+    if profile is None:
+        return None
+    return (bool(profile.get("android_default")), profile["apn"], profile["protocol"],
+            profile["roaming_protocol"], profile["user"], profile["password"], profile["authtype"],
+            profile["mtu4"], profile["mtu6"], profile["nt"], profile["skip464"], profile["always_on"],
+            profile["profile_id"], profile["persistent"])
+
+
+def emergency_labels(key: tuple | None) -> list[str]:
+    """An emergency lead against Android's default request (round 21)."""
+    if key is None:
+        return ["network-type gap"]
+    _, apn, protocol, roaming, user, password, authtype, mtu4, mtu6, nt, skip464, always_on, profile_id, \
+        persistent = key
+    labels = []
+    if apn != "sos":
+        labels.append("carrier name")
+    if "IP" in (protocol, roaming):
+        labels.append("IPv4 only")
+    if "IPV6" in (protocol, roaming):
+        labels.append("IPv6 only")
+    if user or password or authtype or mtu4 > 0 or mtu6 > 0 or nt or skip464 != -1 or always_on \
+            or profile_id or persistent:
+        labels.append("request attribute")
+    return labels or ["equal"]
+
+
+def emergency_text(key: tuple | None) -> str:
+    if key is None:
+        return "none [network-type gap]"
+    text = f"{key[1]} {key[2]}/{key[3]}"
+    return f"Android default {text}" if key[0] else f"{text} [{', '.join(emergency_labels(key))}]"
+
+
+def stranded_sets(settings: list[dict[str, Any]]) -> set[int]:
+    """The preferred APN sets (0, or the set of a profile that serves
+    `default`) under which no profile can carry an emergency request on any
+    network type of WATCH_TYPES."""
+    candidates = {0} | {p["apn_set_id"] for p in settings
+                        if "default" in p["types"] and p["apn_set_id"] not in (0, -1)}
+    emergency = emergency_profiles(settings)
+    return {preferred for preferred in candidates
+            if not any(emergency_lead(emergency, network_type, preferred)
+                       for network_type in WATCH_TYPES.values())}
+
+
 def typed_leads(rows: list[dict[str, Any]], tables: dict) -> dict:
     """Per scope, network type of WATCH_TYPES and APN type of
     WATCH_APN_TYPES: the lead (`android_phone_model.lead_key`) of the first
-    data profile that serves the type, from the stored rows in TABLES."""
-    out: dict[phone.Scope, dict[str, dict[str, tuple | None]]] = {}
+    data profile that serves the type, from the stored rows in TABLES; under
+    "emergency", the `emergency_key` of the phone's emergency lead with
+    Android's fallback; and under "_sets", the scope's `stranded_sets`."""
+    out: dict[phone.Scope, dict[str, Any]] = {}
     for scope in {phone.scope_of(row) for row in rows}:
         settings = phone.profiles(phone.scope_rows(tables, scope))
+        emergency = emergency_profiles(settings)
         out[scope] = {
-            name: {kind: phone.lead_key(next((p for p in settings if kind in p["types"]
-                                              and phone.serves(p, network_type) and phone.cellular(p)), None))
-                   for kind in WATCH_APN_TYPES}
+            name: {**{kind: phone.lead_key(next((p for p in settings if kind in p["types"]
+                                                 and phone.serves(p, network_type) and phone.cellular(p)),
+                                                None))
+                      for kind in WATCH_APN_TYPES},
+                   "emergency": emergency_key(emergency_lead(emergency, network_type))}
             for name, network_type in WATCH_TYPES.items()}
+        out[scope]["_sets"] = stranded_sets(settings)
     return out
 
 
@@ -200,12 +312,24 @@ def watch(before: dict, after: dict, before_typed: dict, after_typed: dict) -> l
                 elif old and (old[6], old[7]) != (new[6], new[7]):
                     found[(f"{kind} lead protocol changed", fmt(scope), protocol_text(old),
                            protocol_text(new))].append(name)
+            old, new = before_typed[scope][name]["emergency"], after_typed[scope][name]["emergency"]
+            if old != new:
+                if old and new and old[0] and not new[0]:
+                    condition = "emergency lead gained"
+                elif old and new and not old[0] and new[0]:
+                    condition = "emergency lead lost"
+                else:
+                    condition = "emergency lead changed"
+                found[(condition, fmt(scope), emergency_text(old), emergency_text(new))].append(name)
             b_inet, _, b_attach = before[scope][name][:3]
             a_inet, _, a_attach = after[scope][name][:3]
             for role, old, new in (("internet", b_inet, a_inet), ("attach", b_attach, a_attach)):
                 if new and emergency_named(new[0]) and not (old and emergency_named(old[0])):
                     found[(f"emergency-named APN becomes the {role} lead", fmt(scope), lead_text(old),
                            lead_text(new))].append(name)
+        for preferred in sorted(after_typed[scope]["_sets"] - before_typed[scope]["_sets"]):
+            found[(f"emergency profile missing under APN set {preferred}", fmt(scope),
+                   "an emergency profile", "none")].extend(WATCH_TYPES)
     return [{"condition": c, "scope": s, "types": types, "old": o, "new": n}
             for (c, s, o, n), types in sorted(found.items())]
 
@@ -215,7 +339,8 @@ def watch_lines(items: list[dict[str, Any]]) -> list[str]:
     WATCH_LIST_LIMIT."""
     lines: list[str] = []
     for condition in sorted({item["condition"] for item in items}):
-        mine = [item for item in items if item["condition"] == condition]
+        mine = sorted((item for item in items if item["condition"] == condition),
+                      key=lambda item: not set(item["types"]) & set(WATCH_FIRST))
         lines.append(f"{condition}: {len({item['scope'] for item in mine})} scope(s)")
         for item in mine[:WATCH_LIST_LIMIT]:
             lines.append(f"  {item['scope']}: {item['old']} -> {item['new']} ({','.join(item['types'])})")
