@@ -34,8 +34,10 @@ each scope in both files lost, its APN changed (case-folded), or only its
 protocol or roaming protocol changed, and an APN with an emergency name
 (EMERGENCY_APN_NAMES) becoming the internet or attach lead. The `ims` and
 `emergency` leads are the first data profile that serves the type on the
-network type, as for the internet lead; without an `emergency` profile
-Android adds its own (`sos`, IPV4V6). These lines never enter the trips or
+network type, as for the internet lead. A scope whose file has no
+`emergency` row shows "none"; Android then adds its own `sos` profile, which
+is not compared against, and a gained `ims` or `emergency` lead is not
+reported. These lines never enter the trips or
 the digest. Each condition prints a count line, then one line per scope and
 value change up to WATCH_LIST_LIMIT; `--report-json` keeps them all under
 `watch`.
