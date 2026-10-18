@@ -202,18 +202,25 @@ def is_gap(item: dict[str, Any]) -> bool:
 def needs_review(watch: list[dict[str, Any]]) -> list[str]:
     """Round 21: a lost emergency lead puts the draft under "needs review".
     A network type or an APN set left with no emergency profile at all is the
-    same phone outcome or worse, so it does too."""
+    same phone outcome or worse, so it does too, and so does a gained or
+    changed lead that is not equal to Android's default."""
     def scopes(items: list[dict[str, Any]]) -> int:
         return len({item["scope"] for item in items})
 
     lost = [i for i in watch if i["condition"] == "emergency lead lost"]
     gaps = [i for i in watch if i["condition"].startswith("emergency lead") and is_gap(i)]
     stranded = [i for i in watch if i["condition"].startswith("emergency profile missing under APN set")]
+    # Correctness judge, round 20/21: a gained or changed emergency lead that
+    # differs from Android's default (any label but `equal`) is also reviewed.
+    moved = [i for i in watch if i["condition"] in ("emergency lead gained", "emergency lead changed")
+             and not is_gap(i) and "[equal]" not in i["new"]]
     reasons = []
     if lost:
         reasons.append(f"emergency lead lost to Android's default (sos IPV4V6/IPV4V6): {scopes(lost)} scope(s)")
     if gaps:
         reasons.append(f"a network type left with no emergency profile: {scopes(gaps)} scope(s)")
+    if moved:
+        reasons.append(f"an emergency lead gained or changed away from Android's default: {scopes(moved)} scope(s)")
     if stranded:
         reasons.append(f"an APN set that leaves no emergency profile: {scopes(stranded)} scope(s)")
     return reasons

@@ -90,10 +90,10 @@ class ComputeTests(unittest.TestCase):
         for section in notes.REQUIRED_SECTIONS:
             self.assertIn(f"\n{section}\n", text)
 
-    def test_gained_and_equal_leads_do_not_need_review(self) -> None:
+    def test_gained_non_default_lead_needs_review_and_equal_does_not(self) -> None:
         result, text = self.notes_for([WEB], [WEB, SOS])
-        self.assertEqual(result["needs_review"], [])
-        self.assertNotIn("## Needs review", text)
+        self.assertTrue(any("gained or changed away from Android's default" in r for r in result["needs_review"]),
+                        result["needs_review"])
         self.assertIn("emergency lead gained: 1 scope(s)", text)
         self.assertIn("IPv6 only 1", text)
         result, text = self.notes_for([WEB], [WEB, SOS_DEFAULT])
