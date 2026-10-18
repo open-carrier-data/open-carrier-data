@@ -4,7 +4,7 @@ Open Carrier Data is a public database of mobile carrier settings. It stores neu
 
 ## Get the data
 
-You can get the data in three ways. Each one works as of 2026-10-04.
+You can get the data in three ways. Each one takes the latest publish on `main`, the edge channel: it changes several times a day, and the validators and the phone guard are its only checks. No release exists yet; [Releases and support](#releases-and-support) below says what is planned.
 
 To take everything, including tools and schemas, clone the public repo:
 
@@ -12,7 +12,7 @@ To take everything, including tools and schemas, clone the public repo:
 git clone https://github.com/open-carrier-data/open-carrier-data.git
 ```
 
-To read the stable snapshot without a checkout, download the raw index:
+To read the latest publish on `main` (edge) without a checkout, download the raw index:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/generated/index.json | head -c 200
@@ -24,9 +24,22 @@ To ship the APN list in a build, copy the one file Android reads:
 cp generated/android/apns-conf.xml /path/to/your/build/vendor/apn/open-carrier-data/apns-conf.xml
 ```
 
-[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides.
+[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides. Until the first release, pin one commit and record the file's SHA-256 and the `data_digest` in its header.
 
-Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8.
+Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8. `carrier-config-list.xml` is not for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run.
+
+## Releases and support
+
+`main` is the edge channel: every publish lands there, several times a day. It is guarded by the `validate` check and the phone guard, and OCD makes no other promise about it. The production channel will be monthly tagged releases, `data-YYYY.MM`, drafted by tooling and published by the owner. No release exists yet. [docs/releases.md](docs/releases.md) describes the plan: the tiers, what a release will guarantee and what it never will.
+
+No file is supported today. The planned tiers, in short:
+
+| File | Planned tier |
+| --- | --- |
+| `generated/android/apns-conf.xml` | for ROMs, from the first release that carries the review of its emergency APN rows and has passed one boot check on the owner's phone |
+| `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | for apps and tools, from the first release; the device records are information, never an export |
+| `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
+| everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
 
 ## Resolve one SIM
 
@@ -56,43 +69,31 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | Path | Contents |
 | --- | --- |
 | `carriers/open/` | the carrier profiles, one JSON file per profile, listed in `generated/index.json` |
-| `generated/index.json` | stable snapshot, one entry per profile |
+| `generated/index.json` | one entry per profile in the latest publish |
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, exact source versions, conflicts, newest entry dates |
 | `generated/android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` |
 | `generated/devices/` | the device catalog, carrier artifact registries, and the device records (`carrier-variants.json`) |
 | `schemas/` | six JSON schemas |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
-| `docs/` | data model, build explanation, consumer guide |
+| `docs/` | data model, build explanation, consumer guide, release plan |
 
-## Status on 2026-10-04
+## Status
 
-The data republishes whenever a source changes, so these values drift. The commands below the table print the current ones. The table leaves out the freshness window, which moves with every Samsung refresh. The commands print it.
-
-| Measure | Value |
-| --- | --- |
-| Carrier profiles | 7,806 |
-| Source names in profile evidence | 11 |
-| Source snapshot records | 12 |
-| Android devices in the device catalog | 42,473 |
-| Apple products in the device catalog | 183 |
-| Android identities with observed carrier data | 266 |
-| Observations verified on a device | 0 |
-
-Eleven source names appear in profiles and twelve snapshot records exist. `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, and `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`. The `samsung_omc` and `samsung_ims` records carry a content hash as their revision and `NOASSERTION` as their terms.
-
-Counts and the freshness window come from these commands, run from the repo root:
+The data republishes whenever a source changes, so this page gives no counts. These commands print the current ones, run from the repo root:
 
 ```bash
-ls carriers/open | wc -l
-python3 -c 'print(len({s for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"] for s in p["sources"]}))'
-python3 -c 'print(len(__import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'
+ls carriers/open | wc -l    # carrier profiles
+python3 -c 'print(len({s for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"] for s in p["sources"]}))'    # source names in profile evidence
+python3 -c 'print(len(__import__("json").load(open("generated/evidence-index.json"))["source_snapshots"]))'    # source snapshot records
 python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["checks_through"])'
 python3 -c 'print(__import__("json").load(open("generated/android/metadata.json"))["stale_after"])'
-python3 -c 'print(len(__import__("json").load(open("generated/devices/android.json"))["devices"]))'
-python3 -c 'print(len(__import__("json").load(open("generated/devices/apple.json"))["devices"]))'
-python3 -c 'print(__import__("json").load(open("generated/devices/index.json"))["platforms"]["android"]["carrier_data_coverage_counts"]["exact_carrier_data_observed"])'
-python3 -c 'print(sum(p["verified_observation_count"] for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"]))'
+python3 -c 'print(len(__import__("json").load(open("generated/devices/android.json"))["devices"]))'    # Android devices in the device catalog
+python3 -c 'print(len(__import__("json").load(open("generated/devices/apple.json"))["devices"]))'    # Apple products in the device catalog
+python3 -c 'print(__import__("json").load(open("generated/devices/index.json"))["platforms"]["android"]["carrier_data_coverage_counts"]["exact_carrier_data_observed"])'    # Android identities with observed carrier data
+python3 -c 'print(sum(p["verified_observation_count"] for p in __import__("json").load(open("generated/evidence-index.json"))["profiles"]))'    # observations verified on a device
 ```
+
+Source names and snapshot records do not map one to one: `aosp` maps to the snapshots `aosp_carrier_config` and `aosp_carrier_ids`, `lineageos_device_overlays` maps to `lineageos_device_carrier_overlays`, and on 2026-10-18 `samsung_carrier_config` has no snapshot record of its own. The `samsung_omc` and `samsung_ims` records carry a content hash as their revision and `NOASSERTION` as their terms.
 
 ## Limits to read before you ship
 
@@ -107,6 +108,7 @@ Read these before you depend on the data:
 - A switch that `carrier-config-list.xml` leaves out is not neutral: your phone keeps what its ROM already says, which for VoLTE, Wi-Fi calling and video calling is usually off, and for MMS, SMS over IMS and conference calls usually on. [docs/consume.md](docs/consume.md) lists the defaults.
 - A phone that has already picked an APN keeps it after you install a newer `apns-conf.xml`. Android finds its chosen row again by its content. New rows and a new order take effect for a newly inserted SIM, or after Settings, Access Point Names, Reset to default.
 - No profile has been verified on a phone. Every value comes from a maintained source, not from a test call. No value has been tested for emergency calls; [docs/consume.md](docs/consume.md#emergency-calls-are-not-tested) says which keys a ROM should keep.
+- `apns-conf.xml` sets an emergency APN row (`type="emergency"`) for many network and MVNO scopes: 869 rows in 674 scopes on 2026-10-18, where LineageOS's own list has 36 such rows. None has been tested, and most rest on one source family. Without such a row Android uses its own default emergency profile, APN `sos` with `IPV4V6`. A row whose source states no protocol makes Android use IPv4 only, because TelephonyProvider stores an unset protocol as `IP`: 49 rows at home and 113 when roaming on 2026-10-18. These rows are under review before the first release. [docs/consume.md](docs/consume.md#emergency-apn-rows) gives the command that counts them.
 - A capability value says what carrier tables configure, not what works. It does not say the operator still offers the service: tables often keep a service for months or years after an operator ends it. `supported` means at least one phone maker's or OS carrier table turns the feature on for this SIM and none turns it off; it may still be off on your phone, or on phones the carrier has not approved. `unsupported` needs the operator's own configuration, or two independent source families, turning it off. One maker's off alone is published as `unknown`, and its false CarrierConfig switch is left out. For VoLTE, Wi-Fi calling and video calling, whose switch is off when it is missing, that off also does not take out a true switch another source sets: the switch is left out only for the operator's own off, an off from two families, or a true too old to publish. [docs/data-model.md](docs/data-model.md#capability-names-and-values) defines the four values, and `capability_sources` in `generated/evidence-index.json` names the families that turn each capability on and off.
 - An MVNO without its own SPN, GID, or IMSI prefix in any source merges into the host network's profile. LIDL Connect runs on Vodafone Germany, and no profile names it, so its SIM resolves the `26202` profiles.
 - CarrierConfig and add-on conflicts are omitted; conflicting APN rows are all published as variants. Every conflict is listed in `generated/evidence-index.json`.
