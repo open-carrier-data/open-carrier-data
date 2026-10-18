@@ -353,6 +353,16 @@ class ImsEmergencyReportTests(GuardCase):
         self.assertIn("emergency-named APN becomes the attach lead",
                       {item["condition"] for item in result["watch"]})
 
+    def test_the_guard_and_the_generator_share_one_emergency_name_rule(self) -> None:
+        import carrier_config_types
+        import generate_android_outputs
+        self.assertIs(guard.emergency_named, carrier_config_types.emergency_named)
+        self.assertIs(generate_android_outputs.emergency_named, carrier_config_types.emergency_named)
+        names = {"sos": True, "SOS": True, "EMERGENCY": True, "emergency.volte.ims.cnt.net.ec": True,
+                 "ims-emergency": True, "e911.mobilefrdm.ca": True, "VZWEMERGENCY": True, "sos.example": False,
+                 "internet.voo.be": False, "ims": False, "": False}
+        self.assertEqual({name: guard.emergency_named(name) for name in names}, names)
+
     def test_an_emergency_named_lead_that_stays_is_not_reported(self) -> None:
         sos_default = 'mcc="262" mnc="01" apn="SOS" type="default" protocol="IPV6"'
         e911 = 'mcc="262" mnc="01" apn="e911.example" type="default"'

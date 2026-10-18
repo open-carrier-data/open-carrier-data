@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import argparse
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import date, timedelta
 import hashlib
 import json
@@ -14,7 +14,11 @@ from pathlib import Path
 from typing import Any, NamedTuple
 from xml.sax.saxutils import escape
 
-from carrier_config_types import config_value_has_expected_type, expected_config_type
+from carrier_config_types import (
+    config_value_has_expected_type,
+    emergency_named,
+    expected_config_type,
+)
 from lineageos_apns import fits_lineageos_schema
 from validate_public_carrier_data import STALE_AFTER_DAYS
 
@@ -439,6 +443,11 @@ class ApnRows(NamedTuple):
     mms_left_out: int = 0
     # Stored rows leave_out_absorbed_mms left out, every file row of them.
     mms_absorbed_left_out: tuple[dict[str, Any], ...] = ()
+    # Rows leave_out_emergency took the "emergency" type off, each marked
+    # "_emergency_left_out" with its reason (EMERGENCY_LEFT_OUT_REASONS). A
+    # row whose only type was "emergency" is not written; a row with other
+    # types is written without it.
+    emergency_left_out: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -719,6 +728,9 @@ class RowRank(NamedTuple):
     # The row leads with "default" and carries an HTTP proxy ("proxy"; an MMS
     # proxy never counts).
     proxied: bool = False
+    # The row's APN is named like an emergency APN (emergency_named) and its
+    # lead type is not "emergency" (rule decisions of 2026-10-18, round 21).
+    emergency_named: bool = False
 
     def sort_key(self) -> tuple[Any, ...]:
         lead = (
@@ -732,6 +744,14 @@ class RowRank(NamedTuple):
             lead,
             (
                 self.placeholder,
+                # An APN named like an emergency APN comes after every other
+                # real APN of a lead type other than "emergency", and before
+                # the placeholders. Samsung types VOO's "SOS" (206/08)
+                # "default" in its carrier-feature list; only the fallback
+                # order (capitals first) put it ahead of "internet.voo.be".
+                # CNT's emergency APN, typed "ims", led normal IMS ahead of
+                # "ims" the same way (302/37, 740/02). Round 21.
+                self.emergency_named,
                 not self.value_current,
                 # A proxy-free internet row before a proxied one. Android makes
                 # an APN's proxy the data network's HTTP proxy (DataNetwork),
@@ -797,6 +817,7 @@ def scope_row_ranks(
                 frozenset(record.get("_current", {}).get(lead_type, frozenset())),
                 frozenset(apn_shared.get((apn, lead_type), set())),
                 lead_type == "default" and bool(str(record.get("proxy") or "").strip()),
+                lead_type != "emergency" and emergency_named(record["apn"]),
             )
         )
     return ranks
@@ -810,21 +831,24 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     1. a real APN before a placeholder such as "default" or a malformed
        value (placeholder_apn),
-    2. an APN value a current vendor (apn_row_current) gives for that type in
+    2. an APN not named like an emergency APN (emergency_named) before one
+       that is, unless the lead type is "emergency"; such a row still comes
+       before the placeholders,
+    3. an APN value a current vendor (apn_row_current) gives for that type in
        this scope before one no current vendor gives; a Samsung value from
        old builds only or from tablet packs and old builds only, or a Google
        value from its shared file only that no maintained per-carrier source
        confirms, does not count,
-    3. a row without an HTTP proxy before one with a proxy, only among the
+    4. a row without an HTTP proxy before one with a proxy, only among the
        rows that lead with "default"; an MMS proxy never counts, and rows
        that lead with another type never move for it,
-    4. the APN value more source families give for that type in this scope,
-    5. an APN value a primary APN source gives,
-    6. a row a current vendor backs, so among the variants of one value the
+    5. the APN value more source families give for that type in this scope,
+    6. an APN value a primary APN source gives,
+    7. a row a current vendor backs, so among the variants of one value the
        one a current Pixel or Galaxy ships comes first,
-    7. the row more source families back,
-    8. a row a primary APN source backs,
-    9. the row more sources back.
+    8. the row more source families back,
+    9. a row a primary APN source backs,
+    10. the row more sources back.
 
     A row is backed for a type by the sources whose observations support it.
     Rows still tied keep the fallback order: APN, types, label.
@@ -877,6 +901,164 @@ def leave_out_stale_attach(records: list[dict[str, Any]]) -> int:
         record["_ia_left_out"] = True
         changed += 1
     return changed
+
+
+# The emergency APN rows (rule decisions of 2026-10-18, round 21, S1-A). When
+# no data profile of a SIM can handle "emergency", Android's DataProfileManager
+# adds its own: APN "sos", IPV4V6 at home and when roaming, APN set "match
+# all" (DataProfileManager.java:339-350, buildDefaultApnSetting :630-641). A
+# row typed "emergency" replaces that default, and TelephonyProvider stores an
+# unset protocol as "IP" (TelephonyProvider.java:230-231, 530-531), narrower
+# than the default. So apns-conf.xml writes the type only where the row asks
+# for exactly Android's default request, or where a source that states what
+# phones do today gives that exact row.
+ANDROID_DEFAULT_EIMS_REQUEST = {"apn": "sos", "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"}
+# Attributes that never change the emergency request: labels, the scope, the
+# carrier id, the UI flags, and the two protocols, which are compared on
+# their own. A row with any other attribute asks for more than Android's
+# default (network types, auth type, credentials, MTU, skip_464xlat,
+# always_on, profile ID, modem_cognitive, proxies and the like), unless the
+# value is TelephonyProvider's default (ANDROID_APN_DEFAULTS) or one of
+# EMERGENCY_NEUTRAL_VALUES.
+EMERGENCY_NEUTRAL_ATTRIBUTES = frozenset(
+    {
+        "carrier",
+        "type",
+        "apn",
+        "mcc",
+        "mnc",
+        "mvno_type",
+        "mvno_match_data",
+        "carrier_id",
+        "user_visible",
+        "user_editable",
+        "protocol",
+        "roaming_protocol",
+    }
+)
+# Values equal to the default profile's in effect: auth type 0 without a
+# username, and APN set 0 or "match all".
+EMERGENCY_NEUTRAL_VALUES = {"authtype": {0}, "apn_set_id": {0, -1}}
+# The sources whose emergency row stands for what phones do today: a current
+# vendor (apn_row_current) or LineageOS's own APN list, which is the
+# baseline a LineageOS phone ships.
+EMERGENCY_STATING_LIST_SOURCES = frozenset({"lineageos"})
+# Why a row lost the "emergency" type, in the order they are tested; the
+# metadata.json omission key of each.
+EMERGENCY_LEFT_OUT_REASONS = {
+    "unset_protocol": "emergency_types_left_out_unset_protocol",
+    "combined": "emergency_types_left_out_combined",
+    "not_vendor_stated": "emergency_types_left_out_not_vendor_stated",
+    "apn_set": "emergency_types_left_out_apn_set",
+}
+
+
+def apn_set_id(record: dict[str, Any]) -> int:
+    try:
+        return int(record.get("apn_set_id", 0))
+    except (TypeError, ValueError):
+        return 0
+
+
+def serves_emergency(record: dict[str, Any]) -> bool:
+    return "emergency" in apn_row_types(record["type"])
+
+
+def emergency_default_in_effect(record: dict[str, Any]) -> bool:
+    """Whether a row asks for exactly Android's default emergency request:
+    APN "sos" (letter case counts: Wi-Fi calling sends the APN name),
+    IPV4V6 at home and when roaming, and no attribute that reaches the
+    request (EMERGENCY_NEUTRAL_ATTRIBUTES)."""
+    if any(record.get(key) != value for key, value in ANDROID_DEFAULT_EIMS_REQUEST.items()):
+        return False
+    for key, value in written_attributes(record).items():
+        if key in EMERGENCY_NEUTRAL_ATTRIBUTES:
+            continue
+        if key in ANDROID_APN_DEFAULTS and ANDROID_APN_DEFAULTS[key] == value:
+            continue
+        if key in EMERGENCY_NEUTRAL_VALUES and value in EMERGENCY_NEUTRAL_VALUES[key]:
+            continue
+        return False
+    return True
+
+
+def emergency_stated(record: dict[str, Any]) -> bool:
+    """Whether a current vendor (apn_row_current) or LineageOS's own list
+    gives this exact row for "emergency"."""
+    return bool(record.get("_current", {}).get("emergency")) or bool(
+        record.get("_support", {}).get("emergency", frozenset()) & EMERGENCY_STATING_LIST_SOURCES
+    )
+
+
+def emergency_reason(record: dict[str, Any]) -> str | None:
+    """Why a row typed "emergency" may not keep the type, or None."""
+    if not str(record.get("protocol") or "").strip() or not str(record.get("roaming_protocol") or "").strip():
+        return "unset_protocol"
+    if set(apn_row_types(record["type"])) - {"emergency"}:
+        return "combined"
+    if not emergency_default_in_effect(record) and not emergency_stated(record):
+        return "not_vendor_stated"
+    return None
+
+
+def leave_out_emergency(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Take the "emergency" type off the rows of one scope that would move
+    the emergency request away from Android's default without a stated
+    reason (rule decisions of 2026-10-18, round 21, S1-A). A row keeps the
+    type only when all of these hold:
+
+    1. it states both protocol and roaming_protocol; an unset one is "IP" on
+       the phone, which no source stated (unset_protocol);
+    2. it serves no other type; a combined profile would carry emergency
+       over the other type's data network (combined);
+    3. it asks for exactly Android's default request
+       (emergency_default_in_effect), or a current vendor or LineageOS's own
+       list gives this exact row (emergency_stated); this covers a narrower
+       protocol, network types or another request attribute, and a carrier's
+       own emergency APN name (not_vendor_stated);
+    4. every APN set Android may prefer in the scope (0, and the set of
+       every row that serves "default") keeps a row that passed 1 to 3 with
+       set -1 or that set (DataProfileManager.java:799-808); otherwise every
+       emergency type of the scope goes, so Android's default, whose set
+       matches all, applies (apn_set).
+
+    A row whose only type is "emergency" is not written; a row with other
+    types keeps them. Each changed row is marked "_emergency_left_out" with
+    its reason, which is never written. The profile JSON keeps the type.
+    Returns the rows to write and the changed rows."""
+    changed: list[dict[str, Any]] = []
+    for record in records:
+        if not serves_emergency(record):
+            continue
+        reason = emergency_reason(record)
+        if reason is not None:
+            record["_emergency_left_out"] = reason
+            changed.append(record)
+    kept = [record for record in records if serves_emergency(record) and "_emergency_left_out" not in record]
+    if kept:
+        preferred_sets = {0} | {
+            apn_set_id(record)
+            for record in records
+            if "default" in apn_row_types(record["type"])
+            and not (serves_emergency(record) and "_emergency_left_out" in record and record["type"] == "emergency")
+        }
+        if any(
+            not any(apn_set_id(record) in (-1, preferred) for record in kept)
+            for preferred in preferred_sets
+        ):
+            for record in kept:
+                record["_emergency_left_out"] = "apn_set"
+                changed.append(record)
+    written: list[dict[str, Any]] = []
+    for record in records:
+        if "_emergency_left_out" not in record:
+            written.append(record)
+            continue
+        types = [apn_type for apn_type in record["type"].split(",") if apn_type != "emergency"]
+        if types:
+            record["type"] = ",".join(types)
+            written.append(record)
+    return written, changed
 
 
 # Network types (TelephonyManager.NETWORK_TYPE_*) of a RIL radio technology
@@ -1178,7 +1360,9 @@ def apn_xml_rows(
     """Every APN XML row of these profiles in file order: rows LineageOS's
     apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
     network code and MVNO selector order, a stale attach type left out
-    (leave_out_stale_attach), each scope ranked by its evidence, MMS sent to a
+    (leave_out_stale_attach), an emergency type that moves the emergency
+    request away from Android's default without a stated reason left out
+    (leave_out_emergency), each scope ranked by its evidence, MMS sent to a
     current vendor's MMS row that serves a mobile network
     (put_vendor_mms_first), the rows Android stores as one written together
     with the best-ranked one last (write_android_groups_best_last), and last
@@ -1206,14 +1390,19 @@ def apn_xml_rows(
     ia_left_out = 0
     mms_left_out = 0
     mms_absorbed: list[dict[str, Any]] = []
+    emergency_left_out: list[dict[str, Any]] = []
     for scope in sorted(scopes):
         ia_left_out += leave_out_stale_attach(scopes[scope])
-        ranked, retyped = put_vendor_mms_first(rank_scope(scopes[scope]))
+        scope_records, emergency_changed = leave_out_emergency(scopes[scope])
+        emergency_left_out.extend(emergency_changed)
+        ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
         mms_left_out += retyped
         kept, absorbed = leave_out_absorbed_mms(write_android_groups_best_last(ranked))
         ordered.extend(kept)
         mms_absorbed.extend(absorbed)
-    return ApnRows(ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed))
+    return ApnRows(
+        ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out)
+    )
 
 
 def apn_xml_records(
@@ -1586,6 +1775,12 @@ def freshness_window(evidence_index_path: Path) -> dict[str, str]:
     }
 
 
+def emergency_left_out_counts(apn_rows: ApnRows) -> dict[str, int]:
+    """The rows leave_out_emergency changed, per reason, every reason listed."""
+    counts = Counter(record["_emergency_left_out"] for record in apn_rows.emergency_left_out)
+    return {reason: counts.get(reason, 0) for reason in EMERGENCY_LEFT_OUT_REASONS}
+
+
 def write_metadata(
     path: Path,
     profiles: list[dict[str, Any]],
@@ -1598,6 +1793,7 @@ def write_metadata(
     ia_types_left_out: int = 0,
     mms_types_left_out: int = 0,
     mms_rows_left_out_absorbed: int = 0,
+    emergency_types_left_out: dict[str, int] | None = None,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -1647,6 +1843,15 @@ def write_metadata(
             # MMS-only rows Android merges into an earlier row, whose MMS
             # setting no current vendor gives. Profile JSON keeps them.
             "mms_rows_left_out_absorbed_by_android": mms_rows_left_out_absorbed,
+            # Rows of apns-conf.xml leave_out_emergency took the "emergency"
+            # type off, by reason; a row whose only type it was is not
+            # written. Android's own default emergency profile then applies
+            # unless another row of the scope keeps the type. Profile JSON
+            # keeps the type (rule decisions of 2026-10-18, round 21).
+            **{
+                key: (emergency_types_left_out or {}).get(reason, 0)
+                for reason, key in EMERGENCY_LEFT_OUT_REASONS.items()
+            },
         },
         **freshness,
     }
@@ -1723,6 +1928,7 @@ def main(argv: list[str]) -> int:
         apn_rows.ia_left_out,
         apn_rows.mms_left_out,
         len(apn_rows.mms_absorbed_left_out),
+        emergency_left_out_counts(apn_rows),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -1732,7 +1938,9 @@ def main(argv: list[str]) -> int:
         f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them, "
         f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
         f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs, "
-        f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out"
+        f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out, "
+        f"{len(apn_rows.emergency_left_out)} emergency type(s) left out "
+        f"({', '.join(f'{reason} {count}' for reason, count in emergency_left_out_counts(apn_rows).items())})"
     )
     return 0
 

@@ -31,9 +31,10 @@ the new lead's APN in the scope carries credentials (rule decisions of
 Also reported, never held, on WATCH_TYPES (HOLD_TYPES plus IWLAN; rule
 decisions of 2026-10-18, round 20): the `ims` lead of each scope in both
 files lost, its APN changed (case-folded), or only its protocol or roaming
-protocol changed, and an APN with an emergency name (`emergency_named`)
-becoming the internet or attach lead. The `ims` lead is the first data
-profile that serves the type on the network type, as for the internet lead.
+protocol changed, and an APN with an emergency name
+(`carrier_config_types.emergency_named`, shared with the generator) becoming
+the internet or attach lead. The `ims` lead is the first data profile that
+serves the type on the network type, as for the internet lead.
 
 The `emergency` lead is what the phone uses (rule decisions of 2026-10-18,
 round 21, S1-A): the first profile that can handle `emergency` (enabled, with
@@ -82,6 +83,7 @@ from typing import Any
 import xml.etree.ElementTree as ET
 
 import android_phone_model as phone
+from carrier_config_types import emergency_named
 
 HOLD_TYPES = {"GPRS": 1, "EDGE": 2, "UMTS": 3, "HSPA": 10, "LTE": 13, "HSPA+": 15, "NR": 20}
 OTHER_TYPES = {"IWLAN": 18, "eHRPD": 14, "EVDO-A": 6, "1xRTT": 7}
@@ -188,13 +190,6 @@ def sends_credentials(lead: tuple | None) -> bool:
     """A lead (`android_phone_model.lead_key`) sends credentials when it has a
     username or password and its resolved auth type is not 0."""
     return bool(lead and (lead[3] or lead[4]) and lead[5] != 0)
-
-
-def emergency_named(apn: Any) -> bool:
-    """An APN named like an emergency APN: `sos`, `emergency`, any name
-    containing `emergency`, or a name starting with `e911` (case-folded)."""
-    name = str(apn or "").casefold()
-    return name == "sos" or "emergency" in name or name.startswith("e911")
 
 
 def protocol_text(lead: tuple | None) -> str:

@@ -94,3 +94,22 @@ def config_value_in_domain(key: str, value: Any) -> bool:
     set in CONFIG_VALUE_DOMAINS accepts every value of its type."""
     domain = CONFIG_VALUE_DOMAINS.get(key)
     return domain is None or value in domain
+
+
+# APN names that name an emergency APN, case-folded (rule decisions of
+# 2026-10-18, rounds 20 and 21): exactly `sos`, any name containing
+# `emergency`, or a name starting with `e911`. One definition for the
+# generator's ranking and the phone guard's report.
+EMERGENCY_APN_NAMES = frozenset({"sos"})
+EMERGENCY_APN_NAME_PARTS = ("emergency",)
+EMERGENCY_APN_NAME_PREFIXES = ("e911",)
+
+
+def emergency_named(apn: Any) -> bool:
+    """Whether an APN is named like an emergency APN (EMERGENCY_APN_NAMES)."""
+    name = str(apn or "").casefold()
+    return (
+        name in EMERGENCY_APN_NAMES
+        or any(part in name for part in EMERGENCY_APN_NAME_PARTS)
+        or name.startswith(EMERGENCY_APN_NAME_PREFIXES)
+    )
