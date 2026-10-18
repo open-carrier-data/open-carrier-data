@@ -544,6 +544,67 @@ def check_explain_absorbed_mms() -> None:
     assert metadata["omissions"]["mms_rows_left_out_absorbed_by_android"] == 1, metadata["omissions"]
 
 
+def check_explain_emergency() -> None:
+    """--explain says why a row keeps "emergency" (emergency_basis), lists a
+    row whose only type was "emergency" under left_out with its reason, and
+    marks an emergency-named internet row ranked after the other internet
+    row (round 21)."""
+    plain = carrier(
+        {"mccmnc": ["20608"]},
+        {},
+        android_apns=[
+            {"name": "SOS", "apn": "SOS", "types": ["default"], "protocol": "IPV6", "roaming_protocol": "IPV4V6"},
+            {"name": "VOO", "apn": "internet.voo.be", "types": ["default", "supl"]},
+            {"name": "Emergency", "apn": "sos", "types": ["emergency"], "protocol": "IPV6", "roaming_protocol": "IPV6"},
+            {"name": "Emergency", "apn": "sos", "types": ["emergency"], "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"},
+        ],
+    )
+    keys = [generate_android_outputs.apn_fact_key(row, row["types"][0]) for row in plain["android_apns"]]
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 4,
+                "verified_observation_count": 0,
+                "sources": ["apple_carrier_bundles", "samsung_omc"],
+                "fact_sources": sorted(
+                    [
+                        {"section": "android_apns", "key": keys[0], "sources": ["samsung_omc"]},
+                        {"section": "android_apns", "key": keys[1], "sources": ["samsung_omc"]},
+                        {"section": "android_apns", "key": keys[2], "sources": ["apple_carrier_bundles"]},
+                        {"section": "android_apns", "key": keys[3], "sources": ["apple_carrier_bundles"]},
+                    ],
+                    key=lambda fact: fact["key"],
+                ),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "20608"}, root, root / "generated" / "evidence-index.json")
+        metadata = json.loads((root / "generated" / "android" / "metadata.json").read_text(encoding="utf-8"))
+    rows = result["apns"]["rows"]
+    assert [row["row"]["apn"] for row in rows] == ["internet.voo.be", "SOS", "sos"], rows
+    assert [row["reasons"]["emergency_named_ranks_last"] for row in rows] == [False, True, False], rows
+    assert [row["reasons"]["emergency_basis"] for row in rows] == [None, None, "android_default"], rows
+    left_out = result["apns"]["left_out"]
+    assert [(row["row"]["protocol"], row["reasons"]) for row in left_out] == [
+        ("IPV6", {"emergency_left_out": "not_vendor_stated"})
+    ], left_out
+    assert metadata["omissions"]["emergency_types_left_out_not_vendor_stated"] == 1, metadata["omissions"]
+
+
 def main() -> int:
     check_resolution()
     check_explain()
@@ -552,6 +613,7 @@ def main() -> int:
     check_explain_stored_with_best_row()
     check_explain_vendor_mms()
     check_explain_absorbed_mms()
+    check_explain_emergency()
     print("carrier profile resolver tests passed")
     return 0
 

@@ -3833,6 +3833,254 @@ def check_leave_out_absorbed_mms() -> None:
     )
 
 
+def check_emergency_rows() -> None:
+    """apns-conf.xml keeps the "emergency" type only on a row that states both
+    protocols, serves nothing else, and asks for exactly Android's default
+    request (sos, IPV4V6/IPV4V6) or is given by a current vendor or
+    LineageOS's own list; and only where every APN set Android may prefer
+    keeps such a row. An APN named like an emergency APN ranks after the
+    other real APNs of a non-emergency lead type (rule decisions of
+    2026-10-18, round 21, S1-A)."""
+
+    google, frozen, samsung = "google_carriersettings", "google_pixel_vendor_carriersettings", "samsung_omc"
+    apple, lineage = "apple_carrier_bundles", "lineageos"
+    dual = {"protocol": "IPV4V6", "roaming_protocol": "IPV4V6"}
+
+    def apn(value: str, types: tuple[str, ...] = ("emergency",), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    internet = (apn("internet", ("default", "supl"), **dual), (google,))
+    scopes: dict[str, list[tuple[dict, tuple[str, ...]]]] = {
+        # E1: an unset protocol is IP on the phone, whoever gives it.
+        "20402": [internet, (apn("emergency", protocol="IPV4V6"), (apple,))],
+        "20818": [internet, (apn("sos", authtype=1), (samsung,))],
+        # 310/580 shape: Google's own row with an unset roaming protocol goes,
+        # its IPV4V6 row of the same scope stays.
+        "31058": [internet, (apn("SOS", protocol="IPV4V6"), (google,)), (apn("sos", **dual), (google,))],
+        # E2: a narrower protocol only when a current vendor or LineageOS gives it.
+        "22201": [internet, (apn("sos", protocol="IPV6", roaming_protocol="IPV4V6"), (apple,))],
+        "26201": [internet, (apn("sos", protocol="IPV6", roaming_protocol="IPV4V6"), (google,))],
+        "65510": [internet, (apn("sos", protocol="IP", roaming_protocol="IP"), (samsung,))],
+        "30272": [internet, (apn("EMERGENCY", protocol="IPV6", roaming_protocol="IPV4V6"), (lineage,))],
+        # 450/06 shape: a carrier name asking for IPv4 at home, Apple alone.
+        "45006": [internet, (apn("emergency.lguplus.co.kr", protocol="IP", roaming_protocol="IPV4V6"), (apple,))],
+        # A carrier's emergency name on the default request needs a
+        # present-day source too: Apple's vzwemergency goes, Google's
+        # VZWEMERGENCY stays.
+        "31059": [internet, (apn("vzwemergency", **dual), (apple,))],
+        "31148": [internet, (apn("VZWEMERGENCY", **dual), (google, lineage))],
+        # E4: exactly Android's default request stays from any source; the
+        # letter case counts, because Wi-Fi calling sends the APN name.
+        "23410": [internet, (apn("sos", authtype=0, apn_set_id=-1, user_visible=False, **dual), (apple,))],
+        "23411": [internet, (apn("SOS", **dual), (apple,))],
+        "45406": [internet, (apn("SOS", **dual), (samsung,))],
+        # E3: network types or another request attribute only when stated.
+        "45202": [internet, (apn("sos", bearer_bitmask="14|20", **dual), (google,))],
+        "45203": [internet, (apn("sos", bearer_bitmask="14|20", **dual), (frozen,))],
+        "23430": [internet, (apn("sos", mtu=1500, **dual), (apple,))],
+        # E5, 440/51 shape: internet rows of APN sets 1 and 2, the only
+        # emergency row in set 0. A preferred set-1 row would strand it, so
+        # Android's match-all default applies instead.
+        "44051": [
+            internet,
+            (apn("au.example", ("default",), apn_set_id=1, **dual), (frozen,)),
+            (apn("unod.example", ("default",), apn_set_id=2, **dual), (frozen,)),
+            (apn("sos", **dual), (google,)),
+        ],
+        # 440/50 shape: a set -1 row serves every set, so both rows stay.
+        "44050": [
+            internet,
+            (apn("au.example", ("default",), apn_set_id=1, **dual), (frozen,)),
+            (apn("sos", **dual), (google,)),
+            (apn("sos", apn_set_id=-1, protocol="IPV6", roaming_protocol="IPV4V6"), (google,)),
+        ],
+        # Combined rows lose "emergency" and keep their other types.
+        "73802": [internet, (apn("ims", ("ims", "emergency")), (samsung,))],
+        "73803": [(apn("web", ("default", "emergency"), **dual), (google,))],
+        # 206/08 shape (A5): Samsung types "SOS" "default"; "internet.voo.be"
+        # leads although "SOS" sorts first.
+        "20608": [
+            (apn("SOS", ("default",), protocol="IPV6", roaming_protocol="IPV4V6", mtu=1300), (samsung,)),
+            (apn("internet.voo.be", ("default", "supl"), authtype=1, roaming_protocol="IPV4V6"), (samsung,)),
+        ],
+        # A lone emergency-named internet row keeps the lead over a
+        # placeholder.
+        "99901": [
+            (apn("default", ("default",)), (lineage,)),
+            (apn("e911.example", ("default",)), (lineage,)),
+        ],
+        # CNT shape (A4): the emergency APN typed "ims" no longer leads IMS.
+        "74002": [
+            internet,
+            (apn("emergency.volte.ims.cnt.net.ec", ("ims",), protocol="IP", roaming_protocol="IPV4V6"), (samsung,)),
+            (apn("ims", ("ims",), protocol="IP", roaming_protocol="IP"), (samsung,)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append(
+            {
+                "profile_id": profile_id,
+                "display_name": profile_id,
+                "match": {"mccmnc": [mccmnc]},
+                "android_apns": [row for row, _ in rows],
+            }
+        )
+        everything = sorted({source for _, group in rows for source in group})
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generate_android_outputs.apn_fact_key(row, apn_type),
+                "sources": sorted(group),
+            }
+            for row, group in rows
+            for apn_type in row["types"]
+        ]
+        records.append({"profile_id": profile_id, "sources": everything, "fact_sources": facts})
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence-index.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        result = generate_android_outputs.apn_xml_rows(profiles, evidence)
+
+        def scope(mccmnc: str) -> list[tuple[str, str]]:
+            return [
+                (record["apn"], record["type"])
+                for record in result.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            ]
+
+        def emergency(mccmnc: str) -> list[str]:
+            return [value for value, types in scope(mccmnc) if "emergency" in types.split(",")]
+
+        expected = {
+            "20402": [],
+            "20818": [],
+            "31058": ["sos"],
+            "22201": [],
+            "26201": ["sos"],
+            "65510": ["sos"],
+            "30272": ["EMERGENCY"],
+            "45006": [],
+            "31059": [],
+            "31148": ["VZWEMERGENCY"],
+            "23410": ["sos"],
+            "23411": [],
+            "45406": ["SOS"],
+            "45202": ["sos"],
+            "45203": [],
+            "23430": [],
+            "44051": [],
+            "44050": ["sos", "sos"],
+            "73802": [],
+            "73803": [],
+        }
+        for mccmnc, kept in expected.items():
+            assert_true(emergency(mccmnc) == kept, f"{mccmnc}: emergency rows {emergency(mccmnc)}, not {kept}")
+        assert_true(
+            ("ims", "ims") in scope("73802") and ("web", "default") in scope("73803"),
+            f"a combined row keeps its other types: {scope('73802')}, {scope('73803')}",
+        )
+        reasons = {
+            (record.get("mcc", "") + record.get("mnc", ""), record["apn"]): record["_emergency_left_out"]
+            for record in result.emergency_left_out
+        }
+        assert_true(
+            reasons
+            == {
+                ("20402", "emergency"): "unset_protocol",
+                ("20818", "sos"): "unset_protocol",
+                ("31058", "SOS"): "unset_protocol",
+                ("73802", "ims"): "unset_protocol",
+                ("73803", "web"): "combined",
+                ("22201", "sos"): "not_vendor_stated",
+                ("45006", "emergency.lguplus.co.kr"): "not_vendor_stated",
+                ("31059", "vzwemergency"): "not_vendor_stated",
+                ("23411", "SOS"): "not_vendor_stated",
+                ("45203", "sos"): "not_vendor_stated",
+                ("23430", "sos"): "not_vendor_stated",
+                ("44051", "sos"): "apn_set",
+            },
+            f"each left-out emergency type has its reason: {reasons}",
+        )
+        counts = generate_android_outputs.emergency_left_out_counts(result)
+        assert_true(
+            counts == {"unset_protocol": 4, "combined": 1, "not_vendor_stated": 6, "apn_set": 1},
+            f"the counts by reason: {counts}",
+        )
+        assert_true(
+            [value for value, _ in scope("20608")] == ["internet.voo.be", "SOS"],
+            f"an emergency-named internet row ranks after the scope's other internet row: {scope('20608')}",
+        )
+        assert_true(
+            [value for value, _ in scope("99901")] == ["e911.example", "default"],
+            f"a lone emergency-named internet row still comes before a placeholder: {scope('99901')}",
+        )
+        assert_true(
+            [value for value, types in scope("74002") if types == "ims"] == ["ims", "emergency.volte.ims.cnt.net.ec"],
+            f"an emergency-named IMS row ranks after the scope's other IMS row: {scope('74002')}",
+        )
+        plain = generate_android_outputs.apn_xml_rows(profiles)
+        plain_emergency = {
+            record.get("mcc", "") + record.get("mnc", "")
+            for record in plain.records
+            if "emergency" in record["type"].split(",")
+        }
+        assert_true(
+            "26201" not in plain_emergency and "23410" in plain_emergency,
+            "without evidence no row has a stated source: only Android's default request keeps "
+            f"the emergency type: {sorted(plain_emergency)}",
+        )
+
+        generated = Path(tmp) / "generated"
+        android_dir = generated / "android"
+        generate_android_outputs.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        root = ET.parse(android_dir / "apns-conf.xml").getroot()
+        assert_true(
+            all(not any(key.startswith("_") for key in element.attrib) for element in root),
+            "the emergency mark is never written",
+        )
+        validate_public_carrier_data.validate_emergency_rows(generated, root)
+        for row, message in (
+            ('<apn mcc="262" mnc="01" apn="sos" type="emergency" protocol="IPV4V6" />', "unset protocol"),
+            ('<apn mcc="262" mnc="01" apn="sos" type="emergency,ims" protocol="IPV4V6" roaming_protocol="IPV4V6" />',
+             "another type"),
+            ('<apn mcc="262" mnc="01" apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6" />'
+             '<apn mcc="262" mnc="01" apn="web" type="default" apn_set_id="1" />', "APN set 1"),
+        ):
+            try:
+                validate_public_carrier_data.validate_emergency_rows(generated, ET.fromstring(f"<apns>{row}</apns>"))
+            except validate_public_carrier_data.ValidationError as exc:
+                assert_true(message in str(exc), f"the validator names the {message}: {exc}")
+            else:
+                raise AssertionError(f"the validator rejects an emergency row with {message}")
+        validate_public_carrier_data.validate_emergency_rows(
+            generated,
+            ET.fromstring(
+                '<apns><apn mcc="262" mnc="01" apn="sos" type="emergency" protocol="IPV4V6" '
+                'roaming_protocol="IPV4V6" apn_set_id="-1" /><apn mcc="262" mnc="01" apn="web" '
+                'type="default" apn_set_id="1" /></apns>'
+            ),
+        )
+        metadata_path = android_dir / "metadata.json"
+        generate_android_outputs.write_metadata(
+            metadata_path, profiles, 8, len(root), 0, {}, emergency_types_left_out=counts
+        )
+        omissions = load_json(metadata_path)["omissions"]
+        assert_true(
+            {key: value for key, value in omissions.items() if key.startswith("emergency_")}
+            == {
+                "emergency_types_left_out_unset_protocol": 4,
+                "emergency_types_left_out_combined": 1,
+                "emergency_types_left_out_not_vendor_stated": 6,
+                "emergency_types_left_out_apn_set": 1,
+            },
+            f"metadata.json counts the emergency types left out: {omissions}",
+        )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -5558,6 +5806,8 @@ def main() -> int:
     print("vendor MMS row tests passed")
     check_leave_out_absorbed_mms()
     print("absorbed MMS row tests passed")
+    check_emergency_rows()
+    print("emergency row tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")

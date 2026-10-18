@@ -192,7 +192,11 @@ def sends_credentials(lead: tuple | None) -> bool:
 
 def emergency_named(apn: Any) -> bool:
     """An APN named like an emergency APN: `sos`, `emergency`, any name
-    containing `emergency`, or a name starting with `e911` (case-folded)."""
+    containing `emergency`, or a name starting with `e911` (case-folded).
+    The same rule as `carrier_config_types.emergency_named`, which the
+    generator ranks by; the guard keeps its own copy so that it runs with
+    only `android_phone_model.py` next to it, as the private publish tests
+    copy it, and `test_phone_guard.py` checks that the two agree."""
     name = str(apn or "").casefold()
     return name == "sos" or "emergency" in name or name.startswith("e911")
 

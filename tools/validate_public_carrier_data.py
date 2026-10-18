@@ -1995,6 +1995,7 @@ def validate_android_metadata(
     if config_root.tag != "carrier_config_list":
         raise ValidationError(f"{generated_dir}: invalid CarrierConfig XML root")
     validate_apn_schema(generated_dir, apn_root)
+    validate_emergency_rows(generated_dir, apn_root)
     output = metadata.get("output")
     require_type(metadata_path, output, dict, "output")
     if output != {
@@ -2013,6 +2014,10 @@ def validate_android_metadata(
         "ia_types_left_out_not_vendor_current",
         "mms_types_left_out_not_vendor_backed",
         "mms_rows_left_out_absorbed_by_android",
+        "emergency_types_left_out_unset_protocol",
+        "emergency_types_left_out_combined",
+        "emergency_types_left_out_not_vendor_stated",
+        "emergency_types_left_out_apn_set",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
@@ -2021,6 +2026,10 @@ def validate_android_metadata(
         ("ia_types_left_out_not_vendor_current", "count of rows without their attach type"),
         ("mms_types_left_out_not_vendor_backed", "count of rows without their MMS type"),
         ("mms_rows_left_out_absorbed_by_android", "count of absorbed MMS rows left out"),
+        ("emergency_types_left_out_unset_protocol", "count of emergency types left out for an unset protocol"),
+        ("emergency_types_left_out_combined", "count of emergency types left out of combined rows"),
+        ("emergency_types_left_out_not_vendor_stated", "count of emergency types no current source states"),
+        ("emergency_types_left_out_apn_set", "count of emergency types left out for an APN set gap"),
     ):
         count = omissions[key]
         if not isinstance(count, int) or isinstance(count, bool) or count < 0:
@@ -2137,6 +2146,55 @@ def validate_apn_schema(generated_dir: Path, apn_root: ET.Element) -> None:
                 f"{generated_dir / 'android' / 'apns-conf.xml'}: row {index + 1} "
                 "fails LineageOS's apns-conf.xsd"
             )
+
+
+def validate_emergency_rows(generated_dir: Path, apn_root: ET.Element) -> None:
+    """What the generator guarantees for emergency APN rows (rule decisions
+    of 2026-10-18, round 21, S1-A): a row typed "emergency" states both
+    protocols and serves no other type, and in every scope with such a row
+    each APN set Android may prefer (0, and the set of every row that serves
+    "default") keeps one with set -1 or that set, since a scope with an
+    emergency row gets no Android default (DataProfileManager.java:339-350,
+    799-808)."""
+    path = generated_dir / "android" / "apns-conf.xml"
+    scopes: dict[tuple[str, ...], list[dict[str, str]]] = {}
+    for index, row in enumerate(apn_root.findall("apn")):
+        attributes = row.attrib
+        types = [item.strip() for item in attributes.get("type", "").split(",")]
+        scope = (
+            attributes.get("mcc", ""),
+            attributes.get("mnc", ""),
+            attributes.get("mvno_type", "").casefold(),
+            attributes.get("mvno_match_data", "").casefold(),
+            "" if "mcc" in attributes else attributes.get("carrier_id", ""),
+        )
+        scopes.setdefault(scope, []).append(attributes)
+        if "emergency" not in types:
+            continue
+        if not attributes.get("protocol") or not attributes.get("roaming_protocol"):
+            raise ValidationError(f"{path}: row {index + 1} is typed emergency with an unset protocol")
+        if types != ["emergency"]:
+            raise ValidationError(f"{path}: row {index + 1} is typed emergency with another type")
+
+    def set_id(attributes: dict[str, str]) -> int:
+        try:
+            return int(attributes.get("apn_set_id", "0"))
+        except ValueError:
+            return 0
+
+    for scope, rows in scopes.items():
+        emergency = [row for row in rows if "emergency" in row.get("type", "").split(",")]
+        if not emergency:
+            continue
+        preferred = {0} | {
+            set_id(row) for row in rows if {"default", "*"} & set(row.get("type", "").split(","))
+        }
+        for apn_set in sorted(preferred):
+            if not any(set_id(row) in (-1, apn_set) for row in emergency):
+                raise ValidationError(
+                    f"{path}: scope {'/'.join(part for part in scope if part)} has no emergency row "
+                    f"under APN set {apn_set}"
+                )
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:

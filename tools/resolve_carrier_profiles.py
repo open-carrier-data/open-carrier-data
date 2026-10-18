@@ -125,6 +125,17 @@ def mvno_row_matches(row: dict[str, Any], identity: dict[str, Any]) -> bool:
     return False
 
 
+def emergency_basis(generator: Any, row: dict[str, Any]) -> str | None:
+    """Why a written row keeps "emergency" (round 21), or None."""
+    if not generator.serves_emergency(row):
+        return None
+    if row.get("_current", {}).get("emergency"):
+        return "current_vendor"
+    if row.get("_support", {}).get("emergency", frozenset()) & generator.EMERGENCY_STATING_LIST_SOURCES:
+        return "lineageos"
+    return "android_default"
+
+
 def explain(
     lookup: dict[str, Any],
     identity: dict[str, Any],
@@ -255,6 +266,10 @@ def explain(
                 "lead_type": rank.lead_type,
                 "reasons": {
                     "real_apn": not rank.placeholder,
+                    # The APN is named like an emergency APN and the row leads
+                    # with another type, so it ranks after the type's other
+                    # real APNs (round 21).
+                    "emergency_named_ranks_last": rank.emergency_named,
                     "value_from_current_vendor": bool(rank.value_current),
                     # Google gives the value only from its shared file, and no
                     # maintained per-carrier source confirms it.
@@ -283,6 +298,15 @@ def explain(
                     "row_families": sorted(generator.source_families(rank.row_sources)),
                     "row_from_primary_source": bool(rank.row_sources & generator.PRIMARY_APN_SOURCES),
                     "row_sources": sorted(rank.row_sources),
+                    # The row keeps "emergency" because it asks for exactly
+                    # Android's default request (android_default), or a
+                    # current vendor (current_vendor) or LineageOS's own list
+                    # (lineageos) gives it; None when it does not serve
+                    # "emergency" (round 21).
+                    "emergency_basis": emergency_basis(generator, row),
+                    # The row lost "emergency" and kept its other types, and
+                    # why (leave_out_emergency).
+                    "emergency_left_out": row.get("_emergency_left_out"),
                 },
             }
         )
@@ -298,11 +322,22 @@ def explain(
             "rows": apn_rows,
             # Rows of this SIM's scope that apns-conf.xml leaves out: stale
             # MMS-only rows Android merges into an earlier row
-            # (absorbed_mms_left_out). The profile JSON keeps them.
+            # (absorbed_mms_left_out), and rows whose only type was
+            # "emergency" when leave_out_emergency took it off
+            # (emergency_left_out, with its reason). The profile JSON keeps
+            # them.
             "left_out": [
                 {"row": generator.written_attributes(row), "reasons": {"absorbed_mms_left_out": True}}
                 for row in generated_rows.mms_absorbed_left_out
                 if generator.apn_scope_key(row) in chosen_scopes
+            ]
+            + [
+                {
+                    "row": generator.written_attributes(row),
+                    "reasons": {"emergency_left_out": row["_emergency_left_out"]},
+                }
+                for row in generated_rows.emergency_left_out
+                if row["type"] == "emergency" and generator.apn_scope_key(row) in chosen_scopes
             ],
         },
     }
