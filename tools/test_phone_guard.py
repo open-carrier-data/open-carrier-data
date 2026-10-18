@@ -258,19 +258,92 @@ class ImsEmergencyReportTests(GuardCase):
         code, _, result = self.run_guard(xml(WEB, unset), xml(WEB, explicit))
         self.assertEqual((code, result["watch"]), (0, []))
 
-    def test_emergency_lead_lost(self) -> None:
-        self.assert_report_only([WEB, self.SOS], [WEB], "emergency lead lost: 1 scope(s)",
-                                "262/01: sos IPV4V6/IPV4V6 -> none")
+    DEFAULT = "Android default sos IPV4V6/IPV4V6"
 
-    def test_emergency_lead_apn_changed(self) -> None:
-        named = self.SOS.replace('apn="sos"', 'apn="emergency"')
-        self.assert_report_only([WEB, self.SOS], [WEB, named], "emergency lead APN changed: 1 scope(s)",
-                                "262/01: sos IPV4V6/IPV4V6 -> emergency IPV4V6/IPV4V6")
+    def test_emergency_lead_lost_lands_on_android_default(self) -> None:
+        result = self.assert_report_only(
+            [WEB, self.SOS], [WEB], "emergency lead lost: 1 scope(s)",
+            f"262/01: sos IPV4V6/IPV4V6 [equal] -> {self.DEFAULT} ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["emergency lead lost"])
 
-    def test_emergency_lead_protocol_changed(self) -> None:
-        narrow = 'mcc="262" mnc="01" apn="sos" type="emergency"'
-        self.assert_report_only([WEB, self.SOS], [WEB, narrow], "emergency lead protocol changed: 1 scope(s)",
-                                "262/01: sos IPV4V6/IPV4V6 -> sos IP/IP")
+    def test_emergency_lead_gained_with_its_label(self) -> None:
+        narrow = self.SOS.replace('protocol="IPV4V6" roaming', 'protocol="IPV6" roaming')
+        self.assert_report_only([WEB], [WEB, narrow], "emergency lead gained: 1 scope(s)",
+                                f"262/01: {self.DEFAULT} -> sos IPV6/IPV4V6 [IPv6 only] ({self.WATCH})")
+
+    def test_emergency_lead_gained_equal_to_the_default(self) -> None:
+        self.assert_report_only([WEB], [WEB, self.SOS], "emergency lead gained: 1 scope(s)",
+                                f"262/01: {self.DEFAULT} -> sos IPV4V6/IPV4V6 [equal]")
+
+    def test_emergency_lead_changed_labels(self) -> None:
+        cases = {
+            'apn="EMERGENCY" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6"': "[carrier name]",
+            'apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IP"': "[IPv4 only]",
+            'apn="sos" type="emergency" protocol="IPV6" roaming_protocol="IPV6"': "[IPv6 only]",
+            'apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6" mtu="1300"':
+                "[request attribute]",
+            'apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6" always_on="true"':
+                "[request attribute]",
+            'apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6" authtype="1"':
+                "[request attribute]",
+            'apn="vzwemergency" type="emergency" protocol="IPV6" roaming_protocol="IP"':
+                "[carrier name, IPv4 only, IPv6 only]",
+        }
+        for row, label in cases.items():
+            with self.subTest(row=row):
+                self.assert_report_only([WEB, self.SOS], [WEB, 'mcc="262" mnc="01" ' + row],
+                                        "emergency lead changed: 1 scope(s)",
+                                        f"262/01: sos IPV4V6/IPV4V6 [equal] -> ")
+                _, out, _ = self.run_guard(xml(WEB, self.SOS), xml(WEB, 'mcc="262" mnc="01" ' + row))
+                self.assertIn(f"{label} ({self.WATCH})", out)
+
+    def test_network_type_gap_has_no_android_fallback(self) -> None:
+        lte_nr = self.SOS + ' bearer_bitmask="14|20"'
+        result = self.assert_report_only(
+            [WEB], [WEB, lte_nr], "emergency lead changed: 1 scope(s)",
+            f"262/01: {self.DEFAULT} -> none [network-type gap] (GPRS,EDGE,UMTS,HSPA,HSPA+,IWLAN)")
+        self.assertIn(f"262/01: {self.DEFAULT} -> sos IPV4V6/IPV4V6 [request attribute] (LTE,NR)",
+                      "\n".join(f"262/01: {i['old']} -> {i['new']} ({','.join(i['types'])})"
+                                 for i in result["watch"]))
+
+    def test_lines_on_lte_nr_or_iwlan_come_first(self) -> None:
+        gsm = 'mcc="262" mnc="02" apn="sos" type="emergency" protocol="IPV6" roaming_protocol="IPV6"' \
+              ' network_type_bitmask="1|2"'
+        lte = 'mcc="262" mnc="03" apn="sos" type="emergency" protocol="IPV6" roaming_protocol="IPV6"' \
+              ' network_type_bitmask="13"'
+        webs = [WEB.replace('mnc="01"', f'mnc="0{n}"') for n in (2, 3)]
+        _, out, _ = self.run_guard(xml(*webs), xml(*webs, gsm, lte))
+        lines = [line.strip() for line in out.splitlines() if "-> sos IPV6/IPV6" in line]
+        self.assertEqual([line[:6] for line in lines], ["262/03", "262/02"], lines)
+
+    def test_an_empty_type_cannot_handle_emergency(self) -> None:
+        everything = 'mcc="262" mnc="01" apn="web" protocol="IPV6" roaming_protocol="IPV6"'
+        code, out, result = self.run_guard(xml(WEB), xml(everything))
+        self.assertEqual([item for item in result["watch"] if item["condition"].startswith("emergency")], [])
+
+    def test_unset_protocol_is_ipv4_only(self) -> None:
+        unset = 'mcc="262" mnc="01" apn="sos" type="emergency"'
+        self.assert_report_only([WEB], [WEB, unset], "emergency lead gained: 1 scope(s)",
+                                f"262/01: {self.DEFAULT} -> sos IP/IP [IPv4 only]")
+
+    def test_an_emergency_row_of_another_apn_set_strands_the_scope(self) -> None:
+        set1 = self.SOS + ' apn_set_id="1"'
+        result = self.assert_report_only(
+            [WEB], [WEB, set1], "emergency lead changed: 1 scope(s)",
+            f"262/01: {self.DEFAULT} -> none [network-type gap] ({self.WATCH})")
+        self.assertIn("emergency profile missing under APN set 0",
+                      {item["condition"] for item in result["watch"]})
+
+    def test_a_preferred_internet_set_strands_a_set_0_emergency_row(self) -> None:
+        set1_web = 'mcc="262" mnc="01" apn="web2" type="default" apn_set_id="1"'
+        result = self.assert_report_only([WEB, set1_web], [WEB, set1_web, self.SOS],
+                                         "emergency profile missing under APN set 1: 1 scope(s)",
+                                         "262/01: an emergency profile -> none")
+        self.assertNotIn("emergency profile missing under APN set 0",
+                         {item["condition"] for item in result["watch"]})
+        minus1 = self.SOS + ' apn_set_id="-1"'
+        code, _, result = self.run_guard(xml(WEB, set1_web), xml(WEB, set1_web, minus1))
+        self.assertEqual({item["condition"] for item in result["watch"]}, {"emergency lead gained"})
 
     def test_emergency_named_apn_becomes_the_internet_and_attach_lead(self) -> None:
         sos_default = 'mcc="262" mnc="01" apn="SOS" type="default" protocol="IPV6"'
