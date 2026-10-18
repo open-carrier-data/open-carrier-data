@@ -28,6 +28,20 @@ new lead sends none, with a WARNING when every row a current vendor backs for
 the new lead's APN in the scope carries credentials (rule decisions of
 2026-10-13, round 14).
 
+Also reported, never held, on WATCH_TYPES (HOLD_TYPES plus IWLAN; rule
+decisions of 2026-10-18, round 20): the `ims` lead and the `emergency` lead of
+each scope in both files lost, its APN changed (case-folded), or only its
+protocol or roaming protocol changed, and an APN with an emergency name
+(EMERGENCY_APN_NAMES) becoming the internet or attach lead. The `ims` and
+`emergency` leads are the first data profile that serves the type on the
+network type, as for the internet lead. A scope whose file has no
+`emergency` row shows "none"; Android then adds its own `sos` profile, which
+is not compared against, and a gained `ims` or `emergency` lead is not
+reported. These lines never enter the trips or
+the digest. Each condition prints a count line, then one line per scope and
+value change up to WATCH_LIST_LIMIT; `--report-json` keeps them all under
+`watch`.
+
 The digest is the first 16 hex characters of sha256 over the sorted trip
 lines `condition|scope|network types|old value|new value`, joined by and
 ending with a newline. The trips pass only with `--accept` equal to it; a
@@ -55,6 +69,10 @@ import android_phone_model as phone
 HOLD_TYPES = {"GPRS": 1, "EDGE": 2, "UMTS": 3, "HSPA": 10, "LTE": 13, "HSPA+": 15, "NR": 20}
 OTHER_TYPES = {"IWLAN": 18, "eHRPD": 14, "EVDO-A": 6, "1xRTT": 7}
 LIST_LIMIT = 15
+# The IMS and emergency report (round 20): the hold types plus Wi-Fi calling.
+WATCH_TYPES = {**HOLD_TYPES, "IWLAN": 18}
+WATCH_APN_TYPES = ("ims", "emergency")
+WATCH_LIST_LIMIT = 30
 
 
 def fmt(scope: phone.Scope) -> str:
@@ -138,6 +156,72 @@ def sends_credentials(lead: tuple | None) -> bool:
     """A lead (`android_phone_model.lead_key`) sends credentials when it has a
     username or password and its resolved auth type is not 0."""
     return bool(lead and (lead[3] or lead[4]) and lead[5] != 0)
+
+
+def emergency_named(apn: Any) -> bool:
+    """An APN named like an emergency APN: `sos`, `emergency`, any name
+    containing `emergency`, or a name starting with `e911` (case-folded)."""
+    name = str(apn or "").casefold()
+    return name == "sos" or "emergency" in name or name.startswith("e911")
+
+
+def protocol_text(lead: tuple | None) -> str:
+    return "none" if lead is None else f"{lead[0]} {lead[6]}/{lead[7]}"
+
+
+def typed_leads(rows: list[dict[str, Any]], tables: dict) -> dict:
+    """Per scope, network type of WATCH_TYPES and APN type of
+    WATCH_APN_TYPES: the lead (`android_phone_model.lead_key`) of the first
+    data profile that serves the type, from the stored rows in TABLES."""
+    out: dict[phone.Scope, dict[str, dict[str, tuple | None]]] = {}
+    for scope in {phone.scope_of(row) for row in rows}:
+        settings = phone.profiles(phone.scope_rows(tables, scope))
+        out[scope] = {
+            name: {kind: phone.lead_key(next((p for p in settings if kind in p["types"]
+                                              and phone.serves(p, network_type) and phone.cellular(p)), None))
+                   for kind in WATCH_APN_TYPES}
+            for name, network_type in WATCH_TYPES.items()}
+    return out
+
+
+def watch(before: dict, after: dict, before_typed: dict, after_typed: dict) -> list[dict[str, Any]]:
+    """The IMS and emergency report items, never trips: per condition, scope
+    and old and new value, the network types of WATCH_TYPES it holds on."""
+    found: dict[tuple, list[str]] = defaultdict(list)
+    for scope in set(before) & set(after):
+        for name in WATCH_TYPES:
+            for kind in WATCH_APN_TYPES:
+                old, new = before_typed[scope][name][kind], after_typed[scope][name][kind]
+                if old and not new:
+                    found[(f"{kind} lead lost", fmt(scope), protocol_text(old), "none")].append(name)
+                elif old and str(old[0]).casefold() != str(new[0]).casefold():
+                    found[(f"{kind} lead APN changed", fmt(scope), protocol_text(old),
+                           protocol_text(new))].append(name)
+                elif old and (old[6], old[7]) != (new[6], new[7]):
+                    found[(f"{kind} lead protocol changed", fmt(scope), protocol_text(old),
+                           protocol_text(new))].append(name)
+            b_inet, _, b_attach = before[scope][name][:3]
+            a_inet, _, a_attach = after[scope][name][:3]
+            for role, old, new in (("internet", b_inet, a_inet), ("attach", b_attach, a_attach)):
+                if new and emergency_named(new[0]) and not (old and emergency_named(old[0])):
+                    found[(f"emergency-named APN becomes the {role} lead", fmt(scope), lead_text(old),
+                           lead_text(new))].append(name)
+    return [{"condition": c, "scope": s, "types": types, "old": o, "new": n}
+            for (c, s, o, n), types in sorted(found.items())]
+
+
+def watch_lines(items: list[dict[str, Any]]) -> list[str]:
+    """A count line per condition (scopes), then its value lines up to
+    WATCH_LIST_LIMIT."""
+    lines: list[str] = []
+    for condition in sorted({item["condition"] for item in items}):
+        mine = [item for item in items if item["condition"] == condition]
+        lines.append(f"{condition}: {len({item['scope'] for item in mine})} scope(s)")
+        for item in mine[:WATCH_LIST_LIMIT]:
+            lines.append(f"  {item['scope']}: {item['old']} -> {item['new']} ({','.join(item['types'])})")
+        if len(mine) > WATCH_LIST_LIMIT:
+            lines.append(f"  ... {len(mine) - WATCH_LIST_LIMIT} more (--report-json lists them all)")
+    return lines
 
 
 def read_rows(path: Path) -> list[dict[str, Any]]:
@@ -256,7 +340,7 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv[1:])
     if args.base.read_bytes() == args.head.read_bytes():
         print("phone-level guard: PASS, apns-conf.xml is unchanged")
-        result: dict[str, Any] = {"verdict": "pass", "trips": [], "digest": None, "report": []}
+        result: dict[str, Any] = {"verdict": "pass", "trips": [], "digest": None, "report": [], "watch": []}
     else:
         before_rows, after_rows = read_rows(args.base), read_rows(args.head)
         types = {**HOLD_TYPES, **OTHER_TYPES}
@@ -268,6 +352,8 @@ def main(argv: list[str]) -> int:
         verdict = "pass" if not found else "accepted" if code in args.accept else "hold"
         lines = report(before, after, (before_tables, after_tables), vendor,
                        vendor_rows(args.generator.resolve()))
+        watched = watch(before, after, typed_leads(before_rows, before_tables),
+                        typed_leads(after_rows, after_tables))
         print(f"phone-level guard: {verdict.upper()}, {len(found)} trip(s) on {', '.join(HOLD_TYPES)}")
         for trip in found:
             print(f"  {trip_line(trip)}")
@@ -276,7 +362,11 @@ def main(argv: list[str]) -> int:
         print("report, never held:")
         for line in lines:
             print(f"  {line}")
-        result = {"verdict": verdict, "trips": found, "digest": code, "report": lines}
+        print("IMS and emergency report, never held:" if watched else
+              "IMS and emergency report, never held: no change")
+        for line in watch_lines(watched):
+            print(f"  {line}")
+        result = {"verdict": verdict, "trips": found, "digest": code, "report": lines, "watch": watched}
     if args.report_json:
         args.report_json.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     return 1 if result["verdict"] == "hold" else 0

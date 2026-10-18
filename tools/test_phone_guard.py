@@ -215,6 +215,110 @@ class CredentialsLostTests(GuardCase):
         self.assertEqual((code, accepted["verdict"]), (0, "accepted"))
 
 
+class ImsEmergencyReportTests(GuardCase):
+    """Report-only (rule decisions of 2026-10-18, round 20): the `ims` and
+    `emergency` leads and emergency-named internet or attach leads, on the
+    hold types plus IWLAN, never in the trips or the digest."""
+
+    WATCH = ",".join(guard.WATCH_TYPES)
+    IMS = 'mcc="262" mnc="01" apn="ims" type="ims" protocol="IPV6" roaming_protocol="IPV6"'
+    SOS = 'mcc="262" mnc="01" apn="sos" type="emergency" protocol="IPV4V6" roaming_protocol="IPV4V6"'
+
+    def assert_report_only(self, base: list[str], head: list[str], line: str, value: str) -> dict:
+        code, out, result = self.run_guard(xml(*base), xml(*head))
+        self.assertEqual((code, result["verdict"], result["trips"], result["digest"]), (0, "pass", [], None))
+        self.assertIn(line, out)
+        self.assertIn(value, out)
+        return result
+
+    def test_ims_lead_lost(self) -> None:
+        result = self.assert_report_only([WEB, self.IMS], [WEB], "ims lead lost: 1 scope(s)",
+                                         f"262/01: ims IPV6/IPV6 -> none ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["ims lead lost"])
+
+    def test_ims_lead_apn_changed(self) -> None:
+        other = self.IMS.replace('apn="ims"', 'apn="ims.example"')
+        self.assert_report_only([WEB, self.IMS], [WEB, other], "ims lead APN changed: 1 scope(s)",
+                                "262/01: ims IPV6/IPV6 -> ims.example IPV6/IPV6")
+
+    def test_ims_lead_apn_case_change_is_not_reported(self) -> None:
+        upper = self.IMS.replace('apn="ims"', 'apn="IMS"')
+        code, out, result = self.run_guard(xml(WEB, self.IMS), xml(WEB, upper))
+        self.assertEqual((code, result["watch"]), (0, []))
+        self.assertIn("IMS and emergency report, never held: no change", out)
+
+    def test_ims_lead_protocol_changed(self) -> None:
+        dual = self.IMS.replace('roaming_protocol="IPV6"', 'roaming_protocol="IPV4V6"')
+        self.assert_report_only([WEB, self.IMS], [WEB, dual], "ims lead protocol changed: 1 scope(s)",
+                                "262/01: ims IPV6/IPV6 -> ims IPV6/IPV4V6")
+
+    def test_unset_protocol_and_ip_are_the_same_on_a_phone(self) -> None:
+        unset = 'mcc="262" mnc="01" apn="sos" type="emergency"'
+        explicit = unset + ' protocol="IP" roaming_protocol="IP"'
+        code, _, result = self.run_guard(xml(WEB, unset), xml(WEB, explicit))
+        self.assertEqual((code, result["watch"]), (0, []))
+
+    def test_emergency_lead_lost(self) -> None:
+        self.assert_report_only([WEB, self.SOS], [WEB], "emergency lead lost: 1 scope(s)",
+                                "262/01: sos IPV4V6/IPV4V6 -> none")
+
+    def test_emergency_lead_apn_changed(self) -> None:
+        named = self.SOS.replace('apn="sos"', 'apn="emergency"')
+        self.assert_report_only([WEB, self.SOS], [WEB, named], "emergency lead APN changed: 1 scope(s)",
+                                "262/01: sos IPV4V6/IPV4V6 -> emergency IPV4V6/IPV4V6")
+
+    def test_emergency_lead_protocol_changed(self) -> None:
+        narrow = 'mcc="262" mnc="01" apn="sos" type="emergency"'
+        self.assert_report_only([WEB, self.SOS], [WEB, narrow], "emergency lead protocol changed: 1 scope(s)",
+                                "262/01: sos IPV4V6/IPV4V6 -> sos IP/IP")
+
+    def test_emergency_named_apn_becomes_the_internet_and_attach_lead(self) -> None:
+        sos_default = 'mcc="262" mnc="01" apn="SOS" type="default" protocol="IPV6"'
+        result = self.assert_report_only(
+            [WEB], [sos_default, WEB], "emergency-named APN becomes the internet lead: 1 scope(s)",
+            f"262/01: web -> SOS ({self.WATCH})")
+        self.assertIn("emergency-named APN becomes the attach lead",
+                      {item["condition"] for item in result["watch"]})
+
+    def test_an_emergency_named_lead_that_stays_is_not_reported(self) -> None:
+        sos_default = 'mcc="262" mnc="01" apn="SOS" type="default" protocol="IPV6"'
+        e911 = 'mcc="262" mnc="01" apn="e911.example" type="default"'
+        code, _, result = self.run_guard(xml(sos_default, WEB), xml(e911, WEB))
+        self.assertEqual((code, result["watch"]), (0, []))
+
+    def test_loss_only_on_iwlan_is_reported_and_cdma_is_not(self) -> None:
+        wifi = self.IMS + ' network_type_bitmask="18"'
+        cdma = self.IMS + ' network_type_bitmask="14"'
+        both = self.IMS + ' network_type_bitmask="1|2|3|10|13|15|20"'
+        self.assert_report_only([WEB, self.IMS], [WEB, both], "ims lead lost: 1 scope(s)",
+                                "262/01: ims IPV6/IPV6 -> none (IWLAN)")
+        code, _, result = self.run_guard(xml(WEB, wifi), xml(WEB))
+        self.assertEqual([item["types"] for item in result["watch"]], [["IWLAN"]])
+        code, _, result = self.run_guard(xml(WEB, cdma), xml(WEB))
+        self.assertEqual((code, result["watch"]), (0, []))
+
+    def test_report_lines_leave_trips_verdict_and_digest_unchanged(self) -> None:
+        _, plain_out, plain = self.run_guard(xml(WEB, MMS), xml(WEB))
+        code, out, result = self.run_guard(xml(WEB, MMS, self.IMS, self.SOS), xml(WEB))
+        self.assertIn("IMS and emergency report, never held: no change", plain_out)
+        self.assertIn("ims lead lost: 1 scope(s)", out)
+        self.assertIn("emergency lead lost: 1 scope(s)", out)
+        self.assertEqual((code, result["verdict"]), (1, "hold"))
+        self.assertEqual((result["trips"], result["digest"]), (plain["trips"], plain["digest"]))
+        code, _, accepted = self.run_guard(xml(WEB, MMS, self.IMS, self.SOS), xml(WEB),
+                                           extra=["--accept", plain["digest"]])
+        self.assertEqual((code, accepted["verdict"]), (0, "accepted"))
+
+    def test_long_lists_are_cut_in_the_text_and_kept_in_the_json(self) -> None:
+        rows = [f'mcc="262" mnc="{n:02d}" apn="ims" type="ims"' for n in range(guard.WATCH_LIST_LIMIT + 5)]
+        webs = [f'mcc="262" mnc="{n:02d}" apn="web" type="default"' for n in range(guard.WATCH_LIST_LIMIT + 5)]
+        code, out, result = self.run_guard(xml(*webs, *rows), xml(*webs))
+        self.assertEqual(code, 0)
+        self.assertIn(f"ims lead lost: {guard.WATCH_LIST_LIMIT + 5} scope(s)", out)
+        self.assertIn("  ... 5 more (--report-json lists them all)", out)
+        self.assertEqual(len(result["watch"]), guard.WATCH_LIST_LIMIT + 5)
+
+
 class DigestTests(GuardCase):
     def test_exact_digest_passes(self) -> None:
         code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB))
