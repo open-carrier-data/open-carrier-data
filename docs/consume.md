@@ -2,6 +2,31 @@
 
 This guide shows how to package the generated files, how to resolve profiles from code, how to check freshness, and how to validate a snapshot. Run every command from the repo root.
 
+## Read this first
+
+The files on `main` are the edge channel: each publish replaces them, several times a day. No release exists yet, and no file is supported today. [releases.md](releases.md) describes the planned monthly releases, `data-YYYY.MM`, and their tiers:
+
+| File | Planned tier |
+| --- | --- |
+| `generated/android/apns-conf.xml` | for ROMs, from the first release that carries the review of its emergency APN rows and has passed one boot check on the owner's phone |
+| `generated/android/lookup.json`, `generated/android/metadata.json` | for apps and tools, from the first release |
+| `generated/devices/carrier-variants.json` | for apps and tools as information, from the first release; never an export |
+| `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
+| the other files under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
+
+Until the first release, pin one commit by hand and record the SHA-256 of each file you take and its `data_digest`.
+
+What every ROM maintainer must know:
+
+1. **Configured, not verified.** Every value comes from a vendor or ROM carrier table. No profile has been verified on a phone: `verified_observation_count` is 0 everywhere. `supported` means a table turns the feature on, not that the operator offers it, that the plan includes it or that the phone model is approved.
+2. **Emergency calls are not tested, and OCD never places one.** `apns-conf.xml` sets emergency APN rows for many more scopes than LineageOS's own list, and a row whose source states no protocol makes Android use IPv4 only ([Emergency APN rows](#emergency-apn-rows)); the rows are under review before the first release. `carrier-config-list.xml` carries emergency, TTY, RTT, WPS and `iwlan.*` keys and is not for ROM application until the per-key review of those keys has run. Switching VoLTE or Wi-Fi calling on changes how the phone places emergency calls: where there is no 2G or 3G voice, or a regulator requires emergency calls over IMS (Sweden's PTS, Australia's ACMA), confirm that your IMS stack places them before you ship.
+3. **The phone must load the file.** Keep `<apns version>` equal to your framework's `frameworks/base/core/res/res/xml/apns.xml`. On a mismatch TelephonyProvider loads no APN at all.
+4. **The preferred APN survives an update.** New rows and a new order apply to a newly inserted SIM or after Reset to default.
+5. **Pin one snapshot and check its window.** Do not ship after `stale_after`.
+6. **`profile_id` is a hash of the match set** and changes when a source's selectors change. Key your own records by the SIM's facts (MCC and MNC, SPN, GID1, IMSI, carrier id) and the snapshot, and resolve them again against each new one.
+7. **Most values rest on one source family.** `generated/evidence-index.json` names it.
+8. **Data rights.** OCD waives its own rights in the data (CC0). Several sources state no terms, and whether Samsung's and Apple's terms allow extracting facts is open. This is not legal advice; [DATA-LICENSE.md](../DATA-LICENSE.md) has the details.
+
 ## Use the data in an Android ROM
 
 The Android files live in `generated/android/`. Each file has one job.
@@ -9,7 +34,7 @@ The Android files live in `generated/android/`. Each file has one job.
 | File | Put it where |
 | --- | --- |
 | `apns-conf.xml` | the one APN file your build installs, see below |
-| `carrier-config-list.xml` | only if you want it: a `vendor.xml` for the CarrierConfig app, merged with your device's own, see below |
+| `carrier-config-list.xml` | not for ROM application until the per-key review of its safety keys has run; see below |
 | `lookup.json` | a tool that resolves profiles for a SIM, see below |
 | `metadata.json` | your build log, so you know which profiles the XML left out and how fresh the snapshot is |
 
@@ -40,6 +65,8 @@ The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_
 
 ### carrier-config-list.xml is a vendor.xml
 
+Not supported for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run (rule decisions of 2026-10-18, round 20), and no release will carry it before then. A maintainer who applies it anyway does so on their own review. This section says what such a merge involves.
+
 `carrier-config-list.xml` has the format of the CarrierConfig app's `res/xml/vendor.xml`. That file is not one carrier's config: `DefaultCarrierConfigService` first reads the per-carrier asset AOSP ships for the SIM, then applies every matching block of `vendor.xml` on top with `putAll`, so each key here overrides AOSP's own value for that carrier on every device that installs it. A build has one `vendor.xml`, and devices often ship their own (the S20 tree's overlay has one), so merge the blocks into it instead of replacing it, and keep only keys you have reason to apply. Profiles whose match needs a GID or ICCID prefix are left out, because `vendor.xml` matches GID1 only exactly; `metadata.json` says so (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`) and lists them. No value in this file has been tested on a phone.
 
 A key this file leaves out is not neutral. The phone keeps the value its own layers give: AOSP's per-carrier asset, the device's `vendor.xml`, a carrier app, or Android's default. OCD leaves a capability switch out when it withholds a single family's off, when sources conflict, or when no source gives it. Android's defaults for the switches that turn a feature on or off (`CarrierConfigManager`, Android 16):
@@ -62,6 +89,21 @@ For these three switches a single family's off therefore does not take out a tru
 
 No value in this project has been tested for emergency calls, and the project never places one. `carrier-config-list.xml` carries emergency-related keys as carrier tables give them, among them `carrier_use_ims_first_for_emergency_bool`, `auto_retry_failed_wifi_emergency_call`, `allow_emergency_video_calls_bool`, `support_wps_over_ims_bool` and `iwlan.epdg_static_address_string`. Unless you have tested them on your device, keep your device's own values for every key whose name contains `emergency`, `e911` or `ecbm`, for `support_wps_over_ims_bool`, the TTY and RTT keys, and the `iwlan.*` keys. Switching VoLTE or Wi-Fi calling on also changes how the phone places emergency calls. Where a network has no 2G or 3G voice, or a regulator requires emergency calls over VoLTE (Sweden's PTS, from 2026-02-02), make sure your IMS stack places emergency calls over IMS before you ship such a switch.
 
+#### Emergency APN rows
+
+`apns-conf.xml` also carries emergency APN rows, typed `emergency`, as the sources give them. On 2026-10-18 there are 869 such rows in 674 network and MVNO scopes; LineageOS's own list has 36. None has been tested, and most rest on one source family. When a scope has no such row, Android's `DataProfileManager` adds its own default emergency profile, APN `sos` with protocol `IPV4V6` at home and when roaming. A row in the file takes that default's place for its scope, so it sets the emergency connection's APN name and protocol. TelephonyProvider stores a protocol the row leaves unset as `IP`, which is IPv4 only and narrower than Android's own default: on 2026-10-18 that makes 49 rows IPv4 only at home and 113 when roaming. Some rows whose APN is named like an emergency APN are typed otherwise: rows named `sos` typed `ims`, and on VOO (206/08) a row `SOS` typed `default` that is the first internet row. These rows are under review before the first release (rule decisions of 2026-10-18, round 20). Whether a phone uses the emergency rows depends on its IMS stack: a stack that places every emergency call over 2G or 3G never opens the emergency connection. Count them with:
+
+```bash
+python3 <<'PY'
+import xml.etree.ElementTree as ET
+rows = [a for a in ET.parse("generated/android/apns-conf.xml").getroot() if a.tag == "apn" and "emergency" in (a.get("type") or "").split(",")]
+scopes = {(a.get("mcc"), a.get("mnc"), a.get("mvno_type"), (a.get("mvno_match_data") or "").lower()) for a in rows}
+ipv4_home = sum(1 for a in rows if a.get("protocol") in (None, "IP"))
+ipv4_roaming = sum(1 for a in rows if a.get("roaming_protocol") in (None, "IP"))
+print(len(rows), "rows in", len(scopes), "scopes;", ipv4_home, "IPv4 only at home,", ipv4_roaming, "when roaming")
+PY
+```
+
 ### Installing a newer apns-conf.xml does not change an APN a phone already uses
 
 Android remembers the APN the SIM connected with (the preferred APN) by its content, and finds that row again after a newer `apns-conf.xml` replaces the database. New rows and a new order therefore take effect for a newly inserted SIM, or after Settings, Access Point Names, Reset to default. A user who added or edited an APN keeps it until that reset. If the preferred row stops working, Android retries it instead of moving to the next row, and the status bar shows signal bars without a "4G" label. Picking another row in the APN list, or Reset to default, recovers.
@@ -74,20 +116,15 @@ python3 tools/generate_android_outputs.py carriers /tmp/ocd-out --apn-version 9 
 grep -m1 '<apns ' /tmp/ocd-out/android/apns-conf.xml
 ```
 
-The generator prints one summary line, and the root element shows the new version. On 2026-10-04 the output is:
+The generator prints one summary line with the profile, APN row and CarrierConfig block counts, and the root element shows the new version, `<apns version="9">`.
 
-```text
-generated Android output for 7816 profile(s): 25406 APN row(s), 6351 CarrierConfig profile(s), 5261 CarrierConfig XML block(s), 0 APN row(s) left out because LineageOS's schema rejects them
-<apns version="9">
-```
-
-Read `metadata.json` before you ship. On 2026-10-04 it lists 18 profiles whose match cannot be expressed in APN XML and 1,380 profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
+Read `metadata.json` before you ship. It lists the profiles whose match cannot be expressed in APN XML and the profiles left out of CarrierConfig XML. `omissions.apn_rows_rejected_by_lineageos_schema` counts the APN rows left out because LineageOS's schema rejects them. Print the two profile counts with:
 
 ```bash
 python3 -c 'print({k: v for k, v in __import__("json").load(open("generated/android/metadata.json"))["omissions"].items() if k.endswith("_unrepresentable_match") and not k.endswith("ids_with_unrepresentable_match")})'
 ```
 
-The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. On 2026-10-04, of the 1,380, 1,074 use GID only, 298 use ICCID only, and 8 use both. Recount them with:
+The CarrierConfig omissions are profiles whose match uses GID or ICCID prefixes, which `config_filter_records` in `tools/generate_android_outputs.py` skips. Split them into GID only, ICCID only and both with:
 
 ```bash
 python3 <<'PY'
@@ -110,7 +147,7 @@ Those profiles stay available in `lookup.json`.
 
 ## Check the file against LineageOS's schema
 
-A LineageOS build checks its APN file against `apns-conf.xsd` in `vendor/apn`. The generator leaves out every row that schema rejects, and `metadata.json` counts them as `omissions.apn_rows_rejected_by_lineageos_schema`. On 2026-10-04 that is 0 rows. To check the file before you build, run:
+A LineageOS build checks its APN file against `apns-conf.xsd` in `vendor/apn`. The generator leaves out every row that schema rejects, and `metadata.json` counts them as `omissions.apn_rows_rejected_by_lineageos_schema`. To check the file before you build, run:
 
 ```bash
 xmllint --noout --schema /path/to/lineage/vendor/apn/apns-conf.xsd generated/android/apns-conf.xml
@@ -249,7 +286,7 @@ The validators apply the same window. `check_freshness` in `tools/validate_publi
 
 ## Validate a snapshot
 
-Run both validators before you package anything. Both must exit 0. Pass `--freshness fail` so a snapshot past `stale_after` fails instead of warning.
+Run the three validators before you package anything. All three must exit 0. Pass `--freshness fail` so a snapshot past `stale_after` fails instead of warning.
 
 ```bash
 python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail
@@ -257,11 +294,6 @@ python3 tools/validate_device_catalog.py generated/devices --freshness fail
 python3 tools/validate_carrier_variants.py . --freshness fail
 ```
 
-Output on 2026-10-04:
-
-```text
-validated 7806 public carrier profile(s)
-validated 42473 Android devices, 183 Apple products, and 4642 carrier artifacts
-```
+Each prints one `validated` line with its counts.
 
 The first validator also checks every source snapshot date.
