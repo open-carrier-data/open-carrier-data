@@ -145,6 +145,29 @@ PY
 
 Those profiles stay available in `lookup.json`.
 
+### Wi-Fi calling can fail because of the Wi-Fi's DNS, not the settings
+
+Before Wi-Fi calling starts, the phone looks up the carrier's ePDG, the server its Wi-Fi calling tunnel connects to. The name has the form `epdg.epc.mncXXX.mccYYY.pub.3gppnetwork.org`, and the lookup goes through the DNS server of the Wi-Fi the phone is on. Some carriers answer that lookup only for clients they place in their own country. They judge this by the EDNS Client Subnet (ECS) in the query, or, when there is none, by the address of the DNS server that asks. A DNS server that sends no ECS gets an empty answer. The phone then finds no ePDG and gives up, and the carrier never refuses anything.
+
+Measured on 2026-10-19 for Vodafone Germany (26202, which includes its MVNOs such as LIDL Connect):
+
+| DNS server | Answer for `epdg.epc.mnc002.mcc262.pub.3gppnetwork.org` |
+|---|---|
+| Quad9 9.9.9.9, Cloudflare 1.1.1.1 | empty |
+| Google 8.8.8.8 with ECS switched off | empty |
+| Google 8.8.8.8, Quad9 with ECS (9.9.9.11) | an address |
+| Vodafone's own name servers, asked from a German home line | an address |
+
+The paper by Gegenhuber et al., [*Why E.T. Can't Phone Home* (MobiSys 2024)](https://arxiv.org/abs/2403.11759), describes the same DNS-based blocking for Vodafone Germany. It also reports that the ePDG itself accepts connections from abroad. On the same day, the name for 1&1 (26223) resolved through every DNS server tried.
+
+What fixes it:
+
+- **On the router:** use the internet provider's DNS servers. AVM's own Wi-Fi calling article recommends this for Vodafone.
+- **On that one phone:** set Private DNS to `dns11.quad9.net` (Quad9 with ECS) or `dns.google`. A Private DNS host that sends no ECS does not help.
+- **For only these names:** a DNS forwarder on the local network, such as dnsmasq, Pi-hole, AdGuard Home or Unbound, can send `pub.3gppnetwork.org` and `vodafone-ip.de` to such a server and everything else to the usual one. A FRITZ!Box cannot forward one domain to a different server by itself.
+
+A public DNS server that sends ECS passes the first three parts of the client's IPv4 address to the carrier's name servers. Pinning today's ePDG addresses is fragile: Vodafone's were 139.7.117.161 and .162 until 2019, and are .168 to .170 in 2026.
+
 ## Check the file against LineageOS's schema
 
 A LineageOS build checks its APN file against `apns-conf.xsd` in `vendor/apn`. The generator leaves out every row that schema rejects, and `metadata.json` counts them as `omissions.apn_rows_rejected_by_lineageos_schema`. To check the file before you build, run:
