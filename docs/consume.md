@@ -199,6 +199,8 @@ APN rows and MMS settings are per carrier. VoLTE, Wi-Fi calling, video calling a
 
 A record from another stack can still be shown, with its stack named: a stock record on a LineageOS build of the same model is "this model's stock firmware", not "this phone". Device records are information, not an export: never write a false VoLTE, Wi-Fi calling or video calling switch from them into a phone. Each record rests on one source, is configuration and not a test, and says nothing about emergency calls.
 
+Do not write a true from a record of another software stack either. A `stock` record says what the vendor's own IMS stack is set to, not what a LineageOS build's IMS stack can do, emergency calls included. There is no export with `device=` blocks, and none is built until a named ROM states it will apply them (rule decisions of 2026-10-18, round 18). For every profile `carrier-config-list.xml` can express, it already sets the VoLTE, Wi-Fi calling and video calling switches true wherever a device's own file turns them on, unless a gate withholds the value. On 2026-10-18 that held for all but 2 of 169,717 such device values. A `vendor.xml` block can filter by `Build.DEVICE`, board and SKU, but not by model or sales code, so Samsung's records cannot be written as device blocks. An `off` is never exported.
+
 ### Ask why with --explain
 
 `--explain` answers why a SIM gets what it gets. It prints, as JSON:
