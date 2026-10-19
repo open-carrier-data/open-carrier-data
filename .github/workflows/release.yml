@@ -142,14 +142,31 @@ jobs:
           cd "$RUNNER_TEMP/release"
           sha256sum -c SHA256SUMS
           cat release-body.md >> "$GITHUB_STEP_SUMMARY"
+      # The built assets are kept as a run artifact whatever happens next.
+      # GITHUB_TOKEN cannot create a release whose target commit carries
+      # different files under .github/workflows/ than main (it never holds the
+      # workflows permission), so a candidate older than the last workflow
+      # change needs the owner's token to draft it from this artifact; see
+      # docs/releases.md.
+      - name: Keep the built assets
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ inputs.tag }}-assets
+          path: ${{ runner.temp }}/release/
+          if-no-files-found: error
+          retention-days: 30
       - name: Create the draft release
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           cd "$RUNNER_TEMP/release"
-          gh release create "$TAG" --draft --target "$CANDIDATE" --title "$TAG" \
+          if gh release create "$TAG" --draft --target "$CANDIDATE" --title "$TAG" \
             --notes-file release-body.md \
             apns-conf.xml lookup.json metadata.json carrier-variants.json \
-            release.json release-notes.md SHA256SUMS
-          echo "Draft $TAG created. The owner reads it and publishes it; GitHub creates the tag then." \
-            >> "$GITHUB_STEP_SUMMARY"
+            release.json release-notes.md SHA256SUMS; then
+            echo "Draft $TAG created. The owner reads it and publishes it; GitHub creates the tag then." \
+              >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::The workflow token could not create the draft (likely: the candidate's workflow files differ from main). Every gate passed; draft it from the artifact ${TAG}-assets with the owner's token (docs/releases.md)."
+            echo "Draft not created by the workflow token; draft $TAG from the artifact ${TAG}-assets with the owner's token." >> "$GITHUB_STEP_SUMMARY"
+          fi
