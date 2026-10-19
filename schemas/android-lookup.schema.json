@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/android-lookup.schema.json",
+  "title": "Open Carrier Data profile lookup (generated/android/lookup.json)",
+  "description": "One entry per published carrier profile, for apps and tools that pick a profile from a SIM's facts. profile_id is a hash of the match set and changes when the match set changes; key stored results by the SIM's facts and the release, never by profile_id (docs/compatibility.md). tools/validate_public_carrier_data.py checks this schema and what a schema cannot: every published profile listed once, and newest_entry against the evidence index.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "resolution_order", "match_semantics", "profiles"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "resolution_order": { "const": "generic_to_specific" },
+    "match_semantics": { "const": "OR within a match list; AND between match dimensions" },
+    "profiles": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/profile" }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "display_name",
+        "path",
+        "match",
+        "specificity",
+        "capabilities",
+        "android_apn_count",
+        "has_android_carrier_config"
+      ],
+      "properties": {
+        "profile_id": { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
+        "display_name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "path": { "type": "string", "pattern": "^carriers/open/[0-9]{5,6}\\.[0-9a-f]{12}\\.json$" },
+        "match": { "$ref": "#/$defs/match" },
+        "specificity": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "capabilities": { "$ref": "#/$defs/capabilities" },
+        "android_apn_count": { "type": "integer", "minimum": 0 },
+        "has_android_carrier_config": { "type": "boolean" },
+        "checks_through": { "type": "string", "format": "date" },
+        "stale_after": { "type": "string", "format": "date" },
+        "newest_entry": { "type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$" }
+      }
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mccmnc"],
+      "properties": {
+        "mccmnc": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[0-9]{5,6}$" }
+        },
+        "gid1_prefixes": { "$ref": "#/$defs/hexPrefixes" },
+        "gid2_prefixes": { "$ref": "#/$defs/hexPrefixes" },
+        "iccid_prefixes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[0-9]{5,13}$" }
+        },
+        "imsi_prefix_patterns": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[0-9xX]{5,10}$" }
+        },
+        "spn": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 80 }
+        },
+        "android_carrier_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+        }
+      }
+    },
+    "hexPrefixes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[0-9A-Fa-f]{1,32}$" }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "volte": { "$ref": "#/$defs/capabilityStatus" },
+        "vowifi": { "$ref": "#/$defs/capabilityStatus" },
+        "vonr": { "$ref": "#/$defs/capabilityStatus" },
+        "video_calling": { "$ref": "#/$defs/capabilityStatus" },
+        "sms_over_ims": { "$ref": "#/$defs/capabilityStatus" },
+        "mms": { "$ref": "#/$defs/capabilityStatus" },
+        "rcs": { "$ref": "#/$defs/capabilityStatus" },
+        "esim": { "$ref": "#/$defs/capabilityStatus" },
+        "ims_conference": { "$ref": "#/$defs/capabilityStatus" },
+        "wifi_calling_roaming": { "$ref": "#/$defs/capabilityStatus" }
+      }
+    },
+    "capabilityStatus": {
+      "type": "string",
+      "enum": ["supported", "unsupported", "conditional", "unknown"]
+    }
+  }
+}

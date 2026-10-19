@@ -67,6 +67,143 @@ def load_allowed_config_keys(schema_path: Path = SCHEMA_DIR / "carrier-profile.s
 
 ALLOWED_CONFIG_KEYS = load_allowed_config_keys()
 
+# The JSON Schema keywords check_against_schema implements. A schema under
+# schemas/ that the validator checks may use no other keyword, so a schema
+# never says more than the validator enforces (rule decisions of 2026-10-18,
+# round 20: schemas for lookup.json and metadata.json, checked by stdlib code).
+SCHEMA_ANNOTATIONS = frozenset({"$schema", "$id", "title", "description"})
+SCHEMA_KEYWORDS = SCHEMA_ANNOTATIONS | frozenset({
+    "$defs", "$ref", "type", "const", "enum", "anyOf", "properties", "required",
+    "additionalProperties", "propertyNames", "items", "minItems", "maxItems",
+    "uniqueItems", "minimum", "maximum", "minLength", "maxLength", "pattern", "format",
+})
+SCHEMA_TYPES = {
+    "object": lambda value: isinstance(value, dict),
+    "array": lambda value: isinstance(value, list),
+    "string": lambda value: isinstance(value, str),
+    "integer": lambda value: isinstance(value, int) and not isinstance(value, bool),
+    "number": lambda value: isinstance(value, (int, float)) and not isinstance(value, bool),
+    "boolean": lambda value: isinstance(value, bool),
+    "null": lambda value: value is None,
+}
+SCHEMA_DATE_RE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
+
+
+def load_schema(name: str, schema_dir: Path = SCHEMA_DIR) -> dict[str, Any]:
+    """A schema under schemas/, refused if it uses a keyword this validator
+    does not implement."""
+    path = schema_dir / name
+    schema = json.loads(path.read_text(encoding="utf-8"))
+
+    def walk(node: Any, where: str) -> None:
+        if not isinstance(node, dict):
+            raise RuntimeError(f"{path}: {where} is not a schema object")
+        unknown = set(node) - SCHEMA_KEYWORDS
+        if unknown:
+            raise RuntimeError(f"{path}: {where} uses unsupported keywords {sorted(unknown)}")
+        for keyword in ("$defs", "properties"):
+            for key, child in node.get(keyword, {}).items():
+                walk(child, f"{where}/{keyword}/{key}")
+        for keyword in ("items", "propertyNames"):
+            if keyword in node:
+                walk(node[keyword], f"{where}/{keyword}")
+        if isinstance(node.get("additionalProperties"), dict):
+            walk(node["additionalProperties"], f"{where}/additionalProperties")
+        for index, child in enumerate(node.get("anyOf", [])):
+            walk(child, f"{where}/anyOf/{index}")
+        if "format" in node and node["format"] != "date":
+            raise RuntimeError(f"{path}: {where} uses an unsupported format")
+        if "$ref" in node and not str(node["$ref"]).startswith("#/$defs/"):
+            raise RuntimeError(f"{path}: {where} uses a $ref outside #/$defs/")
+
+    walk(schema, "#")
+    return schema
+
+
+def schema_json_text(value: Any) -> str:
+    """Canonical JSON text, so that 1 and true or 1 and 1.0 never compare equal."""
+    return json.dumps(value, sort_keys=True, separators=(",", ":"))
+
+
+def schema_problem(value: Any, schema: dict[str, Any], root: dict[str, Any], where: str) -> str | None:
+    """The first way VALUE breaks SCHEMA (a subset of JSON Schema 2020-12,
+    SCHEMA_KEYWORDS), or None."""
+    if "$ref" in schema:
+        target = root["$defs"][schema["$ref"].removeprefix("#/$defs/")]
+        problem = schema_problem(value, target, root, where)
+        if problem:
+            return problem
+    if "type" in schema:
+        names = schema["type"] if isinstance(schema["type"], list) else [schema["type"]]
+        if not any(SCHEMA_TYPES[name](value) for name in names):
+            return f"{where}: is not of type {'/'.join(names)}"
+    if "const" in schema and schema_json_text(value) != schema_json_text(schema["const"]):
+        return f"{where}: must be {schema_json_text(schema['const'])}"
+    if "enum" in schema and schema_json_text(value) not in {schema_json_text(v) for v in schema["enum"]}:
+        return f"{where}: is not one of {schema_json_text(schema['enum'])}"
+    if "anyOf" in schema and all(schema_problem(value, option, root, where) for option in schema["anyOf"]):
+        return f"{where}: matches none of anyOf"
+    if isinstance(value, str):
+        if "minLength" in schema and len(value) < schema["minLength"]:
+            return f"{where}: is shorter than {schema['minLength']}"
+        if "maxLength" in schema and len(value) > schema["maxLength"]:
+            return f"{where}: is longer than {schema['maxLength']}"
+        if "pattern" in schema and not re.search(schema["pattern"], value):
+            return f"{where}: does not match {schema['pattern']}"
+        if schema.get("format") == "date":
+            try:
+                if not SCHEMA_DATE_RE.fullmatch(value):
+                    raise ValueError(value)
+                date.fromisoformat(value)
+            except ValueError:
+                return f"{where}: is not a date"
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if "minimum" in schema and value < schema["minimum"]:
+            return f"{where}: is below {schema['minimum']}"
+        if "maximum" in schema and value > schema["maximum"]:
+            return f"{where}: is above {schema['maximum']}"
+    if isinstance(value, list):
+        if "minItems" in schema and len(value) < schema["minItems"]:
+            return f"{where}: has fewer than {schema['minItems']} items"
+        if "maxItems" in schema and len(value) > schema["maxItems"]:
+            return f"{where}: has more than {schema['maxItems']} items"
+        if schema.get("uniqueItems") and len({schema_json_text(v) for v in value}) != len(value):
+            return f"{where}: has repeated items"
+        if "items" in schema:
+            for index, item in enumerate(value):
+                problem = schema_problem(item, schema["items"], root, f"{where}[{index}]")
+                if problem:
+                    return problem
+    if isinstance(value, dict):
+        for key in schema.get("required", []):
+            if key not in value:
+                return f"{where}: lacks {key}"
+        properties = schema.get("properties", {})
+        for key, item in value.items():
+            if "propertyNames" in schema:
+                problem = schema_problem(key, schema["propertyNames"], root, f"{where} key {key!r}")
+                if problem:
+                    return problem
+            if key in properties:
+                problem = schema_problem(item, properties[key], root, f"{where}.{key}")
+            elif schema.get("additionalProperties") is False:
+                problem = f"{where}: has the unknown key {key}"
+            elif isinstance(schema.get("additionalProperties"), dict):
+                problem = schema_problem(item, schema["additionalProperties"], root, f"{where}.{key}")
+            else:
+                problem = None
+            if problem:
+                return problem
+    return None
+
+
+def check_against_schema(path: Path, value: Any, schema_name: str) -> None:
+    """Fail when VALUE, read from PATH, breaks schemas/SCHEMA_NAME."""
+    schema = load_schema(schema_name)
+    problem = schema_problem(value, schema, schema, "$")
+    if problem:
+        raise ValidationError(f"{path}: does not match schemas/{schema_name}: {problem}")
+
 CAPABILITY_KEYS = {
     "volte",
     "vowifi",
@@ -2046,6 +2183,7 @@ def validate_android_metadata(
         )
         if len(profile_ids) != count or not set(profile_ids) <= expected_profile_ids:
             raise ValidationError(f"{metadata_path}: omission profile IDs are invalid")
+    check_against_schema(metadata_path, metadata, "android-metadata.schema.json")
 
 
 DATA_DIGEST_RE = re.compile(r"sha256:[0-9a-f]{64}")
@@ -2136,6 +2274,7 @@ def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None
             )
     if seen != expected_profile_ids:
         raise ValidationError(f"{path}: lookup does not list every profile")
+    check_against_schema(path, lookup, "android-lookup.schema.json")
 
 
 def validate_apn_schema(generated_dir: Path, apn_root: ET.Element) -> None:

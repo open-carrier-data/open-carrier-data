@@ -3833,6 +3833,78 @@ def check_leave_out_absorbed_mms() -> None:
     )
 
 
+def check_android_schemas() -> None:
+    """schemas/android-lookup.schema.json and android-metadata.schema.json
+    (rule decisions of 2026-10-18, round 20): today's files match, the
+    validator's stdlib checker rejects what the schemas forbid, and every
+    schema's $id is the raw main URL of its own file."""
+    repository = Path(__file__).resolve().parents[1]
+    check = validate_public_carrier_data.check_against_schema
+    metadata = load_json(repository / "generated" / "android" / "metadata.json")
+    lookup = load_json(repository / "generated" / "android" / "lookup.json")
+    check(Path("metadata.json"), metadata, "android-metadata.schema.json")
+    check(Path("lookup.json"), lookup, "android-lookup.schema.json")
+
+    def rejected(value: dict, schema: str, reason: str) -> None:
+        try:
+            check(Path("x.json"), value, schema)
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(reason in str(exc), f"unexpected schema error: {exc}")
+            return
+        raise AssertionError(f"the schema check passed a value it must reject ({reason})")
+
+    def changed(value: dict, edit: Callable[[dict], object]) -> dict:
+        value = deepcopy(value)
+        edit(value)
+        return value
+
+    small_lookup = dict(lookup, profiles=lookup["profiles"][:3])
+    for edit, reason in (
+        (lambda v: v.update(extra=1), "unknown key extra"),
+        (lambda v: v.update(schema_version=True), "must be 1"),
+        (lambda v: v.update(schema_version=2), "must be 1"),
+        (lambda v: v["target"].update(apn_database_version="8"), "not of type integer"),
+        (lambda v: v["target"].update(carrier_config_gid_matching="exact_only"), 'must be "omitted"'),
+        (lambda v: v["output"].update(apn_row_count=-1), "below 0"),
+        (lambda v: v["omissions"].pop("emergency_types_left_out_apn_set"), "lacks emergency_types_left_out_apn_set"),
+        (lambda v: v["omissions"].update(apn_profile_ids_with_unrepresentable_match=["open.1.x"]), "does not match"),
+        (lambda v: v.update(stale_after="2027-02-30"), "not a date"),
+        (lambda v: v.update(data_digest="sha256:abc"), "does not match"),
+    ):
+        rejected(changed(metadata, edit), "android-metadata.schema.json", reason)
+    for edit, reason in (
+        (lambda v: v.update(resolution_order="specific_to_generic"), "must be"),
+        (lambda v: v["profiles"][0]["capabilities"].update(volte="maybe"), "not one of"),
+        (lambda v: v["profiles"][0].update(android_apn_count=True), "not of type integer"),
+        (lambda v: v["profiles"][0].update(path="open/x.json"), "does not match"),
+        (lambda v: v["profiles"][0]["match"].update(mccmnc=["26201", "26201"]), "repeated items"),
+        (lambda v: v["profiles"][0]["match"].update(mccmnc=[]), "fewer than 1"),
+        (lambda v: v["profiles"][0].update(newest_entry="2026-13"), "does not match"),
+        (lambda v: v["profiles"][0].pop("has_android_carrier_config"), "lacks has_android_carrier_config"),
+        (lambda v: v["profiles"][0].update(note="x"), "unknown key note"),
+    ):
+        rejected(changed(small_lookup, edit), "android-lookup.schema.json", reason)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "bad.schema.json").write_text(
+            json.dumps({"type": "object", "properties": {"a": {"oneOf": []}}}), encoding="utf-8"
+        )
+        try:
+            validate_public_carrier_data.load_schema("bad.schema.json", Path(tmp))
+        except RuntimeError as exc:
+            assert_true("oneOf" in str(exc), f"unexpected schema load error: {exc}")
+        else:
+            raise AssertionError("a schema with a keyword the validator lacks was loaded")
+
+    for path in sorted((repository / "schemas").glob("*.schema.json")):
+        schema_id = load_json(path)["$id"]
+        assert_true(
+            schema_id
+            == "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/" + path.name,
+            f"{path.name}: $id is not the raw main URL of the file: {schema_id}",
+        )
+
+
 def check_emergency_rows() -> None:
     """apns-conf.xml keeps the "emergency" type only on a row that states both
     protocols, serves nothing else, and asks for exactly Android's default
@@ -5808,6 +5880,8 @@ def main() -> int:
     print("absorbed MMS row tests passed")
     check_emergency_rows()
     print("emergency row tests passed")
+    check_android_schemas()
+    print("lookup.json and metadata.json schema tests passed")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")
