@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/android-metadata.schema.json",
+  "title": "Open Carrier Data Android build metadata (generated/android/metadata.json)",
+  "description": "The target, output counts, omissions, data digest and freshness window of the generated Android files. tools/validate_public_carrier_data.py checks this schema and what a schema cannot: counts against the XML files, omission IDs against the published profiles, the window against the evidence index, and the XML provenance headers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "target", "output", "omissions", "data_digest"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "checks_through": { "type": "string", "format": "date" },
+    "stale_after": { "type": "string", "format": "date" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "apn_database_version",
+        "carrier_config_gid_matching",
+        "carrier_config_iccid_matching"
+      ],
+      "properties": {
+        "apn_database_version": { "type": "integer", "minimum": 1 },
+        "carrier_config_gid_matching": { "const": "omitted" },
+        "carrier_config_iccid_matching": { "const": "omitted" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["apn_row_count", "carrier_config_xml_block_count"],
+      "properties": {
+        "apn_row_count": { "$ref": "#/$defs/count" },
+        "carrier_config_xml_block_count": { "$ref": "#/$defs/count" }
+      }
+    },
+    "omissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "apn_profile_ids_with_unrepresentable_match",
+        "apn_profiles_with_unrepresentable_match",
+        "apn_rows_rejected_by_lineageos_schema",
+        "carrier_config_profile_ids_with_unrepresentable_match",
+        "carrier_config_profiles_with_unrepresentable_match",
+        "emergency_types_left_out_apn_set",
+        "emergency_types_left_out_combined",
+        "emergency_types_left_out_not_vendor_stated",
+        "emergency_types_left_out_unset_protocol",
+        "ia_types_left_out_not_vendor_current",
+        "mms_rows_left_out_absorbed_by_android",
+        "mms_types_left_out_not_vendor_backed"
+      ],
+      "properties": {
+        "apn_profile_ids_with_unrepresentable_match": { "$ref": "#/$defs/profileIds" },
+        "apn_profiles_with_unrepresentable_match": { "$ref": "#/$defs/count" },
+        "apn_rows_rejected_by_lineageos_schema": { "$ref": "#/$defs/count" },
+        "carrier_config_profile_ids_with_unrepresentable_match": { "$ref": "#/$defs/profileIds" },
+        "carrier_config_profiles_with_unrepresentable_match": { "$ref": "#/$defs/count" },
+        "emergency_types_left_out_apn_set": { "$ref": "#/$defs/count" },
+        "emergency_types_left_out_combined": { "$ref": "#/$defs/count" },
+        "emergency_types_left_out_not_vendor_stated": { "$ref": "#/$defs/count" },
+        "emergency_types_left_out_unset_protocol": { "$ref": "#/$defs/count" },
+        "ia_types_left_out_not_vendor_current": { "$ref": "#/$defs/count" },
+        "mms_rows_left_out_absorbed_by_android": { "$ref": "#/$defs/count" },
+        "mms_types_left_out_not_vendor_backed": { "$ref": "#/$defs/count" }
+      }
+    }
+  },
+  "$defs": {
+    "count": { "type": "integer", "minimum": 0 },
+    "profileIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" }
+    }
+  }
+}

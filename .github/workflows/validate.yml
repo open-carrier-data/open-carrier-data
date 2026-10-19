@@ -46,6 +46,10 @@ jobs:
         run: python3 tools/test_diff_carrier_config.py
       - name: Test the device records validator
         run: python3 tools/test_validate_carrier_variants.py
+      - name: Test the release notes
+        run: python3 tools/test_release_notes.py
+      - name: Test the release build
+        run: python3 tools/test_build_release.py
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8
