@@ -24,10 +24,13 @@ BLOCK = [('mcc="262" mnc="01"', {"carrier_volte_available_bool": "true"})]
 PROFILES = {"open.26201.aaaaaaaaaaaa": {"volte": "supported"}}
 
 
-def git(repo: Path, *args: str) -> str:
-    env = {**os.environ, "GIT_AUTHOR_DATE": "2026-10-20T00:00:00Z", "GIT_COMMITTER_DATE": "2026-10-20T00:00:00Z",
+def git(repo: Path, *args: str, when: str | None = "2026-10-20T00:00:00Z") -> str:
+    """WHEN None leaves the commit dates to git: the real time."""
+    env = {**{k: v for k, v in os.environ.items() if k not in ("GIT_AUTHOR_DATE", "GIT_COMMITTER_DATE")},
            "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com", "GIT_COMMITTER_NAME": "t",
            "GIT_COMMITTER_EMAIL": "t@example.com"}
+    if when:
+        env.update(GIT_AUTHOR_DATE=when, GIT_COMMITTER_DATE=when)
     return subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True, text=True,
                           env=env).stdout.strip()
 
@@ -35,7 +38,8 @@ def git(repo: Path, *args: str) -> str:
 class RepoCase(unittest.TestCase):
     """A repository with a base commit and a candidate commit."""
 
-    def make_repo(self, base_rows: list[str], head_rows: list[str], stale_after: str = "2027-06-30") -> None:
+    def make_repo(self, base_rows: list[str], head_rows: list[str], stale_after: str = "2027-06-30",
+                  when: str | None = "2026-10-20T00:00:00Z") -> None:
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.repo = Path(self.tmp.name) / "repo"
@@ -48,7 +52,7 @@ class RepoCase(unittest.TestCase):
                     shutil.rmtree(child)
             write_tree(self.repo, rows, PROFILES, BLOCK, stale_after=stale_after, digest=digest)
             git(self.repo, "add", "-A")
-            git(self.repo, "commit", "-q", "-m", title)
+            git(self.repo, "commit", "-q", "-m", title, when=when)
         self.base = git(self.repo, "rev-parse", "HEAD~1")
         self.head = git(self.repo, "rev-parse", "HEAD")
         self.out = Path(self.tmp.name) / "out"
@@ -85,6 +89,8 @@ class BuildTests(RepoCase):
         self.assertEqual(manifest["guard"]["verdict"], "pass")
         self.assertFalse(manifest["rehearsal"])
         self.assertEqual(manifest["needs_review"], [])
+        self.assertEqual(manifest["age_gate"], "passed")
+        self.assertNotIn("age_gate", (self.out / "release-notes.md").read_text())
         # The repository is untouched: no change, no tag.
         self.assertEqual(git(self.repo, "status", "--porcelain"), "")
         self.assertEqual(git(self.repo, "tag"), "")
@@ -141,6 +147,59 @@ class BuildTests(RepoCase):
             self.build()
 
 
+class FirstReleaseAgeWaiverTests(RepoCase):
+    """Round 24: the age gate is waived only for the first release, when the
+    state carries first_base. These run on the real clock: the candidate is
+    committed now, so it is seconds old."""
+
+    def setUp(self) -> None:
+        self.make_repo([WEB, SOS], [WEB, SOS], stale_after="2099-12-31", when=None)
+
+    def build_now(self, state: dict) -> tuple[int, list[str]]:
+        return release.build(self.repo, self.head, self.base, "data-2026.10", self.out, state, "#1",
+                             check_tree=False)
+
+    def test_young_candidate_without_first_base_is_refused(self) -> None:
+        for state in (GOOD_STATE, {**GOOD_STATE, "first_base": ""}):
+            code, failed = self.build_now(state)
+            self.assertEqual(code, 1)
+            self.assertEqual(len(failed), 1, failed)
+            self.assertIn("hours old; it must be at least 72", failed[0])
+            self.assertFalse(self.out.exists() and any(self.out.iterdir()), "a refused candidate wrote assets")
+
+    def test_first_base_waives_the_age_gate_and_records_it(self) -> None:
+        code, failed = self.build_now({**GOOD_STATE, "first_base": self.base})
+        self.assertEqual((code, failed), (0, []))
+        manifest = json.loads((self.out / "release.json").read_text())
+        self.assertEqual(manifest["age_gate"], "waived, round 24")
+        self.assertEqual(manifest["age_gate"], release.AGE_WAIVER)
+        self.assertEqual(manifest["failed_gates"], [])
+        self.assertFalse(manifest["rehearsal"])
+        notes_text = (self.out / "release-notes.md").read_text()
+        self.assertIn("- `age_gate`: waived, round 24.", notes_text)
+        self.assertIn("- `age_gate`: waived, round 24.", (self.out / "release-body.md").read_text())
+        self.assertEqual(release.MIN_CANDIDATE_AGE, timedelta(hours=72))
+
+    def test_first_base_waives_only_the_age_gate(self) -> None:
+        code, failed = self.build_now({**GOOD_STATE, "first_base": self.base, "stale_data": [12]})
+        self.assertEqual(code, 1)
+        self.assertEqual(len(failed), 1, failed)
+        self.assertIn("stale-data", failed[0])
+
+    def test_first_base_other_than_the_base_is_refused(self) -> None:
+        code, failed = self.build_now({**GOOD_STATE, "first_base": self.head})
+        self.assertEqual(code, 1)
+        self.assertTrue(any("is not the base" in line for line in failed), failed)
+        self.assertTrue(any("hours old" in line for line in failed), failed)
+
+    def test_first_base_once_a_release_tag_exists_is_refused(self) -> None:
+        git(self.repo, "tag", "data-2026.10", self.base)
+        code, failed = self.build_now({**GOOD_STATE, "first_base": self.base})
+        self.assertEqual(code, 1)
+        self.assertTrue(any("release tag(s) exist: data-2026.10" in line for line in failed), failed)
+        self.assertTrue(any("hours old" in line for line in failed), failed)
+
+
 class UnitTests(unittest.TestCase):
     def test_guard_refusals(self) -> None:
         self.assertEqual(release.guard_refusals({"verdict": "pass", "trips": []}), [])
@@ -154,8 +213,12 @@ class UnitTests(unittest.TestCase):
 
     def test_candidate_age(self) -> None:
         when = datetime(2026, 10, 20, tzinfo=timezone.utc)
-        self.assertEqual(release.state_refusals(GOOD_STATE, when, when + timedelta(hours=72)), [])
-        self.assertTrue(release.state_refusals(GOOD_STATE, when, when + timedelta(hours=71)))
+        self.assertEqual(release.age_gate(when, when + timedelta(hours=72), False), ("passed", []))
+        self.assertEqual(release.age_gate(when, when + timedelta(hours=72), True), ("passed", []))
+        status, refusals = release.age_gate(when, when + timedelta(hours=71), False)
+        self.assertEqual(status, "refused")
+        self.assertTrue(refusals)
+        self.assertEqual(release.age_gate(when, when + timedelta(hours=71), True), ("waived, round 24", []))
 
     def test_notes_refusals(self) -> None:
         text = "\n" + "\n".join(f"{s}\n" for s in release.notes.REQUIRED_SECTIONS)
