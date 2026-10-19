@@ -88,8 +88,11 @@ jobs:
           set -euo pipefail
           on_main=false
           if git merge-base --is-ancestor "$CANDIDATE" origin/main; then on_main=true; fi
+          # validate.yml skips its validate job on the daily schedule, and that
+          # skipped run is a check run on whatever commit main's head was then.
+          # It never checked anything, so only runs that were not skipped count.
           validate="$(gh api "repos/$GH_REPO/commits/$CANDIDATE/check-runs?check_name=validate&per_page=100" \
-            --jq '[.check_runs[] | select(.app.slug == "github-actions")] | sort_by(.completed_at) | last | .conclusion // "missing"')"
+            --jq '[.check_runs[] | select(.app.slug == "github-actions" and .conclusion != "skipped")] | sort_by(.completed_at) | last | .conclusion // "missing"')"
           held="$(gh pr list --label publish-held --state open --json number --jq '[.[].number]')"
           stale="$(gh issue list --label stale-data --state open --json number --jq '[.[].number]')"
           # Drafts are listed for a token that can write; a draft has no tag yet.
