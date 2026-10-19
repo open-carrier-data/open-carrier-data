@@ -103,6 +103,8 @@ The guarantees cover the files and the process that made them, never that a valu
    - the notes have every required section.
 
    The run's summary names each failed gate. A month with no candidate that passes has no release, and the next release's notes say why.
+If the draft step reports that the workflow token could not create the draft, every gate still passed. GitHub refuses the workflow's own token when the candidate's files under `.github/workflows/` differ from `main`. The run then keeps the seven assets as the artifact `data-YYYY.MM-assets`. Download it, run `sha256sum -c SHA256SUMS`, and create the draft with a token that holds the workflow scope: `gh release create data-YYYY.MM --draft --target <candidate> --title data-YYYY.MM --notes-file release-body.md` with the seven assets. Under round 24 an agent may do this with the owner's token on the owner's direction.
+
 5. **Read the draft.** It is a draft release with the seven assets and no tag yet. Read "Needs review" first, then the phone guard, the IMS and emergency sections and the CarrierConfig safety lines. An optional line may record an owner check on the S20 (attach, data, MMS, IMS registration, the APN list after "Reset to default"; never an emergency call).
 6. **Publish it** (the owner). GitHub creates the tag `data-YYYY.MM` at the candidate then. A draft not published within 14 days is deleted, and the month starts again.
 7. **Check it** like a consumer:
