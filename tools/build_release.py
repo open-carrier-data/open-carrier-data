@@ -15,7 +15,11 @@ Gates. Any failure refuses the candidate:
   workflow gathers from GitHub): the candidate is on `main`, its `validate`
   check is green, no `publish-held` pull request and no `stale-data` issue
   is open, and no release or tag named TAG exists;
-- the candidate is at least MIN_CANDIDATE_AGE old;
+- the candidate is at least MIN_CANDIDATE_AGE old, except for the first
+  release (AGE_WAIVER, round 24): only when STATE_JSON carries `first_base`,
+  which the release workflow sets only while no `data-*` release exists, it
+  equals BASE, and the repository has no `data-*` tag. `release.json` and the
+  notes then record `age_gate: waived, round 24`;
 - (a) the candidate's three validators pass with `--freshness fail`;
 - (b) regenerating `generated/` from `carriers/` changes no byte;
 - (c) `<apns version>` and `metadata.json` both name APN_DATABASE_VERSION,
@@ -79,6 +83,11 @@ SCHEMAS = {
     "carrier-variants.json": "schemas/carrier-variants.schema.json",
 }
 MIN_CANDIDATE_AGE = timedelta(hours=72)
+# Round 24: the first release may be younger than MIN_CANDIDATE_AGE. The
+# waiver needs the state's `first_base`, which release.yml refuses once any
+# data-* release exists, so it can fire for the first release only. It is not
+# an input, does not touch the clock and skips no other gate.
+AGE_WAIVER = "waived, round 24"
 MIN_DAYS_LEFT = 30
 APN_DATABASE_VERSION = 8
 STATE_KEYS = ("candidate_on_main", "validate", "publish_held", "stale_data", "release_exists")
@@ -115,11 +124,36 @@ def state_refusals(state: dict[str, Any], commit_time: datetime, now: datetime) 
         refusals.append(f"stale-data issue(s) open: {', '.join(f'#{n}' for n in state['stale_data'])}")
     if state["release_exists"] is not False:
         refusals.append("a release or tag with this name exists")
-    age = now - commit_time
-    if age < MIN_CANDIDATE_AGE:
-        refusals.append(f"the candidate is {age.total_seconds() / 3600:.1f} hours old; it must be at least "
-                        f"{MIN_CANDIDATE_AGE.total_seconds() / 3600:.0f}")
     return refusals
+
+
+def first_release_refusals(repo: Path, state: dict[str, Any], base: str) -> tuple[bool, list[str]]:
+    """Whether this is the first release, which the age waiver needs: the
+    state names `first_base` (release.yml sets it only while no data-*
+    release exists), it is the base, and no data-* tag exists. A `first_base`
+    that does not hold refuses the candidate."""
+    first_base = state.get("first_base") or ""
+    if not first_base:
+        return False, []
+    refusals = []
+    if first_base != base:
+        refusals.append(f"first_base {first_base} is not the base {base}")
+    tags = notes.git(repo, "tag", "--list", "data-*").decode().split()
+    if tags:
+        refusals.append(f"first_base is set, but release tag(s) exist: {', '.join(tags)}")
+    return not refusals, refusals
+
+
+def age_gate(commit_time: datetime, now: datetime, first_release: bool) -> tuple[str, list[str]]:
+    """The candidate is at least MIN_CANDIDATE_AGE old, or this is the first
+    release (AGE_WAIVER). Returns what release.json records and the refusals."""
+    age = now - commit_time
+    if age >= MIN_CANDIDATE_AGE:
+        return "passed", []
+    if first_release:
+        return AGE_WAIVER, []
+    return "refused", [f"the candidate is {age.total_seconds() / 3600:.1f} hours old; it must be at least "
+                       f"{MIN_CANDIDATE_AGE.total_seconds() / 3600:.0f}"]
 
 
 def freshness_refusals(stale_after: str | None, today: date) -> list[str]:
@@ -217,7 +251,7 @@ def file_entry(repo: Path, commit: str, path: str, tier: str, asset: str | None)
 
 def manifest(repo: Path, commit: str, commit_time: datetime, tag: str, base_name: str, base: str,
              result: dict[str, Any], gates: list[str], rehearsal: bool, today: date,
-             now: datetime) -> dict[str, Any]:
+             now: datetime, age: str) -> dict[str, Any]:
     head = result["head"]
     guard = result["guard"]
     leads = result["leads"]
@@ -230,6 +264,7 @@ def manifest(repo: Path, commit: str, commit_time: datetime, tag: str, base_name
         "cut_at": now.replace(microsecond=0).isoformat(),
         "rehearsal": rehearsal,
         "failed_gates": gates,
+        "age_gate": age,
         "data_digest": head["data_digest"],
         "checks_through": head["checks_through"],
         "stale_after": head["stale_after"],
@@ -301,6 +336,10 @@ def build(repo: Path, candidate: str, base_ref: str, tag: str, out: Path, state:
     base = notes.resolve(repo, base_ref)
     commit_time = datetime.fromisoformat(notes.git(repo, "show", "-s", "--format=%cI", commit).decode().strip())
     failed = state_refusals(state, commit_time, now)
+    first_release, refusals = first_release_refusals(repo, state, base)
+    failed += refusals
+    age, refusals = age_gate(commit_time, now, first_release)
+    failed += refusals
     with tempfile.TemporaryDirectory() as tmp:
         base_tree, head_tree = Path(tmp) / "base", Path(tmp) / "head"
         notes.extract_files(repo, base, [f"{notes.ANDROID}/{name}" for name in notes.BASE_FILES], base_tree)
@@ -312,12 +351,12 @@ def build(repo: Path, candidate: str, base_ref: str, tag: str, out: Path, state:
         if check_tree:
             failed += tree_refusals(head_tree, today)
     name = f"{base_name or base_ref} ({base})"
-    text = notes.render(result, tag + (" (rehearsal)" if rehearsal else ""), name, commit, today)
+    text = notes.render(result, tag + (" (rehearsal)" if rehearsal else ""), name, commit, today, age)
     failed += notes_refusals(text)
     if failed and not rehearsal:
         return 1, failed
     release = manifest(repo, commit, commit_time, tag, base_name or base_ref, base, result, failed, rehearsal,
-                       today, now)
+                       today, now, age)
     write_assets(repo, commit, out, release, text, tag)
     return (1 if failed else 0), failed
 

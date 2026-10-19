@@ -283,13 +283,22 @@ def days_left(stale_after: str | None, today: date) -> int | None:
     return None if not stale_after else (date.fromisoformat(stale_after) - today).days
 
 
-def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, today: date) -> str:
+def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, today: date,
+           age_gate: str | None = None) -> str:
+    """AGE_GATE is build_release.py's verdict; the notes name it only when the
+    gate did not simply pass (the round 24 waiver of the first release)."""
     head, base, g = result["head"], result["base"], result["guard"]
     watch = g.get("watch", [])
     out: list[str] = [f"# Open Carrier Data {tag}", ""]
     out += [f"- Commit: `{head_name}`", f"- Previous: `{base_name}`",
             f"- `data_digest`: `{head['data_digest']}`",
-            f"- APN database version: {head.get('apn_database_version')}", ""]
+            f"- APN database version: {head.get('apn_database_version')}"]
+    if age_gate and age_gate.startswith("waived"):
+        out.append(f"- `age_gate`: {age_gate}. The candidate is younger than 72 hours. The age gate is waived "
+                   "only for the first release, whose base is `first_base`; every later release must pass it.")
+    elif age_gate and age_gate != "passed":
+        out.append(f"- `age_gate`: {age_gate}")
+    out.append("")
     out += ["Configured, not verified: no value was checked on a phone, and OCD never tests or places an "
             "emergency call. See \"Standing notice\" at the end.", ""]
 

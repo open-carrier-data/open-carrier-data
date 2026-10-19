@@ -13,7 +13,9 @@ name: Draft a data release
 # changes nothing; the APN database version is 8 and xmllint accepts the APN
 # file; stale_after is at least 30 days away; the phone guard from the
 # previous release passes with no trip; the notes have every required
-# section. No input skips a gate.
+# section. No input skips a gate. One exception (round 24): the age gate is
+# waived for the first release, because first_base is accepted only while no
+# data-* release exists; the state step passes it to build_release.py.
 
 on:
   workflow_dispatch:
@@ -79,8 +81,14 @@ jobs:
             [[ "$FIRST_BASE" =~ ^[0-9a-f]{40}$ ]] \
               || fail "no data-* release exists yet: first_base must be the full SHA the first release is compared with"
             git merge-base --is-ancestor "$FIRST_BASE" origin/main || fail "first_base is not a commit of main"
-            echo "BASE=$FIRST_BASE" >> "$GITHUB_ENV"
-            echo "BASE_NAME=the first release's base" >> "$GITHUB_ENV"
+            # ACCEPTED_FIRST_BASE is set only here, while no data-* release
+            # exists: build_release.py then waives the age gate and records
+            # it (round 24).
+            {
+              echo "BASE=$FIRST_BASE"
+              echo "BASE_NAME=the first release's base"
+              echo "ACCEPTED_FIRST_BASE=$FIRST_BASE"
+            } >> "$GITHUB_ENV"
           fi
       - name: Read the repository state at the cut
         shell: bash
@@ -102,8 +110,8 @@ jobs:
           fi
           if git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null 2>&1; then exists=true; fi
           jq -n --argjson on_main "$on_main" --arg validate "$validate" --argjson held "$held" \
-            --argjson stale "$stale" --argjson exists "$exists" \
-            '{candidate_on_main: $on_main, validate: $validate, publish_held: $held, stale_data: $stale, release_exists: $exists}' \
+            --argjson stale "$stale" --argjson exists "$exists" --arg first_base "${ACCEPTED_FIRST_BASE:-}" \
+            '{candidate_on_main: $on_main, validate: $validate, publish_held: $held, stale_data: $stale, release_exists: $exists, first_base: $first_base}' \
             > "$RUNNER_TEMP/state.json"
           cat "$RUNNER_TEMP/state.json"
       - name: Install xmllint
