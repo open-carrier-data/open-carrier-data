@@ -1,0 +1,144 @@
+name: Draft a data release
+
+# Drafts a data-YYYY.MM release from one main commit, and only when the owner
+# dispatches it (rule decisions of 2026-10-18, rounds 20 and 21). It never
+# publishes: the owner reads the draft and publishes it, and GitHub creates
+# the tag then. It never commits, pushes or tags. docs/releases.md has the
+# procedure.
+#
+# Gates (tools/build_release.py): the candidate is on main, its validate check
+# is green, it is at least 72 hours old, no publish-held pull request and no
+# stale-data issue is open, no release or tag of that name exists; the
+# candidate's three validators pass with --freshness fail; regeneration
+# changes nothing; the APN database version is 8 and xmllint accepts the APN
+# file; stale_after is at least 30 days away; the phone guard from the
+# previous release passes with no trip; the notes have every required
+# section. No input skips a gate.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release name: data-YYYY.MM, or data-YYYY.MM.N for a fix release"
+        required: true
+      candidate:
+        description: "Full 40-character SHA of the main commit to release"
+        required: true
+      first_base:
+        description: "Only while no data-* release exists: the full SHA the first release is compared with (the S20 pin, #253). Must be empty once a release exists; the newest published data-* release is then the base."
+        required: false
+        default: ""
+
+permissions: {}
+
+concurrency:
+  group: draft-data-release
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # The owner is this environment's required reviewer (an owner setting).
+    environment: release
+    permissions:
+      contents: write
+      checks: read
+      issues: read
+      pull-requests: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      # Inputs reach the scripts only through the environment.
+      TAG: ${{ inputs.tag }}
+      CANDIDATE: ${{ inputs.candidate }}
+      FIRST_BASE: ${{ inputs.first_base }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check the inputs and find the base
+        shell: bash
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+          [[ "$TAG" =~ ^data-20[0-9]{2}\.(0[1-9]|1[0-2])(\.[1-9][0-9]*)?$ ]] \
+            || fail "tag must be data-YYYY.MM or data-YYYY.MM.N"
+          [[ "$CANDIDATE" =~ ^[0-9a-f]{40}$ ]] || fail "candidate must be a full 40-character SHA"
+          git cat-file -e "$CANDIDATE^{commit}" || fail "candidate is not a commit of this repository"
+          previous="$(gh api "repos/$GH_REPO/releases?per_page=100" --paginate \
+            --jq '.[] | select(.draft == false and (.tag_name | test("^data-"))) | [.published_at, .tag_name] | @tsv' \
+            | sort | tail -n 1 | cut -f2)"
+          if [ -n "$previous" ]; then
+            [ -z "$FIRST_BASE" ] || fail "release $previous exists, so it is the base; leave first_base empty"
+            git rev-parse --verify "refs/tags/$previous^{commit}" > /dev/null || fail "tag $previous is missing"
+            echo "BASE=$previous" >> "$GITHUB_ENV"
+            echo "BASE_NAME=$previous" >> "$GITHUB_ENV"
+          else
+            [[ "$FIRST_BASE" =~ ^[0-9a-f]{40}$ ]] \
+              || fail "no data-* release exists yet: first_base must be the full SHA the first release is compared with"
+            git merge-base --is-ancestor "$FIRST_BASE" origin/main || fail "first_base is not a commit of main"
+            echo "BASE=$FIRST_BASE" >> "$GITHUB_ENV"
+            echo "BASE_NAME=the first release's base" >> "$GITHUB_ENV"
+          fi
+      - name: Read the repository state at the cut
+        shell: bash
+        run: |
+          set -euo pipefail
+          on_main=false
+          if git merge-base --is-ancestor "$CANDIDATE" origin/main; then on_main=true; fi
+          validate="$(gh api "repos/$GH_REPO/commits/$CANDIDATE/check-runs?check_name=validate&per_page=100" \
+            --jq '[.check_runs[] | select(.app.slug == "github-actions")] | sort_by(.completed_at) | last | .conclusion // "missing"')"
+          held="$(gh pr list --label publish-held --state open --json number --jq '[.[].number]')"
+          stale="$(gh issue list --label stale-data --state open --json number --jq '[.[].number]')"
+          # Drafts are listed for a token that can write; a draft has no tag yet.
+          exists=false
+          if [ -n "$(gh api "repos/$GH_REPO/releases?per_page=100" --paginate --jq '.[] | select(.tag_name == env.TAG) | .id')" ]; then
+            exists=true
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null 2>&1; then exists=true; fi
+          jq -n --argjson on_main "$on_main" --arg validate "$validate" --argjson held "$held" \
+            --argjson stale "$stale" --argjson exists "$exists" \
+            '{candidate_on_main: $on_main, validate: $validate, publish_held: $held, stale_data: $stale, release_exists: $exists}' \
+            > "$RUNNER_TEMP/state.json"
+          cat "$RUNNER_TEMP/state.json"
+      - name: Install xmllint
+        run: |
+          if ! command -v xmllint > /dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq libxml2-utils
+          fi
+      - name: Run the gates and build the assets
+        shell: bash
+        run: |
+          set -uo pipefail
+          status=0
+          python3 tools/build_release.py --repo . --candidate "$CANDIDATE" --base "$BASE" \
+            --base-name "$BASE_NAME" --tag "$TAG" --state "$RUNNER_TEMP/state.json" \
+            --out "$RUNNER_TEMP/release" 2>&1 | tee "$RUNNER_TEMP/build.log" || status=$?
+          {
+            echo "## Draft $TAG from $CANDIDATE (base $BASE)"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/build.log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -ne 0 ]; then
+            echo "::error::A gate refused the candidate (exit $status); no draft is created. The log names the gate."
+            exit "$status"
+          fi
+          cd "$RUNNER_TEMP/release"
+          sha256sum -c SHA256SUMS
+          cat release-body.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Create the draft release
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/release"
+          gh release create "$TAG" --draft --target "$CANDIDATE" --title "$TAG" \
+            --notes-file release-body.md \
+            apns-conf.xml lookup.json metadata.json carrier-variants.json \
+            release.json release-notes.md SHA256SUMS
+          echo "Draft $TAG created. The owner reads it and publishes it; GitHub creates the tag then." \
+            >> "$GITHUB_STEP_SUMMARY"
