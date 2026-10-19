@@ -63,8 +63,8 @@ The guarantees cover the files and the process that made them, never that a valu
 
 ### Once, before the first release (owner settings)
 
-1. A tag ruleset on `data-*` that blocks updates and deletions, so a published tag never moves. Turn on immutable releases too if the repository offers them.
-2. An environment named `release` with the owner as its required reviewer. `release.yml` runs in it, so every run waits for the owner's approval.
+1. A tag ruleset on `data-*` that blocks updates and deletions, so a published tag never moves. Give it no bypass: a bypass actor could also move or delete the tag. Publishing a draft creates its tag, which this ruleset allows. Turn on immutable releases too if the repository offers them.
+2. An environment named `release` with the owner as its required reviewer. `release.yml` runs in it, so every run waits for the owner's approval. Create it before the first dispatch: a run that names an environment that does not exist creates it without any reviewer. Leave "Prevent self-review" off, because the owner both dispatches and approves the run.
 
 ### Each month
 
@@ -92,7 +92,7 @@ The guarantees cover the files and the process that made them, never that a valu
 
    For the first release only, add `-f first_base=98fbd8b2b3d6a6bbc29b3d573263a8671b7661dd`. Once a release exists, `first_base` must be empty: the newest published `data-*` release is the base. Approve the run in the `release` environment.
 4. **The gates.** `tools/build_release.py` refuses the candidate, and no draft is made, when any of these fails:
-   - the candidate is on `main`, its `validate` check is green and it is at least 72 hours old;
+   - the candidate is on `main`, its `validate` check is green and it is at least 72 hours old. The daily schedule leaves a skipped `validate` run on the commit that was `main`'s head; it does not count;
    - no `publish-held` pull request and no `stale-data` issue is open, and no release or tag of that name exists;
    - the candidate's three validators pass with `--freshness fail`;
    - regenerating `generated/` from `carriers/` changes no byte;
