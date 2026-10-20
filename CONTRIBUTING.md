@@ -1,6 +1,6 @@
 # Contribute to Open Carrier Data
 
-This guide shows the three issue forms, the pull request path for tools and docs, and the checks to run before you submit. You do not need write access to the repo for any of them.
+This guide shows the four issue forms, the pull request path for tools and docs, and the checks to run before you submit. You do not need write access to the repo for any of them.
 
 ## Keep private data out
 
@@ -18,6 +18,10 @@ Use this path when a carrier is missing, a setting looks wrong, or you verified 
 4. Add safe match details such as MCC/MNC, SPN, a GID prefix, or an Android carrier ID.
 5. If you tested a fix, state the device, the setting you changed, the result, and the date.
 6. Add a public source link if you have one.
+
+## Upload an OCD Check report
+
+Use this path for a test report of the OCD Check app's owner build. The app opens the `OCD Check report` form with its JSON report filled in; read it and submit it, without editing it. The report only points at entries of an OCD data release (`volte:on`, `apn:<row key>`, ...) with the result the phone measured; it carries no value. A bot checks it against `schemas/ocd-check-report.schema.json`, a privacy scan and the release, labels the issue `report:valid`, `report:suspect` or `report:invalid`, and says in one comment exactly what is wrong. A valid report is recorded under `observed/` through a bot pull request a maintainer merges, as "reported, not checked by OCD". It is a hint only: it never changes an OCD value and never makes a phone skip its own test. [community/README.md](community/README.md) describes the path.
 
 ## Suggest a maintained source
 
@@ -39,7 +43,7 @@ Open a pull request for schema, validator, generator, test, or documentation cha
 
 ## How a correction reaches stable data
 
-A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides. A report from the OCD Check app goes in the `Wrong or missing carrier data` form as the app writes it. It starts the same review and is never copied into the data or counted. The issue is public under your GitHub account, and public archives of GitHub can keep a copy after the issue is deleted.
+A correction reaches stable data in two ways. A maintained source publishes it and the import path picks it up. Or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides. A test report from the OCD Check app goes in the `OCD Check report` form as the app writes it. It is recorded under `observed/` and counted in `observed/summary.json` as "reported, not checked by OCD", and is never copied into the carrier data: it changes no value, no generated file and no release, and it never makes a phone skip its own test. A difference it shows can start the same review. The issue is public under your GitHub account, and public archives of GitHub can keep a copy after the issue is deleted.
 
 ## Run the local checks
 

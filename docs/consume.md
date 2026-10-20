@@ -13,6 +13,7 @@ The files on `main` are the edge channel: each publish replaces them, several ti
 | `generated/devices/carrier-variants.json` | supported as information, for apps and tools; never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | the other files under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
+| `observed/` | never supported and never a release asset: unverified OCD Check reports, apart from the data |
 
 Take a release and check its files:
 
@@ -25,7 +26,7 @@ cd data-2026.10 && sha256sum -c SHA256SUMS
 
 What every ROM maintainer must know:
 
-1. **Configured, not verified.** Every value comes from a vendor or ROM carrier table. No profile has been verified on a phone: `verified_observation_count` is 0 everywhere. `supported` means a table turns the feature on, not that the operator offers it, that the plan includes it or that the phone model is approved.
+1. **Configured, not verified.** Every value comes from a vendor or ROM carrier table. No profile has been verified on a phone: `verified_observation_count` is 0 everywhere. The phone reports under `observed/` do not change that: they are unverified, anyone can send one, and they never change a value ([community/README.md](../community/README.md)). `supported` means a table turns the feature on, not that the operator offers it, that the plan includes it or that the phone model is approved.
 2. **Emergency calls are not tested, and OCD never places one.** `apns-conf.xml` carries an emergency APN row only where it asks for Android's own default request or where a current Pixel or Galaxy configuration or LineageOS's own list gives that row; elsewhere Android's own default applies ([Emergency APN rows](#emergency-apn-rows)). `carrier-config-list.xml` carries emergency, TTY, RTT, WPS and `iwlan.*` keys and is not for ROM application until the per-key review of those keys has run. Switching VoLTE or Wi-Fi calling on changes how the phone places emergency calls: where there is no 2G or 3G voice, or a regulator requires emergency calls over IMS (Sweden's PTS, Australia's ACMA), confirm that your IMS stack places them before you ship.
 3. **The phone must load the file.** Keep `<apns version>` equal to your framework's `frameworks/base/core/res/res/xml/apns.xml`. On a mismatch TelephonyProvider loads no APN at all.
 4. **The preferred APN survives an update.** New rows and a new order apply to a newly inserted SIM or after Reset to default.

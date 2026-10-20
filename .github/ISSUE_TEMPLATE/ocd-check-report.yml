@@ -1,0 +1,27 @@
+name: OCD Check report
+description: Upload a test report from the OCD Check app as it wrote it. It is recorded as an unverified observation and never changes OCD's data.
+title: "[OCD Check report] "
+labels:
+  - ocd-check-report
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The OCD Check app (owner build) opens this form with its test report filled in. Read it, then submit it. Do not edit the report: a bot checks it against [schemas/ocd-check-report.schema.json](https://github.com/open-carrier-data/open-carrier-data/blob/main/schemas/ocd-check-report.schema.json) and the OCD data release it names, and labels the issue `report:valid`, `report:suspect` or `report:invalid`, with a comment that says exactly what is wrong and gives the report's hash.
+
+        The report only points at entries of that release (`volte:on`, `apn:<row key>`, ...) with the result your phone measured. A valid report is recorded under `observed/` as "reported, not checked by OCD". It is a hint: it never changes an OCD value, a file under `generated/` or a release, and it never makes a phone skip its own test. [community/README.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/community/README.md) explains the path.
+  - type: textarea
+    id: report
+    attributes:
+      label: Report
+      description: The app's JSON test report. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day or location.
+      render: json
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy_check
+    attributes:
+      label: Privacy check
+      options:
+        - label: I read the report and it holds none of the private values listed in SECURITY.md.
+          required: true

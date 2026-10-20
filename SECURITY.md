@@ -2,7 +2,7 @@
 
 To report a security or privacy issue, use GitHub's private vulnerability reporting for this repo at `https://github.com/open-carrier-data/open-carrier-data/security/advisories/new`.
 
-To report wrong carrier data, use the public issue forms after you strip private values.
+To report wrong carrier data, use the public issue forms after you strip private values. An OCD Check report is scanned for these values by a bot; a hit labels the issue `report:invalid` and names the field, never the value.
 
 This is the one list of private values. The contribution guide, the issue forms, and the pull request template point here. Never put these in a public issue or pull request:
 
