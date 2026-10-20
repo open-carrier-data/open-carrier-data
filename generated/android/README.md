@@ -4,7 +4,7 @@ These files are generated from the carrier profiles by `tools/generate_android_o
 
 | File | Meaning | Tier |
 | --- | --- | --- |
-| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them, current vendors' values first, and the attach type `ia` only on rows a current vendor backs where one gives the attach APN | for ROMs once the boot check on the owner's phone has passed; until then `rom, pending the S20 boot check` in `data-2026.10` |
+| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them, current vendors' values first, and the attach type `ia` only on rows a current vendor backs where one gives the attach APN | for ROMs: supported since the boot check on the owner's phone passed with `data-2026.10` on 2026-10-20 (`data-2026.10`'s `release.json`, published before, still says `rom, pending the S20 boot check`) |
 | `carrier-config-list.xml` | CarrierConfig XML in Android's `vendor.xml` format, blocks in generic-to-specific order | not for ROM application and not a release asset until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run |
 | `lookup.json` | every profile with `match`, `capabilities`, `specificity`, counts, its freshness window and the month of its newest upstream entry | supported for apps and tools, since `data-2026.10` |
 | `metadata.json` | target version, output counts, the profile IDs left out of each XML, the APN rows LineageOS's schema rejects, the rows that lost `ia`, the data digest and the freshness window | supported for apps and tools, since `data-2026.10` |

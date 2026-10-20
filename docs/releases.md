@@ -1,13 +1,13 @@
 # Releases
 
-This page describes the releases of Open Carrier Data (rule decisions of 2026-10-18, rounds 20 and 21, and of 2026-10-19, round 24) and how one is made. **The first release is [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), published on 2026-10-19.** In it `lookup.json` and `metadata.json` are supported for apps and tools, and `carrier-variants.json` as information. `apns-conf.xml` is in it but not supported yet: it waits for the S20 boot check ([below](#the-s20-boot-check-of-apns-confxml)). The tooling that drafts a release is `tools/build_release.py`, `tools/release_notes.py` and `.github/workflows/release.yml`; [compatibility.md](compatibility.md) has the compatibility policy.
+This page describes the releases of Open Carrier Data (rule decisions of 2026-10-18, rounds 20 and 21, of 2026-10-19, round 24, and of 2026-10-20, round 26) and how one is made. **The first release is [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), published on 2026-10-19.** In it `lookup.json` and `metadata.json` are supported for apps and tools, and `carrier-variants.json` as information. Its `apns-conf.xml` is supported for ROMs since 2026-10-20, when the S20 boot check of that release passed ([below](#the-s20-boot-check-of-apns-confxml)). The release's own `release.json`, published the day before, still names it `rom, pending the S20 boot check`, because a published release never changes. The tooling that drafts a release is `tools/build_release.py`, `tools/release_notes.py` and `.github/workflows/release.yml`; [compatibility.md](compatibility.md) has the compatibility policy.
 
 ## Releases so far
 
 | Release | Published | Candidate | Notes |
 | --- | --- | --- | --- |
-| [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10) | 2026-10-19 | `8cb64d63` (#280), compared with base `98fbd8b2` (#253) | The first release. Its candidate was not yet 72 hours old: the age gate was waived once, through a public pull request (#283), on the owner's direction (round 24). `release.json` records `age_gate: waived, round 24`; every other gate passed. Known issues, as its notes list them: Samsung's emergency role is not included yet (51 emergency-named rows are still typed `ims`; they come with `data-2026.11`), and 452/02 has no emergency APN profile on IWLAN. |
-| `data-2026.11` | planned for about 2026-11-02 | | The normal path: a candidate at least 72 hours old, with no waiver. The waiver can never fire again, because it needs `first_base`, which the workflow refuses once a `data-*` release exists. |
+| [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10) | 2026-10-19 | `8cb64d63` (#280), compared with base `98fbd8b2` (#253) | The first release. Its candidate was not yet 72 hours old: the age gate was waived once, through a public pull request (#283), on the owner's direction (round 24). `release.json` records `age_gate: waived, round 24`; every other gate passed. Known issues, as its notes list them: Samsung's emergency role is not included yet (51 emergency-named rows are still typed `ims`; they come with `data-2026.11`), and 452/02 has no emergency APN profile on IWLAN. Its `apns-conf.xml` became supported for ROMs on 2026-10-20, after publication, when the S20 boot check passed. |
+| `data-2026.11` | planned for about 2026-11-02 | | The normal path: a candidate at least 72 hours old, with no waiver. The waiver can never fire again, because it needs `first_base`, which the workflow refuses once a `data-*` release exists. The first release whose `release.json` gives `apns-conf.xml` the tier `supported`, with the boot check's `tier_note`. |
 
 ## Two channels
 
@@ -20,7 +20,7 @@ Daily publishing to `main`, the phone guard, the freshness alarm and the data ru
 
 | File | Tier | For |
 | --- | --- | --- |
-| `generated/android/apns-conf.xml` | `rom, pending the S20 boot check` in `data-2026.10`. It becomes supported once it ships in a release, the review of its emergency APN rows has ruled and its result is in that release (true of `data-2026.10`), and the S20 boot check has passed ([below](#the-s20-boot-check-of-apns-confxml)) | ROMs, at build time |
+| `generated/android/apns-conf.xml` | supported, since 2026-10-20. The S20 boot check of `data-2026.10` passed with one LIDL Connect SIM (26202) and covered mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi ([below](#the-s20-boot-check-of-apns-confxml)). MMS was not checked anywhere: that network no longer offers MMS (Vodafone Germany ended it on 2023-01-17). `release.json` says `supported`, with this as its `tier_note`, from `data-2026.11` on; `data-2026.10`'s still says `rom, pending the S20 boot check` | ROMs, at build time |
 | `generated/android/lookup.json` | supported, since `data-2026.10` | apps and tools, bundled at build time |
 | `generated/android/metadata.json` | supported, since `data-2026.10` | apps and tools; a ROM's build log |
 | `generated/devices/carrier-variants.json` | supported as information, since `data-2026.10`; never an export | apps |
@@ -32,7 +32,7 @@ Daily publishing to `main`, the phone guard, the freshness alarm and the data ru
 Each file below is an asset of the GitHub release:
 
 - the four files of the table above, each byte-identical to the file in the tagged commit. `carrier-config-list.xml` is not one of them; `release.json` lists its path and SHA-256 as a reference file;
-- `release.json`: the tag, the commit and its date, the previous release and its commit, the cut time, the age gate's result (`passed`, or `waived, round 24` for the first release), `data_digest`, `checks_through`, `stale_after` and the days left, the APN database version; per file its path, tier, size, SHA-256, `schema_version` and the SHA-256 of its schema in the tag; the counts (profiles, APN rows, rows typed `emergency`, the emergency types left out by reason, CarrierConfig blocks, key lines and safety-class lines); the phone guard's verdict, trips and report counts; the "needs review" reasons; the "Reset to default" scopes and every internet, attach and MMS lead change; every profile ID added and removed; the announced changes;
+- `release.json`: the tag, the commit and its date, the previous release and its commit, the cut time, the age gate's result (`passed`, or `waived, round 24` for the first release), `data_digest`, `checks_through`, `stale_after` and the days left, the APN database version; per file its path, tier (with a `tier_note` that says what a check covered, where one did), size, SHA-256, `schema_version` and the SHA-256 of its schema in the tag; the counts (profiles, APN rows, rows typed `emergency`, the emergency types left out by reason, CarrierConfig blocks, key lines and safety-class lines); the phone guard's verdict, trips and report counts; the "needs review" reasons; the "Reset to default" scopes and every internet, attach and MMS lead change; every profile ID added and removed; the announced changes;
 - `release-notes.md`, generated by `tools/release_notes.py` from the previous release to this one. The release text is the same notes, cut only if they exceed what a GitHub release body takes. Its sections:
   - **Needs review**, first, only when an emergency lead is lost to Android's default, an emergency lead is gained or changed to anything other than Android's default request, a network type is left with no emergency profile, or an APN set leaves a scope with none (round 21; the stricter correctness form);
   - the window and the counts;
@@ -116,7 +116,7 @@ All three were set on 2026-10-19, before `data-2026.10`: the tag ruleset "data r
    The run's summary names each failed gate. A month with no candidate that passes has no release, and the next release's notes say why.
 If the draft step reports that the workflow token could not create the draft, every gate still passed. GitHub refuses the workflow's own token when the candidate's files under `.github/workflows/` differ from `main`. The run then keeps the seven assets as the artifact `data-YYYY.MM-assets`. Download it, run `sha256sum -c SHA256SUMS`, and create the draft with a token that holds the workflow scope: `gh release create data-YYYY.MM --draft --target <candidate> --title data-YYYY.MM --notes-file release-body.md` with the seven assets. Under round 24 an agent may do this with the owner's token on the owner's direction.
 
-5. **Read the draft.** It is a draft release with the seven assets and no tag yet. Read "Needs review" first, then the phone guard, the IMS and emergency sections and the CarrierConfig safety lines. When an agent will publish it (step 6), a second, independent agent does this read first and also checks the SHA-256 of the four data files against the rehearsal (step 2); any mismatch stops the release. An optional line may record an owner check on the S20 (attach, data, MMS, IMS registration, the APN list after "Reset to default"; never an emergency call).
+5. **Read the draft.** It is a draft release with the seven assets and no tag yet. Read "Needs review" first, then the phone guard, the IMS and emergency sections and the CarrierConfig safety lines. When an agent will publish it (step 6), a second, independent agent does this read first and also checks the SHA-256 of the four data files against the rehearsal (step 2); any mismatch stops the release. An optional line may record a check on the S20 (attach, data, IMS registration, the APN list after "Reset to default", the harness's muted mailbox calls; never an emergency call, and no MMS on a network that has ended it).
 6. **Publish it**: the owner, or under round 24 an agent with the owner's token on his direction, after the independent read of step 5. The `release` environment's admin bypass is never used. GitHub creates the tag `data-YYYY.MM` at the candidate then. A draft not published within 14 days is deleted, and the month starts again.
 7. **Check it** like a consumer:
 
@@ -129,13 +129,38 @@ If the draft step reports that the workflow token could not create the draft, ev
 
 ## The S20 boot check of apns-conf.xml
 
-`apns-conf.xml` becomes supported for ROMs only after the owner's S20 has run a release with its APN list loaded and passed the boot check with a SIM: the right file and row count, mobile data, MMS, IMS registration, and calls. Until then `release.json` gives its tier as `rom, pending the S20 boot check`. Once the check passes, a docs pull request changes the tier in `tools/build_release.py` and on this page. The check never places an emergency call and never opens the emergency dialer.
+`apns-conf.xml` becomes supported for ROMs only after the owner's S20 has run a release with its APN list loaded and passed the boot check with a SIM (rounds 20, 24 and 26). The check is:
 
-Where the check of `data-2026.10` stands on 2026-10-20:
+- the review of the emergency APN rows (S1-A), with its result in the release;
+- the right file and row count, and mobile data on the default row;
+- IMS registered over LTE and over Wi-Fi (IWLAN);
+- one automatic "calls out" call per bearer, over Wi-Fi and over LTE, with the release loaded. A harness places each call over adb to the SIM's own mailbox, with the call volume muted, and ends it. A call counts when all of these hold:
+  - it went active;
+  - its bearer proof passed: the call type, the IMS data connection and, for LTE, the data RAT agree when the call goes active and when it is hung up;
+  - RTP flowed both ways, at least 300 packets each way in 10 s, with no inactivity;
+  - there was no SIP failure cause;
+  - the phone hung up itself;
+- the emergency data profile, read without a call.
 
-- **Loaded, 2026-10-19.** The release's `apns-conf.xml` (SHA-256 `8c24a482…`, `data_digest` `sha256:36d5f7eb…`) is the S20's active APN list: 22,082 stored rows, the count expected for that phone. On the owner's direction it was loaded without a new ROM build. The release file replaced the earlier copy in `/data/misc/apns/`, which the phone reads before its build's own file, and TelephonyProvider reloaded the table (`update_db`).
-- **Passed, 2026-10-19, with a LIDL Connect SIM (26202):** mobile data is up on `web.vodafone.de`; VoLTE and SMS over IMS are registered; Wi-Fi calling is registered over IWLAN. Wi-Fi calling registered only after the phone's Private DNS was set to a resolver that sends ECS, because of Vodafone Germany's DNS filter ([consume.md](consume.md#wi-fi-calling-can-fail-because-of-the-wi-fis-dns-not-the-settings)). Registration alone does not show that calls work.
-- **Still open:** one outgoing and one incoming call, and one MMS sent and one received.
+No person takes part. An incoming call and MMS are not part of the check (round 26). MMS is never checked on a network that has ended it. The check never places an emergency call and never opens the emergency dialer. Once it passes, a docs pull request changes the tier in `tools/build_release.py` and on this page.
+
+**`data-2026.10` passed on 2026-10-20, with a LIDL Connect SIM (26202):**
+
+- **Loaded, 2026-10-19.** The release's `apns-conf.xml` (SHA-256 `8c24a482…`, `data_digest` `sha256:36d5f7eb…`) is the S20's active APN list: 22,082 stored rows, the count expected for that phone. On the owner's direction it was loaded without a new ROM build. The release file replaced the earlier copy in `/data/misc/apns/`, which the phone reads before its build's own file, and TelephonyProvider reloaded the table (`update_db`). On 2026-10-20 the phone's file still had that SHA-256 and the table still had 22,082 rows.
+- **Data and registration, 2026-10-19.** Mobile data is up on `web.vodafone.de`. VoLTE and SMS over IMS are registered, and Wi-Fi calling is registered over IWLAN. Wi-Fi calling registered only after the phone's Private DNS was set to a resolver that sends ECS, because of Vodafone Germany's DNS filter ([consume.md](consume.md#wi-fi-calling-can-fail-because-of-the-wi-fis-dns-not-the-settings)).
+- **Calls out over Wi-Fi, 2026-10-20.** Call type 18 (IWLAN), with the IMS data connection on WLAN, both when the call went active and at hang-up. 501 RTP packets sent and 491 received per 10 s, no inactivity, ended by the phone. Passed.
+- **Calls out over LTE, Wi-Fi off, 2026-10-20.** Call type 13 (LTE), with the IMS data connection on WWAN and the data RAT LTE, both when the call went active and at hang-up. 499 packets sent and 491 received per 10 s, no inactivity, ended by the phone. Passed.
+- **Emergency profile, read without a call.** The release's 26202 row: APN `EMERGENCY`, IPV4V6 at home and when roaming, no restriction on network types.
+- **MMS: not checked.** The network no longer offers MMS: Vodafone Germany ended it on 2023-01-17.
+
+The calls of 2026-10-18 and 2026-10-19 do not count: they ran before `data-2026.10` was loaded.
+
+**What the check covers.** One SIM of one network (26202) on one phone and software stack: the S20 with LineageOS 23.2 and PHH IMS. On that SIM it covers mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi. The packet counts show that the media path carried RTP both ways. They do not show that a voice was heard. The check says nothing about:
+
+- incoming calls;
+- MMS on any network;
+- other networks' rows;
+- emergency calls.
 
 ## If releases stop
 

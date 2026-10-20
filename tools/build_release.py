@@ -64,16 +64,17 @@ sys.path.insert(0, str(TOOLS))
 import release_notes as notes  # noqa: E402
 
 TAG_RE = re.compile(r"data-(?P<year>20[0-9]{2})\.(?P<month>0[1-9]|1[0-2])(?:\.(?P<fix>[1-9][0-9]*))?")
-# Asset name, path in the tree, tier. apns-conf.xml becomes "supported" for
-# ROMs only after the owner's S20 has built and booted a release once with
-# its APN list loaded (round 20); a docs pull request then changes its tier
-# here and in docs/releases.md.
+# Asset name, path in the tree, tier. apns-conf.xml is "supported" for ROMs
+# since the S20 boot check of data-2026.10 passed on 2026-10-20 (rounds 20,
+# 24 and 26; docs/releases.md); data-2026.10's own release.json still says
+# "rom, pending the S20 boot check". TIER_NOTES says what that check covered.
 ASSETS = (
-    ("apns-conf.xml", "generated/android/apns-conf.xml", "rom, pending the S20 boot check"),
+    ("apns-conf.xml", "generated/android/apns-conf.xml", "supported"),
     ("lookup.json", "generated/android/lookup.json", "supported"),
     ("metadata.json", "generated/android/metadata.json", "supported"),
     ("carrier-variants.json", "generated/devices/carrier-variants.json", "supported as information"),
 )
+TIER_NOTES = {"apns-conf.xml": notes.APN_TIER_NOTE}
 # In the tagged tree and in release.json, never an asset (round 20: not before
 # the per-key safety review S1).
 REFERENCE_FILES = (("generated/android/carrier-config-list.xml", "reference"),)
@@ -234,6 +235,8 @@ def tree_refusals(tree: Path, today: date | None) -> list[str]:
 def file_entry(repo: Path, commit: str, path: str, tier: str, asset: str | None) -> dict[str, Any]:
     data = notes.git(repo, "show", f"{commit}:{path}")
     entry: dict[str, Any] = {"path": path, "tier": tier, "bytes": len(data), "sha256": sha256(data)}
+    if asset in TIER_NOTES:
+        entry["tier_note"] = TIER_NOTES[asset]
     if asset:
         entry = {"asset": asset, **entry}
     if path.endswith(".json"):
