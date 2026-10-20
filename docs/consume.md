@@ -4,17 +4,24 @@ This guide shows how to package the generated files, how to resolve profiles fro
 
 ## Read this first
 
-The files on `main` are the edge channel: each publish replaces them, several times a day. No release exists yet, and no file is supported today. [releases.md](releases.md) describes the planned monthly releases, `data-YYYY.MM`, and their tiers:
+The files on `main` are the edge channel: each publish replaces them, several times a day. The production channel is the monthly release, `data-YYYY.MM`. The first, [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), was published on 2026-10-19 from `main` commit `8cb64d63`. [releases.md](releases.md) describes the releases and their tiers:
 
-| File | Planned tier |
+| File | Tier in `data-2026.10` |
 | --- | --- |
-| `generated/android/apns-conf.xml` | for ROMs, from the first release that carries the review of its emergency APN rows and has passed one boot check on the owner's phone |
-| `generated/android/lookup.json`, `generated/android/metadata.json` | for apps and tools, from the first release |
-| `generated/devices/carrier-variants.json` | for apps and tools as information, from the first release; never an export |
+| `generated/android/apns-conf.xml` | not supported yet (`rom, pending the S20 boot check`). It carries the review of its emergency APN rows; it becomes supported for ROMs once the boot check on the owner's phone has passed ([releases.md](releases.md#the-s20-boot-check-of-apns-confxml) says what has passed so far) |
+| `generated/android/lookup.json`, `generated/android/metadata.json` | supported, for apps and tools |
+| `generated/devices/carrier-variants.json` | supported as information, for apps and tools; never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | the other files under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
 
-Until the first release, pin one commit by hand and record the SHA-256 of each file you take and its `data_digest`.
+Take a release and check its files:
+
+```sh
+gh release download data-2026.10 -R open-carrier-data/open-carrier-data -D data-2026.10
+cd data-2026.10 && sha256sum -c SHA256SUMS
+```
+
+`release.json` names the commit, the `data_digest`, the window and each file's tier. Record the tag and the `data_digest` with your build. If you take files from `main` instead, pin one commit by hand and record the SHA-256 of each file you take and its `data_digest`.
 
 What every ROM maintainer must know:
 
@@ -61,7 +68,7 @@ prebuilt_etc_xml {
 
 A device turns it on with `$(call soong_config_set,lineage_apn,source,open_carrier_data)` in its makefile. The module keeps its name and its install path, `/product/etc/apns-conf.xml`. A phone that already has the list in its database loads the new one only when the file's checksum changes and TelephonyProvider reloads, for example after `content delete --uri content://telephony/carriers/update_db` as root; a new build with the same build ID does not reload it by itself.
 
-The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_digest`, `checks_through` and `stale_after`. `git log -S <data_digest> -- generated/android/metadata.json` in a clone finds the commit that published it.
+The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_digest`, `checks_through` and `stale_after`. A file from a release carries the same `data_digest` as that release's `release.json`. `git log -S <data_digest> -- generated/android/metadata.json` in a clone finds the commit that published it.
 
 ### carrier-config-list.xml is a vendor.xml
 
