@@ -2,7 +2,7 @@
 
 This page says which parts of Open Carrier Data's files a consumer may rely on across releases, and how a change that breaks them is announced (rule decisions of 2026-10-18, round 20). [releases.md](releases.md) describes the releases themselves.
 
-**The policy starts with the first release.** No release exists yet, and no file is supported today. Changes made before the first release stay history: no `schema_version` is bumped for them after the fact.
+**The policy started with the first release**, [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), published on 2026-10-19. Changes made before it stay history: no `schema_version` is bumped for them after the fact.
 
 ## What is stable
 

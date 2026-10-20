@@ -4,7 +4,7 @@ Open Carrier Data is a public database of mobile carrier settings. It stores neu
 
 ## Get the data
 
-You can get the data in three ways. Each one takes the latest publish on `main`, the edge channel: it changes several times a day, and the validators and the phone guard are its only checks. No release exists yet; [Releases and support](#releases-and-support) below says what is planned.
+You can get the data in three ways. Each one takes the latest publish on `main`, the edge channel: it changes several times a day, and the validators and the phone guard are its only checks. For a fixed, checked snapshot, take a release instead. The first is [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10); [Releases and support](#releases-and-support) below says what it supports.
 
 To take everything, including tools and schemas, clone the public repo:
 
@@ -24,20 +24,20 @@ To ship the APN list in a build, copy the one file Android reads:
 cp generated/android/apns-conf.xml /path/to/your/build/vendor/apn/open-carrier-data/apns-conf.xml
 ```
 
-[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides. Until the first release, pin one commit and record the file's SHA-256 and the `data_digest` in its header.
+[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides. Take the file from a release, or pin one commit, and record the file's SHA-256 and the `data_digest` in its header. In `data-2026.10` this file is not supported yet: it waits for the boot check on the owner's phone.
 
 Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8. `carrier-config-list.xml` is not for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run.
 
 ## Releases and support
 
-`main` is the edge channel: every publish lands there, several times a day. It is guarded by the `validate` check and the phone guard, and OCD makes no other promise about it. The production channel will be monthly tagged releases, `data-YYYY.MM`, drafted by tooling and published by the owner. No release exists yet. [docs/releases.md](docs/releases.md) describes the plan: the tiers, what a release will guarantee and what it never will.
+`main` is the edge channel: every publish lands there, several times a day. It is guarded by the `validate` check and the phone guard, and OCD makes no other promise about it. The production channel is monthly tagged releases, `data-YYYY.MM`, drafted by tooling and published by the owner or, on his direction, by an agent after an independent read. The first, [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), was published on 2026-10-19; the next, `data-2026.11`, is planned for about 2026-11-02. [docs/releases.md](docs/releases.md) describes the releases: the tiers, what a release guarantees and what it never does.
 
-No file is supported today. The planned tiers, in short:
+The tiers in `data-2026.10`, in short:
 
-| File | Planned tier |
+| File | Tier |
 | --- | --- |
-| `generated/android/apns-conf.xml` | for ROMs, from the first release that carries the review of its emergency APN rows and has passed one boot check on the owner's phone |
-| `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | for apps and tools, from the first release; the device records are information, never an export |
+| `generated/android/apns-conf.xml` | not supported yet (`rom, pending the S20 boot check`). It carries the review of its emergency APN rows; it becomes supported for ROMs once the boot check on the owner's phone has passed. [docs/releases.md](docs/releases.md#the-s20-boot-check-of-apns-confxml) says what has passed so far |
+| `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | supported for apps and tools; the device records as information, never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
 
