@@ -36,7 +36,7 @@ The tiers in `data-2026.10`, in short:
 
 | File | Tier |
 | --- | --- |
-| `generated/android/apns-conf.xml` | not supported yet (`rom, pending the S20 boot check`). It carries the review of its emergency APN rows; it becomes supported for ROMs once the boot check on the owner's phone has passed. [docs/releases.md](docs/releases.md#the-s20-boot-check-of-apns-confxml) says what has passed so far |
+| `generated/android/apns-conf.xml` | supported for ROMs, since 2026-10-20. It carries the review of its emergency APN rows, and the boot check on the owner's phone passed with `data-2026.10`: mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi on one 26202 SIM. MMS was not checked, because that network has ended it. [docs/releases.md](docs/releases.md#the-s20-boot-check-of-apns-confxml) says what the check covered |
 | `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | supported for apps and tools; the device records as information, never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |

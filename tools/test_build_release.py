@@ -84,6 +84,13 @@ class BuildTests(RepoCase):
         self.assertEqual(manifest["data_digest"], "sha256:" + "b" * 64)
         self.assertEqual(manifest["days_left"], (date(2027, 6, 30) - date(2026, 11, 2)).days)
         self.assertEqual([f["asset"] for f in manifest["files"]], [a for a, _, _ in release.ASSETS])
+        # Round 26: apns-conf.xml is supported for ROMs, with what the S20 boot check covered.
+        apns = manifest["files"][0]
+        self.assertEqual((apns["asset"], apns["tier"]), ("apns-conf.xml", "supported"))
+        for words in ("26202", "outgoing calls over LTE and Wi-Fi", "MMS was not checked", "incoming calls"):
+            self.assertIn(words, apns["tier_note"])
+        self.assertNotIn("tier_note", manifest["files"][1])
+        self.assertIn(f"`apns-conf.xml`: {release.notes.APN_TIER_NOTE}", (self.out / "release-notes.md").read_text())
         self.assertEqual(manifest["reference_files"][0]["path"], "generated/android/carrier-config-list.xml")
         self.assertNotIn("carrier-config-list.xml", names)
         self.assertEqual(manifest["guard"]["verdict"], "pass")

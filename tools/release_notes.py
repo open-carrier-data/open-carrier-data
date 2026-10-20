@@ -57,6 +57,14 @@ import diff_carrier_config  # noqa: E402
 ANDROID = "generated/android"
 BASE_FILES = ("apns-conf.xml", "carrier-config-list.xml", "lookup.json", "metadata.json")
 LEAD_LIST_LIMIT = 50
+# What the S20 boot check covered when it made apns-conf.xml supported for
+# ROMs (rounds 20, 24 and 26; docs/releases.md). build_release.py writes it
+# as the file's `tier_note` in release.json, and the notes print it.
+APN_TIER_NOTE = ("Supported for ROMs since 2026-10-20: the S20 boot check of data-2026.10 covered mobile data, IMS "
+                 "registration and outgoing calls over LTE and Wi-Fi on one LIDL Connect SIM (26202), with muted "
+                 "calls from the phone to its own mailbox. MMS was not checked: that network no longer offers MMS "
+                 "(Vodafone Germany ended it on 2023-01-17). It says nothing about incoming calls, other networks or "
+                 "emergency calls.")
 EMERGENCY_OMISSIONS = (
     "emergency_types_left_out_unset_protocol",
     "emergency_types_left_out_combined",
@@ -299,8 +307,9 @@ def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, tod
     elif age_gate and age_gate != "passed":
         out.append(f"- `age_gate`: {age_gate}")
     out.append("")
-    out += ["Configured, not verified: no value was checked on a phone, and OCD never tests or places an "
-            "emergency call. See \"Standing notice\" at the end.", ""]
+    out += ["Configured, not verified: apart from the S20 boot check of `apns-conf.xml` on one 26202 SIM, no value "
+            "was checked on a phone, and OCD never tests or places an emergency call. See \"Standing notice\" at "
+            "the end.", "", f"`apns-conf.xml`: {APN_TIER_NOTE}", ""]
 
     if result["needs_review"]:
         out += ["## Needs review", "",
@@ -421,8 +430,8 @@ def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, tod
 
     out += ["## Standing notice", "",
             "- Values are configured, not verified: every value comes from a vendor or ROM table, and no profile "
-            "was checked on a phone. A capability label says what tables configure, not what the operator, the "
-            "plan or the phone model allows.",
+            "was checked on a phone except by the S20 boot check of `apns-conf.xml` (one 26202 SIM). A capability "
+            "label says what tables configure, not what the operator, the plan or the phone model allows.",
             "- OCD never tests or places an emergency call. Switching VoLTE or Wi-Fi calling on changes how "
             "emergency calls are placed; where there is no 2G or 3G voice, or PTS or ACMA rules apply, confirm "
             "that your IMS stack places them over IMS.",
