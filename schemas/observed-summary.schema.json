@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/observed-summary.schema.json",
+  "title": "Open Carrier Data observed summary (observed/summary.json)",
+  "description": "Per device, carrier profile, software stack and release entry: OCD Check reports counted as \"reported, not checked by OCD\" by result, \"contested\" where a counted report measured a clean failure, the reports a noise filter holds, and \"re-tested by OCD\", which only OCD's own phones set. Built by tools/observed_reports.py from observed/reports/. Every entry is unverified. Nothing here changes an OCD value, a file under generated/ or a release, makes a phone skip its own test, or is a support claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "verification", "statuses", "reports", "cells"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "verification": { "const": "unverified" },
+    "statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reported", "contested", "retested_by_ocd"],
+      "properties": {
+        "reported": { "type": "string", "minLength": 1 },
+        "contested": { "type": "string", "minLength": 1 },
+        "retested_by_ocd": { "type": "string", "minLength": 1 }
+      }
+    },
+    "reports": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["counted", "duplicate", "expired", "held", "superseded"],
+      "description": "Valid reports by status after the noise filters.",
+      "properties": {
+        "counted": { "type": "integer", "minimum": 0 },
+        "duplicate": { "type": "integer", "minimum": 0 },
+        "expired": { "type": "integer", "minimum": 0 },
+        "held": { "type": "integer", "minimum": 0 },
+        "superseded": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "cells": { "type": "array", "items": { "$ref": "#/$defs/cell" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date" },
+    "issues": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "integer", "minimum": 1 }
+    },
+    "cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device", "carrier_profile", "mccmnc", "stack", "entry", "reported", "contested", "retested_by_ocd", "held", "verification"],
+      "properties": {
+        "device": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["model", "codename"],
+          "properties": {
+            "model": { "type": "string", "minLength": 1 },
+            "codename": { "type": "string", "minLength": 1 }
+          }
+        },
+        "carrier_profile": {
+          "anyOf": [
+            { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
+            { "type": "null" }
+          ]
+        },
+        "mccmnc": { "type": "string", "pattern": "^[0-9]{5,6}$" },
+        "stack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rom_family", "ims_stack", "android_major"],
+          "properties": {
+            "rom_family": { "enum": ["stock", "lineageos", "other"] },
+            "ims_stack": { "enum": ["phh_ims", "samsung_ims", "other", "not_known"] },
+            "android_major": { "type": "integer", "minimum": 10, "maximum": 40 }
+          }
+        },
+        "entry": { "type": "string", "minLength": 1 },
+        "reported": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "count", "results", "first_report", "last_report", "issues"],
+              "properties": {
+                "status": { "const": "reported, not checked by OCD" },
+                "count": { "type": "integer", "minimum": 1 },
+                "results": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["works", "signed_in", "service_off", "not_possible", "failed", "not_tested"],
+                  "properties": {
+                    "works": { "type": "integer", "minimum": 0 },
+                    "signed_in": { "type": "integer", "minimum": 0 },
+                    "service_off": { "type": "integer", "minimum": 0 },
+                    "not_possible": { "type": "integer", "minimum": 0 },
+                    "failed": { "type": "integer", "minimum": 0 },
+                    "not_tested": { "type": "integer", "minimum": 0 }
+                  }
+                },
+                "first_report": { "$ref": "#/$defs/date" },
+                "last_report": { "$ref": "#/$defs/date" },
+                "issues": { "$ref": "#/$defs/issues" }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "contested": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "count", "first_report", "last_report", "issues"],
+              "properties": {
+                "status": { "const": "contested: a clean measured failure was reported" },
+                "count": { "type": "integer", "minimum": 1 },
+                "first_report": { "$ref": "#/$defs/date" },
+                "last_report": { "$ref": "#/$defs/date" },
+                "issues": { "$ref": "#/$defs/issues" }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "retested_by_ocd": {
+          "type": "null",
+          "description": "Set only from OCD's own phones after a passed T2 call test (the owner's private ledger); empty until that status is published."
+        },
+        "held": { "type": "integer", "minimum": 0, "description": "Valid reports for this cell a noise filter holds; they do not count yet." },
+        "verification": { "const": "unverified" }
+      }
+    }
+  }
+}

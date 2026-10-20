@@ -7,6 +7,11 @@ on:
         description: "Run the freshness alarm as if today were this UTC date (YYYY-MM-DD). Empty means the real date."
         required: false
         default: ""
+      checks_only:
+        description: "Run only the validate job, without the freshness alarm. The OCD Check reports workflow sets it for its pull request branch."
+        type: boolean
+        required: false
+        default: false
   push:
     branches: [main]
   # edited: a phone-guard-accept line added to the body checks again.
@@ -50,6 +55,10 @@ jobs:
         run: python3 tools/test_release_notes.py
       - name: Test the release build
         run: python3 tools/test_build_release.py
+      - name: Test the OCD Check report tool
+        run: python3 tools/test_observed_reports.py
+      - name: Validate observed/ (unverified reports, apart from the data)
+        run: python3 tools/observed_reports.py validate --root .
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8
@@ -130,7 +139,7 @@ jobs:
             generated/android/apns-conf.xml
 
   freshness-alarm:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.checks_only)
     runs-on: ubuntu-latest
     permissions:
       contents: read

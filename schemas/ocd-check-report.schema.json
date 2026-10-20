@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-check-report.schema.json",
+  "title": "OCD Check test report (the \"OCD Check report\" issue form)",
+  "description": "What the OCD Check owner build measured on one phone with one SIM, as pointers: each result names an entry of one OCD data release's closed list (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that release's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the release checks a schema cannot express.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_version",
+    "app",
+    "tested_on",
+    "release",
+    "data_source",
+    "device",
+    "sim",
+    "ocd_profile",
+    "results"
+  ],
+  "properties": {
+    "schema": { "const": "ocd-check-test-report" },
+    "schema_version": { "const": 1 },
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "build", "version"],
+      "properties": {
+        "name": { "const": "OCD Check" },
+        "build": {
+          "enum": ["owner"],
+          "description": "Only the owner build tests values; the read-only builds write no test report."
+        },
+        "version": { "type": "string", "pattern": "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}(-[a-z]{1,16})?$" }
+      }
+    },
+    "tested_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The UTC date the test run started. A date only, never a time."
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "data_digest"],
+      "description": "The OCD data release the entries point into. The tag must exist and carry this data digest; with a null tag (a bundled snapshot) the release is found by its digest.",
+      "properties": {
+        "tag": {
+          "anyOf": [
+            { "type": "string", "pattern": "^data-20[0-9]{2}\\.(0[1-9]|1[0-2])(\\.[1-9][0-9]{0,2})?$" },
+            { "type": "null" }
+          ]
+        },
+        "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    },
+    "data_source": {
+      "enum": ["pulled", "bundled"],
+      "description": "pulled: the release the app fetched and checked against SHA256SUMS; bundled: the snapshot inside the app."
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "codename", "android_major", "rom_family", "build_type", "ims_stack"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9 ._()+-]{0,39}$",
+          "description": "Build.MODEL, for example SM-G981B."
+        },
+        "codename": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "description": "Build.DEVICE, for example x1s: the device tree name LineageOS keys its carrier files by."
+        },
+        "android_major": { "type": "integer", "minimum": 10, "maximum": 40 },
+        "rom_family": {
+          "enum": ["stock", "lineageos", "other"],
+          "description": "The software family as the app detects it; the build strings themselves are never sent."
+        },
+        "build_type": { "enum": ["user", "userdebug", "eng"] },
+        "ims_stack": {
+          "enum": ["phh_ims", "samsung_ims", "other", "not_known"],
+          "description": "The IMS service the phone runs: PHH IMS (me.phh.ims), Samsung's (com.sec.imsservice), another one, or not readable."
+        }
+      }
+    },
+    "sim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mccmnc"],
+      "properties": {
+        "mccmnc": { "type": "string", "pattern": "^[0-9]{5,6}$", "description": "The SIM's home network code." },
+        "android_carrier_id": { "type": "integer", "minimum": 1, "maximum": 999999 },
+        "spn": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[^\\u0000-\\u001f\\u007f\"<>@`\\\\]+$",
+          "description": "The service provider name the SIM shows, when it has one."
+        },
+        "gid1_prefix": {
+          "type": "string",
+          "pattern": "^[0-9A-F]{1,20}$",
+          "description": "Only the GID1 prefix of the OCD profile the SIM matched, which OCD publishes; never the SIM's whole GID1."
+        }
+      }
+    },
+    "ocd_profile": {
+      "anyOf": [
+        { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
+        { "type": "null" }
+      ],
+      "description": "The most specific profile of the release the SIM matched; null when none matched."
+    },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 60,
+      "items": { "$ref": "#/$defs/result" }
+    },
+    "results_left_out": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 500,
+      "description": "APN row results the app left out so the prefilled issue fits a URL."
+    }
+  },
+  "$defs": {
+    "code": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$",
+      "description": "A fixed code from the app, never free text."
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry", "ocd", "phone", "how", "result"],
+      "description": "One entry and what the phone measured. reason, call_types, kept, method and restored are left out when they are empty, so the prefilled issue fits a URL.",
+      "properties": {
+        "entry": {
+          "type": "string",
+          "pattern": "^((volte|vowifi|sms_over_ims|video_calling|vonr):(on|off)|apn:[a-z0-9][a-z0-9._-]{0,62}\\|[a-z_*]{1,16}(,[a-z_*]{1,16}){0,15}\\|(IP|IPV6|IPV4V6|PPP|NON-IP|UNSTRUCTURED)?)$",
+          "description": "The entry of the release's closed list: a feature switch and value, or apn: and the row key (the APN in lower case, its types in lower case and sorted, its protocol), which must be a row the release has for the SIM's network."
+        },
+        "ocd": {
+          "type": "boolean",
+          "description": "The entry is OCD's value for this phone and SIM in the release (this model's device record, or the profile's capability: supported is on, unsupported is off). An APN row entry is always OCD's."
+        },
+        "phone": {
+          "type": "boolean",
+          "description": "The entry is the phone's own value before the test (for an APN row: the phone has the row)."
+        },
+        "how": {
+          "enum": ["observed", "tested"],
+          "description": "observed: the phone's own value, seen without a change; tested: set for a while and reverted with proof."
+        },
+        "result": {
+          "enum": ["works", "signed_in", "service_off", "not_possible", "failed", "not_tested"],
+          "description": "works: an on entry signed in and passed the T2 call test (an outgoing and an incoming call on its bearer, audio confirmed; volte:on and vowifi:on only), an off entry of a voice feature took effect and a call went active with it, or mobile data validated with an APN row; signed_in: an on entry registered IMS with the feature's service on its bearer, no call test; service_off: an off entry took effect, the service went, no call measured; not_possible: an on entry cannot be on here (the modem, the IMS stack, the network's offer); failed: the entry was measured and did not work, or the test broke something (the reason says which); not_tested: no result, with the reason."
+        },
+        "reason": {
+          "$ref": "#/$defs/code",
+          "description": "Why: required for not_possible, failed and not_tested."
+        },
+        "call_types": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/call" },
+          "description": "The calls measured for this entry and the call network type each showed."
+        },
+        "kept": {
+          "type": "boolean",
+          "description": "The entry passed its test and was applied locally (a non-persistent override, or the APN test row kept); left out when not."
+        },
+        "method": {
+          "$ref": "#/$defs/code",
+          "description": "How the phone's value was measured when it could not be seen as it was, for example wfc_override."
+        },
+        "restored": {
+          "type": "boolean",
+          "description": "After the revert the phone's own state came back within the window; false makes a failure unclean."
+        }
+      }
+    },
+    "call": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["test", "network"],
+      "properties": {
+        "test": {
+          "enum": ["t2", "with_feature_off"],
+          "description": "t2: the guided call test's passed outgoing and incoming calls; with_feature_off: a call of the owner's own that went active while the feature was off."
+        },
+        "network": {
+          "enum": [
+            "lte",
+            "lte_ca",
+            "nr",
+            "iwlan",
+            "gsm",
+            "gprs",
+            "edge",
+            "umts",
+            "hsdpa",
+            "hsupa",
+            "hspa",
+            "hspap",
+            "td_scdma",
+            "cdma",
+            "1xrtt",
+            "evdo_0",
+            "evdo_a",
+            "evdo_b",
+            "ehrpd",
+            "iden",
+            "unknown"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -40,6 +40,7 @@ The tiers in `data-2026.10`, in short:
 | `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | supported for apps and tools; the device records as information, never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
+| `observed/` | never supported and never a release asset: unverified phone reports from the OCD Check app ([community/README.md](community/README.md)) |
 
 ## Resolve one SIM
 
@@ -73,7 +74,9 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, exact source versions, conflicts, newest entry dates |
 | `generated/android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` |
 | `generated/devices/` | the device catalog, carrier artifact registries, and the device records (`carrier-variants.json`) |
-| `schemas/` | six JSON schemas |
+| `observed/` | unverified test reports from the OCD Check app, one file per report issue, and their counts (`observed/summary.json`): pointers to release entries with the measured result, hints only; they never change an OCD value |
+| `community/` | how community reports reach `observed/` and why they stay apart from the data |
+| `schemas/` | JSON schemas for the data files and for OCD Check reports |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
 | `docs/` | data model, build explanation, consumer guide, release plan |
 
@@ -129,7 +132,7 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 ## How to contribute
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains the three issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data through a maintained source, or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains the four issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data through a maintained source, or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides. A test report from the OCD Check app goes in the `OCD Check report` form and is recorded under `observed/`, marked unverified, apart from the data ([community/README.md](community/README.md)).
 
 ## License
 

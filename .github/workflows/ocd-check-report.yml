@@ -1,0 +1,166 @@
+name: OCD Check reports
+
+# The "OCD Check report" issue form (.github/ISSUE_TEMPLATE/ocd-check-report.yml)
+# carries one JSON test report from the OCD Check app: pointers to entries of
+# one OCD data release, each with the result the phone measured, never a
+# value. This workflow checks it and keeps observed/ in step with the report
+# issues. All logic is in tools/observed_reports.py; community/README.md
+# describes the path.
+#
+# - check: on a new, edited, reopened or labelled report issue, validates the
+#   report (schema, privacy scan, consistency, and that the release and every
+#   entry exist), labels the issue report:valid, report:suspect (valid, held
+#   by a plausibility flag) or report:invalid, and keeps one bot comment that
+#   says what is wrong and gives the report's hash.
+# - observed: rebuilds observed/ from every report issue (an issue closed as
+#   not planned is withdrawn), applies the noise filters (one counted report
+#   per account and cell, a monthly cap, a hold until an account's first
+#   accepted report is 14 days old, expiry after 90 days), and opens or
+#   updates one bot pull request, automation/observed-reports, that touches
+#   observed/ only. A maintainer merges it. It never commits to main. It runs
+#   daily too, so holds end and reports expire on time.
+#
+# Observed reports are unverified hints. Nothing here changes carriers/,
+# generated/ or a release, and no report makes a phone skip its own test.
+# The issue body is untrusted: it reaches the tool only as a file, never
+# through an expression in a script.
+
+on:
+  issues:
+    types: [opened, edited, reopened, closed, labeled]
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    if: >-
+      github.event_name == 'issues' && github.event.action != 'closed' &&
+      (contains(github.event.issue.labels.*.name, 'ocd-check-report') ||
+       startsWith(github.event.issue.title, '[OCD Check report]'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: ocd-check-report-issue-${{ github.event.issue.number }}
+      cancel-in-progress: true
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - name: Fetch the data releases the reports point into
+        run: git fetch --no-tags --depth=1 origin '+refs/tags/data-*:refs/tags/data-*'
+      - name: Check the report
+        run: |
+          python3 tools/observed_reports.py check-issue \
+            --event "$GITHUB_EVENT_PATH" --root . \
+            --repository "$GH_REPO" \
+            --result "$RUNNER_TEMP/result.json" \
+            --comment "$RUNNER_TEMP/comment.md"
+          cat "$RUNNER_TEMP/comment.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Label the issue and update the bot comment
+        run: |
+          gh label create ocd-check-report --description "A test report from the OCD Check app" --color 1D76DB --force
+          gh label create report:valid --description "The OCD Check report passed the checks (unverified)" --color 0E8A16 --force
+          gh label create report:suspect --description "Valid, but held by a plausibility check until a maintainer looks" --color FBCA04 --force
+          gh label create report:invalid --description "The OCD Check report did not pass the checks" --color D93F0B --force
+          gh label create report:hold-released --description "A maintainer lifted the hold on this OCD Check report" --color C5DEF5 --force
+          if [ "$(jq -r .valid "$RUNNER_TEMP/result.json")" != "true" ]; then
+            gh issue edit "$ISSUE" --add-label ocd-check-report --add-label report:invalid --remove-label report:valid --remove-label report:suspect
+          elif [ "$(jq -r .suspect "$RUNNER_TEMP/result.json")" = "true" ]; then
+            gh issue edit "$ISSUE" --add-label ocd-check-report --add-label report:suspect --remove-label report:valid --remove-label report:invalid
+          else
+            gh issue edit "$ISSUE" --add-label ocd-check-report --add-label report:valid --remove-label report:suspect --remove-label report:invalid
+          fi
+          comment_id="$(gh api --paginate "repos/$GH_REPO/issues/$ISSUE/comments" \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- ocd-check-report-bot -->"))) | .id' | head -n 1)"
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$GH_REPO/issues/comments/$comment_id" -F "body=@$RUNNER_TEMP/comment.md" > /dev/null
+          else
+            gh issue comment "$ISSUE" --body-file "$RUNNER_TEMP/comment.md"
+          fi
+
+  observed:
+    needs: check
+    if: >-
+      !cancelled() &&
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' ||
+       contains(github.event.issue.labels.*.name, 'ocd-check-report') ||
+       startsWith(github.event.issue.title, '[OCD Check report]'))
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      issues: read
+      pull-requests: write
+    # One rebuild at a time. Each rebuild reads every report issue, so a run
+    # that GitHub drops from the queue loses nothing.
+    concurrency:
+      group: observed-reports
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BRANCH: automation/observed-reports
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: main
+      - name: Fetch the data releases the reports point into
+        run: git fetch --no-tags --depth=1 origin '+refs/tags/data-*:refs/tags/data-*'
+      - name: Rebuild observed/ from every report issue
+        run: |
+          gh api --paginate "repos/$GH_REPO/issues?labels=ocd-check-report&state=all&per_page=100" --jq '.[]' \
+            | jq -s . > "$RUNNER_TEMP/issues.json"
+          python3 tools/observed_reports.py rebuild \
+            --issues "$RUNNER_TEMP/issues.json" --root . --pr-body "$RUNNER_TEMP/pr-body.md"
+          python3 tools/observed_reports.py validate --root .
+      - name: Open, update or close the bot pull request
+        run: |
+          set -euo pipefail
+          outside="$(git status --porcelain -- . ':!observed')"
+          if [ -n "$outside" ]; then
+            echo "::error::The rebuild changed files outside observed/:"
+            echo "$outside"
+            exit 1
+          fi
+          existing="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -z "$(git status --porcelain -- observed)" ]; then
+            echo "observed/ on main is up to date." >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$existing" ]; then
+              gh pr close "$existing" --delete-branch --comment "observed/ on main already holds every valid report; nothing to merge."
+            fi
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          base="$(git rev-parse HEAD)"
+          git checkout -B "$BRANCH"
+          git add -A observed
+          git commit -q -m "Record observed OCD Check reports (unverified)"
+          # The same tree on the same main as the open pull request: nothing to push.
+          if [ -n "$existing" ] && git fetch -q --depth=2 origin "$BRANCH" \
+            && [ "$(git rev-parse 'FETCH_HEAD^{tree}')" = "$(git rev-parse 'HEAD^{tree}')" ] \
+            && [ "$(git rev-parse 'FETCH_HEAD^')" = "$base" ]; then
+            echo "#$existing already holds this rebuild." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git push --force origin "HEAD:refs/heads/$BRANCH"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --body-file "$RUNNER_TEMP/pr-body.md"
+            echo "Updated #$existing." >> "$GITHUB_STEP_SUMMARY"
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Observed reports (unverified)" --body-file "$RUNNER_TEMP/pr-body.md"
+          fi
+          # A push with the workflow token starts no workflow, so the required
+          # validate check is dispatched on the branch; checks_only skips the
+          # freshness alarm.
+          gh workflow run validate.yml --ref "$BRANCH" -f checks_only=true
