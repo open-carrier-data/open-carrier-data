@@ -70,7 +70,7 @@
           "required": ["rom_family", "ims_stack", "android_major"],
           "properties": {
             "rom_family": { "enum": ["stock", "lineageos", "other"] },
-            "ims_stack": { "enum": ["phh_ims", "samsung_ims", "other", "not_known"] },
+            "ims_stack": { "enum": ["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"] },
             "android_major": { "type": "integer", "minimum": 10, "maximum": 40 }
           }
         },
