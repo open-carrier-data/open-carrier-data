@@ -79,8 +79,8 @@
         },
         "build_type": { "enum": ["user", "userdebug", "eng"] },
         "ims_stack": {
-          "enum": ["phh_ims", "samsung_ims", "other", "not_known"],
-          "description": "The IMS service the phone runs: PHH IMS (me.phh.ims), Samsung's (com.sec.imsservice), another one, or not readable."
+          "enum": ["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"],
+          "description": "The IMS service the phone runs: PHH IMS (me.phh.ims), Samsung's (com.sec.imsservice), Google's AOSP ImsStack (com.android.imsstack), another one, or not readable."
         }
       }
     },

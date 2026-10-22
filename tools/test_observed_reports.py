@@ -280,6 +280,22 @@ class ReportTest(unittest.TestCase):
         self.assertIn("report:suspect", text)
         self.assertIn("Held as suspect", text)
 
+    def test_every_ims_stack_the_schema_names_is_valid_and_only_phh_ims_flags_video(self) -> None:
+        schema = json.loads((REPO / "schemas" / obs.REPORT_SCHEMA).read_text(encoding="utf-8"))
+        stacks = schema["properties"]["device"]["properties"]["ims_stack"]["enum"]
+        self.assertEqual(["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"], stacks)
+        for stack in stacks:
+            check = obs.check_issue(issue(report=changed(lambda r: r["device"].update(ims_stack=stack))), TODAY, RELEASES)
+            self.assertEqual(([], []), (check.errors, check.flags), stack)
+        # The S20 on LineageOS 24.0 runs Google's AOSP ImsStack (com.android.imsstack, 2026-10-22). Only PHH IMS
+        # is known to have no video, so video calling that signed in there is not held as suspect.
+        video = changed(lambda r: (r["device"].update(ims_stack="aosp_imsstack"), r["results"][5].update(result="signed_in"), r["results"][5].pop("reason")))
+        check = obs.check_issue(issue(report=video), TODAY, RELEASES)
+        self.assertEqual(([], []), (check.errors, check.flags))
+        self.assertIn("IMS stack aosp_imsstack.", obs.comment(check, 7, "open-carrier-data/open-carrier-data"))
+        found = errors_of(changed(lambda r: r["device"].update(ims_stack="imsstack")))
+        self.assertTrue(any(e.startswith("$.device.ims_stack: must be one of") for e in found), found)
+
     def test_the_valid_comment_says_hint_only_and_shows_the_hash(self) -> None:
         check = obs.check_issue(issue(), TODAY, RELEASES)
         text = obs.comment(check, 7, "open-carrier-data/open-carrier-data")
@@ -400,6 +416,23 @@ class ObservedTest(unittest.TestCase):
             off = [c for c in summary["cells"] if c["entry"] == "vowifi:off"][0]
             self.assertEqual(1, off["reported"]["results"]["failed"])
             self.assertIsNone(off["contested"], "a test that broke says nothing about the entry")
+
+    def test_the_aosp_imsstack_is_a_cell_of_its_own(self) -> None:
+        # The same account's S20 before (PHH IMS) and after the move to Google's AOSP ImsStack: two cells,
+        # so the newer report does not supersede the older one.
+        aosp = changed(lambda r: (r["device"].update(ims_stack="aosp_imsstack"), r.update(tested_on="2026-10-22")))
+        phh = issue(15, login="old", created="2026-10-01T00:00:00Z")
+        moved = issue(16, report=aosp, login="old", created="2026-10-22T00:00:00Z")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            result = obs.rebuild([phh, moved], root, date(2026, 10, 25), RELEASES)
+            self.assertEqual([15, 16], result["counted"])
+            summary = json.loads((root / "observed" / "summary.json").read_text(encoding="utf-8"))
+            volte = {c["stack"]["ims_stack"]: c for c in summary["cells"] if c["entry"] == "volte:on"}
+            self.assertEqual({"aosp_imsstack", "phh_ims"}, set(volte))
+            self.assertEqual({"rom_family": "lineageos", "ims_stack": "aosp_imsstack", "android_major": 16}, volte["aosp_imsstack"]["stack"])
+            self.assertEqual(([15], [16]), (volte["phh_ims"]["reported"]["issues"], volte["aosp_imsstack"]["reported"]["issues"]))
+            self.assertEqual([], obs.validate_tree(root))
 
     def test_validate_catches_hand_edits(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
