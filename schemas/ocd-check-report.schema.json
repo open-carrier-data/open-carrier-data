@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-check-report.schema.json",
   "title": "OCD Check test report (the \"OCD Check report\" issue form)",
-  "description": "What the OCD Check owner build measured on one phone with one SIM, as pointers: each result names an entry of one OCD data release's closed list (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that release's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the release checks a schema cannot express.",
+  "description": "What the OCD Check owner build measured on one phone with one SIM, as pointers: each result names an entry of the closed list of one OCD data commit or release (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that data's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the checks against the named commit or release that a schema cannot express.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -39,23 +39,36 @@
       "description": "The UTC date the test run started. A date only, never a time."
     },
     "release": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["tag", "data_digest"],
-      "description": "The OCD data release the entries point into. The tag must exist and carry this data digest; with a null tag (a bundled snapshot) the release is found by its digest.",
-      "properties": {
-        "tag": {
-          "anyOf": [
-            { "type": "string", "pattern": "^data-20[0-9]{2}\\.(0[1-9]|1[0-2])(\\.[1-9][0-9]{0,2})?$" },
-            { "type": "null" }
-          ]
+      "description": "The OCD data the entries point into, with its data digest. Since rule round 29 (S13) the app names the commit it read its data at: the validated main commit it pinned, or the commit its bundled snapshot was built from. The commit must be on OCD's main and carry this data digest. Apps before round 29 name a data release tag instead, which must exist and carry the digest; with a null tag (a bundled snapshot) the release is found by its digest.",
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "data_digest"],
+          "properties": {
+            "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+          }
         },
-        "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
-      }
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tag", "data_digest"],
+          "properties": {
+            "tag": {
+              "anyOf": [
+                { "type": "string", "pattern": "^data-20[0-9]{2}\\.(0[1-9]|1[0-2])(\\.[1-9][0-9]{0,2})?$" },
+                { "type": "null" }
+              ]
+            },
+            "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+          }
+        }
+      ]
     },
     "data_source": {
       "enum": ["pulled", "bundled"],
-      "description": "pulled: the release the app fetched and checked against SHA256SUMS; bundled: the snapshot inside the app."
+      "description": "pulled: the data the app fetched and checked (since round 29 every file read at the pinned main commit, with one data digest across them; before, a release checked against SHA256SUMS); bundled: the snapshot inside the app."
     },
     "device": {
       "type": "object",
@@ -110,7 +123,7 @@
         { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
         { "type": "null" }
       ],
-      "description": "The most specific profile of the release the SIM matched; null when none matched."
+      "description": "The most specific profile of the named data the SIM matched; null when none matched."
     },
     "results": {
       "type": "array",
@@ -140,11 +153,11 @@
         "entry": {
           "type": "string",
           "pattern": "^((volte|vowifi|sms_over_ims|video_calling|vonr):(on|off)|apn:[a-z0-9][a-z0-9._-]{0,62}\\|[a-z_*]{1,16}(,[a-z_*]{1,16}){0,15}\\|(IP|IPV6|IPV4V6|PPP|NON-IP|UNSTRUCTURED)?)$",
-          "description": "The entry of the release's closed list: a feature switch and value, or apn: and the row key (the APN in lower case, its types in lower case and sorted, its protocol), which must be a row the release has for the SIM's network."
+          "description": "The entry of the named data's closed list: a feature switch and value, or apn: and the row key (the APN in lower case, its types in lower case and sorted, its protocol), which must be a row that data has for the SIM's network."
         },
         "ocd": {
           "type": "boolean",
-          "description": "The entry is OCD's value for this phone and SIM in the release (this model's device record, or the profile's capability: supported is on, unsupported is off). An APN row entry is always OCD's."
+          "description": "The entry is OCD's value for this phone and SIM in the named data (this model's device record, or the profile's capability: supported is on, unsupported is off). An APN row entry is always OCD's."
         },
         "phone": {
           "type": "boolean",

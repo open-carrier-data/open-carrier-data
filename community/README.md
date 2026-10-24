@@ -10,16 +10,16 @@ No gate can tell a true report from a well-made fake: anyone can open an issue, 
 
 ## A report points, it carries no value
 
-A report names entries of one OCD data release's closed list, each with the result the phone measured:
+A report names entries of the closed list of OCD's data at one commit, each with the result the phone measured:
 
 | Entry | Meaning |
 |---|---|
 | `volte:on`, `volte:off` | the VoLTE switch on or off; the same for `vowifi`, `sms_over_ims`, `video_calling` and `vonr` |
-| `apn:<row key>` | one APN row of that release's `apns-conf.xml` for the SIM's network: the APN in lower case, its types in lower case and sorted, its protocol, for example `apn:web.vodafone.de\|default,supl\|IPV4V6` |
+| `apn:<row key>` | one APN row of that data's `apns-conf.xml` for the SIM's network: the APN in lower case, its types in lower case and sorted, its protocol, for example `apn:web.vodafone.de\|default,supl\|IPV4V6` |
 
-Anything else fails the schema: no APN string, no CarrierConfig key, no safety-class entry (emergency, e911, ECBM, WPS, TTY, RTT, `iwlan.*`) and no emergency APN row. The bot checks that the release exists (its tag and data digest; a bundled snapshot is found by its digest), that the OCD profile is in it, and that every `apn:` row key is a row it has for the SIM's network. So no report can bring a new value onto any phone.
+Anything else fails the schema: no APN string, no CarrierConfig key, no safety-class entry (emergency, e911, ECBM, WPS, TTY, RTT, `iwlan.*`) and no emergency APN row. Since rule round 29 (S13) the app names the commit of OCD's `main` it read its data at, the validated commit it pinned or the commit its bundled snapshot was built from, with that commit's data digest. The bot checks that the commit is in `main`'s history (GitHub also serves a fork's or an unmerged branch's commit by its SHA) and carries that data digest, that the OCD profile is in it, and that every `apn:` row key is a row it has for the SIM's network. Reports of app builds before round 29 name a data release instead: its tag and data digest, or a bundled snapshot found by its digest. They are still taken. So no report can bring a new value onto any phone.
 
-The report follows [`schemas/ocd-check-report.schema.json`](../schemas/ocd-check-report.schema.json) (`"schema": "ocd-check-test-report"`, `"schema_version": 1`). Besides the entries it holds the app version, the test date (a date, never a time), the release, the phone (model, codename `Build.DEVICE`, Android major version, ROM family, build type, IMS stack), the SIM (network code, and when known the Android carrier ID, the SPN and the GID1 prefix of the OCD profile it matched, never the SIM's whole GID1) and the OCD profile it matched. The IMS stack is the IMS service the phone runs: `phh_ims` for PHH IMS, `samsung_ims` for Samsung's own, `aosp_imsstack` for Google's AOSP ImsStack (`com.android.imsstack`, which the S20 on LineageOS 24.0 runs), `other` for any other, and `not_known` when the app cannot read it. Per entry it says whether it is OCD's value for this phone and SIM (`ocd`), the phone's own value (`phone`), whether it was `observed` or `tested`, the calls measured with their call network type, and whether the app kept it.
+The report follows [`schemas/ocd-check-report.schema.json`](../schemas/ocd-check-report.schema.json) (`"schema": "ocd-check-test-report"`, `"schema_version": 1`). Besides the entries it holds the app version, the test date (a date, never a time), the data commit (or release) and its data digest, the phone (model, codename `Build.DEVICE`, Android major version, ROM family, build type, IMS stack), the SIM (network code, and when known the Android carrier ID, the SPN and the GID1 prefix of the OCD profile it matched, never the SIM's whole GID1) and the OCD profile it matched. The IMS stack is the IMS service the phone runs: `phh_ims` for PHH IMS, `samsung_ims` for Samsung's own, `aosp_imsstack` for Google's AOSP ImsStack (`com.android.imsstack`, which the S20 on LineageOS 24.0 runs), `other` for any other, and `not_known` when the app cannot read it. Per entry it says whether it is OCD's value for this phone and SIM (`ocd`), the phone's own value (`phone`), whether it was `observed` or `tested`, the calls measured with their call network type, and whether the app kept it.
 
 The **result** of an entry is one of:
 
@@ -42,13 +42,13 @@ The issue is public under your GitHub account, and public archives of GitHub can
 
 ## What happens to it
 
-1. [`.github/workflows/ocd-check-report.yml`](../.github/workflows/ocd-check-report.yml) runs [`tools/observed_reports.py`](../tools/observed_reports.py) on the issue: the form's shape, the closed schema, a fail-closed privacy scan of every key and value and of the rest of the issue (the patterns of the app's own scan), consistency checks (for example, `works` on `volte:on` needs a passed T2 call on LTE), and the release checks above.
+1. [`.github/workflows/ocd-check-report.yml`](../.github/workflows/ocd-check-report.yml) runs [`tools/observed_reports.py`](../tools/observed_reports.py) on the issue: the form's shape, the closed schema, a fail-closed privacy scan of every key and value and of the rest of the issue (the patterns of the app's own scan), consistency checks (for example, `works` on `volte:on` needs a passed T2 call on LTE), and the commit and release checks above.
 2. The issue gets one label and one bot comment, updated on every edit, with the report's SHA-256 hash:
    - `report:valid`;
-   - `report:suspect`: valid, but a plausibility check against the release flags it (for example video calling that signed in on PHH IMS, which has no video, or an entry marked as OCD's value that the release does not give). It is held until a maintainer looks;
+   - `report:suspect`: valid, but a plausibility check against the named data flags it (for example video calling that signed in on PHH IMS, which has no video, or an entry marked as OCD's value that the data does not give). It is held until a maintainer looks;
    - `report:invalid`: the comment lists exactly what is wrong. It names the field and the rule, never the value. Edit the issue to fix it, and the check runs again.
 3. The bot rebuilds `observed/` from every report issue, once per issue event and once a day, and opens or updates one pull request, `automation/observed-reports`, titled "Observed reports (unverified)". It touches `observed/` only:
-   - `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, its release, `"verification": "unverified"` and its status after the noise filters;
+   - `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, the commit or release it points into (`release`), `"verification": "unverified"` and its status after the noise filters;
    - `observed/summary.json`: per device × carrier profile × stack (ROM family, IMS stack, Android major) × entry, the statuses below.
 4. A maintainer merges the pull request. Merging accepts the files; it does not verify the results. The issues close with it.
 
