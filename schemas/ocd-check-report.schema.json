@@ -94,6 +94,11 @@
         "ims_stack": {
           "enum": ["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"],
           "description": "The IMS service the phone runs: PHH IMS (me.phh.ims), Samsung's (com.sec.imsservice), Google's AOSP ImsStack (com.android.imsstack), another one, or not readable."
+        },
+        "build": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31} [0-9]{9,11}$",
+          "description": "The ROM build the results were measured on: Build.ID and the build's UTC time in seconds (ro.build.date.utc), for example CP2A.260605.016 1792814506. Never the fingerprint, the incremental, the builder's user or host. A settled result needs it (rule round 29: levels are per build)."
         }
       }
     },
@@ -148,7 +153,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["entry", "ocd", "phone", "how", "result"],
-      "description": "One entry and what the phone measured. reason, call_types, kept, method and restored are left out when they are empty, so the prefilled issue fits a URL.",
+      "description": "One entry and what the phone measured. reason, call_types, kept, method, restored and settled are left out when they are empty, so the prefilled issue fits a URL.",
       "properties": {
         "entry": {
           "type": "string",
@@ -169,7 +174,7 @@
         },
         "result": {
           "enum": ["works", "signed_in", "service_off", "not_possible", "failed", "not_tested"],
-          "description": "works: an on entry signed in and passed the T2 call test (an outgoing and an incoming call on its bearer, audio confirmed; volte:on and vowifi:on only), an off entry of a voice feature took effect and a call went active with it, or mobile data validated with an APN row; signed_in: an on entry registered IMS with the feature's service on its bearer, no call test; service_off: an off entry took effect, the service went, no call measured; not_possible: an on entry cannot be on here (the modem, the IMS stack, the network's offer); failed: the entry was measured and did not work, or the test broke something (the reason says which); not_tested: no result, with the reason."
+          "description": "works: an on entry signed in and passed the T2 call test (an outgoing and an incoming call on its bearer, audio confirmed; volte:on and vowifi:on only), sms_over_ims:on with SMS both ways settled, an off entry of a voice feature took effect and a call went active with it, or mobile data validated with an APN row; signed_in: an on entry registered IMS with the feature's service on its bearer, no call test; service_off: an off entry took effect, the service went, no call measured; not_possible: an on entry cannot be on here (the modem, the IMS stack, the network's offer); failed: the entry was measured and did not work, or the test broke something (the reason says which); not_tested: no result, with the reason."
         },
         "reason": {
           "$ref": "#/$defs/code",
@@ -194,6 +199,31 @@
         "restored": {
           "type": "boolean",
           "description": "After the revert the phone's own state came back within the window; false makes a failure unclean."
+        },
+        "settled": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level", "method", "measured_on"],
+          "description": "A settled result under rounds 26 to 28 (rule round 29): a pass at L2 or L3, SMS both ways, or a clean measured failure, as the owner build measured it on this ROM build, with the evidence behind it. Only volte:on, vowifi:on and sms_over_ims:on carry it, and only in a report that names a data commit and the ROM build. From the owner's account it is recorded in observed/retested.json as \"re-tested by OCD\" for 90 days; from any other account it changes nothing and the report stays \"reported, not checked by OCD\". It never carries a value.",
+          "properties": {
+            "level": {
+              "enum": ["l2", "l3"],
+              "description": "Round 26's ladder. Voice (volte:on on LTE, vowifi:on on Wi-Fi): l2 calls out (a measured outgoing call on the bearer, audio from packet counts), l3 works (also an answered incoming call on the same bearer). With result failed: the rung the clean measured failure was at (l2 the outgoing call, l3 the incoming call). SMS over IMS: l3 only, an SMS sent and received over IMS (SMS both ways)."
+            },
+            "bearer": {
+              "enum": ["lte", "iwlan"],
+              "description": "The proven bearer: lte for volte:on, iwlan for vowifi:on; for SMS over IMS the IMS bearer when the SMS was sent, when known."
+            },
+            "method": {
+              "enum": ["mailbox_call", "real_call", "mailbox_call+real_call", "real_call+real_call", "self_sms"],
+              "description": "How each leg was measured: the app's own muted mailbox call, one of the owner's own calls measured passively, both legs for l3 (outgoing+incoming), or the data SMS to the phone's own number."
+            },
+            "measured_on": {
+              "type": "string",
+              "format": "date",
+              "description": "The UTC date the level was reached (the newer leg), from the phone's call ledger on the same ROM build: at most 90 days before tested_on, possibly after it, never in the future. The record expires 90 days after it."
+            }
+          }
         }
       }
     },

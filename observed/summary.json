@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "description": "Unverified observations from OCD Check reports (observed/reports/), per device, carrier profile, software stack and release entry. A report only points at an entry of an OCD data release; it never changes an OCD value, a file under generated/ or a release, and it never makes a phone skip its own test. Nothing here is a support claim.",
+  "description": "Unverified observations from OCD Check reports of people's phones (observed/reports/, every account but the owner's), per device, carrier profile, software stack and entry. A report only points at an entry of OCD's data at one commit or release; it never changes an OCD value, a file under generated/ or a release, and it never makes a phone skip its own test. Nothing here is a support claim. The owner's results are in observed/retested.json.",
   "verification": "unverified",
   "statuses": {
     "reported": "Counted reports of people's phones, by result. Not checked by OCD: anyone can open an issue, and nothing checks who sent a report or whether the phone exists.",
     "contested": "At least one counted report measured a clean failure of the entry (the test ran and the phone's state came back). It asks the next phone to test the entry and a maintainer to look; it switches nothing off.",
-    "retested_by_ocd": "Set only from OCD's own phones after a passed T2 call test, from the owner's private ledger. Empty until that status is published."
+    "retested_by_ocd": "Always null here. The owner's phones' settled results are published as \"re-tested by OCD\" in observed/retested.json (rule round 29), a separate file."
   },
   "reports": {
     "counted": 0,

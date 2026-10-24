@@ -53,7 +53,7 @@ Each file below is an asset of the GitHub release:
   - the pull requests in between, the announced changes and the standing notice;
 - `SHA256SUMS` over the other assets, so `sha256sum -c SHA256SUMS` checks them.
 
-`observed/`, the unverified OCD Check reports, is never a release asset and no release file depends on it ([community/README.md](../community/README.md)).
+`observed/`, the OCD Check reports and the owner's "re-tested by OCD" records (`observed/retested.json`), is never a release asset and no release file depends on it ([community/README.md](../community/README.md)).
 
 ## What a release guarantees
 

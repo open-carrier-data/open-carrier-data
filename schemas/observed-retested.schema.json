@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/observed-retested.schema.json",
+  "title": "Open Carrier Data re-tested records (observed/retested.json)",
+  "description": "The owner's measured results as \"re-tested by OCD\" (rule round 29, which fires O1 of round 18): settled results of the OCD Check owner build on the owner's own phones, from report issues of the owner's account. Each record is a pointer into OCD's data (volte:on, vowifi:on or sms_over_ims:on) with its result class, the level of round 26, the bearer, the method, the cell (device, carrier profile, ROM family and build, IMS stack, Android major), n, the first and last day measured, the data commit with its data digest, and an expiry 90 days after the last measurement. It never carries a value. It is kept apart from carriers/, generated/ and the releases: it never changes a configured value, never counts toward round 19's F1 thresholds, and is not ROM-citable without R3. On another phone a record only moves that entry's test earlier. Built by tools/observed_reports.py from observed/reports/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "status", "tester", "as_of", "expire_days", "levels", "records"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "status": { "const": "re-tested by OCD" },
+    "tester": { "const": "owner" },
+    "as_of": {
+      "$ref": "#/$defs/date",
+      "description": "The UTC date of the rebuild that last changed this file. Records whose valid_until is before a later day drop out at the next rebuild; read valid_until, not as_of."
+    },
+    "expire_days": { "const": 90 },
+    "levels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["L2", "L3"],
+      "properties": {
+        "L2": { "type": "string", "minLength": 1 },
+        "L3": { "type": "string", "minLength": 1 }
+      }
+    },
+    "records": { "type": "array", "items": { "$ref": "#/$defs/record" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date" },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "tester",
+        "device",
+        "carrier_profile",
+        "mccmnc",
+        "stack",
+        "entry",
+        "bearer",
+        "result",
+        "level",
+        "incoming",
+        "method",
+        "reason",
+        "text",
+        "ocd",
+        "correction",
+        "n",
+        "first_measured",
+        "last_measured",
+        "valid_until",
+        "data",
+        "issues"
+      ],
+      "properties": {
+        "status": { "const": "re-tested by OCD" },
+        "tester": { "const": "owner" },
+        "device": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["model", "codename"],
+          "properties": {
+            "model": { "type": "string", "minLength": 1 },
+            "codename": { "type": "string", "minLength": 1 }
+          }
+        },
+        "carrier_profile": {
+          "anyOf": [
+            { "type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$" },
+            { "type": "null" }
+          ]
+        },
+        "mccmnc": { "type": "string", "pattern": "^[0-9]{5,6}$" },
+        "stack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rom_family", "rom_build", "ims_stack", "android_major"],
+          "properties": {
+            "rom_family": { "enum": ["stock", "lineageos", "other"] },
+            "rom_build": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31} [0-9]{9,11}$" },
+            "ims_stack": { "enum": ["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"] },
+            "android_major": { "type": "integer", "minimum": 10, "maximum": 40 }
+          }
+        },
+        "entry": {
+          "enum": ["volte:on", "vowifi:on", "sms_over_ims:on"],
+          "description": "The pointer: an entry of OCD's closed list, never a value."
+        },
+        "bearer": {
+          "anyOf": [{ "enum": ["lte", "iwlan"] }, { "type": "null" }],
+          "description": "The proven bearer; null for SMS over IMS when the app did not record it."
+        },
+        "result": {
+          "enum": ["works", "calls_out", "sms_both_ways", "failed"],
+          "description": "works: calls both ways on the bearer (L3); calls_out: an outgoing call on the bearer, incoming not tested (L2); sms_both_ways: an SMS sent and received over IMS; failed: a clean measured failure under rounds 26 to 28 at the level named."
+        },
+        "level": { "enum": ["L2", "L3"] },
+        "incoming": {
+          "enum": ["tested", "not tested", "failed"],
+          "description": "Whether the incoming leg was measured: \"not tested\" for calls out only (L2), and for a failure of the outgoing call."
+        },
+        "method": { "enum": ["mailbox_call", "real_call", "mailbox_call+real_call", "real_call+real_call", "self_sms"] },
+        "reason": {
+          "anyOf": [{ "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" }, { "type": "null" }],
+          "description": "The app's code for a failure; null for a pass."
+        },
+        "text": { "type": "string", "minLength": 1, "description": "The record in plain words." },
+        "ocd": {
+          "type": "boolean",
+          "description": "The entry is OCD's value for this phone and SIM at the data commit (the newest report's)."
+        },
+        "correction": {
+          "type": "boolean",
+          "description": "A pass of an entry that is not OCD's value (OCD gives the other value or none) and that the phone keeps: tested and kept, or its own value. It opens a source review; it never changes a configured value."
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The number of distinct days the result was measured on; a report that repeats a measurement counts once."
+        },
+        "first_measured": { "$ref": "#/$defs/date" },
+        "last_measured": { "$ref": "#/$defs/date" },
+        "valid_until": { "$ref": "#/$defs/date", "description": "90 days after last_measured; the record lapses after this day." },
+        "data": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "data_digest"],
+          "description": "The OCD data commit of main and its data digest that the newest report named (round 29 S13).",
+          "properties": {
+            "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ body:
       value: |
         The OCD Check app (owner build) opens this form with its test report filled in. Read it, then submit it. Do not edit the report: a bot checks it against [schemas/ocd-check-report.schema.json](https://github.com/open-carrier-data/open-carrier-data/blob/main/schemas/ocd-check-report.schema.json) and the OCD data it names (a commit of main, or a data release for older app builds), and labels the issue `report:valid`, `report:suspect` or `report:invalid`, with a comment that says exactly what is wrong and gives the report's hash.
 
-        The report only points at entries of that data (`volte:on`, `apn:<row key>`, ...) with the result your phone measured. A valid report is recorded under `observed/` as "reported, not checked by OCD". It is a hint: it never changes an OCD value, a file under `generated/` or a release, and it never makes a phone skip its own test. [community/README.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/community/README.md) explains the path.
+        The report only points at entries of that data (`volte:on`, `apn:<row key>`, ...) with the result your phone measured. A valid report is recorded under `observed/` as "reported, not checked by OCD". It is a hint: it never changes an OCD value, a file under `generated/` or a release, and it never makes a phone skip its own test. Only the owner's own phones' settled results read "re-tested by OCD" (rule round 29); the owner build may also send its report through the API with the same fields. [community/README.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/community/README.md) explains the path.
   - type: textarea
     id: report
     attributes:
