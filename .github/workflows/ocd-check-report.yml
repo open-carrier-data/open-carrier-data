@@ -2,14 +2,14 @@ name: OCD Check reports
 
 # The "OCD Check report" issue form (.github/ISSUE_TEMPLATE/ocd-check-report.yml)
 # carries one JSON test report from the OCD Check app: pointers to entries of
-# one OCD data release, each with the result the phone measured, never a
-# value. This workflow checks it and keeps observed/ in step with the report
+# OCD's data at one commit of main (round 29 S13; apps before it name a data
+# release tag), each with the result the phone measured, never a value. This workflow checks it and keeps observed/ in step with the report
 # issues. All logic is in tools/observed_reports.py; community/README.md
 # describes the path.
 #
 # - check: on a new, edited, reopened or labelled report issue, validates the
-#   report (schema, privacy scan, consistency, and that the release and every
-#   entry exist), labels the issue report:valid, report:suspect (valid, held
+#   report (schema, privacy scan, consistency, and that the commit is on main,
+#   or the release exists, and holds every entry), labels the issue report:valid, report:suspect (valid, held
 #   by a plausibility flag) or report:invalid, and keeps one bot comment that
 #   says what is wrong and gives the report's hash.
 # - observed: rebuilds observed/ from every report issue (an issue closed as
@@ -52,11 +52,15 @@ jobs:
       GH_REPO: ${{ github.repository }}
       ISSUE: ${{ github.event.issue.number }}
     steps:
+      # main's whole history, without file contents (git fetches a file when
+      # the tool reads it): a report's commit must be in it.
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
+          fetch-depth: 0
+          filter: blob:none
       - name: Fetch the data releases the reports point into
-        run: git fetch --no-tags --depth=1 origin '+refs/tags/data-*:refs/tags/data-*'
+        run: git fetch --no-tags --filter=blob:none origin '+refs/tags/data-*:refs/tags/data-*'
       - name: Check the report
         run: |
           python3 tools/observed_reports.py check-issue \
@@ -113,8 +117,10 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           ref: main
+          fetch-depth: 0
+          filter: blob:none
       - name: Fetch the data releases the reports point into
-        run: git fetch --no-tags --depth=1 origin '+refs/tags/data-*:refs/tags/data-*'
+        run: git fetch --no-tags --filter=blob:none origin '+refs/tags/data-*:refs/tags/data-*'
       - name: Rebuild observed/ from every report issue
         run: |
           gh api --paginate "repos/$GH_REPO/issues?labels=ocd-check-report&state=all&per_page=100" --jq '.[]' \

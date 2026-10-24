@@ -2,10 +2,12 @@
 """OCD Check reports: check an issue, rebuild observed/, validate observed/.
 
 A report points, phones prove (the anti-fake design of 2026-10-20). An OCD
-Check report names entries of one OCD data release's closed list, never a
-value: `volte:on`, `volte:off`, the same for `vowifi`, `sms_over_ims`,
-`video_calling` and `vonr`, or `apn:<row key>` for a row that release's
-apns-conf.xml has for the SIM's network. Each entry carries the result class
+Check report names entries of the closed list of one OCD data commit or
+release, never a value: `volte:on`, `volte:off`, the same for `vowifi`,
+`sms_over_ims`, `video_calling` and `vonr`, or `apn:<row key>` for a row that
+data's apns-conf.xml has for the SIM's network. Since rule round 29 (S13) the
+app names the commit of OCD's main it read its data at, with its data digest;
+apps before round 29 name a `data-*` release tag, which is still taken. Each entry carries the result class
 the phone measured. No report can bring a new value onto a phone; a report
 can only make a phone test an entry earlier, and the phone keeps nothing that
 fails its own test.
@@ -19,9 +21,10 @@ same way on a laptop:
       Checks the issue in a GitHub `issues` event: the form's shape, the
       report against the schema, the privacy scan on every value, the title
       and the rest of the issue text, the consistency checks a schema cannot
-      express, and the release: its tag exists, its data digest matches, the
-      profile and every APN row key are in it. Plausibility checks against
-      the release flag a report as suspect. Writes {"valid", "suspect",
+      express, and the data it names: a commit on main (or a release tag)
+      that exists, whose data digest matches, and that holds the profile and
+      every APN row key. Plausibility checks against that data flag a report
+      as suspect. Writes {"valid", "suspect",
       "errors", "flags", "report_sha256"} and the bot's comment. Exit 0
       whether the report is valid or not.
 
@@ -37,8 +40,12 @@ same way on a laptop:
       observed/summary.json is what the reports give. Exit 1 on a problem.
 
   check-file REPORT.json [--root DIR]
-      Checks one bare report, as the app wrote it, with DIR's release tags.
-      Exit 1 when invalid.
+      Checks one bare report, as the app wrote it, against DIR's main history
+      and release tags. Exit 1 when invalid.
+
+DIR is a checkout of main with its history and tags (a blobless clone is
+enough: git fetches a file's content when it is read). --main names the ref
+whose history counts as main (default HEAD).
 
 The noise filters (they order what people read; they are not a defence):
 closed schema, privacy scan, a hash of the report text, plausibility against
@@ -57,6 +64,7 @@ import argparse
 from datetime import date, datetime, timedelta, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -85,6 +93,7 @@ UNVERIFIED = "unverified"
 OBSERVED = "observed"
 REPORT_FILE_RE = re.compile(r"issue-([1-9][0-9]{0,8})\.json")
 RELEASE_TAG_RE = re.compile(r"data-20[0-9]{2}\.(0[1-9]|1[0-2])(\.[1-9][0-9]{0,2})?")
+COMMIT_RE = re.compile(r"[0-9a-f]{40}")
 
 FEATURES = ("volte", "vowifi", "video_calling", "vonr", "sms_over_ims")
 VOICE = {"volte", "vowifi", "vonr"}
@@ -153,7 +162,7 @@ BLOCKED_KEY = re.compile(r"(?i)(imsi|iccid|imei|meid|msisdn|phone_number|subscri
 KEY_SCAN_PATTERNS = ("secret_word", "raw_vendor_key", "gras_payload")
 # Fixed-shape fields skip only the two phone heuristics: an all-digit hash
 # tail or GID1 prefix can look like a national number, and a date is none.
-HEX_FIELDS = {"$.ocd_profile", "$.sim.gid1_prefix", "$.release.data_digest", "$.tested_on"}
+HEX_FIELDS = {"$.ocd_profile", "$.sim.gid1_prefix", "$.release.commit", "$.release.data_digest", "$.tested_on"}
 SAFE_KEY = re.compile(r"[a-z][a-z0-9_]{0,40}")
 
 
@@ -163,7 +172,8 @@ class Check(NamedTuple):
     flags: list[str]
     report: dict[str, Any] | None
     sha256: str | None
-    tag: str | None
+    # The data the report points into: a main commit (40 hex) or a release tag.
+    ref: str | None
 
 
 # ---------------------------------------------------------------- schema
@@ -387,25 +397,45 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
     return out
 
 
-# ---------------------------------------------------------------- releases
+# ---------------------------------------------------------------- the data a report names
 
 
 class Releases:
-    """OCD's data releases, read from this repository's `data-*` tags with
-    `git show`. The release a report was tested against must exist; its
-    profiles and its apns-conf.xml rows are the closed list a report points
-    into."""
+    """The OCD data a report can point into, read from this checkout with
+    `git show`: a commit of main (round 29 S13: the app names the commit it
+    read its data at) or a `data-*` release tag (apps before round 29). The
+    data must exist; its profiles and its apns-conf.xml rows are the closed
+    list a report points into. A commit counts only when it is in the
+    history of MAIN: GitHub serves a fork's or an unmerged branch's commit by
+    its SHA too."""
 
     APN = re.compile(r"<apn\s+([^>]*?)/?>")
     ATTRIBUTE = re.compile(r'([A-Za-z_][A-Za-z0-9_]*)="([^"]*)"')
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, main: str = "HEAD") -> None:
         self.root = root
+        self.main = main
         self.cache: dict[tuple[str, str], Any] = {}
 
-    def git(self, *args: str) -> str | None:
-        done = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True, text=True)
+    def git(self, *args: str, lazy: bool = True) -> str | None:
+        # A blobless clone fetches a file's content when it is read; the
+        # history check needs no network (GIT_NO_LAZY_FETCH, git 2.44+).
+        env = None if lazy else {**os.environ, "GIT_NO_LAZY_FETCH": "1"}
+        done = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True, text=True, env=env)
         return done.stdout if done.returncode == 0 else None
+
+    def on_main(self, commit: str) -> bool:
+        """Whether COMMIT is a commit in the history of main here."""
+        key = ("#main", commit)
+        if key not in self.cache:
+            self.cache[key] = bool(COMMIT_RE.fullmatch(commit)) and self.git(
+                "merge-base", "--is-ancestor", commit, self.main, lazy=False) is not None
+        return self.cache[key]
+
+    @staticmethod
+    def spec(ref: str) -> str:
+        """What `git show` reads for REF: the tag's ref, or the commit itself."""
+        return f"refs/tags/{ref}" if RELEASE_TAG_RE.fullmatch(ref) else ref
 
     def tags(self) -> list[str]:
         if ("tags", "") not in self.cache:
@@ -415,7 +445,7 @@ class Releases:
 
     def file(self, tag: str, path: str) -> str | None:
         if (tag, path) not in self.cache:
-            self.cache[(tag, path)] = self.git("show", f"refs/tags/{tag}:{path}")
+            self.cache[(tag, path)] = self.git("show", f"{self.spec(tag)}:{path}")
         return self.cache[(tag, path)]
 
     def digest(self, tag: str) -> str | None:
@@ -457,15 +487,31 @@ def xml_text(value: str) -> str:
     return value.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", '"').replace("&apos;", "'").replace("&amp;", "&")
 
 
+def data_label(ref: str) -> str:
+    """A commit as "commit 1a2b3c4d5e6f", a release by its tag."""
+    return f"commit {ref[:12]}" if COMMIT_RE.fullmatch(ref) else ref
+
+
+def report_ref(report: dict[str, Any]) -> str | None:
+    """The commit or the release tag a schema-valid report names."""
+    return report["release"].get("commit") or report["release"].get("tag")
+
+
 def release_problems(report: dict[str, Any], releases: Releases) -> tuple[list[str], list[str], str | None]:
-    """(errors, flags, tag): the release the report points into, and whether
-    every pointer exists there. Flags are plausibility checks against the
-    release: they hold a report, they do not reject it."""
+    """(errors, flags, ref): the data the report points into (a main commit
+    or a release tag), and whether every pointer exists there. Flags are
+    plausibility checks against that data: they hold a report, they do not
+    reject it."""
     errors: list[str] = []
     flags: list[str] = []
-    tag = report["release"]["tag"]
     digest = report["release"]["data_digest"]
-    if tag is not None:
+    if "commit" in report["release"]:
+        tag = report["release"]["commit"]
+        if not releases.on_main(tag):
+            return ["$.release.commit: is not a commit of OCD's main"], flags, None
+        if releases.digest(tag) != digest:
+            return [f"$.release.data_digest: is not the data digest of {data_label(tag)}"], flags, None
+    elif (tag := report["release"]["tag"]) is not None:
         if tag not in releases.tags():
             return [f"$.release.tag: {tag} is not an OCD data release"], flags, None
         if releases.digest(tag) != digest:
@@ -474,10 +520,11 @@ def release_problems(report: dict[str, Any], releases: Releases) -> tuple[list[s
         tag = next((t for t in releases.tags() if releases.digest(t) == digest), None)
         if tag is None:
             return ["$.release.data_digest: is the digest of no OCD data release; pull a release and test again"], flags, None
+    name = data_label(tag)
     profile = report["ocd_profile"]
     capabilities = releases.profiles(tag).get(profile) if profile else None
     if profile is not None and capabilities is None:
-        errors.append(f"$.ocd_profile: is not a profile of {tag}")
+        errors.append(f"$.ocd_profile: is not a profile of {name}")
     mccmnc = report["sim"]["mccmnc"]
     keys = None
     for index, result in enumerate(report["results"]):
@@ -485,20 +532,21 @@ def release_problems(report: dict[str, Any], releases: Releases) -> tuple[list[s
         if kind == "apn":
             keys = releases.apn_keys(tag, mccmnc) if keys is None else keys
             if result["entry"].removeprefix("apn:") not in keys:
-                errors.append(f"$.results[{index}].entry: is not an APN row {tag} has for {mccmnc}")
+                errors.append(f"$.results[{index}].entry: is not an APN row {name} has for {mccmnc}")
             continue
         if result["result"] in PASSED and kind == "on" and feature == "video_calling" and report["device"]["ims_stack"] == "phh_ims":
             flags.append(f"$.results[{index}]: video calling passed on PHH IMS, which has no video")
         if capabilities is not None and (profile, feature) not in releases.recorded(tag):
             value = {"supported": "on", "unsupported": "off"}.get(capabilities.get(feature, "unknown"))
             if result["ocd"] and value != kind:
-                flags.append(f"$.results[{index}].ocd: {tag} gives {feature} {value or 'no value'} for this profile, with no device record")
+                flags.append(f"$.results[{index}].ocd: {name} gives {feature} {value or 'no value'} for this profile, with no device record")
     return errors, flags, tag
 
 
 def report_problems(report: Any, today: date, releases: Releases | None) -> tuple[list[str], list[str], str | None]:
-    """(errors, flags, release tag) of one parsed report. Without RELEASES
-    the release is not checked (validate on a checkout without tags)."""
+    """(errors, flags, ref) of one parsed report: ref is the main commit or
+    the release tag it points into. Without RELEASES the data is not checked
+    (validate on a checkout without history or tags)."""
     schema = load_schema(REPORT_SCHEMA, TOOLS.parent / "schemas")
     problems: list[str] = []
     if isinstance(report, dict) and report.get("schema") == "ocd-check-report.v1":
@@ -509,7 +557,7 @@ def report_problems(report: Any, today: date, releases: Releases | None) -> tupl
         return list(dict.fromkeys(problems)), [], None
     problems += consistency_problems(report, today)
     if problems or releases is None:
-        return list(dict.fromkeys(problems)), [], report["release"]["tag"]
+        return list(dict.fromkeys(problems)), [], report_ref(report)
     errors, flags, tag = release_problems(report, releases)
     return errors, flags, tag
 
@@ -595,9 +643,9 @@ def check_issue(issue: dict[str, Any], today: date, releases: Releases | None) -
     except ValueError as error:
         errors.append(f"the report is not valid JSON ({error})")
         return Check(False, errors, [], None, digest, None)
-    problems, flags, tag = report_problems(report, today, releases)
+    problems, flags, ref = report_problems(report, today, releases)
     errors = list(dict.fromkeys(errors + problems))
-    return Check(not errors, errors, flags if not errors else [], report if not errors else None, digest, tag)
+    return Check(not errors, errors, flags if not errors else [], report if not errors else None, digest, ref)
 
 
 ENTRY_NAMES = {
@@ -637,7 +685,7 @@ def comment(check: Check, number: int, repository: str) -> str:
         lines += [
             f"**Valid OCD Check report** (`{label}`). Report hash: `{check.sha256}`.",
             "",
-            "A report points at entries of an OCD data release; it never changes an OCD value, a file under `generated/` "
+            "A report points at entries of OCD's data (a commit of main or a release); it never changes an OCD value, a file under `generated/` "
             "or a release, and it never makes a phone skip its own test. At most it makes a phone test an entry earlier. "
             f"It is recorded as `observed/reports/issue-{number}.json` through the bot's pull request "
             "\"Observed reports (unverified)\", which a maintainer merges, and `observed/summary.json` counts it as "
@@ -645,7 +693,7 @@ def comment(check: Check, number: int, repository: str) -> str:
             f"([community/README.md]({docs})).",
             "",
             f"Phone: {device['model']} ({device['codename']}), {device['rom_family']}, Android {device['android_major']}, "
-            f"IMS stack {device['ims_stack']}. SIM: {report['sim']['mccmnc']}. Release: {check.tag}.",
+            f"IMS stack {device['ims_stack']}. SIM: {report['sim']['mccmnc']}. Data: {data_label(check.ref or '')}.",
             "",
             "| Entry | OCD's | Phone's | How | Result |",
             "|---|---|---|---|---|",
@@ -767,13 +815,14 @@ def statuses(accepted: list[tuple[dict[str, Any], Check]], today: date) -> dict[
 
 def record(issue: dict[str, Any], check: Check, status: tuple[str, list[str]]) -> dict[str, Any]:
     """One file under observed/reports/: the report as submitted, its issue,
-    its hash and release, the status after the noise filters, and the mark
-    every observed entry carries."""
+    its hash and the data it points into (`release`: the main commit or the
+    release tag), the status after the noise filters, and the mark every
+    observed entry carries."""
     return {
         "issue": issue["number"],
         "reported_on": created_on(issue).isoformat(),
         "report_sha256": check.sha256,
-        "release": check.tag,
+        "release": check.ref,
         "status": status[0],
         "status_reasons": status[1],
         "verification": UNVERIFIED,
@@ -890,8 +939,11 @@ def read_records(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
             problems.append(f"status must be one of {', '.join(sorted(RECORD_STATUSES))}, with a list of reasons")
         if not isinstance(item["report_sha256"], str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", item["report_sha256"]):
             problems.append("report_sha256 must be sha256:<64 hex>")
-        if not isinstance(item["release"], str) or not RELEASE_TAG_RE.fullmatch(item["release"]):
-            problems.append("release must be a data release tag")
+        if not isinstance(item["release"], str) or not (RELEASE_TAG_RE.fullmatch(item["release"]) or COMMIT_RE.fullmatch(item["release"])):
+            problems.append("release must be a data release tag or a commit of main")
+        elif isinstance(item["report"], dict) and isinstance(item["report"].get("release"), dict) \
+                and "commit" in item["report"]["release"] and item["release"] != item["report"]["release"]["commit"]:
+            problems.append("release must be the commit the report names")
         try:
             date.fromisoformat(item["reported_on"])
         except (TypeError, ValueError):
@@ -963,12 +1015,14 @@ def main(argv: list[str] | None = None) -> int:
     one.add_argument("--event", type=Path, required=True)
     one.add_argument("--result", type=Path, required=True)
     one.add_argument("--comment", type=Path, required=True)
-    one.add_argument("--root", type=Path, default=Path("."), help="the checkout whose data-* tags are the releases")
+    one.add_argument("--root", type=Path, default=Path("."), help="the checkout of main with its history and data-* tags")
+    one.add_argument("--main", default="HEAD", help="the ref whose history is main's (default HEAD)")
     one.add_argument("--repository", default="open-carrier-data/open-carrier-data")
     one.add_argument("--today")
     build = sub.add_parser("rebuild")
     build.add_argument("--issues", type=Path, required=True)
     build.add_argument("--root", type=Path, default=Path("."))
+    build.add_argument("--main", default="HEAD")
     build.add_argument("--pr-body", type=Path)
     build.add_argument("--today")
     check = sub.add_parser("validate")
@@ -976,16 +1030,17 @@ def main(argv: list[str] | None = None) -> int:
     single = sub.add_parser("check-file")
     single.add_argument("report", type=Path)
     single.add_argument("--root", type=Path, default=Path("."))
+    single.add_argument("--main", default="HEAD")
     single.add_argument("--today")
     args = parser.parse_args(argv)
 
     if args.command == "check-issue":
         event = json.loads(args.event.read_text(encoding="utf-8"))
         issue = event["issue"]
-        result = check_issue(issue, today_utc(args.today), Releases(args.root))
+        result = check_issue(issue, today_utc(args.today), Releases(args.root, args.main))
         args.result.write_text(dump({
             "issue": issue["number"], "valid": result.valid, "suspect": bool(result.flags), "errors": result.errors,
-            "flags": result.flags, "report_sha256": result.sha256, "release": result.tag,
+            "flags": result.flags, "report_sha256": result.sha256, "release": result.ref,
         }), encoding="utf-8")
         args.comment.write_text(comment(result, issue["number"], args.repository), encoding="utf-8")
         print(f"issue #{issue['number']}: {'valid' if result.valid else 'not valid'}{' (suspect)' if result.flags else ''}, {result.sha256}")
@@ -995,7 +1050,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "rebuild":
         issues = json.loads(args.issues.read_text(encoding="utf-8"))
         before = {int(m.group(1)) for p in (args.root / OBSERVED / "reports").glob("issue-*.json") if (m := REPORT_FILE_RE.fullmatch(p.name))}
-        result = rebuild(issues, args.root, today_utc(args.today), Releases(args.root))
+        result = rebuild(issues, args.root, today_utc(args.today), Releases(args.root, args.main))
         if args.pr_body:
             args.pr_body.write_text(pr_body(result, before), encoding="utf-8")
         print(f"written: {result['written']}; counted: {result['counted']}; left out as not valid: {result['left_out']}")
@@ -1015,13 +1070,13 @@ def main(argv: list[str] | None = None) -> int:
         except ValueError as error:
             print(f"error: not valid JSON ({error})", file=sys.stderr)
             return 1
-        problems, flags, tag = report_problems(report, today_utc(args.today), Releases(args.root))
+        problems, flags, ref = report_problems(report, today_utc(args.today), Releases(args.root, args.main))
         for problem in problems:
             print(f"error: {problem}", file=sys.stderr)
         for flag in flags:
             print(f"suspect: {flag}", file=sys.stderr)
         if not problems:
-            print(f"valid against {tag}{' (suspect)' if flags else ''}; {report_hash(text)}")
+            print(f"valid against {data_label(ref or '')}{' (suspect)' if flags else ''}; {report_hash(text)}")
         return 1 if problems else 0
     return 2
 

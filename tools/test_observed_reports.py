@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """tools/observed_reports.py: the OCD Check report form, its checks, the
-release pointers, the noise filters and observed/."""
+pointers into a main commit or a release, the noise filters and observed/."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ from datetime import date
 import json
 from pathlib import Path
 import re
+import subprocess
 import tempfile
 import unittest
 
@@ -18,6 +19,8 @@ REPO = Path(__file__).resolve().parents[1]
 TODAY = date(2026, 10, 20)
 DIGEST = "sha256:36d5f7ebb084a1a915c4961f8a5f3a11c70150b0fca7f68ccc050ffbe3989d37"
 PROFILE = "open.26202.8cebd7550c67"
+# A commit of main the owner build pinned (round 29 S13), with data-2026.10's data.
+COMMIT = "e32fd75687d01e7271b640c3adb41c52d42af6a8"
 
 
 def entry(name: str, ocd: bool, phone: bool, result: str, reason: str | None = None, calls: list | None = None, **extra) -> dict:
@@ -97,7 +100,7 @@ CAPTURED_S20_HASH = "sha256:40683d9b410665fa60d450d8c92092d19342df89be6aa9292803
 
 
 class FakeReleases(obs.Releases):
-    """data-2026.10 as far as the S20 report needs it."""
+    """data-2026.10, and main's commit COMMIT with the same data, as far as the S20 report needs them."""
 
     def __init__(self) -> None:
         super().__init__(REPO)
@@ -105,8 +108,11 @@ class FakeReleases(obs.Releases):
     def tags(self) -> list[str]:
         return ["data-2026.10"]
 
+    def on_main(self, commit: str) -> bool:
+        return commit == COMMIT
+
     def digest(self, tag: str) -> str | None:
-        return DIGEST if tag == "data-2026.10" else None
+        return DIGEST if tag in ("data-2026.10", COMMIT) else None
 
     def profiles(self, tag: str) -> dict:
         return {PROFILE: {"sms_over_ims": "supported", "video_calling": "unknown", "volte": "conditional", "vonr": "supported", "vowifi": "supported"}}
@@ -160,7 +166,7 @@ class ReportTest(unittest.TestCase):
         self.assertEqual([], check.flags)
         self.assertTrue(check.valid)
         self.assertEqual(REPORT, check.report)
-        self.assertEqual("data-2026.10", check.tag)
+        self.assertEqual("data-2026.10", check.ref)
         self.assertEqual(obs.report_hash(json.dumps(REPORT, indent=1)), check.sha256)
 
     def test_the_hash_is_of_the_text_the_app_prefilled(self) -> None:
@@ -174,7 +180,30 @@ class ReportTest(unittest.TestCase):
         bundled = changed(lambda r: (r["release"].update(tag=None), r.update(data_source="bundled"), r.update(sim={"mccmnc": "26202"})))
         check = obs.check_issue(issue(report=bundled), TODAY, RELEASES)
         self.assertEqual([], check.errors)
-        self.assertEqual("data-2026.10", check.tag, "a bundled snapshot is found by its digest")
+        self.assertEqual("data-2026.10", check.ref, "a bundled snapshot is found by its digest")
+
+    def test_a_report_names_the_main_commit_it_read_its_data_at(self) -> None:
+        """Round 29 S13: the commit and its data digest instead of a release tag; the bot checks every pointer against that commit."""
+        pinned = changed(lambda r: r.update(release={"commit": COMMIT, "data_digest": DIGEST}))
+        check = obs.check_issue(issue(report=pinned), TODAY, RELEASES)
+        self.assertEqual(([], []), (check.errors, check.flags))
+        self.assertEqual(COMMIT, check.ref)
+        self.assertIn("Data: commit e32fd75687d0.", obs.comment(check, 7, "open-carrier-data/open-carrier-data"))
+        bundled = changed(lambda r: (r.update(release={"commit": COMMIT, "data_digest": DIGEST}, data_source="bundled")))
+        self.assertTrue(obs.check_issue(issue(report=bundled), TODAY, RELEASES).valid, "a bundled snapshot names the commit it was built from")
+        other = "1" * 40
+        self.assertIn("$.release.commit: is not a commit of OCD's main", errors_of(changed(lambda r: r.update(release={"commit": other, "data_digest": DIGEST}))))
+        self.assertIn("$.release.data_digest: is not the data digest of commit e32fd75687d0",
+                      errors_of(changed(lambda r: r.update(release={"commit": COMMIT, "data_digest": "sha256:" + "0" * 64}))))
+        self.assertIn("$.ocd_profile: is not a profile of commit e32fd75687d0",
+                      errors_of(changed(lambda r: (r.update(release={"commit": COMMIT, "data_digest": DIGEST}), r.update(ocd_profile="open.26202.000000000000")))))
+        self.assertIn("$.results[10].entry: is not an APN row commit e32fd75687d0 has for 26202",
+                      errors_of(changed(lambda r: (r.update(release={"commit": COMMIT, "data_digest": DIGEST}), r["results"][10].update(entry="apn:internet.example|default|IPV4V6")))))
+        # One form or the other: a commit and a tag together, a short commit, a branch name or a commit without its digest fail the schema.
+        for release in ({"commit": COMMIT, "tag": "data-2026.10", "data_digest": DIGEST}, {"commit": COMMIT[:12], "data_digest": DIGEST},
+                        {"commit": "main", "data_digest": DIGEST}, {"commit": COMMIT}):
+            found = errors_of(changed(lambda r: r.update(release=release)))
+            self.assertTrue(any(e.startswith("$.release: matches none of the allowed forms") for e in found), (release, found))
 
     def test_a_report_points_only_into_the_release(self) -> None:
         self.assertIn("$.release.tag: data-2026.11 is not an OCD data release", errors_of(changed(lambda r: r["release"].update(tag="data-2026.11"))))
@@ -326,11 +355,58 @@ class ReportTest(unittest.TestCase):
         self.assertEqual([], check.errors)
         self.assertEqual([], check.flags)
 
+    def test_commit_pointers_are_read_from_main_s_history_and_a_commit_off_main_is_refused(self) -> None:
+        """A real git history: two commits on main and one on a branch never merged, all with files under generated/."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+
+            def git(*args: str) -> str:
+                return subprocess.run(["git", "-C", tmp, "-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", *args],
+                                      check=True, capture_output=True, text=True).stdout.strip()
+
+            def data(digest: str, apn: str) -> None:
+                android = root / "generated" / "android"
+                android.mkdir(parents=True, exist_ok=True)
+                (root / "generated" / "devices").mkdir(parents=True, exist_ok=True)
+                (android / "metadata.json").write_text(json.dumps({"data_digest": digest}), encoding="utf-8")
+                (android / "lookup.json").write_text(json.dumps({"profiles": [{"profile_id": PROFILE, "capabilities": FakeReleases().profiles("")[PROFILE]}]}), encoding="utf-8")
+                (root / "generated" / "devices" / "carrier-variants.json").write_text(json.dumps({"profiles": {PROFILE: {"volte": [], "video_calling": [], "vowifi": [], "vonr": []}}}), encoding="utf-8")
+                (android / "apns-conf.xml").write_text(f'<apns version="8">\n  <apn apn="web.vodafone.de" mcc="262" mnc="02" type="default,supl" protocol="IPV4V6" />\n  {apn}\n</apns>\n', encoding="utf-8")
+                git("add", "-A")
+                git("commit", "-q", "-m", digest[-4:])
+
+            git("init", "-q", "-b", "main")
+            data("sha256:" + "a" * 64, "")
+            first = git("rev-parse", "HEAD")
+            data(DIGEST, '<apn apn="web.vodafone.de" mcc="262" mnc="02" type="default,supl,xcap" protocol="IPV4V6" />')
+            second = git("rev-parse", "HEAD")
+            git("checkout", "-q", "-b", "side", first)
+            data(DIGEST, "")
+            side = git("rev-parse", "HEAD")
+            git("checkout", "-q", "main")
+
+            releases = obs.Releases(root, "main")
+            self.assertTrue(releases.on_main(first) and releases.on_main(second))
+            self.assertFalse(releases.on_main(side), "a commit GitHub serves by SHA that main never merged")
+            self.assertFalse(releases.on_main("0" * 40))
+            self.assertEqual(DIGEST, releases.digest(second))
+            self.assertEqual({"web.vodafone.de|default,supl|IPV4V6", "web.vodafone.de|default,supl,xcap|IPV4V6"}, releases.apn_keys(second, "26202"))
+            two = [r for r in REPORT["results"] if not r["entry"].startswith("apn:")] + REPORT["results"][10:12]
+            report = changed(lambda r: r.update(release={"commit": second, "data_digest": DIGEST}, results=two))
+            check = obs.check_issue(issue(report=report), TODAY, releases)
+            self.assertEqual([], check.errors)
+            self.assertEqual(second, check.ref)
+            off_main = changed(lambda r: r.update(release={"commit": side, "data_digest": DIGEST}, results=two))
+            self.assertIn("$.release.commit: is not a commit of OCD's main", obs.check_issue(issue(report=off_main), TODAY, releases).errors)
+            older = changed(lambda r: r.update(release={"commit": first, "data_digest": DIGEST}, results=two))
+            self.assertIn(f"$.release.data_digest: is not the data digest of commit {first[:12]}", obs.check_issue(issue(report=older), TODAY, releases).errors)
+
 
 class ObservedTest(unittest.TestCase):
     def issues(self) -> list[dict]:
         other_phone = changed(lambda r: (r["device"].update(model="SM-A505F", codename="a50", rom_family="stock", ims_stack="samsung_ims", android_major=14),
-                                         r.update(results=[entry("vowifi:on", True, False, "failed", "settle_timeout", restored=True)])))
+                                         r.update(results=[entry("vowifi:on", True, False, "failed", "settle_timeout", restored=True)]),
+                                         r.update(release={"commit": COMMIT, "data_digest": DIGEST})))
         withdrawn = issue(9, login="bob", created="2026-09-01T10:00:00Z")
         withdrawn.update(state="closed", state_reason="not_planned")
         done = issue(11, report=other_phone, login="carol", created="2026-10-01T10:00:00Z")
@@ -366,6 +442,7 @@ class ObservedTest(unittest.TestCase):
             self.assertEqual("unverified", seven["verification"])
             self.assertEqual("data-2026.10", seven["release"])
             self.assertEqual(REPORT, seven["report"])
+            self.assertEqual(COMMIT, item(11)["release"], "a report that names a commit is recorded with it")
             self.assertEqual("superseded", item(5)["status"], "one counted report per account and cell: the newest")
             self.assertEqual(("duplicate", ["the same report as #5"]), (item(6)["status"], item(6)["status_reasons"]))
             self.assertEqual("held", item(14)["status"])
@@ -449,6 +526,16 @@ class ObservedTest(unittest.TestCase):
             item["verification"] = "verified"
             path.write_text(obs.dump(item), encoding="utf-8")
             self.assertIn("observed/reports/issue-7.json: verification must be unverified", obs.validate_tree(root))
+            obs.rebuild(self.issues(), root, date(2026, 10, 25), RELEASES)
+            eleven = root / "observed" / "reports" / "issue-11.json"
+            item = json.loads(eleven.read_text(encoding="utf-8"))
+            self.assertEqual([], obs.validate_tree(root), "a record of a commit report is valid")
+            item["release"] = "1" * 40
+            eleven.write_text(obs.dump(item), encoding="utf-8")
+            self.assertIn("observed/reports/issue-11.json: release must be the commit the report names", obs.validate_tree(root))
+            item["release"] = "main"
+            eleven.write_text(obs.dump(item), encoding="utf-8")
+            self.assertIn("observed/reports/issue-11.json: release must be a data release tag or a commit of main", obs.validate_tree(root))
             path.rename(root / "observed" / "reports" / "report.json")
             self.assertIn("observed/reports/report.json: the name must be issue-N.json", obs.validate_tree(root))
 
