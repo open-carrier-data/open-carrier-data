@@ -420,7 +420,7 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
         if result["result"] == "signed_in" and t2:
             out.append(f"{where}.result: with a passed T2 call test the result is works")
         if "settled" in result:
-            out += settled_problems(report, result, where, tested_on)
+            out += settled_problems(report, result, where, tested_on, today)
         if kind == "apn":
             types = entry.split("|")[1].split(",")
             if "emergency" in types:
@@ -443,10 +443,12 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
     return out
 
 
-def settled_problems(report: dict[str, Any], result: dict[str, Any], where: str, tested_on: date) -> list[str]:
+def settled_problems(report: dict[str, Any], result: dict[str, Any], where: str, tested_on: date, today: date) -> list[str]:
     """What a settled result must agree with (rule round 29): the entries
     and levels rounds 26 to 28 settle, the data commit and the ROM build it
-    was measured against, and dates within the 90 days a level holds."""
+    was measured against, and dates within the 90 days a level holds. The
+    level comes from the phone's call ledger on the same build, so it can be
+    newer than the test run the report names; it is never in the future."""
     out: list[str] = []
     settled = result["settled"]
     where = f"{where}.settled"
@@ -458,8 +460,8 @@ def settled_problems(report: dict[str, Any], result: dict[str, Any], where: str,
     if "build" not in report["device"]:
         out.append(f"{where}: a settled result needs the ROM build in $.device.build (levels are per build)")
     measured = date.fromisoformat(settled["measured_on"])
-    if measured > tested_on:
-        out.append(f"{where}.measured_on: is after tested_on")
+    if measured > today + timedelta(days=1):
+        out.append(f"{where}.measured_on: is in the future")
     elif tested_on - measured > timedelta(days=EXPIRE_DAYS):
         out.append(f"{where}.measured_on: is more than {EXPIRE_DAYS} days before tested_on, so the level no longer holds")
     passed = result["result"] in PASSED

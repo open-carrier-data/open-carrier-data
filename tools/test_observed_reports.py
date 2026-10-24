@@ -441,7 +441,10 @@ class ReportTest(unittest.TestCase):
         has("a call level is measured by calls", lambda r: r["results"][2]["settled"].update(method="self_sms"))
         has("SMS over IMS settles only as SMS both ways", lambda r: r["results"][4]["settled"].update(level="l2"))
         has("works for sms_over_ims:on needs SMS both ways settled", lambda r: r["results"][4].pop("settled"))
-        has("$.results[0].settled.measured_on: is after tested_on", lambda r: r["results"][0]["settled"].update(measured_on="2026-10-25"))
+        has("$.results[0].settled.measured_on: is in the future", lambda r: r["results"][0]["settled"].update(measured_on="2026-10-27"))
+        # The call ledger can settle a level after the run the report names (same build): not an error.
+        later = obs.check_issue(issue(report=owner_changed(lambda r: r["results"][0]["settled"].update(measured_on="2026-10-25"))), date(2026, 10, 25), RELEASES)
+        self.assertEqual([], later.errors)
         has("is more than 90 days before tested_on", lambda r: r["results"][0]["settled"].update(measured_on="2026-07-20"))
         has("only a pass or a clean measured failure is settled",
             lambda r: r["results"][2].update(result="failed", reason="revert_not_proven"))

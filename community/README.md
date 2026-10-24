@@ -41,7 +41,7 @@ Since rule round 29 a result of `volte:on`, `vowifi:on` or `sms_over_ims:on` can
 | `level` | `l2` calls out: a measured outgoing call on the entry's bearer (audio from packet counts), incoming not tested; `l3` works: also an answered incoming call on the same bearer. With `result` `failed`, the rung of the clean measured failure (`l2` the outgoing call, `l3` the incoming call). SMS over IMS settles only as `l3`, SMS both ways: sent and received over IMS |
 | `bearer` | `lte` for `volte:on`, `iwlan` for `vowifi:on`; for SMS over IMS the IMS bearer when known |
 | `method` | `mailbox_call` (the app's own muted call to the SIM's mailbox), `real_call` (one of the owner's own calls, measured passively), both legs for `l3` (`mailbox_call+real_call`, `real_call+real_call`), or `self_sms` (the data SMS to the phone's own number) |
-| `measured_on` | the UTC date the level was reached, at most 90 days before `tested_on` |
+| `measured_on` | the UTC date the level was reached, from the phone's call ledger on the same ROM build: at most 90 days before `tested_on`, possibly after it, never in the future |
 
 The bot checks it against rounds 26 to 28: `l3` is the result `works` with both legs (and the T2 call on the bearer), `l2` is `signed_in` with one leg, a failure is clean (measured, the phone's state came back) and names the one call that failed, SMS both ways is `works` by `self_sms`, and a settled result needs the data commit and the ROM build. A settled field from any account but the owner's changes nothing: the report stays "reported, not checked by OCD".
 
