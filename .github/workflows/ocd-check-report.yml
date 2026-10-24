@@ -18,16 +18,28 @@ name: OCD Check reports
 #   accepted report is 14 days old, expiry after 90 days), and opens or
 #   updates one bot pull request, automation/observed-reports, that touches
 #   observed/ only. A maintainer merges it. It never commits to main. It runs
-#   daily too, so holds end and reports expire on time.
+#   daily too, so holds end and reports expire on time. Reports of the
+#   owner's account skip the account filters, and their settled results
+#   become "re-tested by OCD" records in observed/retested.json, which expire
+#   90 days after the last measurement (rule round 29).
+# - source-review: when observed/retested.json changes on main, and daily,
+#   opens or updates one source-review issue per carrier profile and feature
+#   with a correction or a measured failure of OCD's value (rule 10). It
+#   never closes one and never edits an issue it did not open.
 #
-# Observed reports are unverified hints. Nothing here changes carriers/,
-# generated/ or a release, and no report makes a phone skip its own test.
+# Observed reports are hints, and re-tested records are pointers with a
+# result class. Nothing here changes carriers/, generated/ or a release, and
+# no report makes a phone skip its own test.
 # The issue body is untrusted: it reaches the tool only as a file, never
 # through an expression in a script.
 
 on:
   issues:
     types: [opened, edited, reopened, closed, labeled]
+  push:
+    branches: [main]
+    paths:
+      - observed/retested.json
   schedule:
     - cron: "41 5 * * *"
   workflow_dispatch:
@@ -170,3 +182,41 @@ jobs:
           # validate check is dispatched on the branch; checks_only skips the
           # freshness alarm.
           gh workflow run validate.yml --ref "$BRANCH" -f checks_only=true
+
+  source-review:
+    if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: ocd-source-review
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Plan the source reviews from observed/retested.json on main
+        run: |
+          gh api --paginate "repos/$GH_REPO/issues?labels=source-review&state=all&per_page=100" --jq '.[]' \
+            | jq -s . > "$RUNNER_TEMP/reviews.json"
+          python3 tools/observed_reports.py source-reviews \
+            --root . --issues "$RUNNER_TEMP/reviews.json" --out "$RUNNER_TEMP/reviews" --repository "$GH_REPO"
+      - name: Open or update one issue per profile and feature
+        run: |
+          set -euo pipefail
+          gh label create source-review --description "A phone result asks for a review of the source or importer behind an OCD value (rule 10)" --color 5319E7 --force
+          plan="$RUNNER_TEMP/reviews/plan.json"
+          jq -c '.[]' "$plan" | while read -r step; do
+            body="$RUNNER_TEMP/reviews/$(jq -r .body_file <<< "$step")"
+            if [ "$(jq -r .action <<< "$step")" = "create" ]; then
+              gh issue create --title "$(jq -r .title <<< "$step")" --body-file "$body" --label source-review
+            else
+              gh api --method PATCH "repos/$GH_REPO/issues/$(jq -r .number <<< "$step")" -F "body=@$body" > /dev/null
+            fi
+            echo "$(jq -r '.action + ": " + .key' <<< "$step")" >> "$GITHUB_STEP_SUMMARY"
+          done

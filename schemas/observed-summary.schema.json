@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/observed-summary.schema.json",
   "title": "Open Carrier Data observed summary (observed/summary.json)",
-  "description": "Per device, carrier profile, software stack and release entry: OCD Check reports counted as \"reported, not checked by OCD\" by result, \"contested\" where a counted report measured a clean failure, the reports a noise filter holds, and \"re-tested by OCD\", which only OCD's own phones set. Built by tools/observed_reports.py from observed/reports/. Every entry is unverified. Nothing here changes an OCD value, a file under generated/ or a release, makes a phone skip its own test, or is a support claim.",
+  "description": "Per device, carrier profile, software stack and entry: OCD Check reports of people's phones (every account but the owner's) counted as \"reported, not checked by OCD\" by result, \"contested\" where a counted report measured a clean failure, and the reports a noise filter holds. \"re-tested by OCD\" is always null here: the owner's phones' settled results are in observed/retested.json (schemas/observed-retested.schema.json, rule round 29). Built by tools/observed_reports.py from observed/reports/. Every entry is unverified. Nothing here changes an OCD value, a file under generated/ or a release, makes a phone skip its own test, or is a support claim.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "description", "verification", "statuses", "reports", "cells"],
@@ -124,7 +124,7 @@
         },
         "retested_by_ocd": {
           "type": "null",
-          "description": "Set only from OCD's own phones after a passed T2 call test (the owner's private ledger); empty until that status is published."
+          "description": "Always null here. The owner's phones' results are published as \"re-tested by OCD\" in observed/retested.json, a separate file (rule round 29); outside reports never set it."
         },
         "held": { "type": "integer", "minimum": 0, "description": "Valid reports for this cell a noise filter holds; they do not count yet." },
         "verification": { "const": "unverified" }
