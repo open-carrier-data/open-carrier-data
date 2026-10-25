@@ -65,7 +65,7 @@ The issue is public under your GitHub account, and public archives of GitHub can
 3. The bot rebuilds `observed/` from every report issue, once per issue event and once a day, and opens or updates one pull request, `automation/observed-reports`, titled "Observed reports (unverified)". It touches only these files:
    - `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, the commit or release it points into (`release`), `"verification": "unverified"` and its status after the noise filters;
    - `observed/summary.json`: other accounts' reports per device × carrier profile × stack (ROM family, IMS stack, Android major) × entry, the statuses below;
-   - `devices/records/measured.json`: the owner's measured records ([below](#the-owners-measured-records)), and from it `generated/devices/device-records.json` and the dataset manifest `generated/ocd-dataset/manifest.json` (`tools/ocd_dataset.py generate`).
+   - `devices/records/measured.json`: the owner's measured records from the `ocd-device-record` issues ([below](#the-owners-measured-records)), and from it `generated/devices/device-records.json` and the dataset manifest `generated/ocd-dataset/manifest.json` (`tools/ocd_dataset.py generate`).
 4. A maintainer merges the pull request after `validate`, with the phone guard, passes. Merging accepts the files; it does not verify the results. The issues close with it.
 5. When `devices/records/measured.json` changes on `main`, and once a day, the bot opens or updates one source-review issue per carrier profile and target whose measured record corrects OCD's value ([Source reviews](#source-reviews)).
 
@@ -85,25 +85,23 @@ Each cell also gives `held`, the valid reports a noise filter holds. `summary.js
 
 Rule round 30 (2026-10-25, item 4): corrections measured on the owner's phones become measured records in OCD's per-device records, `generated/devices/device-records.json`, which every validated `main` commit and the owner app's dataset carry ([docs/ocd-dataset.md](../docs/ocd-dataset.md)). The owner's account is named in `tools/observed_reports.py` by its GitHub user ID (`OWNER_ACCOUNTS`, 122638570), which a renamed or reclaimed login cannot take.
 
-The owner build submits them in the same form, with a JSON document of its own:
+The owner build (ocd-android #29) sends each record as one issue with the owner's issues-only token:
 
-```json
-{"schema": "ocd-measured-records", "schema_version": 1,
- "app": {"name": "OCD Check", "build": "owner", "version": "0.4.0-owner"},
- "records": [{"record_key": "r:…", "kind": "measured", "…": "one record of schemas/device-records.schema.json ($defs.record)"}]}
-```
+- the label `ocd-device-record` and a title starting `[OCD device record]`;
+- the record as the body's only JSON block, one record of [`schemas/device-records.schema.json`](../schemas/device-records.schema.json) (`$defs.record`), under a `### Record` heading;
+- a ticked privacy box.
 
-The bot takes the records into `devices/records/measured.json` only when all of these hold:
+It sends a record again when its result or its last measurement day changes, and otherwise every 14 days. The bot labels each issue `report:valid` or `report:invalid` with one comment, as for reports. It takes the record into `devices/records/measured.json` only when all of these hold:
 
-- the issue's author is the owner's account; any other account's document is refused, and other reports stay pointers in `observed/`;
-- every record passes the closed schema (`kind` `measured`, `tester` `owner`, the device, ROM line, IMS stack with its fork, the carrier profile or, for a SIM without one, MCC-MNC with GID1 or SPN), and its `record_key` recomputes;
+- the issue's author is the owner's account (user ID 122638570); any other account's record is refused, and other reports stay pointers in `observed/`;
+- the record passes the closed schema (`kind` `measured`, `tester` `owner`, the device, ROM line, IMS stack with its fork, the carrier profile or, for a SIM without one, MCC-MNC with GID1 or SPN), and its `record_key` recomputes;
 - its value is a candidate at its data commit: OCD's resolved value or an alternative of the profile's stack, the Google lane's value of the profile's fill or of `default`, the other value of a switch, or Android's default (`value_kind` `android_default`); an APN record names a row of the profile; an emergency data record says only accepted, refused or Android's default won;
 - its key is not group A (those enter only with a recorded second-agent read, through a reviewed pull request) and not group B (the metered lists, which records cannot change);
 - the privacy scan passes: no phone number, IMSI, ICCID, IMEI, SIP URI or IP address;
 - its data commit is on `main`, carries its data digest and holds the OCD dataset;
 - `validate` and the phone guard pass on the bot's pull request.
 
-One record per `record_key` is kept, the newest by its last measurement. A record lapses at `valid_until`, 90 days after its last measurement, and the daily rebuild drops it. Round 19's holds, account gates, time spread and thresholds apply only to outside reports. A measured record is served only on the owner's phones of its device, ROM line and IMS stack; other ROMs and apps may use it only under R3. It never changes a configured carrier value in `carriers/`: a correction opens a source review.
+One record per `record_key` is kept, the newest by its last measurement, then by issue; a record sent again unchanged is a `duplicate`. A record lapses at `valid_until`, 90 days after its last measurement, and the daily rebuild drops it. Round 19's holds, account gates, time spread and thresholds apply only to outside reports. A measured record is served only on the owner's phones of its device, ROM line and IMS stack; other ROMs and apps may use it only under R3. It never changes a configured carrier value in `carriers/`: a correction opens a source review.
 
 The owner's pointer reports (`ocd-check-test-report`, round 29) are still taken and kept in `observed/reports/` as pointers. They change nothing; round 29's `observed/retested.json` is gone.
 

@@ -111,7 +111,7 @@ OcdCarrierSettings enforces groups A, B and X6 with its own compiled-in copy as 
 `generated/devices/device-records.json` ([`schemas/device-records.schema.json`](../schemas/device-records.schema.json)) is written from `devices/records/`:
 
 - `configured/*.json` holds the owner's devices' fixes, valid for every carrier (`configured_device`). It is changed only by reviewed pull requests.
-- `measured.json` holds the owner's measured records, written by the report bot from the owner's account ([community/README.md](../community/README.md#the-owners-measured-records)), each for 90 days after its last measurement.
+- `measured.json` holds the owner's measured records, written by the report bot from the owner's `ocd-device-record` issues, one record per issue, from user ID 122638570 only ([community/README.md](../community/README.md#the-owners-measured-records)), each for 90 days after its last measurement.
 - `keys.json` gives the registry entries of the keys records use.
 - `reads/` holds the second-agent reads that group A records need.
 

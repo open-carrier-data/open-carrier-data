@@ -197,7 +197,7 @@ RESULTS = (
 )
 EMERGENCY_RESULTS = ("emergency_data_accepted", "emergency_data_refused", "emergency_default_won")
 METHODS = (
-    "eims_request", "mailbox_call", "mailbox_call+real_call", "override_trial", "real_call",
+    "eims_request", "mailbox_call", "mailbox_call+real_call", "observed", "override_trial", "real_call",
     "real_call+real_call", "self_sms",
 )
 BEARERS = ("iwlan", "lte", "nr")
