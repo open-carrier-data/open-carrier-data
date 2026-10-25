@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/carrier-config-keys.schema.json",
+  "title": "OCD's closed CarrierConfig key registry (schemas/carrier-config-keys.json)",
+  "description": "Every CarrierConfig key OCD may serve on the owner's ROM (rule round 30, dataset spec 2.5.1) with its type, group, origin and fork. A key outside it, or a value of another type, makes the reader refuse the whole dataset.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "description",
+    "keys"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "keys": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.]{1,200}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "group",
+          "origin",
+          "fork"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "bool",
+              "int",
+              "long",
+              "double",
+              "string",
+              "string_array",
+              "int_array",
+              "bundle"
+            ]
+          },
+          "group": {
+            "enum": [
+              "A",
+              "B",
+              "X6",
+              null
+            ]
+          },
+          "origin": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "device_record",
+                "google",
+                "ocd_schema"
+              ]
+            }
+          },
+          "fork": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

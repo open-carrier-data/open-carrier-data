@@ -53,7 +53,7 @@ Each file below is an asset of the GitHub release:
   - the pull requests in between, the announced changes and the standing notice;
 - `SHA256SUMS` over the other assets, so `sha256sum -c SHA256SUMS` checks them.
 
-`observed/`, the OCD Check reports and the owner's "re-tested by OCD" records (`observed/retested.json`), is never a release asset and no release file depends on it ([community/README.md](../community/README.md)).
+`observed/`, the OCD Check reports, is never a release asset and no release file depends on it ([community/README.md](../community/README.md)). Neither are the OCD dataset for the owner's ROM (`generated/ocd-dataset/`) and the per-device records (`generated/devices/device-records.json`, `devices/records/`): the owner's ROM and app take them from validated `main`, pinned per commit (rule round 30, [docs/ocd-dataset.md](ocd-dataset.md)).
 
 ## What a release guarantees
 

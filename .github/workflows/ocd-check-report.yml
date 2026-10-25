@@ -1,11 +1,14 @@
 name: OCD Check reports
 
 # The "OCD Check report" issue form (.github/ISSUE_TEMPLATE/ocd-check-report.yml)
-# carries one JSON test report from the OCD Check app: pointers to entries of
-# OCD's data at one commit of main (round 29 S13; apps before it name a data
-# release tag), each with the result the phone measured, never a value. This workflow checks it and keeps observed/ in step with the report
-# issues. All logic is in tools/observed_reports.py; community/README.md
-# describes the path.
+# carries one JSON document from the OCD Check app: a test report of
+# pointers to entries of OCD's data at one commit of main (round 29 S13; apps
+# before it name a data release tag), each with the result the phone
+# measured, never a value; or, from the owner's account only, the owner
+# build's measured records (`ocd-measured-records`, rule round 30, item 4).
+# This workflow checks it and keeps observed/ and devices/records/measured.json
+# in step with the report issues. All logic is in tools/observed_reports.py;
+# community/README.md describes the path.
 #
 # - check: on a new, edited, reopened or labelled report issue, validates the
 #   report (schema, privacy scan, consistency, and that the commit is on main,
@@ -15,21 +18,24 @@ name: OCD Check reports
 # - observed: rebuilds observed/ from every report issue (an issue closed as
 #   not planned is withdrawn), applies the noise filters (one counted report
 #   per account and cell, a monthly cap, a hold until an account's first
-#   accepted report is 14 days old, expiry after 90 days), and opens or
-#   updates one bot pull request, automation/observed-reports, that touches
-#   observed/ only. A maintainer merges it. It never commits to main. It runs
-#   daily too, so holds end and reports expire on time. Reports of the
-#   owner's account skip the account filters, and their settled results
-#   become "re-tested by OCD" records in observed/retested.json, which expire
-#   90 days after the last measurement (rule round 29).
-# - source-review: when observed/retested.json changes on main, and daily,
-#   opens or updates one source-review issue per carrier profile and feature
-#   with a correction or a measured failure of OCD's value (rule 10). It
-#   never closes one and never edits an issue it did not open.
+#   accepted report is 14 days old, expiry after 90 days), writes the owner's
+#   measured records into devices/records/measured.json (one per record key,
+#   dropped 90 days after the last measurement), regenerates
+#   generated/devices/device-records.json and the OCD dataset manifest with
+#   tools/ocd_dataset.py, and opens or updates one bot pull request,
+#   automation/observed-reports, that touches only those files. A maintainer
+#   merges it after validate (with the phone guard) passes. It never commits
+#   to main. It runs daily too, so holds end and records expire on time.
+#   Reports of the owner's account skip the account filters.
+# - source-review: when devices/records/measured.json changes on main, and
+#   daily, opens or updates one source-review issue per carrier profile and
+#   target whose measured record corrects OCD's value, names a winner after
+#   a failure or found no value (rule 10). It never closes one and never
+#   edits an issue it did not open.
 #
-# Observed reports are hints, and re-tested records are pointers with a
-# result class. Nothing here changes carriers/, generated/ or a release, and
-# no report makes a phone skip its own test.
+# Observed reports are hints. A measured record is served only on the
+# owner's phones of its device, ROM line and IMS stack; nothing here changes
+# carriers/ or a release, and no report makes a phone skip its own test.
 # The issue body is untrusted: it reaches the tool only as a file, never
 # through an expression in a script.
 
@@ -39,7 +45,7 @@ on:
   push:
     branches: [main]
     paths:
-      - observed/retested.json
+      - devices/records/measured.json
   schedule:
     - cron: "41 5 * * *"
   workflow_dispatch:
@@ -140,17 +146,24 @@ jobs:
           python3 tools/observed_reports.py rebuild \
             --issues "$RUNNER_TEMP/issues.json" --root . --pr-body "$RUNNER_TEMP/pr-body.md"
           python3 tools/observed_reports.py validate --root .
+      # The owner's measured records enter generated/devices/device-records.json
+      # and so the dataset manifest (rule round 30).
+      - name: Regenerate the device records and the dataset manifest
+        run: |
+          python3 tools/ocd_dataset.py generate --root .
+          python3 tools/ocd_dataset.py validate --root .
       - name: Open, update or close the bot pull request
         run: |
           set -euo pipefail
-          outside="$(git status --porcelain -- . ':!observed')"
+          owned=(observed devices/records/measured.json generated/devices/device-records.json generated/ocd-dataset/manifest.json)
+          outside="$(git status --porcelain -- . ':!observed' ':!devices/records/measured.json' ':!generated/devices/device-records.json' ':!generated/ocd-dataset/manifest.json')"
           if [ -n "$outside" ]; then
-            echo "::error::The rebuild changed files outside observed/:"
+            echo "::error::The rebuild changed files outside observed/ and the measured records:"
             echo "$outside"
             exit 1
           fi
           existing="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
-          if [ -z "$(git status --porcelain -- observed)" ]; then
+          if [ -z "$(git status --porcelain -- "${owned[@]}")" ]; then
             echo "observed/ on main is up to date." >> "$GITHUB_STEP_SUMMARY"
             if [ -n "$existing" ]; then
               gh pr close "$existing" --delete-branch --comment "observed/ on main already holds every valid report; nothing to merge."
@@ -161,8 +174,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           base="$(git rev-parse HEAD)"
           git checkout -B "$BRANCH"
-          git add -A observed
-          git commit -q -m "Record observed OCD Check reports (unverified)"
+          git add -A "${owned[@]}"
+          git commit -q -m "Record observed OCD Check reports and the owner's measured records"
           # The same tree on the same main as the open pull request: nothing to push.
           if [ -n "$existing" ] && git fetch -q --depth=2 origin "$BRANCH" \
             && [ "$(git rev-parse 'FETCH_HEAD^{tree}')" = "$(git rev-parse 'HEAD^{tree}')" ] \
@@ -200,13 +213,13 @@ jobs:
         with:
           ref: main
           persist-credentials: false
-      - name: Plan the source reviews from observed/retested.json on main
+      - name: Plan the source reviews from devices/records/measured.json on main
         run: |
           gh api --paginate "repos/$GH_REPO/issues?labels=source-review&state=all&per_page=100" --jq '.[]' \
             | jq -s . > "$RUNNER_TEMP/reviews.json"
           python3 tools/observed_reports.py source-reviews \
             --root . --issues "$RUNNER_TEMP/reviews.json" --out "$RUNNER_TEMP/reviews" --repository "$GH_REPO"
-      - name: Open or update one issue per profile and feature
+      - name: Open or update one issue per profile and target
         run: |
           set -euo pipefail
           gh label create source-review --description "A phone result asks for a review of the source or importer behind an OCD value (rule 10)" --color 5319E7 --force

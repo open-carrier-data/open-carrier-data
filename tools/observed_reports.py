@@ -31,22 +31,26 @@ same way on a laptop:
   rebuild --issues ISSUES.json --root DIR [--pr-body BODY.md]
       Rebuilds DIR/observed/ from every report issue (a JSON list as the REST
       API returns them): one file per valid report, observed/reports/issue-N.json,
-      with its status after the noise filters, observed/summary.json from the
-      reports of other accounts, and observed/retested.json from the settled
-      results of the owner's account ("re-tested by OCD", rule round 29). An
-      issue closed as not planned is left out, which is how a maintainer
-      withdraws a report.
+      with its status after the noise filters, and observed/summary.json from
+      the reports of other accounts; and DIR/devices/records/measured.json
+      from the measured records the owner's account submitted (rule round 30,
+      item 4). An issue closed as not planned is left out, which is how a
+      maintainer withdraws a report. Run tools/ocd_dataset.py generate after
+      it, so generated/devices/device-records.json and the dataset manifest
+      follow.
 
   validate --root DIR
       Checks every file under DIR/observed/reports/ and that
-      observed/summary.json and observed/retested.json are what the reports
-      give. Exit 1 on a problem.
+      observed/summary.json and devices/records/measured.json are what the
+      reports give. Exit 1 on a problem.
 
   source-reviews --root DIR --issues ISSUES.json --out DIR2
-      Plans one source-review issue per correction or measured failure in
-      DIR/observed/retested.json (rule 10, rule round 29): DIR2/plan.json
-      lists the issues to open or update, with their bodies beside it.
-      ISSUES.json is the repository's issues labelled source-review.
+      Plans one source-review issue per carrier profile (or SIM key) and
+      target whose measured record corrects OCD's published value, names a
+      winner after a failure, falls back to Android's default or found no
+      value that passes (rule 10, rule round 30): DIR2/plan.json lists the
+      issues to open or update, with their bodies beside it. ISSUES.json is
+      the repository's issues labelled source-review.
 
   check-file REPORT.json [--root DIR]
       Checks one bare report, as the app wrote it, against DIR's main history
@@ -65,19 +69,28 @@ and expiry 90 days after the test. Observed reports are unverified
 observations, kept apart from carriers/, generated/ and the releases; they
 never change an OCD value.
 
-The owner's results (rule round 29, which fires O1 of round 18). Reports of
-the owner's account (OWNER_ACCOUNTS, by GitHub user ID, which a renamed or
-reclaimed login cannot take) skip the account filters, since the plan
-judge's version applies: no hold beyond rounds 26 to 28. Their settled
-results (a pass at L2 or L3, SMS both ways, or a clean measured failure,
-each naming its level, bearer, method and date) become "re-tested by OCD"
-records in observed/retested.json, a separate measured file: pointers with a
-result class, never a value, with n, the first and last day measured, the
-data commit and an expiry 90 days after the last measurement. They never
-change carriers/, lookup.json, carrier-variants.json or the Android files;
-a correction or a measured failure opens a source review instead. Other
-accounts' reports stay "reported, not checked by OCD" in summary.json, also
-when they carry a settled field. Only the standard library is used, as in
+The owner's results (rule round 30, item 4; round 29 fired O1 of round 18).
+Reports of the owner's account (OWNER_ACCOUNTS, by GitHub user ID, which a
+renamed or reclaimed login cannot take) skip the account filters. The OCD
+Check owner build submits its settled results as an `ocd-measured-records`
+document in the same form: per-device records of kind `measured`
+(schemas/device-records.schema.json, $defs.record) for this device, ROM line,
+IMS stack and carrier profile or SIM key. The bot takes one into
+devices/records/measured.json, and from there into
+generated/devices/device-records.json, only when all of these hold: the
+issue's author is the owner's account; every record passes the closed
+schema and its key recomputes; its value is a candidate (OCD's resolved
+value or an alternative of the profile's stack, the Google lane's value of
+the profile's fill or default, the other value of a switch, Android's
+default, or for the emergency data test only accepted, refused or Android's
+default won); its key is not group A (those enter only with a second-agent
+read) and not group B; the privacy scan passes; and its data commit is on
+main with its data digest and holds the dataset. `validate` and the phone
+guard then run on the bot's pull request. observed/retested.json of round 29
+is folded into these records. The owner's pointer reports stay pointers in
+observed/reports/; other accounts' reports stay "reported, not checked by
+OCD" in summary.json, also when they carry a settled field, and an outside
+account can never submit records. Only the standard library is used, as in
 the other validators.
 """
 
@@ -98,10 +111,15 @@ TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))
 
 from validate_public_carrier_data import SCHEMA_TYPES, load_schema, schema_json_text  # noqa: E402
+import ocd_dataset  # noqa: E402
 
 REPORT_SCHEMA = "ocd-check-report.schema.json"
 SUMMARY_SCHEMA = "observed-summary.schema.json"
-RETESTED_SCHEMA = "observed-retested.schema.json"
+RECORD_SCHEMA = "device-records.schema.json"
+# The owner build's settled results as per-device records (rule round 30).
+RECORDS_KIND = "ocd-measured-records"
+MAX_SUBMITTED_RECORDS = 50
+MEASURED_FILE = "devices/records/measured.json"
 REPORT_KIND = "ocd-check-test-report"
 LABEL = "ocd-check-report"
 VALID_LABEL = "report:valid"
@@ -115,15 +133,15 @@ REPORT_HEADING = "Report"
 PRIVACY_HEADING = "Privacy check"
 UNVERIFIED = "unverified"
 OBSERVED = "observed"
+# Round 29's separate file, folded into the measured records (round 30).
 RETESTED_FILE = "retested.json"
-RETESTED = "re-tested by OCD"
 SOURCE_REVIEW_LABEL = "source-review"
 REVIEW_MARKER = "<!-- ocd-source-review"
 BOT_LOGIN = "github-actions[bot]"
 # The owner's GitHub account, by its user ID (logins can be renamed and taken
 # again; the ID cannot). Its reports are the owner's own phones' (rule round
-# 29): their settled results read "re-tested by OCD". Every other account is
-# "outside" and stays "reported, not checked by OCD".
+# 29), and only it submits measured records (rule round 30). Every other
+# account is "outside" and stays "reported, not checked by OCD".
 OWNER_ACCOUNTS = {122638570: "belagrf"}
 OWNER = "owner"
 OUTSIDE = "outside"
@@ -166,8 +184,20 @@ STATUS_TEXT = {
 STATUS_DESCRIPTIONS = {
     "reported": "Counted reports of people's phones, by result. Not checked by OCD: anyone can open an issue, and nothing checks who sent a report or whether the phone exists.",
     "contested": "At least one counted report measured a clean failure of the entry (the test ran and the phone's state came back). It asks the next phone to test the entry and a maintainer to look; it switches nothing off.",
-    "retested_by_ocd": "Always null here. The owner's phones' settled results are published as \"re-tested by OCD\" in observed/retested.json (rule round 29), a separate file.",
+    "retested_by_ocd": "Always null here. The owner's phones' settled results are measured records in generated/devices/device-records.json (rule round 30), where observed/retested.json of round 29 was folded in.",
 }
+# The level a measured record's result is reached at (rule round 30, item 4).
+RECORD_LEVELS = {
+    "works": {"L3"}, "calls_out": {"L2"}, "sms_both_ways": {"sms_both_ways"}, "no_regression_passed": {"no_regression"},
+    "winner_after_failure": {"L2", "L3", "sms_both_ways", "no_regression"},
+    "no_value_passed": {"L2", "L3", "sms_both_ways", "no_regression"},
+    "emergency_data_accepted": {"emergency_data"}, "emergency_data_refused": {"emergency_data"}, "emergency_default_won": {"emergency_data"},
+}
+# Fixed-shape fields of a submitted record that skip the two phone heuristics.
+RECORD_HEX_PATH = re.compile(
+    r"\$\.records\[\d+\]\.(record_key|data\.commit|data\.data_digest|target\.row_key|carrier\.profile_id|carrier\.gid1|"
+    r"first_measured|last_measured|valid_until|second_agent_read\.read_at|differs_between_sims\[\d+\]\.last_measured)"
+)
 
 # The privacy scan: the same patterns as the app's PrivacyScan
 # (app-ocd-check, core/PrivacyScan.kt), which ports BLOCK_PATTERNS of the
@@ -564,6 +594,15 @@ class Releases:
             self.cache[key] = {(p, c) for p, caps in profiles.items() for c in caps}
         return self.cache[key]
 
+    def dataset(self, commit: str) -> dict[str, Any] | None:
+        """The OCD dataset at COMMIT: profiles.json, google-lane.json and apn-index.json, or None."""
+        key = (commit, "#dataset")
+        if key not in self.cache:
+            texts = [self.file(commit, ocd_dataset.FILES[role][1]) for role in ("profiles", "google_lane", "apn_index")]
+            self.cache[key] = None if any(t is None for t in texts) else {
+                "profiles": json.loads(texts[0]), "lane": json.loads(texts[1]), "index": json.loads(texts[2])}
+        return self.cache[key]
+
     def apn_keys(self, tag: str, mccmnc: str) -> set[str]:
         key = (tag, "#apns")
         if key not in self.cache:
@@ -638,12 +677,16 @@ def release_problems(report: dict[str, Any], releases: Releases) -> tuple[list[s
     return errors, flags, tag
 
 
-def report_problems(report: Any, today: date, releases: Releases | None) -> tuple[list[str], list[str], str | None]:
+def report_problems(report: Any, today: date, releases: Releases | None, owner: bool = False) -> tuple[list[str], list[str], str | None]:
     """(errors, flags, ref) of one parsed report: ref is the main commit or
     the release tag it points into. Without RELEASES the data is not checked
-    (validate on a checkout without history or tags)."""
+    (validate on a checkout without history or tags). OWNER: the report
+    comes from the owner's account, the only one that submits measured
+    records."""
     schema = load_schema(REPORT_SCHEMA, TOOLS.parent / "schemas")
     problems: list[str] = []
+    if isinstance(report, dict) and report.get("schema") == RECORDS_KIND:
+        return submission_problems(report, owner, today, releases)
     if isinstance(report, dict) and report.get("schema") == "ocd-check-report.v1":
         return ["$.schema: this is the read-only check's report (ocd-check-report.v1); the form takes the owner build's test report (ocd-check-test-report)"], [], None
     schema_problems(report, schema, schema, "$", problems)
@@ -655,6 +698,161 @@ def report_problems(report: Any, today: date, releases: Releases | None) -> tupl
         return list(dict.fromkeys(problems)), [], report_ref(report)
     errors, flags, tag = release_problems(report, releases)
     return errors, flags, tag
+
+
+# ---------------------------------------------------------------- measured records (rule round 30)
+
+
+def record_privacy_problems(value: Any, where: str) -> list[str]:
+    """The privacy scan over a submission, with the phone heuristics off only
+    for the fixed-shape fields (hashes, row keys, profile ids, GID1, dates)."""
+    out: list[str] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            path = f"{where}.{safe_key(key)}"
+            out += scan_key(path, key)
+            out += record_privacy_problems(child, path)
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            out += record_privacy_problems(child, f"{where}[{index}]")
+    elif isinstance(value, str):
+        out += scan_text(where, value, phone_heuristics=not RECORD_HEX_PATH.fullmatch(where))
+    return out
+
+
+def current_registry(root: Path) -> dict[str, dict[str, Any]]:
+    """Main's closed key registry: a measured record is served with main's dataset."""
+    path = root / ocd_dataset.REGISTRY_PATH
+    if not path.is_file():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8")).get("keys", {})
+
+
+def record_candidate_problems(record: dict[str, Any], dataset: dict[str, Any], where: str) -> list[str]:
+    """The value is a candidate at the data commit (rule round 30, item 4): a
+    resolved value or an alternative of the profile's stack, the Google
+    lane's value of its fill or of default, the other value of a switch, or
+    Android's default; an APN record names a row of the profile."""
+    profiles, lane, index = dataset["profiles"], dataset["lane"], dataset["index"]
+    carrier, target = record["carrier"], record["target"]
+    if carrier["scope"] == "all":
+        return [f"{where}.carrier: a measured record names a carrier profile or a SIM key"]
+    stacks: list[list[dict[str, Any]]] = []
+    fills: set[str] = {"default"}
+    if carrier["scope"] == "profile":
+        for network in profiles["networks"].values():
+            for profile in network["profiles"]:
+                if profile["id"] == carrier["profile_id"]:
+                    stacks.append(ocd_dataset.profile_stack(network["profiles"], profile))
+                    fills |= {item["entry"] for item in profile["fill"]}
+        if not stacks:
+            return [f"{where}.carrier.profile_id: is not a profile of the data commit (record_unknown_profile)"]
+    else:
+        network = profiles["networks"].get(f"{carrier['mcc']}-{carrier['mnc']}")
+        sim = {"mcc": carrier["mcc"], "mnc": carrier["mnc"], "gid1": carrier.get("gid1"), "spn": carrier.get("spn")}
+        stack = ocd_dataset.resolve_stack(network["profiles"], sim) if network else []
+        if stack and stack[-1]["kind"] == "ocd":
+            return [f"{where}.carrier: a SIM key record is for a SIM that default or a fill-only profile serves; this SIM has {stack[-1]['id']}"]
+        if stack:
+            stacks.append(stack)
+            fills |= {item["entry"] for item in stack[-1]["fill"]}
+    if target["type"] == "config":
+        key = target["key"]
+        meta = profiles["keys"].get(key)
+        if meta is None:
+            return [f"{where}.target.key: is not in the data commit's key registry (unknown_key)"]
+        if record["value_kind"] != "value" or meta["type"] == "bool":
+            return []
+        values = [p["values"][key] for stack in stacks for p in stack if key in p["values"]]
+        values += [alt["value"] for stack in stacks for p in stack for alt in p["alternatives"].get(key, [])]
+        values += [lane["entries"][name]["values"][key] for name in sorted(fills) if name in lane["entries"] and key in lane["entries"][name]["values"]]
+        if schema_json_text(record["value"]) not in {schema_json_text(v) for v in values}:
+            return [f"{where}.value: is no candidate for this key and profile at the data commit (record_not_candidate)"]
+        return []
+    rows = {row["row_key"]: row for row in index["rows"]}
+    row_key = target["row_key"]
+    if row_key is None:
+        return []
+    row = rows.get(row_key)
+    if row is None:
+        return [f"{where}.target.row_key: is not a row of the data commit's apns-conf.xml (record_apn_row_unknown)"]
+    if carrier["scope"] == "profile" and carrier["profile_id"] not in row["profiles"]:
+        return [f"{where}.target.row_key: is not a row of this profile (record_apn_row_unknown)"]
+    return []
+
+
+def submission_problems(submission: dict[str, Any], owner: bool, today: date, releases: Releases | None) -> tuple[list[str], list[str], str | None]:
+    """(errors, flags, ref) of an `ocd-measured-records` submission."""
+    errors: list[str] = []
+    if not owner:
+        return ["$: measured records are taken only from the owner's account (rule round 30); other accounts send pointer reports"], [], None
+    envelope = {"schema", "schema_version", "app", "records"}
+    if set(submission) != envelope:
+        return [f"$: a measured-records submission holds exactly {', '.join(sorted(envelope))}"], [], None
+    app = submission["app"]
+    if submission["schema_version"] != 1 or not isinstance(app, dict) or set(app) != {"name", "build", "version"} \
+            or app.get("name") != "OCD Check" or app.get("build") != "owner" \
+            or not isinstance(app.get("version"), str) or not re.fullmatch(r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(-[a-z]{1,16})?", app["version"]):
+        errors.append("$: schema_version must be 1 and app the OCD Check owner build with its version")
+    records = submission["records"]
+    if not isinstance(records, list) or not 1 <= len(records) <= MAX_SUBMITTED_RECORDS:
+        return errors + [f"$.records: must hold 1 to {MAX_SUBMITTED_RECORDS} records"], [], None
+    schema = load_schema(RECORD_SCHEMA, TOOLS.parent / "schemas")
+    registry = current_registry(releases.root if releases is not None else TOOLS.parent)
+    seen: set[str] = set()
+    ref = None
+    for index, record in enumerate(records):
+        where = f"$.records[{index}]"
+        found: list[str] = []
+        schema_problems(record, schema["$defs"]["record"], schema, where, found)
+        found += record_privacy_problems(record, where)
+        if found:
+            errors += found
+            continue
+        if record["kind"] != "measured" or record["claim"] != "measured":
+            errors.append(f"{where}: the owner build submits records of kind measured only")
+            continue
+        if record["record_key"] in seen:
+            errors.append(f"{where}.record_key: appears twice in one submission")
+        seen.add(record["record_key"])
+        errors += ocd_dataset.record_problems(record, registry, {}, where) if registry else [f"{where}: main has no key registry ({ocd_dataset.REGISTRY_PATH})"]
+        if record["result"] not in RECORD_LEVELS or record["level"] not in RECORD_LEVELS.get(record["result"], set()):
+            errors.append(f"{where}: result and level do not fit (works L3, calls_out L2, sms_both_ways, no_regression_passed, emergency results at emergency_data)")
+        if record["method"] is None or record["n"] is None or record["first_measured"] is None:
+            errors.append(f"{where}: a measured record names its method, n and the days measured")
+        if record["level"] in ("L2", "L3") and record["bearer"] is None:
+            errors.append(f"{where}.bearer: a call level names its bearer")
+        last = record["last_measured"]
+        if last is not None:
+            if date.fromisoformat(last) > today + timedelta(days=1):
+                errors.append(f"{where}.last_measured: is in the future")
+            elif releases is not None and today - date.fromisoformat(last) > timedelta(days=EXPIRE_DAYS):
+                errors.append(f"{where}.last_measured: is more than {EXPIRE_DAYS} days ago, so the record has expired")
+        commit = record["data"]["commit"]
+        ref = ref or commit
+        if releases is not None and not errors:
+            if not releases.on_main(commit):
+                errors.append(f"{where}.data.commit: is not a commit of OCD's main")
+            elif releases.digest(commit) != record["data"]["data_digest"]:
+                errors.append(f"{where}.data.data_digest: is not the data digest of {data_label(commit)}")
+            else:
+                dataset = releases.dataset(commit)
+                if dataset is None:
+                    errors.append(f"{where}.data.commit: {data_label(commit)} holds no OCD dataset (generated/ocd-dataset/)")
+                else:
+                    errors += record_candidate_problems(record, dataset, where)
+    return list(dict.fromkeys(errors)), [], ref
+
+
+def report_date(report: dict[str, Any]) -> date:
+    """The test date of a pointer report, or a submission's newest measurement."""
+    if report.get("schema") == RECORDS_KIND:
+        return max(date.fromisoformat(r["last_measured"]) for r in report["records"])
+    return date.fromisoformat(report["tested_on"])
+
+
+def is_submission(report: dict[str, Any] | None) -> bool:
+    return isinstance(report, dict) and report.get("schema") == RECORDS_KIND
 
 
 # ---------------------------------------------------------------- the issue
@@ -738,7 +936,7 @@ def check_issue(issue: dict[str, Any], today: date, releases: Releases | None) -
     except ValueError as error:
         errors.append(f"the report is not valid JSON ({error})")
         return Check(False, errors, [], None, digest, None)
-    problems, flags, ref = report_problems(report, today, releases)
+    problems, flags, ref = report_problems(report, today, releases, owner=is_owner(issue))
     errors = list(dict.fromkeys(errors + problems))
     return Check(not errors, errors, flags if not errors else [], report if not errors else None, digest, ref)
 
@@ -799,6 +997,25 @@ def comment(check: Check, number: int, repository: str, owner: bool = False) -> 
     OWNER: the issue is from the owner's account (OWNER_ACCOUNTS)."""
     docs = f"https://github.com/{repository}/blob/main/community/README.md"
     lines = [BOT_MARKER]
+    if check.valid and is_submission(check.report):
+        lines += [
+            f"**Valid measured records** (`{VALID_LABEL}`) from the owner's account (rule round 30). Report hash: `{check.sha256}`.",
+            "",
+            f"Through the bot's pull request \"Observed reports (unverified)\", which a maintainer merges after `validate` and the phone "
+            f"guard pass, they enter `{MEASURED_FILE}` and so `generated/devices/device-records.json`: measured records for this "
+            "device, ROM line and IMS stack, served only there, each for 90 days after its last measurement. A correction opens a "
+            f"source review; no configured carrier value changes ([community/README.md]({docs})).",
+            "",
+            "| Record | Target | Value | Result | Level | Carrier | Measured |",
+            "|---|---|---|---|---|---|---|",
+        ]
+        for record in check.report["records"]:
+            target = ocd_dataset.record_target_text(record["target"])
+            value = {"value": "`" + schema_json_text(record["value"]).replace("|", "\\|")[:60] + "`", "android_default": "Android's default", "none": "none"}[record["value_kind"]]
+            carrier = ocd_dataset.record_carrier_text(record["carrier"])
+            when = record["first_measured"] + ("" if record["first_measured"] == record["last_measured"] else " to " + record["last_measured"])
+            lines.append(f"| `{record['record_key']}` | `{target}` | {value} | {record['result']} | {record['level']} | `{carrier}` | {when} |")
+        return "\n".join(lines) + "\n"
     if check.valid:
         report = check.report or {}
         device = report["device"]
@@ -810,8 +1027,7 @@ def comment(check: Check, number: int, repository: str, owner: bool = False) -> 
             "or a release, and it never makes a phone skip its own test. At most it makes a phone test an entry earlier. "
             f"It is recorded as `observed/reports/issue-{number}.json` through the bot's pull request "
             "\"Observed reports (unverified)\", which a maintainer merges, and "
-            + ("as the owner's report it is not counted in `observed/summary.json`; only its settled results are published, in "
-               f"`observed/{RETESTED_FILE}` " if owner else
+            + ("as the owner's report it is not counted in `observed/summary.json` " if owner else
                "`observed/summary.json` counts it as \"reported, not checked by OCD\" once the noise filters let it through ")
             + f"([community/README.md]({docs})).",
             "",
@@ -833,12 +1049,12 @@ def comment(check: Check, number: int, repository: str, owner: bool = False) -> 
             lines += ["", "Settled results (rule round 29):"]
             lines += [f"- {entry_name(result['entry'])}: {settled_text(result)}" for result in settled]
             if owner:
-                lines += ["", f"From the owner's account: once counted, these are recorded as \"{RETESTED}\" in "
-                          f"`{OBSERVED}/{RETESTED_FILE}` for {EXPIRE_DAYS} days after each measurement. A correction or a "
-                          "measured failure opens a source review; no configured value changes."]
+                lines += ["", "From the owner's account: since rule round 30 the owner build submits settled results as "
+                          f"measured records (an `{RECORDS_KIND}` report), which enter `{MEASURED_FILE}`. This pointer report "
+                          "stays in observed/ and changes nothing."]
             else:
-                lines += ["", f"Not from the owner's account: these stay \"reported, not checked by OCD\"; only the owner's "
-                          f"phones set \"{RETESTED}\"."]
+                lines += ["", "Not from the owner's account: these stay \"reported, not checked by OCD\"; only the owner's "
+                          "phones submit measured records."]
         if check.flags:
             lines += ["", f"**Held as suspect** (`{SUSPECT_LABEL}`) until a maintainer looks; it does not count yet:"]
             lines += [comment_line(flag) for flag in check.flags]
@@ -926,13 +1142,15 @@ def statuses(accepted: list[tuple[dict[str, Any], Check]], today: date) -> dict[
     hashes: dict[str, int] = {}
     monthly: dict[tuple[str, str], int] = {}
     for issue, check in accepted:
+        if is_submission(check.report):
+            continue
         author = (issue.get("user") or {}).get("login", "")
         newest[(author, schema_json_text(cell_of(check.report)))] = issue["number"]
     for issue, check in accepted:
         number = issue["number"]
         author = (issue.get("user") or {}).get("login", "")
         released = HOLD_RELEASED_LABEL in labels_of(issue)
-        tested = date.fromisoformat(check.report["tested_on"])
+        tested = report_date(check.report)
         if check.sha256 in hashes:
             out[number] = ("duplicate", [f"the same report as #{hashes[check.sha256]}"])
             continue
@@ -968,8 +1186,9 @@ def record(issue: dict[str, Any], check: Check, status: tuple[str, list[str]]) -
     its hash and the data it points into (`release`: the main commit or the
     release tag), the status after the noise filters, the tester (`owner`
     for the owner's account, else `outside`), and the mark every report file
-    carries: the raw report stays unverified; only observed/retested.json
-    says "re-tested by OCD", and only for the owner's settled results."""
+    carries: the raw report stays unverified. A measured-records submission
+    of the owner's account is kept here too, and devices/records/measured.json
+    is built from these files."""
     return {
         "issue": issue["number"],
         "reported_on": created_on(issue).isoformat(),
@@ -992,8 +1211,8 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
     accounts other than the owner's: the counted reports by result
     ("reported, not checked by OCD"), "contested" when a counted report
     measured a clean failure, and the held reports. "re-tested by OCD" stays
-    null here: the owner's results are in observed/retested.json, a separate
-    file (rule round 29). Deterministic: no time, sorted keys and cells."""
+    null here: the owner's results are measured records (rule round 30).
+    Deterministic: no time, sorted keys and cells."""
     cells: dict[str, dict[str, Any]] = {}
     records = [r for r in records if r["tester"] == OUTSIDE]
     for item in sorted(records, key=lambda r: r["issue"]):
@@ -1029,8 +1248,8 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
             "Unverified observations from OCD Check reports of people's phones (observed/reports/, every account but the "
             "owner's), per device, carrier profile, software stack and entry. A report only points at an entry of OCD's "
             "data at one commit or release; it never changes an OCD value, a file under generated/ or a release, and it "
-            "never makes a phone skip its own test. Nothing here is a support claim. The owner's results are in "
-            "observed/retested.json."
+            "never makes a phone skip its own test. Nothing here is a support claim. The owner's results are measured "
+            "records in generated/devices/device-records.json."
         ),
         "verification": UNVERIFIED,
         "statuses": STATUS_DESCRIPTIONS,
@@ -1039,123 +1258,45 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-LEVEL_TEXT = {
-    "L2": "calls out: a measured outgoing call on the entry's bearer (round 26, audio from packet counts); incoming not tested",
-    "L3": "works: also an answered incoming call on the same bearer (round 26 and 27, audio from packet counts); for SMS over IMS, an SMS sent and received over IMS",
-}
+MEASURED_DESCRIPTION = (
+    "The owner's measured records (rule round 30, item 4): settled results the OCD Check owner build submitted from the "
+    "owner's GitHub account, one per record_key, the newest kept and each dropped after its valid_until. Written only by "
+    "tools/observed_reports.py rebuild from the report issues; outside reports stay pointers in observed/."
+)
 
 
-def retested(records: list[dict[str, Any]], as_of: date) -> dict[str, Any]:
-    """observed/retested.json as of AS_OF: the settled results of the
-    owner's counted reports, one record per cell (device, carrier profile,
-    network code, ROM family and build, IMS stack, Android major), entry,
-    bearer, result class and level, with n (distinct days measured), the
-    first and last day, the newest report's data commit and whether the
-    entry is OCD's value there, and an expiry 90 days after the last day. A
-    settled result older than that on AS_OF is left out. Deterministic for a
-    given AS_OF."""
-    found: dict[str, dict[str, Any]] = {}
-    newest: dict[str, tuple[str, int]] = {}
+def measured_document(records: list[dict[str, Any]], as_of: date) -> dict[str, Any]:
+    """devices/records/measured.json as of AS_OF: the records of the owner's
+    counted submissions, one per record_key (the newest last_measured, then
+    the newest issue), without those past valid_until on AS_OF."""
+    best: dict[str, tuple[tuple[str, int], dict[str, Any]]] = {}
     for item in sorted(records, key=lambda r: r["issue"]):
-        if item["tester"] != OWNER or item["status"] != "counted":
+        if item["tester"] != OWNER or item["status"] != "counted" or not is_submission(item["report"]):
             continue
-        report = item["report"]
-        if "commit" not in report["release"] or "build" not in report["device"]:
-            continue
-        device = report["device"]
-        for result in report["results"]:
-            settled = result.get("settled")
-            if settled is None or result["entry"] not in SETTLED_BEARERS:
+        for record in item["report"]["records"]:
+            if record["valid_until"] is None or record["valid_until"] < as_of.isoformat():
                 continue
-            measured = settled["measured_on"]
-            if as_of - date.fromisoformat(measured) > timedelta(days=EXPIRE_DAYS):
-                continue
-            klass = settled_class(result)
-            key_cell = {
-                "device": {"model": device["model"], "codename": device["codename"]},
-                "carrier_profile": report["ocd_profile"],
-                "mccmnc": report["sim"]["mccmnc"],
-                "stack": {"rom_family": device["rom_family"], "rom_build": device["build"], "ims_stack": device["ims_stack"], "android_major": device["android_major"]},
-                "entry": result["entry"],
-                "bearer": settled.get("bearer"),
-                "result": klass,
-                "level": settled["level"].upper(),
-            }
-            key = schema_json_text(key_cell)
-            entry = found.setdefault(key, {**key_cell, "days": set(), "issues": []})
-            entry["days"].add(measured)
-            entry["issues"].append(item["issue"])
-            # The newest measurement names the method, the reason, OCD's value and the data commit.
-            if newest.get(key, ("", 0)) <= (measured, item["issue"]):
-                newest[key] = (measured, item["issue"])
-                passed = klass != "failed"
-                entry.update(
-                    method=settled["method"],
-                    reason=None if passed else result.get("reason"),
-                    text=settled_text(result).split(";")[0],
-                    ocd=bool(result["ocd"]),
-                    correction=passed and not result["ocd"] and bool(result.get("kept") or result["phone"]),
-                    data={"commit": report["release"]["commit"], "data_digest": report["release"]["data_digest"]},
-                )
-    out = []
-    for key in sorted(found):
-        entry = found[key]
-        days = sorted(entry.pop("days"))
-        klass, level = entry["result"], entry["level"]
-        out.append({
-            "status": RETESTED,
-            "tester": OWNER,
-            "device": entry["device"],
-            "carrier_profile": entry["carrier_profile"],
-            "mccmnc": entry["mccmnc"],
-            "stack": entry["stack"],
-            "entry": entry["entry"],
-            "bearer": entry["bearer"],
-            "result": klass,
-            "level": level,
-            "incoming": "failed" if klass == "failed" and level == "L3" else "not tested" if klass == "calls_out" or (klass == "failed" and level == "L2") else "tested",
-            "method": entry["method"],
-            "reason": entry["reason"],
-            "text": entry["text"],
-            "ocd": entry["ocd"],
-            "correction": entry["correction"],
-            "n": len(days),
-            "first_measured": days[0],
-            "last_measured": days[-1],
-            "valid_until": (date.fromisoformat(days[-1]) + timedelta(days=EXPIRE_DAYS)).isoformat(),
-            "data": entry["data"],
-            "issues": sorted(set(entry["issues"])),
-        })
-    return {
-        "schema_version": 1,
-        "description": (
-            "The owner's measured results, re-tested by OCD (rule round 29; O1 of round 18): settled results of the OCD "
-            "Check owner build on the owner's own phones, from report issues of the owner's account. Each record points at "
-            "an entry of OCD's data (volte:on, vowifi:on, sms_over_ims:on) with its result class and never carries a value. "
-            "It never changes carriers/, lookup.json, carrier-variants.json or the Android files, never counts toward round "
-            "19's F1 thresholds and is not ROM-citable without R3. On another phone it only moves that entry's test "
-            "earlier; every phone keeps only what it measured itself. A record lapses after valid_until, 90 days after its "
-            "last measurement. A correction or a measured failure opens a source review."
-        ),
-        "status": RETESTED,
-        "tester": OWNER,
-        "as_of": as_of.isoformat(),
-        "expire_days": EXPIRE_DAYS,
-        "levels": LEVEL_TEXT,
-        "records": out,
-    }
+            rank = (record["last_measured"], item["issue"])
+            if record["record_key"] not in best or best[record["record_key"]][0] <= rank:
+                best[record["record_key"]] = (rank, {"issue": item["issue"], "record": record})
+    return {"schema_version": 1, "description": MEASURED_DESCRIPTION, "as_of": as_of.isoformat(),
+            "records": [best[key][1] for key in sorted(best)]}
+
+
+def dump_sorted(value: Any) -> str:
+    return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
 
 
 def without_as_of(document: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in document.items() if key != "as_of"}
 
 
-def write_retested(root: Path, records: list[dict[str, Any]], today: date) -> None:
-    """Writes observed/retested.json as of TODAY, but keeps the file (and its
-    as_of) when TODAY changes nothing in it, so a quiet day makes no bot pull
-    request. validate rebuilds it as of its own as_of."""
-    path = root / OBSERVED / RETESTED_FILE
-    current = retested(records, today)
+def write_measured(root: Path, records: list[dict[str, Any]], today: date) -> None:
+    """Writes devices/records/measured.json as of TODAY, but keeps the file
+    (and its as_of) when TODAY changes nothing in it, so a quiet day makes no
+    bot pull request. validate rebuilds it as of its own as_of."""
+    path = root / MEASURED_FILE
+    current = measured_document(records, today)
     if path.is_file():
         try:
             old = strict_json(path.read_text(encoding="utf-8"))
@@ -1163,10 +1304,11 @@ def write_retested(root: Path, records: list[dict[str, Any]], today: date) -> No
         except (ValueError, TypeError, KeyError):
             old = None
         if old is not None and old_day <= today:
-            again = retested(records, old_day)
-            if path.read_text(encoding="utf-8") == dump(again) and without_as_of(again) == without_as_of(current):
+            again = measured_document(records, old_day)
+            if path.read_text(encoding="utf-8") == dump_sorted(again) and without_as_of(again) == without_as_of(current):
                 return
-    path.write_text(dump(current), encoding="utf-8")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(dump_sorted(current), encoding="utf-8")
 
 
 def rebuild(issues: list[dict[str, Any]], root: Path, today: date, releases: Releases | None) -> dict[str, list[int]]:
@@ -1192,10 +1334,13 @@ def rebuild(issues: list[dict[str, Any]], root: Path, today: date, releases: Rel
         if not path.exists() or path.read_text(encoding="utf-8") != text:
             path.write_text(text, encoding="utf-8")
     (root / OBSERVED / "summary.json").write_text(dump(summarize(records)), encoding="utf-8")
-    write_retested(root, records, today)
+    write_measured(root, records, today)
+    # Round 29's observed/retested.json is folded into the measured records.
+    (root / OBSERVED / RETESTED_FILE).unlink(missing_ok=True)
     return {"written": [item["issue"] for item in records], "left_out": left_out,
             "counted": [item["issue"] for item in records if item["status"] == "counted"],
-            "owner": [item["issue"] for item in records if item["tester"] == OWNER and item["status"] == "counted"]}
+            "owner": [item["issue"] for item in records if item["tester"] == OWNER and item["status"] == "counted"],
+            "records": [item["issue"] for item in records if is_submission(item["report"]) and item["status"] == "counted"]}
 
 
 def read_records(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
@@ -1234,11 +1379,14 @@ def read_records(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
         elif isinstance(item["report"], dict) and isinstance(item["report"].get("release"), dict) \
                 and "commit" in item["report"]["release"] and item["release"] != item["report"]["release"]["commit"]:
             problems.append("release must be the commit the report names")
+        elif is_submission(item["report"]) and isinstance(item["report"].get("records"), list) and item["report"]["records"] \
+                and isinstance(item["report"]["records"][0], dict) and item["release"] != item["report"]["records"][0].get("data", {}).get("commit"):
+            problems.append("release must be the data commit of the submission's first record")
         try:
             date.fromisoformat(item["reported_on"])
         except (TypeError, ValueError):
             problems.append("reported_on must be a date")
-        report_errors, _, _ = report_problems(item["report"], date.max - timedelta(days=2), None)
+        report_errors, _, _ = report_problems(item["report"], date.max - timedelta(days=2), None, owner=item["tester"] == OWNER)
         problems += report_errors
         if path.read_text(encoding="utf-8") != dump(item):
             problems.append("is not written as the tool writes it (indent 2, a final newline)")
@@ -1248,25 +1396,20 @@ def read_records(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
     return records, errors
 
 
-def validate_retested(root: Path, records: list[dict[str, Any]], today: date) -> list[str]:
-    """observed/retested.json: the schema, an as_of not after TODAY, and what the reports give as of that day."""
-    name = f"{OBSERVED}/{RETESTED_FILE}"
-    path = root / OBSERVED / RETESTED_FILE
+def validate_measured(root: Path, records: list[dict[str, Any]], today: date) -> list[str]:
+    """devices/records/measured.json: an as_of not after TODAY, and what the reports give as of that day."""
+    name = MEASURED_FILE
+    path = root / MEASURED_FILE
     if not path.is_file():
         return [f"{name}: is missing"]
     try:
         document = strict_json(path.read_text(encoding="utf-8"))
-    except ValueError as error:
-        return [f"{name}: not valid JSON ({error})"]
-    schema = load_schema(RETESTED_SCHEMA, TOOLS.parent / "schemas")
-    problems: list[str] = []
-    schema_problems(document, schema, schema, "$", problems)
-    if problems:
-        return [f"{name}: {problem}" for problem in problems]
-    as_of = date.fromisoformat(document["as_of"])
+        as_of = date.fromisoformat(document["as_of"])
+    except (ValueError, TypeError, KeyError) as error:
+        return [f"{name}: not valid JSON with an as_of date ({error})"]
     if as_of > today + timedelta(days=1):
         return [f"{name}: as_of is in the future"]
-    if path.read_text(encoding="utf-8") != dump(retested(records, as_of)):
+    if path.read_text(encoding="utf-8") != dump_sorted(measured_document(records, as_of)):
         return [f"{name}: is not what the reports give as of {as_of.isoformat()}; run tools/observed_reports.py rebuild"]
     return []
 
@@ -1287,7 +1430,9 @@ def validate_tree(root: Path, today: date | None = None) -> list[str]:
     if not errors and summary_path.read_text(encoding="utf-8") != dump(summarize(records)):
         errors.append(f"{OBSERVED}/summary.json: is not what the reports give; run tools/observed_reports.py rebuild")
     if not errors:
-        errors += validate_retested(root, records, today or datetime.now(timezone.utc).date())
+        errors += validate_measured(root, records, today or datetime.now(timezone.utc).date())
+    if (root / OBSERVED / RETESTED_FILE).exists():
+        errors.append(f"{OBSERVED}/{RETESTED_FILE}: round 29's file is folded into {MEASURED_FILE} (rule round 30); remove it")
     return errors
 
 
@@ -1295,18 +1440,18 @@ def pr_body(result: dict[str, list[int]], before: set[int]) -> str:
     added = [n for n in result["written"] if n not in before]
     removed = sorted(before - set(result["written"]))
     lines = [
-        "Observed reports from OCD Check report issues: people's reports recorded as **unverified**, the owner's settled results as \"re-tested by OCD\" (rule round 29).",
+        "Observed reports from OCD Check report issues: people's reports recorded as **unverified**, the owner's measured records as per-device records (rule round 30).",
         "",
         "- `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, its release, its tester (`owner` or `outside`) and its status after the noise filters.",
         "- `observed/summary.json`: other accounts' reports per device × carrier profile × stack × entry, \"reported, not checked by OCD\" by result, \"contested\" for a clean measured failure, and the held reports.",
-        "- `observed/retested.json`: the owner's settled results (a pass at L2 or L3, SMS both ways, or a clean measured failure) as \"re-tested by OCD\" records with level, bearer, method, build, data commit, n, dates and a 90-day expiry.",
+        f"- `{MEASURED_FILE}`: the measured records the owner's account submitted, one per record key, with a 90-day expiry, and from it `generated/devices/device-records.json` and the dataset manifest (tools/ocd_dataset.py generate).",
         "",
-        "A report only points at an entry of OCD's data. Nothing here changes `carriers/`, `generated/` or a release, "
-        "and a report never changes an OCD value or makes a phone skip its own test. A correction or a measured failure in `retested.json` "
-        "opens a source review after the merge. Merging accepts the files; it does not verify the results.",
+        "A pointer report only points at an entry of OCD's data and never changes an OCD value or makes a phone skip its own test. "
+        "A measured record is served only on the owner's phones of its device, ROM line and IMS stack; it changes no configured "
+        "carrier value in `carriers/`, and a correction opens a source review after the merge. Merging accepts the files; it does not verify the results.",
         "",
         f"Reports in this pull request: {', '.join(f'#{n}' for n in result['written']) or 'none'}; counted: {', '.join(f'#{n}' for n in result['counted']) or 'none'}; "
-        f"the owner's: {', '.join(f'#{n}' for n in result.get('owner', [])) or 'none'}.",
+        f"the owner's: {', '.join(f'#{n}' for n in result.get('owner', [])) or 'none'}; with measured records: {', '.join(f'#{n}' for n in result.get('records', [])) or 'none'}.",
     ]
     if added:
         lines.append(f"New: {', '.join(f'#{n}' for n in added)}.")
@@ -1323,24 +1468,43 @@ def pr_body(result: dict[str, list[int]], before: set[int]) -> str:
 
 
 def review_key(record: dict[str, Any]) -> str:
-    """One source review per carrier profile (or network code without one) and feature."""
-    return f"{record['carrier_profile'] or 'no-profile'}|{record['mccmnc']}|{record['entry'].split(':')[0]}"
+    """One source review per carrier profile (or SIM key) and target."""
+    return f"{ocd_dataset.record_carrier_text(record['carrier'])}|{ocd_dataset.record_target_text(record['target'])}"
 
 
-def review_records(document: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
-    """The records that open a source review (rule 10, rule round 29): a
-    correction (a pass of an entry that is not OCD's value, which the phone
-    keeps) and a clean measured failure of OCD's own value."""
+def published_value(profiles: dict[str, Any] | None, record: dict[str, Any]) -> tuple[bool, Any]:
+    """(found, value): OCD's resolved value of the record's key for its profile in main's dataset."""
+    if profiles is None or record["carrier"]["scope"] != "profile" or record["target"]["type"] != "config":
+        return False, None
+    key = record["target"]["key"]
+    for network in profiles["networks"].values():
+        for profile in network["profiles"]:
+            if profile["id"] == record["carrier"]["profile_id"]:
+                values = {}
+                for item in ocd_dataset.profile_stack(network["profiles"], profile):
+                    values.update(item["values"])
+                return (key in values), values.get(key)
+    return False, None
+
+
+def review_records(document: dict[str, Any], profiles: dict[str, Any] | None = None) -> dict[str, list[dict[str, Any]]]:
+    """The measured records that open a source review (rule 10, rule round
+    30): a winner after a measured failure, no value that passed, Android's
+    default winning, or a measured value other than OCD's published one."""
     out: dict[str, list[dict[str, Any]]] = {}
     for item in document["records"]:
-        if item["correction"] or (item["result"] == "failed" and item["ocd"]):
-            out.setdefault(review_key(item), []).append(item)
+        record = item["record"]
+        found, value = published_value(profiles, record)
+        correction = record["value_kind"] == "value" and found and schema_json_text(value) != schema_json_text(record["value"])
+        if record["result"] in ("winner_after_failure", "no_value_passed", "emergency_default_won") \
+                or record["value_kind"] == "android_default" or correction:
+            out.setdefault(review_key(record), []).append({**item, "published": value if found else None, "published_found": found})
     return out
 
 
 def review_signature(items: list[dict[str, Any]]) -> str:
     """What the review is about, without dates, counts or issue numbers: a renewal does not reopen a closed review."""
-    parts = sorted(schema_json_text({k: item[k] for k in ("device", "stack", "entry", "bearer", "result", "level", "correction")}) for item in items)
+    parts = sorted(schema_json_text({k: item["record"][k] for k in ("device", "rom", "ims_stack", "target", "value_kind", "value", "result", "level")}) for item in items)
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()[:12]
 
 
@@ -1352,52 +1516,51 @@ REVIEW_MARKER_RE = re.compile(re.escape(REVIEW_MARKER) + r" key=(\S+) signature=
 
 
 def review_title(key: str) -> str:
-    profile, mccmnc, feature = key.split("|")
-    return f"[Source review] {ENTRY_NAMES[feature]} for {profile if profile != 'no-profile' else 'no OCD profile'} ({mccmnc})"
+    carrier, target = key.split("|")
+    return f"[Source review] {target} for {carrier}"
 
 
 def review_body(key: str, items: list[dict[str, Any]], as_of: str, repository: str) -> str:
-    profile, mccmnc, feature = key.split("|")
-    name = ENTRY_NAMES[feature]
-    where = f"carrier profile `{profile}`" if profile != "no-profile" else "no OCD profile"
+    carrier, target = key.split("|")
     base = f"https://github.com/{repository}/blob/main"
     lines = [
         review_marker(key, review_signature(items)),
-        f"**Source review** (rule 10, rule round 29): the owner's phone measured {name} on {mccmnc} ({where}) "
-        "differently from OCD's configured value.",
+        f"**Source review** (rule 10, rule round 30): the owner's phone measured `{target}` for `{carrier}` differently from OCD's "
+        "configured value, or found no value that passes.",
         "",
-        "| Phone | Software | What was measured | OCD's value | Method | n | Measured | Valid until | Data |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| Phone | Software | Measured value | Result | OCD's published value | Method | n | Measured | Valid until | Data |",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for item in sorted(items, key=lambda i: (i["entry"], schema_json_text(i["stack"]), i["result"], i["level"])):
-        stack = item["stack"]
-        kind = "the other value or none: the phone keeps this one" if item["correction"] else "this value, and it failed"
+    for item in sorted(items, key=lambda i: i["record"]["record_key"]):
+        record = item["record"]
+        value = {"value": "`" + schema_json_text(record["value"])[:80] + "`", "android_default": "Android's default", "none": "none passed"}[record["value_kind"]]
+        published = "`" + schema_json_text(item["published"])[:80] + "`" if item["published_found"] else "none published"
+        stack = f"{record['rom']['family']} {record['rom']['line']}, {record['ims_stack']['id']}" + (f" ({record['ims_stack']['fork']})" if record["ims_stack"]["fork"] else "")
+        when = record["first_measured"] + ("" if record["first_measured"] == record["last_measured"] else " to " + record["last_measured"])
         lines.append(
-            f"| {item['device']['model']} ({item['device']['codename']}) | {stack['rom_family']} {stack['rom_build']}, {stack['ims_stack']}, "
-            f"Android {stack['android_major']} | `{item['entry']}` {item['text']} | {kind} | {item['method']} | {item['n']} | "
-            f"{item['first_measured']}{'' if item['first_measured'] == item['last_measured'] else ' to ' + item['last_measured']} | "
-            f"{item['valid_until']} | commit {item['data']['commit'][:12]} |"
+            f"| {record['device']['model']} ({record['device']['codename']}) | {stack} | {value} | {record['result']} ({record['level']}) | "
+            f"{published} | {record['method']} | {record['n']} | {when} | {record['valid_until']} | commit {record['data']['commit'][:12]} |"
         )
     lines += [
         "",
-        f"Records: [`{OBSERVED}/{RETESTED_FILE}`]({base}/{OBSERVED}/{RETESTED_FILE}) as of {as_of}, from the report issues "
-        + ", ".join(f"#{n}" for n in sorted({n for item in items for n in item["issues"]})) + ".",
+        f"Records: [`{MEASURED_FILE}`]({base}/{MEASURED_FILE}) as of {as_of}, from the report issues "
+        + ", ".join(f"#{n}" for n in sorted({item["issue"] for item in items})) + ".",
         "",
-        f"**What to do.** Review the source or importer behind OCD's {name} value for this profile "
+        "**What to do.** Review the source or importer behind OCD's value for this profile "
         f"([`generated/evidence-index.json`]({base}/generated/evidence-index.json) names the source family). If the source "
         "or the importer is wrong, fix it there, with this evidence in the pull request; the configured value then changes "
         "through the normal data path. If the cause is the phone, its IMS stack or the SIM's plan, say so here. A maintainer "
         "closes the issue after the review.",
         "",
-        "This issue changes nothing by itself. A phone result never changes `carriers/`, `lookup.json`, "
-        "`carrier-variants.json` or the Android files (rule round 29), and a record is a pointer with a result class, never a "
-        "value. The bot opens one issue per profile and feature, keeps this text current while records are current, never "
-        "closes it, and opens a new one after a close only when the measured results change.",
+        "This issue changes nothing by itself. The measured record is served only on the owner's phones of its device, ROM line "
+        "and IMS stack (rule round 30); configured carrier values in `carriers/` change only through a source review. The bot "
+        "opens one issue per profile and target, keeps this text current while records are current, never closes it, and opens "
+        "a new one after a close only when the measured results change.",
     ]
     return "\n".join(lines) + "\n"
 
 
-def review_plan(document: dict[str, Any], issues: list[dict[str, Any]], repository: str) -> list[dict[str, Any]]:
+def review_plan(document: dict[str, Any], issues: list[dict[str, Any]], repository: str, profiles: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     """The source-review issues to open or update: one per key with current
     records. An open bot issue of the key is updated when its text differs;
     without one, a new issue is opened unless a closed one already covers the
@@ -1410,7 +1573,7 @@ def review_plan(document: dict[str, Any], issues: list[dict[str, Any]], reposito
         if match:
             bot.setdefault(match.group(1), []).append({**issue, "signature": match.group(2)})
     plan = []
-    for key, items in sorted(review_records(document).items()):
+    for key, items in sorted(review_records(document, profiles).items()):
         body = review_body(key, items, document["as_of"], repository)
         existing = sorted(bot.get(key, []), key=lambda i: i["number"])
         open_ = [i for i in existing if i.get("state") == "open"]
@@ -1481,7 +1644,7 @@ def main(argv: list[str] | None = None) -> int:
         result = rebuild(issues, args.root, today_utc(args.today), Releases(args.root, args.main))
         if args.pr_body:
             args.pr_body.write_text(pr_body(result, before), encoding="utf-8")
-        print(f"written: {result['written']}; counted: {result['counted']}; the owner's: {result['owner']}; left out as not valid: {result['left_out']}")
+        print(f"written: {result['written']}; counted: {result['counted']}; the owner's: {result['owner']}; with measured records: {result['records']}; left out as not valid: {result['left_out']}")
         return 0
     if args.command == "source-reviews":
         errors = validate_tree(args.root)
@@ -1489,8 +1652,10 @@ def main(argv: list[str] | None = None) -> int:
             for error in errors:
                 print(f"error: {error}", file=sys.stderr)
             return 1
-        document = json.loads((args.root / OBSERVED / RETESTED_FILE).read_text(encoding="utf-8"))
-        plan = review_plan(document, json.loads(args.issues.read_text(encoding="utf-8")), args.repository)
+        document = json.loads((args.root / MEASURED_FILE).read_text(encoding="utf-8"))
+        profiles_path = args.root / ocd_dataset.FILES["profiles"][1]
+        profiles = json.loads(profiles_path.read_text(encoding="utf-8")) if profiles_path.is_file() else None
+        plan = review_plan(document, json.loads(args.issues.read_text(encoding="utf-8")), args.repository, profiles)
         args.out.mkdir(parents=True, exist_ok=True)
         steps = []
         for index, step in enumerate(plan):
