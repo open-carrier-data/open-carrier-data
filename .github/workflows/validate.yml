@@ -57,6 +57,25 @@ jobs:
         run: python3 tools/test_build_release.py
       - name: Test the OCD Check report tool
         run: python3 tools/test_observed_reports.py
+      - name: Test the OCD dataset (matcher vectors, selectors, generator, reader checks)
+        run: python3 tools/test_ocd_dataset.py
+      # The OCD dataset for the owner's ROM (rule round 30): the schemas, the
+      # reader's checks 4 to 10, the device-record rules, the privacy guard on
+      # the Google lane, and a regeneration that must give the same bytes. On
+      # a pull request a changed dataset must also carry a later generated_at
+      # than main's, which orders datasets on the phone.
+      - name: Validate the OCD dataset
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base=()
+          if [ -n "$BASE_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            if git show "$BASE_SHA:generated/ocd-dataset/manifest.json" > "$RUNNER_TEMP/base-manifest.json" 2>/dev/null; then
+              base=(--base-manifest "$RUNNER_TEMP/base-manifest.json")
+            fi
+          fi
+          python3 tools/ocd_dataset.py validate --root . "${base[@]}"
       - name: Validate observed/ (unverified reports, apart from the data)
         run: python3 tools/observed_reports.py validate --root .
       - name: Regenerate Android outputs and confirm nothing drifted

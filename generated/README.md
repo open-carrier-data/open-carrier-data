@@ -7,9 +7,10 @@ The Android files under `generated/android/` are produced from the carrier profi
 | `index.json` | one entry per carrier profile in the latest publish, with `profile_id`, `display_name`, `path` |
 | `evidence-index.json` | source snapshot records, per-profile fact sources, observed scope, exact source versions, conflicts, quality gates, newest entry dates |
 | `android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` with the freshness window |
-| `devices/` | the device catalog, the two carrier artifact registries, and the device records (`carrier-variants.json`) for VoLTE, Wi-Fi calling, video calling and VoNR |
+| `devices/` | the device catalog, the two carrier artifact registries, the device records (`carrier-variants.json`) for VoLTE, Wi-Fi calling, video calling and VoNR, and the per-device records of the owner's devices (`device-records.json`, rule round 30) |
+| `ocd-dataset/` | the OCD dataset for the owner's ROM (rule round 30): `manifest.json`, `profiles.json` (OCD's match rules, values and the Google-lane fill per network), `google-lane.json` (the Google lane's values, family `google`) and `apn-index.json`; with `android/apns-conf.xml` and `devices/device-records.json` one set per commit. [docs/ocd-dataset.md](../docs/ocd-dataset.md) |
 
-The Android files come from `python3 tools/generate_android_outputs.py carriers generated --apn-version 8`. The profiles, the evidence index, and the device catalog are published from the private repo.
+The Android files come from `python3 tools/generate_android_outputs.py carriers generated --apn-version 8`, the OCD dataset and the per-device records from `python3 tools/ocd_dataset.py generate` (the private publisher writes the Google lane first). The profiles, the evidence index, and the device catalog are published from the private repo.
 
 `android/metadata.json` carries `checks_through` and `stale_after`. Read both before you ship. The validators warn past `stale_after` and fail only with `--freshness fail`, which the daily public job passes. That job opens an issue labeled `stale-data` when it fails.
 

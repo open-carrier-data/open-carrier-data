@@ -321,12 +321,22 @@ GENERATED_FILES = {
     # Device records (round 17), checked by tools/validate_carrier_variants.py.
     "devices/carrier-variants.json",
     "devices/index.json",
+    # The OCD dataset for the owner's ROM (rule round 30), checked by
+    # tools/ocd_dataset.py: the per-device records and the dataset files.
+    "devices/device-records.json",
+    "ocd-dataset/README.md",
+    "ocd-dataset/apn-index.json",
+    "ocd-dataset/google-lane.json",
+    "ocd-dataset/manifest.json",
+    "ocd-dataset/profiles.json",
 }
 
+# The OCD dataset is required by tools/ocd_dataset.py validate, which the
+# validate workflow runs; this checker only allows its files.
 REQUIRED_GENERATED_FILES = {
     path
     for path in GENERATED_FILES
-    if not path.endswith("README.md") and not path.startswith("devices/")
+    if not path.endswith("README.md") and not path.startswith(("devices/", "ocd-dataset/"))
 }
 
 ADDON_NAMESPACES = {

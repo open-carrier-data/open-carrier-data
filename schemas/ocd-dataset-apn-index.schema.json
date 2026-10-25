@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-dataset-apn-index.schema.json",
+  "title": "OCD dataset APN index (generated/ocd-dataset/apn-index.json)",
+  "description": "Each <apn/> row of generated/android/apns-conf.xml in file order (rule round 30, dataset spec 2.9): its ordinal, its line, its row key (a: and the first 16 hex digits of SHA-256 over its attributes, sorted by name, XML-unescaped, each name=value, joined with a newline) and every profile whose rows the generator wrote as this element.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "based_on_data_digest",
+    "apn_xml_sha256",
+    "rows"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "based_on_data_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "apn_xml_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ordinal",
+          "line",
+          "row_key",
+          "profiles"
+        ],
+        "properties": {
+          "ordinal": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "row_key": {
+            "type": "string",
+            "pattern": "^a:[0-9a-f]{16}$"
+          },
+          "profiles": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1024,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

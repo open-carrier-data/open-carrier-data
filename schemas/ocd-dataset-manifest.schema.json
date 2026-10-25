@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-dataset-manifest.schema.json",
+  "title": "OCD dataset manifest (generated/ocd-dataset/manifest.json)",
+  "description": "The header of the OCD dataset for the owner's ROM (rule round 30): OCD's data digest, when the set was generated, the files with their sizes and SHA-256, the dataset digest over them and the counts. tools/ocd_dataset.py writes and checks it; docs/ocd-dataset.md explains the dataset.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "format",
+    "data_digest",
+    "generated_at",
+    "generator",
+    "apn_database_version",
+    "google_lane",
+    "files",
+    "dataset_digest",
+    "counts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "format": {
+      "const": "ocd-dataset"
+    },
+    "data_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "description": "When the set was generated (UTC, seconds). It orders datasets: of two with different dataset_digest, the later one is newer. It changes only when a file changes."
+    },
+    "generator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "apn_database_version": {
+      "const": 8
+    },
+    "google_lane": {
+      "enum": [
+        "included",
+        "absent"
+      ]
+    },
+    "files": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "name",
+          "path",
+          "bytes",
+          "sha256"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "apn_index",
+              "apn_xml",
+              "device_records",
+              "google_lane",
+              "profiles"
+            ]
+          },
+          "name": {
+            "enum": [
+              "apn-index.json",
+              "apns-conf.xml",
+              "device-records.json",
+              "google-lane.json",
+              "profiles.json"
+            ]
+          },
+          "path": {
+            "enum": [
+              "generated/ocd-dataset/apn-index.json",
+              "generated/android/apns-conf.xml",
+              "generated/devices/device-records.json",
+              "generated/ocd-dataset/google-lane.json",
+              "generated/ocd-dataset/profiles.json"
+            ]
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "dataset_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "networks",
+        "profiles",
+        "fill_only_profiles",
+        "google_entries",
+        "apn_rows",
+        "records"
+      ],
+      "properties": {
+        "networks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "profiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fill_only_profiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "google_entries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "apn_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

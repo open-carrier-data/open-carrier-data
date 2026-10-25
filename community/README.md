@@ -8,7 +8,7 @@ A community report is what a phone measured, uploaded by its owner. Today there 
 
 No gate can tell a true report from a well-made fake: anyone can open an issue, nothing checks who sent a report or whether the phone exists, and no carrier signal can prove to a third party that a setting worked. So OCD does not ask "is this report true?". A report can only point, and every phone proves for itself.
 
-The owner's own phones are the one exception (rule round 29, which fires O1 of round 18): the settled results of the owner's reports are published as **"re-tested by OCD"** in `observed/retested.json`, with a 90-day expiry. They are still pointers with a result class, never values, and they never change OCD's configured data ([The owner's results](#the-owners-results-re-tested-by-ocd)).
+The owner's own phones are the one exception (rule round 30, item 4; round 29 fired O1 of round 18): the OCD Check owner build submits its settled results as **measured records**, which enter `devices/records/measured.json` and from there `generated/devices/device-records.json`, with a 90-day expiry. They are served only on the owner's phones of the same device, ROM line and IMS stack, and they never change OCD's configured carrier values ([The owner's measured records](#the-owners-measured-records)). Round 29's `observed/retested.json` is folded into them.
 
 ## A report points, it carries no value
 
@@ -62,12 +62,12 @@ The issue is public under your GitHub account, and public archives of GitHub can
    - `report:valid`;
    - `report:suspect`: valid, but a plausibility check against the named data flags it (for example video calling that signed in on PHH IMS, which has no video, or an entry marked as OCD's value that the data does not give). It is held until a maintainer looks;
    - `report:invalid`: the comment lists exactly what is wrong. It names the field and the rule, never the value. Edit the issue to fix it, and the check runs again.
-3. The bot rebuilds `observed/` from every report issue, once per issue event and once a day, and opens or updates one pull request, `automation/observed-reports`, titled "Observed reports (unverified)". It touches `observed/` only:
+3. The bot rebuilds `observed/` from every report issue, once per issue event and once a day, and opens or updates one pull request, `automation/observed-reports`, titled "Observed reports (unverified)". It touches only these files:
    - `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, the commit or release it points into (`release`), `"verification": "unverified"` and its status after the noise filters;
    - `observed/summary.json`: other accounts' reports per device × carrier profile × stack (ROM family, IMS stack, Android major) × entry, the statuses below;
-   - `observed/retested.json`: the owner's settled results as "re-tested by OCD" records ([below](#the-owners-results-re-tested-by-ocd)).
-4. A maintainer merges the pull request. Merging accepts the files; it does not verify the results. The issues close with it.
-5. When `observed/retested.json` changes on `main`, and once a day, the bot opens or updates one source-review issue per carrier profile and feature with a correction or a measured failure ([Source reviews](#source-reviews)).
+   - `devices/records/measured.json`: the owner's measured records from the `ocd-device-record` issues ([below](#the-owners-measured-records)), and from it `generated/devices/device-records.json` and the dataset manifest `generated/ocd-dataset/manifest.json` (`tools/ocd_dataset.py generate`).
+4. A maintainer merges the pull request after `validate`, with the phone guard, passes. Merging accepts the files; it does not verify the results. The issues close with it.
+5. When `devices/records/measured.json` changes on `main`, and once a day, the bot opens or updates one source-review issue per carrier profile and target whose measured record corrects OCD's value ([Source reviews](#source-reviews)).
 
 A maintainer withdraws a report by closing its issue as **not planned**; the next rebuild drops its file. The label `report:hold-released` lifts a hold. The workflow can also be started by hand (`workflow_dispatch`).
 
@@ -77,59 +77,43 @@ A maintainer withdraws a report by closing its issue as **not planned**; the nex
 |---|---|
 | `reported`: "reported, not checked by OCD" | counted reports of people's phones: how many, by result, the first and last report date, and the issues |
 | `contested` | at least one counted report measured a clean failure of the entry: it was measured and did not work, and the phone's state came back. It asks the next phone to test the entry and a maintainer to look; it switches nothing off. A test that broke (a revert not proven) contests nothing |
-| `retested_by_ocd` | always null here: the owner's phones' results are in `observed/retested.json`, a separate file (rule round 29) |
+| `retested_by_ocd` | always null here: the owner's phones' results are measured records in `generated/devices/device-records.json` (rule round 30) |
 
 Each cell also gives `held`, the valid reports a noise filter holds. `summary.json` counts the reports of every account but the owner's.
 
-## The owner's results: re-tested by OCD
+## The owner's measured records
 
-Rule round 29 (2026-10-24) puts the owner's plan of 2026-10-17 into rules: the app bundled in his ROM verifies OCD's entries on his phones, corrects wrong ones on the phone, and the results flow back into OCD as measured records. This fires O1 of round 18. The owner's account is named in `tools/observed_reports.py` by its GitHub user ID (`OWNER_ACCOUNTS`), which a renamed or reclaimed login cannot take.
+Rule round 30 (2026-10-25, item 4): corrections measured on the owner's phones become measured records in OCD's per-device records, `generated/devices/device-records.json`, which every validated `main` commit and the owner app's dataset carry ([docs/ocd-dataset.md](../docs/ocd-dataset.md)). The owner's account is named in `tools/observed_reports.py` by its GitHub user ID (`OWNER_ACCOUNTS`, 122638570), which a renamed or reclaimed login cannot take.
 
-- **Only settled results.** A pass at L2 or L3, SMS both ways, or a clean measured failure under rounds 26 to 28, as the report's `settled` field states it. A plain `signed_in`, an off entry, an APN row, video calling and VoNR are not settled results and are not published from the owner's reports.
-- **No extra hold.** The plan judge's version applies: "after a few days" is the settlement of rounds 26 to 28 itself (L3 for a working changed value, two days for a measured failure on passive calls). The owner's reports skip the account hold, the monthly cap and the supersede filter, so every report counts. A plausibility flag still holds a report until a maintainer looks, and a maintainer withdraws one by closing it as not planned.
-- **A separate measured file.** `observed/retested.json` ([`schemas/observed-retested.schema.json`](../schemas/observed-retested.schema.json)), apart from `carriers/`, `lookup.json`, `carrier-variants.json`, `apns-conf.xml` and every other file under `generated/`, and not a release asset.
-- **One record** per cell (device, carrier profile, network code, ROM family and build, IMS stack, Android major), entry, bearer, result class and level. It gives the result (`works`, `calls_out`, `sms_both_ways` or `failed`), the level (`L2`, `L3`), `incoming` (`tested`, `not tested` for calls out only and for a failed outgoing call, `failed`), the method, the failure's reason code, the record in plain words, whether the entry is OCD's value at the data commit (`ocd`), whether it is a correction, `n` (the distinct days measured; a report that repeats a measurement counts once), the first and last day, `valid_until` (90 days after the last day), the data commit of `main` with its `data_digest` (round 29 S13), and the report issues. The tester is always `owner`.
-- **Expiry.** A record lapses 90 days after its last measurement. The daily rebuild drops it; read `valid_until`, not the file's `as_of`, which is the day of the rebuild that last changed the file.
-- **What it never does.** It never carries a value, never changes a configured value, never counts toward round 19's F1 thresholds, and is not ROM-citable without R3. On another phone it only moves that entry's test earlier: it never creates, keeps, skips, pauses, reverts or protects an entry, and every phone keeps only what it measured itself.
+The owner build (ocd-android #29) sends each record as one issue with the owner's issues-only token:
 
-An example record (the S20 on LineageOS 24.0 with AOSP ImsStack and a LIDL Connect SIM):
+- the label `ocd-device-record` and a title starting `[OCD device record]`;
+- the record as the body's only JSON block, one record of [`schemas/device-records.schema.json`](../schemas/device-records.schema.json) (`$defs.record`), under a `### Record` heading;
+- a ticked privacy box.
 
-```json
-{
-  "status": "re-tested by OCD",
-  "tester": "owner",
-  "device": {"model": "SM-G981B", "codename": "x1s"},
-  "carrier_profile": "open.26202.8cebd7550c67",
-  "mccmnc": "26202",
-  "stack": {"rom_family": "lineageos", "rom_build": "CP2A.260605.016 1792814506", "ims_stack": "aosp_imsstack", "android_major": 16},
-  "entry": "vowifi:on",
-  "bearer": "iwlan",
-  "result": "calls_out",
-  "level": "L2",
-  "incoming": "not tested",
-  "method": "mailbox_call",
-  "reason": null,
-  "text": "calls out (L2) over Wi-Fi, incoming not tested (audio from packet counts)",
-  "ocd": true,
-  "correction": false,
-  "n": 1,
-  "first_measured": "2026-10-24",
-  "last_measured": "2026-10-24",
-  "valid_until": "2027-01-22",
-  "data": {"commit": "5358c2598be8db1bbd81e4edbb24f8b76a7f34f1", "data_digest": "sha256:e803919120235fa378226d469a9a8d6d52c15bfcb6c2655c611cf105f1b37f73"},
-  "issues": [301]
-}
-```
+It sends a record again when its result or its last measurement day changes, and otherwise every 14 days. The bot labels each issue `report:valid` or `report:invalid` with one comment, as for reports. It takes the record into `devices/records/measured.json` only when all of these hold:
+
+- the issue's author is the owner's account (user ID 122638570); any other account's record is refused, and other reports stay pointers in `observed/`;
+- the record passes the closed schema (`kind` `measured`, `tester` `owner`, the device, ROM line, IMS stack with its fork, the carrier profile or, for a SIM without one, MCC-MNC with GID1 or SPN), and its `record_key` recomputes;
+- its value is a candidate at its data commit: OCD's resolved value or an alternative of the profile's stack, the Google lane's value of the profile's fill or of `default`, the other value of a switch, or Android's default (`value_kind` `android_default`); an APN record names a row of the profile; an emergency data record says only accepted, refused or Android's default won;
+- its key is not group A (those enter only with a recorded second-agent read, through a reviewed pull request) and not group B (the metered lists, which records cannot change);
+- the privacy scan passes: no phone number, IMSI, ICCID, IMEI, SIP URI or IP address;
+- its data commit is on `main`, carries its data digest and holds the OCD dataset;
+- `validate` and the phone guard pass on the bot's pull request.
+
+One record per `record_key` is kept, the newest by its last measurement, then by issue; a record sent again unchanged is a `duplicate`. A record lapses at `valid_until`, 90 days after its last measurement, and the daily rebuild drops it. Round 19's holds, account gates, time spread and thresholds apply only to outside reports. A measured record is served only on the owner's phones of its device, ROM line and IMS stack; other ROMs and apps may use it only under R3. It never changes a configured carrier value in `carriers/`: a correction opens a source review.
+
+The owner's pointer reports (`ocd-check-test-report`, round 29) are still taken and kept in `observed/reports/` as pointers. They change nothing; round 29's `observed/retested.json` is gone.
 
 ## Source reviews
 
-A configured value changes only through a review of its source and the normal data path (rule 10). So each **correction** in `observed/retested.json` (a pass of an entry that is not OCD's value, where OCD gives the other value or none, and which the phone keeps: tested and kept, or its own value) and each **clean measured failure of OCD's own value** opens a review automatically. The `source-review` job of the same workflow runs when `observed/retested.json` changes on `main`, and daily:
+A configured value changes only through a review of its source and the normal data path (rule 10). So each measured record that **corrects** OCD's published value for its profile, names a **winner after a failure**, falls back to **Android's default**, or found **no value that passed** opens a review automatically. The `source-review` job of the same workflow runs when `devices/records/measured.json` changes on `main`, and daily:
 
-- one issue per carrier profile (or network code without a profile) and feature, labelled `source-review`, titled for example "[Source review] VoLTE for open.26203.0a1b2c3d4e5f (26203)";
-- its text lists every current record behind it, with the phone, software, method, n, dates, expiry and data commit, and says what to do: review the source or importer behind OCD's value, fix it there with the evidence in the pull request, or say that the cause is the phone, its IMS stack or the SIM's plan;
-- the bot keeps the text current, never closes the issue and never edits an issue it did not open. After a maintainer closes it, the bot opens a new one only when the measured results change (a new result, level, cell or build), not for a renewal of the same result.
+- one issue per carrier profile (or SIM key) and target, labelled `source-review`, titled for example "[Source review] config:carrier_wfc_ims_available_bool for profile:open.26202.8cebd7550c67";
+- its text lists every current record behind it, with the phone, software, the measured and the published value, method, n, dates, expiry and data commit, and says what to do: review the source or importer behind OCD's value, fix it there with the evidence in the pull request, or say that the cause is the phone, its IMS stack or the SIM's plan;
+- the bot keeps the text current, never closes the issue and never edits an issue it did not open. After a maintainer closes it, the bot opens a new one only when the measured results change, not for a renewal of the same result.
 
-The issue itself changes nothing. A phone result never changes `carriers/`, `lookup.json`, `carrier-variants.json` or the Android files.
+The issue itself changes nothing.
 
 ## Noise filters
 
@@ -143,13 +127,13 @@ These order what people read and keep review time down. They are not a defence, 
 - an account's reports are `held` until its first accepted report here is 14 days old. The age counts from that report, not from the account's sign-up, because old accounts are easy to buy. The account names are read from the issues on each rebuild and never written to `observed/`;
 - a report `expires` 90 days after its test.
 
-The owner's account skips the account filters (the hold, the monthly cap and the supersede); the duplicate, the plausibility flag and the expiry apply to it as well ([The owner's results](#the-owners-results-re-tested-by-ocd)).
+The owner's account skips the account filters (the hold, the monthly cap and the supersede); the duplicate, the plausibility flag and the expiry apply to it as well ([The owner's measured records](#the-owners-measured-records)).
 
 ## Why it stays apart
 
 OCD's values say what carrier tables configure, from maintained sources. A phone result is a different kind of evidence, kept beside the data, never in it:
 
-- no report changes a capability value, an APN row, a CarrierConfig key, a device record or a release asset;
+- no pointer report changes a capability value, an APN row, a CarrierConfig key, a device record or a release asset; only the owner's measured records enter `generated/devices/device-records.json`, for the owner's phones;
 - `observed/` is not part of a release and has no compatibility promise;
 - counts are not votes: a `signed_in` from one phone says nothing about another phone, stack or plan;
 - a ROM maintainer who uses a cell still makes his own test call; a phone that acts on a report still runs its own test and keeps nothing that fails.
@@ -158,7 +142,7 @@ Run the checks locally:
 
 ```bash
 python3 tools/test_observed_reports.py
-python3 tools/observed_reports.py validate --root .   # observed/reports/, summary.json and retested.json
+python3 tools/observed_reports.py validate --root .   # observed/reports/, summary.json and devices/records/measured.json
 git fetch --no-tags --depth=1 origin '+refs/tags/data-*:refs/tags/data-*'
 python3 tools/observed_reports.py check-file report.json   # one report as the app wrote it
 ```

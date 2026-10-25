@@ -1,0 +1,31 @@
+{
+  "description": "Registry entries (type and IMS stack fork) of the keys the per-device records use (rule round 30, spec 2.5.1), so that a record's key keeps its type when neither the public schema nor the Google lane has it, or when the Google lane drops it. fork is null for a key of the stack itself; source says where the key is defined.",
+  "keys": {
+    "gps.longterm_psds_server_1": {
+      "fork": null,
+      "source": "Android GNSS configuration key, in Google's CarrierSettings default",
+      "type": "string"
+    },
+    "imsemergency.skip_audio_dedicated_bearer_wait_timer_for_emergency_bool": {
+      "fork": null,
+      "source": "AOSP ImsStack java/src/com/android/imsstack/core/config/CarrierConfig.java line 778 (LineageOS 23.2), default false",
+      "type": "bool"
+    },
+    "imsvoice.audio_evs_support_bool": {
+      "fork": null,
+      "source": "AOSP ImsStack java/src/com/android/imsstack/core/config/CarrierConfig.java line 1350 (LineageOS 23.2)",
+      "type": "bool"
+    },
+    "imsvoice.voice_on_default_bearer_in_roaming_without_qos_bool": {
+      "fork": "ocd",
+      "source": "OCD's ImsStack fork (S20 project rom-repos/platform_packages_modules_ImsStack.git, branch ocd), java/assets/carrier_config/carrier_config.xml line 170, default false",
+      "type": "bool"
+    },
+    "imsvoice.voice_on_default_bearer_supported_bool": {
+      "fork": null,
+      "source": "AOSP ImsStack imsvoice.* key (LineageOS 23.2), also in Google's CarrierSettings",
+      "type": "bool"
+    }
+  },
+  "schema_version": 1
+}
