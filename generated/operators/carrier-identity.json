@@ -1,0 +1,2753 @@
+{
+  "countries": [
+    "CH",
+    "DE",
+    "LU",
+    "MY"
+  ],
+  "description": "Which operators, brands and MVNOs run on which network codes (rule round 32, GOAL decision 2), built from the sources' own labels: LineageOS APN carrier names, Samsung network names and sales codes, Google carrier ID names and Apple bundle names. selectors are the SIM selectors exactly as a source states them, each with the OCD profile it maps to and the source families that state it. host_only means no source gives the brand a selector, so no phone can tell its SIMs from the host's. The table never changes OCD's matcher.",
+  "entries": [
+    {
+      "country": "CH",
+      "host_networks": [
+        "22803"
+      ],
+      "host_only": false,
+      "key": "ch.salt",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "samsung_ims",
+            "samsung_omc"
+          ],
+          "label": "Orange CH",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "label": "Salt",
+          "networks": [
+            "22803"
+          ],
+          "sales_codes": [
+            "AUT",
+            "EUX",
+            "EUY"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Salt Ch",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Salt IMS",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Salt Internet",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Salt MMS",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Salt Prepay",
+          "networks": [
+            "22803"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Salt Ut",
+          "networks": [
+            "22803"
+          ]
+        }
+      ],
+      "name": "Salt",
+      "operator_key": "ch.salt",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "22803"
+            ]
+          },
+          "profile_id": "open.22803.14c2984b5bc5"
+        }
+      ]
+    },
+    {
+      "country": "CH",
+      "host_networks": [
+        "22802"
+      ],
+      "host_only": false,
+      "key": "ch.sunrise",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "label": "Sunrise",
+          "networks": [
+            "22802"
+          ],
+          "sales_codes": [
+            "AUT",
+            "EUX",
+            "EUY"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "Sunrise CH",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Sunrise Ch",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Sunrise IMS",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Sunrise Internet",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Sunrise MMS",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Sunrise Ut",
+          "networks": [
+            "22802"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Sunrise live",
+          "networks": [
+            "22802"
+          ]
+        }
+      ],
+      "name": "Sunrise",
+      "operator_key": "ch.sunrise",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "22802"
+            ]
+          },
+          "profile_id": "open.22802.4eff0a62cfa4"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26202",
+        "26203",
+        "26204",
+        "26207",
+        "26209",
+        "26223"
+      ],
+      "host_only": false,
+      "key": "de.1und1",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "label": "1&1",
+          "networks": [
+            "26202",
+            "26204",
+            "26207",
+            "26209",
+            "26223"
+          ],
+          "sales_codes": [
+            "DBT",
+            "EUX"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "1And1 De",
+          "networks": [
+            "26223"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos"
+          ],
+          "label": "1and1 IMS",
+          "networks": [
+            "26203",
+            "26207",
+            "26223"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos"
+          ],
+          "label": "1and1 Internet",
+          "networks": [
+            "26203",
+            "26207",
+            "26223"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "1and1 MMS",
+          "networks": [
+            "26223"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "1and1 XCAP",
+          "networks": [
+            "26223"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "1n1 DE",
+          "networks": [
+            "26223"
+          ]
+        }
+      ],
+      "name": "1&1",
+      "operator_key": "de.1und1",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "11"
+            ],
+            "mccmnc": [
+              "26202"
+            ]
+          },
+          "profile_id": "open.26202.5e6cc8d0e19b"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "250109"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.15d0af63e273"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "samsung_ims",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26223"
+            ]
+          },
+          "profile_id": "open.26223.902dafdf3eed"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203",
+        "26205",
+        "26277"
+      ],
+      "host_only": true,
+      "key": "de.aldi-talk",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "AldiTalk/MedionMobile",
+          "networks": [
+            "26203",
+            "26205",
+            "26277"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "MEDIONmobile",
+          "networks": [
+            "26203"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "MEDIONmobile MMS",
+          "networks": [
+            "26203"
+          ]
+        }
+      ],
+      "name": "ALDI TALK",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26207"
+      ],
+      "host_only": false,
+      "key": "de.alice",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "lineageos",
+            "mobile_broadband_provider_info",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Alice",
+          "networks": [
+            "26207"
+          ]
+        }
+      ],
+      "name": "Alice",
+      "operator_key": "de.telefonica",
+      "selectors": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "mccmnc": [
+              "26207"
+            ],
+            "spn": [
+              "ALICE"
+            ]
+          },
+          "profile_id": "open.26207.69841ad3698a"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26202"
+      ],
+      "host_only": true,
+      "key": "de.bild-mobil",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Bild Mobil",
+          "networks": [
+            "26202"
+          ]
+        }
+      ],
+      "name": "BILDmobil",
+      "operator_key": "de.vodafone",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203",
+        "26205",
+        "26277"
+      ],
+      "host_only": true,
+      "key": "de.blau",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "blau.de",
+          "networks": [
+            "26203",
+            "26205",
+            "26277"
+          ]
+        }
+      ],
+      "name": "Blau",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26201",
+        "26206"
+      ],
+      "host_only": false,
+      "key": "de.congstar",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Congstar",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Congstar De",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Congstar HOS",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Congstar IMS",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos"
+          ],
+          "label": "Congstar Internet",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "congstar.de",
+          "networks": [
+            "26201",
+            "26206"
+          ],
+          "sales_codes": [
+            "DBT",
+            "DCO",
+            "DTM"
+          ]
+        }
+      ],
+      "name": "congstar",
+      "operator_key": "de.telekom",
+      "selectors": [
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "congstar"
+            ]
+          },
+          "profile_id": "open.26201.3e9dccb1fd2a"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "congstar.de"
+            ]
+          },
+          "profile_id": "open.26201.406cac61ad86"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "congstar.de"
+            ]
+          },
+          "profile_id": "open.26201.5017678e17b2"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "congstar"
+            ]
+          },
+          "profile_id": "open.26201.e7be740147c1"
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.fdceda072a5d"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "congstar"
+            ]
+          },
+          "profile_id": "open.26206.09ed0a1e06a6"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "congstar.de"
+            ]
+          },
+          "profile_id": "open.26206.2898f9c10349"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "congstar.de"
+            ]
+          },
+          "profile_id": "open.26206.7e9050880945"
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.a2e41640ba7c"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "congstar"
+            ]
+          },
+          "profile_id": "open.26206.aacd3b728a20"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203"
+      ],
+      "host_only": false,
+      "key": "de.enreach",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Enreach De",
+          "networks": [
+            "26203"
+          ]
+        }
+      ],
+      "name": "Enreach",
+      "operator_key": "de.telefonica",
+      "selectors": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "26203482"
+            ],
+            "mccmnc": [
+              "26203"
+            ]
+          },
+          "profile_id": "open.26203.c20311365064"
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "26203483"
+            ],
+            "mccmnc": [
+              "26203"
+            ]
+          },
+          "profile_id": "open.26203.c69ea5f641e4"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26207",
+        "26208",
+        "26211"
+      ],
+      "host_only": true,
+      "key": "de.fonic",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "FONIC",
+          "networks": [
+            "26207",
+            "26208",
+            "26211"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Fonic Prepaid",
+          "networks": [
+            "26207"
+          ]
+        }
+      ],
+      "name": "FONIC",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26201",
+        "26206"
+      ],
+      "host_only": false,
+      "key": "de.fraenk",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "fraenk",
+          "networks": [
+            "26201",
+            "26206"
+          ],
+          "sales_codes": [
+            "DTM"
+          ]
+        }
+      ],
+      "name": "fraenk",
+      "operator_key": "de.telekom",
+      "selectors": [
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "fraenk"
+            ]
+          },
+          "profile_id": "open.26201.d1aa0b84aab3"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "44"
+            ],
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "fraenk"
+            ]
+          },
+          "profile_id": "open.26206.f74033faf3ac"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26201"
+      ],
+      "host_only": true,
+      "key": "de.lebara",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Lebara",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Lebara Internet",
+          "networks": [
+            "26201"
+          ]
+        }
+      ],
+      "name": "Lebara",
+      "operator_key": "de.telekom",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26202"
+      ],
+      "host_only": true,
+      "key": "de.lidl-connect",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "LIDL Connect",
+          "networks": [
+            "26202"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "LIDL MMS",
+          "networks": [
+            "26202"
+          ]
+        }
+      ],
+      "name": "LIDL Connect",
+      "operator_key": "de.vodafone",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26207"
+      ],
+      "host_only": true,
+      "key": "de.lidl-mobile",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Lidl Mobile",
+          "networks": [
+            "26207"
+          ]
+        }
+      ],
+      "name": "Lidl Mobile (on O2)",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26201",
+        "26207"
+      ],
+      "host_only": false,
+      "key": "de.mobilcom-debitel",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "aosp"
+          ],
+          "label": "Debitel",
+          "networks": [
+            "26201"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "label": "mobilcom-debitel",
+          "networks": [
+            "26207"
+          ]
+        }
+      ],
+      "name": "mobilcom-debitel",
+      "operator_key": null,
+      "selectors": [
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              2310
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "debitel"
+            ]
+          },
+          "profile_id": "open.26201.56eb48b45e00"
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "DEBITEL"
+            ]
+          },
+          "profile_id": "open.26201.9d4a6a8c8761"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "000002"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.6aa33dfeb206"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26207",
+        "26208",
+        "26211"
+      ],
+      "host_only": true,
+      "key": "de.netzclub",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Netzclub",
+          "networks": [
+            "26207",
+            "26208",
+            "26211"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "netzclub",
+          "networks": [
+            "26207"
+          ]
+        }
+      ],
+      "name": "netzclub",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26223"
+      ],
+      "host_only": true,
+      "key": "de.sim-de",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "sim.de",
+          "networks": [
+            "26223"
+          ]
+        }
+      ],
+      "name": "sim.de",
+      "operator_key": "de.1und1",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203",
+        "26205",
+        "26277"
+      ],
+      "host_only": true,
+      "key": "de.simyo",
+      "kind": "brand",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "simyo Internet",
+          "networks": [
+            "26203",
+            "26205",
+            "26277"
+          ]
+        }
+      ],
+      "name": "simyo",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203"
+      ],
+      "host_only": true,
+      "key": "de.sipgate",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "sipgate",
+          "networks": [
+            "26203"
+          ]
+        }
+      ],
+      "name": "sipgate",
+      "operator_key": "de.telefonica",
+      "selectors": []
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26207",
+        "26208",
+        "26211"
+      ],
+      "host_only": false,
+      "key": "de.tchibo",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Tchibo De",
+          "networks": [
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Tchibo Internet",
+          "networks": [
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Tchibo-Mobil",
+          "networks": [
+            "26207",
+            "26208",
+            "26211"
+          ]
+        }
+      ],
+      "name": "Tchibo mobil",
+      "operator_key": "de.telefonica",
+      "selectors": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "26207500"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.78040a3afcc4"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26203",
+        "26205",
+        "26207",
+        "26208",
+        "26211",
+        "26277"
+      ],
+      "host_only": false,
+      "key": "de.telefonica",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "label": "E-Plus",
+          "networks": [
+            "26203",
+            "26205",
+            "26277"
+          ],
+          "sales_codes": [
+            "SMP"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "E-Plus Internet",
+          "networks": [
+            "26203"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "E-Plus MMS",
+          "networks": [
+            "26203"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Eplus De",
+          "networks": [
+            "26203"
+          ]
+        },
+        {
+          "families": [
+            "aosp",
+            "mobile_broadband_provider_info"
+          ],
+          "label": "O2",
+          "networks": [
+            "26207",
+            "26208",
+            "26211"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "O2 DE IMS",
+          "networks": [
+            "26203",
+            "26207",
+            "26208"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "O2 DE Internet",
+          "networks": [
+            "26203",
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "lineageos"
+          ],
+          "label": "O2 DE Internet Prepaid",
+          "networks": [
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "O2 De",
+          "networks": [
+            "26207",
+            "26208"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "O2Prepaid De",
+          "networks": [
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "Telefonica DE",
+          "networks": [
+            "26203",
+            "26207",
+            "26208",
+            "26211",
+            "26277"
+          ],
+          "sales_codes": [
+            "EUX"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "o2 - de",
+          "networks": [
+            "26203",
+            "26207",
+            "26208"
+          ],
+          "sales_codes": [
+            "DBT",
+            "EUX",
+            "GCF",
+            "XAA"
+          ]
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "o2 DE",
+          "networks": [
+            "26203",
+            "26207"
+          ],
+          "sales_codes": [
+            "DBT"
+          ]
+        },
+        {
+          "families": [
+            "sony_open_devices_aosp"
+          ],
+          "label": "o2 IMS",
+          "networks": [
+            "26203",
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "sony_open_devices_aosp"
+          ],
+          "label": "o2 Internet",
+          "networks": [
+            "26203",
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "sony_open_devices_aosp"
+          ],
+          "label": "o2 Internet Prepaid",
+          "networks": [
+            "26207"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "label": "o2-de",
+          "networks": [
+            "26203",
+            "26207"
+          ]
+        }
+      ],
+      "name": "Telefónica Deutschland (O2)",
+      "operator_key": "de.telefonica",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "010901"
+            ],
+            "mccmnc": [
+              "26203"
+            ]
+          },
+          "profile_id": "open.26203.a91fb80d125d"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "26203"
+            ]
+          },
+          "profile_id": "open.26203.dbb2be7109a6"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "010301"
+            ],
+            "mccmnc": [
+              "26203"
+            ]
+          },
+          "profile_id": "open.26203.ec645827a22d"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info"
+          ],
+          "match": {
+            "mccmnc": [
+              "26205"
+            ]
+          },
+          "profile_id": "open.26205.a8512a2cc9e7"
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "2620749"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.1c95803fdfb1"
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              1454
+            ],
+            "mccmnc": [
+              "26207",
+              "26211"
+            ]
+          },
+          "profile_id": "open.26207.394d5585811d"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "010301"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.9f3d8c88984e"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.c07dcc040b58"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "010901"
+            ],
+            "mccmnc": [
+              "26207"
+            ]
+          },
+          "profile_id": "open.26207.c327d4602731"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "26208"
+            ]
+          },
+          "profile_id": "open.26208.d7179172e6f8"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims"
+          ],
+          "match": {
+            "mccmnc": [
+              "26211"
+            ]
+          },
+          "profile_id": "open.26211.c64f13cbbb33"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims"
+          ],
+          "match": {
+            "mccmnc": [
+              "26277"
+            ]
+          },
+          "profile_id": "open.26277.b08a9533d50b"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26201",
+        "26206"
+      ],
+      "host_only": false,
+      "key": "de.telekom",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "HOS",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "T-Mobile(Telekom)",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "TMobile DE",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "label": "Telekom",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Telekom De",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Telekom IMS",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Telekom Internet",
+          "networks": [
+            "26201",
+            "26206"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "Telekom.de",
+          "networks": [
+            "26201",
+            "26206"
+          ],
+          "sales_codes": [
+            "DBT",
+            "DTM",
+            "EUX",
+            "GCF",
+            "XAA"
+          ]
+        }
+      ],
+      "name": "Telekom Deutschland",
+      "operator_key": "de.telekom",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_carrier_config",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.13528695fee7"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "01"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.1663c382736a"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26201.1f7e1db680d5"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "04"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.252ee8ab8627"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "02"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.256bb5ca1972"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "99"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26201.2b9c2bbe3224"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "01"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26201.31baa30c86e4"
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              3
+            ],
+            "mccmnc": [
+              "26201",
+              "26206"
+            ],
+            "spn": [
+              "Business",
+              "Privat",
+              "T-Campus",
+              "T-Mobile D",
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26201.420d035152c1"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Privat"
+            ]
+          },
+          "profile_id": "open.26201.47a32cdd87da"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "T-Mobile D"
+            ]
+          },
+          "profile_id": "open.26201.556eb640efbf"
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              3
+            ],
+            "gid1_prefixes": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "4B",
+              "99"
+            ],
+            "mccmnc": [
+              "26201",
+              "26206"
+            ]
+          },
+          "profile_id": "open.26201.7c7067e3bb8f"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "03"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.812125eb9475"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "99"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.8c48ee860bf8"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "02"
+            ],
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26201.bdbec0242756"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "T-Campus"
+            ]
+          },
+          "profile_id": "open.26201.c249d3cc39c3"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26201"
+            ],
+            "spn": [
+              "Business"
+            ]
+          },
+          "profile_id": "open.26201.ca6233963ed0"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "4B"
+            ],
+            "mccmnc": [
+              "26201"
+            ]
+          },
+          "profile_id": "open.26201.d071d51dc6d8"
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              2395
+            ],
+            "mccmnc": [
+              "26201",
+              "26206"
+            ]
+          },
+          "profile_id": "open.26201.fb727a260df2"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "Telekom.de"
+            ]
+          },
+          "profile_id": "open.26206.015a4c41188c"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "02"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.019379e545e2"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "04"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.359897c5bdca"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "CA"
+            ],
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "T-Campus"
+            ]
+          },
+          "profile_id": "open.26206.5fedbbd933e8"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.6634a7e46d53"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "03"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.764cd42e27b2"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "T-Campus"
+            ]
+          },
+          "profile_id": "open.26206.8158cd2e4bde"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "4B"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.900e701624ff"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "01"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.aeab637282a1"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "T-Mobile D"
+            ]
+          },
+          "profile_id": "open.26206.baa71136c025"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "Business"
+            ]
+          },
+          "profile_id": "open.26206.d809bda4154a"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "99"
+            ],
+            "mccmnc": [
+              "26206"
+            ]
+          },
+          "profile_id": "open.26206.f4d16dba3d38"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26206"
+            ],
+            "spn": [
+              "Privat"
+            ]
+          },
+          "profile_id": "open.26206.fb7f068488b5"
+        }
+      ]
+    },
+    {
+      "country": "DE",
+      "host_networks": [
+        "26202",
+        "26204",
+        "26209"
+      ],
+      "host_only": false,
+      "key": "de.vodafone",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Vodafone",
+          "networks": [
+            "26202",
+            "26204",
+            "26209"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "samsung_ims",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Vodafone DE",
+          "networks": [
+            "26202",
+            "26209"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "Vodafone DE-IMS",
+          "networks": [
+            "26202"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Vodafone DE-MMS",
+          "networks": [
+            "26202"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Vodafone De",
+          "networks": [
+            "26202"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "Vodafone.de",
+          "networks": [
+            "26202"
+          ],
+          "sales_codes": [
+            "GCF"
+          ]
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "vodafone.de",
+          "networks": [
+            "26202"
+          ],
+          "sales_codes": [
+            "DBT",
+            "EUX",
+            "VD2"
+          ]
+        }
+      ],
+      "name": "Vodafone Deutschland",
+      "operator_key": "de.vodafone",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "26202"
+            ]
+          },
+          "profile_id": "open.26202.8cebd7550c67"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info"
+          ],
+          "match": {
+            "mccmnc": [
+              "26204"
+            ]
+          },
+          "profile_id": "open.26204.b3ff670276aa"
+        }
+      ]
+    },
+    {
+      "country": "LU",
+      "host_networks": [
+        "27001"
+      ],
+      "host_only": false,
+      "key": "lu.join",
+      "kind": "mvno",
+      "labels": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "Join",
+          "networks": [
+            "27001"
+          ],
+          "sales_codes": [
+            "LUX"
+          ]
+        }
+      ],
+      "name": "Join",
+      "operator_key": "lu.post",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "270016"
+            ],
+            "mccmnc": [
+              "27001"
+            ]
+          },
+          "profile_id": "open.27001.4973085cf1df"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "imsi_prefix_patterns": [
+              "270016"
+            ],
+            "mccmnc": [
+              "27001"
+            ],
+            "spn": [
+              "Join"
+            ]
+          },
+          "profile_id": "open.27001.c72d45a61fe4"
+        }
+      ]
+    },
+    {
+      "country": "LU",
+      "host_networks": [
+        "27001"
+      ],
+      "host_only": false,
+      "key": "lu.post",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "LUXGSM",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Luxgsm Internet",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "POST",
+          "networks": [
+            "27001"
+          ],
+          "sales_codes": [
+            "EUX",
+            "LUX"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "POST Internet",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source"
+          ],
+          "label": "POST MMS",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Post Internet",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "Post LU",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Post Lu",
+          "networks": [
+            "27001"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Post MMS",
+          "networks": [
+            "27001"
+          ]
+        }
+      ],
+      "name": "POST Luxembourg",
+      "operator_key": "lu.post",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "27001"
+            ],
+            "spn": [
+              "POST"
+            ]
+          },
+          "profile_id": "open.27001.8e87adf553fa"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "27001"
+            ]
+          },
+          "profile_id": "open.27001.a63cfc35dfd8"
+        }
+      ]
+    },
+    {
+      "country": "MY",
+      "host_networks": [
+        "50212"
+      ],
+      "host_only": false,
+      "key": "my.maxis",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "MAXIS",
+          "networks": [
+            "50212"
+          ],
+          "sales_codes": [
+            "XME"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Maxis",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 2G Internet",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 2G MMS",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 3G Internet",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 3G MMS",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 3G WAP GPRS",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 3g Internet",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis 3g MMS",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "fairphone_official_source",
+            "lineageos",
+            "sony_open_devices_aosp"
+          ],
+          "label": "Maxis Internet",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "Maxis MY",
+          "networks": [
+            "50212"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Maxis My",
+          "networks": [
+            "50212"
+          ]
+        }
+      ],
+      "name": "Maxis (Hotlink)",
+      "operator_key": "my.maxis",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_carrier_config",
+            "samsung_ims",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "50212"
+            ]
+          },
+          "profile_id": "open.50212.a6855267e1f3"
+        }
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "schema_version": 1
+}
