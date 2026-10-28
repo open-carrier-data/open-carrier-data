@@ -19,6 +19,7 @@ from carrier_config_types import (
     emergency_named,
     expected_config_type,
 )
+from android_phone_model import PERSIST_APNS_FOR_PLMN
 from lineageos_apns import fits_lineageos_schema
 from validate_public_carrier_data import STALE_AFTER_DAYS
 
@@ -1115,6 +1116,90 @@ def vendor_mms_row(record: dict[str, Any]) -> bool:
     )
 
 
+def take_mms_off_internet_group(
+    ranked: list[dict[str, Any]], internet: dict[str, Any], vendor: list[dict[str, Any]]
+) -> int:
+    """Step 2b of put_vendor_mms_first: step 2 read on the row Android
+    stores for the first internet row (rule decisions round 33, change 18
+    step 2b, round 6 question 7). That stored row is every row of the scope
+    with the internet row's android_unique_key (write_android_groups_best_last),
+    and Android sends MMS over the internet connection when it serves "mms"
+    (DataNetworkController 1372 and 1429). It acts only when all six hold:
+
+    1. after step 2, the first internet row itself does not serve "mms";
+    2. another row of the stored group serves "mms";
+    3. no row of the group is backed for "mms" by a current vendor
+       (_current: CURRENT_VENDOR_APN_SOURCES, old-build sources excluded;
+       Apple is not a current vendor), so the group's MMS setting is no
+       vendor's;
+    4. the vendor MMS rows (vendor_mms_row) together serve every network
+       type of the group's merged bitmask (apn_row_network_types);
+    5. the scope is not on a persist_apns_for_plmn network
+       (android_phone_model.PERSIST_APNS_FOR_PLMN), where
+       TelephonyProvider.separateRowsNeeded can keep the rows apart, so the
+       stored-row reading does not hold;
+    6. the sole-effect test: for each row of the group whose only type is
+       "mms", the stored row without it (android_stored_rows, in written
+       order) equals the stored row with it in every attribute except type,
+       unset values ignored: the bearer and network type bitmasks (a row
+       with neither serves every network type), username, password, auth
+       type and MTU included.
+
+    Then every other row of the group that serves "mms" loses "mms". A row
+    with other types keeps them, its place and every value, and is marked
+    "_mms_left_out_stored_with_internet" (Apple's 452/01 m-wap row becomes
+    dun, 259/01's stale row cbs,dun,fota,ims). A row whose only type is
+    "mms" never stands as a profile of its own, because TelephonyProvider
+    stores it into the internet row, so it is marked
+    "_left_out_stored_with_internet" and leave_out_absorbed_mms leaves it out
+    of apns-conf.xml (274/12's stale internet.tal.is row). When any check
+    fails, nothing in the scope changes. The first internet row itself, every
+    MMSC, MMS proxy and MMS port, the rows of other stored groups and every
+    type other than "mms" never change. Profile JSON keeps every retyped and
+    left-out row. Returns the number of rows retyped; the left-out rows are
+    counted with leave_out_absorbed_mms."""
+    def serves(record: dict[str, Any], apn_type: str) -> bool:
+        return apn_type in apn_row_types(record["type"])
+
+    if serves(internet, "mms"):
+        return 0
+    if f"{internet.get('mcc', '')}{internet.get('mnc', '')}" in PERSIST_APNS_FOR_PLMN:
+        return 0
+    key = android_unique_key(internet)
+    group = [record for record in ranked if android_unique_key(record) == key]
+    stale = [record for record in group if record is not internet and serves(record, "mms")]
+    if not stale or any(record.get("_current", {}).get("mms") for record in group):
+        return 0
+    covered = frozenset().union(*(apn_row_network_types(record) for record in vendor))
+    if not frozenset().union(*(apn_row_network_types(record) for record in group)) <= covered:
+        return 0
+    # Check 6. The group is written best row last (the internet row is the
+    # best-ranked row of its own group) and the others before it in reverse
+    # rank order (write_android_groups_best_last).
+    written_order = [record for record in reversed(group) if record is not internet] + [internet]
+
+    def stored_without_type(rows: list[dict[str, Any]]) -> dict[str, Any]:
+        row = {field: value for field, value in android_stored_rows(rows)[0][0].items() if value is not None}
+        row.pop("type", None)
+        return row
+
+    whole = stored_without_type(written_order)
+    for record in stale:
+        if apn_row_types(record["type"]) == ["mms"] and stored_without_type(
+            [other for other in written_order if other is not record]
+        ) != whole:
+            return 0
+    retyped = 0
+    for record in stale:
+        if apn_row_types(record["type"]) == ["mms"]:
+            record["_left_out_stored_with_internet"] = True
+            continue
+        record["type"] = ",".join(t for t in apn_row_types(record["type"]) if t != "mms")
+        record["_mms_left_out_stored_with_internet"] = True
+        retyped += 1
+    return retyped
+
+
 def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
     current vendor backs for "mms" (_current), with a real APN and an MMSC,
@@ -1143,8 +1228,9 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
        earliest-ranked row of that stored group. The group is written at
        that row's place, so the moved row comes before the stored row.
 
-    Only the first internet row is retyped; retyping every row no vendor
-    backs lets DataProfileManager merge EE's stale T-Mobile rows in 234/30.
+    Only the first internet row and the rows Android stores with it (step
+    2b) are retyped; retyping every row no vendor backs lets
+    DataProfileManager merge EE's stale T-Mobile rows in 234/30.
     MmsService then reads the MMSC from the APN of the network that carries
     MMS (MmsRequest 209-231). Rule decisions of 2026-10-06, round 6, change
     18, which replaces change 15: measured on 2026-10-08 (public 575632c1),
@@ -1165,10 +1251,19 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     current vendor's tuple only in 374/12 and 748/01, no other MMS, internet
     or attach lead, credential or auth type changes, and the phone stores
     22,295 rows either way; on the 2026-10-17 data 621/60 joins them and
-    keeps 9mobile. A stale MMS-only row stored with the internet row itself
-    (274/12, where only the APN name differs from the vendor's) is not
-    reached: step 3 stops there, and it stays round 6 question 7.
-    Returns the rows and 1 when a row was retyped."""
+    keeps 9mobile.
+    Step 2b (take_mms_off_internet_group) reads the internet row's own
+    stored row since rule decisions round 33 (2026-10-28, round 6 question
+    7, the internet row's own group): a row no current vendor backs for
+    "mms" that is stored with the first internet row gave that stored row
+    "mms", so MMS went over the internet APN (452/01, where Apple's m-wap
+    dun,mms row took the internet row's key when Apple's 2026-10-26 bundle
+    added IPV4V6, and the phone guard held the publish with digest
+    1491f56ec56e2140; 259/01, where a stale wap.orange.md row sent MMS to a
+    WAP page). Such a row loses "mms" and keeps its other types; an
+    MMS-only row of that group is left out by leave_out_absorbed_mms
+    (274/12). Step 3 then runs on the groups as retyped.
+    Returns the rows and the number of rows retyped."""
     def serves(record: dict[str, Any], apn_type: str) -> bool:
         return apn_type in apn_row_types(record["type"])
 
@@ -1190,6 +1285,9 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
             retyped = 1
         else:
             internet["_mms_kept_no_vendor_coverage"] = True
+    # Step 2b (round 33): the rows Android stores with the internet row.
+    if internet is not None:
+        retyped += take_mms_off_internet_group(ranked, internet, vendor)
     # Android stores the rows of one android_unique_key as one row, at the
     # place of the group's best-ranked row (write_android_groups_best_last),
     # so a row serves "mms" on the phone when any row of its group does, and
@@ -1197,7 +1295,8 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     # MMS row (the unique key holds the APN, MMSC, MMS proxy and MMS port).
     groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
     for record in ranked:
-        groups[android_unique_key(record)].append(record)
+        if not record.get("_left_out_stored_with_internet"):
+            groups[android_unique_key(record)].append(record)
     first = next(
         (record for record in ranked
          if any(serves(member, "mms") for member in groups[android_unique_key(record)])),
@@ -1502,6 +1601,16 @@ def leave_out_absorbed_mms(written: list[dict[str, Any]]) -> tuple[list[dict[str
     Profile JSON keeps these rows; only apns-conf.xml leaves them out.
     Returns the rows kept and the rows left out, each marked
     "_absorbed_mms_left_out" for --explain."""
+    marked = [record for record in written if record.get("_left_out_stored_with_internet")]
+    if marked:
+        # MMS-only rows of the internet row's stored row marked by
+        # take_mms_off_internet_group (round 33, option C) go first, so the
+        # tests below read the stored rows without them.
+        kept, absorbed = leave_out_absorbed_mms(
+            [record for record in written if not record.get("_left_out_stored_with_internet")]
+        )
+        order = {id(record): index for index, record in enumerate(written)}
+        return kept, sorted(marked + absorbed, key=lambda record: order[id(record)])
     vendor = [record for record in written if vendor_mms_row(record)]
     if not vendor:
         return written, []
@@ -1572,14 +1681,20 @@ def apn_xml_rows(
         emergency_left_out.extend(emergency_changed)
         ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
         mms_left_out += retyped
+        written = write_android_groups_best_last(ranked)
+        # Step 7's MMS-only rows stored with the internet row (round 33,
+        # take_mms_off_internet_group) leave before D8 rule 1 reads the
+        # stored rows, so rule 1 sees the leads the phone will have.
+        stored_with_internet = [record for record in written if record.get("_left_out_stored_with_internet")]
         grouped, credentials_changed, kept_by_page = leave_out_superseded_google_credentials(
-            write_android_groups_best_last(ranked), scopes[scope]
+            [record for record in written if not record.get("_left_out_stored_with_internet")], scopes[scope]
         )
         credentials_left_out.extend(credentials_changed)
         credentials_kept.extend(kept_by_page)
         kept, absorbed = leave_out_absorbed_mms(grouped)
         ordered.extend(kept)
-        mms_absorbed.extend(absorbed)
+        order = {id(record): index for index, record in enumerate(written)}
+        mms_absorbed.extend(sorted(stored_with_internet + absorbed, key=lambda record: order[id(record)]))
     return ApnRows(
         ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out),
         tuple(credentials_left_out), tuple(credentials_kept),
@@ -2121,7 +2236,7 @@ def main(argv: list[str]) -> int:
         f"{config_xml_count} CarrierConfig XML block(s), "
         f"{rows_schema_rejected} APN row(s) left out because LineageOS's schema rejects them, "
         f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
-        f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs, "
+        f"{apn_rows.mms_left_out} row(s) without the MMS type no current vendor backs (first internet rows and rows stored with them), "
         f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out, "
         f"{len(apn_rows.credentials_left_out)} row(s) left out whose only effect is credentials from Google's "
         f"superseded copies ({len(apn_rows.credentials_kept_operator_page)} kept by the operator's page), "

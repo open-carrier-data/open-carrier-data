@@ -289,6 +289,11 @@ def explain(
                     # backs it for MMS and current vendors' MMS rows serve
                     # every mobile network type it serves.
                     "mms_left_out": bool(row.get("_mms_left_out")),
+                    # A row Android stores with the first internet row lost
+                    # "mms": no current vendor backs any row of that stored
+                    # row for MMS and current vendors' MMS rows serve every
+                    # mobile network type it serves (round 33).
+                    "mms_left_out_stored_with_internet": bool(row.get("_mms_left_out_stored_with_internet")),
                     # A current vendor's MMS row moved ahead of the first row
                     # that served "mms", so MMS goes to it.
                     "vendor_mms_ahead": bool(row.get("_vendor_mms_ahead")),
@@ -366,7 +371,16 @@ def explain(
             # them. Rows rule 1 of round 32 (D8) left out are listed too
             # (superseded_google_credentials_left_out).
             "left_out": [
-                {"row": generator.written_attributes(row), "reasons": {"absorbed_mms_left_out": True}}
+                {
+                    "row": generator.written_attributes(row),
+                    "reasons": {
+                        "absorbed_mms_left_out": True,
+                        # An MMS-only row Android stores with the first
+                        # internet row, left out because it gave that stored
+                        # row "mms" no current vendor backs (round 33).
+                        "left_out_stored_with_internet": bool(row.get("_left_out_stored_with_internet")),
+                    },
+                }
                 for row in generated_rows.mms_absorbed_left_out
                 if generator.apn_scope_key(row) in chosen_scopes
             ]
