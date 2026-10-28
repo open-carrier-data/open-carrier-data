@@ -42,7 +42,7 @@ The tiers in `data-2026.10`, in short:
 | `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | supported for apps and tools; the device records as information, never an export |
 | `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
 | everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
-| `generated/ocd-dataset/`, `generated/devices/device-records.json` | the OCD dataset for the owner's ROM and the OCD Check owner app, taken from validated `main` pinned per commit, not from releases (rule round 30, [docs/ocd-dataset.md](docs/ocd-dataset.md)); reference for everyone else. The per-device records are the owner's devices' configured fixes and measured results (90-day expiry, not ROM-citable without R3) |
+| `generated/ocd-dataset/`, `generated/devices/device-records.json` | the OCD dataset, which OcdCarrierSettings serves as a ROM's carrier data on every ROM whose builder chooses it, baked at a validated `main` commit or a release's commit and kept current by the ROM's own build of the OCD Check app; not a release asset (rule rounds 30 and 31, [docs/rom-builders.md](docs/rom-builders.md), [docs/ocd-dataset.md](docs/ocd-dataset.md)). The records are the owner's measured results, served only in their exact cell, with a 90-day expiry, and, until round 31's S20 build has passed, the S20's device fixes |
 | `observed/` | never supported and never a release asset: unverified phone reports from the OCD Check app ([community/README.md](community/README.md)) |
 
 ## Resolve one SIM
@@ -77,13 +77,13 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, exact source versions, conflicts, newest entry dates |
 | `generated/android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` |
 | `generated/devices/` | the device catalog, carrier artifact registries, and the device records (`carrier-variants.json`) |
-| `generated/ocd-dataset/` | the OCD dataset for the owner's ROM (rule round 30): the manifest, the profiles per network with OCD's match rules and the Google-lane fill, the Google lane's values as source family `google`, and the APN row index ([docs/ocd-dataset.md](docs/ocd-dataset.md)) |
+| `generated/ocd-dataset/` | the OCD dataset that OcdCarrierSettings serves as a ROM's carrier data (rule rounds 30 and 31, [docs/rom-builders.md](docs/rom-builders.md)): the manifest, the profiles per network with OCD's match rules and the Google-lane fill, the Google lane's values as source family `google`, and the APN row index ([docs/ocd-dataset.md](docs/ocd-dataset.md)) |
 | `devices/records/` | the sources of `generated/devices/device-records.json`: the owner's devices' configured records, the owner's measured records (written by the report bot) and the second-agent reads group A records need |
 | `observed/` | test reports from the OCD Check app, one file per report issue; people's reports counted as unverified hints (`observed/summary.json`): pointers to entries with the measured result, never a value; they never change an OCD value |
 | `community/` | how community reports reach `observed/` and why they stay apart from the data |
 | `schemas/` | JSON schemas for the data files and for OCD Check reports |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
-| `docs/` | data model, build explanation, consumer guide, release plan |
+| `docs/` | data model, build explanation, consumer guide, the guide for ROM builders who ship OCD's dataset, release plan |
 
 ## Status
 

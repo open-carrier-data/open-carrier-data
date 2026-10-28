@@ -101,7 +101,7 @@ It sends a record again when its result or its last measurement day changes, and
 - its data commit is on `main`, carries its data digest and holds the OCD dataset;
 - `validate` and the phone guard pass on the bot's pull request.
 
-One record per `record_key` is kept, the newest by its last measurement, then by issue; a record sent again unchanged is a `duplicate`. A record lapses at `valid_until`, 90 days after its last measurement, and the daily rebuild drops it. Round 19's holds, account gates, time spread and thresholds apply only to outside reports. A measured record is served only on the owner's phones of its device, ROM line and IMS stack; other ROMs and apps may use it only under R3. It never changes a configured carrier value in `carriers/`: a correction opens a source review.
+One record per `record_key` is kept, the newest by its last measurement, then by issue; a record sent again unchanged is a `duplicate`. A record lapses at `valid_until`, 90 days after its last measurement, and the daily rebuild drops it. Round 19's holds, account gates, time spread and thresholds apply only to outside reports. Since rule round 31 a measured record is served on any phone in its exact cell (device, carrier, ROM family and build line, IMS stack) on a ROM that ships OcdCarrierSettings, and without a tester the kinds SM7 lists are left out ([docs/rom-builders.md](../docs/rom-builders.md), SM12). Results from anyone else's phone stay on that phone (SM11). It never changes a configured carrier value in `carriers/`: a correction opens a source review.
 
 The owner's pointer reports (`ocd-check-test-report`, round 29) are still taken and kept in `observed/reports/` as pointers. They change nothing; round 29's `observed/retested.json` is gone.
 

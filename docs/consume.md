@@ -15,6 +15,8 @@ The files on `main` are the edge channel: each publish replaces them, several ti
 | the other files under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
 | `observed/` | never supported and never a release asset: unverified OCD Check reports and the owner's "re-tested by OCD" records, apart from the data |
 
+To replace a ROM's whole carrier data with OCD's dataset, through OcdCarrierSettings, read [rom-builders.md](rom-builders.md): it lists the ship minimum SM1 to SM12 that the build must meet (rule round 31).
+
 Take a release and check its files:
 
 ```sh
@@ -26,7 +28,7 @@ cd data-2026.10 && sha256sum -c SHA256SUMS
 
 What every ROM maintainer must know:
 
-1. **Configured, not verified.** Every value comes from a vendor or ROM carrier table. No profile has been verified on a phone: `verified_observation_count` is 0 everywhere. The phone reports under `observed/` do not change that: they are unverified, anyone can send one, and they never change a value. The owner's settled results on his own phones are measured records in `generated/devices/device-records.json` (rule round 30, item 4): each names the device, the ROM line and IMS stack, the carrier profile, the level (L2 calls out, incoming not tested; L3 calls both ways), the method, the data commit and the days measured, and lapses 90 days after the last one. They change no configured carrier value, are not a support claim for any other phone, stack or plan, and are not ROM-citable without R3: a ROM maintainer still makes his own test call ([community/README.md](../community/README.md), [docs/ocd-dataset.md](ocd-dataset.md)). `supported` means a table turns the feature on, not that the operator offers it, that the plan includes it or that the phone model is approved.
+1. **Configured, not verified.** Every value comes from a vendor or ROM carrier table. No profile has been verified on a phone: `verified_observation_count` is 0 everywhere. The phone reports under `observed/` do not change that: they are unverified, anyone can send one, and they never change a value. The owner's settled results on his own phones are measured records in `generated/devices/device-records.json` (rule round 30, item 4): each names the device, the ROM line and IMS stack, the carrier profile, the level (L2 calls out, incoming not tested; L3 calls both ways), the method, the data commit and the days measured, and lapses 90 days after the last one. They change no configured carrier value and are not a support claim for any other phone, stack or plan. A ROM that ships OcdCarrierSettings serves them only in their exact cell: the device, the carrier profile, the ROM family and build line, and the IMS stack (rule round 31, SM12 in [rom-builders.md](rom-builders.md)). A ROM builder still makes his own test call on each device before a build ships (SM3) ([community/README.md](../community/README.md), [docs/ocd-dataset.md](ocd-dataset.md)). `supported` means a table turns the feature on, not that the operator offers it, that the plan includes it or that the phone model is approved.
 2. **Emergency calls are not tested, and OCD never places one.** `apns-conf.xml` carries an emergency APN row only where it asks for Android's own default request or where a current Pixel or Galaxy configuration or LineageOS's own list gives that row; elsewhere Android's own default applies ([Emergency APN rows](#emergency-apn-rows)). `carrier-config-list.xml` carries emergency, TTY, RTT, WPS and `iwlan.*` keys and is not for ROM application until the per-key review of those keys has run. Switching VoLTE or Wi-Fi calling on changes how the phone places emergency calls: where there is no 2G or 3G voice, or a regulator requires emergency calls over IMS (Sweden's PTS, Australia's ACMA), confirm that your IMS stack places them before you ship.
 3. **The phone must load the file.** Keep `<apns version>` equal to your framework's `frameworks/base/core/res/res/xml/apns.xml`. On a mismatch TelephonyProvider loads no APN at all.
 4. **The preferred APN survives an update.** New rows and a new order apply to a newly inserted SIM or after Reset to default.
@@ -36,6 +38,8 @@ What every ROM maintainer must know:
 8. **Data rights.** OCD waives its own rights in the data (CC0). Several sources state no terms, and whether Samsung's and Apple's terms allow extracting facts is open. This is not legal advice; [DATA-LICENSE.md](../DATA-LICENSE.md) has the details.
 
 ## Use the data in an Android ROM
+
+This section covers taking OCD's files alone. To serve OCD's whole dataset as the ROM's carrier data, ship OcdCarrierSettings instead ([rom-builders.md](rom-builders.md)).
 
 The Android files live in `generated/android/`. Each file has one job.
 
@@ -230,7 +234,7 @@ APN rows and MMS settings are per carrier. VoLTE, Wi-Fi calling, video calling a
 
 A record from another stack can still be shown, with its stack named: a stock record on a LineageOS build of the same model is "this model's stock firmware", not "this phone". Device records are information, not an export: never write a false VoLTE, Wi-Fi calling or video calling switch from them into a phone. Each record rests on one source, is configuration and not a test, and says nothing about emergency calls.
 
-Do not write a true from a record of another software stack either. A `stock` record says what the vendor's own IMS stack is set to, not what a LineageOS build's IMS stack can do, emergency calls included. There is no export with `device=` blocks, and none is built until a named ROM states it will apply them (rule decisions of 2026-10-18, round 18). For every profile `carrier-config-list.xml` can express, it already sets the VoLTE, Wi-Fi calling and video calling switches true wherever a device's own file turns them on, unless a gate withholds the value. On 2026-10-18 that held for all but 2 of 169,717 such device values. A `vendor.xml` block can filter by `Build.DEVICE`, board and SKU, but not by model or sales code, so Samsung's records cannot be written as device blocks. An `off` is never exported.
+Do not write a true from a record of another software stack either. A `stock` record says what the vendor's own IMS stack is set to, not what a LineageOS build's IMS stack can do, emergency calls included. There is no export with `device=` blocks, and since rule round 31 none is built: a device's own fixes belong in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)). For every profile `carrier-config-list.xml` can express, it already sets the VoLTE, Wi-Fi calling and video calling switches true wherever a device's own file turns them on, unless a gate withholds the value. On 2026-10-18 that held for all but 2 of 169,717 such device values. A `vendor.xml` block can filter by `Build.DEVICE`, board and SKU, but not by model or sales code, so Samsung's records cannot be written as device blocks. An `off` is never exported.
 
 ### Ask why with --explain
 
