@@ -448,6 +448,12 @@ class ApnRows(NamedTuple):
     # row whose only type was "emergency" is not written; a row with other
     # types is written without it.
     emergency_left_out: tuple[dict[str, Any], ...] = ()
+    # Rows leave_out_superseded_google_credentials left out (rule decisions
+    # round 32, D8 rule 1), each marked "_credentials_left_out" with the
+    # fields it filled in, and the rows of that class the operator's own
+    # page kept, each marked "_credentials_kept_operator_page".
+    credentials_left_out: tuple[dict[str, Any], ...] = ()
+    credentials_kept_operator_page: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -1304,6 +1310,166 @@ def mms_setting(record: dict[str, Any]) -> tuple[str, ...]:
     return tuple(str(record.get(field, "")) for field in ("apn", "mmsc", "mmsproxy", "mmsport"))
 
 
+# Rule 1 of rule decisions round 32, D8: superseded Google copies. Android
+# stores the rows of one android_unique_key as one row, and a lower-ranked row
+# fills in the username, password, auth type or MTU the best row leaves unset
+# (write_android_groups_best_last). Where only Google's frozen Pixel copies
+# give such a value and Google's current file gives the APN bare, the value is
+# one Google itself dropped: current Pixels on that SIM send none.
+FROZEN_PIXEL_COPY_SOURCES = frozenset({"google_pixel_vendor_carriersettings"})
+CREDENTIAL_ATTRIBUTES = ("user", "password", "authtype", "mtu", "mtu_v4", "mtu_v6")
+# APNs whose operator's own current APN page names credentials, read without a
+# login, a consent click, a bot wall or an anti-detection browser (round 32,
+# D8 rule 1, step 2 (b)). Such a page keeps a row; a page never removes one.
+# Key: (MCC, case-folded APN); value: the page and the day it was read.
+OPERATOR_PAGE_CREDENTIALS: dict[tuple[str, str], tuple[str, str]] = {
+    # Vodafone Portugal's manual for current phones names username and
+    # password "vodafone", authentication "Nenhum", MCC 268, MNC 01.
+    ("268", "net2.vodafone.pt"): (
+        "https://ajuda.vodafone.pt/manuais/samsung/galaxy-s24-android-14/conetividade/"
+        "configure-o-telefone-para-internet",
+        "2026-10-28",
+    ),
+}
+
+
+def android_usable(row: dict[str, Any]) -> bool:
+    """A stored row a cellular request can use: enabled, cellular
+    infrastructure, APN set 0 or -1 (DataProfileManager)."""
+    if str(row.get("carrier_enabled", True)).lower() == "false":
+        return False
+    if "infrastructure_bitmask" in row and "cellular" not in str(row["infrastructure_bitmask"]).lower():
+        return False
+    try:
+        return int(row.get("apn_set_id", 0)) in (0, -1)
+    except (TypeError, ValueError):
+        return False
+
+
+def android_lead_positions(stored: list[tuple[dict[str, Any], list[int]]]) -> set[int]:
+    """The stored rows (android_stored_rows) that lead a role: on some 3GPP
+    data network type the first usable row that serves "default" (internet),
+    that row when it serves "mms" or else the first usable row that serves
+    "mms" (MMS), and the first usable row that serves "ia", else "default"
+    (attach). DataProfileManager's dedupe is not modelled here; the dry run
+    measures the file with android_phone_model."""
+    def serves(row: dict[str, Any], apn_type: str) -> bool:
+        return apn_type in apn_row_types(row["type"])
+
+    usable = [(position, row) for position, (row, _) in enumerate(stored) if android_usable(row)]
+    leads: set[int] = set()
+    for network_type in MMS_NETWORK_TYPES:
+        on_type = [(position, row) for position, row in usable if network_type in apn_row_network_types(row)]
+        internet = next(((position, row) for position, row in on_type if serves(row, "default")), None)
+        if internet is not None:
+            leads.add(internet[0])
+        mms = internet if internet is not None and serves(internet[1], "mms") else next(
+            ((position, row) for position, row in on_type if serves(row, "mms")), None)
+        if mms is not None:
+            leads.add(mms[0])
+    attach = next((position for position, row in usable if serves(row, "ia")), None)
+    if attach is None:
+        attach = next((position for position, row in usable if serves(row, "default")), None)
+    if attach is not None:
+        leads.add(attach)
+    return leads
+
+
+def record_sources(record: dict[str, Any], field: str = "_support") -> frozenset[str]:
+    out: set[str] = set()
+    for sources in (record.get(field) or {}).values():
+        out.update(sources)
+    return frozenset(out)
+
+
+def leave_out_superseded_google_credentials(
+    written: list[dict[str, Any]], scope_records: list[dict[str, Any]]
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    """Rule 1 of rule decisions round 32, D8. Leave a row out of one written
+    scope when all of these hold:
+
+    1. Android stores it with a lead's best row: its android_unique_key
+       group (android_stored_rows) leads a role (android_lead_positions), and
+       it is not the group's last, best-ranked row;
+    2. its only effect on the stored row is a username, password, auth type
+       or MTU it fills in (CREDENTIAL_ATTRIBUTES): the stored row without it
+       differs in no other attribute, type or bitmask;
+    3. every source of the row is a frozen Pixel copy
+       (FROZEN_PIXEL_COPY_SOURCES), and no other source gives credentials,
+       or the values it fills in, for that APN and any of its types in the
+       scope (SCOPE_RECORDS, every row of the scope before any leave-out);
+    4. Google's current lane (google_carriersettings in "_current") gives the
+       same APN for each of its types in the scope without a username or
+       password;
+    5. the operator's own current APN page names no credentials for the APN
+       (OPERATOR_PAGE_CREDENTIALS keeps such a row; a page never removes one).
+
+    The phone then sends what a current Pixel sends. The profile JSON keeps
+    the row and its sources; only apns-conf.xml leaves it out. Rows of
+    independent families (LineageOS, MBPI, Sony, Fairphone, Apple) and old
+    Samsung builds always stay, and no row gets explicit empty credentials.
+    Returns the rows kept, the rows left out, each marked
+    "_credentials_left_out" with the fields it filled in, and the rows only
+    the operator's page kept, each marked "_credentials_kept_operator_page"."""
+    stored = android_stored_rows(written)
+    leads = android_lead_positions(stored)
+    left_out: set[int] = set()
+    kept_by_page: list[dict[str, Any]] = []
+    for position, (row, indices) in enumerate(stored):
+        if position not in leads or len(indices) < 2:
+            continue
+        for at, index in enumerate(indices[:-1]):
+            record = written[index]
+            attributes = written_attributes(record)
+            later = [written_attributes(written[i]) for i in indices[at + 1:]]
+            fills = [field for field in CREDENTIAL_ATTRIBUTES
+                     if field in attributes and not any(field in other for other in later)]
+            if not fills:
+                continue
+            sources = record_sources(record)
+            if not sources or not sources <= FROZEN_PIXEL_COPY_SOURCES:
+                continue
+            without = android_stored_rows([written[i] for i in indices if i != index])[0][0]
+            changed = {key for key in set(row) | set(without)
+                       if key != "type" and str(row.get(key)) != str(without.get(key))}
+            if changed - set(CREDENTIAL_ATTRIBUTES) or set(apn_row_types(row["type"])) != set(
+                apn_row_types(without["type"])
+            ):
+                continue
+            apn = str(record["apn"]).casefold()
+            types = set(apn_row_types(record["type"]))
+            same_apn = [other for other in scope_records
+                        if str(other["apn"]).casefold() == apn and types & set(apn_row_types(other["type"]))]
+            if any(
+                record_sources(other) - FROZEN_PIXEL_COPY_SOURCES
+                and (str(other.get("user") or "") or str(other.get("password") or "")
+                     or any(field in other and str(other[field]) == str(attributes[field]) for field in fills))
+                for other in same_apn
+                if other is not record
+            ):
+                continue
+            if not all(
+                any("google_carriersettings" in (other.get("_current") or {}).get(apn_type, ())
+                    and not str(other.get("user") or "") and not str(other.get("password") or "")
+                    for other in same_apn)
+                for apn_type in types
+            ):
+                continue
+            if (str(record.get("mcc", "")), apn) in OPERATOR_PAGE_CREDENTIALS:
+                record["_credentials_kept_operator_page"] = OPERATOR_PAGE_CREDENTIALS[
+                    (str(record.get("mcc", "")), apn)
+                ]
+                kept_by_page.append(record)
+                continue
+            record["_credentials_left_out"] = tuple(fills)
+            left_out.add(index)
+    return (
+        [record for index, record in enumerate(written) if index not in left_out],
+        [record for index, record in enumerate(written) if index in left_out],
+        kept_by_page,
+    )
+
+
 def leave_out_absorbed_mms(written: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Leave out of one written scope a stored row (every file row of one
     android_unique_key, android_stored_rows) when all of these hold:
@@ -1365,9 +1531,11 @@ def apn_xml_rows(
     (leave_out_emergency), each scope ranked by its evidence, MMS sent to a
     current vendor's MMS row that serves a mobile network
     (put_vendor_mms_first), the rows Android stores as one written together
-    with the best-ranked one last (write_android_groups_best_last), and last
-    a stale MMS-only row Android merges into another row left out
-    (leave_out_absorbed_mms). TelephonyProvider stores such rows as
+    with the best-ranked one last (write_android_groups_best_last), a row
+    whose only effect on its stored row is credentials from Google's
+    superseded copies left out (leave_out_superseded_google_credentials,
+    round 32, D8 rule 1), and last a stale MMS-only row Android merges into
+    another row left out (leave_out_absorbed_mms). TelephonyProvider stores such rows as
     one at the first row's place, each later row's written attributes
     overwrite, types unite and bitmasks merge, so the best row goes last and
     takes from the others only what it leaves unset. A group's first row in
@@ -1391,17 +1559,25 @@ def apn_xml_rows(
     mms_left_out = 0
     mms_absorbed: list[dict[str, Any]] = []
     emergency_left_out: list[dict[str, Any]] = []
+    credentials_left_out: list[dict[str, Any]] = []
+    credentials_kept: list[dict[str, Any]] = []
     for scope in sorted(scopes):
         ia_left_out += leave_out_stale_attach(scopes[scope])
         scope_records, emergency_changed = leave_out_emergency(scopes[scope])
         emergency_left_out.extend(emergency_changed)
         ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
         mms_left_out += retyped
-        kept, absorbed = leave_out_absorbed_mms(write_android_groups_best_last(ranked))
+        grouped, credentials_changed, kept_by_page = leave_out_superseded_google_credentials(
+            write_android_groups_best_last(ranked), scopes[scope]
+        )
+        credentials_left_out.extend(credentials_changed)
+        credentials_kept.extend(kept_by_page)
+        kept, absorbed = leave_out_absorbed_mms(grouped)
         ordered.extend(kept)
         mms_absorbed.extend(absorbed)
     return ApnRows(
-        ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out)
+        ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out),
+        tuple(credentials_left_out), tuple(credentials_kept),
     )
 
 
@@ -1794,6 +1970,7 @@ def write_metadata(
     mms_types_left_out: int = 0,
     mms_rows_left_out_absorbed: int = 0,
     emergency_types_left_out: dict[str, int] | None = None,
+    credential_rows_left_out: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -1843,6 +2020,7 @@ def write_metadata(
             # MMS-only rows Android merges into an earlier row, whose MMS
             # setting no current vendor gives. Profile JSON keeps them.
             "mms_rows_left_out_absorbed_by_android": mms_rows_left_out_absorbed,
+            "credential_rows_left_out_superseded_google_copy": credential_rows_left_out,
             # Rows of apns-conf.xml leave_out_emergency took the "emergency"
             # type off, by reason; a row whose only type it was is not
             # written. Android's own default emergency profile then applies
@@ -1929,6 +2107,7 @@ def main(argv: list[str]) -> int:
         apn_rows.mms_left_out,
         len(apn_rows.mms_absorbed_left_out),
         emergency_left_out_counts(apn_rows),
+        len(apn_rows.credentials_left_out),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -1939,6 +2118,8 @@ def main(argv: list[str]) -> int:
         f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
         f"{apn_rows.mms_left_out} first internet row(s) without the MMS type no current vendor backs, "
         f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out, "
+        f"{len(apn_rows.credentials_left_out)} row(s) left out whose only effect is credentials from Google's "
+        f"superseded copies ({len(apn_rows.credentials_kept_operator_page)} kept by the operator's page), "
         f"{len(apn_rows.emergency_left_out)} emergency type(s) left out "
         f"({', '.join(f'{reason} {count}' for reason, count in emergency_left_out_counts(apn_rows).items())})"
     )

@@ -166,11 +166,8 @@ Built (rule round 32, D8):
 - `tools/credential_fill_ins.py CHECKOUT` prints the class (a) list per scope and role: the APN, the filled-in fields, the sources of the filling rows, whether the lead sends them or only stores them, and the network types. The release notes carry it under "Credentials from old lists". On public `a8fd1898` it has 48 LTE lead roles in 25 scopes, 25 of them sent, in 17 scopes.
 - `tools/resolve_carrier_profiles.py --explain` names, under `apns.credential_sources`, the row and the sources of every username, password, auth type and MTU a SIM's internet, attach and MMS lead carries, and whether a lower-ranked row filled it in.
 - The phone guard reports "credentials filled in from a non-current source on the {role} lead", with the sources, wherever a change creates or changes such a fill-in. Report only.
-
-Being built (rule round 32, D8):
-
-- Where every source of the values is Google's frozen Pixel copies, Google's current file gives the same APN bare, and the operator's own page names no credentials, the filling row leaves `apns-conf.xml`. The phone then sends what a current Pixel sends.
-- Each publish pull request lists class (a) as well, and the rows that left the file.
+- Rule 1: where every source of the values is Google's frozen Pixel copies, no other source gives credentials for that APN and type, Google's current file gives the same APN bare, and the operator's own page names no credentials, the filling row leaves `apns-conf.xml`. The phone then sends what a current Pixel sends. Since 2026-10-28 that is one row: 262/20's frozen `MVNO DE` row of `internet.mvno.mobi`, so 262/20's internet and attach leads send no username or password. Vodafone Portugal's own manuals name credentials for `net2.vodafone.pt`, so 268/91 and 268/92 keep theirs. The profile JSON keeps every row. `credential_fill_ins.py` and `--explain` list the rows rule 1 left out, and `metadata.json` counts them (`omissions.credential_rows_left_out_superseded_google_copy`).
+- Each publish pull request carries the class (a) list too.
 
 On a phone without OCD's tester nothing checks these credentials, so cover those SIMs in your own device check (SM3 in [rom-builders.md](rom-builders.md)).
 

@@ -261,7 +261,8 @@ def class_a_summary(entries: list[dict[str, Any]]) -> str:
             f"{len(sent)} of them sent, in {len({e['scope'] for e in sent})} scope(s)")
 
 
-def class_a_lines(entries: list[dict[str, Any]], left_out: list[dict[str, Any]] | None = None) -> list[str]:
+def class_a_lines(entries: list[dict[str, Any]], left_out: list[dict[str, Any]] | None = None,
+                  kept: list[dict[str, Any]] | None = None) -> list[str]:
     """The class (a) list (round 32, D8, rule 6): per scope and role the APN,
     the filled-in fields, the sources of the filling rows, sent or only
     stored, and the network types; then the rows rule 1 left out of
@@ -278,6 +279,10 @@ def class_a_lines(entries: list[dict[str, Any]], left_out: list[dict[str, Any]] 
         for row in left_out:
             lines.append(f"  {row['scope']} {row['apn']} ({row['type']}): {', '.join(row['fields'])} from "
                          f"{'+'.join(row['sources'])}")
+    if kept:
+        lines.append(f"rows rule 1 keeps because the operator's own page names credentials: {len(kept)}")
+        for row in kept:
+            lines.append(f"  {row['scope']} {row['apn']} ({row['type']}): {row['page']} (read {row['read']})")
     return lines
 
 
@@ -285,16 +290,26 @@ def credentials_left_out(checkout: Path) -> list[dict[str, Any]] | None:
     """The rows the generator of CHECKOUT left out of apns-conf.xml under
     rule 1 (`credentials_left_out` of its apn_xml_rows, each with the fields
     it filled in and its sources); None when the generator has no rule 1."""
+    return rule1_rows(checkout, "credentials_left_out")
+
+
+def rule1_rows(checkout: Path, name: str) -> list[dict[str, Any]] | None:
+    """The rows of apn_xml_rows' field NAME (credentials_left_out, or
+    credentials_kept_operator_page: the rows only the operator's own page
+    kept), with their scope, APN, type, filled-in fields or page, and
+    sources; None when the generator has no such field."""
     generator, apn_rows = generator_rows(checkout)
-    rows = getattr(apn_rows, "credentials_left_out", None)
+    rows = getattr(apn_rows, name, None)
     if rows is None:
         return None
     out = []
     for record in rows:
         attributes = generator.written_attributes(record)
         scope = phone.scope_of({key: str(value) for key, value in attributes.items()})
+        page = record.get("_credentials_kept_operator_page") or ("", "")
         out.append({"scope": fmt(scope), "apn": attributes.get("apn"), "type": attributes.get("type"),
                     "fields": list(record.get("_credentials_left_out") or ()),
+                    "page": page[0], "read": page[1],
                     "sources": sorted(record_sources(record, "_support"))})
     return out
 
@@ -306,10 +321,11 @@ def class_a_list(checkout: Path) -> dict[str, Any]:
     records = aligned_records(checkout, rows)
     entries = class_a_entries(rows, tables, records) if records is not None else []
     left_out = credentials_left_out(checkout)
+    kept = rule1_rows(checkout, "credentials_kept_operator_page")
     return {"sources_known": records is not None, "summary": class_a_summary(entries),
             "entries": [{k: v for k, v in entry.items() if not k.startswith("_")} for entry in entries],
-            "left_out": left_out,
-            "lines": (class_a_lines(entries, left_out) if records is not None else
+            "left_out": left_out, "kept_by_operator_page": kept,
+            "lines": (class_a_lines(entries, left_out, kept) if records is not None else
                       ["class (a) fill-ins: unknown, the generator's records are not this file's rows"])}
 
 

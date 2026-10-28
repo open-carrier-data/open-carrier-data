@@ -363,7 +363,8 @@ def explain(
             # (absorbed_mms_left_out), and rows whose only type was
             # "emergency" when leave_out_emergency took it off
             # (emergency_left_out, with its reason). The profile JSON keeps
-            # them.
+            # them. Rows rule 1 of round 32 (D8) left out are listed too
+            # (superseded_google_credentials_left_out).
             "left_out": [
                 {"row": generator.written_attributes(row), "reasons": {"absorbed_mms_left_out": True}}
                 for row in generated_rows.mms_absorbed_left_out
@@ -376,6 +377,18 @@ def explain(
                 }
                 for row in generated_rows.emergency_left_out
                 if row["type"] == "emergency" and generator.apn_scope_key(row) in chosen_scopes
+            ]
+            # Rule 1 of round 32, D8: a row whose only effect on its stored
+            # row was a username, password, auth type or MTU that only
+            # Google's frozen Pixel copies give, under an APN Google's
+            # current file gives bare; the fields it filled in.
+            + [
+                {
+                    "row": generator.written_attributes(row),
+                    "reasons": {"superseded_google_credentials_left_out": list(row["_credentials_left_out"])},
+                }
+                for row in getattr(generated_rows, "credentials_left_out", ())
+                if generator.apn_scope_key(row) in chosen_scopes
             ],
         },
     }

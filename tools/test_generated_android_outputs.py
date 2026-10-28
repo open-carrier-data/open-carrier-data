@@ -3230,6 +3230,110 @@ def check_best_row_last() -> None:
     assert_true(count == len(given) and got == given, f"the rows and their values do not change: {got} != {given}")
 
 
+def check_superseded_google_credentials() -> None:
+    """Rule 1 of rule decisions round 32, D8: a row whose only effect on the
+    lead's stored row is a username, password, auth type or MTU that only
+    Google's frozen Pixel copies give leaves apns-conf.xml when Google's
+    current file gives the APN bare for its types in the scope and the
+    operator's own page names no credentials. Every other fill-in stays."""
+
+    google = "google_carriersettings"
+    pixel = "google_pixel_vendor_carriersettings"
+    samsung = "samsung_omc"
+
+    def apn(value: str, types: tuple[str, ...] = ("default", "supl"), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    creds = {"user": "mvno", "password": "mvno", "authtype": 1}
+    scopes: dict[str, list[tuple[dict, tuple[str, ...]]]] = {
+        # 262/20 shape: Google's current Enreach row is bare, TheMuppets'
+        # frozen Pixel copy has mvno/mvno: left out.
+        "26220": [
+            (apn("internet.mvno.mobi", ("default", "dun", "supl"), name="Enreach DE", authtype=1), (google, pixel)),
+            (apn("internet.mvno.mobi", name="MVNO DE", **creds), (pixel,)),
+        ],
+        # 268/91 shape: the operator's own page names credentials: kept.
+        "26891": [
+            (apn("net2.vodafone.pt", ("default", "mms", "supl"), authtype=0), (google, samsung)),
+            (apn("net2.vodafone.pt", ("default", "mms", "supl"), name="Vodafone Net2",
+                 user="vodafone", password="vodafone", authtype=1), (pixel,)),
+        ],
+        # 262/03 IMSI shape: Fairphone also gives the credentials for the
+        # APN, on a row stored apart (carrier id): kept.
+        "26203": [
+            (apn("internet.mvno.mobi", ("default", "dun", "supl"), name="Enreach DE", authtype=1), (google, pixel)),
+            (apn("internet.mvno.mobi", name="MVNO DE", **creds), (pixel,)),
+            (apn("internet.mvno.mobi", ("default", "ia", "supl"), name="MVNO DE", carrier_id=2461, **creds),
+             ("fairphone_official_source",)),
+        ],
+        # The Pixel row also adds a type the stored row would lose: kept.
+        "26201": [
+            (apn("web.example", authtype=1), (google,)),
+            (apn("web.example", ("default", "mms"), **creds), (pixel,)),
+        ],
+        # Only Samsung's current row is bare, Google's current file does not
+        # give the APN: kept.
+        "26202": [
+            (apn("web.example", authtype=1), (samsung,)),
+            (apn("web.example", **creds), (pixel,)),
+        ],
+        # LineageOS also backs the credentialed row: kept.
+        "26207": [
+            (apn("web.example", authtype=1), (google,)),
+            (apn("web.example", **creds), (pixel, "lineageos")),
+        ],
+        # The group leads no role (a.example leads internet and attach):
+        # kept.
+        "26209": [
+            (apn("a.example"), (google,)),
+            (apn("b.example", authtype=1), (google,)),
+            (apn("b.example", **creds), (pixel,)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append({"profile_id": profile_id, "display_name": profile_id, "match": {"mccmnc": [mccmnc]},
+                         "android_apns": [row for row, _ in rows]})
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type),
+             "sources": sorted(sources)}
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append({"profile_id": profile_id,
+                        "sources": sorted({source for _, sources in rows for source in sources}),
+                        "fact_sources": sorted(facts, key=lambda fact: fact["key"])})
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+    left = [(r["mcc"] + r["mnc"], r["apn"], r["carrier"], r["_credentials_left_out"]) for r in rows.credentials_left_out]
+    assert_true(left == [("26220", "internet.mvno.mobi", "MVNO DE", ("user", "password"))],
+                f"only the 262/20 Pixel row leaves the file, with the fields it filled in: {left}")
+    kept = [(r["mcc"] + r["mnc"], r["apn"], r["_credentials_kept_operator_page"][1]) for r in
+            rows.credentials_kept_operator_page]
+    assert_true(kept == [("26891", "net2.vodafone.pt", "2026-10-28")],
+                f"Vodafone Portugal's page keeps the 268/91 row: {kept}")
+    written = {(r["mcc"] + r["mnc"], r["carrier"], r.get("user")) for r in rows.records}
+    for row in (("26891", "Vodafone Net2", "vodafone"), ("26203", "MVNO DE", "mvno"), ("26201", "web.example", "mvno"),
+                ("26202", "web.example", "mvno"), ("26207", "web.example", "mvno"), ("26209", "b.example", "mvno")):
+        assert_true(row in written, f"the row stays in the file: {row} {sorted(written, key=str)}")
+    assert_true(not any(r["mcc"] + r["mnc"] == "26220" and r.get("user") for r in rows.records),
+                f"262/20 writes no credentials: {rows.records}")
+    import android_phone_model as phone
+    file_rows = phone.parse_lines(generate_android_outputs.apn_row_line(r) for r in rows.records)
+    state, _ = phone.phone_state(file_rows)
+    lead = state[("262", "20", "", "")]["LTE"][0]
+    assert_true((lead[0], lead[3], lead[4], lead[5]) == ("internet.mvno.mobi", "", "", 1),
+                f"the 262/20 internet lead sends what Google's current row gives: {lead}")
+    lead = state[("268", "91", "", "")]["LTE"][0]
+    assert_true((lead[3], lead[4], lead[5]) == ("vodafone", "vodafone", 0),
+                f"the 268/91 lead still stores vodafone/vodafone with auth type 0: {lead}")
+
+
 def check_vendor_mms_first() -> None:
     """MMS goes to a current vendor's MMS row that serves a mobile network
     (rule decisions of 2026-10-06, round 6, change 18). A vendor MMS row is a
@@ -6015,6 +6119,7 @@ def main() -> int:
     print("malformed APN value tests passed")
     check_best_row_last()
     print("best row last tests passed")
+    check_superseded_google_credentials()
     check_vendor_mms_first()
     print("vendor MMS row tests passed")
     check_leave_out_absorbed_mms()

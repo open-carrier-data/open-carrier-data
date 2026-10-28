@@ -304,6 +304,19 @@ class CredentialFillInTests(GuardCase):
         self.assertIn("  262/01 internet web: authtype, password, user from lineageos; sent (all hold types)",
                       result["lines"])
 
+    def test_rule_1_rows_are_listed(self) -> None:
+        left = [{"scope": "262/20", "apn": "internet.mvno.mobi", "type": "default,supl", "fields": ["user", "password"],
+                 "page": "", "read": "", "sources": ["google_pixel_vendor_carriersettings"]}]
+        kept = [{"scope": "268/91", "apn": "net2.vodafone.pt", "type": "default,mms,supl", "fields": [],
+                 "page": "https://operator.example/apn", "read": "2026-10-28", "sources": ["google_pixel_vendor_carriersettings"]}]
+        lines = guard.class_a_lines([], left, kept)
+        self.assertEqual(lines[1:], [
+            "rows rule 1 left out of apns-conf.xml (superseded Google copies): 1",
+            "  262/20 internet.mvno.mobi (default,supl): user, password from google_pixel_vendor_carriersettings",
+            "rows rule 1 keeps because the operator's own page names credentials: 1",
+            "  268/91 net2.vodafone.pt (default,mms,supl): https://operator.example/apn (read 2026-10-28)",
+        ])
+
     def test_auth_type_0_keeps_the_fill_in_stored_only(self) -> None:
         best = WEB + ' authtype="0"'
         records = records_of([(self.FILL, self.LINEAGE, {}), (best, self.GOOGLE, self.GOOGLE)])
