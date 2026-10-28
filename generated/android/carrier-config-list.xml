@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:4610479e03ec583580f6a1c3df7db0f987b4e093788cd10e47a81f31de00a50f
+    data_digest: sha256:eb0a6d10d7a871b4497fca24dd572ae423ddf6514d12d324862e0b87d5472588
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -5267,6 +5267,7 @@
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -5368,6 +5369,7 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
@@ -5480,7 +5482,7 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
-    <boolean name="enabledMMS" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="2">
@@ -19820,7 +19822,7 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
-    <boolean name="enabledMMS" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
@@ -31471,6 +31473,7 @@
   <!-- open.26203.c20311365064 -->
   <carrier_config imsi="26203482[0-9]*" mcc="262" mnc="03" name="Enreach De">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <string-array name="read_only_apn_types_string_array" num="0">
     </string-array>
@@ -31478,6 +31481,7 @@
   <!-- open.26203.c69ea5f641e4 -->
   <carrier_config imsi="26203483[0-9]*" mcc="262" mnc="03" name="Enreach De">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <string-array name="read_only_apn_types_string_array" num="0">
     </string-array>
@@ -31534,6 +31538,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <string-array name="ims_reasoninfo_mapping_string_array" num="2">
       <item value="510|Call completed elsewhere|1014" />
@@ -31548,6 +31553,7 @@
   </carrier_config>
   <!-- open.26207.2aa389aa6407 -->
   <carrier_config imsi="26207520[0-9]*" mcc="262" mnc="07" name="Carrier 26207">
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -31556,6 +31562,7 @@
   <!-- open.26207.78040a3afcc4 -->
   <carrier_config imsi="26207500[0-9]*" mcc="262" mnc="07" name="Tchibo De">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -31565,6 +31572,7 @@
   </carrier_config>
   <!-- open.26207.ca4d2a48544f -->
   <carrier_config imsi="26207515[0-9]*" mcc="262" mnc="07" name="Carrier 26207">
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -31572,6 +31580,7 @@
   </carrier_config>
   <!-- open.26207.69841ad3698a -->
   <carrier_config mcc="262" mnc="07" name="Carrier 26207" spn="\QALICE\E">
+    <boolean name="enabledMMS" value="false" />
     <boolean name="hide_ims_apn_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -31670,6 +31679,10 @@
   <!-- open.26806.075dd9ce9876 -->
   <carrier_config mcc="268" mnc="06" name="MEO" spn="\Qaltice MEO\E">
     <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.27001.8e87adf553fa -->
+  <carrier_config mcc="270" mnc="01" name="POST" spn="\QPOST\E">
+    <boolean name="enabledMMS" value="false" />
   </carrier_config>
   <!-- open.27077.50d2632d498c -->
   <carrier_config mcc="270" mnc="77" name="Tango" spn="\QTango\E">

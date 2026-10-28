@@ -1,0 +1,1872 @@
+{
+  "countries": [
+    "CH",
+    "DE",
+    "LU",
+    "MY"
+  ],
+  "counts": {
+    "lapsed": 0,
+    "sets_value": 7,
+    "statements": 40
+  },
+  "description": "What operators, brands and MVNOs state on their own pages about their services (rule round 32, part A). Each statement names its source page, the day it was read and a paraphrase, never quoted text. A statement says what the operator sells, not what a tariff includes or a phone supports. Only sets_value statements change a value: an MMS end that the operator states network-wide, checked by a second reader, which makes the profiles of its networks publish mms unsupported and enabledMMS false from operator_statement.",
+  "display_rule": "Show an offered status as: the operator states it offers the service (read on <checked_at>); whether your tariff includes it is not checked. Show an end as: the operator states the service ended on <last_day>. Never show a statement as works. A host-only brand shows only as a brand on its host network, never as a statement about the SIM.",
+  "license": "CC0-1.0",
+  "mms_ended_networks": [
+    {
+      "first_day_without": "2024-03-17",
+      "mccmnc": "22802",
+      "statement": "ch.sunrise.mms"
+    },
+    {
+      "first_day_without": "2023-01-10",
+      "mccmnc": "22803",
+      "statement": "ch.salt.mms"
+    },
+    {
+      "first_day_without": "2023-01-17",
+      "mccmnc": "26202",
+      "statement": "de.vodafone.mms"
+    },
+    {
+      "first_day_without": "2026-06-30",
+      "mccmnc": "26203",
+      "statement": "de.telefonica.mms"
+    },
+    {
+      "first_day_without": "2026-06-30",
+      "mccmnc": "26207",
+      "statement": "de.telefonica.mms"
+    },
+    {
+      "first_day_without": "2026-07-01",
+      "mccmnc": "26223",
+      "statement": "de.1und1.mms"
+    },
+    {
+      "first_day_without": "2024-09-29",
+      "mccmnc": "27001",
+      "statement": "lu.post.mms"
+    },
+    {
+      "first_day_without": "2026-03-15",
+      "mccmnc": "50212",
+      "statement": "my.maxis.mms"
+    }
+  ],
+  "schema_version": 1,
+  "statements": [
+    {
+      "checked_at": "2026-10-28",
+      "country": "CH",
+      "first_day_without": "2023-01-10",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "ch.salt.mms",
+      "identity_key": "ch.salt",
+      "mccmnc": [
+        "22803"
+      ],
+      "mmsc_hosts": [
+        "192.168.151.3"
+      ],
+      "operator": "Salt",
+      "paraphrase": "Salt states that it discontinues its MMS service from 10 January 2023, as the other main Swiss operators do.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:ae3fb8914a2b35e444c4e13611f51df907983fd3ab20b34e56fa69e34dd226dd",
+          "publisher": "Salt help page",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.salt.ch/en/help/mobile/MMS"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "CH",
+      "first_day_without": "2024-03-17",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "ch.sunrise.mms",
+      "identity_key": "ch.sunrise",
+      "mccmnc": [
+        "22802"
+      ],
+      "mmsc_hosts": [
+        "mmsc.sunrise.ch"
+      ],
+      "operator": "Sunrise",
+      "paraphrase": "Sunrise states that it discontinues its MMS service as of 17 March 2024; TalkTalk and Lebara, which run on Sunrise, state the same for their customers.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:476f57851857a41ce9c7625756247ace761b05ae3e58b68dcdae5d08e323211a",
+          "publisher": "Sunrise business pages",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://sunrise.ch/business/en/network/goodbye-mms"
+        },
+        {
+          "date": null,
+          "kind": "mvno",
+          "passage_sha256": "sha256:91687e045ef4d02bb42ed51ca2994b88a7e464311b279e243d961a4def3e1d3a",
+          "publisher": "TalkTalk Switzerland, an MVNO on Sunrise",
+          "read_on": "2026-10-28",
+          "role": "supports",
+          "url": "https://talktalk.ch/en/lp/bye-bye-mms.html"
+        },
+        {
+          "date": null,
+          "kind": "mvno",
+          "passage_sha256": "sha256:575558daaf806760f4b56724fec40a5ccec72b83863be5dd794e4f50efe2a3c5",
+          "publisher": "Lebara Switzerland, an MVNO on Sunrise",
+          "read_on": "2026-10-28",
+          "role": "supports",
+          "url": "https://www.lebara.ch/en/mms"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.1und1.esim",
+      "identity_key": "de.1und1",
+      "mccmnc": [
+        "26223"
+      ],
+      "operator": "1&1",
+      "paraphrase": "The 1&1 mobile service description treats the physical SIM card and the eSIM profile together as the SIM, so 1&1 provides eSIM profiles; it also mentions Multi-Cards in eSIM format for an Apple Watch.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2026-07-01",
+          "kind": "operator",
+          "passage_sha256": "sha256:a1b9a8247e2b23391d83cad73e2c9b711e74ce7a7a27a3d8945e6db016e0f156",
+          "publisher": "1&1 Telecom (mobile service description PDF)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://content.1und1.de/vvi/1und1_Leistungsbeschreibung_Mobilfunk.pdf"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "first_day_without": "2026-07-01",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "de.1und1.mms",
+      "identity_key": "de.1und1",
+      "last_day": "2026-06-30",
+      "mccmnc": [
+        "26223"
+      ],
+      "mmsc_hosts": [
+        "mms.1und1-mobilfunk.de"
+      ],
+      "operator": "1&1",
+      "paraphrase": "1&1 states that its MMS service ended on 30 June 2026 and has not been available since 1 July 2026, and that MMS is switched off in every German network.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": "2026-10-13",
+          "kind": "operator",
+          "passage_sha256": "sha256:060cd1c0fc47291cf4affaa30d7553bab4e72cee52427f44501c37004e190e2e",
+          "publisher": "1&1 magazine on 1und1.de, by 1&1 Telecom",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.1und1.de/magazin/mobilfunk/rcs-chat/"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": true,
+      "id": "de.aldi-talk.esim",
+      "identity_key": "de.aldi-talk",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "ALDI TALK",
+      "paraphrase": "ALDI TALK states that it offers an eSIM; existing customers swap via the service hotline, new customers first get a starter set; the swap is free and the eSIM works only in phones for now.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:10077c34da3f40dd300671f21ec6a63e9dd8f85e3116ce0b97c401a86c47378d",
+          "publisher": "ALDI TALK (FAQ)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.alditalk.de/faq"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": true,
+      "id": "de.aldi-talk.volte",
+      "identity_key": "de.aldi-talk",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "ALDI TALK",
+      "paraphrase": "ALDI TALK states that its 4G/LTE network offers telephony in HD quality and that the phone should support VoLTE, sometimes switched on in settings, to call over LTE. The page dates from the 3G switch-off period.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:9ace5748d5867d7e01e1c85182a9e2edef2ef341a2b9240b821faee461c1410d",
+          "publisher": "ALDI TALK (page on the 3G switch-off)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.alditalk.de/3g-abschaltung-info"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": true,
+      "id": "de.aldi-talk.wifi_calling",
+      "identity_key": "de.aldi-talk",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "ALDI TALK",
+      "paraphrase": "ALDI TALK states that WLAN-Telefonie lets customers call over WLAN instead of the mobile network, at home and abroad, billed per tariff; a compatible phone and the setting switched on are needed.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:22bc3e0d184151001a8fcdf1317ab0faa8a072b4f58d4b7e849c84a9003368af",
+          "publisher": "ALDI TALK (FAQ)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.alditalk.de/faq"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": true,
+      "id": "de.aldi-talk.wifi_calling_abroad",
+      "identity_key": "de.aldi-talk",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "ALDI TALK",
+      "paraphrase": "ALDI TALK states that WLAN-Telefonie works in Germany and abroad, with calls billed according to the tariff.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:22bc3e0d184151001a8fcdf1317ab0faa8a072b4f58d4b7e849c84a9003368af",
+          "publisher": "ALDI TALK (FAQ)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.alditalk.de/faq"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.esim",
+      "identity_key": "de.congstar",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that the eSIM can be booked free of charge with all Allnet Flat tariffs and prepaid tariffs; it is chosen as the SIM format in the cart.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:d4b89df0127300be144e573eacf8a0df06bfc5c87153d5e3e11cdebbf2eff40c",
+          "publisher": "congstar (eSIM tariff page)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/esim/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "first_day_without": "2026-07-01",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.mms",
+      "identity_key": "de.congstar",
+      "last_day": "2026-06-30",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that MMS is part of its contracts only until 30 June 2026 and no longer available afterwards, and names RCS as the alternative.",
+      "scope": "brand",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2026-06-11",
+          "kind": "brand",
+          "passage_sha256": "sha256:4865789b6c8482257d9118c43456c96cd09aada54c829d7d0f2e16aa5b67dc13",
+          "publisher": "congstar price list, a brand of Telekom Deutschland",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/fileadmin/files_congstar/documents/Preislisten/Preisliste_congstar_Mobilfunktarife.pdf"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.volte",
+      "identity_key": "de.congstar",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that all its tariffs have been enabled for VoLTE since September 2020; a VoLTE-capable phone is needed.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:bd0f4395f38b5b5cea0ff2bccf147999f42626be00daa65f8602d2add3ced8f5",
+          "publisher": "congstar (help page on VoIP, VoLTE and WLAN-Call)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/hilfe-service/mein-handy/voip-volte-wlancall/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "not_offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.vonr",
+      "identity_key": "de.congstar",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that mobile calls currently run only over 4G with VoLTE and that 5G is used for data only; voice over 5G is described as a future step. The page shows no date.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "vonr",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:315eac86768a6d383efe61588b6313fd931c8575e0545538ca0c5d6a62bb3bde",
+          "publisher": "congstar (help page on VoIP, VoLTE and WLAN-Call)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/hilfe-service/mein-handy/voip-volte-wlancall/"
+        }
+      ],
+      "status": "not_offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.wifi_calling",
+      "identity_key": "de.congstar",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that WLAN-Call lets customers call where mobile reception is poor, with no extra cost or effort; a WLAN-Call capable phone and the setting switched on are needed.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:8799f70b88076a2321df6f8de1da90e29d0132ce72db43470929df315267c9f1",
+          "publisher": "congstar (help page on VoIP, VoLTE and WLAN-Call)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/hilfe-service/mein-handy/voip-volte-wlancall/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.congstar.wifi_calling_abroad",
+      "identity_key": "de.congstar",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "congstar",
+      "paraphrase": "congstar states that WLAN-Call works over any private or public WLAN and is therefore available worldwide; abroad, outgoing WLAN calls are billed like calls from Germany.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:7ed1afb14e6db157a9bd437a3c36b02c72b0ac13caa0d0c45e7082026cc3a35b",
+          "publisher": "congstar (help page on VoIP, VoLTE and WLAN-Call)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.congstar.de/hilfe-service/mein-handy/voip-volte-wlancall/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.fraenk.esim",
+      "identity_key": "de.fraenk",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "fraenk",
+      "paraphrase": "fraenk states that customers choose between an eSIM and a classic SIM card when ordering; the eSIM is free.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:e3586751dd808ac57f35160fe65d6559bd7cc78f24663cf2a32e03e88553b6a0",
+          "publisher": "fraenk (eSIM tariff page)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://fraenk.de/handyvertrag-esim"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.fraenk.volte",
+      "identity_key": "de.fraenk",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "fraenk",
+      "paraphrase": "fraenk answers in its FAQ that Voice over LTE can be used with its tariff.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:d05ae941985731594a4ebdff0630890b47f21c30328992e4be98c9833b9e9cb2",
+          "publisher": "fraenk (FAQ on the tariff)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://fraenk.de/faq/tarif"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.fraenk.wifi_calling",
+      "identity_key": "de.fraenk",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "fraenk",
+      "paraphrase": "fraenk answers in its FAQ that WLAN-Call (WiFi calling) can be used with its tariff.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:d05ae941985731594a4ebdff0630890b47f21c30328992e4be98c9833b9e9cb2",
+          "publisher": "fraenk (FAQ on the tariff)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://fraenk.de/faq/tarif"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.fraenk.wifi_calling_abroad",
+      "identity_key": "de.fraenk",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "fraenk",
+      "paraphrase": "fraenk states that outside the EU, with a stable WLAN, calls and SMS to Germany work over WLAN-Call in both directions; it has tested this in some countries, not all. Inside the EU it advises switching WLAN-Call off.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:76f0e90761559235fe2d2d4d25a0230b91bd306a4914fb74a244faf8575bea89",
+          "publisher": "fraenk (FAQ on the tariff)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://fraenk.de/faq/tarif"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": true,
+      "id": "de.lidl-connect.wifi_calling",
+      "identity_key": "de.lidl-connect",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "LIDL Connect",
+      "paraphrase": "LIDL Connect states in its tariff notes that WLAN calls are possible where mobile coverage is limited, once activated in the app or web portal and on a phone that supports them; tariff terms apply, no extra cost.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:5adcdb4f10ab9833c252420688982723a4766d4bfc55edc886cfa98cd3d2f151",
+          "publisher": "LIDL Connect (customer account FAQ and tariff notes)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://kundenkonto.lidl-connect.de/FAQ.html"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.5g_sa",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "Telefónica states that o2 has offered nationwide access to its 5G standalone network, sold as 5G Plus, since autumn 2023; customers need the 5G Plus pack, free for twelve months, so pack-dependent.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "5g_sa",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2025-04-03",
+          "kind": "operator",
+          "passage_sha256": "sha256:b52abe42b822e17a4bbe77d78cbe69aab38f06966953d8d85eec18a05f525fd4",
+          "publisher": "Telefónica Deutschland (corporate news)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telefonica.de/news/corporate/2025/04/5g-plus-fuer-iphones-neue-technologie-ab-heute-fuer-viele-o2-kunden-verfuegbar.html"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.esim",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "o2 describes ordering and activating an eSIM for new contracts, existing customers, Apple Watch and prepaid; swapping a SIM card to an eSIM is free.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:5516a5adb21a8ca500f96e0fc33a3bb05beecb5a3ac5c5e5a0975e5091808608",
+          "publisher": "o2 (service page on eSIM)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.o2online.de/service/esim/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "first_day_without": "2026-06-30",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.mms",
+      "identity_key": "de.telefonica",
+      "last_day": "2026-06-29",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "mmsc_hosts": [
+        "10.81.0.7",
+        "mms"
+      ],
+      "operator": "Telefonica Deutschland (O2)",
+      "paraphrase": "o2 states that its MMS service is no longer available from 30 June 2026 and names RCS as the successor. The listed MMSC hosts are Telefonica's current MMSC and the former E-Plus MMSC on 26203.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": "2026-05-28",
+          "kind": "operator",
+          "passage_sha256": "sha256:44a0f13a313591bb654dbd38596fbd854f887b420288cc695eb47b9cf450adfa",
+          "publisher": "o2 community, announcement by an o2 moderator",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://hilfe.o2online.de/o2-news-3/abschaltung-ende-juni-2026-der-mms-dienst-ist-bald-geschichte-669822"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.volte",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "Telefónica states on its o2 Business pages that VoLTE with HD voice is available free to o2 business customers with a VoLTE-capable phone; the statement found is on the business site.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:e5ffa2a303126416e4ee6e5426bd05eee78484e60f67245b749e62cb5fe60bd1",
+          "publisher": "o2 Business (Telefónica Germany business site)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.o2business.de/mobilfunk/services/volte-hd-voice/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.vonr",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "Telefónica states that with 5G Plus its customers have Voice over New Radio for calls over 5G; a later note says iPhone users can now browse and call over the o2 5G standalone network.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "vonr",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:5e122b8fcf2742a891b1b8675ea830b794eeb7275aabd7cfaafeffd97f04cb00",
+          "publisher": "Telefónica Germany (press release on 5G Plus)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telefonica.de/news/press-releases-telefonica-germany/2023/10/5g-plus-launches-across-o2-s-5g-network-o2-telefonica-activates-latest-network-technology-for-the-digitization-of-germany.html"
+        },
+        {
+          "date": "2025-04-03",
+          "kind": "operator",
+          "passage_sha256": "sha256:a059083423002070c6c60b59a1b9d19a73d80416ff1b99c4708308e8dc21f697",
+          "publisher": "Telefónica Deutschland (corporate news)",
+          "read_on": "2026-10-28",
+          "role": "supports",
+          "url": "https://www.telefonica.de/news/corporate/2025/04/5g-plus-fuer-iphones-neue-technologie-ab-heute-fuer-viele-o2-kunden-verfuegbar.html"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.wifi_calling",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "o2 states that WLAN-Telefonie is in principle available to all o2 customers with an LTE, 4G or 5G capable tariff, a capable phone and the setting switched on.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:362762db41ad00b4b3fb5a036f90fc067ec52401e443c48dfdabdd5cbb27f449",
+          "publisher": "o2 (service page on WLAN-Telefonie)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.o2online.de/service/wlan-telefonie/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telefonica.wifi_calling_abroad",
+      "identity_key": "de.telefonica",
+      "mccmnc": [
+        "26203",
+        "26207"
+      ],
+      "operator": "Telefónica Deutschland (O2)",
+      "paraphrase": "o2 states that its WLAN-Telefonie works both in Germany and abroad; calls over WLAN abroad are billed as if made in Germany.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:a5b88eac2c4051b0844d43f664993c9e6fe02b7f1c111ae92840d173892e946b",
+          "publisher": "o2 (service page on WLAN-Telefonie)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.o2online.de/service/wlan-telefonie/"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telekom.5g_sa",
+      "identity_key": "de.telekom",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "Telekom Deutschland",
+      "paraphrase": "Telekom states that its free 5G+ Ultra add-on for private customers runs on its existing 5G standalone network; access to 5G SA is through this option, so tariff-dependent.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "5g_sa",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:ab6cabf0e9982aed4f5d8e2a5832cc6c0d9b54f1bc69b7aa71a2dc6ccd8935d4",
+          "publisher": "Deutsche Telekom (media information on 5G+ Ultra)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telekom.com/en/newsroom/latest-updates/media-information/2026/4/5g-ultra-for-video-calls"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telekom.esim",
+      "identity_key": "de.telekom",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "Telekom Deutschland",
+      "paraphrase": "Telekom states that its customers can move their eSIM profile between Android and iOS devices, in addition to same-system transfers offered since earlier years.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2025-10-07",
+          "kind": "operator",
+          "passage_sha256": "sha256:600072830858aebcf2297db172f17a09bf5878af532b14e042b8df7bbf7a1f63",
+          "publisher": "Deutsche Telekom (media information on eSIM transfer)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telekom.com/en/newsroom/latest-updates/media-information/2025/10/first-at-deutsche-telekom-esim-transfer-between-android-and-ios"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telekom.volte",
+      "identity_key": "de.telekom",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "Telekom Deutschland",
+      "paraphrase": "Telekom states that calls over 4G/LTE (VoLTE) are possible in all its tariffs at no extra cost; after the 3G switch-off calls run over 2G or VoLTE. The statement dates from the 2020 switch-off announcement.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:020e5f887f32e9c778317b958b13856b0112e689983610f43c925529d4a5431d",
+          "publisher": "Deutsche Telekom (media information on the 3G switch-off)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telekom.com/en/newsroom/latest-updates/media-information/2020/9/bye-bye-3g-now-lte-is-coming-for-everyone"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.telekom.wifi_calling_abroad",
+      "identity_key": "de.telekom",
+      "mccmnc": [
+        "26201"
+      ],
+      "operator": "Telekom Deutschland",
+      "paraphrase": "Telekom explains that WLAN Call works abroad and calls and texts over it are billed as if the customer were in Germany; it can save money outside the EU and may cost extra for local calls inside the EU.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:8ecb5e7020a915f2380e6dae67ec9b54b9bfc2cd34b117cd321cdf3530486cc6",
+          "publisher": "Deutsche Telekom (newsroom explainer on roaming)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.telekom.com/de/newsroom/aktuelles/erklaerstuecke/2026/06/surfen-und-telefonieren-im-ausland-was-beim-roaming-wichtig-ist"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.5g_sa",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone announced that 5G+ (5G standalone) is switched on nationwide for private customers; access is unlocked free of charge, for example in the MeinVodafone app.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "5g_sa",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2024-10-08",
+          "kind": "operator",
+          "passage_sha256": "sha256:a041299b4b17190ce8305bca642a01c89e089e0c66030019bdde64701dcef5da",
+          "publisher": "Vodafone Deutschland (corporate newsroom)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://unternehmen.vodafone.de/newsroom/vodafone-schaltet-5g-standalone-bundesweit-frei"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.esim",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that new customers can order an eSIM with a contract or with a CallYa prepaid card, and existing customers can swap to an eSIM in MeinVodafone.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "esim",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:ef70fe4c14ce7685b41afbb992e286d8f632b7f04009851eec088e35d2d24e27",
+          "publisher": "Vodafone (help page on eSIM)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.vodafone.de/hilfe/alles-zur-esim.html"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "first_day_without": "2023-01-17",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.mms",
+      "identity_key": "de.vodafone",
+      "last_day": "2023-01-16",
+      "mccmnc": [
+        "26202"
+      ],
+      "mmsc_hosts": [
+        "139.7.24.1"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that it switched off its MMS service in the Vodafone network on 17 January 2023, after 21 years; SMS stays.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": "2023-01-17",
+          "kind": "operator",
+          "passage_sha256": "sha256:ecb790ada7cedb5e966a35738e66eff2809a669da0e47305684f42f268f471f5",
+          "publisher": "Vodafone Deutschland newsroom",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://unternehmen.vodafone.de/newsroom/vodafone-stellt-den-mms-service-ein"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.volte",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that VoLTE is switched on by default in its mobile contracts at no extra cost; if it is missing, support can enable it.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2025-08-14",
+          "kind": "operator",
+          "passage_sha256": "sha256:1af73650658255a84865a824be6d99142243a1f8bc8672e637eb61bef728f134",
+          "publisher": "Vodafone (featured magazine on vodafone.de)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.vodafone.de/featured/article/kein-internet-beim-telefonieren-ursachen-loesungen-238002"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.volte_roaming",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone marks the roaming partner networks where calls over 4G/LTE (VoLTE roaming) work and explains that a VoLTE-roaming capable phone with a recent iOS or Android version is needed; country- and partner-dependent.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "volte_roaming",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:d2b56f6aabfe8526fadd75908f07f5c7642806e2de0247add97eef85904d9992",
+          "publisher": "Vodafone (InfoDok 443, World roaming partner list)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.vodafone.de/infofaxe/443.pdf"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.vonr",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that at many sites voice calls over 5G (VoNR) are already possible on its 5G+ network, while calls are otherwise carried over 2G and 4G; site-dependent.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "vonr",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": "2024-10-08",
+          "kind": "operator",
+          "passage_sha256": "sha256:1b84324ee6b3547a50005964b6293e38d377cf81cb182376abe755373c3563b8",
+          "publisher": "Vodafone Deutschland (corporate newsroom)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://unternehmen.vodafone.de/newsroom/vodafone-schaltet-5g-standalone-bundesweit-frei"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.wifi_calling",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that WiFi Calling is included automatically and free in almost all its tariffs and lists the postpaid and CallYa tariffs that have it; tariff-dependent.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:38bbf667ff4fcdfab5e77b60fea3643b522500eb7e71faad1cf62e03606432ee",
+          "publisher": "Vodafone (help page on WiFi Calling)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.vodafone.de/hilfe/wifi-calling.html"
+        }
+      ],
+      "status": "offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "DE",
+      "history": [
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "not_offered"
+        }
+      ],
+      "host_only": false,
+      "id": "de.vodafone.wifi_calling_abroad",
+      "identity_key": "de.vodafone",
+      "mccmnc": [
+        "26202"
+      ],
+      "operator": "Vodafone Deutschland",
+      "paraphrase": "Vodafone states that WiFi Calling does not work abroad; there the phone uses the mobile network for calls.",
+      "scope": "brand",
+      "second_check": null,
+      "service": "wifi_calling_abroad",
+      "sets_value": false,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:f1f208a2b932c5008870dc9d4f7d8206a16052b1d1c973029500d78fc44b3eb9",
+          "publisher": "Vodafone (help page on WiFi Calling)",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.vodafone.de/hilfe/wifi-calling.html"
+        }
+      ],
+      "status": "not_offered",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "LU",
+      "first_day_without": "2024-09-29",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "lu.post.mms",
+      "identity_key": "lu.post",
+      "mccmnc": [
+        "27001"
+      ],
+      "mmsc_hosts": [
+        "mmsc.pt.lu"
+      ],
+      "operator": "POST Luxembourg",
+      "paraphrase": "POST states that sending and receiving MMS ended on 29 September 2024, also to and from other networks. Join, an MVNO on 27001 with its own MMSC, is not covered.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:894a346bbf097bb85c7880bdcd725815d3284235f8a66c32761f5dd702822c21",
+          "publisher": "POST Luxembourg",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.post.lu/en/lp/fin-du-service-mms"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    },
+    {
+      "checked_at": "2026-10-28",
+      "country": "MY",
+      "first_day_without": "2026-03-15",
+      "history": [
+        {
+          "event": "seeded",
+          "on": "2026-10-09",
+          "status": "unknown"
+        },
+        {
+          "event": "read",
+          "on": "2026-10-28",
+          "status": "unknown"
+        },
+        {
+          "event": "admitted",
+          "on": "2026-10-28",
+          "status": "ended"
+        },
+        {
+          "event": "second_check",
+          "on": "2026-10-28",
+          "status": "ended"
+        }
+      ],
+      "host_only": false,
+      "id": "my.maxis.mms",
+      "identity_key": "my.maxis",
+      "mccmnc": [
+        "50212"
+      ],
+      "mmsc_hosts": [
+        "172.16.74.100"
+      ],
+      "operator": "Maxis (Hotlink)",
+      "paraphrase": "Maxis states, on its Hotlink FAQ, that it discontinues MMS completely, effective 15 March 2026, as part of network modernisation.",
+      "scope": "network",
+      "second_check": {
+        "on": "2026-10-28",
+        "verdict": "confirmed"
+      },
+      "service": "mms",
+      "sets_value": true,
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:efaca91144f1f32ba8bcc96d228db46639f47b6a600f9cbff866a72a691a312b",
+          "publisher": "Hotlink, the Maxis prepaid brand",
+          "read_on": "2026-10-28",
+          "role": "admits",
+          "url": "https://www.hotlink.com.my/en/faq/network/decomissioning-mms/"
+        }
+      ],
+      "status": "ended",
+      "swept_at": "2026-10-28"
+    }
+  ]
+}
