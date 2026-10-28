@@ -1663,9 +1663,16 @@ def validate_capability_sources(
 # gives the month. Until 2026-10-06 capability_label_withheld marked a
 # capability-gating CarrierConfig key published next to a withheld label;
 # such a key is now left out, and the flag is refused.
+# old_selector_superseded (round 32, D7): an old Samsung MVNO scope that the
+# vendor's current packs supersede. Its profile file stays, and the generator
+# leaves it out of apns-conf.xml, carrier-config-list.xml and lookup.json. It
+# names the match's selector, and only Samsung OMC gives the profile.
+OLD_SELECTOR_SUPERSEDED = "old_selector_superseded"
 FLAG_SECTIONS = {
     "old_single_source": "capabilities",
+    OLD_SELECTOR_SUPERSEDED: "match",
 }
+SELECTOR_MATCH_KEYS = {"spn", "gid1_prefixes", "imsi_prefix_patterns", "iccid_prefixes"}
 
 
 def validate_flags(
@@ -1694,6 +1701,13 @@ def validate_flags(
         flag, section, key = item["flag"], item["section"], item["key"]
         if FLAG_SECTIONS.get(flag) != section:
             raise ValidationError(f"{path}: {item_label} is not a valid flag")
+        if flag == OLD_SELECTOR_SUPERSEDED:
+            if key != "selector" or evidence.get("sources") != ["samsung_omc"]:
+                raise ValidationError(
+                    f"{path}: {item_label} flags a profile that is not an old Samsung selector"
+                )
+            keys.append((section, key, flag))
+            continue
         if (
             key not in CAPABILITY_KEYS
             or key not in (evidence.get("capability_sources") or {})
@@ -2391,10 +2405,22 @@ def validate_provenance_header(path: Path, metadata: dict[str, Any]) -> None:
         )
 
 
+def superseded_selector_ids(evidence_path: Path) -> set[str]:
+    """The profiles the evidence index flags old_selector_superseded (D7)."""
+    if not evidence_path.exists():
+        return set()
+    return {
+        item["profile_id"]
+        for item in load_json(evidence_path).get("profiles", [])
+        if any(flag.get("flag") == OLD_SELECTOR_SUPERSEDED for flag in item.get("flags", []))
+    }
+
+
 def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None:
-    """lookup.json lists every profile once. newest_entry, where present,
-    repeats the month the evidence index publishes for that profile, and is
-    present exactly where the evidence index has one."""
+    """lookup.json lists every profile once, except those flagged
+    old_selector_superseded (D7), which it leaves out. newest_entry, where
+    present, repeats the month the evidence index publishes for that profile,
+    and is present exactly where the evidence index has one."""
     path = generated_dir / "android" / "lookup.json"
     lookup = load_json(path)
     require_type(path, lookup, dict, "lookup")
@@ -2439,7 +2465,9 @@ def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None
                 f"{path}: {label}.newest_entry does not match the evidence index"
             )
     if seen != expected_profile_ids:
-        raise ValidationError(f"{path}: lookup does not list every profile")
+        raise ValidationError(
+            f"{path}: lookup must list every profile except the superseded old selectors"
+        )
     check_against_schema(path, lookup, "android-lookup.schema.json")
 
 
@@ -2582,7 +2610,13 @@ def main(argv: list[str]) -> int:
         },
     )
     validate_android_metadata(index_path.parent, seen_ids, window)
-    validate_lookup(index_path.parent, seen_ids)
+    superseded = superseded_selector_ids(index_path.parent / "evidence-index.json")
+    for profile in profiles_by_path.values():
+        if profile["profile_id"] in superseded and not set(profile["match"]) & SELECTOR_MATCH_KEYS:
+            raise ValidationError(
+                f"{profile['profile_id']}: flagged {OLD_SELECTOR_SUPERSEDED}, but its match has no selector"
+            )
+    validate_lookup(index_path.parent, seen_ids - superseded)
     if window is not None:
         check_freshness(window, args.freshness)
     check_liveness(
