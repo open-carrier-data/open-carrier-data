@@ -209,8 +209,9 @@ CARRIER_SCOPES = ("profile", "sim_key")
 # main serves schema_version 1 (the round 30 format, which every reader on a
 # phone today parses) until implementation order step 8; the prepared
 # removal branch switches SERVED_RECORDS_SCHEMA_VERSION to 2 and drops the
-# five S20 records. Cell records the owner build sends before then wait in
-# devices/records/measured.json.
+# five S20 records. The report bot takes schema_version 1 records until the
+# switch; a cell record placed in devices/records/measured.json before then is
+# checked and waits there unserved.
 CELL_RECORDS_SCHEMA_VERSION = 2
 SERVED_RECORDS_SCHEMA_VERSION = 1
 FORK_RE = re.compile(r"[a-z][a-z0-9_-]{0,31}")
