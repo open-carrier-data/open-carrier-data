@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-dataset-group-a-pending.schema.json",
+  "title": "OCD group A read status (generated/ocd-dataset/group-a-pending.json)",
+  "description": "Rule round 31 (emergencyValues), a companion file of the dataset: every group A value that differs from the Google lane and that no read covers yet on the ROM families and IMS stacks OCD reads for (`targets`), which serve the Google-lane value until an independent agent reads them; the read values whose profile has no recorded source family, which no read can admit; every key read; and the keys a display_only read took out of group A. The publisher starts a read for each new pending value at once. tools/ocd_dataset.py generate writes it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "based_on_data_digest",
+    "targets",
+    "pending",
+    "unrecorded_basis",
+    "key_reads",
+    "left_group_a"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "based_on_data_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rom_family",
+          "ims_stack"
+        ],
+        "properties": {
+          "rom_family": {
+            "enum": [
+              "aosp",
+              "lineageos",
+              "other",
+              "stock"
+            ]
+          },
+          "ims_stack": {
+            "enum": [
+              "aosp_imsstack",
+              "other",
+              "phh_ims",
+              "samsung_ims"
+            ]
+          }
+        }
+      }
+    },
+    "pending": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "value",
+          "rom_family",
+          "ims_stack",
+          "families",
+          "profiles"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.]{1,200}$"
+          },
+          "value": {},
+          "rom_family": {
+            "enum": [
+              "aosp",
+              "lineageos",
+              "other",
+              "stock"
+            ]
+          },
+          "ims_stack": {
+            "enum": [
+              "aosp_imsstack",
+              "other",
+              "phh_ims",
+              "samsung_ims"
+            ]
+          },
+          "families": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "profiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^(open|fill)\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+            }
+          }
+        }
+      }
+    },
+    "unrecorded_basis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "value",
+          "profile_id",
+          "reference"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.]{1,200}$"
+          },
+          "value": {},
+          "profile_id": {
+            "type": "string",
+            "pattern": "^(open|fill)\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+          },
+          "reference": {
+            "type": "string",
+            "pattern": "^devices/records/reads/group-a/[A-Za-z0-9_.]{1,200}\\.[0-9a-f]{12}\\.json$"
+          }
+        }
+      }
+    },
+    "key_reads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "effect",
+          "verdict",
+          "reference"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.]{1,200}$"
+          },
+          "effect": {
+            "enum": [
+              "call_path",
+              "display_only"
+            ]
+          },
+          "verdict": {
+            "enum": [
+              "proceed",
+              "hold"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "pattern": "^devices/records/reads/group-a/[A-Za-z0-9_.]{1,200}\\.[0-9a-f]{12}\\.json$"
+          }
+        }
+      }
+    },
+    "left_group_a": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

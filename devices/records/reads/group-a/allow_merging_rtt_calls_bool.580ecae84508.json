@@ -1,0 +1,45 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google",
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Google's att_us sets true (kodiak/att_us.textproto:74), and that is what the lane serves for 310-280/380/410. For AT&T 310-070/090/680/980 and Sprint 310-120, the AT&T and Sprint vendor.xml carrier configs shipped on OnePlus, Nothing, Xiaomi, Motorola, Nokia, LG, Osom, Razer, Shift and Realme devices all set true (lineage-device-carrier-overlays). These are three-digit MNCs that real SIMs report.",
+    "effect": "allow_merging_rtt_calls_bool (CarrierConfigManager.java:797-802, default false at :11835) has a single reader: TelephonyConnection.isRttMergeSupported (TelephonyConnection.java:2153-2155), called from refreshConferenceSupported (TelephonyConnection.java:3279-3304). An emergency connection is made non-conferenceable before the RTT check is reached (TelephonyConnection.java:3280-3282). For a non-emergency RTT connection, true lets the user merge it into a conference, which per the key's definition downgrades it to voice; false withholds the merge. The AOSP ImsStack (tree and OCD fork), frameworks/opt/telephony, frameworks/opt/net/ims, Telecom and the Dialer do not read it; the Dialer's own RTT-conference workaround is independent of it (DialerCall.java:924-945). On this ROM RTT connections arise only from incoming RTT calls, because config_support_rtt is false, so the key matters only when the user presses Merge during an incoming RTT call. Telephony's own RTT gates also need R.bool.config_support_rtt, which is false in this tree (packages/services/Telephony/res/values/config.xml:234-235, config_support_simless_emergency_rtt false at :259-261) with no overlay in device/samsung/x1s, device/samsung/universal9830-common or rom-repos/android_vendor_extra: PhoneInterfaceManager.isRttSupported/isRttEnabled (PhoneInterfaceManager.java:7995-8035), the PhoneAccount CAPABILITY_RTT bit (TelecomAccountRegistry.java:441-446, 1102-1155) and the accessibility RTT switch (AccessibilitySettingsFragment.java:267-276) are all off, so the stock Dialer never offers or upgrades to RTT (DialerCall.java:1024-1052). Telecom still creates RTT streams for an incoming RTT call (CallsManager.java:1809-1816) and for an outgoing emergency call when the calling app passes EXTRA_START_CALL_WITH_RTT, ignoring the account capability (CallsManager.java:2650-2662). Read on the LineageOS 23.2 tree; the phone runs 24.0, whose config_support_rtt was not checked. The OCD ImsStack fork (branch ocd) is byte-identical to the tree in every ImsStack file cited.",
+    "risk": "Emergency calls cannot be merged in any case (TelephonyConnection.java:3280-3282). With true, a merge the user starts on an RTT call drops the text stream and the call continues as voice inside the conference; with false the Merge option is withheld for that call. No emergency, TTY, RTT or priority call is placed, routed, held or called back differently."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_merging_rtt_calls_bool",
+  "notes": "Proceed. The key only decides whether a user may merge a non-emergency RTT call into a conference; emergency connections are excluded before it is read. The value is AT&T's real setting, from Google's att_us and many OEM AT&T and Sprint configs.",
+  "profiles": [
+    "open.310070.42060a0efc4e",
+    "open.310090.4f00a20e9474",
+    "open.310120.53fe464fbdf5",
+    "open.310280.37026d92df43",
+    "open.310380.15e45647dd5a",
+    "open.310410.cdedc056c91a",
+    "open.310680.61b8680bf9b6",
+    "open.310980.5a93d79d5738"
+  ],
+  "read_at": "2026-10-28T19:16:56Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:797-802,11835",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnection.java:2140-2160,3229-3310",
+    "packages/apps/Dialer/java/com/android/incallui/call/DialerCall.java:920-945,1024-1053",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:1800-1816,2644-2662",
+    "packages/services/Telephony/src/com/android/services/telephony/TelecomAccountRegistry.java:430-455,1100-1155",
+    "packages/services/Telephony/res/values/config.xml:230-270",
+    "rom-repos/platform_packages_modules_ImsStack.git@ocd (git grep: no reader)",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/kodiak/att_us.textproto:72-76",
+    "Open_Carrier_Data/live-private/candidates/lineage-device-carrier-overlays/profiles-*.json (allow_merging_rtt_calls_bool entries)",
+    "Open_Carrier_Data/worktrees-r31/public/generated/evidence-index.json"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "proceed"
+}

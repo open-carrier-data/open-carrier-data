@@ -1,0 +1,57 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "T-Mobile profiles: 'T-Mobile - US' (AOSP carrier ID 1, 21 networks), T-Mobile 310-240 and 310-260, and Truphone 310-300. The value is T-Mobile's own published setting. The ROM's own AOSP CarrierConfig asset carrier_config_carrierid_1_T-Mobile-US.xml:10-11 sets carrier_volte_tty_supported_bool=false and carrier_vowifi_tty_supported_bool=false. Google's current tmobile_us (kodiak tmobile_us.textproto:187-188) and metropcs_us set false, and every one of the 795 Google CarrierSettings protobuf files that carry the key says false. For 310-240, 310-260 and Truphone 310-300, the Google lane already serves false, so serving it changes nothing. For 'T-Mobile - US', it differs only on the networks where the Google lane maps to an entry that leaves the key unset. Fi profiles (234-20 GID1 0306, three 310-120 variants, 311-580, 312-530, 312-580): the value comes from Google's own Pixel vendor CarrierSettings entry 'Fi Us' (barbet, 2024-06-30). These are Google Fi SIMs (AOSP carrier ID 1989 and its sub-IDs), whereas the Google lane maps them to host-network entries (h3_gb, sprintwholesale_us, uscc_us, google_us) that leave it unset. The same Fi entry and the OCD profiles set carrier_wfc_ims_available_bool=false.",
+    "effect": "The key decides only whether MMTEL voice over Wi-Fi (IWLAN) stays enabled while TTY mode is on. ImsManager.isNonTtyOrTtyOnVoWifiEnabled() is true when the key is true or the current TTY mode is OFF (ImsManager.java:730-746). reevaluateCapabilities(), setWfcSetting() and setTtyMode() pass that result to updateVoiceWifiFeatureAndProvisionedValues() (ImsManager.java:1212-1215, 1752-1754, 2886-2893). That function disables CAPABILITY_TYPE_VOICE on REGISTRATION_TECH_IWLAN unless Wi-Fi calling is available, enabled, provisioned and the result is true (ImsManager.java:1954-1990). The video-over-Wi-Fi update takes the same input (ImsManager.java:1215, 1757). So with false, while TTY mode is on (preferred TTY mode set and a wired TTY device attached), ImsPhone stops reporting Wi-Fi calling. GsmCdmaPhone.useImsForCall() then sends a TTY call to VoLTE, which is allowed only if carrier_volte_tty_supported_bool permits, or else to CS (GsmCdmaPhone.java:1235-1241, 1346-1347, 1422-1428). With TTY mode off, nothing changes. Emergency: domain selection is off on this phone (empty component, Telephony config.xml:393; DomainSelectionResolver componentName=[] in the phone log, S20 report line 264). The legacy GsmCdmaPhone.useImsForEmergency() reads carrier_volte_tty_supported_bool and isImsAvailable(), not this key (GsmCdmaPhone.java:1243-1252), and EmergencyCallDomainSelector does not read it either. The only indirect emergency effect is this: when TTY mode has already disabled VoLTE voice and this key also disables Wi-Fi voice, reevaluateCapabilities() may turn IMS off if the carrier allows it (ImsManager.java:1772-1784). SMS over IMS then stops and SMS falls back to CS or SGs, the same state as with Wi-Fi calling switched off. The AOSP ImsStack (tree and ocd fork) never reads this key, and its TTY/GTT media is gated only by the VoLTE key (CallFeature.java:80-83). So a TTY call that goes over Wi-Fi calling while that key is false is plain AMR audio on ImsMedia, which has no TTY-tone handling (STATUS.md:25). The phone runs 24.0; ImsManager on 24.0 was not read.",
+    "risk": "For the T-Mobile profiles: compared with the Android default true, false keeps TTY-mode calls off Wi-Fi calling. That is a path T-Mobile declares unsupported, and on this stack it would carry TTY tones as plain AMR audio without GTT, because T-Mobile's VoLTE TTY key is false. Emergency TTY routing is unchanged, because the legacy emergency path follows the VoLTE TTY key (false, so CS) and not this key. Residual effects: with Wi-Fi-only coverage, a non-emergency TTY-mode call cannot be placed, and in TTY mode IMS may be turned off, so SMS, emergency SMS included, falls back to CS/SGs. This is the behaviour stock AOSP ships for T-Mobile on this ROM. For the Fi profiles, the key has no effect while the profile's carrier_wfc_ims_available_bool=false is served: Wi-Fi voice is never enabled (ImsManager.java:1966-1990). If Wi-Fi calling were enabled, the effect would match Google Fi's own setting. Fi's VoLTE TTY comes from the Google lane (default false), so emergency TTY routing is again unchanged. Nothing here places an emergency, TTY, RTT or priority call on a worse path than the otherwise-served value."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "carrier_vowifi_tty_supported_bool",
+  "notes": "Proceed for these 11 profiles. The value is the carrier's own setting: T-Mobile's in AOSP (shipped in this ROM's CarrierConfig assets) and in Google CarrierSettings, and Google's own for Fi. Three profiles already get false from the Google lane. On LineageOS with AOSP ImsStack, the key only stops Wi-Fi calling from carrying calls while TTY mode is on. The legacy emergency path, which this phone uses because domain selection is off, does not read it, and ImsStack never reads it. For Fi, it is inert while Wi-Fi calling is unavailable in the same profile. Serving false avoids placing TTY calls over Wi-Fi calling without TTY media and does not change how an emergency TTY call is routed.",
+  "profiles": [
+    "open.23420.b7dfa1ff345d",
+    "open.310026.28145f54cfa7",
+    "open.310120.54ca513b7ffe",
+    "open.310120.a9fe3c58c86e",
+    "open.310120.dd365e29a243",
+    "open.310240.25c6dcd2afb6",
+    "open.310260.f201405c108e",
+    "open.310300.a45d2276b6ea",
+    "open.311580.c832b3393eca",
+    "open.312530.cf7323a385d3",
+    "open.312580.86de852a7d51"
+  ],
+  "read_at": "2026-10-28T19:11:43Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1078-1082,11859-11860",
+    "frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:705-746,1195-1227,1748-1800,1954-1990,2878-2900",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1235-1252,1279-1445,4370-4377",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:2797-2826",
+    "packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java:5005-5018",
+    "packages/services/Telephony/res/values/config.xml:390-393",
+    "packages/services/Telephony/src/com/android/services/telephony/domainselection/EmergencyCallDomainSelector.java:710-760",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/enabler/mtc/CallFeature.java:80-83",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsMmTelService.java:191-211",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsRegistrationTracker.java (changeCapabilities)",
+    "packages/modules/ImsStack (whole tree) and rom-repos/platform_packages_modules_ImsStack.git branch ocd: git grep, no reader of carrier_vowifi_tty_supported_bool",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1_T-Mobile-US.xml:10-11",
+    "packages/providers/TelephonyProvider/assets/latest_carrier_id/carrier_list.textpb (entries for 310-590, 311-660, Google Fi, T-Mobile US, MetroPCS)",
+    "S20_Project/reports/S20 modem and radio interface study.md:264",
+    "S20_Project/STATUS.md:25",
+    "Open_Carrier_Data/live-public/carriers/open/ (the 14 profiles of candidate 10)",
+    "Open_Carrier_Data/live-private/candidates/aosp-carrier-config/aosp-carrier-config/1.t-mobile-us.28145f54cf.json",
+    "Open_Carrier_Data/live-private/candidates/google-carriersettings-protobuf/google-carriersettings-protobuf/*tmobile-us*, *metropcs-us*, *fi-*.json (all 795 files with the key: false)",
+    "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.{7145e9de,6b4e7bc6,7b18bf29,ed4d5b70,2b09af57,8e457afa,46d4ebb7,8df62221,9d803235,b4ff8cdf,e0dc76d3}*.json",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/kodiak/{tmobile_us,metropcs_us,verizon_us,sprintwholesale_us,uscc_us,h3_gb}.textproto"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "proceed"
+}

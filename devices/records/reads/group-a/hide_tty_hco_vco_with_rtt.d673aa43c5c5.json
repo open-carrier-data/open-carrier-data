@@ -1,0 +1,39 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "This is a key read, not a value read. For reference, AOSP's T-Mobile config (carrier_config_carrierid_1_T-Mobile-US.xml:17) and Google's tmobile_us and metropcs_us set it true, alongside rtt_supported_bool=true.",
+    "effect": "Only one place reads the key, TtyModeListPreference.shouldHideHcoAndVco() in TeleService, and it is true only if the key is true and RTT is supported for the default voice sub. RTT support needs the carrier's rtt_supported_bool and the device's config_support_rtt (TtyModeListPreference.java:123-133, PhoneInterfaceManager.java:7995-8015). It does more than hide entries. In init(), which runs when the call accessibility settings screen opens (AccessibilitySettingsFragment.java:104-105), the list is cut to Off/Full. If the stored Settings.Secure.PREFERRED_TTY_MODE is HCO or VCO, init() rewrites it to FULL (TtyModeListPreference.java:53-65). No ACTION_TTY_PREFERRED_MODE_CHANGED broadcast is sent, so the new mode applies the next time Telecom and Telephony read the setting. That happens in TtyManager's constructor through getCurrentTtyMode(), which reads PREFERRED_TTY_MODE (TtyManager.java:46-57, PhoneInterfaceManager.java:2819-2840), in GsmCdmaPhone.loadTtyMode() (GsmCdmaPhone.java:4157-4170), and in ImsPhoneCallTracker when the ImsService connects (ImsPhoneCallTracker.java:1421-1425), typically after a reboot or a phone-process restart. From then on, with a TTY device attached, Telecom's current TTY mode is FULL instead of HCO/VCO. Telecom then sends the audio HAL tty_mode=tty_full instead of tty_hco/tty_vco, which changes whether the phone microphone (VCO) or the earpiece voice (HCO) is used during the TTY call (TtyManager.java:76-115). ACTION_CURRENT_TTY_MODE_CHANGED carries FULL to Telephony and the ImsService. AOSP ImsStack then signals MEDIA_GTT_MODE FULL instead of HCO/VCO (ImsCallSessionImpl.java:1955-1958, ImsCallMediaUtils.java:247-261). CS signalling does not change, because GsmCdmaPhone maps HCO and VCO to FULL for the RIL anyway (GsmCdmaPhone.java:4142-4152). TTY on/off routing does not change either: ImsManager and TelephonyConnectionService only compare against TTY_MODE_OFF. On this ROM it is currently inert: config_support_rtt is false in TeleService's default resources (config.xml:235) and no S20 overlay sets it, so isRttSupported() is false and the key does nothing until device RTT is turned on.",
+    "risk": "With the key true and device RTT on, a TTY user who chose VCO (speaks and reads) or HCO (hears and types) is silently switched to FULL TTY the next time the setting is read. During the next TTY call, an emergency TTY call included, the audio HAL and the IMS call then use full-TTY audio. A VCO user's voice or an HCO user's received voice may not be carried as before, so the call may not work the way the user set it up. That is a change in how a TTY call is placed, not only in what is shown."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "hide_tty_hco_vco_with_rtt",
+  "notes": "Hold: the key stays in group A. Besides hiding the HCO and VCO choices, it rewrites the stored preferred TTY mode from HCO/VCO to FULL whenever the accessibility settings screen opens with RTT supported. Telecom turns that stored mode into the audio HAL's tty_mode, and the IMS stack turns it into the call's GTT mode, so it changes how later TTY calls, emergency ones included, are carried. On the current S20 build it is inert because device RTT support (config_support_rtt) is off, but that does not make it display-only.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:12:18Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:3465-3469,12196",
+    "packages/services/Telephony/src/com/android/phone/settings/TtyModeListPreference.java:47-68,70-105,123-133",
+    "packages/services/Telephony/src/com/android/phone/settings/AccessibilitySettingsFragment.java:99-108,282-287",
+    "packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java:2819-2840,7995-8015",
+    "packages/services/Telephony/res/values/config.xml:235",
+    "packages/services/Telecomm/src/com/android/server/telecom/TtyManager.java:39-58,76-115,117-136",
+    "packages/services/Telecomm/res/values/config.xml:37",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:436-448,4128-4170",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1418-1425,2797-2826",
+    "frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:705-746,2878-2900",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsCallSessionImpl.java:1925-1965",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsCallMediaUtils.java:247-261,312-326",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:218-230",
+    "whole-tree grep for the key (frameworks/opt, frameworks/base services/core/telecomm/telephony, packages/services/Telephony, packages/services/Telecomm, packages/modules/ImsStack, packages/apps/Dialer): only TtyModeListPreference reads it",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1_T-Mobile-US.xml:17",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/kodiak/tmobile_us.textproto:291-292, metropcs_us.textproto:260-261"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "hold"
+}
