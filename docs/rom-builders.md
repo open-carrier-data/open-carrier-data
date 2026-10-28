@@ -29,7 +29,7 @@ For each SIM, OcdCarrierSettings picks one OCD profile with OCD's own exact matc
 2. OCD's `default` profile.
 3. The Google-lane fill, for keys the profile does not publish.
 4. The matched profile's values.
-5. The owner's measured records for this exact cell (see [Records from the owner's phones](#records-from-the-owners-phones)).
+5. Measured records for this exact cell: the owner's published records, and this phone's own results, which never leave it (see [Records from the owner's phones](#records-from-the-owners-phones)).
 6. Last, your device tree's override and LineageOS's own fixed key, exactly as LineageOS's CarrierService applies them. This step also runs when OCD's dataset fails to load.
 
 Between steps 5 and 6, OcdCarrierSettings enforces its fixed rules: group A (the emergency call keys), group B (the metered lists) and, on a phone without a tester, SM7. It enforces them with its own compiled-in copy, whatever the data says.
