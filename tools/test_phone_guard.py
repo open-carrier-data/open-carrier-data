@@ -8,6 +8,8 @@ import contextlib
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -213,6 +215,115 @@ class CredentialsLostTests(GuardCase):
         code, _, accepted = self.run_guard(xml(self.CREDS, MMS), xml(WEB), [self.SAMSUNG],
                                            extra=["--accept", plain["digest"]])
         self.assertEqual((code, accepted["verdict"]), (0, "accepted"))
+
+
+def records_of(rows: list[tuple[str, dict, dict]]) -> list[dict]:
+    """Stand-in generator records for the head file: each row's attributes
+    with its `_support` and `_current`, in file order."""
+    out = []
+    for text, support, current in rows:
+        row = guard.phone.parse_lines([f"<apn {text} />"])[0]
+        out.append({**{k: v for k, v in row.items() if not k.startswith("_")},
+                    "_support": support, "_current": current})
+    return out
+
+
+class CredentialFillInTests(GuardCase):
+    """Report-only (rule decisions round 32, D8): a lead that takes a
+    username, password, auth type or MTU from a lower-ranked row of its
+    stored group that no current vendor backs, under a current vendor's best
+    row (class (a))."""
+
+    FILL = WEB + ' user="u" password="p" authtype="1"'
+    LINEAGE = {"default": ["lineageos"], "supl": ["lineageos"]}
+    GOOGLE = {"default": ["google_carriersettings"], "supl": ["google_carriersettings"]}
+    OTHER = 'mcc="262" mnc="02" apn="net" type="default"'
+    LINE = "credentials filled in from a non-current source on the {} lead: 1: 262/01 (lineageos)"
+
+    def head_records(self, fill_current: dict | None = None) -> list[dict]:
+        return records_of([(self.FILL, self.LINEAGE, fill_current or {}), (WEB, self.GOOGLE, self.GOOGLE)])
+
+    def test_a_created_fill_in_is_reported_with_its_source(self) -> None:
+        code, out, result = self.run_guard(xml(WEB), xml(self.FILL, WEB), self.head_records())
+        self.assertEqual((code, result["verdict"], result["trips"], result["digest"]), (0, "pass", [], None))
+        self.assertIn(self.LINE.format("internet"), out)
+        self.assertIn(self.LINE.format("attach"), out)
+        self.assertNotIn("credential sources: unknown", out)
+
+    def test_an_unchanged_fill_in_is_not_reported(self) -> None:
+        code, out, _ = self.run_guard(xml(self.FILL, WEB, self.OTHER), xml(self.FILL, WEB), self.head_records())
+        self.assertEqual(code, 0)
+        self.assertNotIn("credentials filled in", out)
+
+    def test_changed_filled_in_values_are_reported(self) -> None:
+        old = WEB + ' user="old" password="p" authtype="1"'
+        _, out, _ = self.run_guard(xml(old, WEB), xml(self.FILL, WEB), self.head_records())
+        self.assertIn(self.LINE.format("internet"), out)
+
+    def test_a_current_vendors_fill_in_is_not_class_a(self) -> None:
+        _, out, _ = self.run_guard(xml(WEB), xml(self.FILL, WEB), self.head_records(self.GOOGLE))
+        self.assertNotIn("credentials filled in", out)
+
+    def test_records_that_are_not_the_head_file_name_no_source(self) -> None:
+        code, out, result = self.run_guard(xml(WEB), xml(self.FILL, WEB), [])
+        self.assertEqual((code, result["trips"]), (0, []))
+        self.assertNotIn("credentials filled in", out)
+        self.assertIn("credential sources: unknown", out)
+
+    def test_trips_and_digest_do_not_change(self) -> None:
+        records = self.head_records() + records_of([])
+        _, _, plain = self.run_guard(xml(WEB, MMS), xml(WEB), records_of([(WEB, self.GOOGLE, self.GOOGLE)]))
+        code, out, result = self.run_guard(xml(WEB, MMS), xml(self.FILL, WEB), records)
+        self.assertIn(self.LINE.format("internet"), out)
+        self.assertEqual((code, result["trips"], result["digest"]), (1, plain["trips"], plain["digest"]))
+
+    def test_class_a_list_of_a_checkout(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            checkout = Path(tmp)
+            (checkout / "tools").mkdir()
+            (checkout / "carriers").mkdir()
+            (checkout / "generated" / "android").mkdir(parents=True)
+            (checkout / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
+            (checkout / "carriers" / "records.json").write_text(json.dumps(self.head_records()), encoding="utf-8")
+            (checkout / "generated" / "android" / "apns-conf.xml").write_text(xml(self.FILL, WEB),
+                                                                              encoding="utf-8")
+            guard.generator_records.cache_clear()
+            result = guard.class_a_list(checkout)
+            printed = subprocess.run([sys.executable, str(Path(guard.__file__).with_name("credential_fill_ins.py")),
+                                      str(checkout)], capture_output=True, text=True)
+        self.assertEqual(printed.returncode, 0, printed.stderr)
+        self.assertEqual(printed.stdout.splitlines(), result["lines"])
+        self.assertTrue(result["sources_known"])
+        self.assertIsNone(result["left_out"])
+        self.assertEqual([(e["scope"], e["role"], e["apn"], e["fill_ins"], e["fill_in_sources"], e["sent"])
+                          for e in result["entries"]],
+                         [("262/01", "internet", "web", ["authtype", "password", "user"], ["lineageos"], True),
+                          ("262/01", "attach", "web", ["authtype", "password", "user"], ["lineageos"], True)])
+        self.assertEqual(result["lines"][0], "class (a) fill-ins: 2 LTE lead role(s) in 1 scope(s), 2 of them "
+                                             "sent, in 1 scope(s)")
+        self.assertIn("  262/01 internet web: authtype, password, user from lineageos; sent (all hold types)",
+                      result["lines"])
+
+    def test_rule_1_rows_are_listed(self) -> None:
+        left = [{"scope": "262/20", "apn": "internet.mvno.mobi", "type": "default,supl", "fields": ["user", "password"],
+                 "page": "", "read": "", "sources": ["google_pixel_vendor_carriersettings"]}]
+        kept = [{"scope": "268/91", "apn": "net2.vodafone.pt", "type": "default,mms,supl", "fields": [],
+                 "page": "https://operator.example/apn", "read": "2026-10-28", "sources": ["google_pixel_vendor_carriersettings"]}]
+        lines = guard.class_a_lines([], left, kept)
+        self.assertEqual(lines[1:], [
+            "rows rule 1 left out of apns-conf.xml (superseded Google copies): 1",
+            "  262/20 internet.mvno.mobi (default,supl): user, password from google_pixel_vendor_carriersettings",
+            "rows rule 1 keeps because the operator's own page names credentials: 1",
+            "  268/91 net2.vodafone.pt (default,mms,supl): https://operator.example/apn (read 2026-10-28)",
+        ])
+
+    def test_auth_type_0_keeps_the_fill_in_stored_only(self) -> None:
+        best = WEB + ' authtype="0"'
+        records = records_of([(self.FILL, self.LINEAGE, {}), (best, self.GOOGLE, self.GOOGLE)])
+        rows = guard.phone.parse_lines([f"  <apn {self.FILL} />", f"  <apn {best} />"])
+        entries = guard.class_a_entries(rows, guard.phone.provider(rows), records)
+        self.assertEqual({(e["role"], tuple(e["fill_ins"]), e["sent"]) for e in entries},
+                         {("internet", ("password", "user"), False), ("attach", ("password", "user"), False)})
 
 
 class ImsEmergencyReportTests(GuardCase):

@@ -28,6 +28,18 @@ new lead sends none, with a WARNING when every row a current vendor backs for
 the new lead's APN in the scope carries credentials (rule decisions of
 2026-10-13, round 14).
 
+Also reported, never held (rule decisions round 32, D8): "credentials filled
+in from a non-current source on the {role} lead", for every lead of the head
+on HOLD_TYPES whose stored row takes a username, password, auth type or MTU
+from a lower-ranked row of its group (`android_phone_model.fill_ins`) that no
+current vendor backs, under a best row a current vendor backs (class (a)),
+where the base's lead on that network type had another APN or other
+filled-in values. Each scope names the sources of the filling rows, read from
+the generator's records of CHECKOUT when they are exactly the head file's
+rows (`aligned_records`); otherwise the report says the sources are unknown.
+`class_a_list` gives the whole class (a) list of a checkout, which
+`credential_fill_ins.py` prints for each publish and the release notes carry.
+
 Also reported, never held, on WATCH_TYPES (HOLD_TYPES plus IWLAN; rule
 decisions of 2026-10-18, round 20): the `ims` lead of each scope in both
 files lost, its APN changed (case-folded), or only its protocol or roaming
@@ -123,12 +135,222 @@ def load_generator(checkout: Path):
 
 
 @functools.lru_cache(maxsize=None)
-def generator_records(checkout: Path):
-    """The generator of CHECKOUT and its APN records of CHECKOUT's data."""
+def generator_rows(checkout: Path):
+    """The generator of CHECKOUT and its `apn_xml_rows` of CHECKOUT's data."""
     generator = load_generator(checkout)
     profiles = [generator.load_json(path) for path in generator.profile_paths(checkout / "carriers")]
     evidence = generator.load_apn_evidence(checkout / "generated" / "evidence-index.json")
-    return generator, generator.apn_xml_rows(profiles, evidence).records
+    return generator, generator.apn_xml_rows(profiles, evidence)
+
+
+def generator_records(checkout: Path):
+    """The generator of CHECKOUT and its APN records of CHECKOUT's data."""
+    generator, rows = generator_rows(checkout)
+    return generator, rows.records
+
+
+generator_records.cache_clear = generator_rows.cache_clear  # type: ignore[attr-defined]
+
+
+def aligned_records(checkout: Path, rows: list[dict[str, Any]]) -> list[dict[str, Any]] | None:
+    """The generator's records of CHECKOUT, one per row of ROWS in file
+    order, when they are exactly the rows of that file (the head's file,
+    generated from CHECKOUT); None otherwise, and then no source is named."""
+    generator, records = generator_records(checkout)
+    if len(records) != len(rows):
+        return None
+    for record, row in zip(records, rows):
+        line = generator.apn_row_line(record).strip()
+        if line == row["_line"]:
+            continue
+        parsed = phone.parse_lines([line])
+        if not parsed or ({k: v for k, v in parsed[0].items() if not k.startswith("_")}
+                          != {k: v for k, v in row.items() if not k.startswith("_")}):
+            return None
+    return records
+
+
+def record_sources(record: dict[str, Any] | None, key: str) -> frozenset[str]:
+    """Every source of a generator record's `_support` or `_current`, over
+    all its types."""
+    out: set[str] = set()
+    for sources in ((record or {}).get(key) or {}).values():
+        out.update(sources)
+    return frozenset(out)
+
+
+# Credentials from non-current sources (rule decisions round 32, D8). A lead's
+# stored row takes a username, password, auth type or MTU from a lower-ranked
+# row of its group where the best row sets none (android_phone_model.fill_ins).
+# The fill-in is class (a) when no current vendor backs any filling row
+# (`_current`) and one backs the best row. Report only: no trip, no digest.
+CREDENTIAL_ROLES = ("internet", "attach", "MMS")
+CREDENTIAL_SENT_FIELDS = ("user", "password", "authtype")
+CREDENTIAL_MTU_FIELDS = ("mtu", "mtu_v4", "mtu_v6")
+
+
+def lead_credentials(rows: list[dict[str, Any]], tables: dict, records: list[dict[str, Any]] | None,
+                     network_types: dict[str, int] = HOLD_TYPES,
+                     scopes: Any = None) -> list[dict[str, Any]]:
+    """Per scope, role (internet, attach, MMS) and lead, on NETWORK_TYPES:
+    every field of CREDENTIAL_FIELDS the lead's stored row carries, with the
+    file row that wrote it, whether that is the group's best (last) row, and
+    with RECORDS (aligned_records) the row's sources and current vendors.
+    `fill_ins` holds the fields a lower-ranked row filled in, `class_a`
+    whether that fill-in is class (a) (None without records), and `sent`
+    whether the lead sends a filled-in value: credentials with an auth type
+    other than 0, or an MTU."""
+    out: dict[tuple, dict[str, Any]] = {}
+    for scope in sorted(scopes if scopes is not None else {phone.scope_of(row) for row in rows}):
+        stored = phone.scope_rows(tables, scope)
+        by_srcs = {tuple(row["_srcs"]): row for row in stored}
+        settings = phone.profiles(stored)
+        for name, network_type in network_types.items():
+            internet, mms, attach = phone.leads(settings, network_type)
+            for role, profile in zip(CREDENTIAL_ROLES, (internet, attach, mms)):
+                row = by_srcs.get(tuple(profile["base_srcs"])) if profile else None
+                if row is None:
+                    continue
+                best = row["_srcs"][-1]
+                writers = dict(row.get("_writers") or {})
+                fills = phone.fill_ins(row)
+                fields = {}
+                for field, index in sorted(writers.items()):
+                    fields[field] = {
+                        "value": rows[index].get(field),
+                        "row": index,
+                        "best_row": index == best,
+                        **({"sources": sorted(record_sources(records[index], "_support")),
+                            "current_sources": sorted(record_sources(records[index], "_current"))}
+                           if records is not None else {}),
+                    }
+                class_a = None
+                if records is not None and fills:
+                    class_a = (bool(record_sources(records[best], "_current"))
+                               and not any(record_sources(records[index], "_current") for index in fills.values()))
+                sent = bool((set(fills) & set(CREDENTIAL_SENT_FIELDS) and sends_credentials(phone.lead_key(profile)))
+                            or set(fills) & set(CREDENTIAL_MTU_FIELDS))
+                signature = (str(profile["apn"]), tuple(sorted((field, str(rows[index].get(field)))
+                                                               for field, index in fills.items())))
+                key = (scope, role, signature)
+                entry = out.get(key)
+                if entry is None:
+                    out[key] = entry = {
+                        "scope": fmt(scope), "role": role, "apn": profile["apn"], "network_types": [],
+                        "sends_credentials": sends_credentials(phone.lead_key(profile)),
+                        "fields": fields, "fill_ins": sorted(fills), "class_a": class_a, "sent": sent,
+                        "fill_in_sources": sorted(set().union(*(record_sources(records[index], "_support")
+                                                                for index in fills.values())))
+                        if records is not None and fills else [],
+                        "_signature": signature, "_scope": scope,
+                    }
+                entry["network_types"].append(name)
+    return list(out.values())
+
+
+def class_a_entries(rows: list[dict[str, Any]], tables: dict, records: list[dict[str, Any]] | None,
+                    ) -> list[dict[str, Any]]:
+    """The class (a) leads of `lead_credentials` on HOLD_TYPES."""
+    return [entry for entry in lead_credentials(rows, tables, records) if entry["class_a"]]
+
+
+def class_a_summary(entries: list[dict[str, Any]]) -> str:
+    on_lte = [entry for entry in entries if "LTE" in entry["network_types"]]
+    sent = [entry for entry in on_lte if entry["sent"]]
+    return (f"{len(on_lte)} LTE lead role(s) in {len({e['scope'] for e in on_lte})} scope(s), "
+            f"{len(sent)} of them sent, in {len({e['scope'] for e in sent})} scope(s)")
+
+
+def class_a_lines(entries: list[dict[str, Any]], left_out: list[dict[str, Any]] | None = None,
+                  kept: list[dict[str, Any]] | None = None) -> list[str]:
+    """The class (a) list (round 32, D8, rule 6): per scope and role the APN,
+    the filled-in fields, the sources of the filling rows, sent or only
+    stored, and the network types; then the rows rule 1 left out of
+    apns-conf.xml, when the generator names them."""
+    lines = [f"class (a) fill-ins: {class_a_summary(entries)}"]
+    for entry in entries:
+        types = "all hold types" if len(entry["network_types"]) == len(HOLD_TYPES) else ",".join(
+            entry["network_types"])
+        lines.append(f"  {entry['scope']} {entry['role']} {entry['apn']}: {', '.join(entry['fill_ins'])} from "
+                     f"{'+'.join(entry['fill_in_sources']) or 'unknown sources'}; "
+                     f"{'sent' if entry['sent'] else 'stored only'} ({types})")
+    if left_out is not None:
+        lines.append(f"rows rule 1 left out of apns-conf.xml (superseded Google copies): {len(left_out)}")
+        for row in left_out:
+            lines.append(f"  {row['scope']} {row['apn']} ({row['type']}): {', '.join(row['fields'])} from "
+                         f"{'+'.join(row['sources'])}")
+    if kept:
+        lines.append(f"rows rule 1 keeps because the operator's own page names credentials: {len(kept)}")
+        for row in kept:
+            lines.append(f"  {row['scope']} {row['apn']} ({row['type']}): {row['page']} (read {row['read']})")
+    return lines
+
+
+def credentials_left_out(checkout: Path) -> list[dict[str, Any]] | None:
+    """The rows the generator of CHECKOUT left out of apns-conf.xml under
+    rule 1 (`credentials_left_out` of its apn_xml_rows, each with the fields
+    it filled in and its sources); None when the generator has no rule 1."""
+    return rule1_rows(checkout, "credentials_left_out")
+
+
+def rule1_rows(checkout: Path, name: str) -> list[dict[str, Any]] | None:
+    """The rows of apn_xml_rows' field NAME (credentials_left_out, or
+    credentials_kept_operator_page: the rows only the operator's own page
+    kept), with their scope, APN, type, filled-in fields or page, and
+    sources; None when the generator has no such field."""
+    generator, apn_rows = generator_rows(checkout)
+    rows = getattr(apn_rows, name, None)
+    if rows is None:
+        return None
+    out = []
+    for record in rows:
+        attributes = generator.written_attributes(record)
+        scope = phone.scope_of({key: str(value) for key, value in attributes.items()})
+        page = record.get("_credentials_kept_operator_page") or ("", "")
+        out.append({"scope": fmt(scope), "apn": attributes.get("apn"), "type": attributes.get("type"),
+                    "fields": list(record.get("_credentials_left_out") or ()),
+                    "page": page[0], "read": page[1],
+                    "sources": sorted(record_sources(record, "_support"))})
+    return out
+
+
+def class_a_list(checkout: Path) -> dict[str, Any]:
+    """The class (a) list of CHECKOUT's generated/android/apns-conf.xml."""
+    rows = read_rows(checkout / "generated" / "android" / "apns-conf.xml")
+    tables = phone.provider(rows)
+    records = aligned_records(checkout, rows)
+    entries = class_a_entries(rows, tables, records) if records is not None else []
+    left_out = credentials_left_out(checkout)
+    kept = rule1_rows(checkout, "credentials_kept_operator_page")
+    return {"sources_known": records is not None, "summary": class_a_summary(entries),
+            "entries": [{k: v for k, v in entry.items() if not k.startswith("_")} for entry in entries],
+            "left_out": left_out, "kept_by_operator_page": kept,
+            "lines": (class_a_lines(entries, left_out, kept) if records is not None else
+                      ["class (a) fill-ins: unknown, the generator's records are not this file's rows"])}
+
+
+def fill_in_report(before_rows: list[dict[str, Any]], before_tables: dict, after_rows: list[dict[str, Any]],
+                   after_tables: dict, records: list[dict[str, Any]] | None) -> dict[str, set[str]]:
+    """'credentials filled in from a non-current source on the {role} lead'
+    for every head lead with a class (a) fill-in that the base lead on that
+    network type did not have: another APN or other filled-in values. Each
+    scope names the sources of the filling rows. Report only."""
+    items: dict[str, set[str]] = defaultdict(set)
+    if records is None:
+        return items
+    after = [entry for entry in class_a_entries(after_rows, after_tables, records)]
+    if not after:
+        return items
+    scopes = {entry["_scope"] for entry in after} & {phone.scope_of(row) for row in before_rows}
+    before = {(entry["_scope"], entry["role"], name): entry["_signature"]
+              for entry in lead_credentials(before_rows, before_tables, None, scopes=scopes)
+              for name in entry["network_types"]}
+    for entry in after:
+        if any(before.get((entry["_scope"], entry["role"], name)) != entry["_signature"]
+               for name in entry["network_types"]):
+            items[f"credentials filled in from a non-current source on the {entry['role']} lead"].add(
+                f"{entry['scope']} ({'+'.join(entry['fill_in_sources'])})")
+    return items
 
 
 def vendor_mms_tuples(checkout: Path) -> dict[phone.Scope, set[tuple]]:
@@ -394,8 +616,11 @@ def digest(found: list[dict[str, Any]]) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
 
-def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict) -> list[str]:
+def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
+           extra: dict[str, set[str]] | None = None) -> list[str]:
     items: dict[str, set[str]] = defaultdict(set)
+    for key, scopes in (extra or {}).items():
+        items[key].update(scopes)
     warnings: list[str] = []
     for scope in sorted(set(before) - set(after)):
         items["scopes gone, MVNO" if scope[2] else "scopes gone, network"].add(fmt(scope))
@@ -479,8 +704,13 @@ def main(argv: list[str]) -> int:
         found = trips(before, after, vendor)
         code = digest(found) if found else None
         verdict = "pass" if not found else "accepted" if code in args.accept else "hold"
+        records = aligned_records(args.generator.resolve(), after_rows)
         lines = report(before, after, (before_tables, after_tables), vendor,
-                       vendor_rows(args.generator.resolve()))
+                       vendor_rows(args.generator.resolve()),
+                       fill_in_report(before_rows, before_tables, after_rows, after_tables, records))
+        if records is None:
+            lines.append("credential sources: unknown, the generator's records of --generator are not "
+                         "the head file's rows")
         watched = watch(before, after, typed_leads(before_rows, before_tables),
                         typed_leads(after_rows, after_tables))
         print(f"phone-level guard: {verdict.upper()}, {len(found)} trip(s) on {', '.join(HOLD_TYPES)}")
