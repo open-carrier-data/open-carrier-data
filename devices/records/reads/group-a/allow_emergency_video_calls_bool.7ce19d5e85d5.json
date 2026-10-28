@@ -1,0 +1,41 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Explicit false in the 450-06 block of Motorola's sm7250-common carrier overlay (b8445085fc75-vendor.xml:4529-4530), next to other LG U+ values (VoLTE off, conference). It is a real carrier-scoped OEM setting. It matches what is otherwise served for this profile: Google's lguplus_kr leaves the key unset, and CarrierConfigManager's default is false (CarrierConfigManager.java:12020). AOSP's own LG U+ file (carrier ID 1892) says true. OCD serves that true to the other LG U+ profile, open.450006 (candidate 1), not to this one.",
+    "effect": "The key is read in two places. ImsPhoneCallTracker caches it (ImsPhoneCallTracker.java:1965-1966). In dial(), an emergency call that was asked for as video is changed to audio-only when the key is false (ImsPhoneCallTracker.java:1781-1786). TelecomAccountRegistry adds PhoneAccount.CAPABILITY_EMERGENCY_VIDEO_CALLING only when video is on and the key is true (TelecomAccountRegistry.java:479-481, 777-782). Telecom then makes a video emergency request audio-only when the account lacks that capability (CallsManager.java:2257-2264). The ImsStack and the OCD ImsStack fork do not read the key. With false, every emergency call leaves the phone as an audio call. The video emergency profile in ImsCallApp.java:368-390 is never asked for.",
+    "risk": "None. The served value is the same as the default this profile would otherwise get, so the call path does not change. A 112 call asked for as video goes out as audio, the most conservative behaviour. Read in the 23.2 tree. The phone runs 24.0, which is not expected to change these few lines; not re-checked."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_emergency_video_calls_bool",
+  "notes": "Proceed. Serving false for LG U+ (open.45006.b24fd915ea7b) changes nothing against the Android default false that the Google lane would serve. It keeps emergency calls audio-only. The basis is a real carrier-scoped OEM block for 450-06. The key itself stays in group A: it changes whether an emergency call is placed with video.",
+  "profiles": [
+    "open.45006.b24fd915ea7b"
+  ],
+  "read_at": "2026-10-28T19:04:07Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2500-2507",
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:12020",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:797",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1749-1790",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1963-1966",
+    "packages/services/Telephony/src/com/android/services/telephony/TelecomAccountRegistry.java:456-481",
+    "packages/services/Telephony/src/com/android/services/telephony/TelecomAccountRegistry.java:777-782",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:2246-2275",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsCallApp.java:255-271",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsCallApp.java:355-390",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1892_LG-U.xml (allow_emergency_video_calls_bool)",
+    "Open_Carrier_Data live-private/work/lineage-device-carrier-overlays/files/android_device_motorola_sm7250-common/b8445085fc75-vendor.xml:4529-4540",
+    "Open_Carrier_Data worktrees-r31/public/carriers/open/45006.b24fd915ea7b.json (match, allow_emergency_video_calls_bool)",
+    "rom-repos/platform_packages_modules_ImsStack.git branch ocd: git grep for the key (no hits)"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "proceed"
+}

@@ -1,6 +1,6 @@
 # The OCD dataset
 
-Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)). OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Check app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. It is not a release asset: a ROM bakes it at a validated `main` commit or at a release's commit. Today the owner's S20 is the only ROM that ships it.
+Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Check app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. It is not a release asset: a ROM bakes it at a validated `main` commit or at a release's commit. Today the owner's S20 is the only ROM that ships it.
 
 `tools/ocd_dataset.py` writes and checks it from one checkout of `main`. The private publisher writes the Google lane first, then runs it on every publish; the report bot runs it when the owner's measured records change. `validate` checks every file on every pull request.
 
@@ -98,7 +98,7 @@ Each key has its type, its group and the IMS stack fork it exists in (`fork`). A
 - the ruling's `call_forwarding_blocks_while_roaming_string_array` and `ims_reasoninfo_mapping_string_array`;
 - the eight keys the owner added on 2026-10-25: `use_only_dialed_sim_ecc_list_bool`, the four `rilext.*` ECC and EIMS keys, `gps.es_extension_sec`, `dial_string_replace_string_array` and `international_roaming_dial_string_replace_string_array`.
 
-For them the phone serves a record entered after a second-agent read, else the Google-lane value, else Android's default. OCD's other vendor values for them stay published but are not served.
+Rule round 31 changes their source order (see [Group A reads](#group-a-reads)): a value that differs from the Google lane, from any OCD source family, is served once an independent read with verdict `proceed` covers it; else the Google lane's value in the newest dataset; else Android's default. A key leaves group A only on a read's finding that it changes what is shown or logged and never how an emergency, TTY, RTT or priority call, or an emergency SMS, is placed, routed, held or called back.
 
 Rule round 31 lets group A update like other values (being built). A value that differs from the Google lane, from any OCD source family, is served once an independent read with the verdict `proceed` is on `main` for that key, value, source and profile, and for the ROM family and IMS stack it is served on. Else the newest Google-lane value serves, else Android's default. The read starts as soon as such a value appears. Keys a read finds change only what is shown or logged leave group A. OCD publishes no emergency number list, and `emergency_number_prefix_string_array` and `dial_string_replace_string_array` stay in group A.
 
@@ -108,7 +108,36 @@ Rule round 31 lets group A update like other values (being built). A value that 
 
 OcdCarrierSettings enforces groups A, B and X6 with its own compiled-in copy as well, whatever the data says.
 
-## Per-device records
+## Records by cell (rule round 31)
+
+Rule round 31 (2026-10-28) keys records by cell. OCD is carrier data: its index is the carrier profile, and where a fact also depends on the device, the index is the device and the carrier together. No OCD record is keyed by device alone. A value whose reason holds on every carrier is a device quirk and belongs in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)); a value a test measured on a device with a carrier is an OCD cell record. The S20's four served values move back into its `carrier_config_override.xml`, and the bearer-wait key stays unset.
+
+A cell record ([`schemas/cell-records.schema.json`](../schemas/cell-records.schema.json), `device-records.json` with `schema_version` 2) belongs to one cell:
+
+- the device: `device.codename` (`Build.DEVICE`) and `device.model`;
+- the carrier: an OCD or fill-only profile (`{"scope": "profile", "profile_id"}`), or for a SIM without one, MCC-MNC plus GID1 or SPN (`{"scope": "sim_key", ...}`);
+- the ROM: `rom.family` (`aosp`, `lineageos`, `stock` or `other`), `rom.line` (for example `24.0`) and `rom.forks`, the sorted names of the builder's forks the result can depend on, as the build declares them;
+- the IMS stack: `ims_stack.id` with `ims_stack.fork`.
+
+It also states `rom.incremental` (`Build.VERSION.INCREMENTAL`) and `ims_stack.version`. These are recorded, not matched: a changed incremental or stack version makes the record due for a test at once on a phone with the tester. The kind is `measured` only, and so is the claim; there is no `second_agent_read`, because group A and group B keys are refused in a cell record.
+
+`record_key` is `r:` plus the first 16 hex digits of SHA-256 over ten lines joined with `\n`: kind, device codename, upper-cased model, ROM family, ROM line, the ROM forks joined with commas (empty for none), IMS stack id, IMS stack fork (empty for none), the carrier text (`profile:<id>`, `sim:<mcc>-<mnc>:gid1=<upper GID1>` or `sim:<mcc>-<mnc>:spn=<SPN>`) and the target text (`config:<key>`, `apn:<row_key>` or `emergency_data:<row_key or default>`). Two vectors:
+
+| Cell | Target | `record_key` |
+|---|---|---|
+| x1s, SM-G981B, lineageos 24.0, forks `ocd`, aosp_imsstack fork `ocd`, `profile:open.26207.c07dcc040b58` | `config:carrier_volte_available_bool` | `r:3e3c08bfd829cafe` |
+| x1s, SM-G981B, lineageos 24.0, no forks, aosp_imsstack without fork, `sim:262-02:gid1=FF` | `apn:a:f3b816097ac0ee1b` | `r:282f49c73c83c8bb` |
+
+Serving:
+
+- A record is served as a value only in its exact cell.
+- In a neighbouring cell (same device and carrier, another ROM family, line, forks or stack), it may only be tried as the first candidate, and only where a tester runs. It is never served there without a test.
+- The app tries no candidates, and writes no record, for a key the ROM's device override sets on that phone.
+- Last, after carrier values and cell records, the ROM applies LineageOS's fixed key and its device override (`carrier_config_override.xml`), also when the dataset fails to load.
+
+**The transition.** `validate` refuses every record without a carrier key and every `configured_device` record (`record_no_carrier`, `record_kind`), with one exception: the S20's five round 30 records below stay until the build with the restored device override has passed on the phone (round 31, implementation order step 8). Public main serves `device-records.json` in `schema_version` 1 until then, because every reader on a phone today parses that format; cell records the owner build sends meanwhile wait in `devices/records/measured.json`. A prepared change drops the five records and the kind at step 8, and the switch to `schema_version` 2 follows once the readers on the phones parse it. A round 30 measured record does not carry over into `schema_version` 2: its cell lacks the ROM forks and the incremental, so it is due for a new test anyway.
+
+## Per-device records (round 30)
 
 `generated/devices/device-records.json` ([`schemas/device-records.schema.json`](../schemas/device-records.schema.json)) is written from `devices/records/`:
 
@@ -137,7 +166,46 @@ The fifth record is group A. It is served only with a `second_agent_read` that n
 
 So the record has no `second_agent_read`, and the phone serves ImsStack's default for the key. `validate` refuses a `second_agent_read` that points at a read with another verdict, record, key or value.
 
-**What rule round 31 changes here** (being built). OCD holds carrier data, and device quirks belong in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)). The S20's four served values move back into its `carrier_config_override.xml`, and the bearer-wait key stays unset. Once the S20 build with that override has passed on the phone, `main` drops the five records and the `configured_device` kind. From then on every record belongs to one cell (the device, the carrier profile or SIM key, the ROM family and build line with its forks, and the IMS stack with its fork), its kind is `measured`, and the validator refuses a record without a carrier key. A record is served as a value only in its exact cell.
+## Group A reads
+
+Rule round 31 (`emergencyValues`): group A values update like every other value. Each dataset brings the Google lane's newest emergency settings with no read. A value that differs from the Google lane, from any other OCD source, is served once an independent read of that value has passed. No test can place an emergency call, so this read is the only check there is. Emergency numbers are not OCD data: OCD publishes no emergency number list and serves no number.
+
+- **Candidates.** `tools/ocd_dataset.py` lists every group A value that differs from the Google lane: per key and value, the profiles whose own values hold it (the step-4 overlay of a profile's stack against every Google bundle its SIMs can get) and the source families behind it.
+- **The read.** An agent other than the value's builder reads the key's effect in the platform and IMS stack source for that ROM family and stack, and the value's basis. It records `proceed` or `hold` with the sources it read in `devices/records/reads/group-a/<key>.<12 hex>.json` ([`schemas/group-a-read.schema.json`](../schemas/group-a-read.schema.json), `ocd-group-a-read/2`): key, value, families, profiles, ROM family, IMS stack, effect, reader, builder, time, sources read, findings (effect, basis, risk), verdict and notes.
+- **Serving.** A read covers its key and value for its profiles and source families on its ROM family and IMS stack. A hold keeps the Google-lane value. A new value, a new profile, another source family or another stack needs its own read.
+- **Leaving group A.** A key read (`subject` `key`) with effect `display_only` and verdict `proceed` takes the key out of group A: its registry `group` becomes null, and it follows OCD under the no-regression check. `emergency_number_prefix_string_array`, `dial_string_replace_string_array` and `international_roaming_dial_string_replace_string_array` never leave. OcdCarrierSettings still unions the data's marking with its own pattern, so it takes the exits from `group-a-reads.json`.
+- **The served file.** `generated/ocd-dataset/group-a-reads.json` ([schema](../schemas/ocd-dataset-group-a-reads.schema.json)) is the S20 spec's R31.7 file, as OcdCarrierSettings protocol 3 reads it: one item per read, profile and source family (`read_id` `gar:<16 hex>`, key, value, family, profile, ROM family, IMS stack and fork, verdict, reader, time, reference), and the `display_only` key findings. CarrierSettings admits the value of the profile that sets the key only where a `proceed` item names its key, value, profile and one of the families its `sources` list, and this phone's ROM family and stack. A profile whose value has no recorded source family therefore gets no item, and its SIMs keep the Google-lane value. It is an optional dataset role (`group_a_reads`): a reader of protocol 2 refuses a manifest that lists it, and so does the S20 pin step until it knows the file. Until implementation order step 8 it sits beside the set, unlisted (`LIST_GROUP_A_READS` in `tools/ocd_dataset.py`), so every SIM keeps the Google-lane value for group A; the step 8 change lists it.
+- **The status file.** `generated/ocd-dataset/group-a-pending.json` ([schema](../schemas/ocd-dataset-group-a-pending.schema.json)) lists `pending`, every candidate no read covers yet on the ROM families and stacks OCD reads for (today LineageOS with the AOSP ImsStack), the read values whose profile has no recorded basis, every key read, and the keys that left group A.
+- **Who reads, and when.** OCD's checks run on free GitHub runners, where no agent runs. So the publisher lists a new candidate in `pending` (and in its pull request) the moment the data offers it, and an agent session on the owner's PC reads it (the round 30 reads were done the same way). A read is redone when the value, its basis or the stack changes.
+- **Claims.** Records and screens say "configured, not tested" for a Google-lane value and "read, not tested" for a value a read admitted. They never say that emergency calls work.
+
+On 2026-10-28 the reads ran for every non-Google group A value on `main` (32 values of 15 keys over 732 profile values) and as key reads for five display-only candidates and two named keys, on LineageOS (the 24.0 tree) with the AOSP ImsStack: 36 value reads, 27 of them `proceed`, and 7 key reads. They give 640 served items, 535 of them `proceed`; 158 profile values have no recorded basis. `allow_emergency_numbers_in_call_log_bool` and `always_show_emergency_alert_onoff_bool` left group A; `broadcast_emergency_call_state_changes_bool`, `wfc_emergency_address_carrier_app_string`, `hide_tty_hco_vco_with_rtt`, `ims_reasoninfo_mapping_string_array` and `call_forwarding_blocks_while_roaming_string_array` stay. Nothing is pending.
+
+## F5 reads
+
+Rule round 31, SM6: OCD's publisher runs F5's independent read for each `main` commit that changes emergency lines, and publishes the read with that commit. Build pins and runtime installs take an emergency-line change only with that read. On a phone of a device family whose emergency data test first use has passed (SM10), only a change to the APN name or the roaming protocol of a matched emergency row needs it. Releases keep their draft read.
+
+The read is `tools/f5_read.py`: a deterministic, documented check that anyone can rerun, and that public `validate` reruns on every pull request and push. Free GitHub runners run no agent. Its lines are round 29's F5 lines: the phone-level guard's emergency items (an emergency lead gained, lost or changed, a network type left without an emergency profile, an emergency profile missing under an APN set, an emergency-named APN becoming a data lead), plus the emergency lead of a scope only one side has, against what its SIMs get on the other side. Each line is decided by the first rule that applies:
+
+| Rule | Verdict | When |
+|---|---|---|
+| `android_default` | proceed | the new lead is Android's default EIMS request (`sos`, IPV4V6 both ways), or a row asking exactly that |
+| `unreachable_scope` | proceed | no SIM of that MCC reports a network code of this length (Google's carrier list names at least 3 networks of the MCC, all of the other length) |
+| `gap` | hold | a network type or APN set loses its emergency profile, or an emergency APN leads data |
+| `foreign_name` | hold | the APN name ends in a country label Google's carrier list uses for other MCCs and never for this one (the 302/37 class) |
+| `stated` | proceed | a current vendor or LineageOS's own list states this row for emergency on the scope it belongs to; for a gone MVNO scope, the network's plain scope its SIMs fall back to |
+| `not_stated` | hold | anything else |
+
+`generated/ocd-dataset/f5-reads.json` ([schema](../schemas/ocd-dataset-f5-reads.schema.json)) is the chain of reads since `since`: one entry per change of the APN rows on `main`, oldest first, each with its base and head named by the SHA-256 of the APN file's `<apn>` lines (the header, which names the data digest, is left out), its lines, their digest (the first 16 hex digits of SHA-256 over the sorted lines, each ending with a newline, as the pin step computes it), one finding per line, and the verdict: `proceed`, `hold` or `no_lines`.
+
+- **The publisher** appends the read of its change. A hold holds the publish as a draft, as a phone-guard trip does, unless an independent agent's `proceed` read of exactly those lines is committed in the private repository's `state/f5-reads/<lines digest>.json`; the read then records `method` `agent`. `validate` refuses a hold on `main`.
+- **A consumer** that has APN rows R0 and takes rows Rn walks the chain back from Rn to R0 and takes the change only when every read on the way proceeds or has no lines (`python3 tools/f5_read.py chain --from R0`, with `--gate narrow --networks 262-02,262-03` after the first use). A chain that does not pass R0 refuses. The ROM pin step runs the same walk with `export_ocd_dataset.py sm6` in the private repository, which also recomputes each read's lines from the two commits.
+- **A runtime install** hands OcdCarrierSettings the read its emergency gate asks for (`f5_read`, round 29's `x1s-ocd-f5-read.v1`): the app walks the staged commit's chain from the installed APN rows and, when the walk takes the change, sends `base_commit` (the installed commit), `head_commit` (the staged commit), `lines_digest` (the digest of every line on the path, sorted, as above), `reader` (the chain's reader, `ocd-f5-check: …`, never the app), `read_at` (the newest read's), `verdict` `proceed` and `notes` naming the reads walked.
+- The chain starts at `5358c259`, the first round 30 build's pin. The seven changes since then were read when the chain was published (rules 2), all `proceed` or `no_lines`. Publish #321 (`c8811304`) went out before the publisher ran the read: rules 1 held its 8 lines (digest `a65c163bac29db48`), because they looked for the stated row of 310/240 GID 554d's fallback under the gone scope itself. An independent agent then read them (`devices/records/reads/f5/a65c163bac29db48.json`): proceed. The SIMs of that Ultra Mobile family code now take T-Mobile US's own `sos` IPV6/IPV4V6 row with `always_on`, which T-Mobile's current Google CarrierSettings and LineageOS state. Rules 2 read the fallback scope's row and give the same verdict.
+
+## Privacy-withheld keys
+
+Rule round 31, SM4: a build from public validated `main` alone gives every SIM its full bundle, the Google-lane keys included, and the build check lists every key that falls to Android's default because OCD withholds it for privacy. `generated/ocd-dataset/privacy-withheld.json` ([schema](../schemas/ocd-dataset-privacy-withheld.schema.json)) names each Google-lane value the privacy guard leaves out, by entry, key and guard rule, never the value. The private exporter's `check-build` reads it and lists the keys that fall to Android's default for some SIM. On 2026-10-28 those were six of the seven withheld keys: the voicemail numbers, the conference URI, both dial-string replacements and the Wi-Fi network profiles. `httpParams` is served from Google's default entry.
 
 ## Run it
 
@@ -145,6 +213,8 @@ So the record has no `second_agent_read`, and the phone serves ImsStack's defaul
 python3 tools/ocd_dataset.py generate      # writes the dataset from this checkout
 python3 tools/ocd_dataset.py validate      # schemas, the reader's checks 4 to 10, records, privacy, regeneration
 python3 tools/test_ocd_dataset.py          # the spec's 27 matcher vectors, every published selector, the tie report
+python3 tools/f5_read.py check             # the F5 chain ends at this checkout's APN rows
+python3 tools/test_f5_read.py              # the F5 rules, the chain and a consumer's walk
 ```
 
 The ROM pin step bakes the set at its pinned commit with the private exporter (`tools/export_ocd_dataset.py bake` in the private repository). For a commit from before the dataset existed, it generates the set from that commit's own files with this tool.

@@ -329,6 +329,13 @@ GENERATED_FILES = {
     "ocd-dataset/google-lane.json",
     "ocd-dataset/manifest.json",
     "ocd-dataset/profiles.json",
+    # Rule round 31: the companion files beside the dataset, checked by
+    # tools/ocd_dataset.py (group A reads and status, privacy-withheld
+    # values) and tools/f5_read.py (the F5 reads).
+    "ocd-dataset/f5-reads.json",
+    "ocd-dataset/group-a-pending.json",
+    "ocd-dataset/group-a-reads.json",
+    "ocd-dataset/privacy-withheld.json",
     # Operator statements and the carrier-identity table (rule round 32),
     # checked by tools/validate_operators.py.
     "operators/README.md",

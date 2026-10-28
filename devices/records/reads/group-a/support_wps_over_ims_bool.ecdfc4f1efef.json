@@ -1,0 +1,63 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "The false value comes only from old Pixel vendor CarrierSettings baselines (taimen/walleye, entry date 2022-10-01, 'translated_google_pixel_vendor_private', not verified on a device). In that USCC entry VoLTE is not available (carrier_volte_available_bool false) and volte_replacement_rat_int is 6 (RIL_RADIO_TECHNOLOGY_1xRTT, ServiceState.java:188). In other words it describes U.S. Cellular when voice and WPS ran over CDMA 1x. The current Google lane entry (kodiak uscc_us.textproto, current graphene CarrierSettings) sets carrier_volte_available_bool true and carrier_wfc_ims_available_bool true, has IMS emergency settings, and no longer sets support_wps_over_ims_bool. So Android's default true applies. The basis is a real but superseded carrier setting tied to a CS (1x) voice network. The SM-G981B is not a CDMA phone and cannot use it.",
+    "effect": "Domain selection is off on this ROM (empty config_domain_selection_service_component_name, config.xml:393, PhoneGlobals.java:520-525, DomainSelectionResolver.java:139-146; componentName=[] on the phone running LineageOS 24.0). NormalCallDomainSelector's reading of the key (:311-332) is therefore not used. The legacy GsmCdmaPhone.dial() reads it as allowWpsOverIms (GsmCdmaPhone.java:1296-1297). For a number starting *272 (or its CLIR variants, PhoneNumberUtils.java:2974-2978) it sets useImsForCall = useImsForCall(dialArgs) && allowWpsOverIms (:1327, :1346-1347). With false: the WPS call is never placed on IMS, even with VoLTE registered. Before dialing, Telephony hangs up every IMS call on that phone ('WPS call placed over CS; disconnecting all IMS calls', :1415-1420, ImsPhoneCallTracker.hangupAllConnections :1563-1572). It then dials on CS through the RIL (:1476-1488). The CS dial is allowed when the PS side is in service on LTE/NR (:1460-1474), so on an LTE-only network it reaches the modem and fails there for lack of a CS domain. With the default true, the WPS call goes over IMS when VoLTE/WFC is registered and keeps its WPS priority (ImsPhoneConnection.getCallPriority, :1918-1928). The OCD ImsStack fork has no WPS-specific code.",
+    "risk": "Serving false instead of the default true sends every priority (*272) call from a U.S. Cellular SIM to CS. On this phone, USCC service is LTE with VoLTE and there is no CS domain to fall back to (no 1x on this device, no GSM/UMTS on USCC). The priority call would most likely fail. Worse, Telephony first hangs up all ongoing IMS calls on that SIM, so a user who starts a WPS call during another call loses that call and gets no priority call either. With true the call goes over IMS like any VoLTE call. That is the only working voice path here."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "support_wps_over_ims_bool",
+  "notes": "Hold for all 21 USCC profiles. On LineageOS 24.0 with the AOSP ImsStack (legacy path, domain selection off), false forces WPS calls onto CS and hangs up IMS calls first. The value comes from a 2022 Pixel baseline describing USCC with CDMA 1x voice and no VoLTE, and Google's current entry has dropped it. On this GSM/LTE phone a WPS call would most likely fail. Keep Android's default (true), which is what the Google lane serves.",
+  "profiles": [
+    "open.20404.36b07ac848ba",
+    "open.311220.b792f668611f",
+    "open.311221.b95696eec69e",
+    "open.311222.0d063e12a6be",
+    "open.311223.4aaff57a1902",
+    "open.311224.529bbcb5cc7c",
+    "open.311225.1127c611025b",
+    "open.311226.2239db7ee191",
+    "open.311227.081af3c4da07",
+    "open.311228.3c6f3c21c531",
+    "open.311229.d59fb42ce343",
+    "open.311580.65f7d9d6917b",
+    "open.311581.536dde77a9cd",
+    "open.311582.366e8fec6681",
+    "open.311583.6aac97b9d101",
+    "open.311584.809660701f99",
+    "open.311585.f33f9ecf9a6f",
+    "open.311586.a8d7f45caced",
+    "open.311587.2fd68f1bb431",
+    "open.311588.e5e917144044",
+    "open.311589.df8a0bb47085"
+  ],
+  "read_at": "2026-10-28T19:07:37Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:9834-9840",
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:12421",
+    "frameworks/base/telephony/java/android/telephony/PhoneNumberUtils.java:117,2974-2978",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1235-1241",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1279-1379",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1409-1488",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1563-1572",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneConnection.java:1918-1928",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/domainselection/DomainSelectionResolver.java:123-146",
+    "packages/services/Telephony/src/com/android/phone/PhoneGlobals.java:520-525",
+    "packages/services/Telephony/res/values/config.xml:393",
+    "packages/services/Telephony/src/com/android/services/telephony/domainselection/NormalCallDomainSelector.java:311-332",
+    "frameworks/base/telephony/java/android/telephony/ServiceState.java:188",
+    "rom-repos/platform_packages_modules_ImsStack.git@ocd (git grep: no WPS or support_wps_over_ims handling)",
+    "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.20dc1e7c4ad5908ce2485020ffa4a6d0.json (and the other 24 uscc bundles carrying the key)",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/kodiak/uscc_us.textproto:1-2,68-75,183-210,520-527"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "hold"
+}

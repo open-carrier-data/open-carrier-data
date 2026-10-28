@@ -1,0 +1,34 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "display_only",
+  "families": [],
+  "findings": {
+    "basis": "Key read, no candidate value. Android default is false. Google CarrierSettings sets it true for many carriers (about 1400 kodiak textprotos carry it), and the in-tree CarrierConfig assets set it true for several Asian and Mexican carriers; these are real carrier settings (carrier requirements to log or not log emergency calls).",
+    "effect": "The only reader on LineageOS 23.2 is Telecom's CallLogManager.okayToLogCall (packages/services/Telecomm/.../CallLogManager.java:528-549): when the call's handle is an emergency number (Call.isEmergencyCall, set from TelephonyManager.isEmergencyNumber in Call.java:1863-1880, for both directions), the call is written to the call log only if the key is true; otherwise Telecom records SKIP_CALL_LOG (CallLogManager.java:494-509). The decision is taken after the call has ended (logCall runs on disconnect) and only selects whether CallLog.addCall runs. Downstream effects are all display: (a) the missed-call notification for an incoming call from an emergency number is posted from the log-completed listener, so with false it is neither logged nor notified (CallLogManager.java:290-308); (b) Dialer's empty-dial-button redial fills the last outgoing number into the dialpad only (DialpadFragment.java:1171-1183, 1515-1533), and a user can tap a call-log row to start a new call (UserCallIntentProcessor.java:200-210) - both are new user-initiated calls placed through the normal emergency path. Nothing that places, routes, holds or calls back an emergency call reads the call log: the emergency callback window, ECBM tracking and temporary location grant use in-memory timestamps in EmergencyCallHelper (EmergencyCallHelper.java:87-127), and blocked-number suppression uses notifyEmergencyContact at dial time (CallsManager.java:3845-3852). No reader in Telephony, the AOSP ImsStack, the OCD ImsStack fork, Dialer, CellBroadcast, Settings or SystemUI. The legacy Telephony resource of the same name is marked deprecated and is not read (packages/services/Telephony/res/values/config.xml:116-117). On the phone (LineageOS 24.0) Telecom lives in the telephonycore apex; its service-telecom.jar still contains the key string and no other platform jar but framework.jar (the constant) does, consistent with the 23.2 reading.",
+    "risk": "No change to how an emergency, TTY, RTT or priority call or an emergency SMS is placed, routed, held or called back. With true, an emergency call appears in the call log and redial affordances exist, which raises only the human-factor chance of an accidental later emergency dial (a new, user-initiated call); with false, a missed incoming call from an emergency-number handle gets no call-log row and no missed-call notification, which is what is shown, not how the callback rings or connects."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_emergency_numbers_in_call_log_bool",
+  "notes": "Proceed: the key leaves group A. Its single consumer decides only whether Telecom writes a finished emergency call into the call log (and therefore whether the missed-call notification and redial suggestions see it). No component involved in placing, routing, holding or calling back an emergency, TTY, RTT or priority call, or in emergency SMS, reads the call log or this key on LineageOS 23.2 with the AOSP ImsStack, and the 24.0 phone build carries the key only in Telecom's service jar.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:04:37Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:455-464,11822",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallLogManager.java:286-308,325-330,490-549",
+    "packages/services/Telecomm/src/com/android/server/telecom/Call.java:1863-1880",
+    "packages/services/Telecomm/src/com/android/server/telecom/EmergencyCallHelper.java:87-127",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:3845-3852",
+    "packages/services/Telecomm/src/com/android/server/telecom/components/UserCallIntentProcessor.java:200-210",
+    "packages/services/Telephony/res/values/config.xml:116-117",
+    "packages/apps/Dialer/java/com/android/dialer/dialpadview/DialpadFragment.java:1171-1195,1515-1533",
+    "frameworks/base/core/java/android/provider/CallLog.java:984-986,1205",
+    "tree-wide grep of frameworks, packages (apps, services, modules), lineage-sdk, vendor/lineage, device/samsung for the key and its constant",
+    "rom-repos (ImsStack ocd, Iwlan, vendor/apn, vendor/extra, PhhIms): no reader of the key"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "proceed"
+}

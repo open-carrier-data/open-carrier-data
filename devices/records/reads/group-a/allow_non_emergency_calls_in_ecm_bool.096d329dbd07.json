@@ -1,0 +1,44 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Does not hold for this profile. The false comes from Google's virgin_us (virgin_us.textproto:44-45) and AOSP's Virgin Mobile, carrier ID 1853. Both match only Sprint-era SIMs: 310-120 or 312-530 with gid1 000003 (carrier_list.textpb:6036-6043; Google carrier_list virgin_us entries). The OCD profile open.311490.0efa23c7cb84 matches every SIM on plain 311-490. AOSP carrier ID 1 and Google's carrier_list both map 311-490 to T-Mobile US (tmobile_us; metropcs_us with gid1 6D38). Google leaves the key unset for T-Mobile. The value was joined to the profile by the old name 'Virgin Mobile US', not by a matching carrier rule. So it is not that carrier's setting for these SIMs.",
+    "effect": "When the phone is in emergency callback mode, a normal (non-emergency) outgoing call is refused with false. Telecom fails it at once with CDMA_NOT_EMERGENCY, 'Cannot make non-emergency call in ECM mode' (TelephonyConnectionService.java:1665-1682). With the default true, the call leaves callback mode and is placed (ImsPhoneCallTracker.java:1810-1840). Emergency calls are not affected. On this ROM the mode is rarely or never entered. The S20 runs without a domain selection service (empty component, config.xml:393; S20 radio study:264), so Phone.isInEcm() uses the legacy flag (Phone.java:2930-2935). On IMS that flag is set only when the ImsService reports ECBM, and the AOSP ImsStack's ImsEcbmImpl is an empty stub (ImsEcbmImpl.java:19-22). With domain selection, EmergencyStateTracker enters ECBM only when emergency_callback_mode_supported_bool is true (EmergencyStateTracker.java:790-792, 1258-1296). That key's default is false, and neither tmobile_us nor this OCD profile sets it.",
+    "risk": "Today, on this ROM and stack, small, because callback mode is not entered. The behaviour is still callback-related. If a later build turns on domain selection, or a profile turns on callback mode, every T-Mobile SIM on 311-490 would be unable to place normal calls for the whole callback period. T-Mobile does not ask for that, and the Google lane serves true. Holding costs nothing: the default true is served."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_non_emergency_calls_in_ecm_bool",
+  "notes": "Hold. The key decides what happens to outgoing normal calls during emergency callback mode, so it stays in group A. The value's basis is wrong for this profile. Google's and AOSP's Virgin Mobile false belongs to Sprint-era 310-120 and 312-530 gid1 000003 SIMs. The OCD profile covers all of 311-490, which both carrier ID databases assign to T-Mobile US, where the Google lane leaves the key at its default true. The effect on this ROM is nearly nil, but the rule needs a real carrier setting as basis, and this one is not. Fix the importer's match: attach virgin_us values only to a profile with the same mccmnc and gid1 rule. Read in the 23.2 tree; the phone runs 24.0, not re-checked.",
+  "profiles": [
+    "open.311490.0efa23c7cb84"
+  ],
+  "read_at": "2026-10-28T19:04:07Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2477-2484",
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:12087",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:1665-1682",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1810-1840",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/Phone.java:2930-2935",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/emergency/EmergencyStateTracker.java:790-812",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/emergency/EmergencyStateTracker.java:1258-1296",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsEcbmImpl.java:19-22",
+    "packages/services/Telephony/res/values/config.xml:393",
+    "packages/providers/TelephonyProvider/assets/latest_carrier_id/carrier_list.textpb:1-26,6036-6043",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1853_Virgin-Mobile.xml (value false)",
+    "rom-repos/platform_packages_modules_ImsStack.git branch ocd: git grep for the key (no hits)",
+    "Open_Carrier_Data live-private/work/google-carriersettings/graphene/devices/kodiak/virgin_us.textproto:44-45",
+    "Open_Carrier_Data live-private/work/google-carriersettings/graphene/devices/kodiak/carrier_list.textproto:7890-7901 (311490 entries) and the virgin_us entries",
+    "Open_Carrier_Data live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.42490a328c8f4c260d5642a5f98c453a.json, bundle.71831fae7a9b11456750d393a1f84778.json (Virgin Us matches)",
+    "Open_Carrier_Data worktrees-r31/public/carriers/open/311490.0efa23c7cb84.json (match, values)",
+    "S20_Project reports/S20 modem and radio interface study.md:264"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "hold"
+}

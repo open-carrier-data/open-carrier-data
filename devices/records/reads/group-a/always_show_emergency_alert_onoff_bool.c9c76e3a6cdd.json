@@ -1,0 +1,32 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "display_only",
+  "families": [],
+  "findings": {
+    "basis": "Key read, no candidate value. Google CarrierSettings still carries the key for about 240 kodiak textprotos; it is a real but obsolete carrier setting.",
+    "effect": "The key has no reader on LineageOS 23.2. CarrierConfigManager documents it as deprecated ('The allow alerts option is always shown now', CarrierConfigManager.java:1201-1210; @Deprecated in core/api/current.txt:45559), with default false (11967). Its only historical reader, CellBroadcastReceiver's settings screen (added in 775699f27, 2015), was removed on 2020-01-09 in commits 6d6451d1e/b612d59ea; neither CellBroadcastReceiver nor CellBroadcastService in the tree mentions it now. Visibility of the 'Allow alerts' main switch is driven by the CellBroadcastReceiver resource show_main_switch_settings (CellBroadcastSettings.java:648-656, res/values/config.xml:23), and whether alerts reach the person is decided by the user's master-toggle preference with the resource default master_toggle_enabled_default (CellBroadcastAlertService.java:574-586, CellBroadcastConfigService.java:187,734) plus always-on channel ranges; none of these read carrier config for this key. Even when the key was read, it only made the switch visible; it never turned alerts off. On the phone (LineageOS 24.0), the cell broadcast module APK (apex com.android.cellbroadcast) and CellBroadcastLegacyApp were checked: their dex contains enable_alerts_master_toggle but not always_show_emergency_alert_onoff, so the 24.0 build has no reader either.",
+    "risk": "None for emergency, TTY, RTT or priority calls or emergency SMS: the key reaches no code. It cannot hide or show the alert switch on this ROM and cannot stop wireless emergency alerts from reaching the person."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "always_show_emergency_alert_onoff_bool",
+  "notes": "Proceed: the key leaves group A. It is deprecated and unread on LineageOS 23.2 (removed from CellBroadcastReceiver in January 2020) and absent from the 24.0 phone's cell broadcast module; when it was read it only controlled whether a settings switch was shown. Whether alerts are delivered is decided by the user's main switch and resource defaults, not by this key.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:04:37Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1201-1210,11967",
+    "frameworks/base/core/api/current.txt:45559",
+    "packages/apps/CellBroadcastReceiver/src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java:87,384,648-656,1289",
+    "packages/apps/CellBroadcastReceiver/src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java:574-586",
+    "packages/apps/CellBroadcastReceiver/src/com/android/cellbroadcastreceiver/CellBroadcastConfigService.java:187,734",
+    "packages/apps/CellBroadcastReceiver/res/values/config.xml:23,82",
+    "packages/apps/CellBroadcastReceiver git history: 775699f27 (2015, added the reader), 6d6451d1e and b612d59ea (2020-01-09, 'Removed developer mode support', removed it)",
+    "tree-wide grep of frameworks, packages (apps incl. CellBroadcastReceiver, services, modules incl. CellBroadcastService), lineage-sdk, vendor/lineage, device/samsung",
+    "rom-repos (ImsStack ocd, Iwlan, vendor/apn, vendor/extra, PhhIms): no reader of the key"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "proceed"
+}

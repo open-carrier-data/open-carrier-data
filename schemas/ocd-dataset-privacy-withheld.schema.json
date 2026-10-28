@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-dataset-privacy-withheld.schema.json",
+  "title": "OCD privacy-withheld Google-lane values (generated/ocd-dataset/privacy-withheld.json)",
+  "description": "Rule round 31, SM4, a companion file of the dataset: every Google-lane value the privacy guard (the sanitizer's BLOCK_PATTERNS, rule 3) leaves out of google-lane.json, by entry and key, without the value. A SIM of such an entry takes the key from Google's default entry, from OCD's profile values, or else from Android's default. The ROM build check (live-private tools/export_ocd_dataset.py check-build) lists every key that falls to Android's default this way, so a builder without OCD's private lane knows which keys are missing. Written by the private publisher.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "based_on_data_digest",
+    "lane",
+    "withheld",
+    "by_key"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "based_on_data_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "device",
+        "build",
+        "snapshot"
+      ],
+      "properties": {
+        "device": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "build": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "snapshot": {
+          "type": "string",
+          "maxLength": 128
+        }
+      }
+    },
+    "withheld": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entry",
+          "key",
+          "rules"
+        ],
+        "properties": {
+          "entry": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.]{1,200}$"
+          },
+          "rules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "enum": [
+                "email",
+                "long_decimal_identity",
+                "international_phone",
+                "secret_word",
+                "raw_vendor_file",
+                "raw_vendor_key",
+                "gras_payload",
+                "ims_patch"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "by_key": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9_.]{1,200}$"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  }
+}

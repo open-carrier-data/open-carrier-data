@@ -82,6 +82,9 @@ FILES = {
     "device_records": ("device-records.json", "generated/devices/device-records.json", 4 * 1024 * 1024),
     "apn_xml": ("apns-conf.xml", "generated/android/apns-conf.xml", 16 * 1024 * 1024),
     "apn_index": ("apn-index.json", f"{DATASET_DIR}/apn-index.json", 16 * 1024 * 1024),
+    # Round 31 (S20 spec R31.7): optional; a reader of protocol 2 refuses a
+    # manifest that lists it. Listed once LIST_GROUP_A_READS is true.
+    "group_a_reads": ("group-a-reads.json", f"{DATASET_DIR}/group-a-reads.json", 4 * 1024 * 1024),
     "pin": ("pin.json", None, 64 * 1024),
 }
 TOTAL_CAP = 64 * 1024 * 1024
@@ -178,8 +181,12 @@ BLOCK_PATTERNS = {
     ),
 }
 
-# The S20's configured_device records (spec 2.10), which the ROM's build
-# check requires in the baked dataset.
+# The S20's five configured_device records (spec 2.10). Round 31 (keys)
+# ends the device-only kind: no record is keyed by device alone, and every
+# record names a carrier. These five stay on main only until the build with
+# the restored device override has passed on the phone (round 31,
+# implementation order step 8); until then they are the one exception to
+# the carrier key rule, and nothing else may join them.
 S20_RECORD_KEYS = (
     "r:40ee9931e862c76c",
     "r:5e72fea0c8d2f885",
@@ -187,8 +194,32 @@ S20_RECORD_KEYS = (
     "r:937a114148bf73b8",
     "r:e41c807e9f154e6a",
 )
+LEGACY_DEVICE_ONLY_RECORDS = frozenset(S20_RECORD_KEYS)
 
 RECORD_KINDS = ("configured_device", "measured")
+# The carrier keys a record may name (round 31): an OCD or fill-only profile,
+# or MCC-MNC with GID1 or SPN for a SIM that default or a fill-only profile
+# serves. Scope `all` is left only for LEGACY_DEVICE_ONLY_RECORDS.
+CARRIER_SCOPES = ("profile", "sim_key")
+# Round 31 cell records: generated/devices/device-records.json schema_version
+# 2 (schemas/cell-records.schema.json). A measured record belongs to one cell:
+# the device, the carrier (profile or SIM key), the ROM family and build line
+# with its forks, and the IMS stack with its fork; it also states the build
+# incremental and the stack version, which are recorded, not matched. Public
+# main serves schema_version 1 (the round 30 format, which every reader on a
+# phone today parses) until implementation order step 8; the prepared
+# removal branch switches SERVED_RECORDS_SCHEMA_VERSION to 2 and drops the
+# five S20 records. Cell records the owner build sends before then wait in
+# devices/records/measured.json.
+CELL_RECORDS_SCHEMA_VERSION = 2
+SERVED_RECORDS_SCHEMA_VERSION = 1
+FORK_RE = re.compile(r"[a-z][a-z0-9_-]{0,31}")
+INCREMENTAL_RE = re.compile(r"[0-9A-Za-z][0-9A-Za-z._+-]{0,63}")
+CELL_RECORD_MEMBERS = frozenset({
+    "record_key", "kind", "device", "rom", "ims_stack", "carrier", "target", "value_kind", "value", "claim", "label",
+    "basis", "level", "result", "method", "bearer", "n", "first_measured", "last_measured", "valid_until", "data",
+    "tester", "differs_between_sims",
+})
 IMS_STACK_IDS = ("aosp_imsstack", "other", "phh_ims", "samsung_ims")
 VALUE_KINDS = ("android_default", "none", "value")
 CLAIMS = ("configured", "measured")
@@ -204,6 +235,54 @@ METHODS = (
 )
 BEARERS = ("iwlan", "lte", "nr")
 READ_SCHEMA = "ocd-group-a-read/1"
+
+# Round 31 (2026-10-28 ruling, `emergencyValues`): a group A value that
+# differs from the Google lane is served only after an independent read with
+# verdict proceed is on main, for that key, value, source and profile and for
+# the ROM family and IMS stack it is served on. A key read whose finding is
+# display_only takes the key out of group A. The reads live in
+# devices/records/reads/ (ocd-group-a-read/2) and are copied, with the
+# candidates still waiting for a read, into generated/ocd-dataset/group-a-reads.json.
+GROUP_A_READ_SCHEMA = "ocd-group-a-read/2"
+GROUP_A_EFFECTS = ("call_path", "display_only")
+GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
+GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
+# Whether the manifest lists group-a-reads.json as the role group_a_reads.
+# The round 31 readers (OcdCarrierSettings protocol 3, the OCD Check owner
+# app) take it, a round 30 reader (protocol 2) refuses a manifest that lists
+# it, and so does the S20 pin step until it knows the file. Until it is
+# listed, the file sits beside the dataset and CarrierSettings serves the
+# Google-lane value for every group A key. The prepared step 8 change lists it.
+LIST_GROUP_A_READS = False
+# The keys that never leave group A, whatever a read finds (round 31,
+# emergencyValues; the S20 spec's R31.7).
+GROUP_A_NEVER_LEAVE = frozenset({
+    "dial_string_replace_string_array",
+    "emergency_number_prefix_string_array",
+    "international_roaming_dial_string_replace_string_array",
+})
+# Companion files of the dataset (round 31). They sit beside the dataset in
+# the same commit but are not manifest roles: every reader on a phone today
+# refuses an unknown role, and the round 30 builds stay rollback targets
+# until step 8. Each names the dataset it belongs to (f5-reads.json by the
+# APN rows' SHA-256, the others by the data digest); the app takes them
+# from the same commit with the blob check and hands them over with the
+# stage, and the ROM pin step bakes them (export_ocd_dataset.py bake
+# --companions).
+#   f5-reads.json          the F5 reads of emergency-line changes (SM6),
+#                          written by tools/f5_read.py publish
+#   group-a-reads.json     the group A reads and the candidates waiting for
+#                          one, written by generate from devices/records/reads/
+#   privacy-withheld.json  the Google-lane values the privacy guard leaves
+#                          out (SM4), written by the private publisher
+F5_READS_FILE = f"{DATASET_DIR}/f5-reads.json"
+WITHHELD_FILE = f"{DATASET_DIR}/privacy-withheld.json"
+COMPANION_FILES = (F5_READS_FILE, GROUP_A_READS_FILE, GROUP_A_PENDING_FILE, WITHHELD_FILE)
+COMPANION_CAP = 4 * 1024 * 1024
+# The ROM family and IMS stack OCD runs its reads for today: the stack SM8
+# lists as calibrated. Another ROM family's builder asks for its own reads.
+GROUP_A_READ_TARGETS = (("lineageos", "aosp_imsstack"),)
+ROM_FAMILIES = ("aosp", "lineageos", "other", "stock")
 
 
 class DatasetError(Exception):
@@ -731,6 +810,112 @@ def record_key_of(record: dict[str, Any]) -> str:
     return "r:" + sha256_hex("\n".join(lines).encode("utf-8"))[:16]
 
 
+def is_cell_record(record: Any) -> bool:
+    """A round 31 cell record (schema_version 2): its ROM names its forks."""
+    return isinstance(record, dict) and isinstance(record.get("rom"), dict) and "forks" in record["rom"]
+
+
+def cell_record_key_of(record: dict[str, Any]) -> str:
+    """r: and the first 16 hex digits of SHA-256 over the ten cell lines,
+    joined with \n: kind, device codename, upper-cased model, ROM family,
+    ROM line, the ROM forks joined with commas (empty for none), IMS stack
+    id, IMS stack fork (or empty), the carrier text and the target text.
+    The build incremental and the stack version are not part of it."""
+    lines = [
+        record["kind"], record["device"]["codename"], record["device"]["model"].upper(),
+        record["rom"]["family"], record["rom"]["line"], ",".join(record["rom"]["forks"]), record["ims_stack"]["id"],
+        record["ims_stack"]["fork"] or "", record_carrier_text(record["carrier"]), record_target_text(record["target"]),
+    ]
+    return "r:" + sha256_hex("\n".join(lines).encode("utf-8"))[:16]
+
+
+def cell_record_problems(record: Any, registry: dict[str, dict[str, Any]], where: str) -> list[str]:
+    """What a schema cannot say about one cell record (round 31): its cell
+    and key, the carrier key, the kind, the ROM forks and incremental, the
+    group rules, the value against the registry and the privacy scan."""
+    if not isinstance(record, dict) or set(record) != CELL_RECORD_MEMBERS:
+        return [f"{where}: a cell record holds exactly {', '.join(sorted(CELL_RECORD_MEMBERS))}"]
+    carrier = record.get("carrier")
+    if not isinstance(carrier, dict) or carrier.get("scope") not in CARRIER_SCOPES:
+        return [f"{where}: a cell record names its carrier, a profile or a SIM key (record_no_carrier)"]
+    if carrier["scope"] == "sim_key" and ("gid1" in carrier) == ("spn" in carrier):
+        return [f"{where}: a SIM key names exactly one of gid1 and spn"]
+    if record["kind"] != "measured" or record["claim"] != "measured":
+        return [f"{where}: a cell record is of kind measured and claims measured (record_kind)"]
+    rom = record["rom"]
+    if not isinstance(rom, dict) or set(rom) != {"family", "line", "forks", "incremental"}:
+        return [f"{where}: rom holds exactly family, line, forks and incremental"]
+    out: list[str] = []
+    if rom["family"] not in ROM_FAMILIES:
+        out.append(f"{where}: rom.family is one of {', '.join(ROM_FAMILIES)}")
+    forks = rom["forks"]
+    if not isinstance(forks, list) or not all(isinstance(f, str) and FORK_RE.fullmatch(f) for f in forks) or forks != sorted(set(forks)):
+        out.append(f"{where}: rom.forks is a sorted list of distinct fork names")
+    if not isinstance(rom["incremental"], str) or not INCREMENTAL_RE.fullmatch(rom["incremental"]):
+        out.append(f"{where}: rom.incremental is the build's Build.VERSION.INCREMENTAL")
+    if out:
+        return out
+    if cell_record_key_of(record) != record["record_key"]:
+        return [f"{where}: record_key is not the hash of its cell lines (expected {cell_record_key_of(record)})"]
+    if record["last_measured"] is None or record["first_measured"] is None:
+        out.append(f"{where}: a cell record names the days it was measured")
+    elif record["valid_until"] != (date.fromisoformat(record["last_measured"]) + timedelta(days=EXPIRE_DAYS)).isoformat():
+        out.append(f"{where}: valid_until must be last_measured + {EXPIRE_DAYS} days")
+    elif record["first_measured"] > record["last_measured"]:
+        out.append(f"{where}: first_measured is after last_measured")
+    target = record["target"]
+    value_kind = record["value_kind"]
+    if value_kind != "value" and record["value"] is not None:
+        out.append(f"{where}: only value_kind value carries a value")
+    if target["type"] == "config":
+        key = target["key"]
+        entry = registry.get(key)
+        if entry is None:
+            return out + [f"{where}: {key} is not in the key registry (unknown_key)"]
+        if entry["fork"] is not None and record["ims_stack"]["fork"] != entry["fork"]:
+            out.append(f"{where}: {key} exists only in the {entry['fork']} fork; ims_stack.fork must name it")
+        if key in GROUP_B_KEYS:
+            out.append(f"{where}: {key} is group B, whose records could never be served (record_group_b)")
+        if entry["group"] == "A" or key in GROUP_A_NAMES:
+            out.append(f"{where}: {key} is group A; group A values enter only as carrier values with a read (record_group_a)")
+        if value_kind == "value":
+            problem = value_problem(record["value"], entry["type"], f"{where}.value") or domain_problem(key, record["value"], f"{where}.value")
+            if problem:
+                out.append(problem)
+        elif value_kind == "none" and record["result"] != "no_value_passed":
+            out.append(f"{where}: a config record without a value is a no_value_passed result")
+    else:
+        if value_kind != "none":
+            out.append(f"{where}: an APN or emergency data record holds no value (value_kind none)")
+        if target["type"] == "emergency_data" and record["result"] not in EMERGENCY_RESULTS:
+            out.append(f"{where}: an emergency data record has an emergency data result")
+        if target["type"] == "apn" and record["result"] == "emergency_default_won":
+            out.append(f"{where}: Android's default winning is an emergency_data record")
+    if record["result"] in EMERGENCY_RESULTS and (target["type"] != "emergency_data" or record["level"] != "emergency_data"):
+        out.append(f"{where}: an emergency data result belongs to an emergency_data target at level emergency_data")
+    for text in strings_of({k: record[k] for k in ("basis", "label") if record[k] is not None}):
+        for name, pattern in BLOCK_PATTERNS.items():
+            if pattern.search(text):
+                out.append(f"{where}: basis or label looks like private data ({name})")
+    return out
+
+
+def any_record_problems(record: Any, registry: dict[str, dict[str, Any]], reads: dict[str, dict[str, Any]], where: str) -> list[str]:
+    """A round 30 record or a round 31 cell record, each by its own rules."""
+    if is_cell_record(record):
+        return cell_record_problems(record, registry, where)
+    return record_problems(record, registry, reads, where)
+
+
+def served_records(records: list[dict[str, Any]], version: int | None = None) -> list[dict[str, Any]]:
+    """The records device-records.json carries in schema_version VERSION
+    (SERVED_RECORDS_SCHEMA_VERSION by default): round 30 records in 1, cell
+    records in 2. A cell record waits for 2; a round 30 record does not
+    carry over into 2, because its cell lacks the ROM forks and incremental."""
+    version = SERVED_RECORDS_SCHEMA_VERSION if version is None else version
+    return [r for r in records if is_cell_record(r) == (version == CELL_RECORDS_SCHEMA_VERSION)]
+
+
 def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
     """(records, declared keys, reads) from devices/records/: every
     configured/*.json, measured.json (written by the report bot), keys.json
@@ -759,8 +944,9 @@ def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dic
             raise DatasetError(f"{base / 'keys.json'}: must hold exactly schema_version 1, description and keys")
         keys = document["keys"]
     reads: dict[str, dict[str, Any]] = {}
-    for path in sorted((base / "reads").glob("*.json")) if (base / "reads").is_dir() else []:
-        reads[path.relative_to(root).as_posix()] = read_json_file(path)
+    for folder in (base / "reads", base / "reads" / "group-a"):
+        for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
+            reads[path.relative_to(root).as_posix()] = read_json_file(path)
     return records, keys, reads
 
 
@@ -794,6 +980,10 @@ def record_problems(
     if record_key_of(record) != record["record_key"]:
         return [f"{where}: record_key is not the hash of its identity lines (expected {record_key_of(record)})"]
     kind = record["kind"]
+    if record["carrier"]["scope"] not in CARRIER_SCOPES and record["record_key"] not in LEGACY_DEVICE_ONLY_RECORDS:
+        return [f"{where}: a record names its carrier, a profile or a SIM key (round 31: no record is keyed by device alone; record_no_carrier)"]
+    if kind != "measured" and record["record_key"] not in LEGACY_DEVICE_ONLY_RECORDS:
+        return [f"{where}: the record kind is measured only (round 31: configured_device ends; record_kind)"]
     if kind == "configured_device":
         if record["claim"] != "configured" or record["valid_until"] is not None:
             out.append(f"{where}: a configured_device record claims configured and has no valid_until")
@@ -860,14 +1050,22 @@ def record_problems(
 # ---------------------------------------------------------------- registry and groups
 
 
-def group_of(key: str) -> str | None:
+def group_of(key: str, left_group_a: frozenset[str] | set[str] = frozenset()) -> str | None:
     if key in GROUP_B_KEYS:
         return "B"
     if key in X6_KEYS:
         return "X6"
-    if GROUP_A_RE.search(key) or key in GROUP_A_NAMES:
+    if (GROUP_A_RE.search(key) or key in GROUP_A_NAMES) and key not in left_group_a:
         return "A"
     return None
+
+
+def left_group_a_keys(reads: dict[str, dict[str, Any]]) -> set[str]:
+    """The keys a key read with verdict proceed found display_only (round
+    31): they leave group A, except GROUP_A_NEVER_LEAVE."""
+    return {r["key"] for r in reads.values() if isinstance(r, dict) and r.get("schema") == GROUP_A_READ_SCHEMA
+            and r.get("subject") == "key" and r.get("verdict") == "proceed" and r.get("effect") == "display_only"
+            and r.get("key") not in GROUP_A_NEVER_LEAVE}
 
 
 def lane_value_types(lane: dict[str, Any] | None, registry_file: dict[str, Any] | None) -> dict[str, str]:
@@ -886,7 +1084,8 @@ def lane_value_types(lane: dict[str, Any] | None, registry_file: dict[str, Any] 
     return out
 
 
-def build_registry(inputs: Inputs, records: list[dict[str, Any]], declared: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def build_registry(inputs: Inputs, records: list[dict[str, Any]], declared: dict[str, dict[str, Any]],
+                   left_group_a: set[str] | frozenset[str] = frozenset()) -> dict[str, dict[str, Any]]:
     """The closed key list (spec 2.5.1): the public schema's keys, every key
     of the Google lane, and the keys of the device records, each with its
     type, group, origin and fork."""
@@ -912,7 +1111,259 @@ def build_registry(inputs: Inputs, records: list[dict[str, Any]], declared: dict
             raise DatasetError(f"{KEYS_FILE}: the record key {key} is in neither the schema nor the Google lane; declare its type there")
         if len(types) != 1:
             raise DatasetError(f"the key {key} has conflicting types {sorted(types)} (schema, Google lane, {KEYS_FILE})")
-        out[key] = {"type": types.pop(), "group": group_of(key), "origin": sorted(origins), "fork": fork}
+        out[key] = {"type": types.pop(), "group": group_of(key, left_group_a), "origin": sorted(origins), "fork": fork}
+    return out
+
+
+# ---------------------------------------------------------------- group A reads (round 31, emergencyValues)
+
+
+def google_variants(profile: dict[str, Any], entries: dict[str, Any]) -> list[dict[str, Any]]:
+    """The Google-lane bundles (steps 2 and 3) a SIM that PROFILE serves on
+    this network copy can get: `default` with each fill entry in order, and
+    `default` alone when no fill item may hold. A fill entry the lane lacks
+    is skipped, as the reader does."""
+    default = entries.get("default", {}).get("values", {})
+    out = []
+    for item in profile["fill"]:
+        entry = entries.get(item["entry"])
+        if entry is None:
+            continue
+        out.append({**default, **entry["values"]})
+        if item["when"] is None:
+            return out
+    out.append(dict(default))
+    return out
+
+
+def group_a_keys(profiles: dict[str, Any]) -> set[str]:
+    """Group A as CarrierSettings takes it: the dataset's marking, the
+    pattern over the registry and the named keys (spec 5.1)."""
+    groups = profiles["groups"]["A"]
+    return set(groups["keys"]) | set(groups["names"]) | {k for k, meta in profiles["keys"].items() if GROUP_A_RE.search(k) and meta["group"] == "A"}
+
+
+def group_a_candidates(profiles: dict[str, Any], lane: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """Every group A value that differs from the Google lane (round 31,
+    emergencyValues): per key and value, the profiles whose own values hold
+    it and the source families behind it. A value differs when the step-4
+    overlay of a profile's stack serves it and some Google bundle that
+    profile's SIMs can get holds another value or none."""
+    entries = (lane or {}).get("entries", {})
+    keys = group_a_keys(profiles)
+    found: dict[tuple[str, str], dict[str, Any]] = {}
+    for network in profiles["networks"].values():
+        items = network["profiles"]
+        for profile in items:
+            stack = profile_stack(items, profile)
+            served: dict[str, tuple[Any, dict[str, Any]]] = {}
+            for q in stack:
+                for key, value in q["values"].items():
+                    if key in keys:
+                        served[key] = (value, q)
+            if not served:
+                continue
+            variants = google_variants(profile, entries)
+            for key, (value, carrier) in served.items():
+                text = compact(value)
+                if all(key in bundle and compact(bundle[key]) == text for bundle in variants):
+                    continue
+                slot = found.setdefault((key, text), {"key": key, "value": value, "profiles": {}})
+                slot["profiles"][carrier["id"]] = sorted(carrier["sources"].get(key, []))
+    out = []
+    for (key, text), slot in sorted(found.items()):
+        families = sorted({f for fams in slot["profiles"].values() for f in fams})
+        out.append({"key": key, "value": slot["value"], "families": families,
+                    "profiles": {p: slot["profiles"][p] for p in sorted(slot["profiles"])}})
+    return out
+
+
+def group_a_read_problems(read: Any, where: str) -> list[str]:
+    """A round 31 group A read (ocd-group-a-read/2), beyond its schema."""
+    required = {"schema", "subject", "key", "value", "families", "profiles", "rom_family", "ims_stack", "effect",
+                "reader", "builder", "read_at", "sources_read", "findings", "verdict", "notes"}
+    if not isinstance(read, dict) or set(read) != required:
+        return [f"{where}: a group A read holds exactly {', '.join(sorted(required))}"]
+    out = []
+    if read["subject"] not in ("value", "key"):
+        out.append(f"{where}: subject is value or key")
+    if read["effect"] not in GROUP_A_EFFECTS:
+        out.append(f"{where}: effect is one of {', '.join(GROUP_A_EFFECTS)}")
+    if read["verdict"] not in ("proceed", "hold"):
+        out.append(f"{where}: verdict must be proceed or hold")
+    if read["rom_family"] not in ROM_FAMILIES or read["ims_stack"] not in IMS_STACK_IDS:
+        out.append(f"{where}: rom_family and ims_stack name a ROM family and an IMS stack of the cell schema")
+    for name in ("reader", "builder"):
+        if not isinstance(read[name], str) or not read[name].strip():
+            out.append(f"{where}: {name} must be named")
+    if isinstance(read["reader"], str) and isinstance(read["builder"], str) and read["reader"].strip().casefold() == read["builder"].strip().casefold():
+        out.append(f"{where}: the reader must not be the value's builder")
+    if not isinstance(read["read_at"], str) or not GENERATED_AT_RE.fullmatch(read["read_at"]):
+        out.append(f"{where}: read_at must be an ISO 8601 UTC time with seconds")
+    if not isinstance(read["sources_read"], list) or not read["sources_read"] or not all(isinstance(s, str) and s for s in read["sources_read"]):
+        out.append(f"{where}: sources_read lists the sources the reader read")
+    if not isinstance(read["findings"], dict) or set(read["findings"]) != {"effect", "basis", "risk"} \
+            or not all(isinstance(v, str) and v.strip() for v in read["findings"].values()):
+        out.append(f"{where}: findings hold exactly effect, basis and risk, each a sentence")
+    if read["subject"] == "value":
+        if not isinstance(read["profiles"], list) or not read["profiles"] or not all(isinstance(p, str) and (OCD_ID_RE.fullmatch(p) or FILL_ID_RE.fullmatch(p)) for p in read["profiles"]):
+            out.append(f"{where}: a value read lists the profiles whose value it read")
+        if not isinstance(read["families"], list) or not all(isinstance(f, str) and f for f in read["families"]):
+            out.append(f"{where}: families lists the value's source families")
+    else:
+        if read["value"] is not None or read["families"] != [] or read["profiles"] != []:
+            out.append(f"{where}: a key read holds no value, families or profiles")
+        if read["verdict"] == "proceed" and read["effect"] != "display_only":
+            out.append(f"{where}: a key read proceeds only on a display_only finding (the key leaves group A)")
+    if not isinstance(read["notes"], str) or not read["notes"].strip():
+        out.append(f"{where}: notes say what the read found")
+    for text in strings_of({k: read[k] for k in ("findings", "notes")}):
+        for name, pattern in BLOCK_PATTERNS.items():
+            if name in ("email", "long_decimal_identity", "international_phone", "secret_word") and pattern.search(text):
+                out.append(f"{where}: findings or notes look like private data ({name})")
+    return out
+
+
+def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
+    """gar: and the first 16 hex digits of SHA-256 over the read record's
+    path, the profile and the source family, joined with \\n."""
+    return "gar:" + sha256_hex(f"{reference}\n{profile_id}\n{family}".encode("utf-8"))[:16]
+
+
+def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[str, Any] | None,
+                      reads: dict[str, dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """(group-a-reads.json, group-a-pending.json) from the round 31 group A
+    reads on main (devices/records/reads/group-a/).
+
+    group-a-reads.json is the S20 spec's R31.7 file, as OcdCarrierSettings
+    reads it: one item per read, profile and source family (a read admits
+    the value of `profile_id` only when the profile's sources for the key
+    name `family`), and the display_only key findings. A profile whose value
+    has no recorded source family gets no item: no read can admit it, and
+    its SIMs keep the Google-lane value.
+
+    group-a-pending.json is the status beside it: every candidate (a group A
+    value that differs from the Google lane) no read covers yet, the values
+    a read covered whose basis is not recorded, every key read, and the keys
+    that left group A."""
+    registry = profiles["keys"]
+    value_reads, key_reads = [], []
+    for path, read in sorted(reads.items()):
+        if read.get("schema") != GROUP_A_READ_SCHEMA:
+            continue
+        if read["subject"] == "value":
+            meta = registry.get(read["key"])
+            if meta is None:
+                continue  # a key the registry no longer has is never served; its read is moot
+            problem = value_problem(read["value"], meta["type"], f"{path}: value")
+            if problem:
+                raise DatasetError(problem)
+            value_reads.append((path, read))
+        else:
+            key_reads.append((path, read))
+    left = sorted(left_group_a_keys(dict(key_reads)))
+    candidates = group_a_candidates(profiles, lane)
+    by_value = {(c["key"], compact(c["value"])): c for c in candidates}
+    items, unrecorded = [], []
+    for path, read in value_reads:
+        candidate = by_value.get((read["key"], compact(read["value"])), {"profiles": {}})
+        for profile_id in sorted(read["profiles"]):
+            families = candidate["profiles"].get(profile_id)
+            if families is None:
+                continue  # the profile no longer carries this value
+            covered = [f for f in families if f in read["families"]]
+            if not families:
+                unrecorded.append({"key": read["key"], "value": read["value"], "profile_id": profile_id, "reference": path})
+            for family in covered:
+                items.append({
+                    "read_id": group_a_read_id(path, profile_id, family), "key": read["key"], "value": read["value"],
+                    "family": family, "profile_id": profile_id, "rom_family": read["rom_family"], "ims_stack": read["ims_stack"],
+                    "ims_stack_fork": None, "verdict": read["verdict"], "reader": read["reader"], "read_at": read["read_at"], "reference": path,
+                })
+    findings = [{"key": read["key"], "finding": "display_only", "verdict": read["verdict"], "reader": read["reader"],
+                 "read_at": read["read_at"], "reference": path}
+                for path, read in key_reads if read["effect"] == "display_only"]
+    pending = []
+    for candidate in candidates:
+        if candidate["key"] in left:
+            continue
+        for target in GROUP_A_READ_TARGETS:
+            covering = [r for _, r in value_reads if r["key"] == candidate["key"] and compact(r["value"]) == compact(candidate["value"])
+                        and (r["rom_family"], r["ims_stack"]) == target]
+            waiting = {p: fams for p, fams in candidate["profiles"].items()
+                       if not any(p in r["profiles"] and set(fams) <= set(r["families"]) for r in covering)}
+            if waiting:
+                pending.append({"key": candidate["key"], "value": candidate["value"], "rom_family": target[0], "ims_stack": target[1],
+                                "families": sorted({f for fams in waiting.values() for f in fams}), "profiles": sorted(waiting)})
+    reads_document = {
+        "schema_version": SCHEMA_VERSION,
+        "based_on_data_digest": inputs_digest,
+        "reads": sorted(items, key=lambda r: (r["key"], compact(r["value"]), r["profile_id"], r["family"], r["read_id"])),
+        "key_findings": sorted(findings, key=lambda f: (f["key"], f["reference"])),
+    }
+    pending_document = {
+        "schema_version": SCHEMA_VERSION,
+        "based_on_data_digest": inputs_digest,
+        "targets": [{"rom_family": f, "ims_stack": st} for f, st in GROUP_A_READ_TARGETS],
+        "pending": pending,
+        "unrecorded_basis": sorted(unrecorded, key=lambda u: (u["key"], compact(u["value"]), u["profile_id"])),
+        "key_reads": sorted(({"key": r["key"], "effect": r["effect"], "verdict": r["verdict"], "reference": path} for path, r in key_reads),
+                            key=lambda k: (k["key"], k["reference"])),
+        "left_group_a": left,
+    }
+    return reads_document, pending_document
+
+
+def withheld_document_of(root: Path, lane: dict[str, Any], data_digest: str) -> bytes | None:
+    """privacy-withheld.json as generate keeps it: the publisher's list,
+    restamped with this data digest and narrowed to the entries the
+    published Google lane carries (rule 3 can leave entries out after the
+    publisher listed them). None when the publisher wrote no list."""
+    path = root / WITHHELD_FILE
+    if not path.is_file():
+        return None
+    document = read_json_file(path)
+    items = sorted((i for i in document.get("withheld", []) if i.get("entry") in lane["entries"]), key=lambda i: (i["entry"], i["key"]))
+    counts: dict[str, int] = defaultdict(int)
+    for item in items:
+        counts[item["key"]] += 1
+    return dump_lines({**document, "based_on_data_digest": data_digest, "withheld": items, "by_key": dict(sorted(counts.items()))}, ("withheld",))
+
+
+def withheld_problems(root: Path, lane: dict[str, Any] | None, data_digest: str | None) -> list[str]:
+    """privacy-withheld.json (SM4), when the publisher wrote one: its shape,
+    its data digest, and that every value it names is absent from the
+    Google lane's entry, so the list says exactly which keys a SIM of that
+    entry takes from Google's default or from Android's default instead."""
+    path = root / WITHHELD_FILE
+    if not path.is_file():
+        return []
+    document = read_json_file(path)
+    out = schema_check(root, document, "ocd-dataset-privacy-withheld.schema.json", WITHHELD_FILE)
+    if out:
+        return out
+    if document["based_on_data_digest"] != data_digest:
+        out.append(f"{WITHHELD_FILE}: based_on_data_digest is not metadata.json's")
+    if lane is None:
+        return out + [f"{WITHHELD_FILE}: there is no Google lane to withhold values from"]
+    seen = set()
+    for item in document["withheld"]:
+        pair = (item["entry"], item["key"])
+        if pair in seen:
+            out.append(f"{WITHHELD_FILE}: {item['entry']} {item['key']} is listed twice")
+        seen.add(pair)
+        entry = lane["entries"].get(item["entry"])
+        if entry is None:
+            out.append(f"{WITHHELD_FILE}: {item['entry']} is not an entry of the Google lane")
+        elif item["key"] in entry["values"]:
+            out.append(f"{WITHHELD_FILE}: {item['entry']} {item['key']} is listed as withheld but the lane carries it")
+    if [(i["entry"], i["key"]) for i in document["withheld"]] != sorted(seen):
+        out.append(f"{WITHHELD_FILE}: withheld is not sorted by entry and key")
+    counts: dict[str, int] = defaultdict(int)
+    for item in document["withheld"]:
+        counts[item["key"]] += 1
+    if document["by_key"] != dict(sorted(counts.items())):
+        out.append(f"{WITHHELD_FILE}: by_key does not count withheld")
     return out
 
 
@@ -1186,9 +1637,10 @@ def lane_document(inputs: Inputs) -> dict[str, Any]:
     return lane
 
 
-def records_document(inputs: Inputs, records: list[dict[str, Any]]) -> dict[str, Any]:
+def records_document(inputs: Inputs, records: list[dict[str, Any]], version: int | None = None) -> dict[str, Any]:
+    version = SERVED_RECORDS_SCHEMA_VERSION if version is None else version
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": version,
         "based_on_data_digest": inputs.data_digest,
         "expire_days": EXPIRE_DAYS,
         "records": sorted(records, key=lambda r: r["record_key"]),
@@ -1256,7 +1708,7 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     records, declared, reads = read_record_sources(root)
     if records_override is not None:
         records = records_override
-    registry = build_registry(inputs, records, declared)
+    registry = build_registry(inputs, records, declared, left_group_a_keys(reads))
     carriers = {e["profile_id"]: inputs.carrier_profile(e["path"]) for e in inputs.lookup["profiles"]}
     apn_index, version = build_apn_index(inputs, generator, lineage, [(e, carriers[e["profile_id"]]) for e in inputs.lookup["profiles"]])
     if version != APN_DATABASE_VERSION:
@@ -1267,20 +1719,25 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
             apn_counts[profile_id] += 1
     profiles_doc, profile_counts = build_profiles(inputs, registry, apn_counts, carriers)
     lane = lane_document(inputs)
+    served = served_records(records)
+    group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads)
+    group_a_bytes = dump_lines(group_a, ("key_findings", "reads"))
     files_by_role = {
         "profiles": dump_lines(profiles_doc, ("keys", "networks")),
         "google_lane": dump_lines(lane, ("entries", "rules")),
-        "device_records": dump_lines(records_document(inputs, records), ("records",)),
+        "device_records": dump_lines(records_document(inputs, served), ("records",)),
         "apn_xml": inputs.apn_xml,
         "apn_index": dump_lines(apn_index, ("rows",)),
     }
+    if LIST_GROUP_A_READS:
+        files_by_role["group_a_reads"] = group_a_bytes
     counts = {
         "networks": profile_counts["networks"],
         "profiles": profile_counts["profiles"],
         "fill_only_profiles": profile_counts["fill_only_profiles"],
         "google_entries": len(lane["entries"]),
         "apn_rows": len(apn_index["rows"]),
-        "records": len(records),
+        "records": len(served),
     }
     keep = None
     if previous_manifest is not None:
@@ -1293,8 +1750,18 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     out = {FILES[role][1]: data for role, data in files_by_role.items()}
     out[FILES["manifest"][1]] = (json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
     out[REGISTRY_PATH] = (json.dumps(registry_document(registry), indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
+    if not LIST_GROUP_A_READS:
+        out[GROUP_A_READS_FILE] = group_a_bytes
+    withheld = withheld_document_of(root, lane, inputs.data_digest)
+    if withheld is not None:
+        out[WITHHELD_FILE] = withheld
+    out[GROUP_A_PENDING_FILE] = dump_lines(group_a_pending, ("key_reads", "pending", "unrecorded_basis"))
     return {"files": out, "manifest": manifest, "counts": {**profile_counts, **counts}, "registry": registry, "reads": reads,
-            "lane_rules_left_out": inputs.lane_rules_left_out}
+            "group_a": {"read_items": len(group_a["reads"]), "proceed_items": sum(r["verdict"] == "proceed" for r in group_a["reads"]),
+                        "key_findings": len(group_a["key_findings"]), "left_group_a": group_a_pending["left_group_a"],
+                        "pending": len(group_a_pending["pending"]), "pending_profiles": sum(len(p["profiles"]) for p in group_a_pending["pending"]),
+                        "listed_in_manifest": LIST_GROUP_A_READS},
+            "records_waiting": len(records) - len(served), "lane_rules_left_out": inputs.lane_rules_left_out}
 
 
 def previous_manifest_of(root: Path) -> dict[str, Any] | None:
@@ -1380,7 +1847,8 @@ def check_dataset_files(files: dict[str, bytes], expected_digest: str | None = N
         if (entry["name"], entry["path"]) != FILES[entry["role"]][:2]:
             out.append(f"manifest.json: {entry['role']} must be named {FILES[entry['role']][0]} at {FILES[entry['role']][1]}")
         listed[entry["role"]] = entry
-    wanted = {"profiles", "device_records", "apn_xml", "apn_index"} | ({"google_lane"} if manifest["google_lane"] == "included" else set())
+    wanted = {"profiles", "device_records", "apn_xml", "apn_index"} | ({"google_lane"} if manifest["google_lane"] == "included" else set()) \
+        | ({"group_a_reads"} if "group_a_reads" in listed else set())
     if manifest["google_lane"] not in ("included", "absent"):
         out.append("manifest.json: google_lane must be included or absent")
     if set(listed) != wanted:
@@ -1403,6 +1871,7 @@ def check_dataset_files(files: dict[str, bytes], expected_digest: str | None = N
         "google_lane": {"schema_version", "based_on_data_digest", "family", "provenance", "rules", "entries"},
         "device_records": {"schema_version", "based_on_data_digest", "expire_days", "records"},
         "apn_index": {"schema_version", "based_on_data_digest", "apn_xml_sha256", "rows"},
+        "group_a_reads": {"schema_version", "based_on_data_digest", "reads", "key_findings"},
     }
     for role in sorted(wanted - {"apn_xml"}):
         try:
@@ -1523,6 +1992,14 @@ def registry_and_value_problems(parsed: dict[str, Any]) -> list[str]:
     if lane is not None:
         for name, entry in lane["entries"].items():
             check_values(entry["values"], f"google-lane.json: {name}")
+    for index, read in enumerate(parsed.get("group_a_reads", {}).get("reads", [])):
+        meta = registry.get(read.get("key"))
+        if meta is None:
+            out.append(f"group-a-reads.json: read {index} names {read.get('key')}, not in the registry (unknown_key)")
+        else:
+            problem = value_problem(read.get("value"), meta["type"], f"group-a-reads.json: read {index}")
+            if problem:
+                out.append(f"{problem} (wrong_type)")
     for index, record in enumerate(parsed["device_records"]["records"]):
         target = record.get("target", {})
         if target.get("type") == "config":
@@ -1561,6 +2038,7 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
         "apn_index": "ocd-dataset-apn-index.schema.json",
         "device_records": "device-records.schema.json",
         "manifest": "ocd-dataset-manifest.schema.json",
+        "group_a_reads": "ocd-dataset-group-a-reads.schema.json",
     }
     for role, schema in names.items():
         if role in parsed:
@@ -1601,7 +2079,11 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
                 out.append(f"profiles.json: {profile['id']} is not a fill-only profile id")
     records, declared, reads = read_record_sources(root)
     for path, read in reads.items():
-        out += read_problems(read, path)
+        if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA:
+            problems = group_a_read_problems(read, path)
+            out += problems or schema_check(root, read, "group-a-read.schema.json", path)
+        else:
+            out += read_problems(read, path)
     registry = parsed["profiles"]["keys"]
     seen_keys: set[str] = set()
     for index, record in enumerate(parsed["device_records"]["records"]):
@@ -1609,7 +2091,21 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
         if record["record_key"] in seen_keys:
             out.append(f"{where}: record_key {record['record_key']} appears twice")
         seen_keys.add(record["record_key"])
-        out += record_problems(record, registry, reads, where)
+        out += any_record_problems(record, registry, reads, where)
+    for index, record in enumerate(r for r in records if r not in served_records(records)):
+        where = f"{MEASURED_FILE}: waiting cell record {index}"
+        problems = cell_record_problems(record, registry, where)
+        out += problems or schema_check(root, {"schema_version": CELL_RECORDS_SCHEMA_VERSION, "based_on_data_digest": metadata.get("data_digest"),
+                                                "expire_days": EXPIRE_DAYS, "records": [record]}, "cell-records.schema.json", where)
+    group_a_path = root / GROUP_A_READS_FILE
+    if group_a_path.is_file() and "group_a_reads" not in parsed:
+        out += schema_check(root, read_json_file(group_a_path), "ocd-dataset-group-a-reads.schema.json", GROUP_A_READS_FILE)
+    if (root / GROUP_A_PENDING_FILE).is_file():
+        out += schema_check(root, read_json_file(root / GROUP_A_PENDING_FILE), "ocd-dataset-group-a-pending.schema.json", GROUP_A_PENDING_FILE)
+    listed_roles = {entry["role"] for entry in parsed["manifest"]["files"]}
+    if ("group_a_reads" in listed_roles) != LIST_GROUP_A_READS:
+        out.append(f"manifest.json: group_a_reads is {'not ' if LIST_GROUP_A_READS else ''}listed; this tool's LIST_GROUP_A_READS says otherwise")
+    out += withheld_problems(root, parsed.get("google_lane"), metadata.get("data_digest"))
     if base_manifest is not None:
         if base_manifest.get("dataset_digest") != parsed["manifest"]["dataset_digest"] and \
                 not str(parsed["manifest"]["generated_at"]) > str(base_manifest.get("generated_at", "")):

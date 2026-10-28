@@ -1,0 +1,25 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "Key read; no single value.",
+    "effect": "The prefix check runs in getTelephonyConnection for every outgoing call, including emergency calls from placeEmergencyConnection, with no emergency exception (TelephonyConnectionService.java:1735-1742, 2153-2186, 2726-2731). When roaming without IMS voice, any dialled string that starts with a listed prefix fails at once with DIALED_CALL_FORWARDING_WHILE_ROAMING.",
+    "risk": "A value that holds an empty string (startsWith('') is always true) or a prefix that begins an emergency number (for example '1', '9', '11', '99') would make 112/911-type calls fail at once while roaming on CS. So the key is not display-only, even though the values seen so far ('*71','*72') cannot touch an emergency number."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "call_forwarding_blocks_while_roaming_string_array",
+  "notes": "Hold: the key stays in group A, because its check runs on the emergency dial path and a careless prefix would refuse emergency calls while roaming. A cheap guard for future values: proceed when every prefix is non-empty, starts with '*' or '#', and neither is a leading part of nor starts with a WPS prefix ('*272', '*31#*272', '#31#*272'); read by hand otherwise.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:11:13Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2986-3006,12172",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:1611-1742,2153-2186,2726-2731"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "hold"
+}

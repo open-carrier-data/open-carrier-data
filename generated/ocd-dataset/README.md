@@ -9,4 +9,13 @@ The OCD dataset, which OcdCarrierSettings serves as a ROM's carrier data on ever
 | `google-lane.json` | the Google lane's values as OCD source family `google`: Google's carrier list rules in file order and every entry's CarrierConfig values, without values the privacy guard trips |
 | `apn-index.json` | each row of `apns-conf.xml` in file order with its line, row key and profiles |
 
-`tools/ocd_dataset.py generate` writes these files and `tools/ocd_dataset.py validate` checks them. Do not edit them by hand. [docs/ocd-dataset.md](../../docs/ocd-dataset.md) explains the formats.
+Beside the set, in the same commit, are four companion files (rule round 31). They are not manifest roles, so every reader on a phone today parses the set unchanged:
+
+| File | Contents | Written by |
+| --- | --- | --- |
+| `f5-reads.json` | the chain of F5 reads: one per change of the APN rows on `main`, each with its emergency lines, the rule that decided each line and the verdict (SM6) | `tools/f5_read.py publish`, in the private publish run |
+| `group-a-reads.json` | the group A reads of `devices/records/reads/group-a/` as CarrierSettings serves them (one item per read, profile and source family) and the display-only key findings; an optional dataset role, listed from implementation order step 8 | `tools/ocd_dataset.py generate` |
+| `group-a-pending.json` | every group A value that still waits for a read, the values whose basis is not recorded, every key read, and the keys that left group A | `tools/ocd_dataset.py generate` |
+| `privacy-withheld.json` | which Google-lane values the privacy guard leaves out, by entry and key, without the value (SM4) | the private publisher |
+
+`tools/ocd_dataset.py generate` writes these files and `tools/ocd_dataset.py validate` checks them; `tools/f5_read.py check` checks the F5 chain. Do not edit them by hand. [docs/ocd-dataset.md](../../docs/ocd-dataset.md) explains the formats.
