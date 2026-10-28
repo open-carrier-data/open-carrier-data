@@ -10,6 +10,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | --- | --- | --- | --- | --- | --- |
 | `aosp` | `aosp_carrier_config`, `aosp_carrier_ids` | AOSP `platform/packages/apps/CarrierConfig` and `platform/packages/providers/TelephonyProvider` | CarrierConfig values, Android carrier identity rules | Apache-2.0 | 235 |
 | `lineageos` | same | `LineageOS/android_vendor_apn` | APN rows and MVNO selectors | Apache-2.0 | 1,064 |
+| `lineageos_pixel_apn_snapshot` | `lineageos` | the Pixel APN snapshot in `LineageOS/android_vendor_apn` (`upstream/apns-conf.xml`), which LineageOS's build merges into its APN list since 2026-10-21 | APN rows and MVNO selectors, the snapshot rows LineageOS ships unchanged | Apache-2.0 | new on 2026-10-28 |
 | `lineageos_device_overlays` | `lineageos_device_carrier_overlays` | LineageOS device repos | device overlay carrier facts | NOASSERTION | 1,163 |
 | `mobile_broadband_provider_info` | same | GNOME `mobile-broadband-provider-info` | carrier and APN facts | CC-PD | 741 |
 | `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,934 |
@@ -21,7 +22,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Three profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records, and `samsung_carrier_config`, read from the same firmware build as the IMS maps, shares the `samsung_ims` record. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
+Four profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records, `samsung_carrier_config`, read from the same firmware build as the IMS maps, shares the `samsung_ims` record, and `lineageos_pixel_apn_snapshot`, read from the same commit of `android_vendor_apn`, shares the `lineageos` record. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
 
 To print the profile count per source name, run:
 
@@ -44,7 +45,7 @@ A source family that turns a capability on makes it `supported`, as long as none
 | Source name | Its offs |
 | --- | --- |
 | `apple_carrier_bundles`, `samsung_omc`, `samsung_ims`, `samsung_carrier_config` | never published; both makers write an off almost always as a missing entry, and their written offs describe phones or defaults, not the carrier ([data-model.md](docs/data-model.md)) |
-| `google_carriersettings`, `google_pixel_vendor_carriersettings` | one family; the operator's own for Google Fi |
+| `google_carriersettings`, `google_pixel_vendor_carriersettings`, `lineageos_pixel_apn_snapshot` | one family; the operator's own for Google Fi. LineageOS's Pixel APN snapshot is a copy of Google's Pixel APN list (on 2026-10-28, 6,523 of its 6,633 rows were rows of Google's own CarrierSettings of the same Pixel build) and gives no offs |
 | `aosp` | one family; the operator's own only for a file the carrier submitted, on 2026-10-04 SETAR's |
 | `lineageos`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list |
 | `lineageos_device_overlays` | one family |
@@ -71,7 +72,7 @@ A snapshot revision names the source state that was checked. Where a family also
 | `google_pixel_vendor_carriersettings` | `commits` | the commits that last changed each device's CarrierSettings files |
 | `apple_carrier_bundles` | `bundle_versions`, `ios_versions` | the bundle and iOS versions Apple's index lists for the package |
 
-On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names the firmware build only for observations extracted since 2026-10-04, up to 50 CSC packages a day; older ones carry none, because a later join would have to guess. Its OMC versions are in `observed_scope.omc_versions`.
+On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, `lineageos_pixel_apn_snapshot`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names the firmware build only for observations extracted since 2026-10-04, up to 50 CSC packages a day; older ones carry none, because a later join would have to guess. Its OMC versions are in `observed_scope.omc_versions`.
 
 To print how many profiles name a version, per family and kind, run:
 
