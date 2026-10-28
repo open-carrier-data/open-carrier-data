@@ -428,6 +428,62 @@ def check_explain_stored_with_best_row() -> None:
         assert len(internet["network_types"]) == 7, internet
 
 
+def check_explain_superseded_google_credentials() -> None:
+    """--explain lists a row rule 1 of round 32 (D8) left out: its only
+    effect on the lead's stored row was credentials only Google's frozen
+    Pixel copies give, under Google's current bare row of the APN; and the
+    lead's credential sources then name no filled-in value."""
+    plain = carrier(
+        {"mccmnc": ["26220"]},
+        {},
+        android_apns=[
+            {"name": "Enreach DE", "apn": "internet.mvno.mobi", "types": ["default", "dun", "supl"], "authtype": 1},
+            {"name": "MVNO DE", "apn": "internet.mvno.mobi", "types": ["default", "supl"], "user": "mvno",
+             "password": "mvno", "authtype": 1},
+        ],
+    )
+    rows_in = plain["android_apns"]
+    sources = [["google_carriersettings", "google_pixel_vendor_carriersettings"], ["google_pixel_vendor_carriersettings"]]
+    facts = [
+        {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group}
+        for row, group in zip(rows_in, sources)
+        for apn_type in row["types"]
+    ]
+    evidence = {
+        "schema_version": 1,
+        "description": "Test evidence.",
+        "source_snapshots": [],
+        "profiles": [
+            {
+                "profile_id": plain["profile_id"],
+                "observation_count": 2,
+                "verified_observation_count": 0,
+                "sources": sorted({source for group in sources for source in group}),
+                "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                "capability_sources": {},
+            }
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+        write_json(root / "generated" / "evidence-index.json", evidence)
+        with contextlib.redirect_stdout(io.StringIO()):
+            generate_android_outputs.main(
+                ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+            )
+        lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+        metadata = json.loads((root / "generated" / "android" / "metadata.json").read_text(encoding="utf-8"))
+        result = resolver.explain(lookup, {"mccmnc": "26220"}, root, root / "generated" / "evidence-index.json")
+    assert [row["row"]["carrier"] for row in result["apns"]["rows"]] == ["Enreach DE"], result["apns"]["rows"]
+    left = [(item["row"]["carrier"], item["reasons"]) for item in result["apns"]["left_out"]]
+    assert left == [("MVNO DE", {"superseded_google_credentials_left_out": ["user", "password"]})], left
+    assert metadata["omissions"]["credential_rows_left_out_superseded_google_copy"] == 1, metadata["omissions"]
+    internet = next(e for e in result["apns"]["credential_sources"] if e["role"] == "internet")
+    assert (internet["sends_credentials"], set(internet["fields"])) == (False, {"authtype"}), internet
+    assert internet["fields"]["authtype"]["filled_in"] is False, internet
+
+
 def check_explain_vendor_mms() -> None:
     """--explain says when the first internet row lost "mms" (mms_left_out),
     when a current vendor's MMS row moved ahead (vendor_mms_ahead), and when
@@ -626,6 +682,7 @@ def main() -> int:
     check_explain_proxy_free_first()
     check_explain_stored_with_best_row()
     check_explain_vendor_mms()
+    check_explain_superseded_google_credentials()
     check_explain_absorbed_mms()
     check_explain_emergency()
     print("carrier profile resolver tests passed")
