@@ -4436,6 +4436,424 @@ def check_step_2b_keeps_internet_rows() -> None:
     )
 
 
+@contextlib.contextmanager
+def without_step_2c():
+    """apn_xml_rows with change 18 step 2c (take_type_off_internet_group,
+    rule round 34) switched off, to compare its output with and without the
+    step."""
+    original = generate_android_outputs.take_type_off_internet_group
+    generate_android_outputs.take_type_off_internet_group = lambda ranked, apn_type: 0
+    try:
+        yield
+    finally:
+        generate_android_outputs.take_type_off_internet_group = original
+
+
+def _round34_fixture(scopes: dict) -> tuple[object, dict]:
+    """apn_xml_rows of synthetic scopes {mccmnc: [(apn row, sources)]},
+    where sources is a tuple or a {type: tuple} dict, with an evidence index
+    built from them (rule round 34)."""
+
+    def sources_for(sources: object, apn_type: str) -> tuple[str, ...]:
+        return sources[apn_type] if isinstance(sources, dict) else sources  # type: ignore[index,return-value]
+
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = validate_public_carrier_data.canonical_profile_id({"mccmnc": [mccmnc]})
+        profiles.append(
+            {"profile_id": profile_id, "display_name": profile_id, "match": {"mccmnc": [mccmnc]},
+             "android_apns": [row for row, _ in rows]}
+        )
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type),
+             "sources": sorted(sources_for(sources, apn_type))}
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append(
+            {"profile_id": profile_id, "sources": sorted({s for fact in facts for s in fact["sources"]}),
+             "fact_sources": sorted(facts, key=lambda fact: fact["key"])}
+        )
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        result = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+
+    def leads(mccmnc: str) -> dict:
+        """Per role, the set of values on all 11 network types with the merge
+        on and off: internet, attach, mms (tuple), ims, xcap and dun (APN),
+        and the stored-row count and persist events."""
+        mcc, mnc = (mccmnc[:3], mccmnc[3:])
+        lines = [generate_android_outputs.apn_row_line(r) for r in result.records
+                 if r.get("mcc", "") + r.get("mnc", "") == mccmnc]
+        tables = android_phone_model.provider(android_phone_model.parse_lines(lines))
+        stored = android_phone_model.scope_rows(tables, (mcc, mnc, "", ""))
+        out: dict = {role: set() for role in ("internet", "attach", "mms", "ims", "xcap", "dun")}
+        per_type: dict = {}
+        for dedupe in (True, False):
+            settings = android_phone_model.profiles(stored, dedupe=dedupe)
+            for name, network_type in android_phone_model.ALL_NETWORK_TYPES.items():
+                internet, mms, attach = android_phone_model.leads(settings, network_type)
+                values = {
+                    "internet": internet and internet["apn"],
+                    "attach": attach and attach["apn"],
+                    "mms": android_phone_model.mms_of(mms, stored),
+                }
+                for kind in ("ims", "xcap", "dun"):
+                    profile = next((p for p in settings if kind in p["types"]
+                                    and android_phone_model.serves(p, network_type)
+                                    and android_phone_model.cellular(p)), None)
+                    values[kind] = profile and profile["apn"]
+                for role, value in values.items():
+                    out[role].add(value)
+                per_type[(dedupe, name)] = values
+        out["per_type"] = per_type
+        out["stored"] = len(stored)
+        out["persist_events"] = android_phone_model.persist_events(tables)
+        return out
+
+    return result, {"leads": leads}
+
+
+def _round34_written(result: object, mccmnc: str) -> list[tuple[str, str, str]]:
+    return [(r["apn"], r["type"], r.get("carrier", "")) for r in result.records  # type: ignore[attr-defined]
+            if r.get("mcc", "") + r.get("mnc", "") == mccmnc]
+
+
+def _round34_lines(result: object, mccmnc: str) -> list[str]:
+    """The scope's apns-conf.xml lines, in written order."""
+    return [generate_android_outputs.apn_row_line(r) for r in result.records  # type: ignore[attr-defined]
+            if r.get("mcc", "") + r.get("mnc", "") == mccmnc]
+
+
+def check_internet_stored_row_types() -> None:
+    """Rule round 34, change 18 step 2c (round 33 step 7 (a)): step 2b read
+    for "ims" and "xcap". A row Android stores with the first internet row
+    that gives that stored row a type no row of it is backed for by a current
+    vendor loses the type, or is left out when it is its only type, under
+    checks 1 to 7 and 3b. Shapes of 259/01, 308/03, 404/58, 255/03 and
+    250/20 move; every other shape is written exactly as without the step
+    (without_step_2c): an ia shape ("ia" is not a type of the step),
+    coverage (262/90), a vendor-backed member (262/91, check 3), two
+    sole-effect shapes (262/92, 262/93, check 6), two gate shapes (262/95,
+    263/83, check 7), the check 3b shapes 263/84 and 263/87, a disabled
+    vendor ims row (263/85, usable rows only) and the persist network 310/004
+    (check 5). Read through apn_xml_rows and the phone model with the merge
+    on and off on all 11 network types."""
+
+    google = "google_carriersettings"
+    samsung = "samsung_omc"
+    apple = "apple_carrier_bundles"
+    lineage = ("lineageos", "sony_open_devices_aosp")
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    scopes: dict = {
+        # 259/01 (Orange Moldova): a LineageOS/Sony wap.orange.md row typed
+        # cbs,dun,fota,ims,mms has the key of the vendors' internet row;
+        # Google and Samsung give ims for IMS and Samsung mms.orange.md for MMS.
+        "25901": [
+            (apn("wap.orange.md", ("default", "supl"), authtype=1, mmsc="http://wap.orange.md/", mmsproxy="9201", mmsport=8799),
+             (google, samsung)),
+            (apn("wap.orange.md", ("cbs", "dun", "fota", "ims", "mms"), name="Orange old", mmsc="http://wap.orange.md/",
+                 mmsproxy="9201", mmsport=8799), {"cbs": lineage, "dun": (apple, *lineage), "fota": lineage, "ims": lineage, "mms": lineage}),
+            (apn("mms.orange.md", ("mms",), mmsc="http://mms/mms", mmsproxy="192.168.127.125", mmsport=3128), (samsung,)),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (samsung,)),
+            (apn("ims", ("ims",), name="Orange VoLTE", protocol="IPV4V6", roaming_protocol="IPV4V6", bearer_bitmask="14|20"), (google, samsung)),
+        ],
+        # 308/03 (SPM Telecom): a dun,ims row (Apple for dun, an old copy for
+        # ims) stored with the internet row.
+        "30803": [
+            (apn("spmtelecom", ("default",), authtype=1), (google, samsung)),
+            (apn("spmtelecom", ("dun", "ims"), name="SPM old"), {"dun": (apple,), "ims": ("lineageos",)}),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6", authtype=1), (google, samsung)),
+        ],
+        # 404/58 (BSNL): a LineageOS ims-only bsnlnet row stored with the
+        # vendors' internet row.
+        "40458": [
+            (apn("bsnlnet", ("default", "supl"), protocol="IPV4V6", roaming_protocol="IPV4V6", authtype=1), (google, samsung)),
+            (apn("bsnlnet", ("ims",), name="BSNL IMS", protocol="IPV4V6", roaming_protocol="IPV4V6"), ("lineageos",)),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (google, samsung)),
+        ],
+        # 255/03 (Kyivstar): a default,ims row whose default a current vendor
+        # backs and whose ims only an old copy gives.
+        "25503": [
+            (apn("internet", ("default", "dun", "supl"), protocol="IPV4V6", authtype=1), (samsung,)),
+            (apn("internet", ("default", "ims"), name="internet old", protocol="IPV4V6"), {"default": (samsung,), "ims": (apple,)}),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (google, samsung)),
+        ],
+        # 250/20 (Tele2 RU): an xcap-only internet.tele2.ru row stored with
+        # the vendors' internet row; Samsung gives hos for XCAP.
+        "25020": [
+            (apn("internet.tele2.ru", ("default",), protocol="IPV4V6", roaming_protocol="IPV4V6", authtype=1), (google, samsung)),
+            (apn("internet.tele2.ru", ("xcap",), name="Tele2 old", protocol="IPV4V6", roaming_protocol="IPV4V6"), ("lineageos",)),
+            (apn("hos", ("xcap",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (samsung,)),
+        ],
+        # An ia-only row stored with the internet row on a network outside
+        # persist_apns_for_plmn; Google gives ims.example for "ia". "ia" is
+        # not a type of step 2c: unchanged.
+        "26294": [
+            (apn("web.example", ("default", "supl"), protocol="IPV4V6", authtype=1), (google,)),
+            (apn("web.example", ("ia",), name="old attach", protocol="IPV4V6"), ("fairphone_official_source",)),
+            (apn("ims.example", ("ia", "ims"), protocol="IPV4V6", roaming_protocol="IPV6"), (google,)),
+        ],
+        # Check 7 (gate): after the internet group, the first stored row
+        # that serves ims is a second default row no vendor backs for ims.
+        "26295": [
+            (apn("web.example", ("default",), authtype=1), (google, samsung)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("other.example", ("default", "ims"), name="other old"), ("lineageos",)),
+            (apn("ims", ("ims",)), (google, samsung)),
+        ],
+        # Check 7 (gate), the safety judge's 26296: a non-vendor mms,ims row
+        # ranks ahead of the vendor's ims row, so it would take IMS.
+        "26383": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("other.example", ("mms", "ims"), mmsc="http://mms.other.example"), ("lineageos",)),
+            (apn("ims", ("ims",)), (google,)),
+        ],
+        # Check 3b: a current vendor gives the internet row's APN for ims in
+        # another stored row (another protocol), ranked ahead of the
+        # vendor's ims row (263/84) or after it and LTE and NR only (263/87).
+        "26384": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("web.example", ("ims",), name="vendor ims on web", protocol="IPV4V6"), (google,)),
+            (apn("ims", ("ims",), protocol="IPV4V6"), (google,)),
+        ],
+        "26387": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("ims", ("ims",), protocol="IPV4V6"), (google,)),
+            (apn("web.example", ("ims",), name="vendor ims on web", protocol="IPV4V6", bearer_bitmask="14|20"),
+             (google,)),
+        ],
+        # Checks 4 and 7 count usable rows only: the only vendor ims row is
+        # disabled, so a phone has no other IMS profile.
+        "26385": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("ims", ("ims",), carrier_enabled=False), (google,)),
+        ],
+        # The same shape with the vendor ims row enabled: the step acts.
+        "26386": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("ims", ("ims",), protocol="IPV4V6"), (google,)),
+        ],
+        # Guard shapes, each unchanged:
+        # coverage: the only vendor IMS row serves LTE and NR, the stored
+        # internet row every network type, Wi-Fi included;
+        "26290": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("ims", ("ims",), bearer_bitmask="14|20"), (google,)),
+        ],
+        # a current vendor backs the stale row for ims;
+        "26291": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("dun", "ims"), name="old dun"), {"dun": (apple,), "ims": (samsung,)}),
+            (apn("ims", ("ims",)), (google,)),
+        ],
+        # sole effect: the ims-only row has no bitmask, the internet row
+        # serves LTE and NR only (the stored row serves every type with it);
+        "26292": [
+            (apn("web.example", ("default",), bearer_bitmask="14|20", authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims"), ("lineageos",)),
+            (apn("ims", ("ims",)), (google,)),
+        ],
+        # sole effect: the ims-only row fills in a username;
+        "26293": [
+            (apn("web.example", ("default",), authtype=1), (google,)),
+            (apn("web.example", ("ims",), name="old ims", user="web"), ("lineageos",)),
+            (apn("ims", ("ims",)), (google,)),
+        ],
+        # persist_apns_for_plmn (310/004 Verizon shape): nothing changes.
+        "310004": [
+            (apn("internet", ("default", "mms", "supl"), mmsc="http://mms.vtext.example/servlets/mms", protocol="IPV4V6",
+                 authtype=3, bearer_bitmask="4|5|6|7|8|12", user_visible=False),
+             (google, "google_pixel_vendor_carriersettings", "fairphone_official_source")),
+            (apn("internet", ("ia",), name="Verizon old", mmsc="http://mms.vtext.example/servlets/mms", protocol="IPV4V6",
+                 authtype=3, bearer_bitmask="4|5|6|7|8|12"), ("fairphone_official_source",)),
+            (apn("VZWINTERNET", ("default", "dun", "supl"), protocol="IPV4V6", bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20"),
+             (google, "google_pixel_vendor_carriersettings")),
+            (apn("IMS", ("ia", "ims"), protocol="IPV4V6", roaming_protocol="IPV6", bearer_bitmask="14|18|20"), (google,)),
+            (apn("VZWAPP", ("cbs", "mms"), mmsc="http://mms.vtext.example/servlets/mms", protocol="IPV4V6",
+                 bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20"), (google,)),
+        ],
+    }
+    result, tools = _round34_fixture(scopes)
+    leads = tools["leads"]
+    with without_step_2c():
+        plain, plain_tools = _round34_fixture(scopes)
+
+    def given(mccmnc: str) -> list[tuple[str, str]]:
+        return sorted((row["apn"], ",".join(row["types"])) for row, _ in scopes[mccmnc])
+
+    def unchanged(mccmnc: str) -> bool:
+        """Written exactly as without step 2c: the same lines in the same
+        order."""
+        return _round34_lines(result, mccmnc) == _round34_lines(plain, mccmnc)
+
+    def rows(mccmnc: str) -> list[tuple[str, str]]:
+        return sorted((value, types) for value, types, _ in _round34_written(result, mccmnc))
+
+    left_out = list(getattr(result, "rows_left_out_stored_with_internet", ()))
+    # The first internet row of every scope is the given one, with its types.
+    for mccmnc, scope_rows in scopes.items():
+        label = scope_rows[0][0]["name"]
+        first = [(r["apn"], r["type"]) for r in result.records
+                 if r.get("mcc", "") + r.get("mnc", "") == mccmnc and r.get("carrier") == label
+                 and "default" in r["type"].split(",")]
+        assert_true(
+            first == [(scope_rows[0][0]["apn"], ",".join(scope_rows[0][0]["types"]))],
+            f"{mccmnc}: the first internet row stays: {_round34_written(result, mccmnc)}",
+        )
+    # Guard shapes and the persist network: written as without the step.
+    for mccmnc in ("26290", "26291", "26292", "26293", "26294", "26295", "26383", "26384", "26385", "26387", "310004"):
+        assert_true(rows(mccmnc) == given(mccmnc) and unchanged(mccmnc),
+                    f"{mccmnc}: nothing changes: {_round34_lines(result, mccmnc)}")
+    # The shapes the step acts on are not written as without it.
+    for mccmnc in ("25901", "30803", "40458", "25503", "25020", "26386"):
+        assert_true(not unchanged(mccmnc), f"{mccmnc}: step 2c acts: {_round34_lines(result, mccmnc)}")
+    # Check 5: 310/004 is a persist_apns_for_plmn network, where step 2c
+    # does nothing; separateRowsNeeded keeps no row apart there.
+    l310 = leads("310004")
+    assert_true(not l310["persist_events"], f"310/004: no persist event: {l310['persist_events']}")
+    for mccmnc in ("26290", "26292", "26293"):
+        assert_true(leads(mccmnc)["ims"] >= {"web.example"}, f"{mccmnc}: the IMS lead stays the internet APN: {leads(mccmnc)['ims']}")
+
+    # 259/01: mms (round 33) and ims come off the stale row, which keeps
+    # cbs,dun,fota; IMS goes to ims on all 11 types, MMS to mms.orange.md,
+    # dun stays on the internet stored row.
+    l = leads("25901")
+    assert_true(l["ims"] == {"ims"}, f"259/01: IMS lead is ims with the merge on and off: {l['ims']}")
+    assert_true(l["mms"] == {("mms.orange.md", "http://mms/mms", "192.168.127.125", 3128)}, f"259/01: MMS: {l['mms']}")
+    assert_true(l["dun"] == {"wap.orange.md"} and l["internet"] == {"wap.orange.md"}, f"259/01: dun and internet: {l}")
+    assert_true(("wap.orange.md", "cbs,dun,fota") in rows("25901"), f"259/01: the stale row keeps cbs,dun,fota: {rows('25901')}")
+    # 308/03: the stale row keeps dun.
+    l = leads("30803")
+    assert_true(l["ims"] == {"ims"} and l["dun"] == {"spmtelecom"}, f"308/03: IMS ims, dun spmtelecom: {l}")
+    assert_true(("spmtelecom", "dun") in rows("30803"), f"308/03: the stale row becomes dun: {rows('30803')}")
+    # 404/58: the ims-only row is left out; the stored row keeps every value.
+    l = leads("40458")
+    assert_true(l["ims"] == {"ims"} and l["internet"] == {"bsnlnet"}, f"404/58: IMS ims: {l}")
+    assert_true(("bsnlnet", "ims") not in rows("40458")
+                and any(r["apn"] == "bsnlnet" and r["_type_left_out_stored_with_internet"] == "ims" for r in left_out),
+                f"404/58: the ims-only row is left out and marked: {rows('40458')}")
+    # 255/03: the stale row keeps default.
+    l = leads("25503")
+    assert_true(l["ims"] == {"ims"} and l["internet"] == {"internet"}, f"255/03: IMS ims: {l}")
+    assert_true(("internet", "default") in rows("25503"), f"255/03: the stale row becomes default: {rows('25503')}")
+    marked = {(r.get("mcc", "") + r.get("mnc", ""), r["apn"], tuple(r.get("_types_left_out_stored_with_internet", [])))
+              for r in result.records if r.get("_types_left_out_stored_with_internet")}
+    assert_true({("25901", "wap.orange.md", ("ims",)), ("30803", "spmtelecom", ("ims",)), ("25503", "internet", ("ims",))} <= marked,
+                f"the retyped rows are marked for --explain: {marked}")
+
+    # 250/20: the xcap-only row is left out, XCAP goes to hos.
+    l = leads("25020")
+    assert_true(l["xcap"] == {"hos"} and l["internet"] == {"internet.tele2.ru"}, f"250/20: XCAP hos: {l}")
+    assert_true(("internet.tele2.ru", "xcap") not in rows("25020"), f"250/20: the xcap-only row is left out: {rows('25020')}")
+    # "ia" is not a type of step 2c: the attach stays the internet stored
+    # row (its own "ia" comes from the Fairphone row stored with it).
+    assert_true(leads("26294")["attach"] == {"web.example"}, f"262/94: the attach stays: {leads('26294')['attach']}")
+    # Check 7: the next IMS row is a non-vendor default,ims (262/95) or
+    # mms,ims (263/83) row: IMS stays on the internet APN.
+    for mccmnc in ("26295", "26383"):
+        assert_true(leads(mccmnc)["ims"] == {"web.example"}, f"{mccmnc}: the gate keeps IMS: {leads(mccmnc)['ims']}")
+    # Check 3b: the internet APN keeps its ims row; IMS stays on it.
+    for mccmnc in ("26384", "26387"):
+        assert_true(leads(mccmnc)["ims"] == {"web.example"}, f"{mccmnc}: check 3b keeps IMS: {leads(mccmnc)['ims']}")
+    # Usable rows only: with the vendor ims row disabled IMS stays on the
+    # internet APN on every type; enabled, it moves to ims on every type.
+    assert_true(leads("26385")["ims"] == {"web.example"}, f"263/85: IMS stays: {leads('26385')['ims']}")
+    assert_true(leads("26386")["ims"] == {"ims"} and leads("26386")["internet"] == {"web.example"},
+                f"263/86: IMS moves to ims: {leads('26386')}")
+    # No scope loses an ims or xcap profile on a network type where it had
+    # one, and the internet, attach, MMS and dun leads and the stored-row
+    # count are the same as without the step.
+    plain_leads = plain_tools["leads"]
+    for mccmnc in scopes:
+        on, off = leads(mccmnc), plain_leads(mccmnc)
+        for key, values in on["per_type"].items():
+            before = off["per_type"][key]
+            assert_true(all(values[role] == before[role] for role in ("internet", "attach", "mms", "dun"))
+                        and all(values[kind] is not None or before[kind] is None for kind in ("ims", "xcap")),
+                        f"{mccmnc} {key}: only the ims and xcap leads move: {before} -> {values}")
+        # A left-out row was stored with the internet row, so the phone
+        # stores as many rows as before.
+        assert_true(on["stored"] == off["stored"] and on["persist_events"] == off["persist_events"],
+                    f"{mccmnc}: the same stored rows ({off['stored']} -> {on['stored']}) and persist events")
+
+
+def _dataset_internet_rows_and_leads() -> tuple[dict, dict, list]:
+    """apn_xml_rows over the whole dataset in this checkout (carriers/ and
+    generated/evidence-index.json): each scope's first internet row (its
+    written attributes, and whether it is written), the phone's internet
+    lead, MMS tuple and attach lead per scope and network type (all 11, the
+    merge on), and the written records."""
+    repository = Path(__file__).resolve().parents[1]
+    evidence_path = repository / "generated" / "evidence-index.json"
+    profile_paths = generate_android_outputs.profile_paths(repository / "carriers")
+    if not profile_paths or not evidence_path.exists():
+        raise AssertionError("the dataset-wide test needs carriers/ and generated/evidence-index.json")
+    profiles = [load_json(path) for path in profile_paths]
+    evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+    put_vendor_mms_first = generate_android_outputs.put_vendor_mms_first
+    internet_rows: dict[tuple, dict] = {}
+
+    def capture(ranked: list[dict]) -> tuple[list[dict], int]:
+        result = put_vendor_mms_first(ranked)
+        internet = next((r for r in ranked if "default" in generate_android_outputs.apn_row_types(r["type"])), None)
+        if internet is not None:
+            internet_rows[generate_android_outputs.apn_scope_key(internet)] = internet
+        return result
+
+    generate_android_outputs.put_vendor_mms_first = capture
+    try:
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+    finally:
+        generate_android_outputs.put_vendor_mms_first = put_vendor_mms_first
+    written_ids = {id(record) for record in rows.records}
+    firsts = {
+        scope: (generate_android_outputs.written_attributes(record), id(record) in written_ids)
+        for scope, record in internet_rows.items()
+    }
+    state, _ = android_phone_model.phone_state(
+        android_phone_model.parse_lines(generate_android_outputs.apn_row_line(r) for r in rows.records),
+        android_phone_model.ALL_NETWORK_TYPES,
+    )
+    leads = {
+        scope: {name: {"internet": values[0], "mms": values[1], "attach": values[2]} for name, values in per_type.items()}
+        for scope, per_type in state.items()
+    }
+    return firsts, leads, list(rows.records)
+
+
+def check_round34_keeps_internet_rows() -> None:
+    """Rule round 34: over the whole dataset in this checkout, each scope's
+    first internet row is written and is the same row, with the same types
+    and values, with and without change 18 step 2c, and step 2c changes no
+    internet lead, MMS tuple or attach lead on any of the 11 network types.
+    It changes only "ims" and "xcap" on the other rows of the internet row's
+    stored row, and leaves out only rows whose sole effect on it is that
+    type."""
+    firsts, leads, _ = _dataset_internet_rows_and_leads()
+    with without_step_2c():
+        plain_firsts, plain_leads, _ = _dataset_internet_rows_and_leads()
+    changed = sorted(str(scope) for scope in set(firsts) | set(plain_firsts) if firsts.get(scope) != plain_firsts.get(scope))
+    assert_true(
+        len(firsts) > 1000 and not changed and all(kept for _, kept in firsts.values()),
+        f"each scope's first internet row is written, the same with and without step 2c: {changed[:20]}",
+    )
+    moved = sorted(str(scope) for scope in set(leads) | set(plain_leads) if leads.get(scope) != plain_leads.get(scope))
+    assert_true(not moved, f"no internet, MMS or attach lead changes with step 2c on any of the 11 network types: {moved[:20]}")
+
+
 def check_leave_out_absorbed_mms() -> None:
     """apns-conf.xml leaves out a stored row that serves only "mms", whose
     MMS setting no vendor MMS row gives, whose network types the vendor MMS
@@ -6876,6 +7294,10 @@ def main() -> int:
     print("vendor MMS row tests passed")
     check_internet_stored_row_mms()
     print("internet stored row MMS tests passed (round 33)")
+    check_internet_stored_row_types()
+    print("internet stored row ims and xcap tests passed (round 34, step 2c)")
+    check_round34_keeps_internet_rows()
+    print("dataset-wide first internet row tests passed (round 34)")
     check_step_2b_keeps_internet_rows()
     print("dataset-wide first internet row tests passed (round 33)")
     check_leave_out_absorbed_mms()

@@ -697,6 +697,91 @@ def check_explain_internet_stored_row_mms() -> None:
     assert omissions["mms_types_left_out_not_vendor_backed"] == 1, omissions
 
 
+def _explain_cases(cases: dict) -> dict:
+    """--explain and metadata.json omissions of synthetic plain scopes
+    {mccmnc: (apns, per-row {type: sources})}, each generated alone."""
+    results = {}
+    for mccmnc, (apns, sources) in cases.items():
+        plain = carrier({"mccmnc": [mccmnc]}, {}, android_apns=apns)
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group[apn_type]}
+            for row, group in zip(apns, sources)
+            for apn_type in row["types"]
+        ]
+        evidence = {
+            "schema_version": 1,
+            "description": "Test evidence.",
+            "source_snapshots": [],
+            "profiles": [
+                {
+                    "profile_id": plain["profile_id"],
+                    "observation_count": len(apns),
+                    "verified_observation_count": 0,
+                    "sources": sorted({source for fact in facts for source in fact["sources"]}),
+                    "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                    "capability_sources": {},
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+            write_json(root / "generated" / "evidence-index.json", evidence)
+            with contextlib.redirect_stdout(io.StringIO()):
+                generate_android_outputs.main(
+                    ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+                )
+            lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+            results[mccmnc] = (
+                resolver.explain(lookup, {"mccmnc": mccmnc}, root, root / "generated" / "evidence-index.json"),
+                json.loads((root / "generated" / "android" / "metadata.json").read_text(encoding="utf-8"))["omissions"],
+            )
+    return results
+
+
+def check_explain_internet_stored_row_types() -> None:
+    """--explain marks change 18 step 2c's rows (rule round 34): a row stored
+    with the first internet row that lost "ims" or "xcap" lists the types
+    (types_left_out_stored_with_internet), and a row whose only type it was
+    is listed under left_out with the type
+    (type_left_out_stored_with_internet); metadata.json counts both."""
+    google, samsung = ["google_carriersettings"], ["samsung_omc"]
+    results = _explain_cases({
+        # 308/03 shape: a dun,ims row stored with the internet row.
+        "30803": (
+            [
+                {"name": "spmtelecom", "apn": "spmtelecom", "types": ["default"], "authtype": 1},
+                {"name": "SPM old", "apn": "spmtelecom", "types": ["dun", "ims"]},
+                {"name": "ims", "apn": "ims", "types": ["ims"], "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"},
+            ],
+            [{"default": google}, {"dun": ["apple_carrier_bundles"], "ims": ["lineageos"]}, {"ims": google}],
+        ),
+        # 250/20 shape: an xcap-only twin of the internet row.
+        "25020": (
+            [
+                {"name": "internet.tele2.ru", "apn": "internet.tele2.ru", "types": ["default"], "authtype": 1,
+                 "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"},
+                {"name": "Tele2 old", "apn": "internet.tele2.ru", "types": ["xcap"],
+                 "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"},
+                {"name": "hos", "apn": "hos", "types": ["xcap"], "protocol": "IPV4V6", "roaming_protocol": "IPV4V6"},
+            ],
+            [{"default": samsung}, {"xcap": ["lineageos"]}, {"xcap": samsung}],
+        ),
+    })
+    result, omissions = results["30803"]
+    rows = [(row["row"]["apn"], row["row"]["type"], row["reasons"]["types_left_out_stored_with_internet"])
+            for row in result["apns"]["rows"]]
+    assert ("spmtelecom", "dun", ["ims"]) in rows and result["apns"]["left_out"] == [], rows
+    assert omissions["types_left_out_stored_with_internet_not_vendor_backed"] == 1, omissions
+    assert omissions["rows_left_out_stored_with_internet_not_vendor_backed"] == 0, omissions
+    result, omissions = results["25020"]
+    left_out = [(row["row"]["apn"], row["row"]["type"], row["reasons"].get("type_left_out_stored_with_internet"))
+                for row in result["apns"]["left_out"]]
+    assert left_out == [("internet.tele2.ru", "xcap", "xcap")], left_out
+    assert omissions["rows_left_out_stored_with_internet_not_vendor_backed"] == 1, omissions
+    assert omissions["types_left_out_stored_with_internet_not_vendor_backed"] == 0, omissions
+
+
 def check_explain_emergency() -> None:
     """--explain says why a row keeps "emergency" (emergency_basis), lists a
     row whose only type was "emergency" under left_out with its reason, and
@@ -768,6 +853,7 @@ def main() -> int:
     check_explain_superseded_google_credentials()
     check_explain_absorbed_mms()
     check_explain_internet_stored_row_mms()
+    check_explain_internet_stored_row_types()
     check_explain_emergency()
     print("carrier profile resolver tests passed")
     return 0

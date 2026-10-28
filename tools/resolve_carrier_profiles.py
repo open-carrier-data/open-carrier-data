@@ -294,6 +294,11 @@ def explain(
                     # row for MMS and current vendors' MMS rows serve every
                     # mobile network type it serves (round 33).
                     "mms_left_out_stored_with_internet": bool(row.get("_mms_left_out_stored_with_internet")),
+                    # Types (ims, xcap) a row Android stores with the first
+                    # internet row lost: no current vendor backs any row of
+                    # that stored row for them (rule round 34, change 18
+                    # step 2c).
+                    "types_left_out_stored_with_internet": list(row.get("_types_left_out_stored_with_internet", [])),
                     # A current vendor's MMS row moved ahead of the first row
                     # that served "mms", so MMS goes to it.
                     "vendor_mms_ahead": bool(row.get("_vendor_mms_ahead")),
@@ -388,6 +393,17 @@ def explain(
                     },
                 }
                 for row in generated_rows.mms_absorbed_left_out
+                if generator.apn_scope_key(row) in chosen_scopes
+            ]
+            + [
+                {
+                    "row": generator.written_attributes(row),
+                    # A row whose only type (ims or xcap) no current vendor
+                    # backs on the first internet row's stored row (rule
+                    # round 34, change 18 step 2c).
+                    "reasons": {"type_left_out_stored_with_internet": row["_type_left_out_stored_with_internet"]},
+                }
+                for row in getattr(generated_rows, "rows_left_out_stored_with_internet", ())
                 if generator.apn_scope_key(row) in chosen_scopes
             ]
             + [
