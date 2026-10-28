@@ -169,6 +169,43 @@ class ValidateCarrierVariantsTests(unittest.TestCase):
         ]
         self.assert_rejected(data, "has no on record")
 
+    def old_off(self) -> None:
+        """Round 32's old-off clause: the profile's VoLTE is supported against
+        an overlay off older than five years, which the gate names with its
+        reason and month."""
+        self.device_backed()
+        path = self.root / "generated/evidence-index.json"
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+        evidence["profiles"][0]["quality_gates"][0].update(
+            {"off_newest_entry": "2016-03", "reason": "off_older_than_five_years"}
+        )
+        write(path, evidence)
+
+    def without_offs(self) -> dict:
+        data = variants_file()
+        data["profiles"][PROFILE]["volte"] = [
+            record for record in data["profiles"][PROFILE]["volte"] if record["state"] != "off"
+        ]
+        return data
+
+    def test_an_old_off_label_needs_an_on_record_and_no_off_record(self) -> None:
+        self.old_off()
+        result = self.run_check(self.without_offs())
+        self.assertIn("1 supported labels have only offs older than five years", result)
+        self.assertIn("0 supported labels keep their off", result)
+        # A visible off is a current off the label would hide.
+        self.assert_rejected(variants_file(), "has an off record from lineageos_device_overlays")
+        data = self.without_offs()
+        data["profiles"][PROFILE]["volte"] = []
+        data["profiles"][PROFILE].pop("volte")
+        self.assert_rejected(data, "older than five years, but the file has no on record")
+
+    def test_an_old_off_label_needs_the_file(self) -> None:
+        self.old_off()
+        with self.assertRaises(ValidationError) as caught:
+            check.validate(self.root, "fail", False)
+        self.assertIn("1 rest on on records against an off older than five years", str(caught.exception))
+
     def test_a_supported_label_needs_the_file(self) -> None:
         self.device_backed()
         with self.assertRaises(ValidationError) as caught:
