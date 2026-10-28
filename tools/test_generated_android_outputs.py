@@ -2516,6 +2516,87 @@ def check_data_device_values() -> None:
         )
 
 
+def check_old_selector_superseded() -> None:
+    """Round 32, D7: a profile the evidence index flags
+    old_selector_superseded keeps its file, counts for data_digest, and
+    leaves apns-conf.xml, carrier-config-list.xml and lookup.json; the
+    validator accepts the flag only on a Samsung-only selector profile and
+    refuses a lookup that still lists it."""
+    plain = {
+        "schema_version": 1,
+        "profile_id": "open.53099.000000000001",
+        "display_name": "Spark NZ",
+        "match": {"mccmnc": ["53099"]},
+        "capabilities": {},
+        "android_apns": [{"name": "Spark", "apn": "internet", "types": ["default", "supl"]}],
+    }
+    old = {
+        "schema_version": 1,
+        "profile_id": "open.53099.000000000002",
+        "display_name": "Spark NZ",
+        "match": {"mccmnc": ["53099"], "spn": ["Spark NZ"]},
+        "capabilities": {},
+        "android_apns": [{"name": "Spark old", "apn": "direct", "types": ["default", "supl"]}],
+        "android_carrier_config": {"carrier_volte_available_bool": True},
+    }
+    flag = {"section": "match", "key": "selector", "flag": "old_selector_superseded"}
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        carriers = root / "carriers" / "open"
+        carriers.mkdir(parents=True)
+        for profile in (plain, old):
+            (carriers / f"{profile['profile_id'][5:]}.json").write_text(json.dumps(profile), encoding="utf-8")
+        generated = root / "generated"
+        (generated / "android").mkdir(parents=True)
+        evidence_path = generated / "evidence-index.json"
+
+        def generate(flagged: bool) -> tuple[str, dict, str]:
+            evidence = {
+                "profiles": [
+                    {"profile_id": plain["profile_id"], "sources": ["google_carriersettings"]},
+                    {"profile_id": old["profile_id"], "sources": ["samsung_omc"], **({"flags": [flag]} if flagged else {})},
+                ]
+            }
+            evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
+            generate_android_outputs.main(["generate", str(root / "carriers"), str(generated)])
+            return (
+                (generated / "android" / "apns-conf.xml").read_text(encoding="utf-8"),
+                load_json(generated / "android" / "lookup.json"),
+                (generated / "android" / "carrier-config-list.xml").read_text(encoding="utf-8"),
+            )
+
+        apns, lookup, config = generate(False)
+        assert_true('apn="direct"' in apns and "Spark NZ" in config, "an unflagged selector profile is served")
+        assert_true(len(lookup["profiles"]) == 2, "an unflagged selector profile is in lookup.json")
+        apns, lookup, config = generate(True)
+        assert_true('apn="direct"' not in apns and 'apn="internet"' in apns, f"the flagged profile left apns-conf.xml: {apns}")
+        assert_true("carrier_volte_available_bool" not in config, "the flagged profile left carrier-config-list.xml")
+        assert_true(
+            [item["profile_id"] for item in lookup["profiles"]] == [plain["profile_id"]],
+            f"the flagged profile left lookup.json: {lookup['profiles']}",
+        )
+        assert_true(
+            generate_android_outputs.superseded_selector_ids(evidence_path) == {old["profile_id"]},
+            "the generator reads the flag from the evidence index",
+        )
+        assert_true(
+            validate_public_carrier_data.superseded_selector_ids(evidence_path) == {old["profile_id"]},
+            "the validator reads the same flag",
+        )
+
+    def flags_valid(sources: list[str], key: str = "selector") -> bool:
+        evidence = {"sources": sources, "flags": [{**flag, "key": key}]}
+        try:
+            validate_public_carrier_data.validate_flags(Path("x.json"), evidence, 0, None, None)
+        except validate_public_carrier_data.ValidationError:
+            return False
+        return True
+
+    assert_true(flags_valid(["samsung_omc"]), "the flag is valid on a Samsung-only profile")
+    assert_true(not flags_valid(["lineageos", "samsung_omc"]), "the flag needs Samsung as the only source")
+    assert_true(not flags_valid(["samsung_omc"], "spn"), "the flag names the selector")
+
+
 def check_superseded_pack_values() -> None:
     """A Samsung value that only carrier packs superseded for the fact's type
     give, with old builds (superseded_pack_sources), is not a current
@@ -6502,6 +6583,7 @@ def main() -> int:
     check_data_device_values()
     print("data-device pack tests passed")
     check_superseded_pack_values()
+    check_old_selector_superseded()
     print("superseded pack tests passed")
     check_shared_file_and_malformed_values()
     print("shared-file and malformed APN value tests passed")
