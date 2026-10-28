@@ -4,8 +4,27 @@
       "apn": "ims",
       "name": "Spectrum",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "vzwapp",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "vzwemergency",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -18,16 +37,21 @@
       ]
     }
   ],
+  "android_carrier_config": {
+    "enabledMMS": true,
+    "maxMessageSize": 1228800,
+    "recipientLimit": 20
+  },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
-    "volte": "unknown",
-    "vonr": "unknown",
-    "vowifi": "unknown",
+    "volte": "supported",
+    "vonr": "supported",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Spectrum",

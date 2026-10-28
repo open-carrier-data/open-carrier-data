@@ -19,18 +19,13 @@
   "android_apns": [
     {
       "apn": "chesapeake",
-      "name": "Cape Internet",
-      "protocol": "IPV4V6",
-      "types": [
-        "default"
-      ]
-    },
-    {
-      "apn": "chesapeake",
       "mmsc": "http://mms.cape.net:10021",
-      "name": "Cape MMS",
+      "name": "chesapeake",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
+        "default",
+        "dun",
         "mms"
       ]
     },
@@ -44,16 +39,29 @@
     },
     {
       "apn": "ims",
-      "name": "Cape IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "Cape",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     }
   ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
-    "imssms.sms_over_ims_supported_bool": true
+    "enabledMMS": true,
+    "imssms.sms_over_ims_supported_bool": true,
+    "maxMessageSize": 3145728,
+    "recipientLimit": 20
   },
   "capabilities": {
     "esim": "unknown",
@@ -64,7 +72,7 @@
     "video_calling": "unknown",
     "volte": "supported",
     "vonr": "unknown",
-    "vowifi": "unknown",
+    "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
   "display_name": "Cape",
