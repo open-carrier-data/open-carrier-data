@@ -33,7 +33,11 @@ The steps, in the order the phone runs them:
    set and a row without cellular infrastructure serve nothing.
 
 Rows are dicts of XML attribute strings with `_i`, the row's index in the
-file. Stored rows keep `_srcs`, the file rows merged into them.
+file. Stored rows keep `_srcs`, the file rows merged into them, and
+`_writers`, for each field of CREDENTIAL_FIELDS the stored row carries, the
+file row whose value it took (the last one that writes it). `fill_ins` reads
+it: a field taken from a row other than the group's last, best-ranked row is
+filled in (rule decisions round 32, D8).
 """
 
 from __future__ import annotations
@@ -63,6 +67,9 @@ INT_FIELDS = ("authtype", "bearer", "profile_id", "max_conns", "wait_time", "max
               "mtu_v4", "mtu_v6", "apn_set_id", "carrier_id", "skip_464xlat")
 BOOL_FIELDS = ("carrier_enabled", "modem_cognitive", "user_visible", "user_editable", "always_on",
                "esim_bootstrap_provisioning")
+# The fields a row of a stored group can fill in under the group's best row
+# without being one of CARRIERS_UNIQUE_FIELDS (round 14 and round 32, D8).
+CREDENTIAL_FIELDS = ("user", "password", "authtype", "mtu", "mtu_v4", "mtu_v6")
 # ServiceState.rilRadioTechnologyToNetworkType
 RIL_TO_NETWORK_TYPE = {1: 1, 2: 2, 3: 3, 4: 4, 5: 4, 6: 7, 7: 5, 8: 6, 9: 8, 10: 9, 11: 10, 12: 12,
                        13: 14, 14: 13, 15: 15, 16: 16, 17: 17, 18: 18, 19: 19, 20: 20}
@@ -216,6 +223,7 @@ def _separate_rows_needed(table, old, new, old_types, new_types, persist) -> boo
             break
     new["_events"] = [("persist_separate_row", None)]
     new["_srcs"] = [new["_src"]]
+    new["_writers"] = {field: new["_src"] for field in CREDENTIAL_FIELDS if field in new}
     table.append(new)
     return True
 
@@ -233,6 +241,7 @@ def provider(rows: list[dict[str, Any]], persist=PERSIST_APNS_FOR_PLMN) -> dict[
         old = next((stored for stored in table if unique_key(stored) == key), None)
         if old is None:
             values["_srcs"] = [row["_i"]]
+            values["_writers"] = {field: row["_i"] for field in CREDENTIAL_FIELDS if field in values}
             table.append(values)
             continue
         new = dict(values)
@@ -264,7 +273,19 @@ def provider(rows: list[dict[str, Any]], persist=PERSIST_APNS_FOR_PLMN) -> dict[
         merged.update({key2: value for key2, value in new.items() if not key2.startswith("_")})
         old.update(merged)
         old["_srcs"].append(row["_i"])
+        old.setdefault("_writers", {}).update({field: row["_i"] for field in CREDENTIAL_FIELDS if field in new})
     return tables
+
+
+def fill_ins(stored: dict[str, Any]) -> dict[str, int]:
+    """The fields of CREDENTIAL_FIELDS a stored row takes from a file row
+    other than its last one, with that row's index. The generator writes a
+    group's best-ranked row last (change 17), so these are the values a
+    lower-ranked row fills in where the best row sets none (round 32, D8)."""
+    srcs = stored.get("_srcs") or []
+    if len(srcs) < 2:
+        return {}
+    return {field: index for field, index in (stored.get("_writers") or {}).items() if index != srcs[-1]}
 
 
 def stored_count(tables: dict[str, list[dict[str, Any]]]) -> int:

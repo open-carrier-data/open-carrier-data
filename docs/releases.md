@@ -47,6 +47,7 @@ Each file below is an asset of the GitHub release:
   - IMS leads and emergency-named leads, every line;
   - emergency APN rows: rows typed `emergency`, the types left out by reason, and every emergency lead gained, lost or changed with its label against Android's default, never cut;
   - internet, attach and MMS lead changes (counts, then up to 50 per role) and the scopes whose lead "Reset to default" changes;
+  - credentials from old lists: the class (a) list of the candidate, every line, and the rows rule 1 left out (rule round 32, D8; [consume.md](consume.md#credentials-from-old-lists));
   - capability value changes, as counts;
   - CarrierConfig: the emergency, TTY, RTT, WPS and `iwlan.*` keys in full, every other key as counts;
   - profile IDs added and removed per MCC/MNC;

@@ -23,6 +23,9 @@ The notes have these sections, in this order:
   changed emergency lead with its label, never cut;
 - internet, attach and MMS lead changes on the 7 hold types (counts, then up
   to LEAD_LIST_LIMIT lines each) and the "Reset to default" scopes;
+- credentials from old lists: the candidate's class (a) list
+  (`check_phone_guard.class_a_list`, rule decisions round 32, D8), every
+  line, and the rows rule 1 left out;
 - capability value changes, as counts;
 - CarrierConfig (`diff_carrier_config.py`): the safety class in full, every
   other key as counts;
@@ -79,6 +82,7 @@ REQUIRED_SECTIONS = (
     "## Emergency APN rows",
     "## CarrierConfig",
     "## Profile IDs",
+    "## Credentials from old lists",
 )
 
 
@@ -175,6 +179,14 @@ def lead_changes(base_xml: Path, head_xml: Path) -> dict[str, Any]:
     }
 
 
+def credential_list(head: Path) -> dict[str, Any]:
+    """The candidate's class (a) list (round 32, D8, rule 6)."""
+    try:
+        return guard.class_a_list(head.resolve())
+    except Exception as exc:  # noqa: BLE001 - the notes stop with the reason
+        raise NotesError(f"the class (a) list failed: {type(exc).__name__}: {exc}") from exc
+
+
 def profile_changes(base_lookup: dict[str, Any], head_lookup: dict[str, Any]) -> dict[str, Any]:
     old = {p["profile_id"]: p for p in base_lookup["profiles"]}
     new = {p["profile_id"]: p for p in head_lookup["profiles"]}
@@ -254,6 +266,7 @@ def compute(base: Path, head: Path, pull_requests: list[str] | None = None,
         "guard": guard_result,
         "needs_review": needs_review(watch),
         "leads": lead_changes(b / "apns-conf.xml", h / "apns-conf.xml"),
+        "credentials": credential_list(head),
         "profiles": profile_changes(load_json(b / "lookup.json"), load_json(h / "lookup.json")),
         "carrier_config": carrier_config_changes(b / "carrier-config-list.xml", h / "carrier-config-list.xml"),
         "pull_requests": pull_requests or [],
@@ -390,6 +403,17 @@ def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, tod
             + (": " + ", ".join(reset[:LEAD_LIST_LIMIT]) if reset else "")
             + (f" and {len(reset) - LEAD_LIST_LIMIT} more (release.json lists them all)."
                if len(reset) > LEAD_LIST_LIMIT else "."), ""]
+
+    credentials = result.get("credentials") or {"lines": ["class (a) fill-ins: not computed"]}
+    out += ["## Credentials from old lists", "",
+            "A phone sends a username, password, auth type or MTU that a lower-ranked row writes when Android "
+            "stores it with a lead's best row and the best row sets none. Class (a) is such a value no current "
+            "vendor backs, under a best row a current vendor backs: per scope and role, the APN, the filled-in "
+            "fields, the sources of the filling rows, sent or only stored, and the network types; then the rows "
+            "rule 1 left out of `apns-conf.xml` (rule round 32, D8; docs/consume.md, \"Credentials from old "
+            "lists\"). On a phone without OCD's tester nothing checks these values, so cover these SIMs in your "
+            "own device check.", ""]
+    out += code(credentials["lines"]) + [""]
 
     profiles = result["profiles"]
     out += ["## Capability values", "",

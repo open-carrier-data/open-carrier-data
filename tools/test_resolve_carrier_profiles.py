@@ -412,6 +412,20 @@ def check_explain_stored_with_best_row() -> None:
         ], rows
         assert [row["reasons"]["stored_with_best_row"] for row in rows] == [True, False, False], rows
         assert rows[1]["reasons"]["row_from_current_vendor"] is True, rows[1]
+        # Round 32, D8: the lead sends RACC old's username, password and auth
+        # type, which only LineageOS gives, under Samsung's bare best row.
+        leads = {entry["role"]: entry for entry in result["apns"]["credential_sources"]}
+        assert set(leads) == {"internet", "attach"}, leads
+        internet = leads["internet"]
+        assert (internet["apn"], internet["class_a"], internet["sent"], internet["sends_credentials"]) == (
+            "internet.racc.es", True, True, True), internet
+        assert set(internet["fields"]) == {"user", "password", "authtype"}, internet
+        for field in ("user", "password", "authtype"):
+            value = internet["fields"][field]
+            assert (value["position"], value["filled_in"], value["sources"], value["current_sources"]) == (
+                1, True, ["lineageos"], []), (field, value)
+        assert internet["fields"]["user"]["value"] == "CLIENTERACC", internet
+        assert len(internet["network_types"]) == 7, internet
 
 
 def check_explain_vendor_mms() -> None:
