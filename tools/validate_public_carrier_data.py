@@ -329,6 +329,11 @@ GENERATED_FILES = {
     "ocd-dataset/google-lane.json",
     "ocd-dataset/manifest.json",
     "ocd-dataset/profiles.json",
+    # Operator statements and the carrier-identity table (rule round 32),
+    # checked by tools/validate_operators.py.
+    "operators/README.md",
+    "operators/carrier-identity.json",
+    "operators/statements.json",
 }
 
 # The OCD dataset is required by tools/ocd_dataset.py validate, which the
@@ -336,7 +341,7 @@ GENERATED_FILES = {
 REQUIRED_GENERATED_FILES = {
     path
     for path in GENERATED_FILES
-    if not path.endswith("README.md") and not path.startswith(("devices/", "ocd-dataset/"))
+    if not path.endswith("README.md") and not path.startswith(("devices/", "ocd-dataset/", "operators/"))
 }
 
 ADDON_NAMESPACES = {
@@ -1040,7 +1045,13 @@ OLD_OFF_MAX_AGE_YEARS = 5
 # the current file gives (rule decisions of 2026-10-09, how-it-is-built.md).
 SUPERSEDED_DEVICE_FILE = "superseded_device_file"
 SUPERSEDED_DEVICE_FILE_SECTIONS = {"capabilities", "android_carrier_config"}
-RESOLUTIONS = {"conditional", "omitted_from_stable", "published_variants", SUPERSEDED_DEVICE_FILE}
+# An mms value that an admitted, second-checked operator statement sets
+# (rule round 32, the MMS override): the operator states on its own page that
+# MMS ended network-wide, so mms is unsupported and enabledMMS false, although
+# carrier tables may still configure MMS. tools/validate_operators.py checks
+# the statement behind it in generated/operators/statements.json.
+OPERATOR_STATEMENT = "operator_statement"
+RESOLUTIONS = {"conditional", "omitted_from_stable", "published_variants", SUPERSEDED_DEVICE_FILE, OPERATOR_STATEMENT}
 APN_FACT_KEY_RE = re.compile(r"sha256:[0-9a-f]{16}")
 
 
@@ -1073,6 +1084,10 @@ def validate_resolution_items(
                 f"{path}: {label}: {SUPERSEDED_DEVICE_FILE} belongs only to capability and "
                 "CarrierConfig conflicts"
             )
+        if item["resolution"] == OPERATOR_STATEMENT and (
+            item["kind"] != "conflict" or item["section"] != "capabilities" or item["key"] != "mms"
+        ):
+            raise ValidationError(f"{path}: {label}: {OPERATOR_STATEMENT} belongs only to the mms conflict")
         if "variant_sources" in item:
             validate_variant_sources(path, item, label, sources)
         if GATE_REASON_KEYS & set(item):
@@ -1254,10 +1269,15 @@ SINGLE_FAMILY_OFF_GATE = "single_family_off"
 # The gates that withhold an old single-family value. Since 2026-10-06 the
 # capability-gating CarrierConfig key of a capability they withhold is left
 # out with the label, so no profile publishes a switch next to such a label.
+# A lapsed operator statement (rule round 32): the mms value it set fails
+# closed to unknown where the tables alone give supported or conditional, and
+# enabledMMS is left out, so the key returns to the Google-lane value.
+OPERATOR_STATEMENT_LAPSED_GATE = "operator_statement_lapsed"
 WITHHOLDING_CAPABILITY_GATES = {
     STALE_CAPABILITY_GATE,
     FROZEN_SOURCE_ONLY_GATE,
     UNSEEN_SCOPE_GATE,
+    OPERATOR_STATEMENT_LAPSED_GATE,
 }
 # The gates that publish a capability as unknown although a source gives it.
 UNKNOWN_CAPABILITY_GATES = {
@@ -1265,6 +1285,7 @@ UNKNOWN_CAPABILITY_GATES = {
     FROZEN_SOURCE_ONLY_GATE,
     UNSEEN_SCOPE_GATE,
     SINGLE_FAMILY_OFF_GATE,
+    OPERATOR_STATEMENT_LAPSED_GATE,
 }
 # The vendor sources whose observations are dated by firmware build, which an
 # APN fact's old_build_sources may name.
@@ -1599,17 +1620,26 @@ def validate_capability_sources(
             raise ValidationError(f"{path}: {label}.{key} has invalid keys")
         for kind, names in kinds.items():
             validate_canonical_list(path, names, f"{label}.{key}.{kind}")
-            if not names or not set(names) <= set(sources):
+            allowed = set(sources) | ({OPERATOR_STATEMENT} if key == "mms" and kind == "off" else set())
+            if not names or not set(names) <= allowed:
                 raise ValidationError(f"{path}: {label}.{key}.{kind} is invalid")
         if capabilities is None:
             continue
         published = capabilities.get(key, "unknown")
+        stated = key == "mms" and OPERATOR_STATEMENT in kinds.get("off", []) and any(
+            item["resolution"] == OPERATOR_STATEMENT and item["key"] == "mms"
+            for item in evidence.get("conflicts", [])
+        )
+        if key == "mms" and OPERATOR_STATEMENT in kinds.get("off", []) and published != "unsupported":
+            raise ValidationError(f"{path}: {label}.mms names {OPERATOR_STATEMENT}, so mms is unsupported")
         agrees = {
             # A single_family_off gate next to supported must name a real
             # off (round 22, F6): an on-only supported carries no such gate.
             "supported": (set(kinds) == {"on"} and key not in single_family)
             or device_backed_supported(key, kinds, key in single_family),
-            "unsupported": set(kinds) == {"off"},
+            # Round 32: an admitted operator statement's MMS end stands
+            # against the tables' on, with its conflict item.
+            "unsupported": set(kinds) == {"off"} or stated,
             "conditional": len(kinds) >= 2 or "conditional" in kinds,
             "unknown": key in withheld,
         }[published]
@@ -1992,8 +2022,17 @@ def validate_evidence_index(
                 raise ValidationError(f"{path}: {label}.key is unsafe")
             fact_source_names = fact.get("sources")
             validate_canonical_list(path, fact_source_names, f"{label}.sources")
-            if not fact_source_names or not set(fact_source_names) <= set(sources):
+            # Round 32: enabledMMS false from an operator statement names
+            # operator_statement, which is no observation source.
+            stated = section == "android_carrier_config" and key == "enabledMMS"
+            allowed = set(sources) | ({OPERATOR_STATEMENT} if stated else set())
+            if not fact_source_names or not set(fact_source_names) <= allowed:
                 raise ValidationError(f"{path}: {label}.sources is invalid")
+            if OPERATOR_STATEMENT in fact_source_names and (
+                profile_config_keys is None
+                or profile_config_keys.get(evidence.get("profile_id"), {}).get("enabledMMS") is not False
+            ):
+                raise ValidationError(f"{path}: {label}: {OPERATOR_STATEMENT} gives only enabledMMS false")
             old_builds = fact.get("old_build_sources")
             if old_builds is not None:
                 # The vendor sources that give an APN fact only from firmware
@@ -2554,6 +2593,19 @@ def main(argv: list[str]) -> int:
         args.liveness,
         vendor_build_grace(index_path.parent / "evidence-index.json"),
     )
+    # Rule round 32: generated/operators/ and rule 3's prefix limits on every
+    # published file, with the profiles an operator statement sets.
+    import validate_operators
+
+    errors, warnings = validate_operators.validate(
+        index_path.parent.parent, utc_today(), args.freshness, require=False
+    )
+    for line in warnings:
+        print(f"warning: {line}", file=sys.stderr)
+    if errors:
+        raise ValidationError(
+            f"{len(errors)} operator statement or prefix problem(s): " + "; ".join(errors[:10])
+        )
     print(f"validated {len(profile_paths)} public carrier profile(s)")
     return 0
 

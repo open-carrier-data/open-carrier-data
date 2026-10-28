@@ -59,6 +59,13 @@ jobs:
         run: python3 tools/test_observed_reports.py
       - name: Test the OCD dataset (matcher vectors, selectors, generator, reader checks)
         run: python3 tools/test_ocd_dataset.py
+      # Rule round 32: generated/operators/ (operator statements and the
+      # carrier-identity table) and rule 3's prefix limits on every published
+      # file, checked directly, not only through regeneration.
+      - name: Test the operators validator
+        run: python3 tools/test_validate_operators.py
+      - name: Validate generated/operators and rule 3's prefix limits on every published file
+        run: python3 tools/validate_operators.py . --freshness warn
       # The OCD dataset for the owner's ROM (rule round 30): the schemas, the
       # reader's checks 4 to 10, the device-record rules, the privacy guard on
       # the Google lane, and a regeneration that must give the same bytes. On
@@ -203,6 +210,7 @@ jobs:
           python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness fail "${liveness[@]}" "${today[@]}" 2>&1 | tee strict.log || status=1
           python3 tools/validate_device_catalog.py generated/devices --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
           python3 tools/validate_carrier_variants.py . --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
+          python3 tools/validate_operators.py . --freshness fail "${today[@]}" 2>&1 | tee -a strict.log || status=1
           # Warnings do not fail the alarm, but show on the run: a Samsung
           # build whose values publish under the vendor build grace warns
           # every day until the lane rebuilds them.
