@@ -4,7 +4,9 @@
 With --explain it also says why: the profile stack, the value each profile
 gives for every capability, CarrierConfig key and add-on with the sources
 behind it from the evidence index, and the APN rows Android 16 gives this SIM
-in file order with the reasons each row sits where it does.
+in file order with the reasons each row sits where it does, and for its
+internet, attach and MMS leads the row and the sources behind every username,
+password, auth type and MTU they carry (rule decisions round 32, D8).
 """
 
 from __future__ import annotations
@@ -310,6 +312,41 @@ def explain(
                 },
             }
         )
+    # Where each username, password, auth type and MTU a lead sends comes
+    # from (rule decisions round 32, D8): the phone model reads this SIM's
+    # rows as TelephonyProvider stores them, and for the internet, attach and
+    # MMS lead on the 3GPP data network types each such field names the row
+    # (its position above) that wrote it, whether that is the stored group's
+    # best row or a lower-ranked row that fills in (filled_in), and that
+    # row's sources and current vendors. class_a: a filled-in value no
+    # current vendor backs under a best row a current vendor backs; sent:
+    # the lead sends a filled-in credential (auth type not 0) or MTU.
+    import android_phone_model as phone
+    import check_phone_guard as guard
+
+    file_rows = phone.parse_lines(generator.apn_row_line(row) for row in chosen)
+    credential_sources = []
+    for entry in guard.lead_credentials(file_rows, phone.provider(file_rows), chosen):
+        credential_sources.append(
+            {
+                "role": entry["role"],
+                "apn": entry["apn"],
+                "network_types": entry["network_types"],
+                "sends_credentials": entry["sends_credentials"],
+                "class_a": bool(entry["class_a"]),
+                "sent": entry["sent"],
+                "fields": {
+                    field: {
+                        "value": value["value"],
+                        "position": value["row"] + 1,
+                        "filled_in": not value["best_row"],
+                        "sources": value.get("sources", []),
+                        "current_sources": value.get("current_sources", []),
+                    }
+                    for field, value in entry["fields"].items()
+                },
+            }
+        )
     return {
         "schema_version": 1,
         "sim": identity,
@@ -320,6 +357,7 @@ def explain(
         "apns": {
             "scope": "mvno" if mvno_rows else "network",
             "rows": apn_rows,
+            "credential_sources": credential_sources,
             # Rows of this SIM's scope that apns-conf.xml leaves out: stale
             # MMS-only rows Android merges into an earlier row
             # (absorbed_mms_left_out), and rows whose only type was

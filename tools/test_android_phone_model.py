@@ -88,6 +88,31 @@ class ProviderTests(unittest.TestCase):
         self.assertEqual(stored_all[0]["network_type_bitmask"], 0)
 
 
+class FillInTests(unittest.TestCase):
+    """Round 32, D8: which file row wrote each credential field of a stored
+    row (`_writers`), and which of them a lower-ranked row fills in."""
+
+    def test_a_lower_ranked_row_fills_in_what_the_best_row_leaves_unset(self) -> None:
+        xml = rows(
+            'mcc="262" mnc="01" apn="web" type="default" user="u" password="p" authtype="1" mtu="1400"',
+            'mcc="262" mnc="01" apn="web" type="default,supl" authtype="0"',
+        )
+        stored, _ = scope_profiles(xml)
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0]["_writers"], {"user": 0, "password": 0, "authtype": 1, "mtu": 0})
+        self.assertEqual(phone.fill_ins(stored[0]), {"user": 0, "password": 0, "mtu": 0})
+
+    def test_a_row_alone_or_a_best_row_that_sets_everything_fills_in_nothing(self) -> None:
+        alone = rows('mcc="262" mnc="01" apn="web" type="default" user="u"')
+        self.assertEqual(phone.fill_ins(scope_profiles(alone)[0][0]), {})
+        both = rows(
+            'mcc="262" mnc="01" apn="web" type="default" user="old" password="p"',
+            'mcc="262" mnc="01" apn="web" type="default" user="new" password="q"',
+        )
+        stored = scope_profiles(both)[0][0]
+        self.assertEqual((stored["user"], phone.fill_ins(stored)), ("new", {}))
+
+
 class LeadTests(unittest.TestCase):
     def test_mms_over_the_internet_apn_when_it_serves_mms(self) -> None:
         xml = rows(

@@ -106,6 +106,27 @@ class ComputeTests(unittest.TestCase):
         self.assertTrue(any("network type left with no emergency profile" in r for r in result["needs_review"]),
                         result["needs_review"])
 
+    def test_class_a_list_is_carried(self) -> None:
+        fill = WEB + ' user="u" password="p" authtype="1"'
+        vendor = []
+        for text, support, current in ((fill, ["lineageos"], []), (WEB, ["samsung_omc"], ["samsung_omc"])):
+            attrs = notes.phone.parse_lines([f"<apn {text} />"])[0]
+            vendor.append({**{k: v for k, v in attrs.items() if not k.startswith("_")},
+                           "_support": {"default": support, "supl": support},
+                           "_current": {"default": current, "supl": current} if current else {}})
+        with tempfile.TemporaryDirectory() as tmp:
+            base = write_tree(Path(tmp) / "base", [WEB], {"open.26201.aaaaaaaaaaaa": CAPS},
+                              [('mcc="262" mnc="01"', {"carrier_volte_available_bool": "true"})])
+            head = write_tree(Path(tmp) / "head", [fill, WEB], {"open.26201.aaaaaaaaaaaa": CAPS},
+                              [('mcc="262" mnc="01"', {"carrier_volte_available_bool": "true"})], vendor=vendor)
+            notes.guard.generator_records.cache_clear()
+            result = notes.compute(base, head, [], [])
+        text = notes.render(result, "data-2026.11", "base", "head", date(2026, 11, 2))
+        self.assertIn("\n## Credentials from old lists\n", text)
+        self.assertIn("262/01 internet web: authtype, password, user from lineageos; sent (all hold types)", text)
+        self.assertIn("credentials filled in from a non-current source on the internet lead: 1: 262/01 (lineageos)",
+                      text)
+
     def test_guard_trip_is_reported(self) -> None:
         result, text = self.notes_for([WEB, MMS], [WEB])
         self.assertEqual(result["guard"]["verdict"], "hold")
