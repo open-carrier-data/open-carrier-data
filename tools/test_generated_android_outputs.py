@@ -763,6 +763,75 @@ def check_capability_sources(
                     ),
                     f"a single-family gate next to a conditional {capability} passed",
                 )
+            # Round 32's old-off clause: the gate names the reason
+            # off_older_than_five_years and the off's month, older than five
+            # years, and only next to a supported label of the three.
+            def old_gate(capability: str, **changes: object) -> dict:
+                return {
+                    **gate(f"single_family_off:{capability}"),
+                    "off_newest_entry": "2016-03",
+                    "reason": "off_older_than_five_years",
+                    **changes,
+                }
+
+            today = validate_public_carrier_data.utc_today()
+            recent = f"{today.year - 4:04d}-{today.month:02d}"
+            boundary = f"{today.year - 5:04d}-{today.month:02d}"
+            for capability in ("volte", "vowifi", "video_calling"):
+                capabilities[target] = {**published_capabilities, capability: "supported"}
+                for changes in ({}, {"off_newest_entry": boundary}):
+                    validate(
+                        with_sources(
+                            shaped({**new_sources, capability: overlay_off}, [old_gate(capability, **changes)]),
+                            *extra,
+                        )
+                    )
+                for changes, message in (
+                    ({"off_newest_entry": recent}, "an off newer than five years"),
+                    ({"off_newest_entry": "2016-3"}, "a malformed month"),
+                    ({"reason": "off_hidden"}, "an unknown reason"),
+                ):
+                    expect_failure(
+                        with_sources(
+                            shaped({**new_sources, capability: overlay_off}, [old_gate(capability, **changes)]),
+                            *extra,
+                        ),
+                        f"a supported {capability} with {message} passed",
+                    )
+                one_key = old_gate(capability)
+                one_key.pop("off_newest_entry")
+                expect_failure(
+                    with_sources(shaped({**new_sources, capability: overlay_off}, [one_key]), *extra),
+                    f"a reason without off_newest_entry on {capability} passed",
+                )
+                # Round 22, F6: the reason still needs a real off.
+                expect_failure(
+                    with_sources(
+                        shaped({**new_sources, capability: {"on": ["aosp"]}}, [old_gate(capability)]),
+                        *extra,
+                    ),
+                    f"an old-off gate next to an on-only supported {capability} passed",
+                )
+                capabilities[target] = {**published_capabilities, capability: "unknown"}
+                expect_failure(
+                    with_sources(
+                        shaped({**new_sources, capability: {"off": ["lineageos_device_overlays"]}}, [old_gate(capability)]),
+                        *extra,
+                    ),
+                    f"an old-off reason next to an unknown {capability} passed",
+                )
+            capabilities[target] = published_capabilities
+            expect_failure(
+                with_sources(shaped({**new_sources, "vowifi": overlay_off}, [old_gate("mms")]), *extra),
+                "an old-off reason on mms passed",
+            )
+            expect_failure(
+                with_sources(
+                    shaped(new_sources, [{**old_gate("carrier_volte_available_bool"), "section": "android_carrier_config"}]),
+                    *extra,
+                ),
+                "an old-off reason on a CarrierConfig gate passed",
+            )
             capabilities[target] = published_capabilities
             for capability in ("mms",):
                 expect_failure(

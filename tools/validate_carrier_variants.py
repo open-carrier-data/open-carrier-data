@@ -12,7 +12,10 @@ inside five years; the digest of the data it was built with; and
 canonical bytes. And every VoLTE, Wi-Fi calling or video calling label
 published supported against a single family's off (round 17, step 2) has an
 off record here from each off source and at least one on record (round 22);
-without the file such a label fails even without --require.
+without the file such a label fails even without --require. A label whose
+gate carries the reason off_older_than_five_years (round 32's old-off clause)
+has at least one on record and no off record here, because rule 7 withholds
+every off behind it.
 
 Usage: validate_carrier_variants.py [REPO_ROOT] [--freshness warn|fail] [--require]
 Without the file the check passes unless --require is given.
@@ -164,12 +167,16 @@ def validate_record(
     return record
 
 
-def device_backed_labels(evidence: dict[str, dict[str, Any]]) -> dict[tuple[str, str], list[str]]:
+def device_backed_labels(
+    evidence: dict[str, dict[str, Any]], reason: str | None = None
+) -> dict[tuple[str, str], list[str]]:
     """(profile, capability) to the off sources of every VoLTE, Wi-Fi calling
     or video calling label published supported against a single family's
     off (round 17, step 2): the profile carries the gate
     single_family_off:<capability> and capability_sources lists both on and
-    off, which validate_public_carrier_data accepts only for such a label."""
+    off, which validate_public_carrier_data accepts only for such a label.
+    reason selects the labels whose gate carries that reason (round 32's
+    off_older_than_five_years); None selects those whose gate carries none."""
     labels: dict[tuple[str, str], list[str]] = {}
     for profile_id, item in evidence.items():
         gated = {
@@ -177,6 +184,7 @@ def device_backed_labels(evidence: dict[str, dict[str, Any]]) -> dict[tuple[str,
             for gate in item.get("quality_gates", [])
             if gate["section"] == "capabilities"
             and gate["key"].partition(":")[0] == validate_public_carrier_data.SINGLE_FAMILY_OFF_GATE
+            and gate.get("reason") == reason
         }
         for capability in sorted(gated & validate_public_carrier_data.DEVICE_BACKED_LABEL_CAPABILITIES):
             kinds = item.get("capability_sources", {}).get(capability, {})
@@ -208,6 +216,30 @@ def check_device_backed_labels(
                 )
 
 
+def check_old_off_labels(
+    path: Path,
+    labels: dict[tuple[str, str], list[str]],
+    profiles: dict[str, Any],
+) -> None:
+    """Each supported label of round 32's old-off clause (the gate's reason
+    off_older_than_five_years) has at least one on record here, and no off
+    record: rule 7 withholds every off behind it, so an off record would be
+    a current off that the label hides."""
+    for (profile_id, capability), _sources in sorted(labels.items()):
+        records = profiles.get(profile_id, {}).get(capability, [])
+        if not any(record["state"] == "on" for record in records):
+            raise ValidationError(
+                f"{path}: {profile_id} {capability} is supported against an off older than "
+                "five years, but the file has no on record"
+            )
+        offs = sorted({record["source"] for record in records if record["state"] == "off"})
+        if offs:
+            raise ValidationError(
+                f"{path}: {profile_id} {capability} is supported against an off older than "
+                f"five years, but the file has an off record from {', '.join(offs)}"
+            )
+
+
 def validate(root: Path, freshness: str, require: bool) -> str:
     path = root / VARIANTS_PATH
     if not path.exists():
@@ -215,12 +247,13 @@ def validate(root: Path, freshness: str, require: bool) -> str:
             raise ValidationError(f"{path}: missing")
         evidence_path = root / "generated/evidence-index.json"
         if evidence_path.exists():
-            labels = device_backed_labels(
-                {item["profile_id"]: item for item in load_json(evidence_path)["profiles"]}
-            )
-            if labels:
+            published = {item["profile_id"]: item for item in load_json(evidence_path)["profiles"]}
+            labels = device_backed_labels(published)
+            old_off = device_backed_labels(published, validate_public_carrier_data.OFF_OLDER_THAN_FIVE_YEARS)
+            if labels or old_off:
                 raise ValidationError(
-                    f"{path}: missing, but {len(labels)} supported labels keep their off as device records"
+                    f"{path}: missing, but {len(labels)} supported labels keep their off as device "
+                    f"records and {len(old_off)} rest on on records against an off older than five years"
                 )
         return f"no {VARIANTS_PATH}; nothing to check"
     raw = path.read_bytes()
@@ -295,11 +328,14 @@ def validate(root: Path, freshness: str, require: bool) -> str:
                 raise ValidationError(f"{here}: records are not in (state, source, stack, newest_entry) order")
     labels = device_backed_labels(evidence)
     check_device_backed_labels(path, labels, profiles)
+    old_off = device_backed_labels(evidence, validate_public_carrier_data.OFF_OLDER_THAN_FIVE_YEARS)
+    check_old_off_labels(path, old_off, profiles)
     check_freshness(window, freshness)
     return (
         f"validated {records} device records ({cells} device values) for "
         f"{len(devices_seen)} devices on {len(profiles)} profiles; "
-        f"{len(labels)} supported labels keep their off as device records"
+        f"{len(labels)} supported labels keep their off as device records; "
+        f"{len(old_off)} supported labels have only offs older than five years"
     )
 
 
