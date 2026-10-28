@@ -44,8 +44,10 @@ Rules, the first that decides wins (RULES_VERSION):
                     this one (the 302/37 class: CNT Ecuador's
                     `emergency.volte.ims.cnt.net.ec` under a Canadian code). hold.
   stated            a current vendor or LineageOS's own list states that row
-                    for emergency on this scope (the generator's S1-A
-                    evidence: APN, protocol and roaming protocol). proceed.
+                    for emergency on the scope the row belongs to (the
+                    generator's S1-A evidence: APN, protocol and roaming
+                    protocol); for a gone MVNO scope that is the network's
+                    plain scope its SIMs fall back to. proceed.
   not_stated        anything else. hold.
 
 The verdict is proceed when every line proceeds, no_lines when the change has
@@ -68,7 +70,7 @@ usage:
                      [--agent-read FILE] [--builder NAME]
   f5_read.py check [--root DIR] [--base-xml BASE_XML --base-file BASE_F5_READS] [--base-commit SHA]
   f5_read.py chain [--root DIR] --from APN_ROWS_SHA256 [--gate full|narrow --networks 262-02,262-03]
-  f5_read.py backfill --repo CLONE --since SHA [--until REF] [--root DIR]
+  f5_read.py backfill --repo CLONE --since SHA [--until REF] [--root DIR] [--agent-reads DIR]
 
 Exit codes: 0 proceed, no lines or valid; 1 a check refused; 2 an error;
 3 publish wrote a hold (the publisher holds the publish).
@@ -97,7 +99,7 @@ sys.path.insert(0, str(TOOLS))
 import android_phone_model as phone  # noqa: E402
 import check_phone_guard as guard  # noqa: E402
 
-RULES_VERSION = 1
+RULES_VERSION = 2
 READ_SCHEMA = "ocd-f5-read/1"
 FILE_SCHEMA_VERSION = 1
 FILE = "generated/ocd-dataset/f5-reads.json"
@@ -181,9 +183,10 @@ def emergency_items(before_rows: list[dict[str, Any]], after_rows: list[dict[str
     a_typed = guard.typed_leads(after_rows, after_tables)
     found: dict[tuple, dict[str, Any]] = {}
 
-    def add(condition: str, scope: phone.Scope, old: Any, new: Any, old_text: str, new_text: str, name: str) -> None:
+    def add(condition: str, scope: phone.Scope, old: Any, new: Any, old_text: str, new_text: str, name: str,
+            row_scope: phone.Scope | None = None) -> None:
         slot = found.setdefault((condition, guard.fmt(scope), old_text, new_text),
-                                {"scope_key": scope, "old_key": old, "new_key": new, "types": []})
+                                {"scope_key": scope, "row_scope": row_scope or scope, "old_key": old, "new_key": new, "types": []})
         slot["types"].append(name)
 
     for scope in set(before) & set(after):
@@ -215,11 +218,14 @@ def emergency_items(before_rows: list[dict[str, Any]], after_rows: list[dict[str
             theirs = there[other][name]["emergency"] if other else DEFAULT_KEY
             old, new = (theirs, mine) if condition == NEW_SCOPE else (mine, theirs)
             if old != new:
-                add(condition, scope, old, new, guard.emergency_text(old), guard.emergency_text(new), name)
+                # The new lead's row: the scope's own (a new scope) or, for a
+                # gone scope, the fallback scope's.
+                row_scope = scope if condition == NEW_SCOPE else (other or scope)
+                add(condition, scope, old, new, guard.emergency_text(old), guard.emergency_text(new), name, row_scope)
     out = []
     for (condition, scope, old_text, new_text), slot in sorted(found.items()):
         item = {"condition": condition, "scope": scope, "types": slot["types"], "old": old_text, "new": new_text,
-                "scope_key": slot["scope_key"], "old_key": slot["old_key"], "new_key": slot["new_key"]}
+                "scope_key": slot["scope_key"], "row_scope": slot["row_scope"], "old_key": slot["old_key"], "new_key": slot["new_key"]}
         item["line"] = line_of(item)
         out.append(item)
     return out
@@ -297,7 +303,7 @@ def judge(item: dict[str, Any], context: Context) -> dict[str, str]:
         return {"rule": "foreign_name",
                 "why": f"APN {new[1]} ends in .{label}, a country label Google's carrier list never uses for MCC {scope[0]} ({sorted(context.countries[scope[0]])})"}
     request = (str(new[1]).casefold(), str(new[2]), str(new[3]))
-    if request in context.stated.get(scope, set()):
+    if request in context.stated.get(item.get("row_scope", scope), set()):
         return {"rule": "stated", "why": "a current vendor or LineageOS's own list states this row for emergency on this scope"}
     return {"rule": "not_stated", "why": "no current vendor or LineageOS row states this emergency request for this scope"}
 
@@ -525,6 +531,16 @@ def append_read(document: dict[str, Any] | None, read: dict[str, Any], since_com
     return {**document, "reads": document["reads"] + [read], "apn_rows_sha256": read["head"]["apn_rows_sha256"]}
 
 
+def with_agent_read(read: dict[str, Any], agent: dict[str, Any], builder: str) -> tuple[dict[str, Any], list[str]]:
+    """READ with an agent's proceed read standing in for its held lines, or
+    READ unchanged with the reasons the agent read does not stand in."""
+    problems = agent_read_stands_in(read, agent, builder)
+    if problems:
+        return read, problems
+    return {**read, "method": "agent", "verdict": "proceed", "reader": agent["reader"], "read_at": agent["read_at"],
+            "notes": f"An independent agent read the {len(read['lines'])} line(s) the rules held: {agent['notes']}"}, []
+
+
 def agent_read_stands_in(read: dict[str, Any], agent: dict[str, Any], builder: str) -> list[str]:
     """An agent's read (round 29's x1s-ocd-f5-read.v1 or this tool's shape
     with method agent) may stand in for a held deterministic read of exactly
@@ -603,6 +619,7 @@ def main(argv: list[str] | None = None) -> int:
     bf.add_argument("--until", default="origin/main")
     bf.add_argument("--root", type=Path, default=TOOLS.parent, help="where to write generated/ocd-dataset/f5-reads.json")
     bf.add_argument("--read-at")
+    bf.add_argument("--agent-reads", type=Path, help="a folder of agents' reads named <lines digest>.json, which stand in for held reads")
     args = parser.parse_args(argv)
     try:
         if args.command == "lines":
@@ -628,13 +645,9 @@ def main(argv: list[str] | None = None) -> int:
             else:
                 read = read_files(base_xml, head_xml, args.root, args.base_commit, read_at=args.read_at)
                 if read["verdict"] == "hold" and args.agent_read:
-                    agent = json.loads(args.agent_read.read_text(encoding="utf-8"))
-                    problems = agent_read_stands_in(read, agent, args.builder)
+                    read, problems = with_agent_read(read, json.loads(args.agent_read.read_text(encoding="utf-8")), args.builder)
                     if problems:
                         print("f5 read: the agent read does not stand in: " + "; ".join(problems), file=sys.stderr)
-                    else:
-                        read = {**read, "method": "agent", "verdict": "proceed", "reader": agent["reader"], "read_at": agent["read_at"],
-                                "notes": f"An independent agent read the {len(read['lines'])} held line(s): {agent['notes']}"}
                 document = append_read(base_file, read, args.base_commit, head_xml)
                 (args.root / FILE).parent.mkdir(parents=True, exist_ok=True)
                 (args.root / FILE).write_bytes(dump(document))
@@ -707,6 +720,11 @@ def main(argv: list[str] | None = None) -> int:
                 with tempfile.TemporaryDirectory(prefix="f5-backfill-") as folder:
                     checkout_tree(args.repo, commit, Path(folder))
                     read = read_files(base_xml, head_xml, Path(folder), previous, read_at=args.read_at)
+                agent_path = args.agent_reads / f"{read['lines_digest']}.json" if args.agent_reads and read["lines_digest"] else None
+                if read["verdict"] == "hold" and agent_path and agent_path.is_file():
+                    read, problems = with_agent_read(read, json.loads(agent_path.read_text(encoding="utf-8")), BUILDER)
+                    if problems:
+                        print(f"  the agent read {agent_path.name} does not stand in: " + "; ".join(problems), file=sys.stderr)
                 document = append_read(document, read, None, head_xml)
                 print(f"{previous[:12]} -> {commit[:12]}: {read['verdict']}, {len(read['lines'])} line(s)")
                 for finding in read["findings"]:

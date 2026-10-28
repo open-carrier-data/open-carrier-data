@@ -152,7 +152,9 @@ RECORD_KEY_RE = re.compile(r"r:[0-9a-f]{16}")
 # Public main never carries an IMSI pattern of 14 or more characters: a
 # full IMSI is 15 digits, and 14 consecutive digits are what the privacy
 # guard treats as an identity. OCD's own profiles stay at 5 to 10 (rule 3).
-PUBLIC_IMSI_RE = re.compile(r"[0-9xX]{5,13}")
+# Google's own entries that no carrier_list rule names; every other entry of
+# the published lane is named by a rule.
+UNNAMED_LANE_ENTRIES = ("default", "no_sim")
 OCD_IMSI_RE = re.compile(r"[0-9xX]{5,10}")
 SOURCE_FAMILY_NAMES = {"google_carriersettings": FAMILY, "google_pixel_vendor_carriersettings": FAMILY}
 
@@ -707,6 +709,47 @@ def schema_config_keys(root: Path) -> dict[str, str]:
     return {key: types.expected_config_type(key) for key in keys}
 
 
+def lane_rule_within_limits(rule: dict[str, Any]) -> bool:
+    """Rule 3, which rule round 32 applies to every published file: a Google
+    rule's IMSI or ICCID datum passes the same subscriber_prefix_ok as every
+    other published selector (an IMSI pattern of 5 to 10 digits or x, an
+    ICCID prefix of 5 to 13 digits)."""
+    mvno = rule.get("mvno")
+    if not mvno or mvno.get("kind") not in ("imsi", "iccid"):
+        return True
+    return carrier_validator().subscriber_prefix_ok(mvno["kind"], str(mvno.get("value", "")))
+
+
+_CARRIER_VALIDATOR: list[Any] = []
+
+
+def carrier_validator() -> Any:
+    """The public validator module, loaded once: its subscriber_prefix_ok is
+    the one rule 3 check every published selector passes."""
+    if not _CARRIER_VALIDATOR:
+        _CARRIER_VALIDATOR.append(load_module("validate_public_carrier_data", TOOLS / "validate_public_carrier_data.py"))
+    return _CARRIER_VALIDATOR[0]
+
+
+def within_prefix_limits(lane: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """The Google lane without the rules whose selector breaks rule 3's
+    limits and without the entries only those rules named, and the rules left
+    out by entry, network, kind and length only, never the value. A SIM such
+    a rule named gets the network's next fill item, or default."""
+    kept, left_out = [], []
+    for rule in lane.get("rules", []):
+        if lane_rule_within_limits(rule):
+            kept.append(rule)
+        else:
+            left_out.append({"canonical_name": rule["canonical_name"], "network": f"{rule['mcc']}-{rule['mnc']}",
+                             "kind": rule["mvno"]["kind"], "characters": len(str(rule["mvno"]["value"]))})
+    if not left_out:
+        return lane, []
+    named = {rule["canonical_name"] for rule in kept} | set(UNNAMED_LANE_ENTRIES)
+    entries = {name: entry for name, entry in lane.get("entries", {}).items() if name in named}
+    return {**lane, "rules": kept, "entries": entries}, left_out
+
+
 class Inputs:
     """The files of one checkout of main that the dataset is made from."""
 
@@ -723,6 +766,9 @@ class Inputs:
         self.evidence = read_json_file(evidence_path) if evidence_path.is_file() else {"profiles": []}
         lane_path = root / FILES["google_lane"][1]
         self.lane = read_json_file(lane_path) if lane_path.is_file() else None
+        self.lane_rules_left_out: list[dict[str, Any]] = []
+        if self.lane is not None:
+            self.lane, self.lane_rules_left_out = within_prefix_limits(self.lane)
         registry_path = root / REGISTRY_PATH
         self.registry_file = read_json_file(registry_path) if registry_path.is_file() else None
         self.schema_keys = schema_config_keys(root)
@@ -1268,6 +1314,22 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
     return reads_document, pending_document
 
 
+def withheld_document_of(root: Path, lane: dict[str, Any], data_digest: str) -> bytes | None:
+    """privacy-withheld.json as generate keeps it: the publisher's list,
+    restamped with this data digest and narrowed to the entries the
+    published Google lane carries (rule 3 can leave entries out after the
+    publisher listed them). None when the publisher wrote no list."""
+    path = root / WITHHELD_FILE
+    if not path.is_file():
+        return None
+    document = read_json_file(path)
+    items = sorted((i for i in document.get("withheld", []) if i.get("entry") in lane["entries"]), key=lambda i: (i["entry"], i["key"]))
+    counts: dict[str, int] = defaultdict(int)
+    for item in items:
+        counts[item["key"]] += 1
+    return dump_lines({**document, "based_on_data_digest": data_digest, "withheld": items, "by_key": dict(sorted(counts.items()))}, ("withheld",))
+
+
 def withheld_problems(root: Path, lane: dict[str, Any] | None, data_digest: str | None) -> list[str]:
     """privacy-withheld.json (SM4), when the publisher wrote one: its shape,
     its data digest, and that every value it names is absent from the
@@ -1638,7 +1700,7 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     without one), RECORDS_OVERRIDE the records of devices/records/."""
     inputs = Inputs(root)
     if lane_override is not None:
-        inputs.lane = lane_override
+        inputs.lane, inputs.lane_rules_left_out = within_prefix_limits(lane_override)
     if inputs.lane is None:
         raise DatasetError(f"{FILES['google_lane'][1]}: missing; the private publisher writes the Google lane (round 30)")
     generator = load_module("generate_android_outputs", root / "tools/generate_android_outputs.py")
@@ -1690,13 +1752,16 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     out[REGISTRY_PATH] = (json.dumps(registry_document(registry), indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
     if not LIST_GROUP_A_READS:
         out[GROUP_A_READS_FILE] = group_a_bytes
+    withheld = withheld_document_of(root, lane, inputs.data_digest)
+    if withheld is not None:
+        out[WITHHELD_FILE] = withheld
     out[GROUP_A_PENDING_FILE] = dump_lines(group_a_pending, ("key_reads", "pending", "unrecorded_basis"))
     return {"files": out, "manifest": manifest, "counts": {**profile_counts, **counts}, "registry": registry, "reads": reads,
             "group_a": {"read_items": len(group_a["reads"]), "proceed_items": sum(r["verdict"] == "proceed" for r in group_a["reads"]),
                         "key_findings": len(group_a["key_findings"]), "left_group_a": group_a_pending["left_group_a"],
                         "pending": len(group_a_pending["pending"]), "pending_profiles": sum(len(p["profiles"]) for p in group_a_pending["pending"]),
                         "listed_in_manifest": LIST_GROUP_A_READS},
-            "records_waiting": len(records) - len(served)}
+            "records_waiting": len(records) - len(served), "lane_rules_left_out": inputs.lane_rules_left_out}
 
 
 def previous_manifest_of(root: Path) -> dict[str, Any] | None:
@@ -1988,8 +2053,8 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
             out.append("google-lane.json: provenance.state on main must be public_main")
         for index, rule in enumerate(lane["rules"]):
             mvno = rule["mvno"]
-            if mvno and mvno["kind"] == "imsi" and not PUBLIC_IMSI_RE.fullmatch(mvno["value"]):
-                out.append(f"google-lane.json: rule {index} has an IMSI pattern longer than 13 characters, which public main never carries")
+            if not lane_rule_within_limits(rule):
+                out.append(f"google-lane.json: rule {index} has an {mvno['kind']} selector outside rule 3's prefix limits, which public main never carries")
         for name, entry in lane["entries"].items():
             for key, value in entry["values"].items():
                 hits = privacy_hits(value)
@@ -1999,6 +2064,9 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
         missing = sorted(names_with_rules - set(lane["entries"]))
         if missing:
             out.append(f"google-lane.json: rules name entries it lacks: {missing[:5]}")
+        unnamed = sorted(set(lane["entries"]) - names_with_rules - set(UNNAMED_LANE_ENTRIES))
+        if unnamed:
+            out.append(f"google-lane.json: {len(unnamed)} entries no rule names, which public main never carries")
     for network in parsed["profiles"]["networks"].values():
         for profile in network["profiles"]:
             if profile["kind"] == "ocd":
@@ -2170,6 +2238,13 @@ def main(argv: list[str] | None = None) -> int:
                 f"{size} bytes; dataset_digest {result['manifest']['dataset_digest']}; "
                 + (f"wrote {', '.join(changed)}" if changed else "nothing changed")
             )
+            left_out = result["lane_rules_left_out"]
+            if left_out:
+                by_network: dict[str, int] = defaultdict(int)
+                for rule in left_out:
+                    by_network[rule["network"]] += 1
+                print(f"ocd dataset: {len(left_out)} Google rule(s) left out for rule 3's prefix limits: "
+                      + ", ".join(f"{network} {count}" for network, count in sorted(by_network.items())))
             return 0
         if args.command == "validate":
             base = None

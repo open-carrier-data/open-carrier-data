@@ -1,0 +1,32 @@
+{
+  "base_commit": "4ec97b0b3653f69abccf7d445919393544711f38",
+  "head_commit": "c88113047bb8df5793cfba01e49386d1cf73eb50",
+  "lines_digest": "a65c163bac29db48",
+  "notes": "Held line 310/240 GID 554d: in the base this scope had 3 rows, all labelled Ultra/Mint Mobile (wholesale default, service and wholesale mms, no emergency row). Their only source was an Apple carrier bundle from iOS 12.3 (bundle 36.1, 2019-06; evidence-index profile open.310240.7b64302a63ff). GID1 554D is ASCII 'UM', an Ultra Mobile family code. LineageOS and Sony AOSP list 554d only under 310/260, as Univision Mobile, with no emergency row. In the head the profile is gone and was not withdrawn. The current Apple Ultra/Mint bundle (2026-10-26) lists only GID1 354D, 364D, 4153, 4154, 6132 and 756D. Google's carrier list (google-lane) has no rule for 554D on 310/240, so a current Pixel reads such a SIM as tmobile_us. TelephonyProvider uses an MVNO match first and MCC/MNC rows otherwise, and no 310/240 GID scope is a prefix of 554D, so these SIMs now take the plain 310/240 rows. Their only emergency row, which is the same in base and head, is apn sos, protocol IPV6, roaming IPV4V6, always_on=true, with no MTU, profile ID, network-type limit or APN set. It therefore serves GPRS through NR and IWLAN with no gap, and its presence stops DataProfileManager from adding DEFAULT EIMS. The request attribute the guard flags is always_on alone. That is the 5G SA always-on PDU session flag (TS 23.501 5.6.13), passed to the modem as DataProfileInfo.alwaysOn; the network grants or ignores it, and it has no effect on LTE or IWLAN. IPV6 at home matches T-Mobile US's IPv6-only IMS core. Basis: Google CarrierSettings tmobile_us (current, revision 2026-10-26) states this exact row, and the generator marks it _current=google_carriersettings, which is why the S1-A rule emergency_stated kept it. LineageOS's own US.xml states sos IPV6/IPV4V6 for T-Mobile 310/260. The current Apple Ultra/Mint bundle states sos IPV6/IPV4V6 for every current Ultra/Mint GID1, and OCD's 756D scope already had this exact row in the base. f5_read's Context states (sos, IPV6, IPV4V6) for the fallback scope 310/240. The tool held the line only because judge() looks up stated rows under the gone scope, which by definition has none. Why proceed: any remaining 554D SIMs move from Android's generic IPV4V6 request to the emergency request that T-Mobile's own current config, every T-Mobile SIM and every current Ultra/Mint SIM already send on the same network. Seven other lines checked: Cape GID 2273 on 206/01, 302/220, 311/588 and 314/560 gains a row, and on 208/01 and 525/05 is a new scope, in every case with sos IPV4V6/IPV4V6 and no attribute that changes the request. 302/222 Koodo GID 4B4F loses its default-equal row and falls back to Android's default. All seven send the same request as before (android_default).",
+  "read_at": "2026-10-28T21:41:36Z",
+  "reader": "independent F5 reader (Claude subagent, not the builder)",
+  "schema": "x1s-ocd-f5-read.v1",
+  "sources_read": [
+    "4ec97b0b3653f69abccf7d445919393544711f38:generated/android/apns-conf.xml lines 9255-9281 (plain 310/240), 9441-9443 (GID 554D), 9863-9879 (GID 756D)",
+    "c88113047bb8df5793cfba01e49386d1cf73eb50:generated/android/apns-conf.xml lines 9259-9285 (plain 310/240), 9864-9881 (GID 756D); emergency rows of 206/01, 208/01, 302/220, 302/222, 311/588, 314/560, 525/05 GID 2273/4B4F (lines 552, 808, 7409, 7435-7436, 13969, 14934, 22469)",
+    "f5_read.py lines output on both files (8 lines, digest a65c163bac29db48) and the structured old/new emergency keys per line",
+    "4ec97b0b3653f69abccf7d445919393544711f38:carriers/open/310240.7b64302a63ff.json (whole file, GID1 554D Ultra/Mint Mobile)",
+    "git diff 4ec97b0b..c8811304 -- carriers/open/310240.c91e286b3448.json carriers/open/310240.cd71cd179976.json; match selectors of the six remaining 310240 Ultra/Mint profiles",
+    "generated/evidence-index.json at both commits: source_snapshots, profile open.310240.7b64302a63ff (base only), withdrawn_profiles",
+    "git diff 4ec97b0b..c8811304 -- generated/android/metadata.json (open.310240.7b64302a63ff and open.310260.70b9dc18219d leave)",
+    "c88113047bb8df5793cfba01e49386d1cf73eb50:generated/ocd-dataset/google-lane.json rules for 310/240 (ultra_us GID1 list, tmobile_us)",
+    "c88113047bb8df5793cfba01e49386d1cf73eb50:tools/generate_android_outputs.py lines 918-1060 (S1-A: emergency_default_in_effect, emergency_stated, emergency_reason, leave_out_emergency) and generator records of the head for the 310/240 emergency rows (_current, _support)",
+    "worktrees-r31/public tools/f5_read.py lines 1-134, 151-305 (rules, emergency_items, fallback_scope, Context, judge); Context(head tree) stated sets for 310/240 plain, GID 554d, GID 756d",
+    "worktrees-r31/public tools/check_phone_guard.py lines 40-130, 400-500 (ANDROID_DEFAULT_EIMS, emergency_key, emergency_labels)",
+    "live-private/candidates/apple-carrier-bundles/apple-carrier-bundles/310240.ultra-mint-mobile.*.json (12 files, GID1 lists and sos rows)",
+    "live-private/candidates/google-carriersettings-protobuf/google-carriersettings-protobuf/310240.tmobile-us.*.json (4 files, emergency row)",
+    "live-private/candidates/lineage-apn/lineage-apn/310260.univision-mobile.*.json; live-private/candidates/sony-open-devices-aosp/profiles-0.json around line 19001",
+    "lineage-23.2-x1s/vendor/apn/US.xml (310/240 and 310/260 emergency and 554d rows, T-Mobile Emergency near line 1102)",
+    "lineage-23.2-x1s/frameworks/opt/telephony/src/java/com/android/internal/telephony/data/DataProfileManager.java lines 340-390, 680-705",
+    "lineage-23.2-x1s/frameworks/base/telephony/java/android/telephony/data/ApnSetting.java lines 980-992",
+    "lineage-23.2-x1s/frameworks/opt/telephony/src/java/com/android/internal/telephony/RILUtils.java lines 1025-1045",
+    "lineage-23.2-x1s/hardware/interfaces/radio/aidl/android/hardware/radio/data/DataProfileInfo.aidl lines 137-141",
+    "lineage-23.2-x1s/packages/providers/TelephonyProvider/src/com/android/providers/telephony/TelephonyProvider.java lines 4944-5045"
+  ],
+  "verdict": "proceed"
+}

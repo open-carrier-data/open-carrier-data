@@ -110,6 +110,19 @@ class RulesTest(unittest.TestCase):
         same = emergency(extra=' mvno_type="spn" mvno_match_data="Brand"')
         self.assertEqual(read(xml(INTERNET, IMS, emergency()), xml(INTERNET, IMS, emergency(), same))["verdict"], "no_lines")
 
+    def test_a_gone_mvno_scope_is_read_against_the_row_it_falls_back_to(self) -> None:
+        """Rules 2: the fallback scope's stated row passes a gone MVNO scope
+        (publish #321: 310/240 GID 554d falling back to T-Mobile's sos IPV6)."""
+        carrier_sos = emergency("sos", "IPV6", "IPV4V6")
+        mvno = 'carrier="Brand" mcc="999" mnc="01" apn="brand" type="default,supl" protocol="IPV4V6" roaming_protocol="IPV4V6" mvno_type="gid" mvno_match_data="554D"'
+        base, head = xml(INTERNET, IMS, carrier_sos, mvno), xml(INTERNET, IMS, carrier_sos)
+        result = read(base, head)
+        self.assertEqual(result["lines"][0].split("|")[:2], [f5.GONE_SCOPE, "999/01 GID 554d"])
+        self.assertEqual((result["verdict"], result["findings"][0]["rule"]), ("hold", "not_stated"))
+        stated = Ctx(stated={("999", "01", "", ""): {("sos", "IPV6", "IPV4V6")}})
+        result = read(base, head, stated)
+        self.assertEqual((result["verdict"], result["findings"][0]["rule"]), ("proceed", "stated"))
+
     def test_the_lines_digest_is_the_pin_steps(self) -> None:
         result = read(xml(INTERNET, IMS), xml(INTERNET, IMS, emergency("sos", "IPV6", "IPV6")))
         text = "".join(line + "\n" for line in sorted(result["lines"]))

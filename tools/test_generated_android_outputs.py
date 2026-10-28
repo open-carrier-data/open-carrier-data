@@ -2516,6 +2516,87 @@ def check_data_device_values() -> None:
         )
 
 
+def check_old_selector_superseded() -> None:
+    """Round 32, D7: a profile the evidence index flags
+    old_selector_superseded keeps its file, counts for data_digest, and
+    leaves apns-conf.xml, carrier-config-list.xml and lookup.json; the
+    validator accepts the flag only on a Samsung-only selector profile and
+    refuses a lookup that still lists it."""
+    plain = {
+        "schema_version": 1,
+        "profile_id": "open.53099.000000000001",
+        "display_name": "Spark NZ",
+        "match": {"mccmnc": ["53099"]},
+        "capabilities": {},
+        "android_apns": [{"name": "Spark", "apn": "internet", "types": ["default", "supl"]}],
+    }
+    old = {
+        "schema_version": 1,
+        "profile_id": "open.53099.000000000002",
+        "display_name": "Spark NZ",
+        "match": {"mccmnc": ["53099"], "spn": ["Spark NZ"]},
+        "capabilities": {},
+        "android_apns": [{"name": "Spark old", "apn": "direct", "types": ["default", "supl"]}],
+        "android_carrier_config": {"carrier_volte_available_bool": True},
+    }
+    flag = {"section": "match", "key": "selector", "flag": "old_selector_superseded"}
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        carriers = root / "carriers" / "open"
+        carriers.mkdir(parents=True)
+        for profile in (plain, old):
+            (carriers / f"{profile['profile_id'][5:]}.json").write_text(json.dumps(profile), encoding="utf-8")
+        generated = root / "generated"
+        (generated / "android").mkdir(parents=True)
+        evidence_path = generated / "evidence-index.json"
+
+        def generate(flagged: bool) -> tuple[str, dict, str]:
+            evidence = {
+                "profiles": [
+                    {"profile_id": plain["profile_id"], "sources": ["google_carriersettings"]},
+                    {"profile_id": old["profile_id"], "sources": ["samsung_omc"], **({"flags": [flag]} if flagged else {})},
+                ]
+            }
+            evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
+            generate_android_outputs.main(["generate", str(root / "carriers"), str(generated)])
+            return (
+                (generated / "android" / "apns-conf.xml").read_text(encoding="utf-8"),
+                load_json(generated / "android" / "lookup.json"),
+                (generated / "android" / "carrier-config-list.xml").read_text(encoding="utf-8"),
+            )
+
+        apns, lookup, config = generate(False)
+        assert_true('apn="direct"' in apns and "Spark NZ" in config, "an unflagged selector profile is served")
+        assert_true(len(lookup["profiles"]) == 2, "an unflagged selector profile is in lookup.json")
+        apns, lookup, config = generate(True)
+        assert_true('apn="direct"' not in apns and 'apn="internet"' in apns, f"the flagged profile left apns-conf.xml: {apns}")
+        assert_true("carrier_volte_available_bool" not in config, "the flagged profile left carrier-config-list.xml")
+        assert_true(
+            [item["profile_id"] for item in lookup["profiles"]] == [plain["profile_id"]],
+            f"the flagged profile left lookup.json: {lookup['profiles']}",
+        )
+        assert_true(
+            generate_android_outputs.superseded_selector_ids(evidence_path) == {old["profile_id"]},
+            "the generator reads the flag from the evidence index",
+        )
+        assert_true(
+            validate_public_carrier_data.superseded_selector_ids(evidence_path) == {old["profile_id"]},
+            "the validator reads the same flag",
+        )
+
+    def flags_valid(sources: list[str], key: str = "selector") -> bool:
+        evidence = {"sources": sources, "flags": [{**flag, "key": key}]}
+        try:
+            validate_public_carrier_data.validate_flags(Path("x.json"), evidence, 0, None, None)
+        except validate_public_carrier_data.ValidationError:
+            return False
+        return True
+
+    assert_true(flags_valid(["samsung_omc"]), "the flag is valid on a Samsung-only profile")
+    assert_true(not flags_valid(["lineageos", "samsung_omc"]), "the flag needs Samsung as the only source")
+    assert_true(not flags_valid(["samsung_omc"], "spn"), "the flag names the selector")
+
+
 def check_superseded_pack_values() -> None:
     """A Samsung value that only carrier packs superseded for the fact's type
     give, with old builds (superseded_pack_sources), is not a current
@@ -3725,9 +3806,20 @@ def check_vendor_mms_first() -> None:
         for mccmnc, items in scopes.items()
         for row, _ in items
     )
+    # Round 33: no row other than those marked _left_out_stored_with_internet
+    # is removed (here 274/12's stale MMS-only internet.tal.is row).
+    left_out = sorted(
+        (record.get("mcc", "") + record.get("mnc", ""), record["apn"], ())
+        for record in rows.mms_absorbed_left_out
+        if record.get("_left_out_stored_with_internet")
+    )
+    for item in left_out:
+        given_without_mms.remove(item)
     assert_true(
-        len(rows.records) == sum(len(items) for items in scopes.values()) and without_mms == given_without_mms,
-        f"no row is removed and no type other than mms changes: {without_mms} != {given_without_mms}",
+        left_out == [("27412", "internet.tal.is", ())]
+        and len(rows.records) == sum(len(items) for items in scopes.values()) - len(left_out)
+        and without_mms == given_without_mms,
+        f"no row other than those marked _left_out_stored_with_internet is removed and no type other than mms changes: {left_out}, {without_mms} != {given_without_mms}",
     )
 
     # Round 16: the rows Android stores as one. Each shape is read on the
@@ -3821,19 +3913,17 @@ def check_vendor_mms_first() -> None:
         and mms_everywhere("45400") == {("globalcall", "http://192.168.58.171:8002", "192.168.59.51", 8080)},
         f"454/00 GID shape: phone MMS tuple, leads and credentials do not depend on which group row is last: {phone_mms(gid_lines, '45400')}",
     )
-    # 4. 274/12, still open: the stale MMS twin is stored with the internet
-    #    row, step 3 stops there, and the phone keeps sending MMS over
-    #    internet.tal.is with the vendor's MMSC.
+    # 4. 274/12 (round 33): the stale MMS twin stored with the internet row
+    #    is left out, and the phone sends MMS over the vendor's mms.tal.is.
     assert_true(
         labels["27412"]
         == [
-            ("internet.tal.is", "mms", "Tal"),
             ("internet.tal.is", "default,supl", "internet.tal.is"),
             ("mms.tal.is", "mms", "Tal MMS"),
         ]
         and ("27412", "mms.tal.is") not in moved
-        and mms_everywhere("27412") == {("internet.tal.is", "http://mms.tal.is/servlets/mms", "213.167.138.210", 8080)},
-        f"274/12: nothing changes, the internet row keeps MMS (round 6 question 7): {labels['27412']}, {mms_everywhere('27412')}",
+        and mms_everywhere("27412") == {("mms.tal.is", "http://mms.tal.is/servlets/mms", "213.167.138.210", 8080)},
+        f"274/12: the stale twin is left out, MMS goes to mms.tal.is (round 33): {labels['27412']}, {mms_everywhere('27412')}",
     )
     # 5. Invariants in every scope: the first internet row stays, and with
     #    the moved row taken out, every other stored row is written as
@@ -3868,9 +3958,20 @@ def check_vendor_mms_first() -> None:
             or identity(first_internet) == identity(written_internet),
             f"{mccmnc}: the first internet row stays: {scope(mccmnc)}",
         )
+        # Round 33: rows left out with the internet row's stored row are not
+        # written; every other row keeps its order.
+        left_out_ids = {
+            identity(record)
+            for record in rows.mms_absorbed_left_out
+            if record.get("_left_out_stored_with_internet") and record.get("mcc", "") + record.get("mnc", "") == mccmnc
+        }
         assert_true(
             [identity(record) for record in written if generate_android_outputs.android_unique_key(record) not in moved_keys]
-            == [identity(record) for record in plain if generate_android_outputs.android_unique_key(record) not in moved_keys],
+            == [
+                identity(record)
+                for record in plain
+                if generate_android_outputs.android_unique_key(record) not in moved_keys and identity(record) not in left_out_ids
+            ],
             f"{mccmnc}: the other stored rows keep their order: {scope(mccmnc)}",
         )
 
@@ -3881,6 +3982,348 @@ def check_vendor_mms_first() -> None:
         and generate_android_outputs.apn_row_network_types({}) == generate_android_outputs.MMS_NETWORK_TYPES
         and generate_android_outputs.apn_row_network_types({"bearer_bitmask": "13"}) == frozenset(),
         "network types: Wi-Fi and eHRPD serve none, LTE and NR stay, no bitmask serves all",
+    )
+
+
+@contextlib.contextmanager
+def without_step_2b():
+    """put_vendor_mms_first with step 2b (take_mms_off_internet_group, round
+    33) switched off, to compare its output with and without the step."""
+    original = generate_android_outputs.take_mms_off_internet_group
+    generate_android_outputs.take_mms_off_internet_group = lambda ranked, internet, vendor: 0
+    try:
+        yield
+    finally:
+        generate_android_outputs.take_mms_off_internet_group = original
+
+
+def check_internet_stored_row_mms() -> None:
+    """Rule decisions round 33, change 18 step 2b (round 6 question 7, the
+    internet row's own stored row). A row Android stores with the first
+    internet row (the same android_unique_key) that serves "mms" makes that
+    stored row serve "mms", so MMS goes over the internet APN. When all six
+    checks of take_mms_off_internet_group hold, "mms" comes off the group's
+    other rows; a row with other types keeps them, and a row whose only type
+    is "mms" is left out of apns-conf.xml. When one fails, the scope is
+    written exactly as without the step. Read through apn_xml_rows and the
+    phone model, with DataProfileManager's merge on and off, on all 11
+    network types."""
+
+    google = "google_carriersettings"
+    samsung = "samsung_omc"
+    apple = "apple_carrier_bundles"
+    mmsc_452 = "http://203.162.21.114/mmsc"
+    mmsc_example = "http://mms.example/mms"
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    def tal_shape() -> list[tuple[dict, object]]:
+        return [
+            (
+                apn("internet.tal.is", ("default", "supl"), authtype=1, mmsc="http://mms.tal.is/servlets/mms",
+                    mmsproxy="213.167.138.210", mmsport=8080),
+                (samsung,),
+            ),
+            (
+                apn("internet.tal.is", ("mms",), name="Tal", mmsc="http://mms.tal.is/servlets/mms",
+                    mmsproxy="213.167.138.210", mmsport=8080),
+                ("lineageos", "sony_open_devices_aosp"),
+            ),
+            (
+                apn("mms.tal.is", ("mms",), name="Tal MMS", authtype=1, mmsc="http://mms.tal.is/servlets/mms",
+                    mmsproxy="213.167.138.210", mmsport=8080),
+                (samsung,),
+            ),
+        ]
+
+    def mobifone_shape() -> list[tuple[dict, object]]:
+        return [
+            (
+                apn("m-wap", ("default",), authtype=1, user="mms", password="mms", protocol="IPV4V6",
+                    mmsc=mmsc_452, mmsproxy="203.162.21.114", mmsport=8080),
+                (google, samsung, "lineageos"),
+            ),
+            (
+                apn("m-wap", ("dun", "mms"), name="Mobifone", user="mms", password="mms", protocol="IPV4V6",
+                    mmsc=mmsc_452, mmsproxy="203.162.21.114", mmsport=8080),
+                (apple,),
+            ),
+            (
+                apn("m-i090", ("mms",), name="Mobi-gprs-mms", authtype=1, user="mms", password="mms",
+                    mmsc=mmsc_452, mmsproxy="203.162.21.114", mmsport=8080),
+                (google, "lineageos"),
+            ),
+            (
+                apn("m-i090", ("mms",), user="mms", password="mms", protocol="IPV4V6",
+                    mmsc=mmsc_452, mmsproxy="203.162.21.114", mmsport=8080),
+                (samsung,),
+            ),
+        ]
+
+    scopes: dict[str, list[tuple[dict, object]]] = {
+        # 452/01 (MobiFone), the held publish of digest 1491f56ec56e2140:
+        # Apple's 2026-10-26 bundle gives its m-wap dun,mms row IPV4V6, so it
+        # has the internet row's key. Google and Samsung give m-i090 for MMS,
+        # Samsung m-wap only for default.
+        "45201": mobifone_shape(),
+        # 274/12 (Tal): a stale LineageOS/Sony MMS-only row with the key of
+        # Samsung's internet row; only the APN name differs from Samsung's
+        # mms.tal.is.
+        "27412": tal_shape(),
+        # Check 3, the 257/02 shape: a current vendor backs the group's mms
+        # row, so the group's MMS setting is a vendor's and nothing changes.
+        "25702": [
+            (apn("mts", ("default",), authtype=1, user="mts", password="mts", mmsc="http://mmsc",
+                 mmsproxy="192.168.192.168", mmsport=8080), (google, samsung)),
+            (apn("mts", ("dun", "mms"), user="mts", password="mts", mmsc="http://mmsc",
+                 mmsproxy="192.168.192.168", mmsport=8080), {"dun": (apple,), "mms": (samsung,)}),
+            (apn("mts", ("mms",), name="MTS MMS", authtype=1, user="mts", password="mts", mmsc="http://mmsc",
+                 mmsproxy="192.168.192.192", mmsport=8080), (google,)),
+        ],
+        # Check 4, coverage: the only vendor MMS row serves LTE and NR, the
+        # stored internet row every network type, so nothing changes.
+        "26299": [
+            (apn("web.example", ("default",), authtype=1, mmsc="http://mms.old.example"), (google,)),
+            (apn("web.example", ("dun", "mms"), mmsc="http://mms.old.example"), (apple,)),
+            (apn("mms.lte.example", ("mms",), mmsc="http://mms.lte.example", bearer_bitmask="14|20"), (google,)),
+        ],
+        # A current vendor backs the stale row for another type ("dun") only:
+        # it loses "mms" and keeps "dun".
+        "26298": [
+            (apn("web.example", ("default",), authtype=1, mmsc="http://mms.old.example"), (google,)),
+            (apn("web.example", ("dun", "mms"), mmsc="http://mms.old.example"), {"dun": (samsung,), "mms": (apple,)}),
+            (apn("mms.example", ("mms",), mmsc="http://mms.example"), (google,)),
+        ],
+        # Check 6, the safety judge's probe (bitmask_probe.py): a stale
+        # MMS-only row with no bitmask, stored with an LTE-only internet row.
+        # Left out, it would leave the phone with internet on LTE only.
+        "27499": [
+            (apn("web.example", ("default", "supl"), authtype=1, mmsc=mmsc_example, mmsproxy="10.0.0.1",
+                 mmsport=8080, bearer_bitmask="14"), (samsung,)),
+            (apn("web.example", ("mms",), name="Old", mmsc=mmsc_example, mmsproxy="10.0.0.1", mmsport=8080),
+             ("lineageos",)),
+            (apn("mms.example", ("mms",), name="MMS", authtype=1, mmsc=mmsc_example, mmsproxy="10.0.0.1",
+                 mmsport=8080), (samsung,)),
+        ],
+        # Check 6: a stale MMS-only row that fills a username into the
+        # internet lead (round 32 D8 rule 2). Left out, it would take the
+        # username with it.
+        "27498": [
+            (apn("web.fill", ("default", "supl"), mmsc=mmsc_example, mmsproxy="10.0.0.2", mmsport=8080),
+             (samsung,)),
+            (apn("web.fill", ("mms",), name="Old fill", user="olduser", mmsc=mmsc_example, mmsproxy="10.0.0.2",
+                 mmsport=8080), ("lineageos",)),
+            (apn("mms.fill", ("mms",), name="MMS fill", mmsc=mmsc_example, mmsproxy="10.0.0.2", mmsport=8080),
+             (samsung,)),
+        ],
+        # Check 5: persist_apns_for_plmn networks, where TelephonyProvider can
+        # keep the rows apart. The Tal shape (a leave-out) on 204/04 and the
+        # MobiFone shape (a retype) on 311/480 stay as without the step.
+        "20404": tal_shape(),
+        "311480": mobifone_shape(),
+    }
+    unchanged = ("25702", "26299", "27499", "27498", "20404", "311480")
+
+    def sources_for(sources: object, apn_type: str) -> tuple[str, ...]:
+        return sources[apn_type] if isinstance(sources, dict) else sources  # type: ignore[index,return-value]
+
+    profiles = []
+    records = []
+    for mccmnc, rows in scopes.items():
+        profile_id = validate_public_carrier_data.canonical_profile_id({"mccmnc": [mccmnc]})
+        profiles.append(
+            {"profile_id": profile_id, "display_name": profile_id, "match": {"mccmnc": [mccmnc]},
+             "android_apns": [row for row, _ in rows]}
+        )
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type),
+             "sources": sorted(sources_for(sources, apn_type))}
+            for row, sources in rows
+            for apn_type in row["types"]
+        ]
+        records.append(
+            {"profile_id": profile_id, "sources": sorted({s for fact in facts for s in fact["sources"]}),
+             "fact_sources": sorted(facts, key=lambda fact: fact["key"])}
+        )
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+        result = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+        with without_step_2b():
+            plain = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+
+    def in_scope(record: dict, mccmnc: str) -> bool:
+        return record.get("mcc", "") + record.get("mnc", "") == mccmnc
+
+    def written(mccmnc: str, rows: object = None) -> list[tuple[str, str, str]]:
+        return [(r["apn"], r["type"], r.get("carrier", "")) for r in (rows or result).records if in_scope(r, mccmnc)]
+
+    def lines_of(mccmnc: str, rows: object = None) -> list[str]:
+        return [generate_android_outputs.apn_row_line(r) for r in (rows or result).records if in_scope(r, mccmnc)]
+
+    def phone(mccmnc: str, rows: object = None) -> dict[str, set]:
+        """On all 11 network types, with the merge on and off: the MMS
+        tuples, the internet and attach leads (lead_key), the network types
+        with an internet lead, and the first dun profiles."""
+        tables = android_phone_model.provider(android_phone_model.parse_lines(lines_of(mccmnc, rows)))
+        stored = android_phone_model.scope_rows(tables, (mccmnc[:3], mccmnc[3:], "", ""))
+        out: dict[str, set] = {"mms": set(), "internet": set(), "attach": set(), "internet_types": set(), "dun": set()}
+        for dedupe in (True, False):
+            settings = android_phone_model.profiles(stored, dedupe=dedupe)
+            for name, network_type in android_phone_model.ALL_NETWORK_TYPES.items():
+                internet, mms_profile, attach = android_phone_model.leads(settings, network_type)
+                out["mms"].add(android_phone_model.mms_of(mms_profile, stored))
+                out["internet"].add(android_phone_model.lead_key(internet))
+                out["attach"].add(android_phone_model.lead_key(attach))
+                if internet is not None:
+                    out["internet_types"].add(name)
+            out["dun"].add(next((p["apn"] for p in settings if "dun" in p["types"]), None))
+        return out
+
+    def given(mccmnc: str) -> list[tuple[str, str]]:
+        return sorted((row["apn"], ",".join(row["types"])) for row, _ in scopes[mccmnc])
+
+    # 452/01: phone MMS goes back to the vendors' m-i090 tuple; Apple's
+    # m-wap row keeps "dun" and the dun profile stays.
+    phone_45201 = phone("45201")
+    assert_true(
+        phone_45201["mms"] == {("m-i090", mmsc_452, "203.162.21.114", 8080)},
+        f"452/01: phone MMS is Google's m-i090 tuple with the merge on and off: {phone_45201['mms']}, {written('45201')}",
+    )
+    apple_rows = [(value, types) for value, types, label in written("45201") if label == "Mobifone"]
+    assert_true(apple_rows == [("m-wap", "dun")], f"452/01: Apple's m-wap row after the step: {apple_rows}")
+    assert_true(phone_45201["dun"] == {"m-wap"}, f"452/01: the dun profile: {phone_45201['dun']}")
+    # 274/12: the stale twin is left out and MMS goes to mms.tal.is.
+    phone_27412 = phone("27412")
+    assert_true(
+        phone_27412["mms"] == {("mms.tal.is", "http://mms.tal.is/servlets/mms", "213.167.138.210", 8080)},
+        f"274/12: phone MMS: {phone_27412['mms']}, {written('27412')}",
+    )
+    assert_true(
+        sorted((v, t) for v, t, _ in written("27412")) == [("internet.tal.is", "default,supl"), ("mms.tal.is", "mms")],
+        f"274/12: rows written: {written('27412')}",
+    )
+    # In both changed scopes the internet and attach leads are the same as
+    # without the step on all 11 network types.
+    for mccmnc in ("45201", "27412"):
+        now, before = phone(mccmnc), phone(mccmnc, plain)
+        assert_true(
+            (now["internet"], now["attach"], now["internet_types"])
+            == (before["internet"], before["attach"], before["internet_types"]),
+            f"{mccmnc}: the internet and attach leads do not change: {now} != {before}",
+        )
+    # Checks 3 to 6: the scope is written exactly as without the step.
+    for mccmnc in unchanged:
+        assert_true(
+            lines_of(mccmnc) == lines_of(mccmnc, plain) and sorted((v, t) for v, t, _ in written(mccmnc)) == given(mccmnc),
+            f"{mccmnc}: nothing changes: {written(mccmnc)} != {written(mccmnc, plain)}",
+        )
+    # The probe: internet stays on all 11 network types (the stale row's
+    # missing bitmask widens the stored row), and the username stays.
+    probe = phone("27499")
+    assert_true(
+        probe["internet_types"] == set(android_phone_model.ALL_NETWORK_TYPES)
+        and {key[0] for key in probe["internet"]} == {"web.example"},
+        f"27499: internet on all 11 network types: {probe['internet_types']}, {probe['internet']}",
+    )
+    fill = phone("27498")
+    assert_true(
+        {key[3] for key in fill["internet"]} == {"olduser"},
+        f"27498: the internet lead keeps the username the stale row fills in: {fill['internet']}",
+    )
+    marks = {
+        (r.get("mcc", "") + r.get("mnc", ""), r["apn"], mark)
+        for r in list(result.records) + list(result.mms_absorbed_left_out)
+        for mark in ("_mms_left_out_stored_with_internet", "_left_out_stored_with_internet")
+        if r.get(mark)
+    }
+    assert_true(
+        marks
+        == {
+            ("45201", "m-wap", "_mms_left_out_stored_with_internet"),
+            ("26298", "web.example", "_mms_left_out_stored_with_internet"),
+            ("27412", "internet.tal.is", "_left_out_stored_with_internet"),
+        },
+        f"the changed rows are marked for --explain: {marks}",
+    )
+    assert_true(
+        [r["apn"] for r in result.mms_absorbed_left_out if r.get("_left_out_stored_with_internet")] == ["internet.tal.is"]
+        and result.mms_left_out == plain.mms_left_out + 2,
+        f"metadata counts: {result.mms_left_out} retyped, {[r['apn'] for r in result.mms_absorbed_left_out]} left out",
+    )
+    # No internet row changes: the first internet row of every scope is the
+    # same row with the same types as given.
+    for mccmnc, rows in scopes.items():
+        first = next(r for r in result.records if in_scope(r, mccmnc) and "default" in r["type"].split(","))
+        assert_true(
+            (first["apn"], first["type"]) == (rows[0][0]["apn"], ",".join(rows[0][0]["types"])),
+            f"{mccmnc}: the first internet row stays: {written(mccmnc)}",
+        )
+
+
+def check_step_2b_keeps_internet_rows() -> None:
+    """Round 33: over the whole dataset in this checkout (carriers/ and
+    generated/evidence-index.json), each scope's first internet row is the
+    same row, with the same types and values, with and without step 2b, and
+    no internet or attach lead changes on the phone on any of the 11 network
+    types. Step 2b changes only "mms" on the other rows of the internet
+    row's stored row, and leaves out only MMS-only rows whose sole effect on
+    it is that type."""
+    repository = Path(__file__).resolve().parents[1]
+    evidence_path = repository / "generated" / "evidence-index.json"
+    profile_paths = generate_android_outputs.profile_paths(repository / "carriers")
+    if not profile_paths or not evidence_path.exists():
+        raise AssertionError("the dataset-wide step 2b test needs carriers/ and generated/evidence-index.json")
+    profiles = [load_json(path) for path in profile_paths]
+    evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+    put_vendor_mms_first = generate_android_outputs.put_vendor_mms_first
+
+    def run() -> tuple[dict, dict]:
+        internet_rows: dict[tuple, dict] = {}
+
+        def capture(ranked: list[dict]) -> tuple[list[dict], int]:
+            result = put_vendor_mms_first(ranked)
+            internet = next(
+                (r for r in ranked if "default" in generate_android_outputs.apn_row_types(r["type"])), None
+            )
+            if internet is not None:
+                internet_rows[generate_android_outputs.apn_scope_key(internet)] = internet
+            return result
+
+        generate_android_outputs.put_vendor_mms_first = capture
+        try:
+            rows = generate_android_outputs.apn_xml_rows(deepcopy(profiles), evidence)
+        finally:
+            generate_android_outputs.put_vendor_mms_first = put_vendor_mms_first
+        written_ids = {id(record) for record in rows.records}
+        firsts = {
+            scope: (generate_android_outputs.written_attributes(record), id(record) in written_ids)
+            for scope, record in internet_rows.items()
+        }
+        state, _ = android_phone_model.phone_state(
+            android_phone_model.parse_lines(generate_android_outputs.apn_row_line(r) for r in rows.records),
+            android_phone_model.ALL_NETWORK_TYPES,
+        )
+        leads = {
+            scope: {name: (per_type[name][0], per_type[name][2]) for name in per_type}
+            for scope, per_type in state.items()
+        }
+        return firsts, leads
+
+    firsts, leads = run()
+    with without_step_2b():
+        plain_firsts, plain_leads = run()
+    changed = sorted(str(scope) for scope in set(firsts) | set(plain_firsts) if firsts.get(scope) != plain_firsts.get(scope))
+    assert_true(
+        len(firsts) > 1000 and not changed and all(kept for _, kept in firsts.values()),
+        f"each scope's first internet row is written, the same with and without step 2b: {changed[:20]}",
+    )
+    moved = sorted(str(scope) for scope in set(leads) | set(plain_leads) if leads.get(scope) != plain_leads.get(scope))
+    assert_true(
+        not moved,
+        f"no internet or attach lead changes with step 2b on any of the 11 network types: {moved[:20]}",
     )
 
 
@@ -6140,6 +6583,7 @@ def main() -> int:
     check_data_device_values()
     print("data-device pack tests passed")
     check_superseded_pack_values()
+    check_old_selector_superseded()
     print("superseded pack tests passed")
     check_shared_file_and_malformed_values()
     print("shared-file and malformed APN value tests passed")
@@ -6152,6 +6596,10 @@ def main() -> int:
     check_superseded_google_credentials()
     check_vendor_mms_first()
     print("vendor MMS row tests passed")
+    check_internet_stored_row_mms()
+    print("internet stored row MMS tests passed (round 33)")
+    check_step_2b_keeps_internet_rows()
+    print("dataset-wide first internet row tests passed (round 33)")
     check_leave_out_absorbed_mms()
     print("absorbed MMS row tests passed")
     check_emergency_rows()

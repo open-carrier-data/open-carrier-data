@@ -614,6 +614,89 @@ def check_explain_absorbed_mms() -> None:
     assert metadata["omissions"]["mms_rows_left_out_absorbed_by_android"] == 1, metadata["omissions"]
 
 
+def check_explain_internet_stored_row_mms() -> None:
+    """--explain marks step 2b's rows (rule round 33): a row stored with the
+    first internet row that lost "mms" (mms_left_out_stored_with_internet)
+    and an MMS-only one left out of apns-conf.xml
+    (left_out_stored_with_internet), which metadata.json counts with step
+    9's rows."""
+    cases = {
+        # 274/12 shape: a stale MMS-only twin of Samsung's internet row.
+        "27412": (
+            [
+                {"name": "internet.tal.is", "apn": "internet.tal.is", "types": ["default", "supl"], "authtype": 1,
+                 "mmsc": "http://mms.tal.is/servlets/mms", "mmsproxy": "213.167.138.210", "mmsport": 8080},
+                {"name": "Tal", "apn": "internet.tal.is", "types": ["mms"],
+                 "mmsc": "http://mms.tal.is/servlets/mms", "mmsproxy": "213.167.138.210", "mmsport": 8080},
+                {"name": "Tal MMS", "apn": "mms.tal.is", "types": ["mms"], "authtype": 1,
+                 "mmsc": "http://mms.tal.is/servlets/mms", "mmsproxy": "213.167.138.210", "mmsport": 8080},
+            ],
+            [{"default": ["samsung_omc"], "supl": ["samsung_omc"]}, {"mms": ["lineageos"]}, {"mms": ["samsung_omc"]}],
+        ),
+        # 452/01 shape: Apple's dun,mms row with the internet row's key.
+        "45201": (
+            [
+                {"name": "m-wap", "apn": "m-wap", "types": ["default"], "authtype": 1, "user": "mms", "password": "mms",
+                 "mmsc": "http://203.162.21.114/mmsc", "mmsproxy": "203.162.21.114", "mmsport": 8080},
+                {"name": "Mobifone", "apn": "m-wap", "types": ["dun", "mms"], "user": "mms", "password": "mms",
+                 "mmsc": "http://203.162.21.114/mmsc", "mmsproxy": "203.162.21.114", "mmsport": 8080},
+                {"name": "Mobi-gprs-mms", "apn": "m-i090", "types": ["mms"], "authtype": 1, "user": "mms", "password": "mms",
+                 "mmsc": "http://203.162.21.114/mmsc", "mmsproxy": "203.162.21.114", "mmsport": 8080},
+            ],
+            [{"default": ["google_carriersettings"]}, {"dun": ["apple_carrier_bundles"], "mms": ["apple_carrier_bundles"]},
+             {"mms": ["google_carriersettings"]}],
+        ),
+    }
+    results = {}
+    for mccmnc, (apns, sources) in cases.items():
+        plain = carrier({"mccmnc": [mccmnc]}, {}, android_apns=apns)
+        facts = [
+            {"section": "android_apns", "key": generate_android_outputs.apn_fact_key(row, apn_type), "sources": group[apn_type]}
+            for row, group in zip(apns, sources)
+            for apn_type in row["types"]
+        ]
+        evidence = {
+            "schema_version": 1,
+            "description": "Test evidence.",
+            "source_snapshots": [],
+            "profiles": [
+                {
+                    "profile_id": plain["profile_id"],
+                    "observation_count": len(apns),
+                    "verified_observation_count": 0,
+                    "sources": sorted({source for fact in facts for source in fact["sources"]}),
+                    "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                    "capability_sources": {},
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_json(root / "carriers" / validate_public_carrier_data.public_path_for(plain["profile_id"]), plain)
+            write_json(root / "generated" / "evidence-index.json", evidence)
+            with contextlib.redirect_stdout(io.StringIO()):
+                generate_android_outputs.main(
+                    ["generate_android_outputs.py", str(root / "carriers"), str(root / "generated")]
+                )
+            lookup = json.loads((root / "generated" / "android" / "lookup.json").read_text(encoding="utf-8"))
+            result = resolver.explain(lookup, {"mccmnc": mccmnc}, root, root / "generated" / "evidence-index.json")
+            metadata = json.loads((root / "generated" / "android" / "metadata.json").read_text(encoding="utf-8"))
+        results[mccmnc] = (
+            [(row["row"]["apn"], row["row"]["type"], row["reasons"]["mms_left_out_stored_with_internet"])
+             for row in result["apns"]["rows"]],
+            [(row["row"]["apn"], row["row"]["type"], row["reasons"]["absorbed_mms_left_out"],
+              row["reasons"]["left_out_stored_with_internet"]) for row in result["apns"]["left_out"]],
+            metadata["omissions"],
+        )
+    rows, left_out, omissions = results["27412"]
+    assert left_out == [("internet.tal.is", "mms", True, True)], left_out
+    assert not any(marked for _, _, marked in rows), rows
+    assert omissions["mms_rows_left_out_absorbed_by_android"] == 1, omissions
+    rows, left_out, omissions = results["45201"]
+    assert ("m-wap", "dun", True) in rows and left_out == [], (rows, left_out)
+    assert omissions["mms_types_left_out_not_vendor_backed"] == 1, omissions
+
+
 def check_explain_emergency() -> None:
     """--explain says why a row keeps "emergency" (emergency_basis), lists a
     row whose only type was "emergency" under left_out with its reason, and
@@ -684,6 +767,7 @@ def main() -> int:
     check_explain_vendor_mms()
     check_explain_superseded_google_credentials()
     check_explain_absorbed_mms()
+    check_explain_internet_stored_row_mms()
     check_explain_emergency()
     print("carrier profile resolver tests passed")
     return 0

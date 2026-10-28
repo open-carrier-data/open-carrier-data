@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-statements.schema.json",
+  "title": "Operator statements (generated/operators/statements.json)",
+  "description": "What operators, brands and MVNOs state on their own pages about MMS, VoLTE, Wi-Fi calling at home and abroad, VoLTE roaming, eSIM, 5G SA and VoNR (rule round 32, part A), CC0-1.0. Each statement names the page, the day it was read and the SHA-256 of the normalized passage it rests on, with a paraphrase, never quoted text or a phone number. Only a statement with sets_value true changes a value: a network-wide MMS end, checked by a second reader and live, which makes its networks' profiles publish mms unsupported and enabledMMS false from operator_statement. A statement lapses to unknown 180 days after its last confirmation or 365 after its last sweep. tools/validate_operators.py checks the file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "description",
+    "license",
+    "display_rule",
+    "countries",
+    "counts",
+    "mms_ended_networks",
+    "statements"
+  ],
+  "$defs": {
+    "code": {
+      "type": "string",
+      "pattern": "^[0-9]{5,6}$"
+    },
+    "own_words": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600,
+      "pattern": "^[^\"“”„‟«»@]*$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "publisher",
+        "kind",
+        "role",
+        "read_on",
+        "passage_sha256"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://[^\\s\"'<>]{4,500}$"
+        },
+        "publisher": {
+          "$ref": "#/$defs/own_words"
+        },
+        "kind": {
+          "enum": [
+            "operator",
+            "brand",
+            "mvno"
+          ]
+        },
+        "role": {
+          "enum": [
+            "admits",
+            "supports"
+          ]
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "read_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "passage_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "statement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "identity_key",
+        "operator",
+        "country",
+        "service",
+        "status",
+        "scope",
+        "mccmnc",
+        "host_only",
+        "checked_at",
+        "swept_at",
+        "paraphrase",
+        "second_check",
+        "sets_value",
+        "sources",
+        "history"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "identity_key": {
+          "type": "string",
+          "pattern": "^[a-z]{2}\\.[a-z0-9][a-z0-9-]{1,40}$"
+        },
+        "operator": {
+          "$ref": "#/$defs/own_words"
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "service": {
+          "enum": [
+            "mms",
+            "volte",
+            "wifi_calling",
+            "wifi_calling_abroad",
+            "volte_roaming",
+            "esim",
+            "5g_sa",
+            "vonr"
+          ]
+        },
+        "status": {
+          "enum": [
+            "offered",
+            "not_offered",
+            "ended",
+            "unknown"
+          ]
+        },
+        "previous_status": {
+          "enum": [
+            "offered",
+            "not_offered",
+            "ended"
+          ]
+        },
+        "lapsed": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason",
+            "since"
+          ],
+          "properties": {
+            "reason": {
+              "enum": [
+                "not_confirmed_180_days",
+                "not_swept_365_days"
+              ]
+            },
+            "since": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "scope": {
+          "enum": [
+            "network",
+            "brand"
+          ]
+        },
+        "mccmnc": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
+        "mmsc_hosts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$"
+          }
+        },
+        "host_only": {
+          "type": "boolean"
+        },
+        "last_day": {
+          "type": "string",
+          "format": "date"
+        },
+        "first_day_without": {
+          "type": "string",
+          "format": "date"
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "swept_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "paraphrase": {
+          "$ref": "#/$defs/own_words"
+        },
+        "second_check": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "on",
+                "verdict"
+              ],
+              "properties": {
+                "on": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "verdict": {
+                  "enum": [
+                    "confirmed",
+                    "disputed"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "sets_value": {
+          "type": "boolean"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "history": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "on",
+              "event",
+              "status"
+            ],
+            "properties": {
+              "on": {
+                "type": "string",
+                "format": "date"
+              },
+              "event": {
+                "enum": [
+                  "seeded",
+                  "read",
+                  "admitted",
+                  "refused",
+                  "lead",
+                  "second_check",
+                  "reread",
+                  "lapsed",
+                  "swept",
+                  "relaunched"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "offered",
+                  "not_offered",
+                  "ended",
+                  "unknown"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1200
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "display_rule": {
+      "type": "string",
+      "maxLength": 800
+    },
+    "countries": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statements",
+        "lapsed",
+        "sets_value"
+      ],
+      "properties": {
+        "statements": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lapsed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sets_value": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "mms_ended_networks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mccmnc",
+          "statement",
+          "first_day_without"
+        ],
+        "properties": {
+          "mccmnc": {
+            "$ref": "#/$defs/code"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "first_day_without": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "statements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/statement"
+      }
+    }
+  }
+}
