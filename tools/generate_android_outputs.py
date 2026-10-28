@@ -259,10 +259,13 @@ def apn_records(
 # published APN fact.
 
 # Lanes that copy one upstream list count as one source family, as in the
-# display-name vote: the two Google lanes; the LineageOS, Sony and Fairphone
-# lists, which descend from AOSP's list; and Samsung's two firmware lanes.
+# display-name vote: the two Google lanes and LineageOS's Pixel APN snapshot,
+# a copy of Google's Pixel list that LineageOS merges into its own at build
+# time since 2026-10-21; the LineageOS, Sony and Fairphone lists, which
+# descend from AOSP's list; and Samsung's two firmware lanes.
 APN_SOURCE_FAMILIES = {
     "google_pixel_vendor_carriersettings": "google_carriersettings",
+    "lineageos_pixel_apn_snapshot": "google_carriersettings",
     "lineageos": "aosp_apn_lists",
     "sony_open_devices_aosp": "aosp_apn_lists",
     "fairphone_official_source": "aosp_apn_lists",
@@ -280,6 +283,7 @@ PRIMARY_APN_SOURCES = frozenset(
         "google_carriersettings",
         "google_pixel_vendor_carriersettings",
         "lineageos",
+        "lineageos_pixel_apn_snapshot",
         "samsung_omc",
         "sony_open_devices_aosp",
     }
@@ -288,8 +292,9 @@ PRIMARY_APN_SOURCES = frozenset(
 # lane is checked against Google's update service and Samsung's firmware lanes
 # against Samsung's firmware service, so a value they give is one a current
 # Pixel or Galaxy ships. Apple's index keeps retired bundles, the TheMuppets
-# Pixel files and Sony's and Fairphone's trees are frozen copies, and
-# LineageOS's list keeps whatever nobody removed, so none of them is in it.
+# Pixel files and Sony's and Fairphone's trees are frozen copies, LineageOS's
+# Pixel APN snapshot is a copy of one Pixel build, and LineageOS's list keeps
+# whatever nobody removed, so none of them is in it.
 # Apple's index date is the day a bundle was re-issued, not the day its
 # content was written: measured on 2026-10-06, its newest bundles carry
 # APNs made for iPhones and old names forward, and agree with the Android

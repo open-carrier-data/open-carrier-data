@@ -4398,6 +4398,34 @@ def check_emergency_rows() -> None:
         )
 
 
+def check_lineageos_pixel_snapshot_family() -> None:
+    """LineageOS's Pixel APN snapshot (merged into LineageOS's list at build
+    time since 2026-10-21) is a copy of Google's Pixel list: it counts in
+    Google's family, is a complete list, is no current vendor and states no
+    emergency row the way LineageOS's own list does."""
+    snapshot = "lineageos_pixel_apn_snapshot"
+    generator = generate_android_outputs
+    assert_true(
+        generator.APN_SOURCE_FAMILIES[snapshot] == "google_carriersettings",
+        "the Pixel APN snapshot must count in Google's family",
+    )
+    assert_true(
+        generator.source_families({snapshot, "google_carriersettings", "google_pixel_vendor_carriersettings"})
+        == {"google_carriersettings"},
+        "the snapshot and both Google lanes must be one family",
+    )
+    assert_true(
+        generator.source_families({snapshot, "lineageos"}) == {"google_carriersettings", "aosp_apn_lists"},
+        "LineageOS's own rows stay in the AOSP list family",
+    )
+    assert_true(snapshot in generator.PRIMARY_APN_SOURCES, "the snapshot is a complete APN list")
+    assert_true(snapshot not in generator.CURRENT_VENDOR_APN_SOURCES, "the snapshot is no current vendor")
+    assert_true(
+        snapshot not in generator.EMERGENCY_STATING_LIST_SOURCES,
+        "only LineageOS's own list states emergency rows",
+    )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -6105,6 +6133,8 @@ def main() -> int:
     print("LineageOS schema rule tests passed")
     check_apn_ranking()
     print("APN ranking tests passed")
+    check_lineageos_pixel_snapshot_family()
+    print("LineageOS Pixel APN snapshot family tests passed")
     check_current_vendor_attach()
     print("current vendor and attach type tests passed")
     check_data_device_values()
