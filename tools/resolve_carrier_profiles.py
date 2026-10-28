@@ -302,6 +302,11 @@ def explain(
                     # A current vendor's MMS row moved ahead of the first row
                     # that served "mms", so MMS goes to it.
                     "vendor_mms_ahead": bool(row.get("_vendor_mms_ahead")),
+                    # A current vendor's attach row moved, with its stored
+                    # group, ahead of a first internet row whose stored group
+                    # serves no 3GPP type and served "ia" only through rows
+                    # no current vendor backs for it (rule round 34, step 4b).
+                    "vendor_attach_ahead": bool(row.get("_vendor_attach_ahead")),
                     # The first internet row kept "mms" because no current
                     # vendor's MMS row serves some mobile network type it serves.
                     "mms_kept_no_vendor_coverage": bool(row.get("_mms_kept_no_vendor_coverage")),

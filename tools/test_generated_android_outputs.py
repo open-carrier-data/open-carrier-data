@@ -4449,6 +4449,23 @@ def without_step_2c():
         generate_android_outputs.take_type_off_internet_group = original
 
 
+@contextlib.contextmanager
+def without_round34_order(read_past: bool = True):
+    """apn_xml_rows with step 4b (put_vendor_attach_first) and, unless
+    READ_PAST is false, step 3's read-past (read_past_cdma_internet_group),
+    the order-only rules of rule round 34, switched off."""
+    attach = generate_android_outputs.put_vendor_attach_first
+    read_past_rule = generate_android_outputs.read_past_cdma_internet_group
+    generate_android_outputs.put_vendor_attach_first = lambda ranked: ranked
+    if read_past:
+        generate_android_outputs.read_past_cdma_internet_group = lambda ranked, internet, groups, first: first
+    try:
+        yield
+    finally:
+        generate_android_outputs.put_vendor_attach_first = attach
+        generate_android_outputs.read_past_cdma_internet_group = read_past_rule
+
+
 def _round34_fixture(scopes: dict) -> tuple[object, dict]:
     """apn_xml_rows of synthetic scopes {mccmnc: [(apn row, sources)]},
     where sources is a tuple or a {type: tuple} dict, with an evidence index
@@ -4790,6 +4807,172 @@ def check_internet_stored_row_types() -> None:
                     f"{mccmnc}: the same stored rows ({off['stored']} -> {on['stored']}) and persist events")
 
 
+def check_verizon_stored_row_order() -> None:
+    """Rule round 34, step 4b (put_vendor_attach_first, R34-ia) and change
+    18 step 3's read-past (read_past_cdma_internet_group, R34-310004-mms),
+    both order only. Verizon shape: Google's CDMA-only internet row serves
+    mms, a Fairphone-only ia row is stored with it, a LineageOS/Sony
+    VZWINTERNET default,dun,mms,supl row serves every network type. Step 3
+    reads past the CDMA-only internet stored row, so Google's VZWAPP moves
+    ahead of the VZWINTERNET row and MMS on GPRS to NR, IWLAN and eHRPD goes
+    to VZWAPP; and Google's IMS ia,ims row moves ahead of the internet row,
+    so the phone attaches with IMS. No type changes, no row is left out, the
+    stored rows are the same and persist_apns_for_plmn keeps none apart.
+    Written exactly as without the two rules (without_round34_order): a
+    Sprint shape whose internet row itself serves ia (310/120), the Verizon
+    shape with an LTE-blind vendor ia row (263/80, condition 6) and an
+    internet group that serves the 3GPP types (263/82, condition 4). The
+    Verizon shape with an LTE-capable vendor ia row (263/81) moves, and so
+    does a shape whose ia-best row is not its stored group's best-ranked
+    member (263/88), with the stored row's values unchanged."""
+
+    google = "google_carriersettings"
+    samsung = "samsung_omc"
+    fairphone = "fairphone_official_source"
+    mmsc = "http://mms.vtext.example/servlets/mms"
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    lte = "1|2|3|9|10|11|13|14|15|18|20"
+    cdma = "4|5|6|7|8|12"
+
+    def verizon(ims_bits: str) -> list:
+        return [
+            (apn("internet", ("cbs", "default", "dun", "fota", "mms", "supl"), mmsc=mmsc, protocol="IPV4V6", authtype=3,
+                 bearer_bitmask=cdma, user_visible=False),
+             (google, "google_pixel_vendor_carriersettings", fairphone)),
+            (apn("internet", ("ia",), name="Verizon old", mmsc=mmsc, protocol="IPV4V6", authtype=3,
+                 bearer_bitmask=cdma), (fairphone,)),
+            (apn("VZWINTERNET", ("default", "dun", "supl"), protocol="IPV4V6", authtype=0, bearer_bitmask=lte),
+             (google, "google_pixel_vendor_carriersettings")),
+            (apn("VZWINTERNET", ("default", "dun", "mms", "supl"), name="Verizon Internet", mmsc=mmsc, protocol="IPV4V6",
+                 roaming_protocol="IPV4V6"), ("lineageos", "sony_open_devices_aosp")),
+            (apn("IMS", ("ia", "ims"), protocol="IPV4V6", roaming_protocol="IPV6", authtype=0, bearer_bitmask=ims_bits),
+             (google,)),
+            (apn("VZWAPP", ("cbs", "mms"), mmsc=mmsc, protocol="IPV4V6", authtype=0, bearer_bitmask=lte), (google,)),
+        ]
+
+    scopes: dict = {
+        "310004": verizon("14|18|20"),
+        # Sprint shape: the internet row itself serves ia (change 7's case)
+        # and Google backs otasn for ia: the attach rule does not act.
+        "310120": [
+            (apn("sprint", ("cbs", "default", "ia", "mms", "supl"), mmsc="http://mms.sprint.example", bearer_bitmask=cdma),
+             {"cbs": (google,), "default": (google,), "ia": ("lineageos",), "mms": ("lineageos",), "supl": (google,)}),
+            (apn("mms", ("mms",), mmsc="http://mms.pictures.example"), (google,)),
+            (apn("otasn", ("fota", "ia"), protocol="IPV4V6"), (google,)),
+        ],
+        # Condition 6: the vendor's ia row is CDMA-only, so moved ahead it
+        # would be an LTE attach that cannot serve LTE.
+        "26380": verizon("4|5|6"),
+        # The same shape with an LTE-capable vendor ia row: it moves.
+        "26381": verizon("14|18|20"),
+        # Condition 4 (the safety judge's 26298): the internet group serves
+        # every type, so it is the preferred profile and is tried first for
+        # attach; a move would change at most the very first attach.
+        "26382": [
+            (apn("web.example", ("default",), user_visible=False), (google,)),
+            (apn("web.example", ("ia",), name="old ia"), (fairphone,)),
+            (apn("att.example", ("ia", "ims"), bearer_bitmask="14|20"), (google,)),
+        ],
+        # The whole stored group moves: Google's IMS ia,ims row is the
+        # ia-best row, but an IMS ia,mms row with its unique fields, which
+        # two current vendors back for ia, ranks ahead of it in the group and
+        # writes the stored row's auth type and MTU.
+        "26388": [
+            (apn("internet", ("cbs", "default", "dun", "fota", "supl"), protocol="IPV4V6", authtype=3,
+                 bearer_bitmask=cdma, user_visible=False), (google, fairphone)),
+            (apn("internet", ("ia",), name="Verizon old", protocol="IPV4V6", authtype=3, bearer_bitmask=cdma),
+             (fairphone,)),
+            (apn("VZWINTERNET", ("default", "supl"), protocol="IPV4V6", authtype=0, bearer_bitmask=lte), (google,)),
+            (apn("IMS", ("ia", "ims"), protocol="IPV4V6", roaming_protocol="IPV6", authtype=0, mtu=1428,
+                 bearer_bitmask="14|18|20"), (google,)),
+            (apn("IMS", ("ia", "mms"), name="IMS attach", protocol="IPV4V6", roaming_protocol="IPV6", authtype=1,
+                 mtu=1400, bearer_bitmask="14|18|20"), (google, samsung)),
+        ],
+    }
+    result, tools = _round34_fixture(scopes)
+    leads = tools["leads"]
+    with without_round34_order():
+        plain, plain_tools = _round34_fixture(scopes)
+    with without_round34_order(read_past=False):
+        plain_4b, _ = _round34_fixture(scopes)
+
+    def marks(mccmnc: str) -> set:
+        return {(r["apn"], r.get("carrier", ""), m) for r in result.records  # type: ignore[attr-defined]
+                if r.get("mcc", "") + r.get("mnc", "") == mccmnc
+                for m in ("_vendor_attach_ahead", "_vendor_mms_ahead") if r.get(m)}
+
+    def unchanged(mccmnc: str, without: object = plain) -> bool:
+        return _round34_lines(result, mccmnc) == _round34_lines(without, mccmnc)
+
+    def multiset(source: object, mccmnc: str) -> list[str]:
+        return sorted(_round34_lines(source, mccmnc))
+
+    l = leads("310004")
+    for (dedupe, name), values in l["per_type"].items():
+        if name in ("EVDO-A", "1xRTT"):
+            expected_mms = ("internet", mmsc, "", -1)
+            expected_internet = "internet"
+        else:
+            expected_mms = ("VZWAPP", mmsc, "", -1)
+            expected_internet = "VZWINTERNET"
+        # EVDO-A and 1xRTT: the phone tries the preferred internet profile
+        # (the CDMA-only internet row, which serves "ia") first for attach
+        # (DataProfileManager 639-642); the phone model does not sort it
+        # first yet, so the attach is asserted on the other nine types only.
+        attach_ok = values["attach"] == "IMS" or name in ("EVDO-A", "1xRTT")
+        assert_true(values["mms"] == expected_mms and values["internet"] == expected_internet and attach_ok,
+                    f"310/004 {name} merge {dedupe}: MMS VZWAPP on the 3GPP types, IWLAN and eHRPD, internet unchanged, "
+                    f"attach IMS: {values}")
+    plain_l = plain_tools["leads"]("310004")
+    assert_true(all(values["ims"] == plain_l["per_type"][key]["ims"] and values["dun"] == plain_l["per_type"][key]["dun"]
+                    and values["internet"] == plain_l["per_type"][key]["internet"]
+                    for key, values in l["per_type"].items()),
+                "310/004: the IMS, dun and internet leads are the same as without the two rules")
+    assert_true(not l["persist_events"] and l["stored"] == plain_l["stored"],
+                f"310/004: the same stored rows, and persist_apns_for_plmn keeps none apart: {l['persist_events']}")
+    written = _round34_written(result, "310004")
+    assert_true(multiset(result, "310004") == multiset(plain, "310004"),
+                f"310/004: no type changes and no row is left out: {written}")
+    assert_true([v for v, _, _ in written][:1] == ["IMS"]
+                and [v for v, _, _ in written].index("VZWAPP") < [label for _, _, label in written].index("Verizon Internet"),
+                f"310/004: IMS first, VZWAPP ahead of the LineageOS VZWINTERNET row: {written}")
+    assert_true({("IMS", "IMS", "_vendor_attach_ahead"), ("VZWAPP", "VZWAPP", "_vendor_mms_ahead")} <= marks("310004"),
+                f"310/004 marks: {marks('310004')}")
+    # Written as without the two rules (310/120, 263/82), and 263/80 as
+    # without step 4b: its VZWAPP row moves by step 3's read-past, as in
+    # 310/004, but its CDMA-only IMS row stays.
+    for mccmnc, without in (("310120", plain), ("26382", plain), ("26380", plain_4b)):
+        assert_true(unchanged(mccmnc, without) and not any(m == "_vendor_attach_ahead" for _, _, m in marks(mccmnc)),
+                    f"{mccmnc}: no attach row moves: {_round34_written(result, mccmnc)}")
+    assert_true(leads("310120")["attach"] == {"sprint"}, f"310/120: the attach stays: {leads('310120')['attach']}")
+    assert_true(leads("26380")["attach"] == {"internet"}, f"263/80: the attach stays: {leads('26380')['attach']}")
+    assert_true(leads("26382")["attach"] == {"web.example"}, f"263/82: the attach stays: {leads('26382')['attach']}")
+    # 263/81: the LTE-capable vendor ia row moves; attach IMS on the nine
+    # types the model reads as the phone does.
+    l = leads("26381")
+    assert_true(all(values["attach"] == "IMS" for (_, name), values in l["per_type"].items()
+                    if name not in ("EVDO-A", "1xRTT"))
+                and ("IMS", "IMS", "_vendor_attach_ahead") in marks("26381"),
+                f"263/81: attach IMS: {l['attach']}")
+    # 263/88: the whole stored group moves in its rank order, so the stored
+    # IMS row keeps the values it has without the move (auth type 1, MTU
+    # 1400 from the group's best-ranked row), and the attach is IMS.
+    def stored_ims(source: object) -> list[dict]:
+        tables = android_phone_model.provider(android_phone_model.parse_lines(_round34_lines(source, "26388")))
+        return [{key: value for key, value in row.items() if not key.startswith("_")}
+                for row in android_phone_model.scope_rows(tables, ("263", "88", "", "")) if row.get("apn") == "IMS"]
+    assert_true(("IMS", "IMS", "_vendor_attach_ahead") in marks("26388") and not unchanged("26388"),
+                f"263/88: the IMS group moves: {_round34_written(result, '26388')}")
+    assert_true(len(stored_ims(result)) == 1 and stored_ims(result) == stored_ims(plain),
+                f"263/88: the stored IMS row is the same: {stored_ims(plain)} -> {stored_ims(result)}")
+    assert_true(multiset(result, "26388") == multiset(plain, "26388"), "263/88: the same rows")
+    assert_true(all(values["attach"] == "IMS" for (_, name), values in leads("26388")["per_type"].items()
+                    if name not in ("EVDO-A", "1xRTT")), f"263/88: attach IMS: {leads('26388')['attach']}")
+
+
 def _dataset_internet_rows_and_leads() -> tuple[dict, dict, list]:
     """apn_xml_rows over the whole dataset in this checkout (carriers/ and
     generated/evidence-index.json): each scope's first internet row (its
@@ -4837,11 +5020,15 @@ def _dataset_internet_rows_and_leads() -> tuple[dict, dict, list]:
 def check_round34_keeps_internet_rows() -> None:
     """Rule round 34: over the whole dataset in this checkout, each scope's
     first internet row is written and is the same row, with the same types
-    and values, with and without change 18 step 2c, and step 2c changes no
-    internet lead, MMS tuple or attach lead on any of the 11 network types.
-    It changes only "ims" and "xcap" on the other rows of the internet row's
+    and values, with and without change 18 step 2c, and with and without the
+    order-only rules (step 4b and step 3's read-past). Step 2c changes no
+    internet lead, MMS tuple or attach lead on any of the 11 network types:
+    it changes only "ims" and "xcap" on the other rows of the internet row's
     stored row, and leaves out only rows whose sole effect on it is that
-    type."""
+    type. The order-only rules change no internet lead; the attach lead
+    changes only in a scope where step 4b moved a row, and the MMS tuple only
+    in a scope where step 3 moved a vendor MMS row it did not move without
+    them."""
     firsts, leads, _ = _dataset_internet_rows_and_leads()
     with without_step_2c():
         plain_firsts, plain_leads, _ = _dataset_internet_rows_and_leads()
@@ -4852,6 +5039,24 @@ def check_round34_keeps_internet_rows() -> None:
     )
     moved = sorted(str(scope) for scope in set(leads) | set(plain_leads) if leads.get(scope) != plain_leads.get(scope))
     assert_true(not moved, f"no internet, MMS or attach lead changes with step 2c on any of the 11 network types: {moved[:20]}")
+    firsts, leads, records = _dataset_internet_rows_and_leads()
+    with without_round34_order():
+        plain_firsts, plain_leads, plain_records = _dataset_internet_rows_and_leads()
+    changed = sorted(str(scope) for scope in set(firsts) | set(plain_firsts) if firsts.get(scope) != plain_firsts.get(scope))
+    assert_true(not changed, f"each scope's first internet row is the same with and without step 4b and step 3's read-past: {changed[:20]}")
+
+    def scopes_marked(rows: list, mark: str) -> set:
+        return {android_phone_model.scope_of(android_phone_model.parse_lines([generate_android_outputs.apn_row_line(r)])[0])
+                for r in rows if r.get(mark)}
+
+    attach_moved = scopes_marked(records, "_vendor_attach_ahead")
+    mms_moved = scopes_marked(records, "_vendor_mms_ahead") - scopes_marked(plain_records, "_vendor_mms_ahead")
+    for role, allowed in (("internet", set()), ("attach", attach_moved), ("mms", mms_moved)):
+        moved = sorted(str(scope) for scope in set(leads) | set(plain_leads)
+                       if scope not in allowed and any(
+                           (leads.get(scope) or {}).get(name, {}).get(role) != (plain_leads.get(scope) or {}).get(name, {}).get(role)
+                           for name in android_phone_model.ALL_NETWORK_TYPES))
+        assert_true(not moved, f"the {role} lead changes with step 4b and step 3's read-past only where they moved a row: {moved[:20]}")
 
 
 def check_leave_out_absorbed_mms() -> None:
@@ -7296,6 +7501,8 @@ def main() -> int:
     print("internet stored row MMS tests passed (round 33)")
     check_internet_stored_row_types()
     print("internet stored row ims and xcap tests passed (round 34, step 2c)")
+    check_verizon_stored_row_order()
+    print("vendor attach row and step 3 read-past tests passed (round 34, step 4b)")
     check_round34_keeps_internet_rows()
     print("dataset-wide first internet row tests passed (round 34)")
     check_step_2b_keeps_internet_rows()

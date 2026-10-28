@@ -1240,6 +1240,39 @@ def take_mms_off_internet_group(
     return retyped
 
 
+def read_past_cdma_internet_group(
+    ranked: list[dict[str, Any]],
+    internet: dict[str, Any] | None,
+    groups: dict[tuple[str, ...], list[dict[str, Any]]],
+    first: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    """Change 18 step 3's read-past (rule round 34, round 33 step 7 (b)).
+    FIRST is the first stored row that serves "mms". When it is the first
+    internet row's stored group (android_unique_key) and no member of that
+    group serves a 3GPP data network type (apn_row_network_types is empty
+    for each, as with Google's CDMA-only Verizon "internet" row), Android
+    never sends MMS over it on GPRS to NR, so step 3 reads the next stored
+    row that serves "mms" and serves a 3GPP data network type in its place.
+    Otherwise FIRST stands. Step 3 then runs as before (C1): it stops at a
+    stored row that holds a vendor MMS row, and otherwise moves the best
+    vendor MMS row just before it. No type changes, no row is left out and no
+    MMS field changes; MMS on the CDMA types stays with the internet group.
+    On 310/004, MMS on LTE went to a LineageOS/Sony VZWINTERNET row ahead of
+    Google's VZWAPP."""
+    if first is None or first is not internet:
+        return first
+    key = android_unique_key(internet)
+    if any(apn_row_network_types(member) for member in groups[key]):
+        return first
+    return next(
+        (record for record in ranked
+         if android_unique_key(record) != key
+         and any("mms" in apn_row_types(member["type"]) for member in groups[android_unique_key(record)])
+         and any(apn_row_network_types(member) for member in groups[android_unique_key(record)])),
+        None,
+    )
+
+
 def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
     current vendor backs for "mms" (_current), with a real APN and an MMSC,
@@ -1263,6 +1296,10 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
        any row of its android_unique_key group serves it, and a group's MMS
        setting is a vendor's exactly when one of its rows is a vendor MMS
        row, because the key holds the APN, MMSC, MMS proxy and MMS port.
+       When that first stored row is the internet row's and no member of it
+       serves a 3GPP data network type, step 3 reads the next stored row
+       that serves "mms" and a 3GPP type instead
+       (read_past_cdma_internet_group, rule round 34).
     4. Move the best vendor MMS row that serves neither "default" nor "ia"
        (RowRank read for "mms", then fallback_order_key) to just before the
        earliest-ranked row of that stored group. The group is written at
@@ -1344,6 +1381,7 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
          if any(serves(member, "mms") for member in groups[android_unique_key(record)])),
         None,
     )
+    first = read_past_cdma_internet_group(ranked, internet, groups, first)
     # "first is internet" is already the stored-row test: rank_scope puts
     # every row that serves "default" first, so the internet row is ranked
     # first in its scope and is always the earliest row of its own group
@@ -1532,6 +1570,109 @@ def take_type_off_internet_group(ranked: list[dict[str, Any]], apn_type: str) ->
         ]
         retyped += 1
     return retyped
+
+
+def put_vendor_attach_first(ranked: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Step 4b (rule round 34, round 33 step 7 (a), "ia"): the vendor
+    attach row ahead of a CDMA-only internet stored group. Android attaches
+    with the first profile that can handle "ia", with no network-type filter,
+    after sorting the preferred profile first
+    (DataProfileManager.updateInitialAttachDataProfileAtModem 636-660), and
+    after the first internet connection the preferred profile is the internet
+    profile (onInternetDataNetworkConnected 470-486). It acts only when all
+    seven conditions hold:
+
+    1. in rank order, the first stored row that serves "ia" is the first
+       internet row's group (android_unique_key);
+    2. the internet row itself does not serve "ia" (its own "ia" stays with
+       change 7's leave_out_stale_attach);
+    3. no row of that group is backed for "ia" by a current vendor;
+    4. no member of that group serves a 3GPP data network type
+       (apn_row_network_types is empty for every member), so it is never
+       the preferred profile on GPRS to NR;
+    5. a current vendor backs another row of the scope for "ia", with a
+       real APN, that serves neither "default" nor "mms"; the best of these
+       is chosen by RowRank read for "ia", then fallback_order_key;
+    6. the chosen row's stored group serves LTE (13 in apn_row_network_types
+       of some member), and every member is android_usable;
+    7. no row it passes, between the internet group's place and the chosen
+       row, serves another type of the chosen row's group.
+
+    Then the chosen row's whole stored group moves, in its own rank order,
+    to just before the internet group, and the chosen row is marked
+    "_vendor_attach_ahead". It never changes a type, leaves out a row or
+    reorders rows within one android_unique_key, so TelephonyProvider stores
+    the same rows on every network and the step runs on
+    persist_apns_for_plmn networks too (separateRowsNeeded compares only rows
+    of one android_unique_key). It runs after step 2c and before
+    write_android_groups_best_last. Returns the rows."""
+    def serves(record: dict[str, Any], served: str) -> bool:
+        return served in apn_row_types(record["type"])
+
+    live = [record for record in ranked if not left_out_stored_with_internet(record)]
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in live:
+        groups[android_unique_key(record)].append(record)
+    internet = next((record for record in live if serves(record, "default")), None)
+    if internet is None:
+        return ranked
+    key = android_unique_key(internet)
+    # Conditions 1 and 2.
+    first = next(
+        (record for record in live
+         if any(serves(member, "ia") for member in groups[android_unique_key(record)])),
+        None,
+    )
+    if first is None or android_unique_key(first) != key or serves(internet, "ia"):
+        return ranked
+    # Condition 4: where the internet group serves a 3GPP type it is the
+    # preferred profile there, serves "ia", and is tried first for attach
+    # (639-642) and re-sent after the first connection (470-486), so a move
+    # would change at most the very first attach.
+    if any(apn_row_network_types(member) for member in groups[key]):
+        return ranked
+    # Condition 3.
+    if any(member.get("_current", {}).get("ia") for member in groups[key]):
+        return ranked
+    # Condition 5.
+    candidates = [
+        record for record in live
+        if android_unique_key(record) != key and record.get("_current", {}).get("ia")
+        and not placeholder_apn(record["apn"]) and not serves(record, "default") and not serves(record, "mms")
+    ]
+    if not candidates:
+        return ranked
+    ranks = scope_row_ranks(ranked, lead_type="ia")
+    position = {id(record): index for index, record in enumerate(ranked)}
+    best = min(
+        candidates,
+        key=lambda record: (*ranks[position[id(record)]].sort_key(), fallback_order_key(record)),
+    )
+    best_key = android_unique_key(best)
+    best_group = groups[best_key]
+    # Condition 6: attach has no network-type filter, so an LTE-blind row
+    # moved ahead would become the LTE attach, and an unusable one cannot
+    # attach at all.
+    if 13 not in frozenset().union(*(apn_row_network_types(member) for member in best_group)):
+        return ranked
+    if not all(android_usable(member) for member in best_group):
+        return ranked
+    # Condition 7.
+    other_types = {served for member in best_group for served in apn_row_types(member["type"])} - {"ia"}
+    start = min(position[id(member)] for member in groups[key])
+    stop = min(position[id(member)] for member in best_group)
+    passed = [record for record in ranked[start:stop]
+              if android_unique_key(record) != best_key and not left_out_stored_with_internet(record)]
+    if any(serves(record, served) for record in passed for served in other_types):
+        return ranked
+    # The whole stored group moves in its rank order, so its best-ranked
+    # member stays the row written last and the stored values stay the same.
+    members = [record for record in ranked if android_unique_key(record) == best_key]
+    moved = [record for record in ranked if android_unique_key(record) != best_key]
+    at = next(index for index, record in enumerate(moved) if record is ranked[start])
+    moved[at:at] = members
+    best["_vendor_attach_ahead"] = True
+    return moved
 
 
 # ApnSetting.similar (ApnSetting.java:1427-1458), which
@@ -2104,14 +2245,17 @@ def write_scope(records: list[dict[str, Any]],
     stale attach type left out, an emergency type without a stated reason left
     out, the rows ranked, MMS sent to a current vendor's MMS row, the rows
     Android stores as one written together (after step 2c,
-    take_type_off_internet_group), D8 rule 1, and the absorbed MMS-only rows
-    left out. The rows are changed in place."""
+    take_type_off_internet_group, and step 4b, put_vendor_attach_first), D8
+    rule 1, and the absorbed MMS-only rows left out. The rows are changed in
+    place."""
     ia_left_out = leave_out_stale_attach(records)
     scope_records, emergency_changed = leave_out_emergency(records)
     ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
     # Step 2c (rule round 34) runs right after put_vendor_mms_first, so after
     # step 2b.
     stale_types = {apn_type: take_type_off_internet_group(ranked, apn_type) for apn_type in STALE_INTERNET_GROUP_TYPES}
+    # Step 4b (rule round 34): after step 2c, before the groups are written.
+    ranked = put_vendor_attach_first(ranked)
     written = write_android_groups_best_last(ranked)
     # Step 2c's rows whose only type it took off are not written. They and
     # step 7's MMS-only rows stored with the internet row (round 33,
