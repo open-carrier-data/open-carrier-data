@@ -1,6 +1,6 @@
-# The OCD dataset for the owner's ROM
+# The OCD dataset
 
-Rule round 30 (2026-10-25) replaces Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings in the owner's build reads it, the OCD Check owner app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. For every other consumer it is reference data: it is not a release asset, and AV2 and T1 are unchanged for anyone else's ROM.
+Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Check app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. It is not a release asset: a ROM bakes it at a validated `main` commit or at a release's commit. Today the owner's S20 is the only ROM that ships it.
 
 `tools/ocd_dataset.py` writes and checks it from one checkout of `main`. The private publisher writes the Google lane first, then runs it on every publish; the report bot runs it when the owner's measured records change. `validate` checks every file on every pull request.
 
@@ -100,6 +100,8 @@ Each key has its type, its group and the IMS stack fork it exists in (`fork`). A
 
 Rule round 31 changes their source order (see [Group A reads](#group-a-reads)): a value that differs from the Google lane, from any OCD source family, is served once an independent read with verdict `proceed` covers it; else the Google lane's value in the newest dataset; else Android's default. A key leaves group A only on a read's finding that it changes what is shown or logged and never how an emergency, TTY, RTT or priority call, or an emergency SMS, is placed, routed, held or called back.
 
+Rule round 31 lets group A update like other values (being built). A value that differs from the Google lane, from any OCD source family, is served once an independent read with the verdict `proceed` is on `main` for that key, value, source and profile, and for the ROM family and IMS stack it is served on. Else the newest Google-lane value serves, else Android's default. The read starts as soon as such a value appears. Keys a read finds change only what is shown or logged leave group A. OCD publishes no emergency number list, and `emergency_number_prefix_string_array` and `dial_string_replace_string_array` stay in group A.
+
 **Group B** holds the metered lists, `carrier_metered_apn_types_strings` and `carrier_metered_roaming_apn_types_strings`. The phone serves the first of these that contains `default`: OCD's value, the Google value, Android's default.
 
 **X6** holds the SMS-to-MMS keys on the networks that ended MMS (262-01, 262-02, 262-03, 262-07, 262-23, 228-01 to 228-03, 270-01).
@@ -108,7 +110,7 @@ OcdCarrierSettings enforces groups A, B and X6 with its own compiled-in copy as 
 
 ## Records by cell (rule round 31)
 
-Rule round 31 (2026-10-28) keys records by cell. OCD is carrier data: its index is the carrier profile, and where a fact also depends on the device, the index is the device and the carrier together. No OCD record is keyed by device alone. A value whose reason holds on every carrier is a device quirk and belongs in the ROM's device tree; a value a test measured on a device with a carrier is an OCD cell record.
+Rule round 31 (2026-10-28) keys records by cell. OCD is carrier data: its index is the carrier profile, and where a fact also depends on the device, the index is the device and the carrier together. No OCD record is keyed by device alone. A value whose reason holds on every carrier is a device quirk and belongs in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)); a value a test measured on a device with a carrier is an OCD cell record. The S20's four served values move back into its `carrier_config_override.xml`, and the bearer-wait key stays unset.
 
 A cell record ([`schemas/cell-records.schema.json`](../schemas/cell-records.schema.json), `device-records.json` with `schema_version` 2) belongs to one cell:
 

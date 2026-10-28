@@ -329,6 +329,13 @@ GENERATED_FILES = {
     "ocd-dataset/google-lane.json",
     "ocd-dataset/manifest.json",
     "ocd-dataset/profiles.json",
+    # Rule round 31: the companion files beside the dataset, checked by
+    # tools/ocd_dataset.py (group A reads and status, privacy-withheld
+    # values) and tools/f5_read.py (the F5 reads).
+    "ocd-dataset/f5-reads.json",
+    "ocd-dataset/group-a-pending.json",
+    "ocd-dataset/group-a-reads.json",
+    "ocd-dataset/privacy-withheld.json",
 }
 
 # The OCD dataset is required by tools/ocd_dataset.py validate, which the
@@ -1024,6 +1031,17 @@ def validate_generated_files(generated_dir: Path) -> None:
 
 
 RESOLUTION_ITEM_KEYS = {"kind", "section", "key", "observed_value_count", "resolution"}
+# Round 32's old-off clause (rule decisions of 2026-10-28, the label
+# remainder): a VoLTE, Wi-Fi calling or video calling label is also published
+# supported against one non-operator family's off when every off the merge
+# counts has its newest entry older than five years, so that the device file
+# withholds it under rule 7. Its gate single_family_off:<capability> then
+# names the reason and the month of the off's newest entry, which must be
+# older than five years; capability_sources keeps the off.
+OFF_OLDER_THAN_FIVE_YEARS = "off_older_than_five_years"
+GATE_REASONS = {OFF_OLDER_THAN_FIVE_YEARS}
+GATE_REASON_KEYS = {"reason", "off_newest_entry"}
+OLD_OFF_MAX_AGE_YEARS = 5
 # A conflict that Google's current CarrierSettings file settled: Google's
 # frozen Pixel copies of the file disagreed with it and do not count for a key
 # the current file gives (rule decisions of 2026-10-09, how-it-is-built.md).
@@ -1044,7 +1062,7 @@ def validate_resolution_items(
     for index, item in enumerate(items):
         require_type(path, item, dict, f"{name}[{index}]")
         label = f"{name}[{index}]"
-        if set(item) - {"variant_sources"} != RESOLUTION_ITEM_KEYS:
+        if set(item) - {"variant_sources"} - GATE_REASON_KEYS != RESOLUTION_ITEM_KEYS:
             raise ValidationError(f"{path}: {label} has invalid keys")
         if item["kind"] != expected_kind:
             raise ValidationError(f"{path}: {label}.kind is invalid")
@@ -1064,6 +1082,39 @@ def validate_resolution_items(
             )
         if "variant_sources" in item:
             validate_variant_sources(path, item, label, sources)
+        if GATE_REASON_KEYS & set(item):
+            validate_gate_reason(path, item, label)
+
+
+def validate_gate_reason(path: Path, item: dict[str, Any], label: str) -> None:
+    """reason and off_newest_entry come together, only on a single-family
+    gate of a VoLTE, Wi-Fi calling or video calling capability (round 32's
+    old-off clause): the reason off_older_than_five_years and the month of
+    the off's newest entry, which is older than five years. Whether the label
+    next to it is supported is checked with the profile's capabilities
+    (validate_stale_capability_gates)."""
+    if set(item) & GATE_REASON_KEYS != GATE_REASON_KEYS:
+        raise ValidationError(f"{path}: {label} needs both reason and off_newest_entry")
+    name, _, key = item["key"].partition(":")
+    if (
+        item["kind"] != "quality_gate"
+        or item["section"] != "capabilities"
+        or name != SINGLE_FAMILY_OFF_GATE
+        or key not in DEVICE_BACKED_LABEL_CAPABILITIES
+    ):
+        raise ValidationError(
+            f"{path}: {label}: a reason belongs only to a single_family_off gate of "
+            f"{', '.join(sorted(DEVICE_BACKED_LABEL_CAPABILITIES))}"
+        )
+    if item["reason"] not in GATE_REASONS:
+        raise ValidationError(f"{path}: {label}.reason is invalid")
+    month = parse_entry_month(path, item["off_newest_entry"], f"{label}.off_newest_entry")
+    today = utc_today()
+    if month > (today.year - OLD_OFF_MAX_AGE_YEARS, today.month):
+        raise ValidationError(
+            f"{path}: {label}.off_newest_entry {item['off_newest_entry']} is not older than "
+            f"{OLD_OFF_MAX_AGE_YEARS} years"
+        )
 
 
 def validate_variant_sources(
@@ -1255,7 +1306,12 @@ CAPABILITY_SOURCE_KINDS = {"on", "off", "conditional"}
 # gives, when every such off is an off device record in
 # generated/devices/carrier-variants.json. The profile then carries the gate
 # single_family_off:<capability>, and capability_sources keeps the off.
-# validate_carrier_variants.py checks that the off records are there.
+# validate_carrier_variants.py checks that the off records are there. Since
+# round 32 (2026-10-28) the same label is also published where every such off
+# is older than five years; the gate then carries the reason
+# off_older_than_five_years and off_newest_entry (validate_gate_reason), and
+# validate_carrier_variants.py checks that the file has an on record and no
+# off record for it.
 DEVICE_BACKED_LABEL_CAPABILITIES = {"volte", "vowifi", "video_calling"}
 # The sources whose off can be a device record (validate_carrier_variants.py
 # SOURCE_STACKS, without Samsung, whose off never publishes), and the source
@@ -1387,6 +1443,10 @@ def validate_withdrawn_profiles(
         )
         if not item_gates or any(gate["resolution"] != "omitted_from_stable" for gate in item_gates):
             raise ValidationError(f"{path}: {item_label}.quality_gates must name omissions")
+        if any(GATE_REASON_KEYS & set(gate) for gate in item_gates):
+            raise ValidationError(
+                f"{path}: {item_label}.quality_gates: a gate reason needs a supported label"
+            )
         validate_apn_removal_gates(path, item_gates, index)
         validate_stale_capability_gates(path, item_gates, index, None, None)
         gates.extend(item_gates)
@@ -1452,13 +1512,21 @@ def validate_stale_capability_gates(
         if gate["section"] != "capabilities" or key not in CAPABILITY_KEYS:
             raise ValidationError(f"{path}: {label} is not a valid {name} gate")
         published = capabilities.get(key, "unknown") if capabilities is not None else "unknown"
+        if "reason" in gate and capabilities is not None and published != "supported":
+            # Round 32's old-off clause: the reason explains a supported label.
+            raise ValidationError(
+                f"{path}: {label} carries the reason {gate['reason']}, but the profile "
+                f"publishes {key} {published}"
+            )
         if (
             name == SINGLE_FAMILY_OFF_GATE
             and key in DEVICE_BACKED_LABEL_CAPABILITIES
             and published == "supported"
         ):
             # Round 17's step 2: the off the gate names is kept as device
-            # records next to a supported label (validate_capability_sources).
+            # records next to a supported label (validate_capability_sources),
+            # or, with the reason off_older_than_five_years (round 32), it is
+            # older than five years and the device file withholds it.
             continue
         if published != "unknown":
             raise ValidationError(

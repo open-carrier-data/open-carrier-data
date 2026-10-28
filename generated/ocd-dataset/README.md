@@ -1,6 +1,6 @@
 # generated/ocd-dataset/
 
-The OCD dataset for the owner's ROM (rule round 30). With `../android/apns-conf.xml` and `../devices/device-records.json` it is one set per commit of `main`. OcdCarrierSettings reads it, the OCD Check owner app pulls it pinned per commit, and the ROM pin step bakes it into the build.
+The OCD dataset, which OcdCarrierSettings serves as a ROM's carrier data on every ROM whose builder chooses it (rule rounds 30 and 31, [docs/rom-builders.md](../../docs/rom-builders.md)). With `../android/apns-conf.xml` and `../devices/device-records.json` it is one set per commit of `main`. OcdCarrierSettings reads it, the ROM's build of the OCD Check app pulls it pinned per commit, and the ROM pin step bakes it into the build.
 
 | File | Contents |
 | --- | --- |
