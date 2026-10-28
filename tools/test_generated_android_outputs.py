@@ -4869,6 +4869,172 @@ def check_lineageos_pixel_snapshot_family() -> None:
     )
 
 
+def check_lineageos_legacy_apn_list_role_gaps() -> None:
+    """LineageOS's legacy list (round 35, B): the rows a764d38 stopped
+    shipping, a frozen copy in the AOSP list family that only fills role
+    gaps. Each of its rows keeps only the types whose role is a gap in the
+    scope without it; a scope that would otherwise be gone keeps it whole;
+    "emergency" follows round 21; a type another source backs never changes."""
+    generator = generate_android_outputs
+    legacy = "lineageos_legacy_apn_list"
+    assert_true(generator.APN_SOURCE_FAMILIES[legacy] == "aosp_apn_lists", "the legacy list is in the AOSP list family")
+    assert_true(
+        generator.source_families({legacy, "lineageos", "sony_open_devices_aosp"}) == {"aosp_apn_lists"},
+        "the legacy list and LineageOS's own list are one family",
+    )
+    assert_true(legacy in generator.PRIMARY_APN_SOURCES, "the legacy list is a complete APN list")
+    assert_true(legacy in generator.FROZEN_SOURCES, "the legacy list is a frozen copy")
+    assert_true(generator.ROLE_GAP_SOURCES == {legacy}, "only the legacy list fills role gaps")
+    assert_true(generator.ROLE_GAP_SOURCES <= generator.FROZEN_SOURCES, "a role-gap copy is frozen")
+    assert_true(legacy not in generator.CURRENT_VENDOR_APN_SOURCES, "the legacy list is no current vendor")
+    assert_true(legacy not in generator.EMERGENCY_STATING_LIST_SOURCES, "the legacy list states no emergency row")
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    google = "google_carriersettings"
+    snapshot = "lineageos_pixel_apn_snapshot"
+    cases = {
+        # 23213: Google gives only the internet row; LineageOS's old MMS row
+        # fills the MMS gap, its old internet row leaves, and its dun row
+        # keeps dun but not hipri.
+        "23213": [
+            (apn("internet", ("default", "supl")), (google,)),
+            (apn("gprsmms", ("mms",), mmsc="http://mmsc.example/mms", mmsproxy="10.12.0.20", mmsport="80"), (legacy,)),
+            (apn("web.old", ("default", "supl")), (legacy,)),
+            (apn("tether.old", ("default", "dun", "hipri")), (legacy,)),
+        ],
+        # 27227: only the legacy list gives rows; the scope would be gone.
+        "27227": [
+            (apn("data.example.ie", ("default", "mms", "supl"), mmsc="http://mms.example.ie"), (legacy,)),
+        ],
+        # 302270: the shipped ims row (bearer 14|20) leaves Wi-Fi calling
+        # without an ims profile; the old ims row without a bitmask returns.
+        "302270": [
+            (apn("internet.example", ("default", "mms"), mmsc="http://mms.example"), (google,)),
+            (apn("ims", ("ims",), bearer_bitmask="14|20", protocol="IPV4V6", roaming_protocol="IPV4V6"), (snapshot, google)),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (legacy,)),
+        ],
+        # 302220: the same, but a current vendor's ims row serves IWLAN, so
+        # the old ims row is not kept, although 2G and 3G have no ims profile.
+        "302220": [
+            (apn("internet.example", ("default", "mms"), mmsc="http://mms.example"), (google,)),
+            (apn("ims", ("ims",), bearer_bitmask="14|20", protocol="IPV4V6", roaming_protocol="IPV4V6"), (snapshot,)),
+            (apn("ims.example", ("ims",), network_type_bitmask="13|18|20", protocol="IPV4V6"), (google,)),
+            (apn("ims", ("ims",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (legacy,)),
+        ],
+        # 26201: emergency follows round 21. Android's default request keeps
+        # the type; a carrier-named IPv6-only row loses it.
+        "26201": [
+            (apn("internet.example.de", ("default", "mms", "supl", "ims", "dun", "xcap", "fota", "cbs", "ia"),
+                 mmsc="http://mms.example.de"), (google,)),
+            (apn("sos", ("emergency",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (legacy,)),
+            (apn("EMERGENCY", ("emergency",), protocol="IPV6", roaming_protocol="IPV6"), (legacy,)),
+        ],
+        # 20408: a type another source also backs never changes.
+        "20408": [
+            (apn("internet", ("default", "supl")), (google,)),
+            (apn("internet.old", ("default", "mms"), mmsc="http://mms.old"), (legacy, "sony_open_devices_aosp")),
+        ],
+        # 46099: no current vendor gives anything, so every role is a gap.
+        "46099": [
+            (apn("old.example", ("default",)), ("sony_open_devices_aosp",)),
+            (apn("legacy.example", ("default", "ia", "hipri")), (legacy,)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in cases.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append(
+            {
+                "profile_id": profile_id,
+                "display_name": profile_id,
+                "match": {"mccmnc": [mccmnc]},
+                "android_apns": [row for row, _ in rows],
+            }
+        )
+        everything = sorted({source for _, group in rows for source in group})
+        facts = [
+            {
+                "section": "android_apns",
+                "key": generator.apn_fact_key(row, apn_type),
+                "sources": sorted(group),
+            }
+            for row, group in rows
+            for apn_type in row["types"]
+            if sorted(group) != everything
+        ]
+        records.append({"profile_id": profile_id, "sources": everything, "fact_sources": facts})
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence-index.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generator.load_apn_evidence(evidence_path)
+        result = generator.apn_xml_rows(profiles, evidence)
+        plain = generator.apn_xml_rows(profiles)
+
+        def scope(mccmnc: str, rows: object = result) -> dict[str, str]:
+            return {
+                record["apn"] + ("|" + record.get("network_type_bitmask", record.get("bearer_bitmask", ""))
+                                 if record["apn"] == "ims" or record["apn"] == "ims.example" else ""): record["type"]
+                for record in rows.records
+                if record.get("mcc", "") + record.get("mnc", "") == mccmnc
+            }
+
+        assert_true(
+            scope("23213") == {"internet": "default,supl", "gprsmms": "mms", "tether.old": "dun"},
+            f"the legacy list fills only 23213's MMS and dun gaps: {scope('23213')}",
+        )
+        assert_true(
+            scope("27227") == {"data.example.ie": "default,mms,supl"},
+            f"a scope that would otherwise be gone keeps the legacy rows whole: {scope('27227')}",
+        )
+        assert_true(
+            scope("302270") == {"internet.example": "default,mms", "ims|": "ims", "ims|14|20": "ims"},
+            f"the old ims row returns where the shipped row leaves IWLAN without ims: {scope('302270')}",
+        )
+        assert_true(
+            "ims|" not in scope("302220"),
+            f"the old ims row stays out where a vendor's ims row serves IWLAN: {scope('302220')}",
+        )
+        assert_true(
+            "sos" in scope("26201") and scope("26201")["sos"] == "emergency" and "EMERGENCY" not in scope("26201"),
+            f"emergency follows round 21 on the legacy list: {scope('26201')}",
+        )
+        assert_true(
+            scope("20408").get("internet.old") == "default,mms",
+            f"a type another source backs stays: {scope('20408')}",
+        )
+        assert_true(
+            scope("46099").get("legacy.example") == "default,ia,hipri",
+            f"where no current vendor gives anything every role is a gap: {scope('46099')}",
+        )
+        marked = {(record["apn"], record["_role_gap_left_out"]) for record in result.role_gap_left_out}
+        assert_true(
+            marked == {
+                ("web.old", ("default", "supl")),
+                ("tether.old", ("default", "hipri")),
+                ("ims", ("ims",)),
+            },
+            f"each changed legacy row is marked with the types it lost: {sorted(marked)}",
+        )
+        assert_true(
+            [record["apn"] for record in result.role_gap_kept_whole] == ["data.example.ie"],
+            f"the kept-whole rows are listed: {result.role_gap_kept_whole}",
+        )
+        assert_true(
+            plain.role_gap_left_out == () and "web.old" in scope("23213", plain),
+            "without evidence no row is known as the legacy list's, so nothing changes",
+        )
+        android_dir = Path(tmp) / "android"
+        generator.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        written = ET.parse(android_dir / "apns-conf.xml").getroot()
+        assert_true(
+            all(not any(key.startswith("_") for key in element.attrib) for element in written),
+            "the role-gap marks are never written",
+        )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -6578,6 +6744,8 @@ def main() -> int:
     print("APN ranking tests passed")
     check_lineageos_pixel_snapshot_family()
     print("LineageOS Pixel APN snapshot family tests passed")
+    check_lineageos_legacy_apn_list_role_gaps()
+    print("LineageOS legacy APN list role-gap tests passed")
     check_current_vendor_attach()
     print("current vendor and attach type tests passed")
     check_data_device_values()
