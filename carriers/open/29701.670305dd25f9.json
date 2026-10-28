@@ -54,12 +54,19 @@
       "user_visible": false
     },
     {
+      "apn": "ims",
+      "name": "One",
+      "protocol": "IP",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
-      "name": "internet",
+      "name": "Telenor MNE internet",
       "password": "gprs",
       "types": [
-        "default",
-        "dun"
+        "default"
       ],
       "user": "gprs"
     },
@@ -98,6 +105,13 @@
     },
     {
       "apn": "internet",
+      "name": "One",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 0,
       "name": "internet",
       "types": [
@@ -127,10 +141,22 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mm.vor.mms29701.me",
+      "mmsport": 8080,
+      "mmsproxy": "192.168.246.5",
+      "name": "One",
+      "password": "mms",
+      "types": [
+        "mms"
+      ],
+      "user": "mms"
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mm.vor.telenor.me",
       "mmsport": 8080,
       "mmsproxy": "192.168.246.5",
-      "name": "mms",
+      "name": "Telenor MNE mms",
       "password": "mms",
       "types": [
         "mms"
@@ -190,7 +216,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telenor",
+  "display_name": "One",
   "match": {
     "mccmnc": [
       "29701"
