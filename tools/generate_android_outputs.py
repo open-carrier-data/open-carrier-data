@@ -1832,6 +1832,28 @@ def profile_windows(evidence_index_path: Path) -> dict[str, dict[str, str]]:
     return windows
 
 
+# Round 32, D7 (rule decisions of 2026-10-28): an old Samsung MVNO scope that
+# the vendor's own current packs supersede keeps its profile file and leaves
+# every match set: apns-conf.xml, carrier-config-list.xml and lookup.json
+# (and so the OCD dataset, which reads lookup.json). The evidence index flags
+# it; the private sanitizer decides it (docs/how-it-is-built.md).
+OLD_SELECTOR_SUPERSEDED = "old_selector_superseded"
+
+
+def superseded_selector_ids(evidence_index_path: Path) -> set[str]:
+    """The profiles the evidence index flags old_selector_superseded."""
+    if not evidence_index_path.exists():
+        return set()
+    return {
+        profile["profile_id"]
+        for profile in load_json(evidence_index_path).get("profiles", [])
+        if any(
+            isinstance(item, dict) and item.get("flag") == OLD_SELECTOR_SUPERSEDED
+            for item in profile.get("flags", [])
+        )
+    }
+
+
 def profile_newest_entries(evidence_index_path: Path) -> dict[str, str]:
     """The month of the newest upstream entry behind each profile, as the
     evidence index publishes it, for the profiles where it is known."""
@@ -2181,7 +2203,11 @@ def main(argv: list[str]) -> int:
     carriers_dir = args.carriers_dir
     generated_dir = args.generated_dir
     evidence_index_path = args.evidence_index or generated_dir / "evidence-index.json"
-    profile_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
+    all_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
+    superseded = superseded_selector_ids(evidence_index_path)
+    # Every profile file counts for data_digest; the match sets leave out the
+    # superseded old selectors (D7).
+    profile_items = [item for item in all_items if item[1]["profile_id"] not in superseded]
     profiles = [profile for _, profile in profile_items]
     evidence = load_apn_evidence(evidence_index_path)
     if evidence is None:
@@ -2192,7 +2218,7 @@ def main(argv: list[str]) -> int:
         )
     freshness = freshness_window(evidence_index_path)
     digest = data_digest(
-        carriers_dir, [path for path, _ in profile_items], evidence_index_path
+        carriers_dir, [path for path, _ in all_items], evidence_index_path
     )
     apn_rows = apn_xml_rows(profiles, evidence)
     apn_count = write_apn_rows(
@@ -2241,7 +2267,8 @@ def main(argv: list[str]) -> int:
         f"{len(apn_rows.credentials_left_out)} row(s) left out whose only effect is credentials from Google's "
         f"superseded copies ({len(apn_rows.credentials_kept_operator_page)} kept by the operator's page), "
         f"{len(apn_rows.emergency_left_out)} emergency type(s) left out "
-        f"({', '.join(f'{reason} {count}' for reason, count in emergency_left_out_counts(apn_rows).items())})"
+        f"({', '.join(f'{reason} {count}' for reason, count in emergency_left_out_counts(apn_rows).items())}), "
+        f"{len(superseded)} old Samsung selector profile(s) left out of the match sets"
     )
     return 0
 
