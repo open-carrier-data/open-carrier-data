@@ -486,9 +486,13 @@ class GeneratorTest(unittest.TestCase):
         lane["rules"].insert(0, {"canonical_name": "o2_de", "mcc": "262", "mnc": "07", "mvno": {"kind": "imsi", "value": "26207000000001"}})
         (root / ocd.FILES["google_lane"][1]).write_bytes(ocd.dump_lines(lane, ("entries", "rules")))
         generate_into(root)
+        published = json.loads((root / ocd.FILES["google_lane"][1]).read_text())
+        self.assertNotIn("26207000000001", json.dumps(published), "the generator leaves a rule outside rule 3 out")
         problems = ocd.validate(root)
         self.assertTrue(any("privacy guard" in p for p in problems), problems)
-        self.assertTrue(any("longer than 13" in p for p in problems), problems)
+        # The check validate applies to a lane that still carries one.
+        self.assertFalse(ocd.lane_rule_within_limits({"mvno": {"kind": "imsi", "value": "26207000001"}}))
+        self.assertTrue(ocd.lane_rule_within_limits({"mvno": {"kind": "imsi", "value": "2620700000"}}))
 
     def test_wrong_type_is_refused(self) -> None:
         root = self.fresh()
@@ -562,6 +566,50 @@ class ReaderChecksTest(unittest.TestCase):
         manifest["dataset_digest"] = "sha256:" + "0" * 64
         refused("manifest", json.dumps(manifest).encode(), "dataset_digest_mismatch")
         refused("manifest", b'{"a":1,"a":2}', "parse_error")
+
+
+class LanePrefixLimitsTest(unittest.TestCase):
+    """Rule 3 on the Google lane (rule round 32, the judged ruling of
+    2026-10-28): the same subscriber_prefix_ok as every published selector.
+    The values are synthetic, on the test network 001-01."""
+
+    def lane(self, *rules: dict) -> dict:
+        names = {rule["canonical_name"] for rule in rules}
+        return {"rules": list(rules), "entries": {name: {"values": {}} for name in names | {"default", "no_sim", "orphan_xx"}}}
+
+    @staticmethod
+    def rule(name: str, kind: str | None, value: str | None = None) -> dict:
+        return {"canonical_name": name, "mcc": "001", "mnc": "01", "mvno": {"kind": kind, "value": value} if kind else None}
+
+    def test_imsi_rules_of_11_to_13_characters_are_left_out(self) -> None:
+        for value in ("00101123456", "001011234567", "0010112345678"):
+            lane, left_out = ocd.within_prefix_limits(self.lane(self.rule("long_xx", "imsi", value), self.rule("net_xx", None)))
+            self.assertEqual([r["canonical_name"] for r in lane["rules"]], ["net_xx"])
+            self.assertEqual(left_out, [{"canonical_name": "long_xx", "network": "001-01", "kind": "imsi", "characters": len(value)}])
+            self.assertNotIn(value, json.dumps(left_out), "a left-out value is never reported")
+
+    def test_ten_characters_and_trailing_x_are_kept(self) -> None:
+        for value in ("0010112345", "00101123xx", "001011234xxxx"):
+            lane, left_out = ocd.within_prefix_limits(self.lane(self.rule("ok_xx", "imsi", value)))
+            self.assertEqual(left_out, [], value)
+
+    def test_iccid_of_13_kept_and_14_left_out(self) -> None:
+        _, kept = ocd.within_prefix_limits(self.lane(self.rule("ok_xx", "iccid", "8949000000001")))
+        self.assertEqual(kept, [])
+        _, left_out = ocd.within_prefix_limits(self.lane(self.rule("long_xx", "iccid", "89490000000012")))
+        self.assertEqual(len(left_out), 1)
+
+    def test_entries_only_left_out_rules_named_go_too(self) -> None:
+        lane, _ = ocd.within_prefix_limits(self.lane(self.rule("long_xx", "imsi", "00101123456"), self.rule("net_xx", None)))
+        self.assertEqual(sorted(lane["entries"]), ["default", "net_xx", "no_sim"])
+
+    def test_the_published_lane_keeps_rule_3(self) -> None:
+        path = REPO / "generated/ocd-dataset/google-lane.json"
+        if path.is_file():
+            lane = json.loads(path.read_text(encoding="utf-8"))
+            self.assertTrue(all(ocd.lane_rule_within_limits(rule) for rule in lane["rules"]))
+            named = {rule["canonical_name"] for rule in lane["rules"]} | set(ocd.UNNAMED_LANE_ENTRIES)
+            self.assertEqual(set(lane["entries"]) - named, set())
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ One set per commit of `main`:
 | apn_xml | `generated/android/apns-conf.xml` | OCD's APN file, unchanged | 16 MiB |
 | apn_index | `generated/ocd-dataset/apn-index.json` | each APN row's line, key and profiles | 16 MiB |
 
-The whole set, with the `pin.json` a fetcher writes beside it, stays under 64 MiB. On 2026-10-25 it was about 14 MB: 3,147 networks, 6,440 profiles (66 of them fill-only), 1,314 Google entries, 25,103 APN rows and 5 records. Files are plain UTF-8 JSON with sorted keys. The large members (`networks`, `keys`, `rules`, `entries`, `rows`, `records`) have one item per line, so a diff shows one network, rule or row per line.
+The whole set, with the `pin.json` a fetcher writes beside it, stays under 64 MiB. On 2026-10-25 it was about 14 MB: 3,147 networks, 6,440 profiles (66 of them fill-only), 1,314 Google entries, 25,103 APN rows and 5 records. On 2026-10-28, after rule 3's limits came to the Google lane (below), it had 3,146 networks, 6,394 profiles (20 of them fill-only) and 1,312 Google entries. Files are plain UTF-8 JSON with sorted keys. The large members (`networks`, `keys`, `rules`, `entries`, `rows`, `records`) have one item per line, so a diff shows one network, rule or row per line.
 
 - **Digests.** Every file but the manifest names `based_on_data_digest`, and the manifest names `data_digest`. Both are OCD's data digest of the publish, the same value as in `generated/android/metadata.json` and the `apns-conf.xml` header. `dataset_digest` is SHA-256 over, for each listed file in byte order of its name, the three lines `name`, `sha256` and `bytes`.
 - **Order.** Of two datasets with different `dataset_digest`, the one with the later `generated_at` is newer. `generated_at` changes only when a file changes; on a pull request, `validate` refuses a changed dataset whose `generated_at` is not later than `main`'s.
@@ -46,7 +46,7 @@ A profile carries:
 4. GID1 and GID2 are prefixes, ignoring case. An ICCID is a prefix. A carrier ID is the SIM's carrier ID or specific carrier ID.
 5. The most specific profile that holds serves. With none, `default` serves, and with no SIM, `no_sim`.
 
-`python3 tools/ocd_dataset.py match --mcc 262 --mnc 07 --imsi 262075000000001` shows the stack, the serving profile and the fill a synthetic SIM gets. `python3 tools/ocd_dataset.py ties` lists the profiles of equal specificity that one SIM can match together; the later `id` serves.
+`python3 tools/ocd_dataset.py match --mcc 001 --mnc 01 --gid1 ABCD2025` shows the stack, the serving profile and the fill a synthetic SIM on the test network 001-01 gets; `--imsi` takes a synthetic IMSI the same way. `python3 tools/ocd_dataset.py ties` lists the profiles of equal specificity that one SIM can match together; the later `id` serves.
 
 ### The Google-lane fill
 
@@ -60,7 +60,7 @@ The phone takes the first item whose `when` is null or holds for the SIM. MTS Mo
 
 ### Fill-only profiles
 
-Every Google rule without an OCD profile of exactly its match (the same single network and the same single selector) becomes a fill-only profile. Its `id` is `fill.<mcc><mnc>.` plus the first 12 hex digits of SHA-256 over `google-rule\n<name>\n<mcc>-<mnc>\n<kind or "none">\n<value or "">`. It has no values and no APN rows. At equal specificity an OCD profile wins, because `fill.` sorts before `open.`. On 2026-10-25 there were 66: 46 IMSI rules, 14 network rules (test PLMNs among them), 5 SPN rules and 1 GID1 rule.
+Every Google rule without an OCD profile of exactly its match (the same single network and the same single selector) becomes a fill-only profile. Its `id` is `fill.<mcc><mnc>.` plus the first 12 hex digits of SHA-256 over `google-rule\n<name>\n<mcc>-<mnc>\n<kind or "none">\n<value or "">`. It has no values and no APN rows. At equal specificity an OCD profile wins, because `fill.` sorts before `open.`. On 2026-10-25 there were 66: 46 IMSI rules, 14 network rules (test PLMNs among them), 5 SPN rules and 1 GID1 rule. Since 2026-10-28 there are 20, with no IMSI rule: all 46 had IMSI patterns of 11 to 13 characters, which rule 3 does not allow (below).
 
 ## The Google lane
 
@@ -71,7 +71,7 @@ Every Google rule without an OCD profile of exactly its match (the same single n
 
 These are derived values, not Google's files (rule 2). Rule 3 still holds for them:
 
-- An IMSI rule of 14 or more characters is left out: a full IMSI is 15 digits. On 2026-10-25 that was one rule, `cellcomroaming_gb` on 234-50.
+- A rule whose IMSI or ICCID datum breaks rule 3's prefix limits is left out: an IMSI pattern is 5 to 10 digits or `x` once trailing `x` are stripped, an ICCID prefix 5 to 13 digits. It is the same `subscriber_prefix_ok` as for every other published selector (rule round 32, which applies the limits to every published file, and the judged ruling of 2026-10-28). Until then the lane kept IMSI patterns of up to 13 characters. On 2026-10-28 the limit left out 46 rules: 206-01 3, 214-10 1, 222-01 18, 234-50 23 and 313-260 1. A SIM such a rule named gets the network's next fill item, or `default`. An entry that only left-out rules named leaves the lane too; every other entry but `default` and `no_sim` is named by a rule. Nothing is kept in a left-out rule's place, and no published file, log or report gives its value or its fill-only profile id.
 - A value that trips the privacy guard (the sanitizer's `BLOCK_PATTERNS`: e-mail shapes, international phone numbers, long digit runs, secret words) is left out for that entry. On 2026-10-25 that was 207 values in 179 entries, of 7 keys:
   - `imsvoice.conference_factory_uri_string` (149 entries);
   - `default_vm_number_string` (29) and `default_vm_number_roaming_string` (2);

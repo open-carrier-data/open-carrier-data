@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/carrier-identity.schema.json",
+  "title": "The carrier-identity table (generated/operators/carrier-identity.json)",
+  "description": "Which operators, brands and MVNOs run on which network codes (rule round 32, GOAL decision 2), CC0-1.0, built from the sources' own labels: LineageOS APN carrier names, Samsung network names and sales codes, Google carrier ID names and Apple bundle names. selectors are SIM selectors exactly as a source states them, each with the OCD profile it maps to; host_only means no source gives the brand a selector, so no phone can tell its SIMs from the host's. Every IMSI and ICCID selector passes rule 3's prefix limits. tools/validate_operators.py checks the file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "description",
+    "license",
+    "countries",
+    "entries"
+  ],
+  "$defs": {
+    "code": {
+      "type": "string",
+      "pattern": "^[0-9]{5,6}$"
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z]{2}\\.[a-z0-9][a-z0-9-]{1,40}$"
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mccmnc"
+      ],
+      "properties": {
+        "mccmnc": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
+        "spn": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "gid1_prefixes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9A-Fa-f]{1,32}$"
+          }
+        },
+        "gid2_prefixes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9A-Fa-f]{1,32}$"
+          }
+        },
+        "iccid_prefixes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]{5,13}$"
+          }
+        },
+        "imsi_prefix_patterns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9xX]{5,15}$"
+          }
+        },
+        "android_carrier_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "name",
+        "kind",
+        "country",
+        "operator_key",
+        "host_networks",
+        "host_only",
+        "selectors",
+        "labels"
+      ],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "kind": {
+          "enum": [
+            "operator",
+            "brand",
+            "mvno"
+          ]
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "operator_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/key"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "host_networks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
+        "host_only": {
+          "type": "boolean"
+        },
+        "selectors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "match",
+              "profile_id",
+              "families"
+            ],
+            "properties": {
+              "match": {
+                "$ref": "#/$defs/match"
+              },
+              "profile_id": {
+                "type": "string",
+                "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+              },
+              "families": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9_]{2,64}$"
+                }
+              }
+            }
+          }
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "families",
+              "networks"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              "families": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9_]{2,64}$"
+                }
+              },
+              "networks": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/code"
+                }
+              },
+              "sales_codes": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Z0-9]{2,8}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1200
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "countries": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  }
+}
