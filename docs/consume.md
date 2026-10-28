@@ -157,6 +157,26 @@ PY
 
 Those profiles stay available in `lookup.json`.
 
+### Credentials from old lists
+
+TelephonyProvider stores rows of one APN that differ only in username, password, auth type or MTU as one row, and `apns-conf.xml` writes the best-ranked row last so its values win ([how-it-is-built.md](how-it-is-built.md#how-the-android-apn-file-is-ordered), step 8). Where the best row, from a current vendor, sets no credentials and a lower row does, the phone sends the lower row's values. When those come only from a non-current source (frozen Pixel copies, LineageOS, MBPI, Sony, Fairphone or Apple), that is class (a). On public `a2f96412` it was 37 LTE lead roles in 20 scopes, 22 of them sent. OCD keeps these values, because removing a credential can cut mobile data on a network that checks it.
+
+Being built (rule round 32, D8):
+
+- Where every source of the values is Google's frozen Pixel copies, Google's current file gives the same APN bare, and the operator's own page names no credentials, the filling row leaves `apns-conf.xml`. The phone then sends what a current Pixel sends.
+- Each publish pull request and each release's notes list class (a) per scope and role: the APN, the source families of the credentials, whether they are sent or only stored, and the rows that left the file.
+- `--explain` names the source of every username, password, auth type and MTU a lead sends.
+
+On a phone without OCD's tester nothing checks these credentials, so cover those SIMs in your own device check (SM3 in [rom-builders.md](rom-builders.md)).
+
+### MMS where the operator ended it
+
+Being built (rule round 32). Where the operator states on its own page or PDF that MMS ended network-wide, and a second reader has checked that statement, the profile's `mms` reads `unsupported`, `capability_sources` names `operator_statement` as the off, and the profile publishes `enabledMMS` false. On such a network a long or group text that the phone turns into an MMS is lost without notice, and an MMS send waits 30 minutes before it fails. With `enabledMMS` false the phone keeps such texts as SMS and fails an MMS at once. Profiles whose MMS rows use their own MMSC, such as Fastweb on 22801 and Join on 27001, are spared, and no APN row changes. A statement that is not confirmed for 180 days lapses, and the value goes back to what the tables give. `carrier-config-list.xml` stays reference-only, so a ROM gets this value through OcdCarrierSettings ([rom-builders.md](rom-builders.md)). No statement changes VoLTE, Wi-Fi calling or any other service.
+
+### Old Samsung MVNO scopes leave the file
+
+Being built (rule round 32, D7). A Samsung MVNO scope that only Samsung builds older than three years state leaves `apns-conf.xml` and `lookup.json` when Samsung's current packs for the same sales code state the plain rule instead, the plain scope has a current vendor's internet row, and the brand belongs to the plain scope's operator. Its profile JSON stays, flagged `old_selector_superseded`, and SIMs that matched it get the plain scope's current rows. Round 14 found one such scope, 530/99 SPN Spark NZ, whose rows already equal the plain scope's. Other operators' old scopes, such as Join's on 270/01, stay as profiles, because an MVNO may still need its own APN.
+
 ### Wi-Fi calling can fail because of the Wi-Fi's DNS, not the settings
 
 Before Wi-Fi calling starts, the phone looks up the carrier's ePDG, the server its Wi-Fi calling tunnel connects to. The name has the form `epdg.epc.mncXXX.mccYYY.pub.3gppnetwork.org`, and the lookup goes through the DNS server of the Wi-Fi the phone is on. Some carriers answer that lookup only for clients they place in their own country. They judge this by the EDNS Client Subnet (ECS) in the query, or, when there is none, by the address of the DNS server that asks. A DNS server that sends no ECS gets an empty answer. The phone then finds no ePDG and gives up, and the carrier never refuses anything.
@@ -223,6 +243,12 @@ On 2026-10-03 the first lines of the output are:
 ```
 
 The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi`, and `--android-carrier-id`. It returns profiles in generic-to-specific order. Apply each one on top of the previous one. Overlay APN rows and CarrierConfig keys. For capabilities, report the most specific profile's value; an `unknown` there means no usable source for this brand, and the host network's value is only the host's. A value is what carrier tables configure, not a test result. It is not a statement that the operator still offers the service. `supported` means at least one phone maker's or OS carrier table turns the feature on for this SIM, or for Samsung VoNR offers the user its switch (`capability_basis` names that weaker basis), and no source whose off counts turns it off. The switch counts only where the pack serves the carrier: on a KT phone only for KT's networks, and never from Samsung's open-market US pack (XAA). Samsung's and Apple's offs never count, including a Samsung carrier pack that switches a feature off on some phone models. It is a configuration, not a test result: the feature may still be off on a given phone, or on phones the carrier has not approved. `unsupported` means the operator's own configuration, or two independent source families, turn it off. One maker's off alone is `unknown`. To see which source families turn a capability on and which turn it off, read `capability_sources` in `generated/evidence-index.json`.
+
+### What operators say, and which brands run where
+
+Being built (rule round 32). `generated/operators/statements.json` records what operators themselves say they offer: MMS, VoLTE, Wi-Fi calling at home and abroad, VoLTE roaming, eSIM, and 5G SA with VoNR. It starts with Telekom, Vodafone, Telefónica and 1&1 in Germany, the brands congstar and fraenk, and LIDL Connect and Aldi Talk. Each entry names the operator's own page, the day it was read and a paraphrase, never quoted text. A statement says what the operator sells, not what a tariff includes or a phone supports. Show it as "the operator states it offers X (read on <date>); whether your tariff includes it is not checked", never as "works". Apart from the MMS case above, statements change no value. An entry that is not confirmed for 180 days, or not swept for 365, lapses to `unknown`.
+
+The same folder carries the carrier-identity table: which operators, brands and MVNOs run on which network codes, with the SIM selectors a source states and `host_only` where none does. A host-only brand, such as LIDL Connect on 26202, cannot be told apart from its host's SIMs, so show it as a brand on that network, never as a statement about the SIM. Every selector in it passes the same prefix limits as every other published file.
 
 ### Device records for the four IMS switches
 
