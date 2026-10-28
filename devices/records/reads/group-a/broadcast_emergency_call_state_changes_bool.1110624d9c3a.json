@@ -1,0 +1,35 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "Key read, no candidate value. Android default false; Google CarrierSettings sets it for about 700 kodiak textprotos (US carriers such as Verizon and cable MVNOs), and in-tree CarrierConfig assets set it true for Verizon and Xfinity carrier IDs. Real carrier setting.",
+    "effect": "Read only by EmergencyStateTracker.onCarrierConfigurationChanged, and only for a carrier-identified config with the SIM ready (EmergencyStateTracker.java:2132-2152). When true, startEmergencyCall sends the sticky broadcast android.intent.action.EMERGENCY_CALL_STATE_CHANGED with EXTRA_PHONE_IN_EMERGENCY_CALL=true to all users, and endCall sends false (720-790, 1484-1494); there is no receiver permission, so any app can receive it (protected only against sending, AndroidManifest.xml:747). The in-tree receiver that acts on it is the Wi-Fi module: ActiveModeWarden registers for it when config_wifi_turn_off_during_emergency_call is true (769-803) and on receipt enters emergency mode (2176-2273): it stops SoftAP/hotspot, drops other Wi-Fi state commands for the duration (processMessageInEmergencyMode), and when carrier config config_wifi_disable_in_ecbm is set shuts Wi-Fi down or switches it to scan-only, then restores it on the false broadcast. That changes Wi-Fi availability during an emergency call, which matters to an emergency call carried over Wi-Fi (IWLAN) and to Wi-Fi-assisted location. On this ROM the path is currently dormant on two counts: EmergencyStateTracker is created only when domain selection is supported (PhoneGlobals.java:540-560; DomainSelectionResolver.java:139-146 needs a non-empty config_domain_selection_service_component_name, default empty at packages/services/Telephony/res/values/config.xml:393, no overlay in device/samsung or the OCD forks), and the Wi-Fi resource default is false (ServiceWifiResources config.xml:103-104). The phone (24.0) confirms both: dumpsys phone shows 'DomainSelectionResolver created: componentName=[]' with no active controller, and the Wi-Fi resource resolves to false. The legacy (non-domain-selection) GsmCdmaPhone path does not read the key or send the broadcast in 23.2.",
+    "risk": "The key decides whether other components are told an emergency call is in progress. With domain selection enabled (as OCD's domain-selection work could do) and a Wi-Fi overlay or carrier config that reacts, a true value can make Wi-Fi turn off or freeze during an emergency call, which can cut an emergency call over Wi-Fi or remove Wi-Fi location; a false value hides the call state from a receiver that a carrier relies on. Third-party or microG components on the phone may also act on the sticky broadcast; they are not in the tree and cannot be checked here."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "broadcast_emergency_call_state_changes_bool",
+  "notes": "Hold: the key stays in group A. Although it only gates a broadcast, the platform's Wi-Fi stack acts on that broadcast during the emergency call (hotspot off, Wi-Fi commands dropped, optional Wi-Fi shutdown), and any app can receive it, which is exactly the 'broadcast that other apps act on' case in the ruling. It is dormant on today's phone build (domain selection off, Wi-Fi overlay false), but that is a property of the current build, not of the key.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:04:37Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2053-2059,11966",
+    "frameworks/base/telephony/java/android/telephony/TelephonyManager.java:2070-2104",
+    "frameworks/base/core/res/AndroidManifest.xml:747",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/emergency/EmergencyStateTracker.java:195-200,720-790,1484-1494,2108-2152,2178-2201",
+    "packages/services/Telephony/src/com/android/phone/PhoneGlobals.java:540-560",
+    "packages/services/Telephony/res/values/config.xml:393",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/domainselection/DomainSelectionResolver.java:123-146",
+    "packages/modules/Wifi/service/java/com/android/server/wifi/ActiveModeWarden.java:769-803,1004-1008,2176-2273,2318-2330",
+    "packages/modules/Wifi/service/ServiceWifiResources/res/values/config.xml:103-104",
+    "packages/modules/Wifi/service/java/com/android/server/wifi/WifiShellCommand.java:4554-4557",
+    "tree-wide grep of frameworks, packages (apps, services, modules), lineage-sdk, vendor/lineage, device/samsung for the key, ACTION_EMERGENCY_CALL_STATE_CHANGED and EXTRA_PHONE_IN_EMERGENCY_CALL",
+    "rom-repos (ImsStack ocd, Iwlan, vendor/apn, vendor/extra, PhhIms): no reader of the key or the broadcast"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "hold"
+}

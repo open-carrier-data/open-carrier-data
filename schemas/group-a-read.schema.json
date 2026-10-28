@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/group-a-read.schema.json",
+  "title": "OCD group A read (devices/records/reads/group-a/*.json, ocd-group-a-read/2)",
+  "description": "Rule round 31 (emergencyValues). A group A value that differs from the Google lane, from any OCD source family, is served only once a read record with the verdict proceed is on main for that key, value, source and profile, and for the ROM family and IMS stack it is served on. An agent other than the value's builder reads the key's effect in the platform and IMS stack source for that ROM family and stack, and the value's basis, and records proceed or hold with the sources it read. A hold keeps the Google-lane value; the read is redone when the value, its basis or the stack changes. A key read (subject key) decides whether a key leaves group A: only a finding that it changes what is shown or logged, and never how an emergency, TTY, RTT or priority call or an emergency SMS is placed, routed, held or called back (effect display_only, verdict proceed). A read never holds a phone number, IMSI, ICCID, IMEI, SIP URI, IP address or e-mail address.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "subject",
+    "key",
+    "value",
+    "families",
+    "profiles",
+    "rom_family",
+    "ims_stack",
+    "effect",
+    "reader",
+    "builder",
+    "read_at",
+    "sources_read",
+    "findings",
+    "verdict",
+    "notes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ocd-group-a-read/2"
+    },
+    "subject": {
+      "enum": [
+        "value",
+        "key"
+      ]
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.]{1,200}$"
+    },
+    "value": {
+      "description": "The value read, typed by the key registry (subject value); null for a key read."
+    },
+    "families": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]{1,64}$"
+      },
+      "description": "The value's source families the read covers; empty for a key read."
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(open|fill)\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+      },
+      "description": "The profiles whose own value the read covers; empty for a key read."
+    },
+    "rom_family": {
+      "enum": [
+        "aosp",
+        "lineageos",
+        "other",
+        "stock"
+      ]
+    },
+    "ims_stack": {
+      "enum": [
+        "aosp_imsstack",
+        "other",
+        "phh_ims",
+        "samsung_ims"
+      ]
+    },
+    "effect": {
+      "enum": [
+        "call_path",
+        "display_only"
+      ]
+    },
+    "reader": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "builder": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "read_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "sources_read": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 200,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 600
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effect",
+        "basis",
+        "risk"
+      ],
+      "properties": {
+        "effect": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000
+        },
+        "risk": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000
+        }
+      }
+    },
+    "verdict": {
+      "enum": [
+        "proceed",
+        "hold"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000
+    }
+  }
+}

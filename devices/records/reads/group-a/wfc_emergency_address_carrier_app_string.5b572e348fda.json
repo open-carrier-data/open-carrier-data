@@ -1,0 +1,34 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "Key read, no candidate value. Android default is empty. Google CarrierSettings carries the key in about 3300 kodiak textprotos, pointing either at com.android.imsserviceentitlement/.WfcActivationActivity or at com.google.android.wfcactivation activities (WfcActivationActivity, VzwEmergencyAddressActivity, WfcActivationCanadaActivity, DishWfcActivationActivity); the latter are not installed on LineageOS, so the served value's basis depends on which app it names and whether that app exists on the device.",
+    "effect": "The key names the activity that must approve Wi-Fi calling (WFC) before it is turned on, not only a screen. Settings: when the user turns the WFC switch on, after the disclaimer Settings launches the named component with LAUNCH_APP_ACTIVATE and calls setVoWiFiSettingEnabled(true) only on RESULT_OK; with the key empty it turns WFC on directly (WifiCallingSettingsForSub.java:565-588). getCarrierActivityIntent builds the intent from the string without checking the component exists (509-531), and the launch is not guarded, so a component that is not installed leaves the user unable to turn WFC on from Settings. The same value shows the 'Update emergency address' entry (186-196, 600-620). The Wi-Fi calling slice/quick toggle refuses to turn WFC on at all when the key is set, only off (WifiCallingSliceHelper.java:367-399, 525-555). The target apps on this ROM can also turn WFC off: ImsServiceEntitlement's activation and address-update flows return RESULT_OK only after a TS.43 entitlement check and call turnOffWfc when the server reports incompatible or missing data (WfcActivationController.java:285-310, 355-380); QNS's WfcActivationHelper enables WFC itself (225). QNS keys and CarrierConfigManager.ImsServiceEntitlement keys are documented as effective only when this key points to that app (WfcCarrierConfigManager.java:42-90; CarrierConfigManager.java:5020-5035, 5088-5100). The key is not read by Telephony, the AOSP ImsStack or the OCD ImsStack fork. Both com.android.imsserviceentitlement and com.android.telephony.qns are installed on the phone (24.0); Google's com.google.android.wfcactivation is not part of LineageOS.",
+    "risk": "The value decides whether and how Wi-Fi calling can be enabled and whether the carrier's emergency (dispatchable) address is collected first. A value naming a missing app blocks enabling WFC (Settings launch fails, slice cannot enable), so no emergency call can be carried over Wi-Fi where there is no cellular coverage; an entitlement-app value can switch WFC off on a server answer; an empty value enables WFC without registering an emergency address, so on carriers that route Wi-Fi emergency calls by the registered address the PSAP routing and location for such a call may be missing or wrong."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "wfc_emergency_address_carrier_app_string",
+  "notes": "Hold: the key stays in group A. It is not display only: it gates turning Wi-Fi calling on (Settings requires the named app's approval, the slice cannot turn it on), it points at apps that can turn Wi-Fi calling off after an entitlement check, and it decides whether the carrier's emergency address for Wi-Fi emergency calls is registered. Those change whether and how an emergency call can be placed and routed over Wi-Fi.",
+  "profiles": [],
+  "read_at": "2026-10-28T19:04:37Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1777-1782,5020-5035,5088-5100,12028",
+    "packages/apps/Settings/src/com/android/settings/wifi/calling/WifiCallingSettingsForSub.java:186-196,476-498,501-560,565-588,600-620",
+    "packages/apps/Settings/src/com/android/settings/wifi/calling/WifiCallingSliceHelper.java:361-400,525-555",
+    "packages/services/QualifiedNetworksService/src/com/android/telephony/qns/wfc/WfcCarrierConfigManager.java:35-90,218",
+    "packages/services/QualifiedNetworksService/src/com/android/telephony/qns/wfc/WfcActivationHelper.java:225",
+    "packages/services/QualifiedNetworksService/src/com/android/telephony/qns/wfc/WfcActivationActivity.java:329",
+    "packages/apps/ImsServiceEntitlement/src/com/android/imsserviceentitlement/WfcActivationActivity.java:120-127",
+    "packages/apps/ImsServiceEntitlement/src/com/android/imsserviceentitlement/WfcActivationController.java:145-148,285-310,355-380",
+    "packages/apps/ImsServiceEntitlement/src/com/android/imsserviceentitlement/ImsEntitlementPollingService.java:270-290",
+    "tree-wide grep of frameworks, packages (apps, services, modules incl. ImsStack), lineage-sdk, vendor/lineage, device/samsung",
+    "rom-repos (ImsStack ocd, Iwlan, vendor/apn, vendor/extra, PhhIms): no reader of the key"
+  ],
+  "subject": "key",
+  "value": null,
+  "verdict": "hold"
+}

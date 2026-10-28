@@ -59,6 +59,8 @@ jobs:
         run: python3 tools/test_observed_reports.py
       - name: Test the OCD dataset (matcher vectors, selectors, generator, reader checks)
         run: python3 tools/test_ocd_dataset.py
+      - name: Test the F5 reads (emergency lines, rules, chain)
+        run: python3 tools/test_f5_read.py
       # The OCD dataset for the owner's ROM (rule round 30): the schemas, the
       # reader's checks 4 to 10, the device-record rules, the privacy guard on
       # the Google lane, and a regeneration that must give the same bytes. On
@@ -76,6 +78,24 @@ jobs:
             fi
           fi
           python3 tools/ocd_dataset.py validate --root . "${base[@]}"
+      # Rule round 31, SM6: every change of the APN rows on main carries its
+      # F5 read in generated/ocd-dataset/f5-reads.json, and an emergency-line
+      # change only with a read that proceeds. The read is tools/f5_read.py's
+      # deterministic check, rerun here from the base: a pull request's base,
+      # or the commit before a push to main.
+      - name: Check the F5 reads of emergency-line changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          args=()
+          if [ -n "$BASE_SHA" ] && [ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            if git show "$BASE_SHA:generated/android/apns-conf.xml" > "$RUNNER_TEMP/f5-base-apns-conf.xml" 2>/dev/null; then
+              git show "$BASE_SHA:generated/ocd-dataset/f5-reads.json" > "$RUNNER_TEMP/f5-base-reads.json" 2>/dev/null || : > "$RUNNER_TEMP/f5-base-reads.json"
+              args=(--base-xml "$RUNNER_TEMP/f5-base-apns-conf.xml" --base-file "$RUNNER_TEMP/f5-base-reads.json" --base-commit "$BASE_SHA")
+            fi
+          fi
+          python3 tools/f5_read.py check --root . "${args[@]}"
       - name: Validate observed/ (unverified reports, apart from the data)
         run: python3 tools/observed_reports.py validate --root .
       - name: Regenerate Android outputs and confirm nothing drifted

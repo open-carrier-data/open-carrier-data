@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-dataset-f5-reads.schema.json",
+  "title": "OCD F5 reads (generated/ocd-dataset/f5-reads.json)",
+  "description": "Rule round 31, SM6, a companion file of the dataset: the chain of F5 reads of emergency-line changes, one per change of the APN rows on main since `since`, oldest first. Each read names its base and head by the SHA-256 of the APN file's <apn> lines in order (apn_rows_sha256; the header comment is left out) and holds the change's emergency lines, one finding per line with the rule that decided it, and the verdict: proceed, hold or no_lines. Each read's base is the previous read's head, and the last head is this commit's APN rows. A consumer with rows R0 that takes rows Rn walks the chain back from Rn to R0 and takes the change only when every read on the way proceeds or has no lines; after the device family's emergency data test first use, only held lines that change an emergency row's APN name or roaming protocol on a matched network refuse. tools/f5_read.py writes and checks it; public validate reruns each new read.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "apn_rows_sha256",
+    "since",
+    "reads"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "apn_rows_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "since": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "apn_rows_sha256"
+      ],
+      "properties": {
+        "commit": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          ]
+        },
+        "apn_rows_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "reads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "base",
+          "head",
+          "lines_digest",
+          "lines",
+          "findings",
+          "verdict",
+          "method",
+          "rules_version",
+          "reader",
+          "builder",
+          "read_at",
+          "notes"
+        ],
+        "properties": {
+          "schema": {
+            "const": "ocd-f5-read/1"
+          },
+          "base": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "commit",
+              "apn_rows_sha256",
+              "data_digest"
+            ],
+            "properties": {
+              "commit": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  }
+                ]
+              },
+              "apn_rows_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "data_digest": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                ]
+              }
+            }
+          },
+          "head": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "apn_rows_sha256",
+              "data_digest"
+            ],
+            "properties": {
+              "apn_rows_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "data_digest": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                ]
+              }
+            }
+          },
+          "lines_digest": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{16}$"
+              }
+            ]
+          },
+          "lines": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "description": "condition|scope|network types|old|new, sorted"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "line",
+                "rule",
+                "verdict",
+                "why"
+              ],
+              "properties": {
+                "line": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2000
+                },
+                "rule": {
+                  "enum": [
+                    "android_default",
+                    "unreachable_scope",
+                    "gap",
+                    "foreign_name",
+                    "stated",
+                    "not_stated"
+                  ]
+                },
+                "verdict": {
+                  "enum": [
+                    "proceed",
+                    "hold"
+                  ]
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "verdict": {
+            "enum": [
+              "proceed",
+              "hold",
+              "no_lines"
+            ]
+          },
+          "method": {
+            "enum": [
+              "deterministic",
+              "agent"
+            ]
+          },
+          "rules_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reader": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "builder": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "read_at": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        }
+      }
+    }
+  }
+}

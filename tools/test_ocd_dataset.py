@@ -499,6 +499,20 @@ class GeneratorTest(unittest.TestCase):
         problems = ocd.validate(root)
         self.assertTrue(any("wrong_type" in p for p in problems), problems)
 
+    def test_group_a_reads_as_a_listed_role(self) -> None:
+        """The step 8 change lists group-a-reads.json in the manifest (role
+        group_a_reads); the reader's checks take it, typed, either way."""
+        root = self.fresh()
+        saved = ocd.LIST_GROUP_A_READS
+        ocd.LIST_GROUP_A_READS = True
+        try:
+            result = generate_into(root, "2026-10-29T10:00:00Z")
+            self.assertIn("group_a_reads", [e["role"] for e in result["manifest"]["files"]])
+            self.assertEqual(ocd.validate(root), [])
+        finally:
+            ocd.LIST_GROUP_A_READS = saved
+        self.assertTrue(any("LIST_GROUP_A_READS" in p for p in ocd.validate(root, regenerate=False)))
+
     def test_group_a_record_needs_a_proceed_read(self) -> None:
         root = self.fresh()
         configured = root / "devices/records/configured/x1s.json"
@@ -534,6 +548,230 @@ class GeneratorTest(unittest.TestCase):
         self.assertTrue(any("valid_until" in p for p in ocd.record_problems(wrong, registry, {}, "r")))
         phone = {**measured, "basis": "called +491701234567"}
         self.assertTrue(any("private data" in p for p in ocd.record_problems(phone, registry, {}, "r")))
+
+
+def cell_record(**changes) -> dict:
+    """A valid round 31 cell record (schema_version 2) for the S20 on o2."""
+    record = {
+        "kind": "measured", "device": {"codename": "x1s", "model": "SM-G981B"},
+        "rom": {"family": "lineageos", "line": "24.0", "forks": ["ocd"], "incremental": "eng.bela.20261028.120000"},
+        "ims_stack": {"id": "aosp_imsstack", "fork": "ocd", "version": None},
+        "carrier": {"scope": "profile", "profile_id": "open.26207.c07dcc040b58"},
+        "target": {"type": "config", "key": "carrier_volte_available_bool"}, "value_kind": "value", "value": True,
+        "claim": "measured", "label": None, "basis": "calls out over LTE and Wi-Fi calling stayed up past 15 s",
+        "level": "L3", "result": "works", "method": "mailbox_call+real_call", "bearer": "lte", "n": 2,
+        "first_measured": "2026-10-28", "last_measured": "2026-10-28", "valid_until": "2027-01-26",
+        "data": {"commit": "a2f96412b58f" + "0" * 28, "data_digest": "sha256:" + "0" * 64}, "tester": "owner",
+        "differs_between_sims": None,
+    }
+    record.update(changes)
+    record["record_key"] = ocd.cell_record_key_of(record)
+    return record
+
+
+class Round31RecordsTest(unittest.TestCase):
+    """Rule round 31 (keys): records keyed by cell, kind measured only, and no
+    record without a carrier key; the five S20 records are the one exception
+    until implementation order step 8."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.registry = ocd.read_json_file(REPO / ocd.FILES["profiles"][1])["keys"]
+
+    def test_cell_record_key_vectors(self) -> None:
+        self.assertEqual(cell_record()["record_key"], "r:3e3c08bfd829cafe")
+        other = cell_record(carrier={"scope": "sim_key", "mcc": "262", "mnc": "02", "gid1": "ff"},
+                            rom={"family": "lineageos", "line": "24.0", "forks": [], "incremental": "1"},
+                            ims_stack={"id": "aosp_imsstack", "fork": None, "version": 1},
+                            target={"type": "apn", "row_key": "a:f3b816097ac0ee1b", "op": "omit"})
+        self.assertEqual(other["record_key"], "r:282f49c73c83c8bb")
+        # The incremental and the stack version are recorded, not matched.
+        later = cell_record(rom={"family": "lineageos", "line": "24.0", "forks": ["ocd"], "incremental": "eng.bela.20261101.080000"},
+                            ims_stack={"id": "aosp_imsstack", "fork": "ocd", "version": 35})
+        self.assertEqual(later["record_key"], cell_record()["record_key"])
+
+    def test_a_valid_cell_record_passes_its_rules_and_schema(self) -> None:
+        record = cell_record()
+        self.assertEqual(ocd.cell_record_problems(record, self.registry, "r"), [])
+        self.assertTrue(ocd.is_cell_record(record))
+        self.assertEqual(ocd.schema_check(REPO, {"schema_version": 2, "based_on_data_digest": "sha256:" + "0" * 64, "expire_days": 90,
+                                                 "records": [record]}, "cell-records.schema.json", "r"), [])
+
+    def test_a_cell_record_without_a_carrier_key_is_refused(self) -> None:
+        record = cell_record()
+        record["carrier"] = {"scope": "all"}
+        problems = ocd.cell_record_problems(record, self.registry, "r")
+        self.assertTrue(any("record_no_carrier" in p for p in problems), problems)
+        self.assertTrue(ocd.schema_check(REPO, {"schema_version": 2, "based_on_data_digest": "sha256:" + "0" * 64, "expire_days": 90,
+                                                "records": [record]}, "cell-records.schema.json", "r"))
+
+    def test_cell_record_refusals(self) -> None:
+        cases = {
+            "record_kind": cell_record(kind="configured_device", claim="configured"),
+            "sorted list": cell_record(rom={"family": "lineageos", "line": "24.0", "forks": ["ocd", "abc"], "incremental": "1"}),
+            "INCREMENTAL": cell_record(rom={"family": "lineageos", "line": "24.0", "forks": [], "incremental": ""}),
+            "record_group_a": cell_record(target={"type": "config", "key": "imsemergency.emergency_domain_preference_int_array"}, value=[2, 1]),
+            "record_group_b": cell_record(target={"type": "config", "key": "carrier_metered_apn_types_strings"}, value=["default"]),
+            "valid_until": cell_record(valid_until="2027-01-27"),
+            "private data": cell_record(basis="called +491701234567"),
+            "fork": cell_record(target={"type": "config", "key": "imsvoice.voice_on_default_bearer_in_roaming_without_qos_bool"},
+                                ims_stack={"id": "aosp_imsstack", "fork": None, "version": None}),
+        }
+        for expected, record in cases.items():
+            problems = ocd.cell_record_problems(record, self.registry, "r")
+            text = " ".join(problems)
+            self.assertTrue(expected.lower() in text.lower() or (expected == "INCREMENTAL" and "incremental" in text), (expected, problems))
+        stale = cell_record()
+        stale["record_key"] = "r:" + "0" * 16
+        self.assertTrue(any("cell lines" in p for p in ocd.cell_record_problems(stale, self.registry, "r")))
+
+    def test_round_30_records_without_a_carrier_key_are_refused_but_the_five(self) -> None:
+        document = json.loads((REPO / "devices/records/configured/x1s.json").read_text(encoding="utf-8"))
+        for record in document["records"]:
+            self.assertIn(record["record_key"], ocd.LEGACY_DEVICE_ONLY_RECORDS)
+            self.assertEqual(ocd.record_problems(record, self.registry, {}, "r"), [])
+        sixth = copy.deepcopy(document["records"][0])
+        sixth["target"] = {"type": "config", "key": "carrier_volte_available_bool"}
+        sixth["record_key"] = ocd.record_key_of(sixth)
+        problems = ocd.record_problems(sixth, self.registry, {}, "r")
+        self.assertTrue(any("record_no_carrier" in p for p in problems), problems)
+        profiled = {**copy.deepcopy(document["records"][0]), "carrier": {"scope": "profile", "profile_id": "open.26207.c07dcc040b58"}}
+        profiled["record_key"] = ocd.record_key_of(profiled)
+        problems = ocd.record_problems(profiled, self.registry, {}, "r")
+        self.assertTrue(any("record_kind" in p for p in problems), problems)
+
+    def test_served_records_follow_the_schema_version(self) -> None:
+        document = json.loads((REPO / "devices/records/configured/x1s.json").read_text(encoding="utf-8"))
+        mixed = document["records"] + [cell_record()]
+        self.assertEqual(ocd.SERVED_RECORDS_SCHEMA_VERSION, 1)
+        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 1)], [r["record_key"] for r in document["records"]])
+        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 2)], ["r:3e3c08bfd829cafe"])
+
+
+def tiny_profiles(values: dict, fill: list) -> dict:
+    profile = {"id": "open.26207.c07dcc040b58", "kind": "ocd", "name": "O2", "match": {"mccmnc": [{"mcc": "262", "mnc": "07"}]},
+               "specificity": 0, "fill": fill, "values": values, "sources": {k: ["lineageos_device_overlays"] for k in values},
+               "alternatives": {}, "apn_rows": 0}
+    keys = {"rtt_supported_bool": {"type": "bool", "group": "A", "origin": ["google"], "fork": None},
+            "carrier_volte_available_bool": {"type": "bool", "group": None, "origin": ["google"], "fork": None},
+            "allow_emergency_numbers_in_call_log_bool": {"type": "bool", "group": "A", "origin": ["google"], "fork": None}}
+    return {"keys": keys, "groups": {"A": {"pattern": ocd.GROUP_A_PATTERN, "names": list(ocd.GROUP_A_NAMES),
+                                           "keys": ["allow_emergency_numbers_in_call_log_bool", "rtt_supported_bool"]}},
+            "networks": {"262-07": {"mcc": "262", "mnc": "07", "profiles": [profile]}}}
+
+
+def group_a_read(**changes) -> dict:
+    read = {"schema": "ocd-group-a-read/2", "subject": "value", "key": "rtt_supported_bool", "value": True,
+            "families": ["lineageos_device_overlays"], "profiles": ["open.26207.c07dcc040b58"], "rom_family": "lineageos",
+            "ims_stack": "aosp_imsstack", "effect": "call_path", "reader": "an independent reader", "builder": "the importer",
+            "read_at": "2026-10-28T19:00:00Z", "sources_read": ["frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1"],
+            "findings": {"effect": "e", "basis": "b", "risk": "r"}, "verdict": "proceed", "notes": "n"}
+    read.update(changes)
+    return read
+
+
+class Round31GroupATest(unittest.TestCase):
+    """Rule round 31 (emergencyValues): a group A value that differs from the
+    Google lane waits for an independent read; a display_only key read
+    takes the key out of group A."""
+
+    LANE = {"entries": {"default": {"values": {}}, "o2_de": {"values": {"rtt_supported_bool": False}}}}
+
+    def test_candidates(self) -> None:
+        differs = ocd.group_a_candidates(tiny_profiles({"rtt_supported_bool": True, "carrier_volte_available_bool": True},
+                                                       [{"entry": "o2_de", "when": None}]), self.LANE)
+        self.assertEqual([(c["key"], c["value"], list(c["profiles"])) for c in differs],
+                         [("rtt_supported_bool", True, ["open.26207.c07dcc040b58"])])
+        same = ocd.group_a_candidates(tiny_profiles({"rtt_supported_bool": False}, [{"entry": "o2_de", "when": None}]), self.LANE)
+        self.assertEqual(same, [])
+        # A conditional fill leaves the default-only bundle, which lacks the key.
+        conditional = ocd.group_a_candidates(tiny_profiles({"rtt_supported_bool": False}, [{"entry": "o2_de", "when": {"kind": "spn", "value": "x"}}]), self.LANE)
+        self.assertEqual(len(conditional), 1)
+
+    def test_reads_cover_candidates_and_key_reads_leave_group_a(self) -> None:
+        profiles = tiny_profiles({"rtt_supported_bool": True, "allow_emergency_numbers_in_call_log_bool": True}, [{"entry": "o2_de", "when": None}])
+        _, none = ocd.group_a_documents("sha256:" + "0" * 64, profiles, self.LANE, {})
+        self.assertEqual(sorted(p["key"] for p in none["pending"]), ["allow_emergency_numbers_in_call_log_bool", "rtt_supported_bool"])
+        value_path = "devices/records/reads/group-a/rtt_supported_bool.000000000001.json"
+        key_path = "devices/records/reads/group-a/allow_emergency_numbers_in_call_log_bool.000000000002.json"
+        reads = {
+            value_path: group_a_read(),
+            key_path: group_a_read(subject="key", key="allow_emergency_numbers_in_call_log_bool", value=None, families=[], profiles=[], effect="display_only"),
+        }
+        for path, read in reads.items():
+            self.assertEqual(ocd.group_a_read_problems(read, path), [])
+            self.assertEqual(ocd.schema_check(REPO, read, "group-a-read.schema.json", path), [])
+        served, status = ocd.group_a_documents("sha256:" + "0" * 64, profiles, self.LANE, reads)
+        self.assertEqual(status["pending"], [])
+        self.assertEqual(status["left_group_a"], ["allow_emergency_numbers_in_call_log_bool"])
+        # The S20 spec's R31.7 shape: one item per read, profile and family.
+        self.assertEqual(served["reads"], [{
+            "read_id": ocd.group_a_read_id(value_path, "open.26207.c07dcc040b58", "lineageos_device_overlays"), "key": "rtt_supported_bool",
+            "value": True, "family": "lineageos_device_overlays", "profile_id": "open.26207.c07dcc040b58", "rom_family": "lineageos",
+            "ims_stack": "aosp_imsstack", "ims_stack_fork": None, "verdict": "proceed", "reader": "an independent reader",
+            "read_at": "2026-10-28T19:00:00Z", "reference": value_path}])
+        self.assertEqual([(f["key"], f["finding"], f["verdict"]) for f in served["key_findings"]],
+                         [("allow_emergency_numbers_in_call_log_bool", "display_only", "proceed")])
+        self.assertRegex(served["reads"][0]["read_id"], r"^gar:[0-9a-f]{16}$")
+        self.assertEqual(ocd.schema_check(REPO, served, "ocd-dataset-group-a-reads.schema.json", "r"), [])
+        self.assertEqual(ocd.schema_check(REPO, status, "ocd-dataset-group-a-pending.schema.json", "p"), [])
+        self.assertEqual(ocd.left_group_a_keys(reads), {"allow_emergency_numbers_in_call_log_bool"})
+        self.assertIsNone(ocd.group_of("allow_emergency_numbers_in_call_log_bool", {"allow_emergency_numbers_in_call_log_bool"}))
+        self.assertEqual(ocd.group_of("allow_emergency_numbers_in_call_log_bool"), "A")
+        # Another basis (source family) needs its own read.
+        other = dict(reads)
+        other[value_path] = group_a_read(families=["google"])
+        served, status = ocd.group_a_documents("sha256:" + "0" * 64, profiles, self.LANE, other)
+        self.assertEqual([p["key"] for p in status["pending"]], ["rtt_supported_bool"])
+        self.assertEqual(served["reads"], [])
+        # A profile whose value has no recorded family gets no item: no read can admit it.
+        bare = tiny_profiles({"rtt_supported_bool": True}, [{"entry": "o2_de", "when": None}])
+        bare["networks"]["262-07"]["profiles"][0]["sources"] = {}
+        served, status = ocd.group_a_documents("sha256:" + "0" * 64, bare, self.LANE, {value_path: group_a_read(families=[])})
+        self.assertEqual((served["reads"], [u["profile_id"] for u in status["unrecorded_basis"]]), ([], ["open.26207.c07dcc040b58"]))
+
+    def test_read_refusals(self) -> None:
+        self.assertTrue(ocd.group_a_read_problems(group_a_read(reader="the importer"), "r"))
+        self.assertTrue(ocd.group_a_read_problems(group_a_read(subject="key", value=None, families=[], profiles=[], effect="call_path"), "r"))
+        self.assertTrue(ocd.group_a_read_problems(group_a_read(profiles=[]), "r"))
+        self.assertTrue(ocd.group_a_read_problems(group_a_read(notes="call +491701234567"), "r"))
+        self.assertFalse(ocd.group_a_read_problems(group_a_read(verdict="hold"), "r"))
+        # The prefix and replace keys never leave group A (round 31; the S20 spec's R31.7).
+        for key in ocd.GROUP_A_NEVER_LEAVE:
+            named = {"x": group_a_read(subject="key", key=key, value=None, families=[], profiles=[], effect="display_only")}
+            self.assertEqual(ocd.left_group_a_keys(named), set())
+
+    def test_the_reads_on_main(self) -> None:
+        document = ocd.read_json_file(REPO / ocd.GROUP_A_READS_FILE)
+        status = ocd.read_json_file(REPO / ocd.GROUP_A_PENDING_FILE)
+        profiles = ocd.read_json_file(REPO / ocd.FILES["profiles"][1])
+        for key in status["left_group_a"]:
+            self.assertIsNone(profiles["keys"][key]["group"], key)
+            self.assertNotIn(key, profiles["groups"]["A"]["keys"])
+        self.assertEqual(len({r["read_id"] for r in document["reads"]}), len(document["reads"]))
+        print(f"\ngroup A reads on main: {len(document['reads'])} read items "
+              f"({sum(r['verdict'] == 'proceed' for r in document['reads'])} proceed), {len(status['key_reads'])} key reads, "
+              f"left group A: {status['left_group_a']}, pending: {len(status['pending'])}, unrecorded basis: {len(status['unrecorded_basis'])}")
+
+
+class Round31WithheldTest(unittest.TestCase):
+    def test_withheld_list(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            shutil.copytree(REPO / "schemas", root / "schemas")
+            shutil.copytree(REPO / "tools", root / "tools", ignore=shutil.ignore_patterns("__pycache__", "fixtures"))
+            (root / ocd.DATASET_DIR).mkdir(parents=True)
+            lane = {"entries": {"vodafone_de": {"values": {"carrier_volte_available_bool": True}}}}
+            digest = "sha256:" + "1" * 64
+            document = {"schema_version": 1, "based_on_data_digest": digest, "lane": {"device": "kodiak", "build": "b", "snapshot": "s"},
+                        "withheld": [{"entry": "vodafone_de", "key": "default_vm_number_string", "rules": ["long_decimal_identity"]}],
+                        "by_key": {"default_vm_number_string": 1}}
+            (root / ocd.WITHHELD_FILE).write_text(json.dumps(document), encoding="utf-8")
+            self.assertEqual(ocd.withheld_problems(root, lane, digest), [])
+            document["withheld"][0]["key"] = "carrier_volte_available_bool"
+            document["by_key"] = {"carrier_volte_available_bool": 1}
+            (root / ocd.WITHHELD_FILE).write_text(json.dumps(document), encoding="utf-8")
+            self.assertTrue(any("the lane carries it" in p for p in ocd.withheld_problems(root, lane, digest)))
 
 
 @unittest.skipUnless((REPO / ocd.FILES["manifest"][1]).is_file(), "needs this checkout's generated/ocd-dataset/")

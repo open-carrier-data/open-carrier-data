@@ -1,0 +1,55 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "aosp",
+    "google"
+  ],
+  "findings": {
+    "basis": "AOSP CarrierConfig assets in this tree: carrier id 1839 Verizon Wireless (lines 82-85) and the Xfinity Mobile ids 2032 and 2556 carry exactly ['*71','*72']. Google's CarrierSettings carry the same value for Fi Extended (GrapheneOS Pixel CarrierSettings snapshot, gid1-matched Fi entries, Pixel firmware CP3A.261005.005), for Spectrum Us on 314-020 and for Verizononsitelte Us on 999-480 (Pixel vendor CarrierSettings bundles). For 310-012 the Google lane already serves ['*71','*72'] from one of its two entries. These are real carrier settings of Verizon-network operators. The Fi Extended source entries are gid1-specific while the OCD profiles name single networks; that is a matching question with no emergency effect for this value.",
+    "effect": "blockCallForwardingNumberWhileRoaming (TelephonyConnectionService.java:2153-2186) runs from getTelephonyConnection (1735-1742) for every outgoing call, emergency calls included: placeEmergencyConnection calls getTelephonyConnection with isEmergencyNumber=true (2726-2731) and the check has no emergency exception. It blocks only when ServiceState reports roaming, the phone is not using IMS for voice (with support_ims_call_forwarding_while_roaming_bool at its default true, VoLTE or Wi-Fi calling enabled and IMS in service turns the check off), and the dialled string starts with a listed prefix. Then the call fails at once with DIALED_CALL_FORWARDING_WHILE_ROAMING (Telecom ERROR with a message). The default is null, which blocks nothing (CarrierConfigManager.java:12172). With ['*71','*72'] only dialled strings that begin with '*71' or '*72' (Verizon-style call forwarding codes) are refused while roaming without IMS voice.",
+    "risk": "None for emergency, TTY, RTT or WPS calls. Emergency numbers reach the check as digit strings (after convertToEmergencyNumber, 1225-1232) and none starts with '*7'. WPS calls start with '*272', '*31#*272' or '#31#*272' (PhoneNumberUtils.java:117-123), which do not start with '*71' or '*72'. TTY relay and RTT calls use ordinary numbers. The only change is that a roaming user without IMS voice cannot dial a '*71'/'*72' forwarding code, which the carrier intends. Note: the key itself is not safe for every value (see key-call_forwarding_blocks_while_roaming_string_array.json)."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "call_forwarding_blocks_while_roaming_string_array",
+  "notes": "Proceed. The value blocks only '*71'/'*72' forwarding codes while roaming without IMS voice. The check runs on the emergency dial path too, but no emergency number, WPS prefix or TTY/RTT number can start with these prefixes. The basis is the AOSP Verizon/Xfinity carrier config and Google's CarrierSettings for Verizon-network operators. Read on the LineageOS 23.2 tree; this path has not changed in years, so 24.0 should read the same.",
+  "profiles": [
+    "open.310012.debc4502ecb5",
+    "open.310591.4143bd6a5b07",
+    "open.310592.5015ac112f52",
+    "open.310593.2d2433622add",
+    "open.310594.dbf37b38039e",
+    "open.310595.351fb29c1b57",
+    "open.310596.cd6b60ad405a",
+    "open.310597.2f0c1d6ff489",
+    "open.310598.28b37f812730",
+    "open.314020.98f1f3f31fdb",
+    "open.999480.e5f9b1ce032e"
+  ],
+  "read_at": "2026-10-28T19:11:13Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2986-3006,12172",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:1225-1234 (emergency number conversion)",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:1611-1742 (getTelephonyConnection, roaming check at 1735-1742)",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:2153-2186 (blockCallForwardingNumberWhileRoaming, useImsForAudioOnlyCall)",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:2726-2731 (placeEmergencyConnection calls getTelephonyConnection)",
+    "frameworks/base/telephony/java/android/telephony/PhoneNumberUtils.java:117-123,2975-2977 (WPS prefixes)",
+    "packages/services/Telephony/src/com/android/services/telephony/DisconnectCauseUtil.java:222-262",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1839_Verizon-Wireless.xml:82-85",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_2032_Xfinity-Mobile.xml:77-80",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_2556_Xfinity_Mobile.xml:76-79",
+    "Open_Carrier_Data/live-private/candidates/aosp-carrier-config/aosp-carrier-config/1839.verizon-wireless.debc4502ec.json",
+    "Open_Carrier_Data/live-private/candidates/google-carriersettings-protobuf/google-carriersettings-protobuf/31059[1-8].fi-extended-us.*.json",
+    "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.3e1984d6e664a99d9b0c0e45e17570e9.json (Spectrum Us, 314-020)",
+    "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.642689dece92dee4011fd35006ca0eeb.json (Verizononsitelte Us, 999-480)"
+  ],
+  "subject": "value",
+  "value": [
+    "*71",
+    "*72"
+  ],
+  "verdict": "proceed"
+}

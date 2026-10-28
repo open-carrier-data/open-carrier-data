@@ -1,0 +1,52 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "aosp",
+    "google"
+  ],
+  "findings": {
+    "basis": "Verizon's real setting is false in AOSP's carrier_config_carrierid_1839_Verizon-Wireless.xml:39-40 (also in this ROM's CarrierConfig assets) and in Google's verizon_us (kodiak/verizon_us.textproto:1501, 1618). Google Fi Extended on Verizon is false in Google's own fi_extended_us (akita/fi_extended_us.textproto:1221, 1294). Verizon on-site LTE 999-480 is false in the 2024 Pixel vendor CarrierSettings bundle (bramble/redfin, which shared the Verizon file); Google's current verizononsitelte_us leaves the key unset.",
+    "effect": "rtt_upgrade_supported_for_downgraded_vt_call (CarrierConfigManager.java:3449-3453, default true at :12198) is meant to decide whether a call that was a video call and was downgraded to voice may be upgraded to RTT. On this ROM and stack nothing reads it. Outside its definition in CarrierConfigManager there is no reference to the key string or its constant in frameworks/, frameworks/opt/telephony, frameworks/opt/net/ims, packages/services/Telephony, packages/services/Telecomm, packages/apps/Dialer, packages/modules/ImsStack (tree and OCD fork branch ocd), vendor/, device/, hardware/ or lineage-sdk. The ImsStack's list of carrier-config keys forwarded to the native stack does not include it (CarrierConfig.java:62-90). Serving false therefore changes no call. Read on the 23.2 tree; the phone runs 24.0, where readers were not checked.",
+    "risk": "None on this ROM and stack, because no code reads the key. If a later ROM or ImsStack starts reading it, false would only withhold the upgrade offer for a call that was downgraded before. It would never affect how a call, emergency included, is placed, routed, held or called back, and it matches the Verizon and Google settings for these SIMs."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_upgrade_supported_for_downgraded_vt_call",
+  "notes": "Proceed. The key has no reader in the platform, Telecom, Dialer or the AOSP ImsStack on this ROM, so the value cannot put an emergency, TTY, RTT or priority call at risk, and it is Verizon's and Google's real setting. The key stays in group A (no key read written): it is call-path by design, and the 24.0 build and future stack versions were not checked for readers.",
+  "profiles": [
+    "open.310012.debc4502ecb5",
+    "open.310590.31e9321fed14",
+    "open.310591.4143bd6a5b07",
+    "open.310592.5015ac112f52",
+    "open.310593.2d2433622add",
+    "open.310594.dbf37b38039e",
+    "open.310595.351fb29c1b57",
+    "open.310596.cd6b60ad405a",
+    "open.310597.2f0c1d6ff489",
+    "open.310598.28b37f812730",
+    "open.310599.89d72280c9f5",
+    "open.311480.07ddc410f094",
+    "open.999480.e5f9b1ce032e"
+  ],
+  "read_at": "2026-10-28T19:16:56Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:3443-3453,12198-12199",
+    "grep -rln downgraded_rtt_call|downgraded_vt_call|DOWNGRADED_RTT_CALL|DOWNGRADED_VT_CALL over frameworks/, packages/ (Telephony, Telecomm, Dialer, ImsStack, CarrierConfig), vendor/, device/, hardware/, lineage-sdk/: only CarrierConfigManager.java",
+    "grep -rIl over packages/modules/ImsStack, packages/services/Telephony, packages/services/Telecomm, frameworks/opt/telephony, frameworks/opt/net/ims (all file types): no hit",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/core/config/CarrierConfig.java:55-100 (keys forwarded to the native stack; these two are not among them)",
+    "rom-repos/platform_packages_modules_ImsStack.git@ocd (git grep: no hit)",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1839_Verizon-Wireless.xml:38-40",
+    "Open_Carrier_Data/live-private/candidates/aosp-carrier-config/aosp-carrier-config/1839.verizon-wireless.debc4502ec.json",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/kodiak/verizon_us.textproto:1495-1503,1616-1620",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/akita/fi_extended_us.textproto:1215-1225,1292-1296",
+    "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/*/verizononsitelte_us.textproto (keys absent in all 24 device folders)",
+    "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.642689dece92dee4011fd35006ca0eeb.json",
+    "Open_Carrier_Data/worktrees-r31/public/generated/evidence-index.json"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "proceed"
+}
