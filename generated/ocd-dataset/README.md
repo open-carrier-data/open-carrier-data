@@ -14,7 +14,7 @@ Beside the set, in the same commit, are four companion files (rule round 31). Th
 | File | Contents | Written by |
 | --- | --- | --- |
 | `f5-reads.json` | the chain of F5 reads: one per change of the APN rows on `main`, each with its emergency lines, the rule that decided each line and the verdict (SM6) | `tools/f5_read.py publish`, in the private publish run |
-| `group-a-reads.json` | the group A reads of `devices/records/reads/group-a/` as CarrierSettings serves them (one item per read, profile and source family) and the display-only key findings; an optional dataset role, listed from implementation order step 8 | `tools/ocd_dataset.py generate` |
+| `group-a-reads.json` | the group A reads of `devices/records/reads/group-a/` as CarrierSettings serves them (one item per read, profile and source family) and the display-only key findings; an optional dataset role, listed in the manifest since implementation order step 8 | `tools/ocd_dataset.py generate` |
 | `group-a-pending.json` | every group A value that still waits for a read, the values whose basis is not recorded, every key read, and the keys that left group A | `tools/ocd_dataset.py generate` |
 | `privacy-withheld.json` | which Google-lane values the privacy guard leaves out, by entry and key, without the value (SM4) | the private publisher |
 
