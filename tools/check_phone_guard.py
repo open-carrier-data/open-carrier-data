@@ -174,12 +174,20 @@ def load_generator(checkout: Path):
     return module
 
 
+BASE_CHECKOUT_PATHS = ("tools", "carriers", "schemas", "generated/evidence-index.json")
+
+
 def extract_checkout(checkout: Path, revision: str, into: Path) -> Path:
-    """The tools, carriers and evidence index of REVISION of CHECKOUT's git
-    repository, extracted into INTO (`git archive`), as a checkout the
-    generator functions read."""
-    listed = subprocess.run(["git", "-C", str(checkout), "archive", "--format=tar", revision, "tools", "carriers",
-                             "schemas", "generated/evidence-index.json"], check=True, capture_output=True)
+    """The tools, carriers, schemas and evidence index of REVISION of
+    CHECKOUT's git repository (those of BASE_CHECKOUT_PATHS the revision has),
+    extracted into INTO (`git archive`), as a checkout the generator
+    functions read."""
+    present = subprocess.run(["git", "-C", str(checkout), "ls-tree", "--name-only", revision, "--",
+                              *BASE_CHECKOUT_PATHS], check=True, capture_output=True, text=True).stdout.split()
+    if "tools" not in present:
+        raise ValueError(f"{revision} of {checkout} has no tools/")
+    listed = subprocess.run(["git", "-C", str(checkout), "archive", "--format=tar", revision, "--", *present],
+                            check=True, capture_output=True)
     subprocess.run(["tar", "-x", "-C", str(into)], input=listed.stdout, check=True)
     return into
 
@@ -674,7 +682,8 @@ def watch_lines(items: list[dict[str, Any]]) -> list[str]:
                       key=lambda item: not set(item["types"]) & set(WATCH_FIRST))
         lines.append(f"{condition}: {len({item['scope'] for item in mine})} scope(s)")
         for item in mine[:WATCH_LIST_LIMIT]:
-            lines.append(f"  {item['scope']}: {item['old']} -> {item['new']} ({','.join(item['types'])})")
+            change = f"{item['old']} -> {item['new']}" if item["old"] else item["new"]
+            lines.append(f"  {item['scope']}: {change} ({','.join(item['types'])})")
         if len(mine) > WATCH_LIST_LIMIT:
             lines.append(f"  ... {len(mine) - WATCH_LIST_LIMIT} more (--report-json lists them all)")
     return lines
