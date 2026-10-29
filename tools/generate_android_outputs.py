@@ -452,6 +452,9 @@ class ProfileEvidence(NamedTuple):
     # the newest version of their sales code's configuration superseded for
     # the fact's type, or from old builds.
     apn_fact_superseded_pack_sources: dict[str, frozenset[str]] = {}
+    # Per source, the builds its observations of the profile come from
+    # (source_versions "builds"): D's build comparison reads them.
+    source_builds: dict[str, frozenset[str]] = {}
 
 
 class ApnRows(NamedTuple):
@@ -524,6 +527,11 @@ def load_apn_evidence(evidence_index_path: Path | None) -> dict[str, ProfileEvid
                 fact["key"]: frozenset(fact["superseded_pack_sources"])
                 for fact in apn_facts
                 if fact.get("superseded_pack_sources")
+            },
+            {
+                item["source"]: frozenset(item["builds"])
+                for item in profile.get("source_versions", [])
+                if item.get("builds")
             },
         )
     return evidence
@@ -1448,6 +1456,63 @@ def mms_setting(record: dict[str, Any]) -> tuple[str, ...]:
 # give such a value and Google's current file gives the APN bare, the value is
 # one Google itself dropped: current Pixels on that SIM send none.
 FROZEN_PIXEL_COPY_SOURCES = frozenset({"google_pixel_vendor_carriersettings"})
+# Rule decisions round 35, item D: LineageOS's Pixel APN snapshot is a copy of
+# one Pixel build (cfcbd9d: blazer CP3A.261005.005). While the Google lane
+# reads that build it is a copy of the current build, not a superseded one,
+# and rule 1 must not strip the credentials Google's current list still
+# carries. It joins FROZEN_PIXEL_COPY_SOURCES, and the private sanitizer's
+# change 26 superseded copies, once the Google lane has moved past it
+# (pixel_snapshot_superseded): automatically, by a build comparison, never by a
+# date or a person. The first publish that this changes runs under D8 rule 7's
+# stops, after an agent reads each affected operator page.
+PIXEL_SNAPSHOT_SOURCE = "lineageos_pixel_apn_snapshot"
+GOOGLE_LANE_SOURCE = "google_carriersettings"
+# A Pixel build ID: branch, date (YYMMDD), serial and an optional carrier or
+# region suffix, such as CP3A.261005.005 or CP3A.261005.002.A1.
+PIXEL_BUILD_RE = re.compile(r"[A-Z0-9]{4}\.(\d{6})\.(\d{3})(?:\.[A-Z](\d{1,3}))?")
+
+
+def pixel_build_key(build: str) -> tuple[int, int, int] | None:
+    """The order of a Pixel build ID by date, serial and suffix number; None
+    for a value that is no Pixel build ID."""
+    match = PIXEL_BUILD_RE.fullmatch(str(build))
+    if match is None:
+        return None
+    return int(match.group(1)), int(match.group(2)), int(match.group(3) or 0)
+
+
+def pixel_snapshot_superseded(evidence: dict[str, ProfileEvidence] | None) -> bool:
+    """Whether the Google lane has moved past LineageOS's Pixel APN snapshot
+    (round 35, D): the snapshot's recorded builds (its observations'
+    source_versions) are known, the Google lane reads none of them any more,
+    and it reads a build newer than each of them. While the Google lane still
+    reads the snapshot's build, for that model or any other, the snapshot is a
+    copy of a current build. A snapshot whose build is unknown is never
+    superseded here (the private lane stops for a read then). The comparison
+    can only come late, never early: rule 1 removes credentials, the direction
+    that can cut data."""
+    snapshot: set[str] = set()
+    google: set[str] = set()
+    for profile in (evidence or {}).values():
+        builds = profile.source_builds or {}
+        snapshot.update(builds.get(PIXEL_SNAPSHOT_SOURCE, ()))
+        google.update(builds.get(GOOGLE_LANE_SOURCE, ()))
+    snapshot_keys = [pixel_build_key(build) for build in snapshot]
+    google_keys = [key for key in (pixel_build_key(build) for build in google) if key is not None]
+    if not snapshot or None in snapshot_keys or snapshot & google:
+        return False
+    return all(any(key > old for key in google_keys) for old in snapshot_keys)
+
+
+def frozen_pixel_copy_sources(evidence: dict[str, ProfileEvidence] | None) -> frozenset[str]:
+    """The sources rule 1 treats as Google's superseded Pixel copies:
+    FROZEN_PIXEL_COPY_SOURCES, and the snapshot once the Google lane has moved
+    past it (pixel_snapshot_superseded)."""
+    if pixel_snapshot_superseded(evidence):
+        return FROZEN_PIXEL_COPY_SOURCES | {PIXEL_SNAPSHOT_SOURCE}
+    return FROZEN_PIXEL_COPY_SOURCES
+
+
 CREDENTIAL_ATTRIBUTES = ("user", "password", "authtype", "mtu", "mtu_v4", "mtu_v6")
 # APNs whose operator's own current APN page names credentials, read without a
 # login, a consent click, a bot wall or an anti-detection browser (round 32,
@@ -1514,7 +1579,8 @@ def record_sources(record: dict[str, Any], field: str = "_support") -> frozenset
 
 
 def leave_out_superseded_google_credentials(
-    written: list[dict[str, Any]], scope_records: list[dict[str, Any]]
+    written: list[dict[str, Any]], scope_records: list[dict[str, Any]],
+    frozen_copies: frozenset[str] = FROZEN_PIXEL_COPY_SOURCES,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Rule 1 of rule decisions round 32, D8. Leave a row out of one written
     scope when all of these hold:
@@ -1525,8 +1591,10 @@ def leave_out_superseded_google_credentials(
     2. its only effect on the stored row is a username, password, auth type
        or MTU it fills in (CREDENTIAL_ATTRIBUTES): the stored row without it
        differs in no other attribute, type or bitmask;
-    3. every source of the row is a frozen Pixel copy
-       (FROZEN_PIXEL_COPY_SOURCES), and no other source gives credentials,
+    3. every source of the row is a frozen Pixel copy (FROZEN_COPIES:
+       FROZEN_PIXEL_COPY_SOURCES, and LineageOS's Pixel APN snapshot once the
+       Google lane has moved past it, frozen_pixel_copy_sources), and no
+       other source gives credentials,
        or the values it fills in, for that APN and any of its types in the
        scope (SCOPE_RECORDS, every row of the scope before any leave-out);
     4. Google's current lane (google_carriersettings in "_current") gives the
@@ -1558,7 +1626,7 @@ def leave_out_superseded_google_credentials(
             if not fills:
                 continue
             sources = record_sources(record)
-            if not sources or not sources <= FROZEN_PIXEL_COPY_SOURCES:
+            if not sources or not sources <= frozen_copies:
                 continue
             without = android_stored_rows([written[i] for i in indices if i != index])[0][0]
             changed = {key for key in set(row) | set(without)
@@ -1572,7 +1640,7 @@ def leave_out_superseded_google_credentials(
             same_apn = [other for other in scope_records
                         if str(other["apn"]).casefold() == apn and types & set(apn_row_types(other["type"]))]
             if any(
-                record_sources(other) - FROZEN_PIXEL_COPY_SOURCES
+                record_sources(other) - frozen_copies
                 and (str(other.get("user") or "") or str(other.get("password") or "")
                      or any(field in other and str(other[field]) == str(attributes[field]) for field in fills))
                 for other in same_apn
@@ -1856,7 +1924,8 @@ class ScopeRows(NamedTuple):
     credentials_kept: list[dict[str, Any]]
 
 
-def write_scope(records: list[dict[str, Any]]) -> ScopeRows:
+def write_scope(records: list[dict[str, Any]],
+                frozen_copies: frozenset[str] = FROZEN_PIXEL_COPY_SOURCES) -> ScopeRows:
     """Steps 4 to 9 of apn_xml_rows for the rows of one scope, in order: a
     stale attach type left out, an emergency type without a stated reason left
     out, the rows ranked, MMS sent to a current vendor's MMS row, the rows
@@ -1871,7 +1940,8 @@ def write_scope(records: list[dict[str, Any]]) -> ScopeRows:
     # stored rows, so rule 1 sees the leads the phone will have.
     stored_with_internet = [record for record in written if record.get("_left_out_stored_with_internet")]
     grouped, credentials_changed, kept_by_page = leave_out_superseded_google_credentials(
-        [record for record in written if not record.get("_left_out_stored_with_internet")], records
+        [record for record in written if not record.get("_left_out_stored_with_internet")], records,
+        frozen_copies,
     )
     kept, absorbed = leave_out_absorbed_mms(grouped)
     order = {id(record): index for index, record in enumerate(written)}
@@ -1932,11 +2002,12 @@ def apn_xml_rows(
     credentials_kept: list[dict[str, Any]] = []
     role_gap_left_out: list[dict[str, Any]] = []
     role_gap_kept_whole: list[dict[str, Any]] = []
+    frozen_copies = frozen_pixel_copy_sources(evidence)
     for scope in sorted(scopes):
         scope_records, gap_changed, gap_whole = keep_role_gap_rows(scopes[scope])
         role_gap_left_out.extend(gap_changed)
         role_gap_kept_whole.extend(gap_whole)
-        result = write_scope(scope_records)
+        result = write_scope(scope_records, frozen_copies)
         ia_left_out += result.ia_left_out
         mms_left_out += result.mms_left_out
         emergency_left_out.extend(result.emergency_left_out)
@@ -2520,7 +2591,9 @@ def main(argv: list[str]) -> int:
         f"{len(superseded)} old Samsung selector profile(s) left out of the match sets, "
         f"{len(apn_rows.role_gap_left_out)} row(s) of LineageOS's legacy list without the types whose role "
         f"is no gap ({sum(1 for record in apn_rows.role_gap_left_out if not record['type'])} left out), "
-        f"{len(apn_rows.role_gap_kept_whole)} kept whole in scopes that would otherwise be gone"
+        f"{len(apn_rows.role_gap_kept_whole)} kept whole in scopes that would otherwise be gone, "
+        f"LineageOS's Pixel APN snapshot "
+        f"{'superseded, a frozen Pixel copy for rule 1' if pixel_snapshot_superseded(evidence) else 'not superseded'}"
     )
     return 0
 
