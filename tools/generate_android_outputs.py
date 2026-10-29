@@ -481,6 +481,11 @@ class ApnRows(NamedTuple):
     # otherwise be gone, kept whole, each marked "_role_gap_scope_kept_whole".
     role_gap_left_out: tuple[dict[str, Any], ...] = ()
     role_gap_kept_whole: tuple[dict[str, Any], ...] = ()
+    # Change 18 step 2c (rule round 34, take_type_off_internet_group): per
+    # type of STALE_INTERNET_GROUP_TYPES, the rows it retyped, and the rows
+    # it left out.
+    stale_types_left_out: tuple[tuple[str, int], ...] = ()
+    rows_left_out_stored_with_internet: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -1235,6 +1240,39 @@ def take_mms_off_internet_group(
     return retyped
 
 
+def read_past_cdma_internet_group(
+    ranked: list[dict[str, Any]],
+    internet: dict[str, Any] | None,
+    groups: dict[tuple[str, ...], list[dict[str, Any]]],
+    first: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    """Change 18 step 3's read-past (rule round 34, round 33 step 7 (b)).
+    FIRST is the first stored row that serves "mms". When it is the first
+    internet row's stored group (android_unique_key) and no member of that
+    group serves a 3GPP data network type (apn_row_network_types is empty
+    for each, as with Google's CDMA-only Verizon "internet" row), Android
+    never sends MMS over it on GPRS to NR, so step 3 reads the next stored
+    row that serves "mms" and serves a 3GPP data network type in its place.
+    Otherwise FIRST stands. Step 3 then runs as before (C1): it stops at a
+    stored row that holds a vendor MMS row, and otherwise moves the best
+    vendor MMS row just before it. No type changes, no row is left out and no
+    MMS field changes; MMS on the CDMA types stays with the internet group.
+    On 310/004, MMS on LTE went to a LineageOS/Sony VZWINTERNET row ahead of
+    Google's VZWAPP."""
+    if first is None or first is not internet:
+        return first
+    key = android_unique_key(internet)
+    if any(apn_row_network_types(member) for member in groups[key]):
+        return first
+    return next(
+        (record for record in ranked
+         if android_unique_key(record) != key
+         and any("mms" in apn_row_types(member["type"]) for member in groups[android_unique_key(record)])
+         and any(apn_row_network_types(member) for member in groups[android_unique_key(record)])),
+        None,
+    )
+
+
 def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
     current vendor backs for "mms" (_current), with a real APN and an MMSC,
@@ -1258,13 +1296,19 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
        any row of its android_unique_key group serves it, and a group's MMS
        setting is a vendor's exactly when one of its rows is a vendor MMS
        row, because the key holds the APN, MMSC, MMS proxy and MMS port.
+       When that first stored row is the internet row's and no member of it
+       serves a 3GPP data network type, step 3 reads the next stored row
+       that serves "mms" and a 3GPP type instead
+       (read_past_cdma_internet_group, rule round 34).
     4. Move the best vendor MMS row that serves neither "default" nor "ia"
        (RowRank read for "mms", then fallback_order_key) to just before the
        earliest-ranked row of that stored group. The group is written at
        that row's place, so the moved row comes before the stored row.
 
-    Only the first internet row and the rows Android stores with it (step
-    2b) are retyped; retyping every row no vendor backs lets
+    Only the first internet row and the rows Android stores with it are
+    retyped: for "mms" here (steps 2 and 2b), and for "ims" and "xcap" in
+    step 2c (take_type_off_internet_group, rule round 34), which apn_xml_rows
+    runs right after this function. Retyping every row no vendor backs lets
     DataProfileManager merge EE's stale T-Mobile rows in 234/30.
     MmsService then reads the MMSC from the APN of the network that carries
     MMS (MmsRequest 209-231). Rule decisions of 2026-10-06, round 6, change
@@ -1337,6 +1381,7 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
          if any(serves(member, "mms") for member in groups[android_unique_key(record)])),
         None,
     )
+    first = read_past_cdma_internet_group(ranked, internet, groups, first)
     # "first is internet" is already the stored-row test: rank_scope puts
     # every row that serves "default" first, so the internet row is ranked
     # first in its scope and is always the earliest row of its own group
@@ -1362,6 +1407,272 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
     moved.insert(next(i for i, record in enumerate(moved) if record is first), best)
     best["_vendor_mms_ahead"] = True
     return moved, retyped
+
+
+# Rule round 34, change 18 step 2c (round 33 step 7 (a)): the types other
+# than "mms" that a row Android stores with the first internet row can give
+# that stored row, and that take_type_off_internet_group takes off such rows,
+# with the network types it reads them on: MMS_NETWORK_TYPES plus IWLAN (18),
+# because the IMS and XCAP networks also run over Wi-Fi.
+STALE_INTERNET_GROUP_TYPES: dict[str, frozenset[int]] = {
+    "ims": MMS_NETWORK_TYPES | {18},
+    "xcap": MMS_NETWORK_TYPES | {18},
+}
+
+
+def row_network_types(record: dict[str, Any], allowed: frozenset[int]) -> frozenset[int]:
+    """apn_row_network_types read on ALLOWED instead of MMS_NETWORK_TYPES: a
+    row without a bitmask serves all of ALLOWED."""
+    def parse(value: Any) -> set[int]:
+        return {int(part) for part in str(value).split("|") if part.strip().isdigit()}
+
+    if str(record.get("network_type_bitmask") or "").strip():
+        types = parse(record["network_type_bitmask"])
+    elif str(record.get("bearer_bitmask") or "").strip():
+        types = {RIL_RADIO_TECH_NETWORK_TYPES.get(bearer, 0) for bearer in parse(record["bearer_bitmask"])}
+    else:
+        return allowed
+    return frozenset(types) & allowed if types - {0} else allowed
+
+
+def left_out_stored_with_internet(record: dict[str, Any]) -> bool:
+    return bool(record.get("_left_out_stored_with_internet") or record.get("_type_left_out_stored_with_internet"))
+
+
+def stored_row_without_type(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """The stored row of ROWS (one android_unique_key, in written order)
+    without its type and without unset values."""
+    row = {field: value for field, value in android_stored_rows(rows)[0][0].items() if value is not None}
+    row.pop("type", None)
+    return row
+
+
+def take_type_off_internet_group(ranked: list[dict[str, Any]], apn_type: str) -> int:
+    """Change 18 step 2c (rule round 34, round 33 step 7 (a)): step 2b
+    (take_mms_off_internet_group) read for APN_TYPE, one of
+    STALE_INTERNET_GROUP_TYPES ("ims" and "xcap"). Android stores the first
+    internet row as one row with every row of its android_unique_key, and
+    that stored row comes first in its scope, so a row of the group that
+    serves APN_TYPE makes the internet APN the type's profile: the first
+    profile that serves "ims" or "xcap" on the network type. An IMS or XCAP
+    request also attaches to the up internet network, whose capabilities hold
+    every type of its profile (DataNetwork updateNetworkCapabilities
+    2502-2530, DataNetworkController findCompatibleDataNetworkAndAttach
+    1370-1455), so only a retype moves it. The network types read are
+    STALE_INTERNET_GROUP_TYPES[APN_TYPE] (row_network_types: a row with
+    neither bitmask serves all of them). The group is the scope's rows with
+    the first internet row's android_unique_key, without the rows step 2b
+    already left out. It acts only when all seven checks and check 3b hold:
+
+    1. the first internet row itself does not serve APN_TYPE;
+    2. another row of the group serves it;
+    3. no row of the group is backed for it by a current vendor
+       (_current: CURRENT_VENDOR_APN_SOURCES; old-build and superseded-pack
+       sources do not count, nor do Apple, LineageOS, Sony and Fairphone);
+       3b. no row of the scope with the internet row's APN value (letter
+       case ignored) is backed for it by a current vendor: then a current
+       vendor runs APN_TYPE on the internet APN;
+    4. coverage: usable rows outside the group (android_usable: enabled,
+       cellular, APN set 0 or -1) that a current vendor backs for it, with a
+       real APN, together serve every read network type the group serves;
+    5. the scope is not on a persist_apns_for_plmn network
+       (android_phone_model.PERSIST_APNS_FOR_PLMN);
+    6. sole effect: for each group row whose only type is APN_TYPE, the
+       stored row without it (android_stored_rows, in written order) equals
+       the stored row with it in every attribute except type, unset values
+       ignored: the bitmasks, username, password, auth type and MTU included;
+    7. the gate, per network type: on each read network type the group
+       serves, the first stored row after the group that serves APN_TYPE
+       there (its members' merged bitmask) holds a usable row a current
+       vendor backs for it, with a real APN.
+
+    Then every other row of the group that serves APN_TYPE loses it. A row
+    with other types keeps them, its place and every value, and gets
+    APN_TYPE added to "_types_left_out_stored_with_internet". A row whose
+    only type is APN_TYPE is marked "_type_left_out_stored_with_internet"
+    and apn_xml_rows leaves it out of apns-conf.xml. When any check fails,
+    nothing in the scope changes for APN_TYPE. The first internet row, every
+    MMSC, MMS proxy and MMS port, every type other than APN_TYPE, the rows of
+    other stored groups and the order of the rows never change. Profile JSON
+    keeps every retyped and left-out row. Returns the rows retyped."""
+    def serves(record: dict[str, Any], served: str) -> bool:
+        return served in apn_row_types(record["type"])
+
+    internet = next((record for record in ranked if serves(record, "default")), None)
+    if internet is None or serves(internet, apn_type):
+        return 0
+    if f"{internet.get('mcc', '')}{internet.get('mnc', '')}" in PERSIST_APNS_FOR_PLMN:
+        return 0
+    key = android_unique_key(internet)
+    group = [record for record in ranked
+             if android_unique_key(record) == key and not left_out_stored_with_internet(record)]
+    stale = [record for record in group if record is not internet and serves(record, apn_type)]
+    if not stale or any(record.get("_current", {}).get(apn_type) for record in group):
+        return 0
+    allowed = STALE_INTERNET_GROUP_TYPES[apn_type]
+    vendor = [
+        record for record in ranked
+        if android_unique_key(record) != key and not left_out_stored_with_internet(record)
+        and record.get("_current", {}).get(apn_type) and not placeholder_apn(record["apn"])
+        and row_network_types(record, allowed) and android_usable(record)
+    ]
+    if not vendor:
+        return 0
+    covered = frozenset().union(*(row_network_types(record, allowed) for record in vendor))
+    if not frozenset().union(*(row_network_types(record, allowed) for record in group)) <= covered:
+        return 0
+    # Check 3b: no current vendor backs the internet row's APN value for
+    # APN_TYPE anywhere in the scope.
+    apn_value = str(internet.get("apn", "")).lower()
+    if any(str(record.get("apn", "")).lower() == apn_value and record.get("_current", {}).get(apn_type)
+           for record in ranked if not left_out_stored_with_internet(record)):
+        return 0
+    # Check 7, the gate: on every network type of ALLOWED that the group
+    # serves, the first stored row after the group that serves APN_TYPE there
+    # holds a usable row a current vendor backs for it (real APN).
+    stored_groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in ranked:
+        if not left_out_stored_with_internet(record):
+            stored_groups[android_unique_key(record)].append(record)
+    for network_type in frozenset().union(*(row_network_types(record, allowed) for record in group)):
+        following = next(
+            (record for record in ranked
+             if android_unique_key(record) != key and not left_out_stored_with_internet(record)
+             and any(serves(member, apn_type) for member in stored_groups[android_unique_key(record)])
+             and network_type in frozenset().union(
+                 *(row_network_types(member, allowed) for member in stored_groups[android_unique_key(record)]))),
+            None,
+        )
+        if following is None or not any(
+            member.get("_current", {}).get(apn_type) and not placeholder_apn(member["apn"])
+            and android_usable(member)
+            for member in stored_groups[android_unique_key(following)]
+        ):
+            return 0
+    # Check 6. The group is written best row last (the internet row is the
+    # best-ranked row of its own group) and the others before it in reverse
+    # rank order (write_android_groups_best_last).
+    written_order = [record for record in reversed(group) if record is not internet] + [internet]
+    whole = stored_row_without_type(written_order)
+    for record in stale:
+        if apn_row_types(record["type"]) == [apn_type] and stored_row_without_type(
+            [other for other in written_order if other is not record]
+        ) != whole:
+            return 0
+    retyped = 0
+    for record in stale:
+        if apn_row_types(record["type"]) == [apn_type]:
+            record["_type_left_out_stored_with_internet"] = apn_type
+            continue
+        record["type"] = ",".join(served for served in apn_row_types(record["type"]) if served != apn_type)
+        record["_types_left_out_stored_with_internet"] = [
+            *record.get("_types_left_out_stored_with_internet", []), apn_type
+        ]
+        retyped += 1
+    return retyped
+
+
+def put_vendor_attach_first(ranked: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Step 4b (rule round 34, round 33 step 7 (a), "ia"): the vendor
+    attach row ahead of a CDMA-only internet stored group. Android attaches
+    with the first profile that can handle "ia", with no network-type filter,
+    after sorting the preferred profile first
+    (DataProfileManager.updateInitialAttachDataProfileAtModem 636-660), and
+    after the first internet connection the preferred profile is the internet
+    profile (onInternetDataNetworkConnected 470-486). It acts only when all
+    seven conditions hold:
+
+    1. in rank order, the first stored row that serves "ia" is the first
+       internet row's group (android_unique_key);
+    2. the internet row itself does not serve "ia" (its own "ia" stays with
+       change 7's leave_out_stale_attach);
+    3. no row of that group is backed for "ia" by a current vendor;
+    4. no member of that group serves a 3GPP data network type
+       (apn_row_network_types is empty for every member), so it is never
+       the preferred profile on GPRS to NR;
+    5. a current vendor backs another row of the scope for "ia", with a
+       real APN, that serves neither "default" nor "mms"; the best of these
+       is chosen by RowRank read for "ia", then fallback_order_key;
+    6. the chosen row's stored group serves LTE (13 in apn_row_network_types
+       of some member), and every member is android_usable;
+    7. no row it passes, between the internet group's place and the chosen
+       row, serves another type of the chosen row's group.
+
+    Then the chosen row's whole stored group moves, in its own rank order,
+    to just before the internet group, and the chosen row is marked
+    "_vendor_attach_ahead". It never changes a type, leaves out a row or
+    reorders rows within one android_unique_key, so TelephonyProvider stores
+    the same rows on every network and the step runs on
+    persist_apns_for_plmn networks too (separateRowsNeeded compares only rows
+    of one android_unique_key). It runs after step 2c and before
+    write_android_groups_best_last. Returns the rows."""
+    def serves(record: dict[str, Any], served: str) -> bool:
+        return served in apn_row_types(record["type"])
+
+    live = [record for record in ranked if not left_out_stored_with_internet(record)]
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in live:
+        groups[android_unique_key(record)].append(record)
+    internet = next((record for record in live if serves(record, "default")), None)
+    if internet is None:
+        return ranked
+    key = android_unique_key(internet)
+    # Conditions 1 and 2.
+    first = next(
+        (record for record in live
+         if any(serves(member, "ia") for member in groups[android_unique_key(record)])),
+        None,
+    )
+    if first is None or android_unique_key(first) != key or serves(internet, "ia"):
+        return ranked
+    # Condition 4: where the internet group serves a 3GPP type it is the
+    # preferred profile there, serves "ia", and is tried first for attach
+    # (639-642) and re-sent after the first connection (470-486), so a move
+    # would change at most the very first attach.
+    if any(apn_row_network_types(member) for member in groups[key]):
+        return ranked
+    # Condition 3.
+    if any(member.get("_current", {}).get("ia") for member in groups[key]):
+        return ranked
+    # Condition 5.
+    candidates = [
+        record for record in live
+        if android_unique_key(record) != key and record.get("_current", {}).get("ia")
+        and not placeholder_apn(record["apn"]) and not serves(record, "default") and not serves(record, "mms")
+    ]
+    if not candidates:
+        return ranked
+    ranks = scope_row_ranks(ranked, lead_type="ia")
+    position = {id(record): index for index, record in enumerate(ranked)}
+    best = min(
+        candidates,
+        key=lambda record: (*ranks[position[id(record)]].sort_key(), fallback_order_key(record)),
+    )
+    best_key = android_unique_key(best)
+    best_group = groups[best_key]
+    # Condition 6: attach has no network-type filter, so an LTE-blind row
+    # moved ahead would become the LTE attach, and an unusable one cannot
+    # attach at all.
+    if 13 not in frozenset().union(*(apn_row_network_types(member) for member in best_group)):
+        return ranked
+    if not all(android_usable(member) for member in best_group):
+        return ranked
+    # Condition 7.
+    other_types = {served for member in best_group for served in apn_row_types(member["type"])} - {"ia"}
+    start = min(position[id(member)] for member in groups[key])
+    stop = min(position[id(member)] for member in best_group)
+    passed = [record for record in ranked[start:stop]
+              if android_unique_key(record) != best_key and not left_out_stored_with_internet(record)]
+    if any(serves(record, served) for record in passed for served in other_types):
+        return ranked
+    # The whole stored group moves in its rank order, so its best-ranked
+    # member stays the row written last and the stored values stay the same.
+    members = [record for record in ranked if android_unique_key(record) == best_key]
+    moved = [record for record in ranked if android_unique_key(record) != best_key]
+    at = next(index for index, record in enumerate(moved) if record is ranked[start])
+    moved[at:at] = members
+    best["_vendor_attach_ahead"] = True
+    return moved
 
 
 # ApnSetting.similar (ApnSetting.java:1427-1458), which
@@ -1922,6 +2233,10 @@ class ScopeRows(NamedTuple):
     emergency_left_out: list[dict[str, Any]]
     credentials_left_out: list[dict[str, Any]]
     credentials_kept: list[dict[str, Any]]
+    # Change 18 step 2c (rule round 34): the rows retyped per type of
+    # STALE_INTERNET_GROUP_TYPES, and the rows left out.
+    stale_types: dict[str, int] = {}
+    type_left_out: list[dict[str, Any]] = []
 
 
 def write_scope(records: list[dict[str, Any]],
@@ -1929,15 +2244,25 @@ def write_scope(records: list[dict[str, Any]],
     """Steps 4 to 9 of apn_xml_rows for the rows of one scope, in order: a
     stale attach type left out, an emergency type without a stated reason left
     out, the rows ranked, MMS sent to a current vendor's MMS row, the rows
-    Android stores as one written together, D8 rule 1, and the absorbed
-    MMS-only rows left out. The rows are changed in place."""
+    Android stores as one written together (after step 2c,
+    take_type_off_internet_group, and step 4b, put_vendor_attach_first), D8
+    rule 1, and the absorbed MMS-only rows left out. The rows are changed in
+    place."""
     ia_left_out = leave_out_stale_attach(records)
     scope_records, emergency_changed = leave_out_emergency(records)
     ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
+    # Step 2c (rule round 34) runs right after put_vendor_mms_first, so after
+    # step 2b.
+    stale_types = {apn_type: take_type_off_internet_group(ranked, apn_type) for apn_type in STALE_INTERNET_GROUP_TYPES}
+    # Step 4b (rule round 34): after step 2c, before the groups are written.
+    ranked = put_vendor_attach_first(ranked)
     written = write_android_groups_best_last(ranked)
-    # Step 7's MMS-only rows stored with the internet row (round 33,
-    # take_mms_off_internet_group) leave before D8 rule 1 reads the
-    # stored rows, so rule 1 sees the leads the phone will have.
+    # Step 2c's rows whose only type it took off are not written. They and
+    # step 7's MMS-only rows stored with the internet row (round 33,
+    # take_mms_off_internet_group) leave before D8 rule 1 reads the stored
+    # rows, so rule 1 sees the leads the phone will have.
+    type_left_out = [record for record in written if record.get("_type_left_out_stored_with_internet")]
+    written = [record for record in written if not record.get("_type_left_out_stored_with_internet")]
     stored_with_internet = [record for record in written if record.get("_left_out_stored_with_internet")]
     grouped, credentials_changed, kept_by_page = leave_out_superseded_google_credentials(
         [record for record in written if not record.get("_left_out_stored_with_internet")], records,
@@ -1953,6 +2278,8 @@ def write_scope(records: list[dict[str, Any]],
         emergency_changed,
         credentials_changed,
         kept_by_page,
+        stale_types,
+        type_left_out,
     )
 
 
@@ -2003,6 +2330,8 @@ def apn_xml_rows(
     role_gap_left_out: list[dict[str, Any]] = []
     role_gap_kept_whole: list[dict[str, Any]] = []
     frozen_copies = frozen_pixel_copy_sources(evidence)
+    stale_types: Counter[str] = Counter({apn_type: 0 for apn_type in STALE_INTERNET_GROUP_TYPES})
+    type_left_out: list[dict[str, Any]] = []
     for scope in sorted(scopes):
         scope_records, gap_changed, gap_whole = keep_role_gap_rows(scopes[scope])
         role_gap_left_out.extend(gap_changed)
@@ -2015,9 +2344,12 @@ def apn_xml_rows(
         credentials_kept.extend(result.credentials_kept)
         ordered.extend(result.written)
         mms_absorbed.extend(result.mms_absorbed)
+        stale_types.update(result.stale_types)
+        type_left_out.extend(result.type_left_out)
     return ApnRows(
         ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out),
         tuple(credentials_left_out), tuple(credentials_kept), tuple(role_gap_left_out), tuple(role_gap_kept_whole),
+        tuple(sorted(stale_types.items())), tuple(type_left_out),
     )
 
 
@@ -2433,6 +2765,8 @@ def write_metadata(
     mms_rows_left_out_absorbed: int = 0,
     emergency_types_left_out: dict[str, int] | None = None,
     credential_rows_left_out: int = 0,
+    stale_types_left_out: int = 0,
+    rows_left_out_stored_with_internet: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -2482,6 +2816,13 @@ def write_metadata(
             # MMS-only rows Android merges into an earlier row, whose MMS
             # setting no current vendor gives. Profile JSON keeps them.
             "mms_rows_left_out_absorbed_by_android": mms_rows_left_out_absorbed,
+            # Change 18 step 2c (rule round 34): rows Android stores with the
+            # first internet row that lost a type of
+            # STALE_INTERNET_GROUP_TYPES no current vendor backs on that
+            # stored row (retyped), and the rows whose only type it was (left
+            # out). --explain names the type. Profile JSON keeps them.
+            "types_left_out_stored_with_internet_not_vendor_backed": stale_types_left_out,
+            "rows_left_out_stored_with_internet_not_vendor_backed": rows_left_out_stored_with_internet,
             "credential_rows_left_out_superseded_google_copy": credential_rows_left_out,
             # Rows of apns-conf.xml leave_out_emergency took the "emergency"
             # type off, by reason; a row whose only type it was is not
@@ -2574,6 +2915,8 @@ def main(argv: list[str]) -> int:
         len(apn_rows.mms_absorbed_left_out),
         emergency_left_out_counts(apn_rows),
         len(apn_rows.credentials_left_out),
+        sum(count for _, count in apn_rows.stale_types_left_out),
+        len(apn_rows.rows_left_out_stored_with_internet),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -2584,6 +2927,8 @@ def main(argv: list[str]) -> int:
         f"{apn_rows.ia_left_out} APN row(s) without the attach type no current vendor gives, "
         f"{apn_rows.mms_left_out} row(s) without the MMS type no current vendor backs (first internet rows and rows stored with them), "
         f"{len(apn_rows.mms_absorbed_left_out)} stale MMS-only row(s) Android merges into another row left out, "
+        f"types no current vendor backs taken off rows stored with the first internet row "
+        f"{dict(apn_rows.stale_types_left_out)} and {len(apn_rows.rows_left_out_stored_with_internet)} such row(s) left out, "
         f"{len(apn_rows.credentials_left_out)} row(s) left out whose only effect is credentials from Google's "
         f"superseded copies ({len(apn_rows.credentials_kept_operator_page)} kept by the operator's page), "
         f"{len(apn_rows.emergency_left_out)} emergency type(s) left out "

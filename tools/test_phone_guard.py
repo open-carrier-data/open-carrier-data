@@ -407,6 +407,27 @@ class ImsEmergencyReportTests(GuardCase):
         self.assert_report_only([WEB, self.IMS], [WEB, other], "ims lead APN changed: 1 scope(s)",
                                 "262/01: ims IPV6/IPV6 -> ims.example IPV6/IPV6")
 
+    XCAP = 'mcc="262" mnc="01" apn="xcap" type="xcap" protocol="IPV4V6" roaming_protocol="IPV4V6"'
+
+    def test_xcap_lead_apn_changed(self) -> None:
+        """Rule round 34: report only, never held."""
+        other = self.XCAP.replace('apn="xcap"', 'apn="hos"')
+        result = self.assert_report_only([WEB, self.XCAP], [WEB, other], "xcap lead APN changed: 1 scope(s)",
+                                         f"262/01: xcap IPV4V6/IPV4V6 -> hos IPV4V6/IPV4V6 ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["xcap lead APN changed"])
+
+    def test_xcap_lead_case_and_protocol_changes_are_not_reported(self) -> None:
+        upper = self.XCAP.replace('apn="xcap"', 'apn="XCAP"').replace('roaming_protocol="IPV4V6"', 'roaming_protocol="IP"')
+        code, _, result = self.run_guard(xml(WEB, self.XCAP), xml(WEB, upper))
+        self.assertEqual((code, result["watch"]), (0, []))
+
+    def test_attach_lead_apn_changed(self) -> None:
+        """Rule round 34: report only, never held."""
+        attach = 'mcc="262" mnc="01" apn="attach.example" type="ia" protocol="IPV4V6" roaming_protocol="IPV6"'
+        result = self.assert_report_only([WEB], [attach, WEB], "attach lead APN changed: 1 scope(s)",
+                                         f"262/01: web IP/IP -> attach.example IPV4V6/IPV6 ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["attach lead APN changed"])
+
     def test_ims_lead_apn_case_change_is_not_reported(self) -> None:
         upper = self.IMS.replace('apn="ims"', 'apn="IMS"')
         code, out, result = self.run_guard(xml(WEB, self.IMS), xml(WEB, upper))
@@ -536,7 +557,8 @@ class ImsEmergencyReportTests(GuardCase):
         sos_default = 'mcc="262" mnc="01" apn="SOS" type="default" protocol="IPV6"'
         e911 = 'mcc="262" mnc="01" apn="e911.example" type="default"'
         code, _, result = self.run_guard(xml(sos_default, WEB), xml(e911, WEB))
-        self.assertEqual((code, result["watch"]), (0, []))
+        # Only the attach lead's APN change (rule round 34) is reported.
+        self.assertEqual((code, [item["condition"] for item in result["watch"]]), (0, ["attach lead APN changed"]))
 
     def test_loss_only_on_iwlan_is_reported_and_cdma_is_not(self) -> None:
         wifi = self.IMS + ' network_type_bitmask="18"'

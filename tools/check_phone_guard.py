@@ -71,6 +71,11 @@ head's IMS leads on a row that a `*` type gave `ims`, that no current vendor
 backs for `ims`, in a scope where a current vendor gives an `ims` row, are
 listed too ("ims lead on a *-typed row no current vendor backs for ims"),
 from the generator's records of CHECKOUT when they are the head file's rows.
+Rule round 34 adds two lines, report only and never held: "xcap lead APN
+changed", the first data profile that serves `xcap` (REPORT_APN_CHANGE_TYPES)
+taking another APN (case-folded), and "attach lead APN changed", the attach
+lead (`android_phone_model.leads`) taking another APN, so a later import that
+moves either lead under change 18 step 2c or step 4b is seen in the publish.
 
 The `emergency` lead is what the phone uses (rule decisions of 2026-10-18,
 round 21, S1-A): the first profile that can handle `emergency` (enabled, with
@@ -129,6 +134,8 @@ LIST_LIMIT = 15
 # The IMS and emergency report (round 20): the hold types plus Wi-Fi calling.
 WATCH_TYPES = {**HOLD_TYPES, "IWLAN": 18}
 WATCH_APN_TYPES = ("ims",)
+# Leads whose APN change alone is reported, never held (rule round 34).
+REPORT_APN_CHANGE_TYPES = ("xcap",)
 WATCH_LIST_LIMIT = 30
 # Report lines that touch these network types are listed first (round 21).
 WATCH_FIRST = ("LTE", "NR", "IWLAN")
@@ -610,6 +617,9 @@ def typed_leads(rows: list[dict[str, Any]], tables: dict) -> dict:
                 entry[f"{kind}_internet"] = bool(lead and not lead.get("android_default")
                                                  and "default" in lead["types"])
                 entry[f"{kind}_srcs"] = tuple(lead["base_srcs"]) if lead and not lead.get("android_default") else ()
+            for kind in REPORT_APN_CHANGE_TYPES:
+                entry[kind] = phone.lead_key(next((p for p in settings if kind in p["types"]
+                                                   and phone.serves(p, network_type) and phone.cellular(p)), None))
             entry["emergency"] = emergency_key(emergency_lead(emergency, network_type))
             out[scope][name] = entry
         out[scope]["_sets"] = stranded_sets(settings)
@@ -651,6 +661,12 @@ def watch(before: dict, after: dict, before_typed: dict, after_typed: dict) -> l
                            f"{kind.upper()}" if (not old or old_default) else
                            f"{kind.upper()} profile moves onto an internet APN", fmt(scope), old_text,
                            new_text)].append(name)
+            # Rule round 34: the xcap lead's APN change, report only.
+            for kind in REPORT_APN_CHANGE_TYPES:
+                old, new = before_typed[scope][name][kind], after_typed[scope][name][kind]
+                if old and new and str(old[0]).casefold() != str(new[0]).casefold():
+                    found[(f"{kind} lead APN changed", fmt(scope), protocol_text(old),
+                           protocol_text(new))].append(name)
             old, new = before_typed[scope][name]["emergency"], after_typed[scope][name]["emergency"]
             if old != new:
                 if old and new and old[0] and not new[0]:
@@ -666,6 +682,11 @@ def watch(before: dict, after: dict, before_typed: dict, after_typed: dict) -> l
                 if new and emergency_named(new[0]) and not (old and emergency_named(old[0])):
                     found[(f"emergency-named APN becomes the {role} lead", fmt(scope), lead_text(old),
                            lead_text(new))].append(name)
+            # Rule round 34: the attach lead's APN change, report only. A
+            # lost attach lead is a trip.
+            if b_attach and a_attach and str(b_attach[0]).casefold() != str(a_attach[0]).casefold():
+                found[("attach lead APN changed", fmt(scope), protocol_text(b_attach),
+                       protocol_text(a_attach))].append(name)
         for preferred in sorted(after_typed[scope]["_sets"] - before_typed[scope]["_sets"]):
             found[(f"emergency profile missing under APN set {preferred}", fmt(scope),
                    "an emergency profile", "none")].extend(WATCH_TYPES)

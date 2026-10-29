@@ -2340,6 +2340,9 @@ def validate_android_metadata(
         "emergency_types_left_out_combined",
         "emergency_types_left_out_not_vendor_stated",
         "emergency_types_left_out_apn_set",
+        # Rule round 34, change 18 step 2c (take_type_off_internet_group).
+        "types_left_out_stored_with_internet_not_vendor_backed",
+        "rows_left_out_stored_with_internet_not_vendor_backed",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
@@ -2354,6 +2357,10 @@ def validate_android_metadata(
         ("emergency_types_left_out_combined", "count of emergency types left out of combined rows"),
         ("emergency_types_left_out_not_vendor_stated", "count of emergency types no current source states"),
         ("emergency_types_left_out_apn_set", "count of emergency types left out for an APN set gap"),
+        ("types_left_out_stored_with_internet_not_vendor_backed",
+         "count of rows stored with the internet row without a type no current vendor backs"),
+        ("rows_left_out_stored_with_internet_not_vendor_backed",
+         "count of rows stored with the internet row left out"),
     ):
         count = omissions[key]
         if not isinstance(count, int) or isinstance(count, bool) or count < 0:
