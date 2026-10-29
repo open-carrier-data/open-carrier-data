@@ -1146,13 +1146,20 @@ def apn_row_network_types(record: dict[str, Any]) -> frozenset[int]:
 def vendor_mms_row(record: dict[str, Any]) -> bool:
     """A vendor MMS row: a row a current vendor backs for "mms" (_current),
     with a real APN and an MMSC, that serves a 3GPP data network type
-    (apn_row_network_types). put_vendor_mms_first and leave_out_absorbed_mms
-    use this one predicate."""
+    (apn_row_network_types), and that a cellular request can use
+    (android_usable: enabled, cellular infrastructure, APN set 0 or -1).
+    DataProfileManager and ApnSetting.canHandleType skip any other row, so
+    such a row neither carries MMS nor covers a network type (change 18,
+    rule round 36, round 34 step 8). put_vendor_mms_first (steps 1 to 4,
+    step 3's stop after the read-past, step 2b's coverage) and
+    leave_out_absorbed_mms (change 19, its vendor rows and coverage) use
+    this one predicate."""
     return (
         bool(record.get("_current", {}).get("mms"))
         and not placeholder_apn(record["apn"])
         and bool(str(record.get("mmsc") or "").strip())
         and bool(apn_row_network_types(record))
+        and android_usable(record)
     )
 
 
@@ -1276,9 +1283,11 @@ def read_past_cdma_internet_group(
 def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     """MMS goes to a current vendor's MMS row. A vendor MMS row is a row a
     current vendor backs for "mms" (_current), with a real APN and an MMSC,
-    that serves a 3GPP data network type (apn_row_network_types); it counts
+    that serves a 3GPP data network type (apn_row_network_types) and that
+    Android can use (android_usable, rule round 36; vendor_mms_row); it counts
     only for the network types it serves, so a Wi-Fi-only row (bearer 18) or
-    a CDMA-only row never counts.
+    a CDMA-only row never counts, nor does a disabled one or one in another
+    APN set.
 
     1. Stop unless the scope has a vendor MMS row.
     2. When the first internet row serves "mms" and no current vendor backs

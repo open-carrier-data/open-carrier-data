@@ -5062,6 +5062,65 @@ def check_round34_keeps_internet_rows() -> None:
         assert_true(not moved, f"the {role} lead changes with step 4b and step 3's read-past only where they moved a row: {moved[:20]}")
 
 
+
+_R36_G = "google_carriersettings"
+_R36_L = "lineageos"
+_R36_VENDOR = "http://mms.vendor.example/mms"
+_R36_STALE = "http://mms.stale.example"
+_R36_STALE2 = "http://mms.stale2.example"
+_R36_CDMA = "4|5|6|7|8|12"
+# The nine types where 310/120's MMS moves: GPRS to NR, IWLAN and eHRPD.
+_R36_NINE = ("GPRS", "EDGE", "UMTS", "HSPA", "HSPA+", "LTE", "NR", "IWLAN", "eHRPD")
+
+
+def _r36_apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+    return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+
+def _r36_mms(scope_leads: dict, names: tuple[str, ...] | None = None) -> set:
+    """The (APN, MMSC) pairs MMS goes to on NAMES (all 11 network types when
+    None), with the merge on and off; None for a type without MMS."""
+    names = names or tuple(android_phone_model.ALL_NETWORK_TYPES)
+    return {
+        (value[0], value[1]) if value else None
+        for (_, name), values in scope_leads["per_type"].items() if name in names
+        for value in [values["mms"]]
+    }
+
+
+def check_vendor_mms_row_usable() -> None:
+    """Rule round 36, item 3 (round 34 step 8): change 18's vendor MMS row
+    (vendor_mms_row) counts only when a cellular request can use it
+    (android_usable: enabled, cellular, APN set 0 or -1). A disabled vendor
+    MMS row (26373, step 2; 26375, step 2b) or one in APN set 1 (26374,
+    change 19) covers no network type, so the stale MMS setting stays on all
+    11 network types, merge on and off, instead of MMS being lost; a usable
+    vendor MMS row still takes MMS (26376)."""
+    G, L, apn = _R36_G, _R36_L, _r36_apn
+    scopes = {
+        "26373": [(apn("web.example", ("default", "mms"), mmsc=_R36_STALE), {"default": (G,), "mms": (L,)}),
+                  (apn("mms", ("mms",), mmsc=_R36_VENDOR, carrier_enabled=False), (G,))],
+        "26374": [(apn("web.example", ("default",)), (G,)),
+                  (apn("web.example", ("mms",), name="old mms", mmsc=_R36_STALE), (L,)),
+                  (apn("mms", ("mms",), mmsc=_R36_VENDOR, apn_set_id=1), (G,))],
+        "26375": [(apn("web.example", ("default",), authtype=1, mmsc=_R36_STALE), (G,)),
+                  (apn("web.example", ("mms", "dun"), name="old mms", authtype=1, mmsc=_R36_STALE), (L,)),
+                  (apn("mms", ("mms",), mmsc=_R36_VENDOR, carrier_enabled=False), (G,))],
+        "26376": [(apn("web.example", ("default", "mms"), mmsc=_R36_STALE), {"default": (G,), "mms": (L,)}),
+                  (apn("mms", ("mms",), mmsc=_R36_VENDOR), (G,))],
+    }
+    result, fixture = _round34_fixture(scopes)
+    for mccmnc in ("26373", "26374", "26375"):
+        mms = _r36_mms(fixture["leads"](mccmnc))
+        assert_true(
+            mms == {("web.example", _R36_STALE)},
+            f"{mccmnc}: an unusable vendor MMS row covers nothing, MMS stays on every network type: {mms} "
+            f"{_round34_written(result, mccmnc)}",
+        )
+    mms = _r36_mms(fixture["leads"]("26376"))
+    assert_true(mms == {("mms", _R36_VENDOR)}, f"26376: a usable vendor MMS row still takes MMS: {mms}")
+
+
 def check_leave_out_absorbed_mms() -> None:
     """apns-conf.xml leaves out a stored row that serves only "mms", whose
     MMS setting no vendor MMS row gives, whose network types the vendor MMS
@@ -7510,6 +7569,8 @@ def main() -> int:
     print("dataset-wide first internet row tests passed (round 34)")
     check_step_2b_keeps_internet_rows()
     print("dataset-wide first internet row tests passed (round 33)")
+    check_vendor_mms_row_usable()
+    print("usable vendor MMS row tests passed (round 36, item 3)")
     check_leave_out_absorbed_mms()
     print("absorbed MMS row tests passed")
     check_emergency_rows()
