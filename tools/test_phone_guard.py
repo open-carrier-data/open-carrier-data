@@ -63,17 +63,23 @@ def xml(*rows: str) -> str:
 
 class GuardCase(unittest.TestCase):
     def run_guard(self, base: str, head: str, vendor: list[dict] | None = None,
-                  extra: list[str] | None = None, generator: bool = True) -> tuple[int, str, dict]:
+                  extra: list[str] | None = None, generator: bool = True,
+                  base_vendor: list[dict] | None = None) -> tuple[int, str, dict]:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "base.xml").write_text(base, encoding="utf-8")
             (root / "head.xml").write_text(head, encoding="utf-8")
             checkout = root / "checkout"
-            if generator:
-                (checkout / "tools").mkdir(parents=True)
-                (checkout / "carriers").mkdir()
-                (checkout / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
-                (checkout / "carriers" / "records.json").write_text(json.dumps(vendor or []), encoding="utf-8")
+            extra = list(extra or [])
+            for path, records in ((checkout, vendor), (root / "base-checkout", base_vendor)):
+                if not generator or (path != checkout and base_vendor is None):
+                    continue
+                (path / "tools").mkdir(parents=True)
+                (path / "carriers").mkdir()
+                (path / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
+                (path / "carriers" / "records.json").write_text(json.dumps(records or []), encoding="utf-8")
+            if base_vendor is not None:
+                extra += ["--base-generator", str(root / "base-checkout")]
             guard.generator_records.cache_clear()
             out, err = io.StringIO(), io.StringIO()
             with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
@@ -342,10 +348,58 @@ class ImsEmergencyReportTests(GuardCase):
         self.assertIn(value, out)
         return result
 
-    def test_ims_lead_lost(self) -> None:
-        result = self.assert_report_only([WEB, self.IMS], [WEB], "ims lead lost: 1 scope(s)",
-                                         f"262/01: ims IPV6/IPV6 -> none ({self.WATCH})")
-        self.assertEqual([item["condition"] for item in result["watch"]], ["ims lead lost"])
+    IMS_DEFAULT = "Android default ims IPV4V6/IPV4V6"
+
+    def test_ims_lead_lost_lands_on_android_default(self) -> None:
+        """No row can handle ims: Android adds its DEFAULT IMS profile
+        (DataProfileManager.java:343-355; round 35, item C)."""
+        result = self.assert_report_only([WEB, self.IMS], [WEB], "ims lead lost to Android's default: 1 scope(s)",
+                                         f"262/01: ims IPV6/IPV6 -> {self.IMS_DEFAULT} ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["ims lead lost to Android's default"])
+
+    def test_ims_lead_gained_over_android_default(self) -> None:
+        self.assert_report_only([WEB], [WEB, self.IMS], "ims lead gained over Android's default: 1 scope(s)",
+                                f"262/01: {self.IMS_DEFAULT} -> ims IPV6/IPV6 ({self.WATCH})")
+
+    def test_no_change_while_android_default_serves_ims(self) -> None:
+        code, out, result = self.run_guard(xml(WEB), xml(WEB, MMS))
+        self.assertEqual([item for item in result["watch"] if item["condition"].startswith("ims")], [])
+
+    def test_ims_gained_on_an_internet_apn_displaces_android_default(self) -> None:
+        """The 310/050 class (round 35, item C): an internet APN that takes
+        ims (an empty type read as TYPE_ALL, or a `*`) becomes the IMS
+        profile, and Android no longer adds its default."""
+        empty = 'mcc="262" mnc="01" apn="web" protocol="IPV4V6" roaming_protocol="IPV4V6"'
+        result = self.assert_report_only(
+            [WEB], [empty], "IMS profile gained on an internet APN, displacing Android's DEFAULT IMS: 1 scope(s)",
+            f"262/01: {self.IMS_DEFAULT} -> web IPV4V6/IPV4V6 ({self.WATCH})")
+        self.assertIn("ims lead gained over Android's default",
+                      [item["condition"] for item in result["watch"]])
+
+    def test_ims_moving_onto_an_internet_apn_is_reported(self) -> None:
+        everything = 'mcc="262" mnc="01" apn="web" type="default,hipri,mms,supl,dun,fota,ims,cbs"'
+        self.assert_report_only([self.IMS, WEB], [everything, self.IMS],
+                                "IMS profile moves onto an internet APN: 1 scope(s)",
+                                "262/01: ims IPV6/IPV6 -> web IP/IP")
+
+    def test_star_typed_ims_lead_no_vendor_backs_is_listed(self) -> None:
+        everything = 'mcc="262" mnc="01" apn="web" type="default,hipri,mms,supl,dun,fota,ims,cbs"'
+        types = ("default", "hipri", "mms", "supl", "dun", "fota", "ims", "cbs")
+        old_copy = {t: ["sony_open_devices_aosp"] for t in types}
+        vendor = records_of([(everything, old_copy, {}),
+                             (self.IMS, {"ims": ["google_carriersettings"]}, {"ims": ["google_carriersettings"]})])
+        code, out, result = self.run_guard(xml(everything, self.IMS), xml(everything, self.IMS), vendor)
+        self.assertEqual(code, 0)
+        _, out, result = self.run_guard(xml(WEB, everything, self.IMS), xml(everything, self.IMS), vendor)
+        item = next(item for item in result["watch"]
+                    if item["condition"] == "ims lead on a *-typed row no current vendor backs for ims")
+        self.assertEqual((item["scope"], item["new"]), ("262/01", "web IP/IP"))
+        self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
+        backed = records_of([(everything, old_copy, {"ims": ["google_carriersettings"]}),
+                             (self.IMS, {"ims": ["google_carriersettings"]}, {"ims": ["google_carriersettings"]})])
+        _, _, result = self.run_guard(xml(WEB, everything, self.IMS), xml(everything, self.IMS), backed)
+        self.assertNotIn("ims lead on a *-typed row no current vendor backs for ims",
+                         [item["condition"] for item in result["watch"]])
 
     def test_ims_lead_apn_changed(self) -> None:
         other = self.IMS.replace('apn="ims"', 'apn="ims.example"')
@@ -431,6 +485,8 @@ class ImsEmergencyReportTests(GuardCase):
         everything = 'mcc="262" mnc="01" apn="web" protocol="IPV6" roaming_protocol="IPV6"'
         code, out, result = self.run_guard(xml(WEB), xml(everything))
         self.assertEqual([item for item in result["watch"] if item["condition"].startswith("emergency")], [])
+        self.assertEqual(guard.phone.type_set(""), guard.phone.WILDCARD_TYPES)
+        self.assertFalse(guard.handles_emergency({"carrier_enabled": 1, "types": guard.phone.type_set("")}))
 
     def test_unset_protocol_is_ipv4_only(self) -> None:
         unset = 'mcc="262" mnc="01" apn="sos" type="emergency"'
@@ -496,7 +552,7 @@ class ImsEmergencyReportTests(GuardCase):
         _, plain_out, plain = self.run_guard(xml(WEB, MMS), xml(WEB))
         code, out, result = self.run_guard(xml(WEB, MMS, self.IMS, self.SOS), xml(WEB))
         self.assertIn("IMS and emergency report, never held: no change", plain_out)
-        self.assertIn("ims lead lost: 1 scope(s)", out)
+        self.assertIn("ims lead lost to Android's default: 1 scope(s)", out)
         self.assertIn("emergency lead lost: 1 scope(s)", out)
         self.assertEqual((code, result["verdict"]), (1, "hold"))
         self.assertEqual((result["trips"], result["digest"]), (plain["trips"], plain["digest"]))
@@ -509,9 +565,104 @@ class ImsEmergencyReportTests(GuardCase):
         webs = [f'mcc="262" mnc="{n:02d}" apn="web" type="default"' for n in range(guard.WATCH_LIST_LIMIT + 5)]
         code, out, result = self.run_guard(xml(*webs, *rows), xml(*webs))
         self.assertEqual(code, 0)
-        self.assertIn(f"ims lead lost: {guard.WATCH_LIST_LIMIT + 5} scope(s)", out)
+        self.assertIn(f"ims lead lost to Android's default: {guard.WATCH_LIST_LIMIT + 5} scope(s)", out)
         self.assertIn("  ... 5 more (--report-json lists them all)", out)
         self.assertEqual(len(result["watch"]), guard.WATCH_LIST_LIMIT + 5)
+
+
+class Round35HardeningTests(GuardCase):
+    """Rule decisions round 35, item E's guard hardening: the base's vendor
+    tuples in the MMS test, role-specific backing of the internet and attach
+    leads, network scopes that leave while a current vendor lists the code,
+    and the fallback of MVNO scopes that leave."""
+
+    VENDOR_MMS = [{"mcc": "262", "mnc": "01", "apn": "mms", "type": "mms", "mmsc": "http://mms.example/",
+                   "_current": {"mms": ["samsung_omc"]}}]
+    STALE = 'mcc="262" mnc="01" apn="mms" type="mms" mmsc="http://old.example"'
+
+    def test_mms_off_a_base_vendor_tuple_trips_with_the_base_checkout(self) -> None:
+        """The Ztar hole: the head no longer has the vendor's row, so the
+        head's tuples alone see no vendor tuple to leave."""
+        code, _, result = self.run_guard(xml(WEB, MMS), xml(WEB, self.STALE), [])
+        self.assertEqual((code, result["trips"]), (0, []))
+        code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB, self.STALE), [], base_vendor=self.VENDOR_MMS)
+        self.assertEqual(code, 1)
+        self.assertEqual(self.conditions(result), {("mms_away", HOLD)})
+        self.assertIn("MMS test: also against the base's vendor tuples", out)
+
+    def test_mms_onto_a_head_vendor_tuple_passes_with_the_base_checkout(self) -> None:
+        moved = [dict(self.VENDOR_MMS[0], mmsc="http://old.example")]
+        code, _, result = self.run_guard(xml(WEB, MMS), xml(WEB, self.STALE), moved, base_vendor=self.VENDOR_MMS)
+        self.assertEqual((code, result["trips"]), (0, []))
+
+    def test_base_ref_reads_a_revision_of_the_checkout(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp) / "repo"
+            (repo / "tools").mkdir(parents=True)
+            (repo / "carriers").mkdir()
+            (repo / "generated").mkdir()
+            (repo / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
+            (repo / "carriers" / "records.json").write_text(json.dumps(self.VENDOR_MMS), encoding="utf-8")
+            (repo / "generated" / "evidence-index.json").write_text("{}", encoding="utf-8")
+            (repo / "schemas").mkdir()
+            (repo / "schemas" / "x.json").write_text("{}", encoding="utf-8")
+            git = ["git", "-C", str(repo), "-c", "user.email=t@example.invalid", "-c", "user.name=t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "-A"], check=True)
+            subprocess.run([*git, "commit", "-q", "-m", "base"], check=True)
+            (repo / "carriers" / "records.json").write_text("[]", encoding="utf-8")
+            (repo / "base.xml").write_text(xml(WEB, MMS), encoding="utf-8")
+            (repo / "head.xml").write_text(xml(WEB, self.STALE), encoding="utf-8")
+            guard.generator_records.cache_clear()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                code = guard.run(["check_phone_guard.py", str(repo / "base.xml"), str(repo / "head.xml"),
+                                  "--generator", str(repo), "--base-ref", "HEAD", "--report-json",
+                                  str(repo / "r.json")])
+            result = json.loads((repo / "r.json").read_text())
+        self.assertEqual(code, 1, out.getvalue())
+        self.assertEqual(self.conditions(result), {("mms_away", HOLD)})
+
+    def test_attach_to_an_apn_a_vendor_gives_only_for_mms_is_reported(self) -> None:
+        """China Mobile's cmwap (round 35, item E): a vendor gives it for MMS,
+        which does not back an attach."""
+        cmnet = 'mcc="460" mnc="08" apn="cmnet" type="default,ia"'
+        cmwap = 'mcc="460" mnc="08" apn="cmwap" type="default,ia,supl" proxy="10.0.0.172" port="80"'
+        vendor = [{"mcc": "460", "mnc": "08", "apn": "cmwap", "type": "mms", "_current": {"mms": ["google"]}},
+                  {"mcc": "460", "mnc": "08", "apn": "cmnet", "type": "default", "_current": {"default": ["google"]}}]
+        code, out, _ = self.run_guard(xml(cmnet, cmwap), xml(cmwap, cmnet), vendor)
+        self.assertEqual(code, 0)
+        self.assertIn("attach lead moves to an APN no current vendor gives for default or ia: 1: 460/08", out)
+        self.assertIn("internet lead moves to an APN no current vendor gives for default: 1: 460/08", out)
+        backed = vendor + [{"mcc": "460", "mnc": "08", "apn": "cmwap", "type": "default",
+                            "_current": {"default": ["google"]}}]
+        _, out, _ = self.run_guard(xml(cmnet, cmwap), xml(cmwap, cmnet), backed)
+        self.assertNotIn("lead moves to an APN no current vendor gives", out)
+
+    def test_a_network_scope_a_vendor_lists_leaving_is_reported(self) -> None:
+        other = 'mcc="262" mnc="02" apn="net" type="default"'
+        listed = [{"mcc": "262", "mnc": "02", "mvno_type": "gid", "mvno_match_data": "ab", "apn": "x",
+                   "type": "default", "_current": {"default": ["google_carriersettings"]}}]
+        _, out, _ = self.run_guard(xml(WEB, other), xml(WEB), listed)
+        self.assertIn("scopes gone, network, while a current Google, Samsung or Apple observation lists the code: "
+                      "1: 262/02", out)
+        _, out, _ = self.run_guard(xml(WEB, other), xml(WEB), [])
+        self.assertNotIn("while a current Google", out)
+        apple = [dict(listed[0], _current={}, _support={"default": ["apple_carrier_bundles"]})]
+        _, out, _ = self.run_guard(xml(WEB, other), xml(WEB), [], base_vendor=apple)
+        self.assertIn("observation lists the code: 1: 262/02", out)
+
+    def test_an_mvno_scope_leaving_reports_its_fallback(self) -> None:
+        gid = 'mcc="262" mnc="01" mvno_type="gid" mvno_match_data="ab" apn="brand.web" type="default,supl"'
+        gid_mms = ('mcc="262" mnc="01" mvno_type="gid" mvno_match_data="ab" apn="brand.mms" type="mms" '
+                   'mmsc="http://brand.example/"')
+        _, out, result = self.run_guard(xml(WEB, gid, gid_mms), xml(WEB))
+        self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
+        self.assertIn("MVNO scope gone, its SIMs' fallback changes the internet APN: 1: 262/01 GID ab "
+                      "(brand.web -> web)", out)
+        self.assertIn("MVNO scope gone, its SIMs' fallback changes the MMS APN: 1: 262/01 GID ab", out)
+        _, out, _ = self.run_guard(xml(WEB, gid.replace('apn="brand.web"', 'apn="web"')), xml(WEB))
+        self.assertNotIn("fallback changes the internet APN", out)
 
 
 class DigestTests(GuardCase):

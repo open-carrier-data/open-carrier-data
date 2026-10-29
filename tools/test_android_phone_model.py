@@ -155,5 +155,30 @@ class LeadTests(unittest.TestCase):
         self.assertEqual(phone.leads(settings, UMTS)[0]["apn"], "any")
 
 
+class EmptyTypeTests(unittest.TestCase):
+    """An empty or missing type is Android's TYPE_ALL (ApnSetting
+    getApnTypesBitmaskFromString), as `*` is: default, hipri, mms, supl, dun,
+    fota, ims and cbs, without ia, emergency, xcap or mcx (rule decisions
+    round 35, item C). Before, the model credited such a row with ia,
+    emergency and xcap."""
+
+    def test_empty_missing_and_star_are_type_all(self) -> None:
+        for types in ("", None, "*"):
+            self.assertEqual(phone.type_set(types), phone.WILDCARD_TYPES, types)
+        self.assertEqual(phone.WILDCARD_TYPES,
+                         frozenset({"default", "hipri", "mms", "supl", "dun", "fota", "ims", "cbs"}))
+
+    def test_an_empty_type_row_is_no_ia_row(self) -> None:
+        xml = rows(
+            'mcc="262" mnc="01" apn="web"',
+            'mcc="262" mnc="01" apn="attach" type="ia"',
+        )
+        _, settings = scope_profiles(xml)
+        internet, mms, attach = phone.leads(settings, LTE)
+        self.assertEqual((internet["apn"], mms["apn"], attach["apn"]), ("web", "web", "attach"))
+        self.assertNotIn("xcap", settings[0]["types"])
+        self.assertNotIn("emergency", settings[0]["types"])
+
+
 if __name__ == "__main__":
     unittest.main()

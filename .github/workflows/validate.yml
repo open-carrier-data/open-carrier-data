@@ -118,7 +118,8 @@ jobs:
       - name: Phone-level guard
         # Holds a pull request whose apns-conf.xml takes a phone's internet,
         # attach or working MMS away, or moves MMS off a current vendor's
-        # tuple, unless the body has the line `phone-guard-accept: DIGEST`
+        # tuple, the base's (--base-ref, rule decisions round 35, item E) or
+        # the head's, unless the body has the line `phone-guard-accept: DIGEST`
         # for exactly these trips. The body is read from the environment,
         # never put into the script text.
         if: github.event_name == 'pull_request'
@@ -135,7 +136,7 @@ jobs:
           done < <(printf '%s\n' "$PR_BODY" | tr -d '\r' | grep -oE '^phone-guard-accept: [0-9a-f]{16}$' || true)
           status=0
           python3 tools/check_phone_guard.py "$base_xml" generated/android/apns-conf.xml \
-            --generator . "${accept[@]}" > "$RUNNER_TEMP/phone-guard.txt" 2>&1 || status=$?
+            --generator . --base-ref "$BASE_SHA" "${accept[@]}" > "$RUNNER_TEMP/phone-guard.txt" 2>&1 || status=$?
           cat "$RUNNER_TEMP/phone-guard.txt"
           {
             echo "## Phone-level guard"

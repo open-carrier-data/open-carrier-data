@@ -329,8 +329,14 @@ def port_from_string(text: Any) -> int:
 
 
 def type_set(types: Any) -> frozenset[str]:
+    """The APN types of a row as ApnSetting reads them
+    (getApnTypesBitmaskFromString): an empty or missing type and `*` are
+    TYPE_ALL (WILDCARD_TYPES: default, hipri, mms, supl, dun, fota, ims and
+    cbs; no ia, emergency, xcap or mcx). Before rule round 35 (item C) an
+    empty type read as every known type, which credited it with ia,
+    emergency and xcap."""
     if types is None or types == "":
-        return KNOWN_TYPES
+        return WILDCARD_TYPES
     out: set[str] = set()
     for item in str(types).split(","):
         item = item.lower()
