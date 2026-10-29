@@ -28,9 +28,16 @@ The steps, in the order the phone runs them:
 5. Per network type (`leads`): the internet profile (first `default` profile
    that serves the type), MMS (the internet profile when it serves `mms`, else
    the first usable `mms` profile; MmsService falls back to the MMSC of a
-   stored `mms` row of the same APN name, `mms_of`), and the attach profile
-   (first `ia`, else first `default`). A disabled row, a row of another APN
-   set and a row without cellular infrastructure serve nothing.
+   stored `mms` row of the same APN name, `mms_of`), and the attach profile:
+   the internet profile of the network type when it serves `ia`, else the
+   first `ia`, else the first `default`. DataProfileManager sorts the
+   preferred profile first before it takes the first profile that serves
+   `ia` (`updateInitialAttachDataProfileAtModem`, 639-642), and after the
+   first internet connection the preferred profile is the internet profile,
+   which it then sends again as the attach profile
+   (`onInternetDataNetworkConnected`, 470-486; rule round 34). A disabled
+   row, a row of another APN set and a row without cellular infrastructure
+   serve nothing.
 
 Rows are dicts of XML attribute strings with `_i`, the row's index in the
 file. Stored rows keep `_srcs`, the file rows merged into them, and
@@ -491,7 +498,12 @@ def leads(settings: list[dict[str, Any]], network_type: int):
     else:
         mms = next((p for p in settings
                     if "mms" in p["types"] and serves(p, network_type) and cellular(p)), None)
-    attach = next((p for p in settings if "ia" in p["types"] and cellular(p)), None)
+    # The preferred profile is tried first for attach: on a phone that has
+    # connected, the internet profile of the network type (rule round 34).
+    if internet is not None and "ia" in internet["types"]:
+        attach = internet
+    else:
+        attach = next((p for p in settings if "ia" in p["types"] and cellular(p)), None)
     if attach is None:
         attach = next((p for p in settings if "default" in p["types"] and cellular(p)), None)
     return internet, mms, attach

@@ -4919,13 +4919,15 @@ def check_verizon_stored_row_order() -> None:
             expected_mms = ("VZWAPP", mmsc, "", -1)
             expected_internet = "VZWINTERNET"
         # EVDO-A and 1xRTT: the phone tries the preferred internet profile
-        # (the CDMA-only internet row, which serves "ia") first for attach
-        # (DataProfileManager 639-642); the phone model does not sort it
-        # first yet, so the attach is asserted on the other nine types only.
-        attach_ok = values["attach"] == "IMS" or name in ("EVDO-A", "1xRTT")
+        # first for attach (DataProfileManager 639-642), the CDMA-only
+        # internet row, which serves "ia" through the Fairphone row stored
+        # with it, so it attaches there with "internet" (android_phone_model,
+        # rule round 34 step 6).
+        expected_attach = "internet" if name in ("EVDO-A", "1xRTT") else "IMS"
+        attach_ok = values["attach"] == expected_attach
         assert_true(values["mms"] == expected_mms and values["internet"] == expected_internet and attach_ok,
                     f"310/004 {name} merge {dedupe}: MMS VZWAPP on the 3GPP types, IWLAN and eHRPD, internet unchanged, "
-                    f"attach IMS: {values}")
+                    f"attach IMS, on EVDO-A and 1xRTT the preferred internet: {values}")
     plain_l = plain_tools["leads"]("310004")
     assert_true(all(values["ims"] == plain_l["per_type"][key]["ims"] and values["dun"] == plain_l["per_type"][key]["dun"]
                     and values["internet"] == plain_l["per_type"][key]["internet"]
@@ -4950,11 +4952,11 @@ def check_verizon_stored_row_order() -> None:
     assert_true(leads("310120")["attach"] == {"sprint"}, f"310/120: the attach stays: {leads('310120')['attach']}")
     assert_true(leads("26380")["attach"] == {"internet"}, f"263/80: the attach stays: {leads('26380')['attach']}")
     assert_true(leads("26382")["attach"] == {"web.example"}, f"263/82: the attach stays: {leads('26382')['attach']}")
-    # 263/81: the LTE-capable vendor ia row moves; attach IMS on the nine
-    # types the model reads as the phone does.
+    # 263/81: the LTE-capable vendor ia row moves; attach IMS, and on EVDO-A
+    # and 1xRTT the preferred CDMA-only internet profile.
     l = leads("26381")
-    assert_true(all(values["attach"] == "IMS" for (_, name), values in l["per_type"].items()
-                    if name not in ("EVDO-A", "1xRTT"))
+    assert_true(all(values["attach"] == ("internet" if name in ("EVDO-A", "1xRTT") else "IMS")
+                    for (_, name), values in l["per_type"].items())
                 and ("IMS", "IMS", "_vendor_attach_ahead") in marks("26381"),
                 f"263/81: attach IMS: {l['attach']}")
     # 263/88: the whole stored group moves in its rank order, so the stored
@@ -4969,8 +4971,9 @@ def check_verizon_stored_row_order() -> None:
     assert_true(len(stored_ims(result)) == 1 and stored_ims(result) == stored_ims(plain),
                 f"263/88: the stored IMS row is the same: {stored_ims(plain)} -> {stored_ims(result)}")
     assert_true(multiset(result, "26388") == multiset(plain, "26388"), "263/88: the same rows")
-    assert_true(all(values["attach"] == "IMS" for (_, name), values in leads("26388")["per_type"].items()
-                    if name not in ("EVDO-A", "1xRTT")), f"263/88: attach IMS: {leads('26388')['attach']}")
+    assert_true(all(values["attach"] == ("internet" if name in ("EVDO-A", "1xRTT") else "IMS")
+                    for (_, name), values in leads("26388")["per_type"].items()),
+                f"263/88: attach IMS: {leads('26388')['attach']}")
 
 
 def _dataset_internet_rows_and_leads() -> tuple[dict, dict, list]:
