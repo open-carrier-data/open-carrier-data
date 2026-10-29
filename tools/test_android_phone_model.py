@@ -145,6 +145,32 @@ class LeadTests(unittest.TestCase):
         self.assertIsNone(mms)
         self.assertEqual(attach["apn"], "on")
 
+    def test_attach_tries_the_preferred_internet_profile_first(self) -> None:
+        """Rule round 34 (DataProfileManager 639-642, 470-486): the internet
+        profile of the network type comes first for attach when it serves
+        ia; elsewhere the first ia profile attaches (the 310/004 shape)."""
+        xml = rows(
+            'mcc="310" mnc="004" apn="IMS" type="ia,ims" network_type_bitmask="13|18|20"',
+            'mcc="310" mnc="004" apn="internet" type="default,ia" network_type_bitmask="4|5|6|7|8|12"',
+            'mcc="310" mnc="004" apn="VZWINTERNET" type="default" network_type_bitmask="1|2|3|9|10|11|13|14|15|18|20"',
+        )
+        _, settings = scope_profiles(xml, ("310", "004", "", ""))
+        _, _, attach = phone.leads(settings, LTE)
+        self.assertEqual(attach["apn"], "IMS")
+        internet, _, attach = phone.leads(settings, phone.ALL_NETWORK_TYPES["1xRTT"])
+        self.assertEqual((internet["apn"], attach["apn"]), ("internet", "internet"))
+        internet, _, attach = phone.leads(settings, phone.ALL_NETWORK_TYPES["EVDO-A"])
+        self.assertEqual((internet["apn"], attach["apn"]), ("internet", "internet"))
+
+    def test_attach_without_a_preferred_ia_profile(self) -> None:
+        xml = rows(
+            'mcc="262" mnc="01" apn="web" type="default"',
+            'mcc="262" mnc="01" apn="attach" type="ia"',
+        )
+        _, settings = scope_profiles(xml)
+        _, _, attach = phone.leads(settings, LTE)
+        self.assertEqual(attach["apn"], "attach")
+
     def test_network_types_limit_the_lead(self) -> None:
         xml = rows(
             'mcc="262" mnc="01" apn="lte" type="default" network_type_bitmask="13|20"',
