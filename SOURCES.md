@@ -11,6 +11,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `aosp` | `aosp_carrier_config`, `aosp_carrier_ids` | AOSP `platform/packages/apps/CarrierConfig` and `platform/packages/providers/TelephonyProvider` | CarrierConfig values, Android carrier identity rules | Apache-2.0 | 235 |
 | `lineageos` | same | `LineageOS/android_vendor_apn` | APN rows and MVNO selectors | Apache-2.0 | 1,064 |
 | `lineageos_pixel_apn_snapshot` | `lineageos` | the Pixel APN snapshot in `LineageOS/android_vendor_apn` (`upstream/apns-conf.xml`), which LineageOS's build merges into its APN list since 2026-10-21 | APN rows and MVNO selectors, the snapshot rows LineageOS ships unchanged | Apache-2.0 | new on 2026-10-28 |
+| `lineageos_legacy_apn_list` | `lineageos` | LineageOS's own APN list in `LineageOS/android_vendor_apn` at `cfcbd9d`, the parent of `a764d38`, a frozen copy | APN rows `a764d38` stopped shipping, which only fill role gaps in `apns-conf.xml` | Apache-2.0 | new on 2026-10-29 |
 | `lineageos_device_overlays` | `lineageos_device_carrier_overlays` | LineageOS device repos | device overlay carrier facts | NOASSERTION | 1,163 |
 | `mobile_broadband_provider_info` | same | GNOME `mobile-broadband-provider-info` | carrier and APN facts | CC-PD | 741 |
 | `apple_carrier_bundles` | same | Apple's carrier index | APN and MMS facts from IPCC packages | NOASSERTION | 1,934 |
@@ -22,7 +23,7 @@ The table has one row per source name as it appears in profile evidence. The sna
 | `fairphone_official_source` | same | Fairphone Gerrit manifest | carrier facts from Fairphone source | Apache-2.0 | 1,242 |
 | `sony_open_devices_aosp` | same | `sonyxperiadev/local_manifests` | carrier facts from Sony AOSP trees | Apache-2.0 | 1,090 |
 
-Four profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records, `samsung_carrier_config`, read from the same firmware build as the IMS maps, shares the `samsung_ims` record, and `lineageos_pixel_apn_snapshot`, read from the same commit of `android_vendor_apn`, shares the `lineageos` record. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
+Five profile source names have no snapshot of the same name: `aosp` and `lineageos_device_overlays` map to differently named records, `samsung_carrier_config`, read from the same firmware build as the IMS maps, shares the `samsung_ims` record, and `lineageos_pixel_apn_snapshot` and `lineageos_legacy_apn_list`, read from the same clone of `android_vendor_apn`, share the `lineageos` record. Samsung has no git revision, so the `samsung_omc` and `samsung_ims` records carry the SHA-256 of the lane's state file as `revision`; the daily Samsung run re-checks them. The oldest Samsung observation still sets `checks_through`.
 
 To print the profile count per source name, run:
 
@@ -47,7 +48,7 @@ A source family that turns a capability on makes it `supported`, as long as none
 | `apple_carrier_bundles`, `samsung_omc`, `samsung_ims`, `samsung_carrier_config` | never published; both makers write an off almost always as a missing entry, and their written offs describe phones or defaults, not the carrier ([data-model.md](docs/data-model.md)) |
 | `google_carriersettings`, `google_pixel_vendor_carriersettings`, `lineageos_pixel_apn_snapshot` | one family; the operator's own for Google Fi. LineageOS's Pixel APN snapshot is a copy of Google's Pixel APN list (on 2026-10-28, 6,523 of its 6,633 rows were rows of Google's own CarrierSettings of the same Pixel build) and gives no offs |
 | `aosp` | one family; the operator's own only for a file the carrier submitted, on 2026-10-04 SETAR's |
-| `lineageos`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list |
+| `lineageos`, `lineageos_legacy_apn_list`, `sony_open_devices_aosp`, `fairphone_official_source` | one family, copies of AOSP's APN list. `lineageos_legacy_apn_list` holds the rows of LineageOS's own list that `a764d38` stopped shipping on 2026-10-21 because the Pixel snapshot covered their networks; it is a frozen copy, pinned at `cfcbd9d` |
 | `lineageos_device_overlays` | one family |
 
 `capability_sources` in each profile's record of `generated/evidence-index.json` names the sources that turn each capability on and off. To print, per source, how many profile capabilities it turns off, whatever value the profiles publish, run:
@@ -63,6 +64,7 @@ A snapshot revision names the source state that was checked. Where a family also
 | Source name | Version kind | From |
 | --- | --- | --- |
 | `google_carriersettings` | `builds` | the Pixel build ID of the GrapheneOS snapshot |
+| `lineageos_pixel_apn_snapshot` | `builds` | the Pixel build ID the commit that last changed `upstream/apns-conf.xml` names (`CP3A.261005.005` from `cfcbd9d`) |
 | `samsung_ims` | `builds` | the Samsung firmware (PDA) build |
 | `samsung_carrier_config` | `builds` | the Samsung firmware (PDA) build, the same as `samsung_ims` |
 | `samsung_omc` | `builds` | the firmware (PDA) build of the CSC package, recorded at extraction since 2026-10-04 |
@@ -72,7 +74,7 @@ A snapshot revision names the source state that was checked. Where a family also
 | `google_pixel_vendor_carriersettings` | `commits` | the commits that last changed each device's CarrierSettings files |
 | `apple_carrier_bundles` | `bundle_versions`, `ios_versions` | the bundle and iOS versions Apple's index lists for the package |
 
-On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, `lineageos_pixel_apn_snapshot`, and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names the firmware build only for observations extracted since 2026-10-04, up to 50 CSC packages a day; older ones carry none, because a later join would have to guess. Its OMC versions are in `observed_scope.omc_versions`.
+On 2026-10-03, 3,984 profiles carry the field, from the first four rows. The last three families add their versions from their next weekly refresh. The `aosp`, `lineageos`, `lineageos_pixel_apn_snapshot`, `lineageos_legacy_apn_list` and `mobile_broadband_provider_info` families read one commit per snapshot, which `source_snapshots` names. Samsung OMC names the firmware build only for observations extracted since 2026-10-04, up to 50 CSC packages a day; older ones carry none, because a later join would have to guess. Its OMC versions are in `observed_scope.omc_versions`.
 
 To print how many profiles name a version, per family and kind, run:
 
@@ -92,7 +94,7 @@ Automation reads the `android-latest-release` branch of both AOSP repos and reco
 
 ## LineageOS contributes APN rows and device overlays
 
-The APN repo is imported by commit ID under Apache-2.0. When LineageOS removes an APN, the lane records it, and the same row is left out of the other sources unless one gives it with an entry newer than the removal; the evidence index names the LineageOS commit in the gate `lineageos_apn_removed:<commit>`. Device overlays are read across LineageOS device repos and recorded as one content hash. The project asserts no license for overlay content beyond what each repo declares, so those facts are `transformed_facts_only`.
+The APN repo is imported by commit ID under Apache-2.0. Since 2026-10-28 the lane imports what LineageOS's build ships: LineageOS's own rows as `lineageos`, and the Pixel APN snapshot it merges at build time as `lineageos_pixel_apn_snapshot`, in Google's family. The rows `a764d38` stopped shipping on 2026-10-21, when that merge began, were chosen by network code, not judged, so they are no removal: they stay as the frozen copy `lineageos_legacy_apn_list`, and `apns-conf.xml` gives each of them only the types whose role (internet, attach, MMS, and the first profile for `ims`, `dun`, `supl`, `xcap`, `fota` and `cbs`) no current vendor fills in its scope ([docs/how-it-is-built.md](docs/how-it-is-built.md#how-the-android-apn-file-is-ordered)). When LineageOS removes an APN, the lane records it, and the same row is left out of the other sources unless one gives it with an entry newer than the removal; the evidence index names the LineageOS commit in the gate `lineageos_apn_removed:<commit>`. Device overlays are read across LineageOS device repos and recorded as one content hash. The project asserts no license for overlay content beyond what each repo declares, so those facts are `transformed_facts_only`.
 
 ## GNOME contributes public carrier and APN facts
 

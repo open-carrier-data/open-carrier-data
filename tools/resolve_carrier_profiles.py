@@ -314,6 +314,10 @@ def explain(
                     # The row lost "emergency" and kept its other types, and
                     # why (leave_out_emergency).
                     "emergency_left_out": row.get("_emergency_left_out"),
+                    # The types of LineageOS's legacy list this row lost
+                    # because their role is no gap in the scope without the
+                    # list (keep_role_gap_rows, round 35); empty otherwise.
+                    "role_gap_types_left_out": list(row.get("_role_gap_left_out") or ()),
                 },
             }
         )
@@ -369,7 +373,9 @@ def explain(
             # "emergency" when leave_out_emergency took it off
             # (emergency_left_out, with its reason). The profile JSON keeps
             # them. Rows rule 1 of round 32 (D8) left out are listed too
-            # (superseded_google_credentials_left_out).
+            # (superseded_google_credentials_left_out), and rows of
+            # LineageOS's legacy list that fill no role gap
+            # (role_gap_types_left_out, round 35).
             "left_out": [
                 {
                     "row": generator.written_attributes(row),
@@ -403,6 +409,17 @@ def explain(
                 }
                 for row in getattr(generated_rows, "credentials_left_out", ())
                 if generator.apn_scope_key(row) in chosen_scopes
+            ]
+            # Round 35, B: a row of LineageOS's legacy list none of whose
+            # types fills a role gap in the scope without the list; the
+            # types it had.
+            + [
+                {
+                    "row": generator.written_attributes(row),
+                    "reasons": {"role_gap_types_left_out": list(row["_role_gap_left_out"])},
+                }
+                for row in getattr(generated_rows, "role_gap_left_out", ())
+                if not row["type"] and generator.apn_scope_key(row) in chosen_scopes
             ],
         },
     }
