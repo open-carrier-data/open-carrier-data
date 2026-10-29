@@ -328,6 +328,10 @@ def explain(
                     # because their role is no gap in the scope without the
                     # list (keep_role_gap_rows, round 35); empty otherwise.
                     "role_gap_types_left_out": list(row.get("_role_gap_left_out") or ()),
+                    # Types this row keeps from other sources, without the
+                    # legacy list's backing, which counts only where a role
+                    # is a gap (round 35).
+                    "role_gap_support_left_out": list(row.get("_role_gap_support_left_out") or ()),
                 },
             }
         )

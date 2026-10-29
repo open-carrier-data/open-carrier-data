@@ -475,9 +475,10 @@ class ApnRows(NamedTuple):
     # page kept, each marked "_credentials_kept_operator_page".
     credentials_left_out: tuple[dict[str, Any], ...] = ()
     credentials_kept_operator_page: tuple[dict[str, Any], ...] = ()
-    # Rows of a role-gap copy (ROLE_GAP_SOURCES) whose types keep_role_gap_rows
-    # took off, each marked "_role_gap_left_out" with those types; a row left
-    # with no type is not written. And the copy's rows of scopes that would
+    # Rows of a role-gap copy (ROLE_GAP_SOURCES) whose types or backing
+    # keep_role_gap_rows took off, marked "_role_gap_left_out" with the types
+    # they lost and "_role_gap_support_left_out" with the types they keep
+    # without the copy's backing; a row left with no type is not written. And the copy's rows of scopes that would
     # otherwise be gone, kept whole, each marked "_role_gap_scope_kept_whole".
     role_gap_left_out: tuple[dict[str, Any], ...] = ()
     role_gap_kept_whole: tuple[dict[str, Any], ...] = ()
@@ -2076,6 +2077,36 @@ def role_gap_copy_types(record: dict[str, Any]) -> set[str]:
     }
 
 
+def role_gap_backed_types(record: dict[str, Any]) -> set[str]:
+    """The types of a row a role-gap copy backs, alone or with other sources
+    (collapse_android_duplicates unites a copy row with another source's
+    equal row)."""
+    support = record.get("_support") or {}
+    return {
+        apn_type
+        for apn_type in apn_row_types(record["type"])
+        if support.get(apn_type, frozenset()) & ROLE_GAP_SOURCES
+    }
+
+
+def leave_copy_out(record: dict[str, Any], types: set[str]) -> set[str]:
+    """Take the role-gap copy's backing off TYPES of a row: a type only the
+    copy backs leaves the row, a type other sources back stays with them.
+    Returns the types that left."""
+    support = dict(record.get("_support") or {})
+    gone = set()
+    for apn_type in types:
+        rest = support.get(apn_type, frozenset()) - ROLE_GAP_SOURCES
+        if rest:
+            support[apn_type] = rest
+        else:
+            gone.add(apn_type)
+    record["_support"] = support
+    if gone:
+        drop_types(record, gone)
+    return gone
+
+
 def drop_types(record: dict[str, Any], types: set[str]) -> None:
     """Take TYPES off a row, with the sources behind them. A "*" type is
     written out as Android's TYPE_ALL list first."""
@@ -2158,54 +2189,59 @@ def role_gaps(written: list[dict[str, Any]], records: list[dict[str, Any]]) -> t
 def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Give the rows of a role-gap copy (ROLE_GAP_SOURCES, LineageOS's legacy
     list) in one scope only the types whose role is a gap in the scope without
-    the copy (rule decisions of 2026-10-29, round 35, B). A type counts as the
-    copy's when only the copy backs it (_support); a type another source also
-    backs never changes.
+    the copy (rule decisions of 2026-10-29, round 35, B). The copy backs a
+    type of a row when its sources for the type (_support) hold it, alone or
+    with other sources.
 
-    1. Take the copy's types off every row, write the scope without them
-       (write_scope: every step of apn_xml_rows) and read its leads on the
-       phone (role_gaps).
-    2. A copy type stays when its role (ROLE_GAP_TYPES) is a gap there on any
-       of the 11 network types; "hipri" stays with "default". One extra case:
-       a copy row typed only "ims" whose APN the scope still serves for "ims"
-       through a row without IWLAN (role_gap_iwlan_case) keeps "ims" only
-       when "ims" is a gap on IWLAN.
+    1. Take the copy off every row: its backing off every type, a type only
+       it backs off the row, a row left with no type out. Write the scope
+       without it (write_scope: every step of apn_xml_rows) and read its leads
+       on the phone (role_gaps).
+    2. The copy keeps backing a type when its role (ROLE_GAP_TYPES) is a gap
+       there on any of the 11 network types; "hipri" stays with "default".
+       One extra case: a row only the copy gives, typed only "ims", whose APN
+       the scope still serves for "ims" through a row without IWLAN
+       (role_gap_iwlan_case) keeps "ims" only when "ims" is a gap on IWLAN.
     3. "emergency" stays for leave_out_emergency, which reads the copy as a
-       source that states no emergency row (round 21); every other type
-       leaves.
-    4. Where the scope without the copy writes no row, the copy's rows are
+       source that states no emergency row (round 21).
+    4. On every other type the copy's backing goes: a type only the copy
+       backs leaves the row; a type another source backs stays, backed by
+       that source alone, so the copy neither ranks a row nor counts as a
+       family there.
+    5. Where the scope without the copy writes no row, the copy's rows are
        kept whole: the scope would otherwise be gone from apns-conf.xml.
 
     The kept types leave by themselves once a current vendor gives an APN for
     the role, because every run tests the gaps again. A changed row is marked
-    "_role_gap_left_out" with the types it lost; a row left with no type is
-    not written. Profile JSON keeps every row and type. Returns the rows to
-    write, the changed rows, and the rows kept whole."""
-    copy_types = {id(record): role_gap_copy_types(record) for record in records}
-    if not any(copy_types.values()):
+    "_role_gap_left_out" with the types it lost and
+    "_role_gap_support_left_out" with the types it keeps without the copy's
+    backing; a row left with no type is not written. Profile JSON keeps every
+    row and type. Returns the rows to write, the changed rows, and the rows
+    kept whole."""
+    backed = {id(record): role_gap_backed_types(record) for record in records}
+    if not any(backed.values()):
         return records, [], []
+    copy_types = {id(record): role_gap_copy_types(record) for record in records}
     without: list[dict[str, Any]] = []
     for record in records:
-        types = copy_types[id(record)]
-        if types and not set(apn_row_types(record["type"])) - types:
-            continue
         trial = copy.deepcopy(record)
-        if types:
-            drop_types(trial, types)
-        without.append(trial)
+        if backed[id(record)]:
+            leave_copy_out(trial, backed[id(record)])
+        if trial["type"]:
+            without.append(trial)
     written = write_scope(without).written if without else []
     if not written:
         for record in records:
-            if copy_types[id(record)]:
+            if backed[id(record)]:
                 record["_role_gap_scope_kept_whole"] = True
-        return records, [], [record for record in records if copy_types[id(record)]]
+        return records, [], [record for record in records if backed[id(record)]]
     gaps, iwlan_gaps = role_gaps(written, records)
     if "default" in gaps:
         gaps.add("hipri")
     kept: list[dict[str, Any]] = []
     changed: list[dict[str, Any]] = []
     for record in records:
-        types = copy_types[id(record)]
+        types = backed[id(record)]
         if not types:
             kept.append(record)
             continue
@@ -2215,9 +2251,12 @@ def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, An
             stay = {apn_type for apn_type in types if apn_type in gaps or apn_type == "emergency"}
         leave = types - stay
         if leave:
-            record["_role_gap_left_out"] = tuple(sorted(leave))
+            gone = leave_copy_out(record, leave)
+            if gone:
+                record["_role_gap_left_out"] = tuple(sorted(gone))
+            if leave - gone:
+                record["_role_gap_support_left_out"] = tuple(sorted(leave - gone))
             changed.append(record)
-            drop_types(record, leave)
         if record["type"]:
             kept.append(record)
     return kept, changed, []

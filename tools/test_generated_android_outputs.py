@@ -5606,7 +5606,8 @@ def check_lineageos_legacy_apn_list_role_gaps() -> None:
     shipping, a frozen copy in the AOSP list family that only fills role
     gaps. Each of its rows keeps only the types whose role is a gap in the
     scope without it; a scope that would otherwise be gone keeps it whole;
-    "emergency" follows round 21; a type another source backs never changes."""
+    "emergency" follows round 21; a type another source also backs stays,
+    without the copy's backing where its role is no gap."""
     generator = generate_android_outputs
     legacy = "lineageos_legacy_apn_list"
     assert_true(generator.APN_SOURCE_FAMILIES[legacy] == "aosp_apn_lists", "the legacy list is in the AOSP list family")
@@ -5663,10 +5664,18 @@ def check_lineageos_legacy_apn_list_role_gaps() -> None:
             (apn("sos", ("emergency",), protocol="IPV4V6", roaming_protocol="IPV4V6"), (legacy,)),
             (apn("EMERGENCY", ("emergency",), protocol="IPV6", roaming_protocol="IPV6"), (legacy,)),
         ],
-        # 20408: a type another source also backs never changes.
+        # 20408: a type another source also backs stays; the copy backs it
+        # only where its role is a gap (mms here, not default).
         "20408": [
             (apn("internet", ("default", "supl")), (google,)),
             (apn("internet.old", ("default", "mms"), mmsc="http://mms.old"), (legacy, "sony_open_devices_aosp")),
+        ],
+        # 24404: the copy's backing of a type that is no gap does not rank a
+        # row: Sony's two supl rows keep their order (the 244/04 shape).
+        "24404": [
+            (apn("internet", ("default",)), (google,)),
+            (apn("aaa.example", ("default", "supl")), ("google_pixel_vendor_carriersettings",)),
+            (apn("bbb.example", ("default", "supl")), (legacy, "sony_open_devices_aosp")),
         ],
         # 46099: no current vendor gives anything, so every role is a gap.
         "46099": [
@@ -5737,11 +5746,23 @@ def check_lineageos_legacy_apn_list_role_gaps() -> None:
             scope("20408").get("internet.old") == "default,mms",
             f"a type another source backs stays: {scope('20408')}",
         )
+        old = next(record for record in result.records if record["apn"] == "internet.old")
+        assert_true(
+            old.get("_role_gap_support_left_out") == ("default",) and old["_support"]["default"] == {"sony_open_devices_aosp"}
+            and old["_support"]["mms"] == {"sony_open_devices_aosp", legacy},
+            f"the copy backs only the gap type of a shared row: {old.get('_support')}",
+        )
+        order = [record["apn"] for record in result.records if record.get("mcc", "") + record.get("mnc", "") == "24404"]
+        assert_true(
+            order.index("aaa.example") < order.index("bbb.example"),
+            f"the copy's backing of a type that is no gap does not rank a row: {order}",
+        )
         assert_true(
             scope("46099").get("legacy.example") == "default,ia,hipri",
             f"where no current vendor gives anything every role is a gap: {scope('46099')}",
         )
-        marked = {(record["apn"], record["_role_gap_left_out"]) for record in result.role_gap_left_out}
+        marked = {(record["apn"], record["_role_gap_left_out"]) for record in result.role_gap_left_out
+                  if "_role_gap_left_out" in record}
         assert_true(
             marked == {
                 ("web.old", ("default", "supl")),
