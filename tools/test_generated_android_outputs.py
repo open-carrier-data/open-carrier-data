@@ -5121,6 +5121,325 @@ def check_vendor_mms_row_usable() -> None:
     assert_true(mms == {("mms", _R36_VENDOR)}, f"26376: a usable vendor MMS row still takes MMS: {mms}")
 
 
+
+@contextlib.contextmanager
+def without_step_2d():
+    """apn_xml_rows with change 18 step 2d (take_mms_off_type_internet_leads,
+    rule round 36) switched off, to compare its output with and without the
+    step."""
+    original = generate_android_outputs.take_mms_off_type_internet_leads
+    generate_android_outputs.take_mms_off_type_internet_leads = lambda ranked: 0
+    try:
+        yield
+    finally:
+        generate_android_outputs.take_mms_off_type_internet_leads = original
+
+
+def _r36_type_lead_scopes() -> dict:
+    """Synthetic scopes for step 2d (rule round 36): the shapes that move
+    (310/120, 26371) and one shape per check that must not move."""
+    G, L, apn = _R36_G, _R36_L, _r36_apn
+    A, S = "apple_carrier_bundles", "samsung_omc"
+    return {
+        # The 310/120 shape on its persist network: Google's CDMA-only
+        # internet row, a stale CDMA row, the single-row non-current n.ispsn
+        # row that serves "mms" on every other type (bearer is not a
+        # bitmask), and Google's mms row.
+        "310120": [
+            (apn("sprint", ("default", "supl"), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("sprint", ("default", "mms"), name="old", mmsc=_R36_STALE, bearer_bitmask=_R36_CDMA),
+             {"default": (G, L), "mms": (L,)}),
+            (apn("n.ispsn", ("default", "dun", "hipri", "mms", "supl"), name="LTE internet", mmsc=_R36_STALE,
+                 mmsproxy="68.28.31.7", mmsport=80, protocol="IPV4V6", roaming_protocol="IPV4V6", bearer=14), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, mmsproxy="oap.vendor.example", mmsport=80), (G,)),
+        ],
+        # An LTE-only vendor internet row; on the other 3GPP types the
+        # internet lead is a stale row that serves "mms".
+        "26371": [
+            (apn("lte.example", ("default",), network_type_bitmask="13"), (G,)),
+            (apn("old.example", ("default", "mms"), name="old internet", mmsc=_R36_STALE), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR), (G,)),
+        ],
+        # Coverage (check 2): the only vendor MMS row serves LTE only.
+        "26372": [
+            (apn("cdma.example", ("default",), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("lte.example", ("default", "mms"), name="LTE internet", mmsc=_R36_STALE), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="13"), (G,)),
+        ],
+        # Persist (check 4): on a persist_apns_for_plmn network the lead's
+        # stored row has two rows.
+        "310004": [
+            (apn("cdma.example", ("default",), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("lte.example", ("default", "dun"), name="LTE internet", mmsc=_R36_STALE, protocol="IPV4V6"), (L,)),
+            (apn("lte.example", ("mms", "supl"), name="LTE mms", mmsc=_R36_STALE, protocol="IPV4V6", authtype=1), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR), (G,)),
+        ],
+        # Coverage only (check 2; the plan judge's 26391): the gate holds,
+        # but the vendor MMS row serves every 3GPP type except LTE, which
+        # the stale lead serves.
+        "26391": [
+            (apn("lte.example", ("default",), network_type_bitmask="13"), (G,)),
+            (apn("old.example", ("default", "mms"), name="old", mmsc=_R36_STALE), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="1|2|3|8|9|10|15|20"), (G,)),
+        ],
+        # The gate only (check 5; 312/130's shape, the plan judge's 26392):
+        # coverage holds, but after the retype MMS on the led types would go
+        # to a second Apple row with the stale MMSC.
+        "26392": [
+            (apn("net.example", ("default", "mms"), mmsc=_R36_VENDOR, bearer_bitmask="14"), (G,)),
+            (apn("net.example", ("default", "dun", "mms"), name="a1", mmsc=_R36_STALE, protocol="IPV4V6",
+                 roaming_protocol="IP"), (A,)),
+            (apn("net.example", ("default", "dun", "mms"), name="a2", mmsc=_R36_STALE, protocol="IP",
+                 roaming_protocol="IP"), (A,)),
+            (apn("mms.example", ("mms",), mmsc=_R36_VENDOR), (G,)),
+        ],
+        # An MMS-only member (check 3; the plan judge's 26393): the lead's
+        # stored row has a row whose only type is "mms"; retyping it would
+        # write an empty type, which Android reads as every wildcard type.
+        "26393": [
+            (apn("cdma.example", ("default",), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("old.example", ("default", "supl"), name="old", mmsc=_R36_STALE), (L,)),
+            (apn("old.example", ("mms",), name="old mms", mmsc=_R36_STALE, authtype=1), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR), (G,)),
+        ],
+        # Vendor-backed (check 1): a current vendor backs the lead for "mms".
+        "26394": [
+            (apn("cdma.example", ("default",), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("web.example", ("default", "mms"), mmsc=_R36_STALE2), {"default": (L,), "mms": (G, L)}),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR), (G,)),
+        ],
+        # The gate on IWLAN (check 5, the safety judge's correction): the
+        # lead carries MMS on Wi-Fi too, and the vendor MMS row serves the
+        # 3GPP types only, so after the retype Wi-Fi would have no MMS.
+        "26395": [
+            (apn("cdma.example", ("default",), bearer_bitmask=_R36_CDMA), (G,)),
+            (apn("old.example", ("default", "mms"), name="old", mmsc=_R36_STALE), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="1|2|3|8|9|10|13|15|20"), (G,)),
+        ],
+        # The gate on a type the group carries MMS on without leading it
+        # (check 5, the safety judge's correction): on LTE the internet lead
+        # is an LTE-only row without "mms", so the stale group carries MMS
+        # there; after the retype LTE's MMS would go to another stale row.
+        "26396": [
+            (apn("lte.example", ("default",), network_type_bitmask="13"), (G,)),
+            (apn("old.example", ("default", "mms"), name="old", mmsc=_R36_STALE), (L,)),
+            (apn("old2.example", ("default", "mms"), name="old2", mmsc=_R36_STALE2), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="1|2|3|8|9|10|15|18|20"), (G, S)),
+            (apn("mms.lte", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="13"), (S,)),
+        ],
+        # Coverage where the widened gate holds (check 2): the first
+        # internet row is LTE-only and keeps its own stale "mms" (step 2's
+        # coverage), so on LTE it carries MMS, not the stale group; no vendor
+        # MMS row serves LTE, eHRPD or the CDMA types, where the stale group
+        # carries MMS, so the retype would leave those without MMS.
+        "26397": [
+            (apn("lte.example", ("default", "mms"), mmsc=_R36_STALE2, network_type_bitmask="13"),
+             {"default": (G,), "mms": (L,)}),
+            (apn("old.example", ("default", "mms"), name="old", mmsc=_R36_STALE), (L,)),
+            (apn("mms", ("mms",), mmsc=_R36_VENDOR, network_type_bitmask="1|2|3|8|9|10|15|18|20"), (G,)),
+        ],
+    }
+
+
+def check_type_internet_lead_mms() -> None:
+    """Rule round 36, change 18 step 2d (round 34 step 8, 310/120 Sprint):
+    step 2 read per network type. A stored row that leads internet on some
+    3GPP data network type, is not the first internet row's, serves "mms"
+    and is backed for it by no current vendor loses "mms" under five checks.
+    Read through apn_xml_rows and the phone model on all 11 network types,
+    merge on and off. Moving: the 310/120 shape (MMS on the nine types to
+    the vendor tuple; the internet, attach, IMS, XCAP and dun leads and the
+    CDMA types unchanged; nothing stored apart) and 26371 (an LTE-only first
+    internet row). Written exactly as without the step (without_step_2d),
+    one shape per check, each of which the mutation without that check
+    fails: 26394 (check 1, vendor-backed), 26391, 26372 and 26397 (check 2,
+    coverage; the widened gate also holds 26391 and 26372, so 26397 is the
+    shape only coverage holds), 26393 (check 3, an MMS-only member: no row is written with
+    an empty type), 310004 (check 4, a two-row stored row on a persist
+    network), 26392 (check 5, the gate; 312/130's shape), 26395 (the gate on
+    IWLAN) and 26396 (the gate on a type the group carries MMS on without
+    leading it); the last two fail a gate read only on the led types."""
+    scopes = _r36_type_lead_scopes()
+    result, fixture = _round34_fixture(scopes)
+    with without_step_2d():
+        plain, plain_fixture = _round34_fixture(scopes)
+    leads, plain_leads = fixture["leads"], plain_fixture["leads"]
+    for mccmnc in ("26394", "26391", "26372", "26397", "26393", "310004", "26392", "26395", "26396"):
+        assert_true(
+            _round34_lines(result, mccmnc) == _round34_lines(plain, mccmnc),
+            f"{mccmnc}: nothing changes: {_round34_written(result, mccmnc)}",
+        )
+        assert_true(all(row_type for _, row_type, _ in _round34_written(result, mccmnc)),
+                    f"{mccmnc}: no row with an empty type: {_round34_written(result, mccmnc)}")
+        assert_true(not any(r.get("_mms_left_out_type_internet_lead") for r in result.records  # type: ignore[attr-defined]
+                            if r.get("mcc", "") + r.get("mnc", "") == mccmnc), f"{mccmnc}: no row marked")
+    sprint, plain_sprint = leads("310120"), plain_leads("310120")
+    assert_true(_r36_mms(sprint, _R36_NINE) == {("mms", _R36_VENDOR)},
+                f"310/120 shape: MMS on the nine types goes to the vendor tuple: {_r36_mms(sprint, _R36_NINE)}")
+    assert_true(_r36_mms(plain_sprint, _R36_NINE) == {("n.ispsn", _R36_STALE)},
+                f"310/120 shape: without step 2d MMS rides n.ispsn: {_r36_mms(plain_sprint, _R36_NINE)}")
+    written = _round34_written(result, "310120")
+    assert_true(("n.ispsn", "default,dun,hipri,supl", "LTE internet") in written
+                and [(a, c) for a, _, c in written] == [(a, c) for a, _, c in _round34_written(plain, "310120")],
+                f"310/120 shape: n.ispsn loses only mms, no row moves or leaves: {written}")
+    marked = sorted((r.get("mcc", "") + r.get("mnc", ""), r["apn"], r["type"])
+                    for r in result.records if r.get("_mms_left_out_type_internet_lead"))  # type: ignore[attr-defined]
+    assert_true(marked == [("26371", "old.example", "default"), ("310120", "n.ispsn", "default,dun,hipri,supl")],
+                f"only the 310/120 and 26371 leads are marked: {marked}")
+    assert_true(not sprint["persist_events"] and sprint["stored"] == plain_sprint["stored"],
+                f"310/120 shape: nothing stored apart: {sprint['persist_events']} {sprint['stored']}")
+    for key, values in sprint["per_type"].items():
+        old = plain_sprint["per_type"][key]
+        for role in ("internet", "attach", "ims", "xcap", "dun"):
+            assert_true(values[role] == old[role], f"310/120 shape {key}: the {role} lead stays: {old[role]} -> {values[role]}")
+        if key[1] in ("EVDO-A", "1xRTT"):
+            assert_true(values["mms"] == old["mms"], f"310/120 shape {key}: the CDMA types keep their MMS")
+    lte_only, plain_lte_only = leads("26371"), plain_leads("26371")
+    moved_names = ("GPRS", "EDGE", "UMTS", "HSPA", "HSPA+", "NR", "IWLAN")
+    assert_true(_r36_mms(lte_only, moved_names) == {("mms", _R36_VENDOR)}
+                and _r36_mms(plain_lte_only, moved_names) == {("old.example", _R36_STALE)},
+                f"26371: per type, MMS on the types the stale row leads goes to the vendor tuple: {lte_only['per_type']}")
+    for key, values in lte_only["per_type"].items():
+        assert_true(values["internet"] == plain_lte_only["per_type"][key]["internet"]
+                    and values["mms"] is not None, f"26371 {key}: internet stays, MMS stays: {values}")
+
+
+
+def _r36_dataset_rows() -> tuple[dict, list]:
+    """apn_xml_rows over the whole dataset in this checkout: each scope's
+    first internet row (its written attributes, and whether it is written)
+    and the written records."""
+    repository = Path(__file__).resolve().parents[1]
+    evidence_path = repository / "generated" / "evidence-index.json"
+    profile_paths = generate_android_outputs.profile_paths(repository / "carriers")
+    if not profile_paths or not evidence_path.exists():
+        raise AssertionError("the dataset-wide step 2d test needs carriers/ and generated/evidence-index.json")
+    profiles = [load_json(path) for path in profile_paths]
+    evidence = generate_android_outputs.load_apn_evidence(evidence_path)
+    put_vendor_mms_first = generate_android_outputs.put_vendor_mms_first
+    internet_rows: dict[tuple, dict] = {}
+
+    def capture(ranked: list[dict]) -> tuple[list[dict], int]:
+        result = put_vendor_mms_first(ranked)
+        internet = next((r for r in ranked if "default" in generate_android_outputs.apn_row_types(r["type"])), None)
+        if internet is not None:
+            internet_rows[generate_android_outputs.apn_scope_key(internet)] = internet
+        return result
+
+    generate_android_outputs.put_vendor_mms_first = capture
+    try:
+        rows = generate_android_outputs.apn_xml_rows(profiles, evidence)
+    finally:
+        generate_android_outputs.put_vendor_mms_first = put_vendor_mms_first
+    written_ids = {id(record) for record in rows.records}
+    firsts = {
+        scope: (generate_android_outputs.written_attributes(record), id(record) in written_ids)
+        for scope, record in internet_rows.items()
+    }
+    return firsts, list(rows.records)
+
+
+def _r36_roles(records: list[dict]) -> dict:
+    """Per scope of RECORDS, per (merge on or off, network type) on all 11
+    network types: the internet, attach, IMS, XCAP and dun leads (what each
+    sends: APN, proxy, port, credentials, auth type, protocols, bitmask,
+    MTU, and its types without "mms") and where MMS goes."""
+    rows = android_phone_model.parse_lines(generate_android_outputs.apn_row_line(r) for r in records)
+    tables = android_phone_model.provider(rows)
+
+    def key(profile: dict | None) -> tuple | None:
+        if profile is None:
+            return None
+        return (*android_phone_model.lead_key(profile), profile["mtu4"], profile["mtu6"],
+                tuple(sorted(set(profile["types"]) - {"mms"})))
+
+    out: dict = {}
+    for scope in {android_phone_model.scope_of(row) for row in rows}:
+        stored = android_phone_model.scope_rows(tables, scope)
+        per: dict = {}
+        for dedupe in (True, False):
+            settings = android_phone_model.profiles(stored, dedupe=dedupe)
+            for name, network_type in android_phone_model.ALL_NETWORK_TYPES.items():
+                internet, mms, attach = android_phone_model.leads(settings, network_type)
+                values = {"internet": key(internet), "attach": key(attach),
+                          "mms": android_phone_model.mms_of(mms, stored)}
+                for kind in ("ims", "xcap", "dun"):
+                    values[kind] = key(next((p for p in settings if kind in p["types"]
+                                             and android_phone_model.serves(p, network_type)
+                                             and android_phone_model.cellular(p)), None))
+                per[(dedupe, name)] = values
+        out[scope] = per
+    return out
+
+
+def check_round36_keeps_leads() -> None:
+    """Rule round 36, change 18 step 2d, over the whole dataset in this
+    checkout, compared with the output without the step (without_step_2d):
+    each scope's first internet row is written and is the same row, with the
+    same types and values; only scopes with a row marked
+    "_mms_left_out_type_internet_lead" change, and in them no row moves or
+    leaves and only "mms" leaves a type list; on all 11 network types, merge
+    on and off, the internet, attach, IMS, XCAP and dun leads keep their
+    APN, protocols, credentials, auth type, bitmask and MTU (only "mms" may
+    leave their type set), and MMS is never lost and moves only to a current
+    vendor's MMS tuple (vendor_mms_row) of the scope."""
+    firsts, records = _r36_dataset_rows()
+    with without_step_2d():
+        plain_firsts, plain_records = _r36_dataset_rows()
+    changed = sorted(str(scope) for scope in set(firsts) | set(plain_firsts) if firsts.get(scope) != plain_firsts.get(scope))
+    assert_true(
+        len(firsts) > 1000 and not changed and all(kept for _, kept in firsts.values()),
+        f"each scope's first internet row is written, the same with and without step 2d: {changed[:20]}",
+    )
+
+    def by_scope(rows: list[dict]) -> dict:
+        out: dict = {}
+        for record in rows:
+            out.setdefault(generate_android_outputs.apn_scope_key(record), []).append(record)
+        return out
+
+    scopes, plain_scopes = by_scope(records), by_scope(plain_records)
+    assert_true(set(scopes) == set(plain_scopes), "step 2d adds or removes no scope")
+
+    def lines(rows: list[dict], drop_mms: bool = False) -> list[str]:
+        out = []
+        for record in rows:
+            attributes = dict(generate_android_outputs.written_attributes(record))
+            if drop_mms:
+                attributes["type"] = ",".join(t for t in str(attributes.get("type", "")).split(",") if t != "mms")
+            out.append(json.dumps(attributes, sort_keys=True, default=str))
+        return out
+
+    moved = sorted((scope for scope in scopes if lines(scopes[scope]) != lines(plain_scopes[scope])), key=str)
+    marked = sorted({generate_android_outputs.apn_scope_key(r) for r in records
+                     if r.get("_mms_left_out_type_internet_lead")}, key=str)
+    assert_true(moved == marked, f"only the scopes with a step 2d mark change: {moved[:10]} {marked[:10]}")
+    for scope in moved:
+        assert_true(lines(scopes[scope], True) == lines(plain_scopes[scope], True),
+                    f"{scope}: only mms leaves a type list, no row moves or leaves")
+    roles = _r36_roles([r for scope in moved for r in scopes[scope]])
+    plain_roles = _r36_roles([r for scope in moved for r in plain_scopes[scope]])
+    assert_true(set(roles) == set(plain_roles), "the moved scopes keep their phone scopes")
+
+    def tuple_of(value: tuple | None) -> tuple | None:
+        return None if value is None else (str(value[0]), str(value[1] or ""), str(value[2] or ""),
+                                           android_phone_model.port_from_string(value[3]))
+
+    for scope in moved:
+        vendor = {tuple_of((r["apn"], r.get("mmsc"), r.get("mmsproxy"), r.get("mmsport")))
+                  for r in scopes[scope] if generate_android_outputs.vendor_mms_row(r)}
+        phone_scope = android_phone_model.scope_of(
+            android_phone_model.parse_lines([generate_android_outputs.apn_row_line(scopes[scope][0])])[0])
+        for key, values in roles[phone_scope].items():
+            old = plain_roles[phone_scope][key]
+            for role in ("internet", "attach", "ims", "xcap", "dun"):
+                assert_true(values[role] == old[role], f"{scope} {key}: the {role} lead keeps its values: {old[role]} -> {values[role]}")
+            assert_true(old["mms"] is None or values["mms"] is not None, f"{scope} {key}: MMS is not lost")
+            if values["mms"] != old["mms"]:
+                assert_true(tuple_of(values["mms"]) in vendor,
+                            f"{scope} {key}: MMS moves only to a current vendor's tuple: {old['mms']} -> {values['mms']}")
+
+
 def check_leave_out_absorbed_mms() -> None:
     """apns-conf.xml leaves out a stored row that serves only "mms", whose
     MMS setting no vendor MMS row gives, whose network types the vendor MMS
@@ -7571,6 +7890,10 @@ def main() -> int:
     print("dataset-wide first internet row tests passed (round 33)")
     check_vendor_mms_row_usable()
     print("usable vendor MMS row tests passed (round 36, item 3)")
+    check_type_internet_lead_mms()
+    print("per network type internet lead MMS tests passed (round 36, step 2d)")
+    check_round36_keeps_leads()
+    print("dataset-wide lead tests passed (round 36, step 2d)")
     check_leave_out_absorbed_mms()
     print("absorbed MMS row tests passed")
     check_emergency_rows()

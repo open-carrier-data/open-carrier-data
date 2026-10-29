@@ -1151,7 +1151,8 @@ def vendor_mms_row(record: dict[str, Any]) -> bool:
     DataProfileManager and ApnSetting.canHandleType skip any other row, so
     such a row neither carries MMS nor covers a network type (change 18,
     rule round 36, round 34 step 8). put_vendor_mms_first (steps 1 to 4,
-    step 3's stop after the read-past, step 2b's coverage) and
+    step 3's stop after the read-past, step 2b's coverage),
+    take_mms_off_type_internet_leads (step 2d's coverage and gate) and
     leave_out_absorbed_mms (change 19, its vendor rows and coverage) use
     this one predicate."""
     return (
@@ -1316,9 +1317,13 @@ def put_vendor_mms_first(ranked: list[dict[str, Any]]) -> tuple[list[dict[str, A
 
     Only the first internet row and the rows Android stores with it are
     retyped: for "mms" here (steps 2 and 2b), and for "ims" and "xcap" in
-    step 2c (take_type_off_internet_group, rule round 34), which apn_xml_rows
-    runs right after this function. Retyping every row no vendor backs lets
-    DataProfileManager merge EE's stale T-Mobile rows in 234/30.
+    step 2c (take_type_off_internet_group, rule round 34), which write_scope
+    runs right after this function; and, per network type, a stored row
+    that leads internet there loses "mms" (step 2d,
+    take_mms_off_type_internet_leads, rule round 36), which write_scope runs
+    after step 4b. Retyping every row no vendor backs lets
+    DataProfileManager merge EE's stale T-Mobile rows in 234/30; step 2d
+    retypes only per-type internet leads.
     MmsService then reads the MMSC from the APN of the network that carries
     MMS (MmsRequest 209-231). Rule decisions of 2026-10-06, round 6, change
     18, which replaces change 15: measured on 2026-10-08 (public 575632c1),
@@ -1683,6 +1688,154 @@ def put_vendor_attach_first(ranked: list[dict[str, Any]]) -> list[dict[str, Any]
     best["_vendor_attach_ahead"] = True
     return moved
 
+
+# Change 18 step 2d (rule round 36): the network types its gate (check 5)
+# reads the MMS carrier on: MMS_NETWORK_TYPES plus IWLAN (18), read as step
+# 2c reads them (row_network_types), because MMS also runs over Wi-Fi.
+TYPE_INTERNET_LEAD_GATE_TYPES = MMS_NETWORK_TYPES | {18}
+
+
+def take_mms_off_type_internet_leads(ranked: list[dict[str, Any]]) -> int:
+    """Change 18 step 2d (rule round 36, round 34 step 8): step 2 read per
+    network type. It runs in write_scope after put_vendor_attach_first (step
+    4b) and before write_android_groups_best_last, so it reads the order the
+    phone will see. On a network type the first internet row's stored row
+    does not serve, the internet lead is another stored row
+    (DataProfileManager takes the first usable profile that serves "default"
+    on the network type), and Android sends MMS over that internet network
+    when its profile serves "mms" (DataNetworkController 1372 and 1429). On
+    310/120 Sprint the first internet row is Google's CDMA-only "sprint"
+    row, and on GPRS to NR, IWLAN and eHRPD the internet lead was the
+    LineageOS/Sony n.ispsn [default,dun,hipri,mms,supl] row, which no
+    current vendor backs, so MMS went to mms.sprintpcs.com through
+    68.28.31.7, while Google's current file gives APN mms with
+    mms.plspictures.com through oap7.sprintpcs.com.
+
+    The groups are the scope's android_unique_key groups (the rows Android
+    stores as one), in the order their stored rows take, without the rows
+    step 2b or step 2c left out. On each type of MMS_NETWORK_TYPES, the
+    internet lead is the first group whose stored row is usable
+    (android_usable) and serves "default" on that type. Each group that is
+    the internet lead on at least one type, is not the first internet row's
+    group and serves "mms" is a candidate. "mms" comes off the candidates'
+    rows only when all of these hold for every candidate; when any check
+    fails, nothing in the scope changes:
+
+    1. no row of the group is backed for "mms" by a current vendor
+       (_current: CURRENT_VENDOR_APN_SOURCES; Apple, LineageOS, Sony and
+       Fairphone are not current vendors);
+    2. coverage: the vendor MMS rows (vendor_mms_row, usable rows only)
+       together serve every network type the group's stored row serves
+       (apn_row_network_types);
+    3. every row of the group that serves "mms" has another type, so no row
+       is left out and no type list becomes empty (Android reads an empty
+       type as every wildcard type);
+    4. on a persist_apns_for_plmn network (android_phone_model
+       .PERSIST_APNS_FOR_PLMN) the group is a single row, so
+       TelephonyProvider.separateRowsNeeded, which compares rows of one
+       unique key, cannot change what is stored;
+    5. the gate, per network type: on every type of
+       TYPE_INTERNET_LEAD_GATE_TYPES (IWLAN included, read with
+       row_network_types) where the group carries MMS before the retype
+       (it is the internet lead there and serves "mms", or the internet lead
+       there does not serve "mms" and the group is the first usable stored
+       row that does), the stored row that carries MMS there after the
+       retype holds a vendor MMS row that serves that type.
+
+    Then each candidate row that serves "mms" loses only "mms". It keeps its
+    other types, its place and every value, and is marked
+    "_mms_left_out_type_internet_lead" for --explain; metadata.json counts
+    it in omissions.mms_types_left_out_not_vendor_backed. The first internet
+    row, the order of the rows, every MMSC, MMS proxy and MMS port and every
+    type other than "mms" never change, and no row is left out. Profile JSON
+    keeps the sources' types. Returns the number of rows retyped."""
+    def serves(record: dict[str, Any], apn_type: str) -> bool:
+        return apn_type in apn_row_types(record["type"])
+
+    live = [record for record in ranked if not left_out_stored_with_internet(record)]
+    vendor = [record for record in live if vendor_mms_row(record)]
+    if not vendor:
+        return 0
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in live:
+        groups[android_unique_key(record)].append(record)
+    # The stored rows' order: each group at its earliest row's place
+    # (write_android_groups_best_last).
+    order = list(groups)
+    # The stored row of each group: its rows written best row last.
+    stored = {key: android_stored_rows(list(reversed(groups[key])))[0][0] for key in order}
+    usable = {key: android_usable(stored[key]) for key in order}
+
+    def stored_types(key: tuple[str, ...], allowed: frozenset[int] = MMS_NETWORK_TYPES) -> frozenset[int]:
+        return row_network_types(stored[key], allowed)
+
+    # The first internet row is put_vendor_mms_first's: the first row that
+    # serves "default" in rank order. Step 4b can move a vendor attach
+    # group ahead of it; that group is not the first internet row's.
+    moved = {android_unique_key(record) for record in live if record.get("_vendor_attach_ahead")}
+    internet = next(
+        (record for record in live if serves(record, "default") and android_unique_key(record) not in moved), None
+    )
+    first_key = android_unique_key(internet) if internet is not None else None
+    gate_types = TYPE_INTERNET_LEAD_GATE_TYPES
+
+    def group_serves(key: tuple[str, ...], apn_type: str, skip: frozenset[int]) -> bool:
+        return any(serves(member, apn_type) and id(member) not in skip for member in groups[key])
+
+    def internet_lead(network_type: int) -> tuple[str, ...] | None:
+        return next(
+            (key for key in order
+             if usable[key] and network_type in stored_types(key, gate_types)
+             and group_serves(key, "default", frozenset())),
+            None,
+        )
+
+    def mms_carrier(network_type: int, skip: frozenset[int]) -> tuple[str, ...] | None:
+        lead = internet_lead(network_type)
+        if lead is not None and group_serves(lead, "mms", skip):
+            return lead
+        return next(
+            (key for key in order
+             if usable[key] and network_type in stored_types(key, gate_types) and group_serves(key, "mms", skip)),
+            None,
+        )
+
+    leads = {internet_lead(network_type) for network_type in MMS_NETWORK_TYPES} - {None, first_key}
+    candidates = [key for key in order if key in leads and group_serves(key, "mms", frozenset())]
+    if not candidates:
+        return 0
+    persist = f"{ranked[0].get('mcc', '')}{ranked[0].get('mnc', '')}" in PERSIST_APNS_FOR_PLMN
+    covered = frozenset().union(*(apn_row_network_types(record) for record in vendor))
+    stale = [member for key in candidates for member in groups[key] if serves(member, "mms")]
+    for key in candidates:
+        members = groups[key]
+        # Check 1.
+        if any(member.get("_current", {}).get("mms") for member in members):
+            return 0
+        # Check 2, coverage.
+        if not stored_types(key) <= covered:
+            return 0
+        # Check 3.
+        if any(apn_row_types(member["type"]) == ["mms"] for member in members if serves(member, "mms")):
+            return 0
+        # Check 4.
+        if persist and len(members) > 1:
+            return 0
+    # Check 5, the gate, read with every candidate retyped.
+    skip = frozenset(id(member) for member in stale)
+    for network_type in sorted(gate_types):
+        if mms_carrier(network_type, frozenset()) not in candidates:
+            continue
+        carrier = mms_carrier(network_type, skip)
+        if carrier is None or not any(
+            vendor_mms_row(member) and network_type in row_network_types(member, gate_types)
+            for member in groups[carrier]
+        ):
+            return 0
+    for member in stale:
+        member["type"] = ",".join(served for served in apn_row_types(member["type"]) if served != "mms")
+        member["_mms_left_out_type_internet_lead"] = True
+    return len(stale)
 
 # ApnSetting.similar (ApnSetting.java:1427-1458), which
 # DataProfileManager.dedupeDataProfiles (DataProfileManager.java:877-897)
@@ -2254,9 +2407,9 @@ def write_scope(records: list[dict[str, Any]],
     stale attach type left out, an emergency type without a stated reason left
     out, the rows ranked, MMS sent to a current vendor's MMS row, the rows
     Android stores as one written together (after step 2c,
-    take_type_off_internet_group, and step 4b, put_vendor_attach_first), D8
-    rule 1, and the absorbed MMS-only rows left out. The rows are changed in
-    place."""
+    take_type_off_internet_group, step 4b, put_vendor_attach_first, and step
+    2d, take_mms_off_type_internet_leads, rule round 36), D8 rule 1, and the
+    absorbed MMS-only rows left out. The rows are changed in place."""
     ia_left_out = leave_out_stale_attach(records)
     scope_records, emergency_changed = leave_out_emergency(records)
     ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
@@ -2265,6 +2418,9 @@ def write_scope(records: list[dict[str, Any]],
     stale_types = {apn_type: take_type_off_internet_group(ranked, apn_type) for apn_type in STALE_INTERNET_GROUP_TYPES}
     # Step 4b (rule round 34): after step 2c, before the groups are written.
     ranked = put_vendor_attach_first(ranked)
+    # Step 2d (rule round 36): after step 4b, so it reads the order the phone
+    # will see, before the groups are written.
+    retyped += take_mms_off_type_internet_leads(ranked)
     written = write_android_groups_best_last(ranked)
     # Step 2c's rows whose only type it took off are not written. They and
     # step 7's MMS-only rows stored with the internet row (round 33,

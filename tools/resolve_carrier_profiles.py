@@ -294,6 +294,13 @@ def explain(
                     # row for MMS and current vendors' MMS rows serve every
                     # mobile network type it serves (round 33).
                     "mms_left_out_stored_with_internet": bool(row.get("_mms_left_out_stored_with_internet")),
+                    # A stored row that leads internet on some 3GPP network
+                    # type, not the first internet row's, lost "mms": no
+                    # current vendor backs it for MMS, the vendor MMS rows
+                    # serve every type it serves, and on every type it
+                    # carried MMS a vendor MMS row takes it (rule round 36,
+                    # change 18 step 2d).
+                    "mms_left_out_type_internet_lead": bool(row.get("_mms_left_out_type_internet_lead")),
                     # Types (ims, xcap) a row Android stores with the first
                     # internet row lost: no current vendor backs any row of
                     # that stored row for them (rule round 34, change 18
