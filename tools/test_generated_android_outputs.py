@@ -3455,6 +3455,75 @@ def check_superseded_google_credentials() -> None:
                 f"the 268/91 lead still stores vodafone/vodafone with auth type 0: {lead}")
 
 
+def check_pixel_snapshot_build_conditional() -> None:
+    """Rule decisions round 35, item D: LineageOS's Pixel APN snapshot joins
+    rule 1's superseded Pixel copies only once the Google lane reads none of
+    its recorded builds and a newer one. While the builds match, rule 1 keeps
+    a snapshot-only credential fill-in; afterwards it treats it as Google's
+    frozen copies."""
+    gen = generate_android_outputs
+    key = gen.pixel_build_key
+    assert_true(key("CP3A.261005.005") < key("CP3A.261105.004") and key("CP3A.261005.002.A1") < key("CP3A.261005.005")
+                and key("CP3A.261005.002") < key("CP3A.261005.002.A1") and key("CD1A.260714.001.A9") < key("CP3A.261005.005"),
+                "Pixel builds order by date, serial and suffix")
+    assert_true(key("git:81542bd") is None and key("") is None, "a value that is no Pixel build has no order")
+
+    def evidence(snapshot: list[str], google: list[str]) -> dict:
+        builds = {}
+        if snapshot:
+            builds[gen.PIXEL_SNAPSHOT_SOURCE] = frozenset(snapshot)
+        if google:
+            builds[gen.GOOGLE_LANE_SOURCE] = frozenset(google)
+        return {"open.x": gen.ProfileEvidence(frozenset(builds), {}, {}, source_builds=builds)}
+
+    cases = [
+        (["CP3A.261005.005"], ["CP3A.261005.005", "CD1A.260714.001.A9", "CP3A.261005.002.A1"], False,
+         "today: the Google lane reads the snapshot's build"),
+        (["CP3A.261005.005"], ["CP3A.261105.004", "CP3A.261005.005"], False,
+         "another model still on the snapshot's build keeps it current"),
+        (["CP3A.261005.005"], ["CP3A.261105.004", "CD1A.260714.001.A9"], True,
+         "the Google lane moved past the snapshot's build"),
+        (["CP3A.261005.005"], ["CD1A.260714.001.A9"], False, "only older builds: not superseded"),
+        ([], ["CP3A.261105.004"], False, "no recorded snapshot build: never superseded"),
+        (["CP3A.261005.005", "weird"], ["CP3A.261105.004"], False, "an unreadable recorded build: never superseded"),
+    ]
+    for snapshot, google, expected, why in cases:
+        got = gen.pixel_snapshot_superseded(evidence(snapshot, google))
+        assert_true(got == expected, f"{why}: {snapshot} against {google} gave {got}")
+    assert_true(gen.frozen_pixel_copy_sources(None) == gen.FROZEN_PIXEL_COPY_SOURCES,
+                "without evidence rule 1 reads only Google's frozen Pixel copies")
+
+    def apn(value: str, types: tuple[str, ...] = ("default", "supl"), **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    rows = [
+        (apn("internet.example", ("default", "dun", "supl"), name="Carrier", authtype=1),
+         ("google_carriersettings", gen.PIXEL_SNAPSHOT_SOURCE)),
+        (apn("internet.example", name="Old name", user="u", password="p", authtype=1), (gen.PIXEL_SNAPSHOT_SOURCE,)),
+    ]
+    profile = {"profile_id": "open.26220.a", "display_name": "x", "match": {"mccmnc": ["26220"]},
+               "android_apns": [row for row, _ in rows]}
+
+    def left_out(snapshot_build: str, google_build: str) -> list:
+        facts = [{"section": "android_apns", "key": gen.apn_fact_key(row, apn_type), "sources": sorted(sources)}
+                 for row, sources in rows for apn_type in row["types"]]
+        record = {"profile_id": "open.26220.a",
+                  "sources": sorted({source for _, sources in rows for source in sources}),
+                  "fact_sources": sorted(facts, key=lambda fact: fact["key"]),
+                  "source_versions": [{"source": "google_carriersettings", "builds": [google_build]},
+                                      {"source": gen.PIXEL_SNAPSHOT_SOURCE, "builds": [snapshot_build]}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "evidence.json"
+            path.write_text(json.dumps({"profiles": [record]}), encoding="utf-8")
+            result = gen.apn_xml_rows([json.loads(json.dumps(profile))], gen.load_apn_evidence(path))
+        return [(r["carrier"], r["_credentials_left_out"]) for r in result.credentials_left_out]
+
+    assert_true(left_out("CP3A.261005.005", "CP3A.261005.005") == [],
+                "while the builds match, the snapshot's credential fill-in stays")
+    assert_true(left_out("CP3A.261005.005", "CP3A.261105.004") == [("Old name", ("user", "password"))],
+                "once the Google lane moved past the snapshot, rule 1 leaves its fill-in out")
+
+
 def check_vendor_mms_first() -> None:
     """MMS goes to a current vendor's MMS row that serves a mobile network
     (rule decisions of 2026-10-06, round 6, change 18). A vendor MMS row is a
@@ -6787,6 +6856,7 @@ def main() -> int:
     check_lineageos_legacy_apn_list_role_gaps()
     print("LineageOS legacy APN list role-gap tests passed")
     check_current_vendor_attach()
+    check_pixel_snapshot_build_conditional()
     print("current vendor and attach type tests passed")
     check_data_device_values()
     print("data-device pack tests passed")

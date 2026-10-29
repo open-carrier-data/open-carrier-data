@@ -98,7 +98,7 @@ Credentials from old lists (rule round 32, D8). Because of step 8, a phone sends
 
 - Android stores it with a lead's best row;
 - its only effect on the stored row is a username, password, auth type or MTU;
-- every source of those values is a frozen Pixel copy (`google_pixel_vendor_carriersettings`), and no other family gives them for that APN, type and scope;
+- every source of those values is a frozen Pixel copy (`google_pixel_vendor_carriersettings`), and no other family gives them for that APN, type and scope. LineageOS's Pixel APN snapshot (`lineageos_pixel_apn_snapshot`) counts as one only once the Google lane has moved past it (rule round 35, D; `pixel_snapshot_superseded`): its recorded builds (the snapshot's `source_versions`, today `CP3A.261005.005` from LineageOS's `cfcbd9d`) are known, the Google lane's `source_versions` name none of them, and they name a newer one. While the Google lane reads the snapshot's build, for any model, the snapshot is a copy of a current build, and its credentials are what Google's current list carries. The switch is automatic. The first publish it changes runs under D8 rule 7's stops after an agent reads each affected operator page. The private sanitizer adds the snapshot to change 26's superseded copies by the same comparison;
 - Google's current file gives the same APN for the same type in the same scope with no credentials;
 - the operator's own current APN page, where it can be read, names no credentials for that APN.
 
