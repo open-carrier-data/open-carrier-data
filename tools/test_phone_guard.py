@@ -394,6 +394,7 @@ class ImsEmergencyReportTests(GuardCase):
         item = next(item for item in result["watch"]
                     if item["condition"] == "ims lead on a *-typed row no current vendor backs for ims")
         self.assertEqual((item["scope"], item["new"]), ("262/01", "web IP/IP"))
+        self.assertIn("    262/01: web IP/IP (", out)
         self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
         backed = records_of([(everything, old_copy, {"ims": ["google_carriersettings"]}),
                              (self.IMS, {"ims": ["google_carriersettings"]}, {"ims": ["google_carriersettings"]})])
@@ -604,8 +605,6 @@ class Round35HardeningTests(GuardCase):
             (repo / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
             (repo / "carriers" / "records.json").write_text(json.dumps(self.VENDOR_MMS), encoding="utf-8")
             (repo / "generated" / "evidence-index.json").write_text("{}", encoding="utf-8")
-            (repo / "schemas").mkdir()
-            (repo / "schemas" / "x.json").write_text("{}", encoding="utf-8")
             git = ["git", "-C", str(repo), "-c", "user.email=t@example.invalid", "-c", "user.name=t"]
             subprocess.run([*git, "init", "-q"], check=True)
             subprocess.run([*git, "add", "-A"], check=True)
@@ -622,6 +621,26 @@ class Round35HardeningTests(GuardCase):
             result = json.loads((repo / "r.json").read_text())
         self.assertEqual(code, 1, out.getvalue())
         self.assertEqual(self.conditions(result), {("mms_away", HOLD)})
+
+    def test_base_ref_without_tools_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp) / "repo"
+            (repo / "carriers").mkdir(parents=True)
+            (repo / "carriers" / "records.json").write_text("[]", encoding="utf-8")
+            git = ["git", "-C", str(repo), "-c", "user.email=t@example.invalid", "-c", "user.name=t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "-A"], check=True)
+            subprocess.run([*git, "commit", "-q", "-m", "base"], check=True)
+            (repo / "tools").mkdir()
+            (repo / "tools" / "generate_android_outputs.py").write_text(FAKE_GENERATOR, encoding="utf-8")
+            (repo / "base.xml").write_text(xml(WEB, MMS), encoding="utf-8")
+            (repo / "head.xml").write_text(xml(WEB, self.STALE), encoding="utf-8")
+            guard.generator_records.cache_clear()
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                code = guard.run(["check_phone_guard.py", str(repo / "base.xml"), str(repo / "head.xml"),
+                                  "--generator", str(repo), "--base-ref", "HEAD"])
+        self.assertEqual(code, 2, out.getvalue())
 
     def test_attach_to_an_apn_a_vendor_gives_only_for_mms_is_reported(self) -> None:
         """China Mobile's cmwap (round 35, item E): a vendor gives it for MMS,
