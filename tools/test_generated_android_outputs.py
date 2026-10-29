@@ -2191,8 +2191,9 @@ def check_apn_ranking() -> None:
 def check_current_vendor_attach() -> None:
     """A value a current vendor (Google CarrierSettings, Samsung) gives comes
     first in its lead type, and apns-conf.xml takes the attach type off a row
-    whose APN no current vendor gives, when a current vendor gives the
-    network's attach or internet APN. No row is removed."""
+    whose APN no current vendor gives for "default" or "ia", when a current
+    vendor gives the network's attach or internet APN (rule decisions round
+    35, item E: the backing is role-specific). No row is removed."""
 
     def apn(value: str, types: tuple[str, ...] = ("default",), **extra: object) -> dict:
         return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
@@ -2222,8 +2223,8 @@ def check_current_vendor_attach() -> None:
         apn("broadband", ("default", "mms"), mmsc="http://mmsc.example"),
         apn("nxtgenphone", ("default", "mms"), mmsc="http://mmsc.example", protocol="IPV4V6"),
     )
-    # 311480: an IMS row typed "ims,ia" keeps "ia" when a current vendor gives
-    # that APN for "ims".
+    # 311480: an IMS row typed "ims,ia" loses "ia" when a current vendor gives
+    # that APN only for "ims" (round 35: the backing is role-specific).
     verizon = profile(
         "open.311480.a",
         "311480",
@@ -2245,7 +2246,28 @@ def check_current_vendor_attach() -> None:
         apn("old.example", ("default", "ia", "supl")),
         apn("web.example", ("default",)),
     )
-    profiles = [eplus, att, verizon, attach_only, untouched]
+    # 46008: Google gives cmwap only for MMS and cmnet for the internet. The
+    # stale cmwap row typed "default,ia,supl" (HTTP proxy, IPv4 only) loses
+    # "ia", and LineageOS's cmnet row typed "ia" keeps it, so a phone attaches
+    # with cmnet (rule decisions round 35, item E: the 460/08 residual).
+    china_mobile = profile(
+        "open.46008.a",
+        "46008",
+        apn("cmnet", ("default", "supl"), protocol="IPV4V6"),
+        apn("cmwap", ("default", "ia", "supl"), proxy="10.0.0.172", port="80"),
+        apn("cmwap", ("mms",), mmsc="http://mmsc.example", mmsproxy="10.0.0.172", mmsport="80"),
+        apn("cmnet", ("ia",), protocol="IPV4V6"),
+    )
+    # 310260: a current vendor gives the IMS APN for "ia" too, so an older
+    # variant of that APN typed "ia,ims" keeps "ia".
+    ims_attach = profile(
+        "open.310260.a",
+        "310260",
+        apn("fast.example", ("default",)),
+        apn("ims", ("ia", "ims"), protocol="IPV4V6"),
+        apn("ims", ("ia", "ims"), protocol="IPV6"),
+    )
+    profiles = [eplus, att, verizon, attach_only, untouched, china_mobile, ims_attach]
     row_sources = {
         "open.26203.a": [("fairphone_official_source",), (google,)],
         "open.310410.a": [
@@ -2255,6 +2277,13 @@ def check_current_vendor_attach() -> None:
         "open.311480.a": [(google,), ("lineageos",), (google,)],
         "open.23415.a": [("samsung_omc",), ("lineageos",)],
         "open.20408.a": [("lineageos",), ("apple_carrier_bundles",)],
+        "open.46008.a": [
+            (google,),
+            ("fairphone_official_source", "sony_open_devices_aosp", "google_pixel_vendor_carriersettings"),
+            (google,),
+            ("lineageos",),
+        ],
+        "open.310260.a": [(google,), (google,), ("lineageos",)],
     }
     # 24007 (Tele2 Sweden, SPN Tele2comviq): a Samsung build from 2017 gives
     # "4g.tele2.se", a current Samsung build "internet.tele2.se". The evidence
@@ -2326,8 +2355,19 @@ def check_current_vendor_attach() -> None:
             f"{scope('310410')}",
         )
         assert_true(
-            ("vzwims", "ia,ims") in scope("311480"),
-            f"an IMS attach row keeps ia when a current vendor gives its APN: {scope('311480')}",
+            ("vzwims", "ims") in scope("311480") and ("vzwims", "ia,ims") not in scope("311480"),
+            f"an IMS row loses ia when a current vendor gives its APN only for ims: {scope('311480')}",
+        )
+        assert_true(
+            ("cmwap", "default,supl") in scope("46008")
+            and any("ia" in types.split(",") for value, types in scope("46008") if value == "cmnet")
+            and not any("ia" in types.split(",") for value, types in scope("46008") if value == "cmwap"),
+            "an APN a current vendor gives only for mms does not keep ia, and the attach row a "
+            f"current vendor's internet APN names keeps it: {scope('46008')}",
+        )
+        assert_true(
+            scope("310260").count(("ims", "ia,ims")) == 2,
+            f"an APN a current vendor gives for ia keeps ia on every variant: {scope('310260')}",
         )
         assert_true(
             ("attach.example", "ia") in scope("23415"),
@@ -2353,8 +2393,8 @@ def check_current_vendor_attach() -> None:
             f"among the variants of one value the current build's comes first: {claro_rows}",
         )
         assert_true(
-            len(rows.records) == len(plain.records) and rows.ia_left_out == 2,
-            f"no row is removed and two rows lose ia: {len(rows.records)}, {rows.ia_left_out}",
+            len(rows.records) == len(plain.records) and rows.ia_left_out == 4,
+            f"no row is removed and four rows lose ia: {len(rows.records)}, {rows.ia_left_out}",
         )
         assert_true(
             plain.ia_left_out == 0,

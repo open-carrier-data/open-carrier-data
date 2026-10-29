@@ -899,24 +899,33 @@ def rank_scope(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
+# The types whose APN a phone may attach with: Android attaches with the first
+# row that serves "ia", else with the first "default" row.
+ATTACH_ROLE_TYPES = frozenset({"default", "ia"})
+
+
 def leave_out_stale_attach(records: list[dict[str, Any]]) -> int:
     """Take the "ia" type off the rows of one scope whose APN value no current
-    vendor gives, when a current vendor gives a real APN for "default" or "ia"
-    there. Android attaches with the first row that serves "ia", whatever the
-    ranking says, so an old copy's attach row would otherwise beat the APN a
-    current Pixel or Galaxy attaches with. A row keeps "ia" when a current
-    vendor gives its APN value for any type in the scope, or when "ia" is its
-    only type. The row itself stays, with its other types. Each changed row is
-    marked "_ia_left_out", which is never written. Returns the rows changed."""
+    vendor gives for "default" or "ia", when a current vendor gives a real APN
+    for "default" or "ia" there. Android attaches with the first row that
+    serves "ia", whatever the ranking says, so an old copy's attach row would
+    otherwise beat the APN a current Pixel or Galaxy attaches with. A row keeps
+    "ia" only when a current vendor gives its APN value for "default" or "ia"
+    in the scope (ATTACH_ROLE_TYPES), or when "ia" is its only type. An APN a
+    current vendor gives only for another type, such as a WAP APN it gives for
+    "mms", does not keep "ia" (rule decisions round 35, item E: China Mobile's
+    cmwap, with an HTTP proxy and IPv4 only, took 460/08's attach from cmnet).
+    The row itself stays, with its other types. Each changed row is marked
+    "_ia_left_out", which is never written. Returns the rows changed."""
     vendor_apns: set[str] = set()
     covered = False
     for record in records:
         apn = str(record["apn"]).casefold()
         for apn_type, sources in record.get("_current", {}).items():
-            if not sources:
+            if not sources or apn_type not in ATTACH_ROLE_TYPES:
                 continue
             vendor_apns.add(apn)
-            if apn_type in {"default", "ia"} and not placeholder_apn(record["apn"]):
+            if not placeholder_apn(record["apn"]):
                 covered = True
     if not covered:
         return 0
