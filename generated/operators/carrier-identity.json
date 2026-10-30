@@ -1,12 +1,82 @@
 {
   "countries": [
+    "BE",
     "CH",
     "DE",
     "LU",
+    "MC",
+    "MK",
     "MY"
   ],
   "description": "Which operators, brands and MVNOs run on which network codes (rule round 32, GOAL decision 2), built from the sources' own labels: LineageOS APN carrier names, Samsung network names and sales codes, Google carrier ID names and Apple bundle names. selectors are the SIM selectors exactly as a source states them, each with the OCD profile it maps to and the source families that state it. host_only means no source gives the brand a selector, so no phone can tell its SIMs from the host's. The table never changes OCD's matcher.",
   "entries": [
+    {
+      "country": "BE",
+      "host_networks": [
+        "20620"
+      ],
+      "host_only": false,
+      "key": "be.base",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "BASE",
+          "networks": [
+            "20620"
+          ],
+          "sales_codes": [
+            "EUX",
+            "LUX"
+          ]
+        },
+        {
+          "families": [
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Base",
+          "networks": [
+            "20620"
+          ]
+        }
+      ],
+      "name": "BASE",
+      "operator_key": "be.base",
+      "selectors": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "google_pixel_vendor_carriersettings",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "20620"
+            ]
+          },
+          "profile_id": "open.20620.38456e90752e"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "20620"
+            ],
+            "spn": [
+              "BASE"
+            ]
+          },
+          "profile_id": "open.20620.ef664eec17f3"
+        }
+      ]
+    },
     {
       "country": "CH",
       "host_networks": [
@@ -2453,6 +2523,83 @@
     {
       "country": "LU",
       "host_networks": [
+        "27099"
+      ],
+      "host_only": false,
+      "key": "lu.orange",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "fairphone_official_source",
+            "mobile_broadband_provider_info"
+          ],
+          "label": "Orange",
+          "networks": [
+            "27099"
+          ]
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "Orange LUX",
+          "networks": [
+            "27099"
+          ],
+          "sales_codes": [
+            "EUX",
+            "LUX"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles"
+          ],
+          "label": "Orange Luxembourg",
+          "networks": [
+            "27099"
+          ]
+        }
+      ],
+      "name": "Orange Luxembourg",
+      "operator_key": "lu.orange",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "27099"
+            ],
+            "spn": [
+              "Orange LUX"
+            ]
+          },
+          "profile_id": "open.27099.9eb41ca38088"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "google_pixel_vendor_carriersettings",
+            "lineageos_device_overlays",
+            "mobile_broadband_provider_info",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "27099"
+            ]
+          },
+          "profile_id": "open.27099.dbeb3c5bc34a"
+        }
+      ]
+    },
+    {
+      "country": "LU",
+      "host_networks": [
         "27001"
       ],
       "host_only": false,
@@ -2586,6 +2733,203 @@
             ]
           },
           "profile_id": "open.27001.a63cfc35dfd8"
+        }
+      ]
+    },
+    {
+      "country": "MC",
+      "host_networks": [
+        "21210"
+      ],
+      "host_only": false,
+      "key": "mc.monaco-telecom",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "samsung_omc"
+          ],
+          "label": "Monaco Telecom",
+          "networks": [
+            "21210"
+          ],
+          "sales_codes": [
+            "EUX",
+            "XEF"
+          ]
+        }
+      ],
+      "name": "Monaco Telecom",
+      "operator_key": "mc.monaco-telecom",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "4D433031"
+            ],
+            "mccmnc": [
+              "21210"
+            ]
+          },
+          "profile_id": "open.21210.1c24218ed327"
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "gid1_prefixes": [
+              "4D433032"
+            ],
+            "mccmnc": [
+              "21210"
+            ]
+          },
+          "profile_id": "open.21210.4c1c500fbc84"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "fairphone_official_source",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "21210"
+            ]
+          },
+          "profile_id": "open.21210.6c5ca4bd5bcd"
+        }
+      ]
+    },
+    {
+      "country": "MK",
+      "host_networks": [
+        "29401"
+      ],
+      "host_only": false,
+      "key": "mk.telekom",
+      "kind": "operator",
+      "labels": [
+        {
+          "families": [
+            "aosp"
+          ],
+          "label": "Mkedonski Telecom AD Skopje",
+          "networks": [
+            "29401"
+          ]
+        },
+        {
+          "families": [
+            "lineageos",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "label": "T-Mobile MK",
+          "networks": [
+            "29401"
+          ]
+        },
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "label": "Telekom MK",
+          "networks": [
+            "29401"
+          ],
+          "sales_codes": [
+            "EUX",
+            "EUY",
+            "MBM",
+            "SEE",
+            "SIO"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Telekom Mk",
+          "networks": [
+            "29401"
+          ]
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "samsung_omc"
+          ],
+          "label": "Telekom.mk",
+          "networks": [
+            "29401"
+          ],
+          "sales_codes": [
+            "SEE",
+            "SIO"
+          ]
+        }
+      ],
+      "name": "Makedonski Telekom",
+      "operator_key": "mk.telekom",
+      "selectors": [
+        {
+          "families": [
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "29401"
+            ],
+            "spn": [
+              "Telekom MK"
+            ]
+          },
+          "profile_id": "open.29401.0f53c8d1f668"
+        },
+        {
+          "families": [
+            "apple_carrier_bundles",
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "lineageos",
+            "lineageos_device_overlays",
+            "samsung_carrier_config",
+            "samsung_omc",
+            "sony_open_devices_aosp"
+          ],
+          "match": {
+            "mccmnc": [
+              "29401"
+            ]
+          },
+          "profile_id": "open.29401.11da49b92377"
+        },
+        {
+          "families": [
+            "aosp"
+          ],
+          "match": {
+            "android_carrier_ids": [
+              13
+            ],
+            "mccmnc": [
+              "29401"
+            ],
+            "spn": [
+              "T-Mobile MK",
+              "Telekom MK",
+              "Telekom.mk"
+            ]
+          },
+          "profile_id": "open.29401.386b70991adb"
         }
       ]
     },
