@@ -3009,6 +3009,29 @@ def superseded_selector_ids(evidence_index_path: Path) -> set[str]:
     }
 
 
+class ProfileFiles(NamedTuple):
+    # Every profile file of the carriers directory as (path, profile):
+    # data_digest reads them all.
+    all_items: list[tuple[Path, dict[str, Any]]]
+    # The match sets' profiles (apns-conf.xml, carrier-config-list.xml and
+    # lookup.json): every profile except the superseded old selectors.
+    items: list[tuple[Path, dict[str, Any]]]
+    # The profile IDs the evidence index flags old_selector_superseded (D7).
+    superseded: set[str]
+
+
+def load_profile_files(carriers_dir: Path, evidence_index_path: Path) -> ProfileFiles:
+    """CARRIERS_DIR's profile files, and the ones the match sets read: every
+    profile except those EVIDENCE_INDEX_PATH flags old_selector_superseded
+    (D7). main and the phone guard (check_phone_guard.generator_rows) load
+    the profiles behind apns-conf.xml with it, so the guard's records are
+    the file's rows."""
+    all_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
+    superseded = superseded_selector_ids(evidence_index_path)
+    items = [item for item in all_items if item[1]["profile_id"] not in superseded]
+    return ProfileFiles(all_items, items, superseded)
+
+
 def profile_newest_entries(evidence_index_path: Path) -> dict[str, str]:
     """The month of the newest upstream entry behind each profile, as the
     evidence index publishes it, for the profiles where it is known."""
@@ -3381,11 +3404,9 @@ def main(argv: list[str]) -> int:
     carriers_dir = args.carriers_dir
     generated_dir = args.generated_dir
     evidence_index_path = args.evidence_index or generated_dir / "evidence-index.json"
-    all_items = [(path, load_json(path)) for path in profile_paths(carriers_dir)]
-    superseded = superseded_selector_ids(evidence_index_path)
     # Every profile file counts for data_digest; the match sets leave out the
     # superseded old selectors (D7).
-    profile_items = [item for item in all_items if item[1]["profile_id"] not in superseded]
+    all_items, profile_items, superseded = load_profile_files(carriers_dir, evidence_index_path)
     profiles = [profile for _, profile in profile_items]
     evidence = load_apn_evidence(evidence_index_path)
     if evidence is None:
