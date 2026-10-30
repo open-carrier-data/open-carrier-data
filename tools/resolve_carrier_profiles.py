@@ -389,6 +389,18 @@ def explain(
             "scope": "mvno" if mvno_rows else "network",
             "rows": apn_rows,
             "credential_sources": credential_sources,
+            # The APN quality gates of this SIM's profile stack, from the
+            # evidence index: the rows a gate left out of a profile, such as
+            # mms_proxy_unroutable:<value> (rule round 40: a row whose MMS
+            # would use a proxy no network routes), mms_without_mmsc or
+            # lineageos_apn_removed:<commit>.
+            "quality_gates": [
+                {"profile_id": item["profile_id"], "key": gate["key"],
+                 "observed_value_count": gate.get("observed_value_count")}
+                for item in stack
+                for gate in evidence.get(item["profile_id"], {}).get("quality_gates", [])
+                if gate.get("section") == "android_apns"
+            ],
             # Rows of this SIM's scope that apns-conf.xml leaves out: stale
             # MMS-only rows Android merges into an earlier row
             # (absorbed_mms_left_out), and rows whose only type was

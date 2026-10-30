@@ -145,7 +145,14 @@ def check_explain() -> None:
                             "key": "single_family_off:volte",
                             "observed_value_count": 1,
                             "resolution": "omitted_from_stable",
-                        }
+                        },
+                        {
+                            "kind": "quality_gate",
+                            "section": "android_apns",
+                            "key": "mms_proxy_unroutable:9.4.229.46",
+                            "observed_value_count": 1,
+                            "resolution": "omitted_from_stable",
+                        },
                     ],
                 },
                 {
@@ -198,6 +205,10 @@ def check_explain() -> None:
             "samsung_omc",
         ], "a fact without a fact_sources entry rests on every profile source"
         assert result["apns"]["scope"] == "mvno"
+        # Rule round 40: --explain names the APN gates of the profile stack.
+        assert result["apns"]["quality_gates"] == [
+            {"profile_id": brand["profile_id"], "key": "mms_proxy_unroutable:9.4.229.46", "observed_value_count": 1}
+        ], result["apns"]["quality_gates"]
         assert [row["row"]["apn"] for row in result["apns"]["rows"]] == ["brand.example"], (
             "an SPN that has rows gets only its own rows"
         )
