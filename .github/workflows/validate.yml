@@ -17,6 +17,10 @@ on:
   # edited: a phone-guard-accept line added to the body checks again.
   pull_request:
     types: [opened, synchronize, reopened, edited]
+  # The merge queue (rule decisions round 37, item 4): a queue run checks
+  # the tree that lands, with the guard against merge_group.base_sha.
+  merge_group:
+    types: [checks_requested]
   schedule:
     - cron: "17 4 * * *"
 
@@ -27,8 +31,28 @@ jobs:
   validate:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # A queue run and a dispatched run read the accept lines from the pull
+      # request's body through the API at run time.
+      pull-requests: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      # Rule decisions round 37, items 3 and 4: validate never passes on a
+      # ref other than main without the phone-level guard, and the guard, the
+      # F5 read check, the OCD dataset's base manifest and the CarrierConfig
+      # report all compare with one base: a pull request's base commit,
+      # merge_group.base_sha in a queue run, or the merge base with main on a
+      # dispatched run. The accept lines come only from the one pull request
+      # the event names (pull_request, merge_group) or, on a dispatch, from the
+      # one open pull request whose head SHA is the run's; never from a
+      # dispatch input. tools/guard_context.py has the rules; a queue run that
+      # cannot name exactly one pull request fails here.
+      - name: Resolve the base and the accept lines
+        id: context
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/guard_context.py resolve --out "$RUNNER_TEMP/guard-context.json"
       - name: Validate carrier profiles and the stable index
         run: python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness warn
       - name: Validate the device catalog
@@ -47,6 +71,8 @@ jobs:
         run: python3 tools/test_android_phone_model.py
       - name: Test the phone-level guard
         run: python3 tools/test_phone_guard.py
+      - name: Test the guard's base and accept lines (pull request, queue, dispatch)
+        run: python3 tools/test_guard_context.py
       - name: Test the CarrierConfig diff
         run: python3 tools/test_diff_carrier_config.py
       - name: Test the device records validator
@@ -75,7 +101,7 @@ jobs:
       # than main's, which orders datasets on the phone.
       - name: Validate the OCD dataset
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: ${{ steps.context.outputs.base }}
         run: |
           base=()
           if [ -n "$BASE_SHA" ]; then
@@ -88,11 +114,12 @@ jobs:
       # Rule round 31, SM6: every change of the APN rows on main carries its
       # F5 read in generated/ocd-dataset/f5-reads.json, and an emergency-line
       # change only with a read that proceeds. The read is tools/f5_read.py's
-      # deterministic check, rerun here from the base: a pull request's base,
-      # or the commit before a push to main.
+      # deterministic check, rerun here from the base: the resolved base of
+      # a pull request, queue or dispatched run, or the commit before a push
+      # to main.
       - name: Check the F5 reads of emergency-line changes
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          BASE_SHA: ${{ steps.context.outputs.base || github.event.before }}
         run: |
           args=()
           if [ -n "$BASE_SHA" ] && [ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]; then
@@ -116,27 +143,26 @@ jobs:
             exit 1
           fi
       - name: Phone-level guard
-        # Holds a pull request whose apns-conf.xml takes a phone's internet,
-        # attach or working MMS away, or moves MMS off a current vendor's
-        # tuple, the base's (--base-ref, rule decisions round 35, item E) or
-        # the head's, unless the body has the line `phone-guard-accept: DIGEST`
-        # for exactly these trips. The body is read from the environment,
-        # never put into the script text.
-        if: github.event_name == 'pull_request'
+        # Holds a change whose apns-conf.xml takes a phone's internet, attach
+        # or working MMS away, or moves MMS off a current vendor's tuple, the
+        # base's (--base-ref, rule decisions round 35, item E) or the head's,
+        # unless the pull request's body has the line
+        # `phone-guard-accept: DIGEST` for exactly these trips. It runs on
+        # every ref other than main (round 37, item 3), also after an earlier
+        # step failed, so its report is always there. The body is read from
+        # the event or the API into the tool, never put into the script text.
+        if: ${{ !cancelled() && github.ref != 'refs/heads/main' }}
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_BODY: ${{ github.event.pull_request.body }}
+          BASE_SHA: ${{ steps.context.outputs.base }}
         run: |
+          if [ -z "$BASE_SHA" ]; then
+            echo "::error::No base was resolved for this run; the phone-level guard fails closed."
+            exit 1
+          fi
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
-          base_xml="$RUNNER_TEMP/base-apns-conf.xml"
-          git show "$BASE_SHA:generated/android/apns-conf.xml" > "$base_xml"
-          accept=()
-          while IFS= read -r line; do
-            accept+=(--accept "${line#phone-guard-accept: }")
-          done < <(printf '%s\n' "$PR_BODY" | tr -d '\r' | grep -oE '^phone-guard-accept: [0-9a-f]{16}$' || true)
           status=0
-          python3 tools/check_phone_guard.py "$base_xml" generated/android/apns-conf.xml \
-            --generator . --base-ref "$BASE_SHA" "${accept[@]}" > "$RUNNER_TEMP/phone-guard.txt" 2>&1 || status=$?
+          python3 tools/guard_context.py guard --context "$RUNNER_TEMP/guard-context.json" \
+            > "$RUNNER_TEMP/phone-guard.txt" 2>&1 || status=$?
           cat "$RUNNER_TEMP/phone-guard.txt"
           {
             echo "## Phone-level guard"
@@ -146,18 +172,19 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           if [ "$status" -ne 0 ]; then
-            echo "::error::The phone-level guard holds this pull request (exit $status). Fix the trips, or add the line 'phone-guard-accept: DIGEST' to the body after a review rules them intended."
+            echo "::error::The phone-level guard holds this change (exit $status). Fix the trips, or add the line 'phone-guard-accept: DIGEST' to the pull request's body after a review rules them intended. A dispatched run takes accept lines only from the one open pull request whose head SHA is the run's."
           fi
           exit "$status"
       - name: CarrierConfig diff, report only
-        # On a pull request that changes carrier-config-list.xml: the
+        # On a pull request, queue or dispatched run that changes
+        # carrier-config-list.xml, against the same base as the guard: the
         # safety-class lines (emergency, e911, ecbm, WPS, TTY, RTT, iwlan.*)
         # in full and the other keys per key, in the step summary. It never
         # fails the job (rule decisions of 2026-10-18, round 20).
-        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        if: ${{ !cancelled() && steps.context.outputs.base != '' }}
         continue-on-error: true
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: ${{ steps.context.outputs.base }}
         run: |
           base_xml="$RUNNER_TEMP/base-carrier-config-list.xml"
           git fetch --no-tags --depth=1 origin "$BASE_SHA" || exit 0
