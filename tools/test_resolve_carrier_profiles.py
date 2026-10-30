@@ -782,6 +782,38 @@ def check_explain_internet_stored_row_types() -> None:
     assert omissions["types_left_out_stored_with_internet_not_vendor_backed"] == 0, omissions
 
 
+
+def check_explain_type_internet_lead() -> None:
+    """--explain marks change 18 step 2d's rows (rule round 36): a stored
+    row that leads internet on some 3GPP network type, not the first
+    internet row's, and lost "mms" (mms_left_out_type_internet_lead);
+    metadata.json counts it in mms_types_left_out_not_vendor_backed."""
+    google, lineage = ["google_carriersettings"], ["lineageos"]
+    results = _explain_cases({
+        # 310/120 shape: a CDMA-only first internet row and the non-current
+        # n.ispsn row that leads internet on every other type.
+        "310120": (
+            [
+                {"name": "sprint", "apn": "sprint", "types": ["default", "supl"], "bearer_bitmask": "4|5|6|7|8|12"},
+                {"name": "LTE internet", "apn": "n.ispsn", "types": ["default", "dun", "hipri", "mms", "supl"],
+                 "mmsc": "http://mms.stale.example", "mmsproxy": "192.0.2.7", "mmsport": 80, "protocol": "IPV4V6",
+                 "roaming_protocol": "IPV4V6"},
+                {"name": "mms", "apn": "mms", "types": ["mms"], "mmsc": "http://mms.vendor.example",
+                 "mmsproxy": "oap.vendor.example", "mmsport": 80},
+            ],
+            [{"default": google, "supl": google},
+             {"default": lineage, "dun": lineage, "hipri": lineage, "mms": lineage, "supl": lineage},
+             {"mms": google}],
+        ),
+    })
+    result, omissions = results["310120"]
+    rows = [(row["row"]["apn"], row["row"]["type"], row["reasons"]["mms_left_out_type_internet_lead"])
+            for row in result["apns"]["rows"]]
+    assert ("n.ispsn", "default,dun,hipri,supl", True) in rows, rows
+    assert [marked for _, _, marked in rows].count(True) == 1 and result["apns"]["left_out"] == [], rows
+    assert omissions["mms_types_left_out_not_vendor_backed"] == 1, omissions
+
+
 def check_explain_emergency() -> None:
     """--explain says why a row keeps "emergency" (emergency_basis), lists a
     row whose only type was "emergency" under left_out with its reason, and
@@ -854,6 +886,7 @@ def main() -> int:
     check_explain_absorbed_mms()
     check_explain_internet_stored_row_mms()
     check_explain_internet_stored_row_types()
+    check_explain_type_internet_lead()
     check_explain_emergency()
     print("carrier profile resolver tests passed")
     return 0
