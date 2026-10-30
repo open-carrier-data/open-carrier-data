@@ -25,6 +25,11 @@ compared, on the 3GPP data network types of HOLD_TYPES. A trip is one of:
   round 35, item E; round 15's base vendor tuples): a change that also takes
   the vendor's row away cannot hide the move.
 
+A checkout's generator records are loaded the generator's own way
+(`generator_profiles`, the generator's `load_profile_files`): without the old
+selectors the evidence index flags old_selector_superseded (rule decisions
+round 32, D7), as apns-conf.xml is built.
+
 Everything else is reported, never held: credentials and HTTP proxies gained
 or changed on the leads, credentials lost on the leads, internet and attach
 leads that move to an APN no current vendor gives for their role (internet:
@@ -242,11 +247,30 @@ def extract_checkout(checkout: Path, revision: str, into: Path) -> Path:
     return into
 
 
+def generator_profiles(generator, checkout: Path) -> list[dict[str, Any]]:
+    """The profiles CHECKOUT's GENERATOR builds apns-conf.xml from, loaded
+    the generator's own way (`load_profile_files`): every profile except the
+    old selectors the evidence index flags old_selector_superseded (rule
+    decisions round 32, D7). A generator from before that function (a base
+    revision) loads them as its main did: from #316 on, without the
+    profiles `superseded_selector_ids` names; before #316, every profile."""
+    carriers = checkout / "carriers"
+    evidence_path = checkout / "generated" / "evidence-index.json"
+    if hasattr(generator, "load_profile_files"):
+        return [profile for _, profile in generator.load_profile_files(carriers, evidence_path).items]
+    profiles = [generator.load_json(path) for path in generator.profile_paths(carriers)]
+    if hasattr(generator, "superseded_selector_ids"):
+        superseded = generator.superseded_selector_ids(evidence_path)
+        profiles = [profile for profile in profiles if profile["profile_id"] not in superseded]
+    return profiles
+
+
 @functools.lru_cache(maxsize=None)
 def generator_rows(checkout: Path):
-    """The generator of CHECKOUT and its `apn_xml_rows` of CHECKOUT's data."""
+    """The generator of CHECKOUT and its `apn_xml_rows` of CHECKOUT's data:
+    the records of CHECKOUT's generated/android/apns-conf.xml."""
     generator = load_generator(checkout)
-    profiles = [generator.load_json(path) for path in generator.profile_paths(checkout / "carriers")]
+    profiles = generator_profiles(generator, checkout)
     evidence = generator.load_apn_evidence(checkout / "generated" / "evidence-index.json")
     return generator, generator.apn_xml_rows(profiles, evidence)
 

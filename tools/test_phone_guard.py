@@ -840,6 +840,91 @@ class Round38ReportTests(GuardCase):
         self.assertIn("persist_apns_for_plmn events change: [] -> ['20404']", out)
 
 
+class GeneratorRecordTests(unittest.TestCase):
+    """The guard's records are the generator's records of apns-conf.xml,
+    loaded the generator's own way."""
+
+    def test_a_superseded_old_selector_leaves_the_records_as_it_leaves_the_file(self) -> None:
+        """Round 32, D7, with the real generator: the evidence index flags an
+        old Samsung SPN profile old_selector_superseded next to its successor,
+        and the generator leaves it out of apns-conf.xml. The guard leaves it
+        out too, so its records are the file's rows (no "credential sources:
+        unknown") and the old profile's MMS tuple is no current vendor's."""
+        import generate_android_outputs
+
+        def profile(number: int, name: str, match: dict, apns: list[dict]) -> dict:
+            return {"schema_version": 1, "profile_id": f"open.27099.{number:012d}", "display_name": name,
+                    "match": {"mccmnc": ["27099"], **match}, "capabilities": {}, "android_apns": apns}
+
+        def apns(apn: str, mmsc: str) -> list[dict]:
+            return [{"name": apn, "apn": apn, "types": ["default", "supl"]},
+                    {"name": f"{apn} MMS", "apn": apn, "types": ["mms"], "mmsc": mmsc}]
+
+        plain = profile(1, "Example LU", {}, apns("web.example", "http://mms.example/"))
+        successor = profile(2, "Orange", {"spn": ["Orange"]}, apns("orange.lu", "http://mms.orange.example/"))
+        old = profile(3, "Orange", {"spn": ["Orange LUX"]}, apns("orange.lu", "http://mms.old.example/"))
+        flag = {"section": "match", "key": "selector", "flag": "old_selector_superseded"}
+        evidence = {"profiles": [
+            {"profile_id": plain["profile_id"], "sources": ["google_carriersettings", "samsung_omc"]},
+            {"profile_id": successor["profile_id"], "sources": ["samsung_omc"]},
+            {"profile_id": old["profile_id"], "sources": ["samsung_omc"], "flags": [flag]},
+        ]}
+        with tempfile.TemporaryDirectory() as tmp:
+            checkout = Path(tmp) / "checkout"
+            (checkout / "carriers" / "open").mkdir(parents=True)
+            (checkout / "generated" / "android").mkdir(parents=True)
+            (checkout / "tools").symlink_to(Path(guard.__file__).resolve().parent, target_is_directory=True)
+            for item in (plain, successor, old):
+                (checkout / "carriers" / "open" / f"{item['profile_id'][5:]}.json").write_text(
+                    json.dumps(item), encoding="utf-8")
+            (checkout / "generated" / "evidence-index.json").write_text(json.dumps(evidence), encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                generate_android_outputs.main(["generate", str(checkout / "carriers"), str(checkout / "generated")])
+            head = checkout / "generated" / "android" / "apns-conf.xml"
+            text = head.read_text(encoding="utf-8")
+            self.assertNotIn("mms.old.example", text)
+            self.assertIn("mms.orange.example", text)
+            # The same rows, other bytes: the guard compares and reads the records.
+            base = Path(tmp) / "base.xml"
+            base.write_text(text.replace("<apns ", "<!-- base -->\n<apns ", 1), encoding="utf-8")
+            guard.generator_records.cache_clear()
+            tuples = {guard.fmt(scope): {mms[1] for mms in values}
+                      for scope, values in guard.vendor_mms_tuples(checkout).items()}
+            sources_known = guard.class_a_list(checkout)["sources_known"]
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                code = guard.run(["check_phone_guard.py", str(base), str(head), "--generator", str(checkout),
+                                  "--report-json", str(Path(tmp) / "r.json")])
+            result = json.loads((Path(tmp) / "r.json").read_text(encoding="utf-8"))
+            guard.generator_records.cache_clear()
+        self.assertEqual(tuples, {"270/99": {"http://mms.example/"},
+                                  "270/99 SPN orange": {"http://mms.orange.example/"}})
+        self.assertTrue(sources_known)
+        self.assertEqual((code, result["verdict"], result["trips"]), (0, "pass", []), out.getvalue())
+        self.assertNotIn("credential sources: unknown", out.getvalue())
+
+    def test_a_base_generator_without_load_profile_files_loads_like_its_main(self) -> None:
+        """A base revision's generator: from #316 (D7) on, its main left out
+        the profiles superseded_selector_ids names; before, none."""
+        def load_json(path: Path) -> dict:
+            return json.loads(Path(path).read_text(encoding="utf-8"))
+
+        def profile_paths(carriers: Path) -> list[Path]:
+            return sorted(Path(carriers).glob("*.json"))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            checkout = Path(tmp)
+            (checkout / "carriers").mkdir()
+            for name in ("new", "old"):
+                (checkout / "carriers" / f"{name}.json").write_text(json.dumps({"profile_id": name}),
+                                                                    encoding="utf-8")
+            before_d7 = type("Generator", (), {"load_json": staticmethod(load_json),
+                                               "profile_paths": staticmethod(profile_paths)})
+            d7 = type("Generator", (before_d7,), {"superseded_selector_ids": staticmethod(lambda _path: {"old"})})
+            self.assertEqual([p["profile_id"] for p in guard.generator_profiles(before_d7, checkout)], ["new", "old"])
+            self.assertEqual([p["profile_id"] for p in guard.generator_profiles(d7, checkout)], ["new"])
+
+
 class DigestTests(GuardCase):
     def test_exact_digest_passes(self) -> None:
         code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB))
