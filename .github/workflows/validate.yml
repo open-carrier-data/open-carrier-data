@@ -48,6 +48,9 @@ jobs:
       # one open pull request whose head SHA is the run's; never from a
       # dispatch input. tools/guard_context.py has the rules; a queue run that
       # cannot name exactly one pull request fails here.
+      - name: TEST ONLY, fail every merge queue run (round 37 step 2c drop test; this pull request is closed unmerged)
+        if: github.event_name == 'merge_group'
+        run: exit 1
       - name: Resolve the base and the accept lines
         id: context
         env:
