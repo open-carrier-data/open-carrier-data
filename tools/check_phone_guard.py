@@ -100,6 +100,16 @@ never held (items 1, 3, 4, 5 and 7):
   change of the networks they fire on is its own line.
 - MVNO scopes new in the head, with the roles whose APN their SIMs got from
   the host network's plain rows in the base and now get from the new scope.
+  Rule round 40 (item 2) hardens it: a new MVNO scope whose MMS tuple (APN,
+  MMSC, MMS proxy and port) differs from its host fallback's and is a tuple no
+  current vendor gives, for the new scope or for the host, is its own line
+  ("MVNO scope new, its SIMs' MMS moves off the host's tuple to one no
+  current vendor gives"): a snapshot SPN scope moved 24-7 Wireless's MMS from
+  the host's 209.4.229.46 to an unrouted 9.4.229.46, and only E7b's existing
+  scopes were compared. And a dun, xcap, supl, fota or cbs lead that appears
+  on an APN no current vendor gives for the type is reported too ("<type>
+  lead appears on an APN no current vendor gives for <type>"), so the stop
+  check's gained-role E7b lines show in the publish.
 E12 (head to PR against base) needs a third build and stays in the dry run's
 stop check.
 
@@ -968,6 +978,19 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
         if scope[2]:
             for role, change in arrival_changes(scope, before, after, typed):
                 items[f"MVNO scope new, its SIMs' {role} APN changes from the host's"].add(f"{fmt(scope)} ({change})")
+            # Round 40: the new scope's MMS tuple against its host fallback.
+            host = (scope[0], scope[1], "", "")
+            known_tuples = {norm(t) for t in vendor.get(scope, ())} | {norm(t) for t in vendor.get(host, ())}
+            moves = set()
+            for name in WATCH_TYPES:
+                if host not in before or name not in before[host] or name not in after[scope]:
+                    continue
+                b_mms, a_mms = before[host][name][1], after[scope][name][1]
+                if works(a_mms) and norm(a_mms) != norm(b_mms) and norm(a_mms) not in known_tuples:
+                    moves.add(f"{mms_text(b_mms)} -> {mms_text(a_mms)}")
+            if moves:
+                items["MVNO scope new, its SIMs' MMS moves off the host's tuple to one no current vendor gives"].add(
+                    f"{fmt(scope)} ({'; '.join(sorted(moves))})")
     for scope in sorted(set(before) & set(after)):
         b, a, s = before[scope], after[scope], fmt(scope)
         known = rows.get(scope, {})
@@ -977,10 +1000,11 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
             for name in WATCH_TYPES:
                 for kind in FIRST_PROFILE_ROLE_TYPES:
                     old, new = typed[0][scope][name].get(kind), typed[1][scope][name].get(kind)
-                    if not new or not old or str(old[0]).casefold() == str(new[0]).casefold():
+                    if not new or (old and str(old[0]).casefold() == str(new[0]).casefold()):
                         continue
                     if kind not in (known.get(str(new[0]).casefold()) or {}).get("types", set()):
-                        items[f"{kind} lead moves to an APN no current vendor gives for {kind}"].add(
+                        verb = "moves to" if old else "appears on"
+                        items[f"{kind} lead {verb} an APN no current vendor gives for {kind}"].add(
                             f"{s} ({lead_text(old)} -> {lead_text(new)})")
         tuples = {norm(t) for t in vendor.get(scope, ())}
         lost: dict[str, set[str]] = defaultdict(set)
