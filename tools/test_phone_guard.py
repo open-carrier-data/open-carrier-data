@@ -402,6 +402,31 @@ class ImsEmergencyReportTests(GuardCase):
         self.assertNotIn("ims lead on a *-typed row no current vendor backs for ims",
                          [item["condition"] for item in result["watch"]])
 
+    def test_star_ims_report_reads_the_united_types_of_a_stored_row(self) -> None:
+        """Rule decisions round 37, item 2: TelephonyProvider stores two
+        rows equal on its unique fields as one row with their united types.
+        On 204/08 two portalmmm.nl rows, neither with every TYPE_ALL type,
+        stored as one TYPE_ALL row ahead of KPN's ims rows and led IMS. The
+        report reads the united types of the file rows behind the lead."""
+        part = 'mcc="262" mnc="01" apn="web" type="cbs,dun,fota,hipri,ims"'
+        rest = 'mcc="262" mnc="01" apn="web" authtype="1" type="default,mms,supl"'
+        lineage = {t: ["lineageos"] for t in ("default", "hipri", "mms", "supl", "dun", "fota", "ims", "cbs")}
+        vendor = records_of([(part, lineage, {}), (rest, lineage, {}),
+                             (self.IMS, {"ims": ["google_carriersettings"]}, {"ims": ["google_carriersettings"]})])
+        _, out, result = self.run_guard(xml(WEB, self.IMS), xml(part, rest, self.IMS), vendor)
+        item = next(item for item in result["watch"]
+                    if item["condition"] == "ims lead on a *-typed row no current vendor backs for ims")
+        self.assertEqual((item["scope"], item["new"]), ("262/01", "web IP/IP"))
+        self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
+        # Two stored rows (other APN values) whose types together are
+        # TYPE_ALL are no *-typed row.
+        apart = rest.replace('apn="web"', 'apn="web2"')
+        vendor = records_of([(part, lineage, {}), (apart, lineage, {}),
+                             (self.IMS, {"ims": ["google_carriersettings"]}, {"ims": ["google_carriersettings"]})])
+        _, _, result = self.run_guard(xml(WEB, self.IMS), xml(part, apart, self.IMS), vendor)
+        self.assertNotIn("ims lead on a *-typed row no current vendor backs for ims",
+                         [item["condition"] for item in result["watch"]])
+
     def test_ims_lead_apn_changed(self) -> None:
         other = self.IMS.replace('apn="ims"', 'apn="ims.example"')
         self.assert_report_only([WEB, self.IMS], [WEB, other], "ims lead APN changed: 1 scope(s)",

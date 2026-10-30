@@ -3455,6 +3455,139 @@ def check_superseded_google_credentials() -> None:
                 f"the 268/91 lead still stores vodafone/vodafone with auth type 0: {lead}")
 
 
+def star_ims_scopes(scopes: dict) -> tuple[list[dict], list[dict]]:
+    """Profiles and evidence records for check_unbacked_star_ims: one profile
+    per network code, each row with the sources behind every one of its
+    types."""
+    gen = generate_android_outputs
+    profiles, records = [], []
+    for mccmnc, rows in scopes.items():
+        pid = f"open.{mccmnc}.a"
+        profiles.append({"profile_id": pid, "display_name": pid, "match": {"mccmnc": [mccmnc]},
+                         "android_apns": [row for row, _ in rows]})
+        facts = [{"section": "android_apns", "key": gen.apn_fact_key(row, t), "sources": sorted(sources)}
+                 for row, sources in rows for t in row["types"]]
+        records.append({"profile_id": pid, "sources": sorted({x for _, sources in rows for x in sources}),
+                        "fact_sources": sorted(facts, key=lambda fact: fact["key"])})
+    return profiles, records
+
+
+def star_ims_leads_of(records: list[dict], mccmnc: str) -> dict:
+    """The IMS lead's APN and protocol of one network scope on LTE, NR and
+    IWLAN with DataProfileManager's merge on and off (android_phone_model)."""
+    gen = generate_android_outputs
+    import android_phone_model as phone
+    lines = [gen.apn_row_line(r) for r in records if r["mcc"] + r["mnc"] == mccmnc and not r.get("mvno_type")]
+    stored = phone.scope_rows(phone.provider(phone.parse_lines(lines)), (mccmnc[:3], mccmnc[3:], "", ""))
+    out = {}
+    for merge in (True, False):
+        settings = phone.profiles(stored, merge)
+        for name, network_type in (("LTE", 13), ("NR", 20), ("IWLAN", 18)):
+            lead = next((p for p in settings if "ims" in p["types"] and phone.serves(p, network_type)
+                         and phone.cellular(p)), None)
+            out[(merge, name)] = None if lead is None else (lead["apn"], lead["protocol"])
+    return out
+
+
+def check_unbacked_star_ims() -> None:
+    """Change 18's IMS mirror in group form (rule decisions round 37, item 2;
+    round 35, item C, condition 4). TelephonyProvider stores the file rows
+    equal on its unique fields as one row with their united types, so a group
+    whose united types are TYPE_ALL serves ims even when no single row has
+    every type (204/08, KPN). Where a current vendor gives a usable ims row,
+    such a group that no current vendor backs for ims loses ims, so the
+    vendor's row leads IMS registration. Each gate has a case that changes
+    without it (the mutation run of the round 37 PR removes each gate and
+    sees this test fail)."""
+    gen = generate_android_outputs
+    star = ("default", "hipri", "mms", "supl", "dun", "fota", "ims", "cbs")
+    v6 = {"protocol": "IPV4V6", "roaming_protocol": "IPV4V6"}
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": value, "apn": value, "types": list(types), **extra}
+
+    kpn_mms = {"mmsc": "http://mp.mobiel.kpn/mmsc", "mmsport": "5080", "mmsproxy": "10.10.100.20"}
+    vendor_ims = (apn("ims", ("ims",), **v6), ("samsung_omc",))
+    scopes = {
+        # 204/08 shape: two portalmmm.nl rows that differ only in type and
+        # auth type, so Android stores them as one row typed TYPE_ALL ahead
+        # of the vendor's ims row. Neither row alone has every TYPE_ALL type.
+        "20408": [(apn("portalmmm.nl", ("cbs", "dun", "fota", "hipri", "ims"), **kpn_mms), ("lineageos",)),
+                  (apn("portalmmm.nl", ("default", "mms", "supl"), authtype=1, **kpn_mms), ("lineageos",)),
+                  vendor_ims],
+        # 655/07 shape: one frozen copy's * row.
+        "65507": [(apn("internet", star), ("sony_open_devices_aosp",)), vendor_ims],
+        # Check 1: the only vendor ims row is disabled, and the * group serves
+        # no network type the mirror reads (eHRPD only), so checks 4 and 7
+        # hold vacuously.
+        "65520": [(apn("web", star, network_type_bitmask="14"), ("sony_open_devices_aosp",)),
+                  (apn("ims", ("ims",), carrier_enabled=False, **v6), ("samsung_omc",))],
+        # Check 2: the group's united types are not TYPE_ALL.
+        "65512": [(apn("web", ("default", "mms", "ims")), ("lineageos",)), vendor_ims],
+        # Check 3: a current vendor backs the * row for ims.
+        "65510": [(apn("web", star), ("samsung_omc",)), vendor_ims],
+        # Check 3b: a current vendor backs ims on the group's APN value, in
+        # another letter case (another unique key).
+        "65513": [(apn("web", star), ("sony_open_devices_aosp",)), (apn("WEB", ("ims",), **v6), ("samsung_omc",)),
+                  vendor_ims],
+        # Check 4: the vendor's ims rows serve LTE and NR, and IWLAN through a
+        # second row, but not 2G and 3G, where the * group serves ims.
+        "65514": [(apn("web", star), ("sony_open_devices_aosp",)),
+                  (apn("ims", ("ims",), network_type_bitmask="13|20", **v6), ("samsung_omc",)),
+                  (apn("ims.wlan", ("ims",), network_type_bitmask="18", **v6), ("samsung_omc",))],
+        # Check 5: a persist_apns_for_plmn network.
+        "20404": [(apn("live.vodafone.com", star), ("sony_open_devices_aosp",)), vendor_ims],
+        # Check 7: on IWLAN a non-vendor row that serves mms and ims (ranked
+        # among the MMS rows) would take the IMS lead after the change.
+        "65515": [(apn("web", star), ("sony_open_devices_aosp",)), vendor_ims,
+                  (apn("wap", ("mms", "ims"), network_type_bitmask="18"), ("lineageos",))],
+    }
+    profiles, evidence_records = star_ims_scopes(scopes)
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "evidence.json"
+        path.write_text(json.dumps({"profiles": evidence_records}), encoding="utf-8")
+        result = gen.apn_xml_rows(profiles, gen.load_apn_evidence(path))
+        plain = gen.apn_xml_rows(profiles)
+
+    def rows_of(mccmnc: str, value: str, rows: object = result) -> list[set[str]]:
+        return [set(r["type"].split(",")) for r in rows.records if r["mcc"] + r["mnc"] == mccmnc and r["apn"] == value]
+
+    # 204/08: no single row has every TYPE_ALL type, the group does.
+    assert_true(not any(set(row["types"]) >= set(star) for row, _ in scopes["20408"]),
+                "the 204/08 shape has no single *-typed row")
+    assert_true(sorted(map(sorted, rows_of("20408", "portalmmm.nl"))) == [
+        ["cbs", "dun", "fota", "hipri"], ["default", "mms", "supl"]],
+                f"204/08: the group's ims row loses only ims: {rows_of('20408', 'portalmmm.nl')}")
+    assert_true(rows_of("65507", "internet") == [set(star) - {"ims"}],
+                f"655/07: the * row loses only ims: {rows_of('65507', 'internet')}")
+    changed = sorted((r["mcc"] + r["mnc"], r["apn"], r["type"]) for r in result.star_ims_left_out)
+    assert_true(changed == [("20408", "portalmmm.nl", "cbs,dun,fota,hipri"),
+                            ("65507", "internet", "default,hipri,mms,supl,dun,fota,cbs")],
+                f"only 204/08's and 655/07's rows change: {changed}")
+    assert_true(all(r.get("_ims_left_out_star_group") for r in result.star_ims_left_out), "the rows are marked")
+    for mccmnc in ("20408", "65507"):
+        leads = star_ims_leads_of(result.records, mccmnc)
+        assert_true(set(leads.values()) == {("ims", "IPV4V6")},
+                    f"{mccmnc}: the vendor's ims row leads IMS on LTE, NR and IWLAN, merge on and off: {leads}")
+        before = star_ims_leads_of(plain.records, mccmnc)
+        assert_true(all(lead and lead[0] != "ims" for lead in before.values()),
+                    f"{mccmnc}: without evidence the * group keeps the IMS lead: {before}")
+    import android_phone_model as phone
+    lines = [gen.apn_row_line(r) for r in result.records if r["mcc"] + r["mnc"] == "20408"]
+    stored = phone.scope_rows(phone.provider(phone.parse_lines(lines)), ("204", "08", "", ""))
+    internet, mms, attach = phone.leads(phone.profiles(stored, True), 13)
+    assert_true((internet["apn"], phone.mms_tuple(mms)) == (
+        "portalmmm.nl", ("portalmmm.nl", "http://mp.mobiel.kpn/mmsc", "10.10.100.20", 5080)),
+                f"204/08: the internet and MMS leads stay: {internet['apn']} {phone.mms_tuple(mms)}")
+    for mccmnc, value, gate in (("65520", "web", "1"), ("65512", "web", "2"), ("65510", "web", "3"),
+                                ("65513", "web", "3b"), ("65514", "web", "4"), ("20404", "live.vodafone.com", "5"),
+                                ("65515", "web", "7")):
+        assert_true(all("ims" in types for types in rows_of(mccmnc, value)) and rows_of(mccmnc, value),
+                    f"check {gate}: {mccmnc} keeps ims: {rows_of(mccmnc, value)}")
+    assert_true(len(result.records) == len(plain.records) and not plain.star_ims_left_out,
+                "no row is removed, and without evidence nothing changes")
+
+
 def check_pixel_snapshot_build_conditional() -> None:
     """Rule decisions round 35, item D: LineageOS's Pixel APN snapshot joins
     rule 1's superseded Pixel copies only once the Google lane reads none of
@@ -8041,6 +8174,7 @@ def main() -> int:
     print("LineageOS legacy APN list role-gap tests passed")
     check_current_vendor_attach()
     check_pixel_snapshot_build_conditional()
+    check_unbacked_star_ims()
     print("current vendor and attach type tests passed")
     check_data_device_values()
     print("data-device pack tests passed")
