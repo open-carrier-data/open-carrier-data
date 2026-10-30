@@ -1,0 +1,283 @@
+name: Refresh generated outputs on pull request branches
+
+# The refresh bot (rule decisions round 37, item 3, rule 2). Code pull
+# requests carry their regenerated generated/, so every push to main can
+# leave an open pull request's generated/ out of step with what its tools
+# give on the new main, or in conflict with it (data_digest included). On
+# every push to main, for each open pull request into main that comes from
+# this repository, is not a draft and carries the label refresh-generated,
+# this workflow:
+#
+# - merges main into the branch; when the merge conflicts only in
+#   generated/, main's side stands in for both sides until the regeneration
+#   rewrites the file;
+# - always regenerates with the branch's own tools:
+#   tools/generate_android_outputs.py, tools/f5_read.py publish from main's
+#   chain (never with --agent-read) and tools/ocd_dataset.py generate;
+# - commits only generated/ changes, pushes with the built-in token, which
+#   starts no workflow, and dispatches validate on the branch. That run takes
+#   accept lines only from the one open pull request whose head SHA is the
+#   run's (tools/guard_context.py).
+#
+# A conflict outside generated/, a tool failure, an F5 read that holds, a
+# write outside generated/ or a refused push stops the bot for that branch.
+# It changes nothing then and leaves one comment, which later runs update.
+# The bot never edits a pull request's body: it never writes, copies or edits
+# a phone-guard-accept line. If the trips change, validate prints a new
+# digest and holds the pull request for a judge, as before.
+#
+# One run per branch: a newer push to main cancels the branch's running
+# refresh. The job that runs the branch's tools holds a token limited to
+# contents: write and actions: write, plus reading pull requests. The token
+# is not in any step that runs those tools. The comment comes from a separate
+# job that runs no branch code. A fork's or a draft's branch is never
+# touched. GitHub refuses a push of .github/workflows/ changes with the
+# built-in token, so a branch that main's workflow changes would reach is
+# reported for a manual merge.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  LABEL: refresh-generated
+
+jobs:
+  plan:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - name: List the opted-in pull requests
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh api --paginate "repos/$GH_REPO/pulls?state=open&base=main&per_page=100" --jq '.[]' \
+            | jq -s --arg repo "$GH_REPO" --arg label "$LABEL" '
+                [.[] | select(.head.repo.full_name == $repo and (.draft | not)
+                              and ([.labels[].name] | index($label)))
+                     | {number, branch: .head.ref, sha: .head.sha}]' > "$RUNNER_TEMP/matrix.json"
+          jq -r '.[] | "#\(.number) \(.branch) at \(.sha[0:12])"' "$RUNNER_TEMP/matrix.json" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "matrix=$(jq -c . "$RUNNER_TEMP/matrix.json")" >> "$GITHUB_OUTPUT"
+          echo "count=$(jq length "$RUNNER_TEMP/matrix.json")" >> "$GITHUB_OUTPUT"
+
+  refresh:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    name: "refresh #${{ matrix.number }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: read
+    concurrency:
+      group: refresh-generated-${{ matrix.branch }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      NUMBER: ${{ matrix.number }}
+      BRANCH: ${{ matrix.branch }}
+      PLANNED_SHA: ${{ matrix.sha }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: ${{ matrix.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      # No token in this step: it runs the branch's tools.
+      - name: Merge main and regenerate with the branch's tools
+        id: refresh
+        run: |
+          set -uo pipefail
+          outcome="$RUNNER_TEMP/outcome.json"
+          main_sha="$(git rev-parse origin/main)"
+          finish() {
+            jq -n --argjson number "$NUMBER" --arg branch "$BRANCH" --arg status "$1" --arg reason "$2" \
+              --arg main "$main_sha" --arg head "$PLANNED_SHA" \
+              '{number: $number, branch: $branch, status: $status, reason: $reason, main: $main, head: $head}' > "$outcome"
+            echo "$1: $2" | tee -a "$GITHUB_STEP_SUMMARY"
+            if [ "$1" = stopped ]; then
+              echo "::error::$2"
+              exit 1
+            fi
+            exit 0
+          }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git merge-base --is-ancestor "$main_sha" HEAD; then
+            finish up_to_date "#$NUMBER already contains main ${main_sha:0:12}."
+          fi
+          if ! git merge --no-ff --no-edit -m "Merge main ${main_sha:0:12} into $BRANCH (refresh bot)" "$main_sha" > "$RUNNER_TEMP/merge.txt" 2>&1; then
+            cat "$RUNNER_TEMP/merge.txt"
+            conflicts="$(git diff --name-only --diff-filter=U)"
+            if [ -z "$conflicts" ]; then
+              git merge --abort 2>/dev/null || true
+              finish stopped "git merge of main ${main_sha:0:12} failed without a conflict list: $(tail -n 3 "$RUNNER_TEMP/merge.txt" | tr '\n' ' ')"
+            fi
+            outside="$(grep -v '^generated/' <<< "$conflicts" || true)"
+            if [ -n "$outside" ]; then
+              git merge --abort
+              finish stopped "Merging main ${main_sha:0:12} conflicts outside generated/: $(tr '\n' ' ' <<< "$outside")The bot resolves only generated/; merge main by hand."
+            fi
+            # Only generated/: main's side stands in for both until the
+            # regeneration below rewrites the file.
+            while IFS= read -r path; do
+              git checkout --theirs -- "$path" 2>/dev/null || git rm -q -- "$path"
+              git add -- "$path" 2>/dev/null || true
+            done <<< "$conflicts"
+            git commit -q --no-edit || finish stopped "The merge commit of main ${main_sha:0:12} could not be made."
+            echo "Resolved in generated/ from main's side, then regenerated: $(tr '\n' ' ' <<< "$conflicts")" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+          merged="$(git rev-parse HEAD)"
+          # The branch's own tools, as validate checks them.
+          python3 tools/generate_android_outputs.py carriers generated --apn-version 8 \
+            || finish stopped "tools/generate_android_outputs.py failed on the merged branch."
+          git show "$main_sha:generated/android/apns-conf.xml" > "$RUNNER_TEMP/f5-base-apns-conf.xml" \
+            || finish stopped "main has no generated/android/apns-conf.xml."
+          f5_base=()
+          if git show "$main_sha:generated/ocd-dataset/f5-reads.json" > "$RUNNER_TEMP/f5-base-reads.json" 2>/dev/null; then
+            f5_base=(--base-file "$RUNNER_TEMP/f5-base-reads.json")
+          fi
+          f5_status=0
+          python3 tools/f5_read.py publish --root . --base-xml "$RUNNER_TEMP/f5-base-apns-conf.xml" \
+            "${f5_base[@]}" --base-commit "$main_sha" > "$RUNNER_TEMP/f5-read.txt" 2>&1 || f5_status=$?
+          cat "$RUNNER_TEMP/f5-read.txt"
+          if [ "$f5_status" -eq 3 ]; then
+            finish stopped "The F5 read holds an emergency-line change on main ${main_sha:0:12} ($(head -n 1 "$RUNNER_TEMP/f5-read.txt")). The bot never supplies an agent read; an independent read or a fix comes first."
+          elif [ "$f5_status" -ne 0 ]; then
+            finish stopped "tools/f5_read.py publish failed (exit $f5_status) on the merged branch."
+          fi
+          python3 tools/ocd_dataset.py generate --root . \
+            || finish stopped "tools/ocd_dataset.py generate failed on the merged branch."
+          outside="$(git status --porcelain --untracked-files=all | cut -c4- | grep -v '^generated/' || true)"
+          if [ -n "$outside" ]; then
+            finish stopped "The regeneration wrote outside generated/: $(tr '\n' ' ' <<< "$outside")"
+          fi
+          if [ -n "$(git status --porcelain --untracked-files=all -- generated)" ]; then
+            git add -A -- generated
+            git commit -q -m "Regenerate generated/ on main ${main_sha:0:12} with this branch's tools (refresh bot)"
+          fi
+          if ! git diff --quiet "$merged^1" "$merged" -- .github/workflows; then
+            echo "workflows=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "main=$main_sha" >> "$GITHUB_OUTPUT"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+          git log --oneline -3
+
+      - name: Push with the built-in token and dispatch validate
+        if: steps.refresh.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          MAIN_SHA: ${{ steps.refresh.outputs.main }}
+          WORKFLOWS: ${{ steps.refresh.outputs.workflows }}
+        run: |
+          set -uo pipefail
+          outcome="$RUNNER_TEMP/outcome.json"
+          finish() {
+            jq -n --argjson number "$NUMBER" --arg branch "$BRANCH" --arg status "$1" --arg reason "$2" \
+              --arg main "$MAIN_SHA" --arg head "$PLANNED_SHA" \
+              '{number: $number, branch: $branch, status: $status, reason: $reason, main: $main, head: $head}' > "$outcome"
+            echo "$1: $2" | tee -a "$GITHUB_STEP_SUMMARY"
+            if [ "$1" = stopped ]; then
+              echo "::error::$2"
+              exit 1
+            fi
+            exit 0
+          }
+          # The pull request as it is now: still open, from this repository,
+          # not a draft, labelled, and at the commit the bot merged onto.
+          pr="$(gh api "repos/$GH_REPO/pulls/$NUMBER")" || finish stopped "Pull request #$NUMBER could not be read before the push."
+          if [ "$(jq -r '.state' <<< "$pr")" != open ] || [ "$(jq -r '.draft' <<< "$pr")" != false ] \
+            || [ "$(jq -r '.head.repo.full_name' <<< "$pr")" != "$GH_REPO" ] \
+            || [ "$(jq -r '.head.ref' <<< "$pr")" != "$BRANCH" ] \
+            || [ "$(jq --arg l "$LABEL" '[.labels[].name] | index($l) != null' <<< "$pr")" != true ]; then
+            finish skipped "#$NUMBER is no longer an open, labelled, non-draft pull request of this repository; nothing pushed."
+          fi
+          if [ "$(jq -r '.head.sha' <<< "$pr")" != "$PLANNED_SHA" ]; then
+            finish skipped "#$NUMBER moved while the bot ran; the next push to main refreshes it."
+          fi
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          # A plain push: it lands only on the commit the bot merged onto.
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" \
+              push "https://github.com/$GH_REPO.git" "HEAD:refs/heads/$BRANCH" > "$RUNNER_TEMP/push.txt" 2>&1; then
+            cat "$RUNNER_TEMP/push.txt"
+            if [ "$WORKFLOWS" = true ]; then
+              finish stopped "GitHub refused the push: main ${MAIN_SHA:0:12} changes .github/workflows/, which the built-in token may not push. Merge main into $BRANCH by hand."
+            fi
+            finish stopped "GitHub refused the push to $BRANCH: $(tail -n 2 "$RUNNER_TEMP/push.txt" | tr '\n' ' ')"
+          fi
+          # A push with the workflow token starts no workflow; the required
+          # validate check runs by dispatch (checks_only skips the alarm).
+          gh workflow run validate.yml --ref "$BRANCH" -f checks_only=true \
+            || finish stopped "Pushed $(git rev-parse --short=12 HEAD), but validate could not be dispatched on $BRANCH."
+          finish refreshed "Merged main ${MAIN_SHA:0:12}, regenerated generated/ with the branch's tools, pushed $(git rev-parse --short=12 HEAD) and dispatched validate."
+
+      - name: Keep the outcome for the comment job
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: refresh-outcome-${{ matrix.number }}
+          path: ${{ runner.temp }}/outcome.json
+          retention-days: 3
+          if-no-files-found: ignore
+
+  comment:
+    needs: [plan, refresh]
+    if: ${{ always() && needs.plan.outputs.count != '0' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: refresh-outcome-*
+          path: ${{ runner.temp }}/outcomes
+      - name: Leave one comment per stopped branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          marker="<!-- refresh-generated-bot -->"
+          shopt -s nullglob
+          for file in "$RUNNER_TEMP"/outcomes/*/outcome.json; do
+            number="$(jq -r .number "$file")"
+            status="$(jq -r .status "$file")"
+            [[ "$number" =~ ^[1-9][0-9]*$ ]] || continue
+            existing="$(gh api --paginate "repos/$GH_REPO/issues/$number/comments" \
+              --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" | head -n 1)"
+            if [ "$status" = stopped ]; then
+              jq -r --arg marker "$marker" --arg run "$RUN_URL" \
+                '"\($marker)\nThe refresh bot stopped on main `\(.main[0:12])` and changed nothing on this branch:\n\n> \(.reason)\n\nRun: \($run). The bot tries again on the next push to main; remove the `refresh-generated` label to stop it."' \
+                "$file" > "$RUNNER_TEMP/comment.md"
+            elif [ "$status" = refreshed ] && [ -n "$existing" ]; then
+              jq -r --arg marker "$marker" --arg run "$RUN_URL" \
+                '"\($marker)\nThe refresh bot refreshed this branch on main `\(.main[0:12])`: \(.reason) Run: \($run)."' \
+                "$file" > "$RUNNER_TEMP/comment.md"
+            else
+              continue
+            fi
+            if [ -n "$existing" ]; then
+              gh api --method PATCH "repos/$GH_REPO/issues/comments/$existing" -F "body=@$RUNNER_TEMP/comment.md" > /dev/null
+            else
+              gh api --method POST "repos/$GH_REPO/issues/$number/comments" -F "body=@$RUNNER_TEMP/comment.md" > /dev/null
+            fi
+            echo "#$number: $status" >> "$GITHUB_STEP_SUMMARY"
+          done
