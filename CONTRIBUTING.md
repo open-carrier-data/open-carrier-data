@@ -52,3 +52,5 @@ A correction reaches stable data in two ways. A maintained source publishes it a
 ## Run the local checks
 
 Run the commands in the `validate` job of `.github/workflows/validate.yml` from the repo root; the pull request check runs the same. A snapshot past `stale_after` prints one warning and still passes. Only the daily `freshness-alarm` job runs the validators with `--freshness fail`.
+
+<!-- r37 refresh-bot test a: this pull request is closed unmerged -->
