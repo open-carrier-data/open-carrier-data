@@ -185,17 +185,6 @@
       "user_visible": false
     },
     {
-      "apn": "ims",
-      "name": "IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_editable": false,
-      "user_visible": false
-    },
-    {
       "apn": "mineo.jp",
       "authtype": 2,
       "name": "mineo A",
@@ -411,6 +400,76 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2110,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "UQ mobile IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "admin.au-net.ne.jp",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "carrier_id": 2110,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "UQ mobile OTA",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 2110,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "UQ mobile Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "uqmobile.jp",
+      "authtype": 2,
+      "carrier_id": 2110,
+      "mmsc": "http://mms.ezweb.ne.jp/MMS",
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "UQ mobile",
+      "password": "uq",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "hipri",
+        "mms",
+        "supl"
+      ],
+      "user": "uq@uqmobile.jp"
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2110,
+      "mvno_match_data": "20",
+      "mvno_type": "gid",
+      "name": "UQ mobile XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     }
   ],
   "android_carrier_config": {

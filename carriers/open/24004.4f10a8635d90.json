@@ -2,6 +2,7 @@
   "android_apns": [
     {
       "apn": "data.tre.se",
+      "authtype": 0,
       "carrier_id": 1693,
       "mmsc": "http://mms.tre.se",
       "mmsport": 8799,
@@ -11,7 +12,6 @@
       "roaming_protocol": "IP",
       "types": [
         "default",
-        "ia",
         "mms",
         "supl"
       ]
@@ -32,6 +32,19 @@
       ]
     },
     {
+      "apn": "data.tre.se",
+      "carrier_id": 1693,
+      "mmsc": "http://mms.tre.se",
+      "mmsport": 8799,
+      "mmsproxy": "mmsproxy.tre.se",
+      "name": "3",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "services.telenor.se",
       "name": "Telenor Mobilsurf",
       "port": 8799,
@@ -49,6 +62,54 @@
       "name": "Telenor MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "TELENOR SE",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mvno_match_data": "TELENOR SE",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms",
+      "mmsport": 8799,
+      "mmsproxy": "172.30.253.241",
+      "mvno_match_data": "TELENOR SE",
+      "mvno_type": "spn",
+      "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "services.telenor.se",
+      "mvno_match_data": "TELENOR SE",
+      "mvno_type": "spn",
+      "name": "Telenor Mobilsurf",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
       ]
     }
   ],

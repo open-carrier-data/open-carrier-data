@@ -2,12 +2,33 @@
   "android_apns": [
     {
       "apn": "MMS",
+      "carrier_id": 30,
       "mmsc": "http://mmsc.optus.com.au:8002/",
       "mmsport": 8070,
       "mmsproxy": "61.88.190.10",
       "name": "Optus MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "MMS",
+      "mmsc": "http://mmsc.optus.com.au:8002/",
+      "mmsport": 8070,
+      "mmsproxy": "61.88.190.10",
+      "name": "Optus MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 30,
+      "name": "Optus XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -19,6 +40,17 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 30,
+      "name": "Optus IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -82,7 +114,29 @@
     },
     {
       "apn": "yesbusiness",
+      "carrier_id": 30,
       "name": "Optus Business Mobile Broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesbusiness",
+      "name": "Optus Business Mobile Broadband",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "yesinternet",
+      "carrier_id": 30,
+      "name": "Optus Yes Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [

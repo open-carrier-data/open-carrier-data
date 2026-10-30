@@ -1,4 +1,30 @@
 {
+  "android_apns": [
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "rain",
+      "mvno_type": "spn",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "rain",
+      "mvno_match_data": "rain",
+      "mvno_type": "spn",
+      "name": "rain",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_volte_available_bool": true,
     "carrier_vt_available_bool": true,
@@ -16,7 +42,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Rain ZA",
+  "display_name": "rain",
   "match": {
     "mccmnc": [
       "65573"

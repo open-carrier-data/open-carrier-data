@@ -16,6 +16,19 @@
     {
       "apn": "TMUS",
       "bearer_bitmask": "18",
+      "carrier_id": 1,
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "name": "T-Mobile MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "TMUS",
+      "bearer_bitmask": "18",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
       "name": "T-Mobile MMS",
       "protocol": "IPV6",
@@ -43,6 +56,22 @@
     {
       "apn": "fast.t-mobile.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "carrier_id": 1,
+      "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
+      "mtu": 1440,
+      "name": "T-Mobile US",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "fast.t-mobile.com",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://mms.msg.eng.t-mobile.com/mms/wapenc",
       "mtu": 1440,
       "name": "T-Mobile US",
@@ -55,6 +84,18 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1,
+      "mtu": 1440,
+      "name": "T-Mobile US IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "always_on": true,
@@ -107,6 +148,15 @@
     },
     {
       "apn": "pcweb.tmobile.com",
+      "carrier_id": 1,
+      "name": "T-Mobile Tethering",
+      "protocol": "IPV6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "pcweb.tmobile.com",
       "infrastructure_bitmask": "cellular",
       "name": "T-Mobile Tethering",
       "protocol": "IPV6",
@@ -132,6 +182,16 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 1,
+      "name": "T-Mobile Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "always_on": true,

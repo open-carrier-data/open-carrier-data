@@ -30,12 +30,31 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 796,
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 796,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -99,6 +118,20 @@
       "name": "Internet 3G",
       "types": [
         "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "uinternet",
+      "authtype": 3,
+      "carrier_id": 796,
+      "mmsc": "http://192.168.220.15/servlets/mms",
+      "name": "Partner",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
         "supl"
       ]
     },
@@ -191,6 +224,17 @@
       "name": "Orange IL MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "global.telcoequity",
+      "carrier_id": 2583,
+      "mvno_match_data": "3597BFD533",
+      "mvno_type": "gid",
+      "name": "DENT",
+      "types": [
+        "default",
+        "dun"
       ]
     }
   ],

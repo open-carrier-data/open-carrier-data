@@ -29,11 +29,32 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 18,
       "name": "hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 18,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -60,25 +81,9 @@
     },
     {
       "apn": "ims",
-      "name": "IMS",
+      "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "Vf IMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "ims",
       "types": [
         "ims"
       ]
@@ -150,6 +155,17 @@
     },
     {
       "apn": "internet.vodafone.gr",
+      "carrier_id": 18,
+      "name": "Vf Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.vodafone.gr",
       "name": "Vf Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -192,6 +208,22 @@
     },
     {
       "apn": "mms.vodafone.net",
+      "authtype": 1,
+      "carrier_id": 18,
+      "mmsc": "http://mms.vodafone.gr",
+      "mmsport": 5080,
+      "mmsproxy": "213.249.19.49",
+      "name": "Vf MMS",
+      "password": "pass",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "mms.vodafone.net",
       "carrier_id": 2399,
       "mmsc": "http://mms.vodafone.gr",
       "mmsport": 5080,
@@ -224,20 +256,6 @@
       "mmsproxy": "213.249.19.49",
       "name": "Vf MMS",
       "password": "pass",
-      "types": [
-        "mms"
-      ],
-      "user": "user"
-    },
-    {
-      "apn": "mms.vodafone.net",
-      "mmsc": "http://mms.vodafone.gr",
-      "mmsport": 5080,
-      "mmsproxy": "213.249.19.49",
-      "name": "Vf MMS",
-      "password": "pass",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
         "mms"
       ],

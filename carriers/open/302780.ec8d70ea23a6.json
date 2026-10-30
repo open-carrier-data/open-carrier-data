@@ -13,23 +13,23 @@
     },
     {
       "apn": "ims",
-      "name": "SaskTel",
-      "protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "carrier_id": 580,
-      "name": "ims",
+      "name": "Lum IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "name": "SaskTel",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "inet.stm.sk.ca",
@@ -100,8 +100,49 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "5A",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "pda.stm.sk.ca",
-      "carrier_id": 580,
+      "mmsc": "http://mms.sasktel.com/",
+      "mmsport": 80,
+      "mmsproxy": "mig.sasktel.com",
+      "mvno_match_data": "5A",
+      "mvno_type": "gid",
+      "name": "SaskTel",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2638,
+      "mvno_match_data": "5B",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pda.stm.sk.ca",
+      "carrier_id": 2638,
       "mmsc": "http://mms.sasktel.com/",
       "mmsport": 80,
       "mmsproxy": "mig.sasktel.com",

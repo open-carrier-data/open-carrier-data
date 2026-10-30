@@ -129,9 +129,30 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "carrier_id": 1690,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "TELIA",
       "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1690,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -225,6 +246,20 @@
     {
       "apn": "mms.telia.se",
       "authtype": 0,
+      "carrier_id": 1690,
+      "mmsc": "http://mmsc",
+      "mmsport": 80,
+      "mmsproxy": "193.209.134.132",
+      "name": "Telia MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.telia.se",
+      "authtype": 0,
       "mmsc": "http://mmsc",
       "mmsport": 80,
       "mmsproxy": "193.209.134.132",
@@ -286,19 +321,21 @@
     },
     {
       "apn": "online.telia.se",
-      "carrier_id": 1690,
-      "name": "Telia",
+      "name": "Telia Internet",
+      "port": 8080,
+      "proxy": "10.254.254.254",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
     {
       "apn": "online.telia.se",
-      "name": "Telia Internet",
-      "port": 8080,
-      "proxy": "10.254.254.254",
+      "authtype": 0,
+      "carrier_id": 1690,
+      "name": "online.telia.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -320,6 +357,14 @@
       "name": "TELIA",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "online.telia.se",
+      "carrier_id": 1690,
+      "name": "Telia",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -441,6 +486,57 @@
       ]
     },
     {
+      "apn": "hos",
+      "mvno_match_data": "2BFFFFFFFFFFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "2BFFFFFFFFFFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.telia.se",
+      "authtype": 0,
+      "mmsc": "http://mmsc",
+      "mmsport": 80,
+      "mmsproxy": "193.209.134.132",
+      "mvno_match_data": "2BFFFFFFFFFFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "Telia MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "online.telia.se",
+      "authtype": 0,
+      "mvno_match_data": "2BFFFFFFFFFFFFFFFFFF",
+      "mvno_type": "gid",
+      "name": "Telia Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
       "apn": "halebop.telia.se",
       "carrier_id": 2287,
       "mvno_match_data": "240017xxxxxxxxx",
@@ -467,12 +563,67 @@
     },
     {
       "apn": "halebop.telia.se",
+      "authtype": 0,
+      "carrier_id": 2287,
+      "mvno_match_data": "halebop",
+      "mvno_type": "spn",
+      "name": "Halebop Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "halebop.telia.se",
       "mvno_match_data": "halebop",
       "mvno_type": "spn",
       "name": "Halebop Internet",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2287,
+      "mvno_match_data": "halebop",
+      "mvno_type": "spn",
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2287,
+      "mvno_match_data": "halebop",
+      "mvno_type": "spn",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.telia.se",
+      "authtype": 0,
+      "carrier_id": 2287,
+      "mmsc": "http://mmsc",
+      "mmsport": 80,
+      "mmsproxy": "193.209.134.132",
+      "mvno_match_data": "halebop",
+      "mvno_type": "spn",
+      "name": "Halebop MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {

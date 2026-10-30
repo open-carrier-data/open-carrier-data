@@ -24,6 +24,16 @@
   "android_apns": [
     {
       "apn": "data.vip.hr",
+      "carrier_id": 1530,
+      "name": "Broadband",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "data.vip.hr",
       "name": "VIPnet",
       "password": "38591",
       "server": "219.91.99.91",
@@ -52,6 +62,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 1530,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1500,
@@ -71,6 +91,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1530,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -168,6 +199,21 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms.vipnet.hr",
+      "authtype": 1,
+      "carrier_id": 1530,
+      "mmsc": "http://mms.vipnet.hr/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "212.91.99.91",
+      "name": "VIP MMS",
+      "password": "38591",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ],
+      "user": "38591"
     },
     {
       "apn": "mms.vipnet.hr",

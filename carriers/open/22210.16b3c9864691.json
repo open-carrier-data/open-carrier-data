@@ -24,6 +24,16 @@
   "android_apns": [
     {
       "apn": "EMERGENCY",
+      "carrier_id": 29,
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "EMERGENCY",
       "name": "emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -41,6 +51,17 @@
         "supl"
       ],
       "user": "lmit"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 29,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -149,6 +170,8 @@
       "mmsport": 80,
       "mmsproxy": "10.128.224.10",
       "name": "MMS Vodafone",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -218,9 +241,10 @@
       "apn": "mobile.vodafone.it",
       "carrier_id": 29,
       "name": "Acc. Internet da cell",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -277,6 +301,14 @@
       ]
     },
     {
+      "apn": "mobile.vodafone.it",
+      "carrier_id": 29,
+      "name": "Acc. Internet da cell",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "wap.omnitel.it",
       "name": "Internet da cellulare",
       "port": 80,
@@ -298,6 +330,16 @@
         "default",
         "dun",
         "xcap"
+      ]
+    },
+    {
+      "apn": "web.omnitel.it",
+      "carrier_id": 29,
+      "name": "Tethering Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
       ]
     },
     {
@@ -395,6 +437,7 @@
     },
     {
       "apn": "mobile.erg.it",
+      "authtype": 0,
       "carrier_id": 2304,
       "mvno_match_data": "ERG",
       "mvno_type": "spn",
@@ -403,7 +446,40 @@
         "default",
         "dun",
         "fota",
-        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.erg.it",
+      "carrier_id": 2304,
+      "mvno_match_data": "ERG",
+      "mvno_type": "spn",
+      "name": "ErgMobile WAP",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "Optima",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "wap.optima.it",
+      "mvno_match_data": "Optima",
+      "mvno_type": "spn",
+      "name": "Optima",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
         "supl"
       ]
     },
@@ -476,7 +552,21 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2455,
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet.ho-mobile.it",
+      "authtype": 0,
       "carrier_id": 2455,
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
@@ -487,6 +577,7 @@
     },
     {
       "apn": "web.ho-mobile.it",
+      "authtype": 0,
       "carrier_id": 2455,
       "mvno_match_data": "ho.",
       "mvno_type": "spn",
@@ -495,8 +586,17 @@
         "default",
         "fota",
         "hipri",
-        "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "web.ho-mobile.it",
+      "carrier_id": 2455,
+      "mvno_match_data": "ho.",
+      "mvno_type": "spn",
+      "name": "ho.",
+      "types": [
+        "ia"
       ]
     }
   ],

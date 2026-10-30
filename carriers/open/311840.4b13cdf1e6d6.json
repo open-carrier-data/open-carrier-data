@@ -1,4 +1,121 @@
 {
+  "android_apns": [
+    {
+      "apn": "CCADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "CCAPPS",
+      "bearer_bitmask": "14|18",
+      "mmsc": "http://mms.cellcom.com/cellcom/mms.php",
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom CCAPPS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "CCHOTSPOT",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "CCINTERNET",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.cellcom.com/cellcom/mms.php",
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "CCINTERNET",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "SOS",
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "mvno_match_data": "C1",
+      "mvno_type": "gid",
+      "name": "Cellcom XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    }
+  ],
   "android_carrier_config": {
     "carrier_allow_turnoff_ims_bool": false,
     "carrier_default_wfc_ims_mode_int": 1,
@@ -38,7 +155,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GenericIR92 US Cellcom",
+  "display_name": "Cellcom",
   "match": {
     "mccmnc": [
       "311840"

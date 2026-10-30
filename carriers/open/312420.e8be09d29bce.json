@@ -47,6 +47,17 @@
     {
       "apn": "admin.lte.ntwls.com",
       "bearer_bitmask": "13|14",
+      "carrier_id": 2260,
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "NexTech Ota",
+      "server": "*",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "admin.lte.ntwls.com",
+      "bearer_bitmask": "13|14",
       "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
       "name": "NexTech Ota",
       "server": "*",
@@ -95,6 +106,27 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2260,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2260,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -201,6 +233,18 @@
     {
       "apn": "modem.lte.ntwls.com",
       "bearer_bitmask": "13|14",
+      "carrier_id": 2260,
+      "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
+      "name": "NexTech Tether",
+      "protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "modem.lte.ntwls.com",
+      "bearer_bitmask": "13|14",
       "mmsc": "http://mms.ntwls.net/nex-tech/mms.php",
       "name": "NexTech Tether",
       "protocol": "IPV4V6",
@@ -269,7 +313,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "NTW",
+  "display_name": "NexTech Wireless",
   "match": {
     "mccmnc": [
       "312420"

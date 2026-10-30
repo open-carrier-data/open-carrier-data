@@ -69,6 +69,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 1507,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -85,6 +96,15 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1507,
+      "name": "internet",
+      "types": [
+        "default",
+        "supl"
       ]
     },
     {
@@ -137,7 +157,7 @@
       "mmsc": "http://mms.manxpronto.net:8002",
       "mmsport": 8080,
       "mmsproxy": "195.10.99.46",
-      "name": "Manx Telecom Contract MMS",
+      "name": "mms.manxpronto.net",
       "password": "mms",
       "types": [
         "mms"
@@ -259,6 +279,45 @@
       "password": "webgo",
       "port": 8080,
       "proxy": "195.10.99.51",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "webgo"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "23458851",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.prontogo.net",
+      "authtype": 3,
+      "mmsc": "http://mms.manxpronto.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "195.10.99.41",
+      "mvno_match_data": "23458851",
+      "mvno_type": "imsi",
+      "name": "MMS",
+      "password": "mmsgo",
+      "types": [
+        "mms"
+      ],
+      "user": "mmsgo"
+    },
+    {
+      "apn": "web.prontogo.net",
+      "mvno_match_data": "23458851",
+      "mvno_type": "imsi",
+      "name": "web.prontogo.net",
+      "password": "webgo",
       "types": [
         "default",
         "supl"

@@ -3,6 +3,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 2524,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -11,6 +22,17 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 2524,
+      "name": "Telavox internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "internet",
@@ -24,7 +46,84 @@
     },
     {
       "apn": "mms",
+      "carrier_id": 2524,
       "mmsc": "http://mms.media",
+      "name": "Telavox MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.media",
+      "name": "Telavox MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "Telavox internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.media",
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "Telavox MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
+      "name": "Telavox internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mms.media",
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
       "name": "Telavox MMS",
       "types": [
         "mms"
@@ -33,8 +132,10 @@
   ],
   "android_carrier_config": {
     "carrier_default_wfc_ims_mode_int": 1,
+    "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
+    "enhanced_4g_lte_on_by_default_bool": true,
     "ims.sip_over_ipsec_enabled_bool": false,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,

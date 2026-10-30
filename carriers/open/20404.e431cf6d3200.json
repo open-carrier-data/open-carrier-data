@@ -254,6 +254,111 @@
       ]
     },
     {
+      "apn": "us.vodafone.com",
+      "mmsc": "http://wholesale.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "2801",
+      "mvno_type": "gid",
+      "name": "Vodafone US",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "DATA",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2631,
+      "mvno_match_data": "536E617065",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "wbdata",
+      "carrier_id": 2631,
+      "mvno_match_data": "536E617065",
+      "mvno_type": "gid",
+      "name": "Webbing",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "1GLOBAL HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "1GLOBAL IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "carrier_id": 2143,
       "mvno_match_data": "547275554B3030656E",
@@ -271,7 +376,7 @@
       "mmsc": "http://mmsc.truphone.com:1981/mm1",
       "mvno_match_data": "547275554B3030656E",
       "mvno_type": "gid",
-      "name": "Truphone",
+      "name": "truphone.com",
       "types": [
         "default",
         "dun",
@@ -333,6 +438,25 @@
       ]
     },
     {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
       "apn": "VZWADMIN",
       "bearer_bitmask": "13",
       "carrier_id": 1839,
@@ -392,6 +516,23 @@
       "profile_id": 3,
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
       "types": [
         "fota"
       ]
@@ -466,6 +607,37 @@
       "types": [
         "cbs",
         "mms"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 1839,
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -569,6 +741,44 @@
         "default",
         "dun",
         "ia"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1839,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BAE0000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -812,13 +1022,66 @@
       ]
     },
     {
-      "apn": "truphone.com",
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
       "mvno_match_data": "20404794",
       "mvno_type": "imsi",
-      "name": "Truphone",
+      "name": "1GLOBAL HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "20404794",
+      "mvno_type": "imsi",
+      "name": "1GLOBAL IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "20404794",
+      "mvno_type": "imsi",
+      "name": "truphone.com",
       "types": [
         "default",
-        "dun"
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "204047960",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.mvno.mobi",
+      "authtype": 1,
+      "mvno_match_data": "204047960",
+      "mvno_type": "imsi",
+      "name": "Enreach NL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -833,6 +1096,58 @@
       "types": [
         "fota"
       ]
+    },
+    {
+      "apn": "admin.cs4glte.com",
+      "carrier_id": 10010,
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Admin",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "admin.cs4glte.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Admin",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "ims.cs4glte.com",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 10010,
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire IMS",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "ims.cs4glte.com",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire IMS",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "Uniroam@inet.cs.com"
     },
     {
       "apn": "internet.cs4glte.com",
@@ -853,6 +1168,39 @@
       "user": "Uniroam@inet.cs.com"
     },
     {
+      "apn": "internet.cs4glte.com",
+      "authtype": 3,
+      "carrier_id": 10010,
+      "mmsc": "http://pix.cspire.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Internet",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "internet.cs4glte.com",
+      "authtype": 3,
+      "mmsc": "http://pix.cspire.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Internet",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
       "apn": "tethering.cs4glte.com",
       "carrier_id": 1836,
       "mmsc": "http://pix.cspire.com",
@@ -863,6 +1211,90 @@
       "server": "*",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "carrier_id": 10010,
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Tethering",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "tethering.cs4glte.com",
+      "mvno_match_data": "C Spire",
+      "mvno_type": "spn",
+      "name": "INTL CSpire Tethering",
+      "password": "cs3g",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ],
+      "user": "Uniroam@inet.cs.com"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1991,
+      "mvno_match_data": "HOT MOBILE",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.hotm",
+      "carrier_id": 1991,
+      "mmsc": "http://mms.hotmobile.co.il",
+      "mmsport": 80,
+      "mmsproxy": "80.246.131.99",
+      "mvno_match_data": "HOT MOBILE",
+      "mvno_type": "spn",
+      "name": "HOT mobile MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "net.hotm",
+      "carrier_id": 1991,
+      "mvno_match_data": "HOT MOBILE",
+      "mvno_type": "spn",
+      "name": "HOT mobile Internet",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "pc.hotm",
+      "carrier_id": 1991,
+      "mvno_match_data": "HOT MOBILE",
+      "mvno_type": "spn",
+      "name": "HOT mobile PC",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1991,
+      "mvno_match_data": "HOT MOBILE",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -894,11 +1326,59 @@
       "apn": "mobiledata",
       "authtype": 0,
       "carrier_id": 2138,
+      "mvno_match_data": "JUMP",
+      "mvno_type": "spn",
+      "name": "Jump Roam",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "hipri",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobiledata",
+      "authtype": 0,
+      "carrier_id": 2138,
       "mvno_match_data": "Jump",
       "mvno_type": "spn",
       "name": "Jump Roam",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1952,
+      "mvno_match_data": "U.S. CELLULAR",
+      "mvno_type": "spn",
+      "name": "U.S. Cellular IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "usccinternet",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1952,
+      "mmsc": "http://mmsc1.uscc.net/mmsc/MMS",
+      "mtu": 1422,
+      "mvno_match_data": "U.S. CELLULAR",
+      "mvno_type": "spn",
+      "name": "U.S. Cellular",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "fota",
+        "hipri",
+        "mms"
       ]
     },
     {
@@ -916,6 +1396,24 @@
         "fota",
         "hipri",
         "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ctnet",
+      "authtype": 0,
+      "carrier_id": 2237,
+      "mvno_match_data": "\u4e2d\u56fd\u7535\u4fe1",
+      "mvno_type": "spn",
+      "name": "CTNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "server": "*",
+      "types": [
+        "cbs",
+        "default",
+        "fota",
+        "hipri",
         "supl"
       ]
     }

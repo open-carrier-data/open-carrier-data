@@ -25,6 +25,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1913,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -74,13 +85,14 @@
       "apn": "internet.itelcel.com",
       "authtype": 1,
       "carrier_id": 1913,
-      "name": "internet.itelcel.com",
+      "name": "Internet",
       "password": "webgprs2002",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "supl"
+        "supl",
+        "xcap"
       ],
       "user": "webgprs"
     },
@@ -148,6 +160,32 @@
         "mms"
       ],
       "user": "mmsgprs"
+    },
+    {
+      "apn": "globaldata",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "Globaldata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {

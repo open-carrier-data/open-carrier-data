@@ -34,18 +34,6 @@
     {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 1962,
-      "name": "Fido IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
@@ -64,6 +52,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -121,16 +119,6 @@
     },
     {
       "apn": "ltedata.apn",
-      "carrier_id": 1962,
-      "name": "Fido Tethering",
-      "protocol": "IPV6",
-      "types": [
-        "dun"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "ltedata.apn",
       "name": "Fido Tethering",
       "protocol": "IPV6",
       "types": [
@@ -157,6 +145,14 @@
       "user_editable": false
     },
     {
+      "apn": "ltedata.apn",
+      "name": "Fido Tethering",
+      "protocol": "IPV6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
       "apn": "ltemobile.apn",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17",
       "mmsc": "http://mms.fido.ca",
@@ -178,25 +174,6 @@
     {
       "apn": "ltemobile.apn",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "carrier_id": 1962,
-      "mmsc": "http://mms.fido.ca",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.fido.ca",
-      "name": "Fido Internet",
-      "protocol": "IPV6",
-      "types": [
-        "default",
-        "fota",
-        "hipri",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
-    },
-    {
-      "apn": "ltemobile.apn",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://mms.fido.ca",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.fido.ca",
@@ -229,6 +206,23 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ltemobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mms.fido.ca",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.fido.ca",
+      "name": "Fido Internet",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -283,33 +277,6 @@
     {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
-      "carrier_id": 1962,
-      "mmsc": "http://mms.fido.ca",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.fido.ca",
-      "name": "Fido Services",
-      "protocol": "IPV4V6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "netsvcs",
-      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "carrier_id": 1962,
-      "name": "Fido Services",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "netsvcs",
-      "bearer_bitmask": "18",
       "mmsc": "http://mms.fido.ca",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.fido.ca",
@@ -351,8 +318,7 @@
     },
     {
       "apn": "sos",
-      "carrier_id": 1962,
-      "name": "Fido SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -367,8 +333,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet.mts",
@@ -378,8 +343,7 @@
       "name": "MTS Tethering",
       "types": [
         "dun"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet.mts",
@@ -443,13 +407,12 @@
       "carrier_id": 1962,
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -471,8 +434,7 @@
       "protocol": "IPV6",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -503,8 +465,7 @@
         "ia",
         "mms",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -534,13 +495,12 @@
       "mmsproxy": "mmsproxy.fido.ca",
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido Services",
+      "name": "Netsvcs",
       "protocol": "IPV4V6",
       "types": [
         "mms",
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -548,26 +508,24 @@
       "carrier_id": 1962,
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido Services",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
       "carrier_id": 1962,
       "mvno_match_data": "DD",
       "mvno_type": "gid",
-      "name": "Fido SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet.mts",

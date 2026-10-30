@@ -56,6 +56,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 2396,
+      "name": "Telekom XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "Telekom XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -63,6 +73,17 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2396,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -93,19 +114,6 @@
       "types": [
         "default",
         "dun",
-        "supl"
-      ],
-      "user": "internet"
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "carrier_id": 2396,
-      "name": "T-Mobile MK Internet",
-      "password": "t-mobile",
-      "types": [
-        "default",
-        "ia",
         "supl"
       ],
       "user": "internet"
@@ -149,6 +157,30 @@
       "user": "internet"
     },
     {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 2396,
+      "name": "internet",
+      "password": "t-mobile",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "internet"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 2396,
+      "name": "T-Mobile MK Internet",
+      "password": "t-mobile",
+      "types": [
+        "ia"
+      ],
+      "user": "internet"
+    },
+    {
       "apn": "mms",
       "authtype": 1,
       "mmsc": "http://mms.t-mobile.com.mk",
@@ -180,8 +212,7 @@
     },
     {
       "apn": "mms",
-      "authtype": 1,
-      "carrier_id": 2396,
+      "authtype": 3,
       "mmsc": "http://mms.t-mobile.com.mk",
       "mmsport": 8080,
       "mmsproxy": "62.162.155.227",
@@ -194,11 +225,12 @@
     },
     {
       "apn": "mms",
-      "authtype": 3,
+      "authtype": 1,
+      "carrier_id": 2396,
       "mmsc": "http://mms.t-mobile.com.mk",
       "mmsport": 8080,
       "mmsproxy": "62.162.155.227",
-      "name": "T-Mobile MK MMS",
+      "name": "mms",
       "password": "mms",
       "types": [
         "mms"
@@ -271,7 +303,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telekom.mk",
+  "display_name": "Telekom",
   "match": {
     "mccmnc": [
       "29401"

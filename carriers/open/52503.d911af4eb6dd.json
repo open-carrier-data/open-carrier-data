@@ -30,29 +30,6 @@
   },
   "android_apns": [
     {
-      "apn": "IMS",
-      "carrier_id": 1706,
-      "name": "M1 IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "XCAP",
-      "carrier_id": 1706,
-      "name": "M1 XCAP",
-      "network_type_bitmask": "18",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
       "apn": "hos",
       "carrier_id": 1706,
       "name": "M1 hos",
@@ -63,6 +40,17 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1706,
+      "name": "M1 IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -179,6 +167,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1706,
+      "name": "M1 XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {

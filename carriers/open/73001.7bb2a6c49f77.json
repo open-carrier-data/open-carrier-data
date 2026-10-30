@@ -39,19 +39,6 @@
     },
     {
       "apn": "bam.entelpcs.cl",
-      "authtype": 1,
-      "carrier_id": 1427,
-      "name": "Internet Movil",
-      "password": "entelpcs",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ],
-      "user": "entelpcs"
-    },
-    {
-      "apn": "bam.entelpcs.cl",
       "name": "Entel PCS",
       "password": "entelpcs",
       "port": 8080,
@@ -65,6 +52,30 @@
     {
       "apn": "bam.entelpcs.cl",
       "authtype": 1,
+      "carrier_id": 1427,
+      "name": "Internet Movil",
+      "password": "entelpcs",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "entelpcs"
+    },
+    {
+      "apn": "bam.entelpcs.cl",
+      "authtype": 1,
+      "carrier_id": 1427,
+      "name": "Internet Movil",
+      "password": "entelpcs",
+      "types": [
+        "ia"
+      ],
+      "user": "entelpcs"
+    },
+    {
+      "apn": "bam.entelpcs.cl",
+      "authtype": 1,
       "name": "Internet Movil",
       "password": "entelpcs",
       "protocol": "IPV4V6",
@@ -72,6 +83,16 @@
         "supl"
       ],
       "user": "entelpcs"
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1427,
+      "name": "Entel XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "hos",
@@ -115,6 +136,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 1427,
+      "name": "IMS Claro CL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "name": "IMS Claro CL",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -146,12 +178,12 @@
     {
       "apn": "mms.entelpcs.cl",
       "authtype": 1,
-      "carrier_id": 1427,
       "mmsc": "http://mmsc.entelpcs.cl",
       "mmsport": 8080,
       "mmsproxy": "10.99.0.10",
-      "name": "MMS Entel",
+      "name": "MMS Entel PCS",
       "password": "entelpcs",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ],
@@ -160,10 +192,11 @@
     {
       "apn": "mms.entelpcs.cl",
       "authtype": 1,
+      "carrier_id": 1427,
       "mmsc": "http://mmsc.entelpcs.cl",
       "mmsport": 8080,
       "mmsproxy": "10.99.0.10",
-      "name": "MMS Entel PCS",
+      "name": "mms.entelpcs.cl",
       "password": "entelpcs",
       "protocol": "IPV4V6",
       "types": [
@@ -178,6 +211,26 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "internet.movilfalabella.com",
+      "mvno_match_data": "FALABELLA",
+      "mvno_type": "spn",
+      "name": "Internet M\u00f3vil",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.movilfalabella.com",
+      "mmsc": "http://mmsc.movilfalabella.com",
+      "mvno_match_data": "FALABELLA",
+      "mvno_type": "spn",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     }
   ],

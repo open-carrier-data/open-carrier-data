@@ -37,38 +37,13 @@
     },
     {
       "apn": "ims",
-      "name": "VODAFONE IMS",
-      "protocol": "IP",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1736,
+      "name": "ims",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
-    },
-    {
-      "apn": "ims",
-      "name": "VODAFONE IMS",
-      "protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "VODAFONE TR",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "authtype": 0,
-      "name": "Vodafone IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
     },
     {
       "apn": "ims",
@@ -82,19 +57,12 @@
     {
       "apn": "ims",
       "name": "ims",
+      "protocol": "IP",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ],
       "user_visible": false
-    },
-    {
-      "apn": "internet",
-      "name": "Vodafone Internet",
-      "password": "vodafone",
-      "types": [
-        "default"
-      ],
-      "user": "vodafone"
     },
     {
       "apn": "internet",
@@ -120,6 +88,7 @@
     {
       "apn": "internet",
       "authtype": 0,
+      "carrier_id": 1736,
       "name": "Vodafone Internet",
       "password": "vodafone",
       "types": [
@@ -131,29 +100,6 @@
     {
       "apn": "internet",
       "authtype": 0,
-      "name": "Vodafone Internet",
-      "password": "vodafone",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "vodafone",
-      "user_editable": true
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "name": "Vodafone Internet",
-      "password": "vodafone",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "vodafone"
-    },
-    {
-      "apn": "internet",
       "name": "internet",
       "password": "vodafone",
       "protocol": "IPV4V6",
@@ -161,7 +107,8 @@
         "default",
         "supl"
       ],
-      "user": "vodafone"
+      "user": "vodafone",
+      "user_editable": true
     },
     {
       "apn": "internet",
@@ -210,6 +157,21 @@
       "mmsc": "http://217.31.233.18:6001/MM1Servlet",
       "mmsport": 9401,
       "mmsproxy": "217.31.233.18",
+      "name": "Vodafone MMS",
+      "password": "vodafone",
+      "types": [
+        "mms"
+      ],
+      "user": "vodafone"
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_id": 1736,
+      "mmsc": "http://217.31.233.18:6001/MM1Servlet",
+      "mmsport": 9401,
+      "mmsproxy": "217.31.233.18",
+      "mtu": 1340,
       "name": "Vodafone MMS",
       "password": "vodafone",
       "types": [

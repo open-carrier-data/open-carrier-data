@@ -52,8 +52,20 @@
       "mmsport": 9201,
       "mmsproxy": "210.241.199.199",
       "name": "\u9060\u50b3\u96fb\u4fe1(Far EasTone) (MMS)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1881,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -78,6 +90,17 @@
     {
       "apn": "ims",
       "name": "FarEasTone IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1881,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -124,9 +147,11 @@
       "apn": "internet",
       "carrier_id": 1881,
       "name": "\u9060\u50b3\u96fb\u4fe1(Far EasTone) (Internet)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
+        "hipri",
         "supl"
       ]
     },
@@ -136,6 +161,14 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1881,
+      "name": "\u9060\u50b3\u96fb\u4fe1(Far EasTone) (Internet)",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -187,7 +220,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "\u9060\u50b3\u96fb\u4fe1",
+  "display_name": "\u9060\u50b3\u96fb\u4fe1(Far EasTone) (Internet)",
   "match": {
     "mccmnc": [
       "46601"

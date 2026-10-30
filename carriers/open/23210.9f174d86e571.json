@@ -28,21 +28,6 @@
   "android_apns": [
     {
       "apn": "drei.at",
-      "carrier_id": 1344,
-      "mmsc": "http://mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "213.94.78.133",
-      "name": "Planet 3",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl",
-        "xcap"
-      ]
-    },
-    {
-      "apn": "drei.at",
       "mmsc": "http://mmsc",
       "mmsport": 8799,
       "mmsproxy": "213.94.78.133",
@@ -54,6 +39,21 @@
         "supl"
       ],
       "user": "drei"
+    },
+    {
+      "apn": "drei.at",
+      "carrier_id": 1344,
+      "mmsc": "http://mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "213.94.78.133",
+      "name": "drei.at",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "drei.at",
@@ -85,6 +85,18 @@
     },
     {
       "apn": "drei.at",
+      "carrier_id": 1344,
+      "mmsc": "http://mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "213.94.78.133",
+      "name": "Planet 3",
+      "types": [
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "drei.at",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1500,
@@ -99,6 +111,16 @@
       "protocol": "IPV4V6",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1344,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -131,6 +153,18 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1344,
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -208,6 +242,44 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "data.esim",
+      "mvno_match_data": "0409",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "h2gW.pmvne",
+      "carrier_id": 10032,
+      "mvno_match_data": "040D",
+      "mvno_type": "gid",
+      "name": "U+264A-AT Operational",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "h2gB.pmvne",
+      "carrier_id": 10033,
+      "mvno_match_data": "040E",
+      "mvno_type": "gid",
+      "name": "U+264A-AT Provisioning",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     }
   ],

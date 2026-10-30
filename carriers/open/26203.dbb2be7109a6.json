@@ -30,17 +30,6 @@
   "android_apns": [
     {
       "apn": "ims",
-      "carrier_id": 1456,
-      "name": "O2 DE IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "ims",
       "name": "O2 DE IMS",
       "protocol": "IP",
       "roaming_protocol": "IP",
@@ -58,6 +47,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1453,
+      "name": "o2 DE IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -195,6 +195,21 @@
     },
     {
       "apn": "internet",
+      "carrier_id": 1453,
+      "mmsc": "http://10.81.0.7:8002",
+      "mmsport": 8080,
+      "mmsproxy": "82.113.100.5",
+      "name": "o2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "internet",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "o2 Internet",
@@ -326,6 +341,56 @@
         "default",
         "ia",
         "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "26203482",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.mvno.mobi",
+      "authtype": 1,
+      "mvno_match_data": "26203482",
+      "mvno_type": "imsi",
+      "name": "Enreach DE",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2461,
+      "mvno_match_data": "26203483",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.mvno.mobi",
+      "authtype": 1,
+      "carrier_id": 2461,
+      "mvno_match_data": "26203483",
+      "mvno_type": "imsi",
+      "name": "Enreach DE",
+      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },

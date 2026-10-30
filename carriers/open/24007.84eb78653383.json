@@ -92,6 +92,16 @@
     },
     {
       "apn": "EMERGENCY",
+      "carrier_id": 1696,
+      "name": "Tele2 Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "EMERGENCY",
       "name": "Tele2 Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -133,6 +143,17 @@
     {
       "apn": "hos",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1696,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
       "name": "xcap",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -151,6 +172,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1696,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -201,16 +233,6 @@
       "name": "Tele2 MMS",
       "types": [
         "mms"
-      ]
-    },
-    {
-      "apn": "internet.tele2.se",
-      "carrier_id": 1696,
-      "name": "Tele2 Internet 3G",
-      "types": [
-        "default",
-        "ia",
-        "supl"
       ]
     },
     {
@@ -267,12 +289,35 @@
     },
     {
       "apn": "internet.tele2.se",
+      "carrier_id": 1696,
+      "mmsc": "http://mmsc.tele2.se/",
+      "mmsport": 8080,
+      "mmsproxy": "mmsproxy.tele2.se",
+      "name": "internet.tele2.se",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
       "authtype": 0,
       "name": "Tele2 Internet 3G",
       "protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
+      "carrier_id": 1696,
+      "name": "Tele2 Internet 3G",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -308,6 +353,325 @@
       ]
     },
     {
+      "apn": "4g.tele2.se",
+      "mvno_match_data": "0002B",
+      "mvno_type": "gid",
+      "name": "Tele2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hotspot.citymesh.com",
+      "mvno_match_data": "0002B",
+      "mvno_type": "gid",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "0002B",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
+      "mvno_match_data": "0002B",
+      "mvno_type": "gid",
+      "name": "Tele2 Internet 3G",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2139,
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "carrier_id": 2139,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "SKY MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mobile.sky",
+      "carrier_id": 2139,
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "SKY Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ut.mobile.sky",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2139,
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "Sky Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "wifi.mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "18",
+      "carrier_id": 2139,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "mvno_match_data": "0C",
+      "mvno_type": "gid",
+      "name": "SKY WiFi MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2603,
+      "mvno_match_data": "40",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2603,
+      "mvno_match_data": "40",
+      "mvno_type": "gid",
+      "name": "spusu",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2600,
+      "mvno_match_data": "41",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2600,
+      "mvno_match_data": "41",
+      "mvno_type": "gid",
+      "name": "spusu",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2601,
+      "mvno_match_data": "42",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2601,
+      "mvno_match_data": "42",
+      "mvno_type": "gid",
+      "name": "HELP mobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2602,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2602,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Tchibo",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2604,
+      "mvno_match_data": "48",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2604,
+      "mvno_match_data": "48",
+      "mvno_type": "gid",
+      "name": "spusu",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "50",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "mvno_match_data": "50",
+      "mvno_type": "gid",
+      "name": "spusu",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2605,
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "web",
+      "carrier_id": 2605,
+      "mvno_match_data": "52",
+      "mvno_type": "gid",
+      "name": "spusu",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "gigsky",
+      "mvno_match_data": "6E",
+      "mvno_type": "gid",
+      "name": "GigSky",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "gigsky",
+      "mvno_match_data": "6F",
+      "mvno_type": "gid",
+      "name": "GigSky",
+      "types": [
+        "default"
+      ]
+    },
+    {
       "apn": "gamma.co.uk",
       "carrier_id": 2137,
       "mmsc": "http://mms.gamma.co.uk/servlets/mms",
@@ -320,6 +684,78 @@
       "roaming_protocol": "IP",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "4g.tele2.se",
+      "mvno_match_data": "2400756111",
+      "mvno_type": "imsi",
+      "name": "Tele2 Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hotspot.citymesh.com",
+      "mvno_match_data": "2400756111",
+      "mvno_type": "imsi",
+      "name": "Hotspot",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "2400756111",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.tele2.se",
+      "mvno_match_data": "2400756111",
+      "mvno_type": "imsi",
+      "name": "Tele2 Internet 3G",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.tele2.no",
+      "authtype": 1,
+      "mvno_match_data": "2400768",
+      "mvno_type": "imsi",
+      "name": "Tele2 Internet",
+      "password": "wap",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "wap"
+    },
+    {
+      "apn": "internet.tele2.no",
+      "mmsc": "http://mmsc.tele2.no",
+      "mmsport": 8080,
+      "mmsproxy": "193.12.40.14",
+      "mvno_match_data": "2400768",
+      "mvno_type": "imsi",
+      "name": "Tele2 MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -346,6 +782,25 @@
       "name": "Tele2 MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "Jump",
+      "mmsc": "http://mmsc.mobi/servlets/mms",
+      "mmsport": 80,
+      "mmsproxy": "164.39.236.69",
+      "mvno_match_data": "JUMP",
+      "mvno_type": "spn",
+      "name": "Jump",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "hipri",
+        "ims",
+        "mms",
+        "supl"
       ]
     },
     {

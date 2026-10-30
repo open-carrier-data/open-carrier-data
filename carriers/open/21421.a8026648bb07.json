@@ -102,23 +102,38 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "jazzinternet",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "Jazztel",
+      "name": "jazzinternet",
       "types": [
         "default",
+        "dun",
+        "ia",
         "supl"
       ]
     },
     {
       "apn": "jazzmms",
+      "authtype": 1,
       "mmsc": "http://jazztelmms.com/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "37.132.0.10",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "Jazztel MMS",
+      "name": "jazzmms",
       "types": [
         "mms"
       ]

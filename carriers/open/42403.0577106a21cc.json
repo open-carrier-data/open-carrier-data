@@ -44,7 +44,9 @@
     {
       "apn": "du",
       "carrier_id": 1970,
-      "name": "du Internet",
+      "name": "du WAP",
+      "port": 8080,
+      "proxy": "10.19.18.4",
       "types": [
         "default",
         "ia",
@@ -54,12 +56,12 @@
     {
       "apn": "du",
       "carrier_id": 1970,
-      "name": "du WAP",
-      "port": 8080,
-      "proxy": "10.19.18.4",
+      "mmsc": "http://mms.du.ae:8002",
+      "name": "du",
+      "protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
+        "mms",
         "supl"
       ]
     },
@@ -105,6 +107,14 @@
     },
     {
       "apn": "du",
+      "carrier_id": 1970,
+      "name": "du Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "du",
       "authtype": 1,
       "mmsc": "http://mms.du.ae:8002",
       "mmsport": 8080,
@@ -133,6 +143,17 @@
       "name": "du MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 1970,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -167,6 +188,16 @@
       "name": "ims",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1970,
+      "name": "Du XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {

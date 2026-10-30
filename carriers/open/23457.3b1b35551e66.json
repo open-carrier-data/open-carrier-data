@@ -3,6 +3,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 2139,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -28,6 +39,21 @@
       "protocol": "IP",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "carrier_id": 2139,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "SKY MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -90,6 +116,18 @@
     },
     {
       "apn": "mobile.sky",
+      "carrier_id": 2139,
+      "name": "SKY Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.sky",
       "authtype": 0,
       "name": "mobile.sky",
       "protocol": "IPV4V6",
@@ -97,6 +135,17 @@
       "types": [
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "ut.mobile.sky",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2139,
+      "name": "Sky Ut",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {
@@ -115,6 +164,21 @@
       "name": "Ut",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "wifi.mms.mobile.sky",
+      "authtype": 0,
+      "bearer_bitmask": "18",
+      "carrier_id": 2139,
+      "mmsc": "http://185.110.178.96:38090/was",
+      "mmsport": 9028,
+      "mmsproxy": "185.110.178.97",
+      "name": "SKY WiFi MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -141,6 +205,20 @@
       "name": "Sky MMS VoWiFi",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "data.esim",
+      "mvno_match_data": "0409",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
       ]
     }
   ],
@@ -178,7 +256,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Sky Gb",
+  "display_name": "SKY",
   "match": {
     "mccmnc": [
       "23457"

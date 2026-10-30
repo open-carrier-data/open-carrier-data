@@ -11,9 +11,30 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "carrier_id": 656,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "TELIA",
       "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 656,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -83,11 +104,13 @@
     },
     {
       "apn": "www.internet.mtelia.dk",
+      "authtype": 0,
       "carrier_id": 656,
-      "name": "Telia SurfPort",
+      "name": "www.internet.mtelia.dk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -111,12 +134,23 @@
       ]
     },
     {
+      "apn": "www.internet.mtelia.dk",
+      "carrier_id": 656,
+      "name": "Telia SurfPort",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "www.mms.mtelia.dk",
+      "authtype": 0,
       "carrier_id": 656,
       "mmsc": "http://mms.telia.dk",
       "mmsport": 8080,
       "mmsproxy": "193.209.134.131",
-      "name": "Telia MMS",
+      "name": "www.mms.mtelia.dk",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

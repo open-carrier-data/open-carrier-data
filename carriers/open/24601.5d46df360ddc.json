@@ -50,6 +50,19 @@
     },
     {
       "apn": "gprs.mms.lt",
+      "carrier_id": 892,
+      "mmsc": "http://mms.omnitel.net:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "194.176.32.149",
+      "name": "Telia MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "gprs.mms.lt",
       "mmsc": "http://mms.omnitel.net:8002/",
       "mmsport": 8080,
       "mmsproxy": "194.176.32.149",
@@ -86,6 +99,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 892,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
       "name": "hos",
@@ -96,6 +119,17 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 892,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -139,6 +173,17 @@
         "supl"
       ],
       "user": "omni"
+    },
+    {
+      "apn": "omnitel",
+      "carrier_id": 892,
+      "name": "Telia Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "omnitel",
@@ -223,7 +268,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Telia LT",
+  "display_name": "Telia",
   "match": {
     "mccmnc": [
       "24601"

@@ -44,6 +44,17 @@
     },
     {
       "apn": "e-ideas",
+      "carrier_id": 31,
+      "mmsc": "http://mms.singtel.com:10021/mmsc",
+      "name": "Singtel (PostPaid)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "e-ideas",
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "name": "Singtel (PostPaid)",
       "protocol": "IPV4V6",
@@ -93,6 +104,17 @@
     },
     {
       "apn": "hicard",
+      "carrier_id": 31,
+      "mmsc": "http://mms.singtel.com:10021/mmsc",
+      "name": "Singtel (PrePaid)",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hicard",
       "mmsc": "http://mms.singtel.com:10021/mmsc",
       "name": "Singtel (PrePaid)",
       "protocol": "IPV4V6",
@@ -113,14 +135,14 @@
     },
     {
       "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "carrier_id": 31,
-      "name": "Singtel IMS",
-      "protocol": "IPV4V6",
+      "name": "Singtel ims",
+      "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ims",
@@ -153,14 +175,14 @@
     },
     {
       "apn": "stm-ut",
+      "bearer_bitmask": "14|18|20",
       "carrier_id": 31,
-      "name": "Singtel Ut",
+      "name": "XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "stm-ut",
@@ -172,6 +194,32 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "globaldata",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "Globaldata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {

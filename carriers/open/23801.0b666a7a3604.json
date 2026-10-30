@@ -29,6 +29,17 @@
   "android_apns": [
     {
       "apn": "MMS",
+      "carrier_id": 1463,
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "MMS",
       "authtype": 3,
       "mmsc": "http://mmsc.tdc.dk:8002",
       "mmsport": 8080,
@@ -58,6 +69,17 @@
         "supl"
       ],
       "user": "lmdk"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1463,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -99,19 +121,6 @@
     {
       "apn": "internet",
       "authtype": 0,
-      "carrier_id": 1463,
-      "name": "DK TDC",
-      "types": [
-        "default",
-        "dun",
-        "fota",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 0,
       "name": "DK TDC",
       "types": [
         "default",
@@ -136,6 +145,18 @@
       "authtype": 1,
       "carrier_enabled": true,
       "name": "TDC",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1463,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
@@ -167,6 +188,17 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1463,
+      "name": "DK TDC",
+      "types": [
+        "dun",
+        "fota",
+        "ia"
       ]
     },
     {
@@ -303,6 +335,16 @@
     },
     {
       "apn": "xcap",
+      "carrier_id": 1463,
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
       "name": "xcap",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
@@ -310,6 +352,24 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "gigsky",
+      "mvno_match_data": "6E",
+      "mvno_type": "gid",
+      "name": "GigSky",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "gigsky",
+      "mvno_match_data": "6F",
+      "mvno_type": "gid",
+      "name": "GigSky",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "internet",

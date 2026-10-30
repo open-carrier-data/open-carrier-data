@@ -15,7 +15,7 @@
       "apn": "IMS",
       "authtype": 0,
       "bearer_bitmask": "14|18|20",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
@@ -26,8 +26,7 @@
       "types": [
         "ia",
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "IMS",
@@ -127,18 +126,16 @@
       "apn": "VZWADMIN",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
       "name": "Verizon",
       "profile_id": 3,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "fota"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWADMIN",
@@ -195,7 +192,7 @@
       "apn": "VZWAPP",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "max_conns": 20,
       "max_conns_time": 300,
       "mmsc": "http://mms.vtext.com/servlets/mms",
@@ -203,12 +200,10 @@
       "name": "Verizon",
       "profile_id": 4,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "cbs",
         "mms"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWAPP",
@@ -229,14 +224,13 @@
     },
     {
       "apn": "VZWEMERGENCY",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "name": "Verizon Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWEMERGENCY",
@@ -304,14 +298,13 @@
       "apn": "VZWINTERNET",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
       "name": "Verizon",
       "profile_id": 0,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "dun",
@@ -367,7 +360,7 @@
       "apn": "internet",
       "authtype": 3,
       "bearer_bitmask": "4|5|6|7|8|12",
-      "carrier_id": 1839,
+      "carrier_id": 10036,
       "mmsc": "http://mms.vtext.com/servlets/mms",
       "name": "Verizon",
       "protocol": "IPV4V6",
@@ -376,11 +369,9 @@
         "default",
         "dun",
         "fota",
-        "ia",
         "mms",
         "supl"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "internet",
@@ -394,6 +385,24 @@
         "default",
         "dun",
         "fota",
+        "mms",
+        "supl"
+      ],
+      "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1839,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "fota",
+        "ia",
         "mms",
         "supl"
       ],
@@ -427,6 +436,266 @@
       ]
     },
     {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1849,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00010000000000",
+      "mvno_type": "gid",
+      "name": "Bluegrass IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1849,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00010000000000",
+      "mvno_type": "gid",
+      "name": "Bluegrass FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 1849,
+      "mvno_match_data": "BA00010000000000",
+      "mvno_type": "gid",
+      "name": "Bluegrass Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1849,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://m.iot1.com/bluegrass/mms.php",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00010000000000",
+      "mvno_type": "gid",
+      "name": "Bluegrass",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1849,
+      "mmsc": "http://m.iot1.com/bluegrass/mms.php",
+      "mmsport": 80,
+      "mmsproxy": "66.255.55.23",
+      "mvno_match_data": "BA00010000000000",
+      "mvno_type": "gid",
+      "name": "Bluegrass",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1802,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00040000000000",
+      "mvno_type": "gid",
+      "name": "Cellcom IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1802,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00040000000000",
+      "mvno_type": "gid",
+      "name": "Cellcom FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 1802,
+      "mvno_match_data": "BA00040000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1802,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.cellcom.com/cellcom/mms.php",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00040000000000",
+      "mvno_type": "gid",
+      "name": "Cellcom",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1802,
+      "mmsc": "http://mms.cellcom.com/cellcom/mms.php",
+      "mvno_match_data": "BA00040000000000",
+      "mvno_type": "gid",
+      "name": "Cellcom",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00050000000000",
+      "mvno_type": "gid",
+      "name": "ThumbCellular IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00050000000000",
+      "mvno_type": "gid",
+      "name": "ThumbCellular FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "mvno_match_data": "BA00050000000000",
+      "mvno_type": "gid",
+      "name": "ThumbCellular Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.thumbcell.com/thumb/mms.php",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA00050000000000",
+      "mvno_type": "gid",
+      "name": "ThumbCellular",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 10008,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
       "apn": "TRACFONE.VZWENTP",
       "mvno_match_data": "BA01270000000000",
       "mvno_type": "gid",
@@ -436,6 +705,92 @@
       "types": [
         "default",
         "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 10008,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 10008,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 10008,
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 10008,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 10008,
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "mvno_match_data": "BA01270000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
         "supl"
       ]
     },
@@ -456,8 +811,7 @@
       "types": [
         "ia",
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWADMIN",
@@ -474,8 +828,7 @@
       "protocol": "IPV4V6",
       "types": [
         "fota"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWAPP",
@@ -494,21 +847,19 @@
       "types": [
         "cbs",
         "mms"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWEMERGENCY",
       "carrier_id": 2032,
       "mvno_match_data": "BA01450000000000",
       "mvno_type": "gid",
-      "name": "xfinity",
+      "name": "Verizon Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -546,13 +897,512 @@
         "fota",
         "mms",
         "supl"
-      ],
-      "user_visible": false
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2126,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2126,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2126,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 2126,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2126,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 2126,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1910,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1910,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1910,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 1910,
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1910,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1910,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BA01570000000000",
+      "mvno_type": "gid",
+      "name": "Cox",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2556,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "xfinity",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2556,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "xfinity",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2556,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "xfinity",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 2556,
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2556,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "Xfinity Mobile",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 2556,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BA01640000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2654,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01700000000000",
+      "mvno_type": "gid",
+      "name": "Mediacom IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2654,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01700000000000",
+      "mvno_type": "gid",
+      "name": "Mediacom FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2654,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01700000000000",
+      "mvno_type": "gid",
+      "name": "Mediacom MMS",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 2654,
+      "mvno_match_data": "BA01700000000000",
+      "mvno_type": "gid",
+      "name": "Mediacom Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2654,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01700000000000",
+      "mvno_type": "gid",
+      "name": "Mediacom Mobile",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BA01750000000000",
+      "mvno_type": "gid",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
     },
     {
       "apn": "VSBLADMIN",
       "authtype": 0,
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 2146,
       "max_conns": 20,
       "max_conns_time": 300,
@@ -562,16 +1412,14 @@
       "name": "Visible",
       "profile_id": 3,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "fota"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VSBLAPP",
       "authtype": 0,
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 2146,
       "max_conns": 20,
       "max_conns_time": 300,
@@ -582,17 +1430,15 @@
       "name": "Visible",
       "profile_id": 4,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "cbs",
         "mms"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VSBLIMS",
       "authtype": 0,
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18",
+      "bearer_bitmask": "14|18|20",
       "carrier_id": 2146,
       "max_conns": 20,
       "max_conns_time": 300,
@@ -606,13 +1452,12 @@
       "types": [
         "ia",
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "VSBLINTERNET",
       "authtype": 0,
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 2146,
       "max_conns": 20,
       "max_conns_time": 300,
@@ -622,10 +1467,126 @@
       "name": "Visible",
       "profile_id": 0,
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 2146,
+      "mvno_match_data": "BAE1000000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2146,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2146,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2146,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 2146,
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 2146,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 2146,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BAE2000000000000",
+      "mvno_type": "gid",
+      "name": "Visible",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
         "supl"
       ]
     }
