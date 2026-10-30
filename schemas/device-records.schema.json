@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/device-records.schema.json",
   "title": "OCD per-device records (generated/devices/device-records.json)",
-  "description": "Per-device and per-carrier records for the owner's devices (rule round 30, item 4; dataset spec 2.10): configured_device records (device fixes valid for every carrier) and measured records (the owner's settled results, 90-day expiry), keyed by device, ROM line and IMS stack with its fork. A record never holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address. A group A record is served only with a second_agent_read naming a read record under devices/records/reads/ whose verdict is proceed; a group B record is refused. Sources: devices/records/; tools/ocd_dataset.py writes and checks the file, tools/observed_reports.py takes measured records from the owner's report issues ($defs.record).",
+  "description": "Per-device and per-carrier records for the owner's devices (rule round 30, item 4; dataset spec 2.10): measured records (the owner's settled results, 90-day expiry; rule round 31 ended the configured_device kind and the carrier scope all at its step 8), keyed by device, ROM line and IMS stack with its fork. A record never holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address. A group A record is served only with a second_agent_read naming a read record under devices/records/reads/ whose verdict is proceed; a group B record is refused. Sources: devices/records/; tools/ocd_dataset.py writes and checks the file, tools/observed_reports.py takes measured records from the owner's report issues ($defs.record).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -48,7 +48,6 @@
         },
         "kind": {
           "enum": [
-            "configured_device",
             "measured"
           ]
         },
@@ -134,18 +133,6 @@
         },
         "carrier": {
           "anyOf": [
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "scope"
-              ],
-              "properties": {
-                "scope": {
-                  "const": "all"
-                }
-              }
-            },
             {
               "type": "object",
               "additionalProperties": false,

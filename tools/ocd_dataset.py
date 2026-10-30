@@ -181,25 +181,16 @@ BLOCK_PATTERNS = {
     ),
 }
 
-# The S20's five configured_device records (spec 2.10). Round 31 (keys)
-# ends the device-only kind: no record is keyed by device alone, and every
-# record names a carrier. These five stay on main only until the build with
-# the restored device override has passed on the phone (round 31,
-# implementation order step 8); until then they are the one exception to
-# the carrier key rule, and nothing else may join them.
-S20_RECORD_KEYS = (
-    "r:40ee9931e862c76c",
-    "r:5e72fea0c8d2f885",
-    "r:63d82c4e3fa3a0ae",
-    "r:937a114148bf73b8",
-    "r:e41c807e9f154e6a",
-)
-LEGACY_DEVICE_ONLY_RECORDS = frozenset(S20_RECORD_KEYS)
+# Round 31 (keys), implementation order step 8: the S20's five
+# configured_device records left main once the build with the restored
+# device override had passed on the phone. No record is keyed by device
+# alone, and every record names a carrier.
+LEGACY_DEVICE_ONLY_RECORDS: frozenset[str] = frozenset()
 
-RECORD_KINDS = ("configured_device", "measured")
+RECORD_KINDS = ("measured",)
 # The carrier keys a record may name (round 31): an OCD or fill-only profile,
 # or MCC-MNC with GID1 or SPN for a SIM that default or a fill-only profile
-# serves. Scope `all` is left only for LEGACY_DEVICE_ONLY_RECORDS.
+# serves.
 CARRIER_SCOPES = ("profile", "sim_key")
 # Round 31 cell records: generated/devices/device-records.json schema_version
 # 2 (schemas/cell-records.schema.json). A measured record belongs to one cell:
@@ -207,9 +198,9 @@ CARRIER_SCOPES = ("profile", "sim_key")
 # with its forks, and the IMS stack with its fork; it also states the build
 # incremental and the stack version, which are recorded, not matched. Public
 # main serves schema_version 1 (the round 30 format, which every reader on a
-# phone today parses) until implementation order step 8; the prepared
-# removal branch switches SERVED_RECORDS_SCHEMA_VERSION to 2 and drops the
-# five S20 records. The report bot takes schema_version 1 records until the
+# phone today parses); implementation order step 8 dropped the five S20
+# records, and SERVED_RECORDS_SCHEMA_VERSION switches to 2 once the readers on
+# the phones parse it. The report bot takes schema_version 1 records until the
 # switch; a cell record placed in devices/records/measured.json before then is
 # checked and waits there unserved.
 CELL_RECORDS_SCHEMA_VERSION = 2
@@ -250,11 +241,11 @@ GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
 # Whether the manifest lists group-a-reads.json as the role group_a_reads.
 # The round 31 readers (OcdCarrierSettings protocol 3, the OCD Check owner
-# app) take it, a round 30 reader (protocol 2) refuses a manifest that lists
-# it, and so does the S20 pin step until it knows the file. Until it is
-# listed, the file sits beside the dataset and CarrierSettings serves the
-# Google-lane value for every group A key. The prepared step 8 change lists it.
-LIST_GROUP_A_READS = False
+# app) take it, and a round 30 reader (protocol 2) refuses a manifest that
+# lists it. Implementation order step 8 lists it; before that the file sat
+# beside the dataset and CarrierSettings served the Google-lane value for
+# every group A key.
+LIST_GROUP_A_READS = True
 # The keys that never leave group A, whatever a read finds (round 31,
 # emergencyValues; the S20 spec's R31.7).
 GROUP_A_NEVER_LEAVE = frozenset({
@@ -263,9 +254,10 @@ GROUP_A_NEVER_LEAVE = frozenset({
     "international_roaming_dial_string_replace_string_array",
 })
 # Companion files of the dataset (round 31). They sit beside the dataset in
-# the same commit but are not manifest roles: every reader on a phone today
-# refuses an unknown role, and the round 30 builds stay rollback targets
-# until step 8. Each names the dataset it belongs to (f5-reads.json by the
+# the same commit but are not manifest roles, because a reader refuses an
+# unknown role; since implementation order step 8 the manifest also lists
+# group-a-reads.json as the role group_a_reads (LIST_GROUP_A_READS). Each
+# names the dataset it belongs to (f5-reads.json by the
 # APN rows' SHA-256, the others by the data digest); the app takes them
 # from the same commit with the blob check and hands them over with the
 # stage, and the ROM pin step bakes them (export_ocd_dataset.py bake

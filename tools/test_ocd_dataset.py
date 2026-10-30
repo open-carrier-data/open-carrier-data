@@ -234,9 +234,12 @@ class PrimitivesTest(unittest.TestCase):
         self.assertEqual(ocd.pick_fill(fill, {"gid1": "0103aa"}, {"c"}), "c")  # an entry the lane lacks is skipped
 
     def test_record_keys_of_the_spec(self) -> None:
-        document = json.loads((REPO / "devices/records/configured/x1s.json").read_text(encoding="utf-8"))
-        keys = sorted(ocd.record_key_of(r) for r in document["records"])
-        self.assertEqual(keys, sorted(ocd.S20_RECORD_KEYS))
+        """Spec 2.10's key rule, on the first of the S20's five records (which
+        left main at round 31's step 8)."""
+        identity = {"kind": "configured_device", "device": {"codename": "x1s", "model": "SM-G981B"},
+                    "rom": {"family": "lineageos", "line": "24.0"}, "ims_stack": {"id": "aosp_imsstack", "fork": None},
+                    "carrier": {"scope": "all"}, "target": {"type": "config", "key": "imsvoice.voice_on_default_bearer_supported_bool"}}
+        self.assertEqual(ocd.record_key_of(identity), "r:40ee9931e862c76c")
 
     def test_row_key_of_the_spec(self) -> None:
         row = {"apn": "emergency.volte.ims.cnt.net.ec", "carrier": "CNT Emergency", "mcc": "302", "mnc": "37",
@@ -436,7 +439,7 @@ class GeneratorTest(unittest.TestCase):
 
     def test_counts_and_profiles(self) -> None:
         counts = self.result["manifest"]["counts"]
-        self.assertEqual(counts["records"], 5)
+        self.assertEqual(counts["records"], 0, "round 31 step 8: the S20's five records left")
         self.assertEqual(counts["fill_only_profiles"], 1)  # test001_zz on 001-01
         profiles = ocd.read_json_file(self.root / ocd.FILES["profiles"][1])
         o2 = profiles["networks"]["262-07"]["profiles"]
@@ -458,10 +461,10 @@ class GeneratorTest(unittest.TestCase):
         root = self.fresh()
         again = generate_into(root, "2026-10-26T10:00:00Z")
         self.assertEqual(again["manifest"]["generated_at"], "2026-10-25T10:00:00Z")
-        configured = root / "devices/records/configured/x1s.json"
-        document = json.loads(configured.read_text())
-        document["records"][0]["basis"] = document["records"][0]["basis"] + " (re-read)"
-        configured.write_text(json.dumps(document), encoding="utf-8")
+        measured = root / "devices/records/measured.json"
+        document = json.loads(measured.read_text())
+        document["records"] = [{"issue": 1, "record": round30_record()}]
+        measured.write_text(json.dumps(document), encoding="utf-8")
         changed = generate_into(root, "2026-10-26T10:00:00Z")
         self.assertEqual(changed["manifest"]["generated_at"], "2026-10-26T10:00:00Z")
         self.assertNotEqual(changed["manifest"]["dataset_digest"], again["manifest"]["dataset_digest"])
@@ -504,43 +507,24 @@ class GeneratorTest(unittest.TestCase):
         self.assertTrue(any("wrong_type" in p for p in problems), problems)
 
     def test_group_a_reads_as_a_listed_role(self) -> None:
-        """The step 8 change lists group-a-reads.json in the manifest (role
+        """Round 31 step 8 lists group-a-reads.json in the manifest (role
         group_a_reads); the reader's checks take it, typed, either way."""
+        self.assertTrue(ocd.LIST_GROUP_A_READS)
+        self.assertIn("group_a_reads", [e["role"] for e in self.result["manifest"]["files"]])
         root = self.fresh()
         saved = ocd.LIST_GROUP_A_READS
-        ocd.LIST_GROUP_A_READS = True
+        ocd.LIST_GROUP_A_READS = False
         try:
             result = generate_into(root, "2026-10-29T10:00:00Z")
-            self.assertIn("group_a_reads", [e["role"] for e in result["manifest"]["files"]])
+            self.assertNotIn("group_a_reads", [e["role"] for e in result["manifest"]["files"]])
             self.assertEqual(ocd.validate(root), [])
         finally:
             ocd.LIST_GROUP_A_READS = saved
         self.assertTrue(any("LIST_GROUP_A_READS" in p for p in ocd.validate(root, regenerate=False)))
 
-    def test_group_a_record_needs_a_proceed_read(self) -> None:
-        root = self.fresh()
-        configured = root / "devices/records/configured/x1s.json"
-        document = json.loads(configured.read_text())
-        record = next(r for r in document["records"] if r["record_key"] == "r:937a114148bf73b8")
-        read = json.loads((root / "devices/records/reads/r-937a114148bf73b8.json").read_text())
-        record["second_agent_read"] = {"reader": read["reader"], "read_at": read["read_at"], "basis": "read",
-                                       "reference": "devices/records/reads/r-937a114148bf73b8.json"}
-        configured.write_text(json.dumps(document), encoding="utf-8")
-        generate_into(root)
-        problems = ocd.validate(root)
-        if read["verdict"] == "hold":
-            self.assertTrue(any("verdict proceed" in p for p in problems), problems)
-        else:
-            self.assertEqual(problems, [])
-
     def test_group_b_and_measured_group_a_records_are_refused(self) -> None:
         registry = ocd.read_json_file(self.root / ocd.FILES["profiles"][1])["keys"]
-        document = json.loads((self.root / "devices/records/configured/x1s.json").read_text())
-        base = copy.deepcopy(document["records"][0])
-        measured = {**base, "kind": "measured", "claim": "measured", "first_measured": "2026-10-24", "last_measured": "2026-10-24",
-                    "valid_until": "2027-01-22", "level": "L2", "result": "calls_out", "method": "mailbox_call", "bearer": "lte", "n": 1,
-                    "carrier": {"scope": "profile", "profile_id": "open.26207.c07dcc040b58"}}
-        measured["record_key"] = ocd.record_key_of(measured)
+        measured = round30_record()
         self.assertEqual(ocd.record_problems(measured, registry, {}, "r"), [])
         group_b = {**measured, "target": {"type": "config", "key": "carrier_metered_apn_types_strings"}, "value": ["default"]}
         group_b["record_key"] = ocd.record_key_of(group_b)
@@ -552,6 +536,23 @@ class GeneratorTest(unittest.TestCase):
         self.assertTrue(any("valid_until" in p for p in ocd.record_problems(wrong, registry, {}, "r")))
         phone = {**measured, "basis": "called +491701234567"}
         self.assertTrue(any("private data" in p for p in ocd.record_problems(phone, registry, {}, "r")))
+
+
+def round30_record(**changes) -> dict:
+    """A round 30 (schema_version 1) measured record for the S20 on o2."""
+    record = {
+        "kind": "measured", "device": {"codename": "x1s", "model": "SM-G981B"}, "rom": {"family": "lineageos", "line": "24.0"},
+        "ims_stack": {"id": "aosp_imsstack", "fork": None, "version": None},
+        "carrier": {"scope": "profile", "profile_id": "open.26207.c07dcc040b58"},
+        "target": {"type": "config", "key": "imsvoice.voice_on_default_bearer_supported_bool"}, "value_kind": "value", "value": True,
+        "claim": "measured", "label": None, "basis": "a 50 s call carried RTP both ways", "level": "L2", "result": "calls_out",
+        "method": "mailbox_call", "bearer": "lte", "n": 1, "first_measured": "2026-10-24", "last_measured": "2026-10-24",
+        "valid_until": "2027-01-22", "data": {"commit": "a2f96412b58f" + "0" * 28, "data_digest": "sha256:" + "0" * 64},
+        "tester": "owner", "differs_between_sims": None, "second_agent_read": None,
+    }
+    record.update(changes)
+    record["record_key"] = ocd.record_key_of(record)
+    return record
 
 
 def cell_record(**changes) -> dict:
@@ -629,26 +630,22 @@ class Round31RecordsTest(unittest.TestCase):
         stale["record_key"] = "r:" + "0" * 16
         self.assertTrue(any("cell lines" in p for p in ocd.cell_record_problems(stale, self.registry, "r")))
 
-    def test_round_30_records_without_a_carrier_key_are_refused_but_the_five(self) -> None:
-        document = json.loads((REPO / "devices/records/configured/x1s.json").read_text(encoding="utf-8"))
-        for record in document["records"]:
-            self.assertIn(record["record_key"], ocd.LEGACY_DEVICE_ONLY_RECORDS)
-            self.assertEqual(ocd.record_problems(record, self.registry, {}, "r"), [])
-        sixth = copy.deepcopy(document["records"][0])
-        sixth["target"] = {"type": "config", "key": "carrier_volte_available_bool"}
-        sixth["record_key"] = ocd.record_key_of(sixth)
-        problems = ocd.record_problems(sixth, self.registry, {}, "r")
+    def test_round_30_records_without_a_carrier_key_are_refused(self) -> None:
+        self.assertEqual(ocd.LEGACY_DEVICE_ONLY_RECORDS, frozenset(), "round 31 step 8: no exception is left")
+        self.assertEqual(ocd.record_problems(round30_record(), self.registry, {}, "r"), [])
+        everyone = round30_record(carrier={"scope": "all"})
+        problems = ocd.record_problems(everyone, self.registry, {}, "r")
         self.assertTrue(any("record_no_carrier" in p for p in problems), problems)
-        profiled = {**copy.deepcopy(document["records"][0]), "carrier": {"scope": "profile", "profile_id": "open.26207.c07dcc040b58"}}
-        profiled["record_key"] = ocd.record_key_of(profiled)
-        problems = ocd.record_problems(profiled, self.registry, {}, "r")
+        configured = round30_record(kind="configured_device", claim="configured", valid_until=None)
+        problems = ocd.record_problems(configured, self.registry, {}, "r")
         self.assertTrue(any("record_kind" in p for p in problems), problems)
+        self.assertFalse((REPO / "devices/records/configured").is_dir() and any((REPO / "devices/records/configured").glob("*.json")))
 
     def test_served_records_follow_the_schema_version(self) -> None:
-        document = json.loads((REPO / "devices/records/configured/x1s.json").read_text(encoding="utf-8"))
-        mixed = document["records"] + [cell_record()]
+        old = round30_record()
+        mixed = [old, cell_record()]
         self.assertEqual(ocd.SERVED_RECORDS_SCHEMA_VERSION, 1)
-        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 1)], [r["record_key"] for r in document["records"]])
+        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 1)], [old["record_key"]])
         self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 2)], ["r:3e3c08bfd829cafe"])
 
 

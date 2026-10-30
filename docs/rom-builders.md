@@ -105,7 +105,7 @@ OCD keeps measured results such as "VoLTE works on S20 with o2, LineageOS 24.0 a
 
 A record is served as a value only in its exact cell (SM12). In a neighbouring cell, for example the same phone and carrier on another ROM, it is only a first value to try, and only where the app tests. A new build or stack version makes a record due for a test at once. Records lapse 90 days after their last measurement. Only the owner's token writes records, and the owner's build never runs on anyone else's phone. [community/README.md](../community/README.md#the-owners-measured-records) has the intake rules, and [ocd-dataset.md](ocd-dataset.md#records-by-cell-rule-round-31) the file.
 
-Today's records still include the S20's device values as records for every carrier. Round 31 moves them back into the S20's device tree. Once the S20 build with that override has passed on the phone, OCD drops those records and the `configured_device` kind (*being built*).
+The S20's device values, once records for every carrier, are back in the S20's device tree. OCD dropped those records and the `configured_device` kind once the S20 build with that override had passed on the phone.
 
 ## Emergency settings
 

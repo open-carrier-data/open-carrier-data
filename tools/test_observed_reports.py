@@ -803,7 +803,8 @@ class MeasuredRecordsTest(unittest.TestCase):
             "has expired": measured_record(first_measured="2026-07-01", last_measured="2026-07-02", valid_until="2026-09-30"),
             "result and level": measured_record(level="L2"),
             "not a commit of OCD's main": measured_record(data={"commit": "0" * 40, "data_digest": DIGEST}),
-            "kind measured only": {**measured_record(), "kind": "configured_device", "claim": "configured", "valid_until": None},
+            # Round 31 step 8: the schema itself knows the kind measured only.
+            'must be one of "measured"': {**measured_record(), "kind": "configured_device", "claim": "configured", "valid_until": None},
             "record_key": {**measured_record(), "record_key": "r:0000000000000000"},
         }
         for code, record in cases.items():
