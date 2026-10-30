@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import sys; sys.exit("TEST ONLY: refresh bot stop test")
 import argparse
 from collections import Counter, defaultdict
 import copy
