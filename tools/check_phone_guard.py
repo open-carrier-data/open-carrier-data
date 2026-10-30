@@ -786,9 +786,15 @@ def star_ims_leads(typed: dict, rows: list[dict[str, Any]],
     """The head's IMS leads on a `*`-typed row that no current vendor backs
     for `ims`, in a scope where a current vendor gives an `ims` row (rule
     decisions round 35, item C). The sanitizer writes a source's `*` as
-    Android's TYPE_ALL list, so a `*`-typed row is a file row behind the
-    lead's stored row whose types include every type of TYPE_ALL
-    (`android_phone_model.WILDCARD_TYPES`). Empty without the head's records."""
+    Android's TYPE_ALL list. TelephonyProvider stores the file rows equal on
+    its unique fields as one row with the union of their types, so the test
+    reads the united types of the file rows behind the lead's stored row:
+    they must include every type of TYPE_ALL
+    (`android_phone_model.WILDCARD_TYPES`), whether one row or several give
+    them (rule decisions round 37, item 2: on 204/08 two portalmmm.nl rows
+    typed `cbs,dun,fota,hipri,ims` and `default,mms,supl` stored as one and
+    led IMS, and a single-row test missed it). Empty without the head's
+    records."""
     if records is None:
         return []
     vendor_ims = {phone.scope_of(row) for row, record in zip(rows, records)
@@ -800,8 +806,8 @@ def star_ims_leads(typed: dict, rows: list[dict[str, Any]],
         for name in WATCH_TYPES:
             srcs = [index for index in per_type[name].get("ims_srcs") or () if 0 <= index < len(records)]
             behind = [records[index] for index in srcs]
-            if not behind or not any(phone.type_set(rows[index].get("type")) >= phone.WILDCARD_TYPES
-                                     for index in srcs):
+            united = frozenset().union(*(phone.type_set(rows[index].get("type")) for index in srcs))
+            if not behind or not united >= phone.WILDCARD_TYPES:
                 continue
             if any((record.get("_current") or {}).get("ims") for record in behind):
                 continue

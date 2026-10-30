@@ -340,6 +340,13 @@ def explain(
                     # (keep_load_bearing_rows, rule round 38, F1); empty
                     # otherwise.
                     "role_gap_kept_load_bearing": list(row.get("_role_gap_kept_load_bearing") or ()),
+                    # The row lost "ims": Android stores it as one with the
+                    # other rows of its unique key, their united types are
+                    # TYPE_ALL, no current vendor backs any of them for ims,
+                    # and a current vendor's ims row takes the IMS lead on
+                    # LTE, NR and IWLAN (change 18's IMS mirror, rule round
+                    # 37, item 2).
+                    "ims_left_out_star_group": bool(row.get("_ims_left_out_star_group")),
                 },
             }
         )

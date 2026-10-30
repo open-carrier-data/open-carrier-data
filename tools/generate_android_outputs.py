@@ -491,6 +491,11 @@ class ApnRows(NamedTuple):
     # (keep_load_bearing_rows, rule round 38, F1), each marked
     # "_role_gap_kept_load_bearing" with those types.
     role_gap_kept_load_bearing: tuple[dict[str, Any], ...] = ()
+    # Change 18's IMS mirror (rule round 37, item 2,
+    # leave_out_unbacked_star_ims): rows of a *-typed android_unique_key
+    # group no current vendor backs for ims that lost "ims", each marked
+    # "_ims_left_out_star_group".
+    star_ims_left_out: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -2535,6 +2540,165 @@ def keep_role_gap_rows_f1(
     return kept, changed, [], restored
 
 
+# Change 18's IMS mirror (rule decisions round 37, item 2): the network types
+# it reads a row on, as step 2c reads "ims" (row_network_types): the 3GPP data
+# types of MMS_NETWORK_TYPES plus IWLAN, because IMS also runs over Wi-Fi.
+STAR_IMS_READ_TYPES = MMS_NETWORK_TYPES | {IWLAN_NETWORK_TYPE}
+# Check 7's network types: LTE, NR and IWLAN (TelephonyManager values), read
+# with DataProfileManager's merge on and off.
+STAR_IMS_GATE_TYPES = (13, 20, IWLAN_NETWORK_TYPE)
+
+
+def vendor_ims_row(record: dict[str, Any]) -> bool:
+    """A usable row a current vendor backs for "ims" (_current), with a real
+    APN (round 36 item 3: android_usable, enabled, cellular, APN set 0 or
+    -1)."""
+    return (bool((record.get("_current") or {}).get("ims")) and not placeholder_apn(record.get("apn"))
+            and android_usable(record))
+
+
+def star_ims_gate_leads(written: list[dict[str, Any]]) -> dict[tuple[bool, int], dict[str, Any] | None]:
+    """The IMS lead of one written scope on each of STAR_IMS_GATE_TYPES with
+    DataProfileManager's merge on and off, keyed (merge, network type): the
+    first data profile that serves "ims" on the type and can serve a
+    cellular request (android_phone_model, as role_gap_leads reads it), or
+    None. A profile's "srcs" and "base_srcs" are positions in WRITTEN."""
+    phone = android_phone_model
+    leads: dict[tuple[bool, int], dict[str, Any] | None] = {}
+    if not written:
+        return {(merge, network_type): None for merge in ROLE_GAP_MERGE_MODES for network_type in STAR_IMS_GATE_TYPES}
+    rows = phone.parse_lines(apn_row_line(record) for record in written)
+    stored = phone.scope_rows(phone.provider(rows), phone.scope_of(rows[0]))
+    for merge in ROLE_GAP_MERGE_MODES:
+        settings = phone.profiles(stored, merge)
+        for network_type in STAR_IMS_GATE_TYPES:
+            leads[(merge, network_type)] = next(
+                (profile for profile in settings
+                 if "ims" in profile["types"] and phone.serves(profile, network_type) and phone.cellular(profile)),
+                None,
+            )
+    return leads
+
+
+def leave_out_unbacked_star_ims(
+    records: list[dict[str, Any]], frozen_copies: frozenset[str] = FROZEN_PIXEL_COPY_SOURCES
+) -> list[dict[str, Any]]:
+    """Change 18's IMS mirror (rule decisions round 37, item 2; round 35,
+    item C, condition 4), in group form. Android takes the first profile that
+    serves "ims" for IMS registration, and TelephonyProvider stores the file
+    rows that are equal on its unique fields (android_unique_key) as one row
+    with the union of their types. So a group whose united types hold every
+    type of Android's TYPE_ALL (ANDROID_WILDCARD_TYPES, the list the
+    sanitizer writes for a source's `*` and for an empty type) serves "ims"
+    even when no single row of it has every type: on 204/08 (KPN) two
+    portalmmm.nl rows typed "cbs,dun,fota,hipri,ims" and "default,mms,supl"
+    stored as one, ahead of KPN's vendor ims rows, and carried VoLTE and
+    Wi-Fi calling on KPN's MMS APN.
+
+    It runs in write_scope after change 1 (leave_out_stale_attach). The rule's
+    subject is a group whose united types include every type of
+    ANDROID_WILDCARD_TYPES (check 2) and of which no row is backed for "ims"
+    by a current vendor (check 3: _current, CURRENT_VENDOR_APN_SOURCES;
+    old-build and superseded-pack sources do not count, nor do Apple,
+    LineageOS, Sony and Fairphone). The scope changes only when all of these
+    hold:
+
+    1. the scope has a usable row a current vendor backs for "ims", with a
+       real APN (vendor_ims_row: android_usable, round 36 item 3);
+    3b. for every subject group, no row of the scope with the group's APN
+        value (letter case ignored) is backed for "ims" by a current vendor:
+        then a current vendor runs IMS on that APN (the group's own rows are
+        check 3's, so this reads the rows outside it);
+    4. coverage: for every subject group, usable rows outside it that a
+       current vendor backs for "ims" (vendor_ims_row) together serve every
+       network type of STAR_IMS_READ_TYPES (the 3GPP data types plus IWLAN,
+       row_network_types) on which the group serves "ims" (its rows' merged
+       bitmask): Android adds its DEFAULT IMS profile only when no profile
+       serves "ims" at all, so a gap would cost Wi-Fi calling or VoNR;
+    5. the scope is not on a persist_apns_for_plmn network
+       (android_phone_model.PERSIST_APNS_FOR_PLMN);
+    7. the gate: the scope is written (write_scope_steps, every later step)
+       once as it is and once with "ims" off the subject groups, and the IMS
+       lead of both is read on LTE, NR and IWLAN with the merge on and off
+       (star_ims_gate_leads; IWLAN read as step 2c reads it). Wherever a
+       subject group carries the IMS lead before the change, the first
+       stored row that serves "ims" after it must hold a usable row a
+       current vendor backs for "ims" (vendor_ims_row).
+
+    If any check fails, the scope stays as it is. Otherwise "ims" comes off
+    every row of each subject group that has another type; a row whose only
+    type is "ims" is left alone. A changed row keeps its other types, its
+    place and every value, and is marked "_ims_left_out_star_group", which is
+    never written; the profile JSON keeps the type set its sources give.
+    Returns the rows changed."""
+    if not records:
+        return []
+    if f"{records[0].get('mcc', '')}{records[0].get('mnc', '')}" in PERSIST_APNS_FOR_PLMN:
+        return []
+    vendor = [record for record in records if vendor_ims_row(record) and row_network_types(record, STAR_IMS_READ_TYPES)]
+    if not vendor:
+        return []
+    groups: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for record in records:
+        groups[android_unique_key(record)].append(record)
+    subjects: list[tuple[tuple[str, ...], list[dict[str, Any]]]] = []
+    for key, group in groups.items():
+        united = set().union(*(apn_row_types(record["type"]) for record in group))
+        if not set(ANDROID_WILDCARD_TYPES) <= united:
+            continue
+        if any((record.get("_current") or {}).get("ims") for record in group):
+            continue
+        subjects.append((key, group))
+    if not subjects:
+        return []
+    for key, group in subjects:
+        apn_value = str(group[0].get("apn", "")).casefold()
+        if any(str(record.get("apn", "")).casefold() == apn_value and (record.get("_current") or {}).get("ims")
+               and android_unique_key(record) != key for record in records):
+            return []
+        served = frozenset().union(*(row_network_types(record, STAR_IMS_READ_TYPES) for record in group))
+        covered = frozenset().union(*(row_network_types(record, STAR_IMS_READ_TYPES) for record in vendor
+                                      if android_unique_key(record) != key))
+        if not served <= covered:
+            return []
+    # Check 7 on deep copies: the subject rows carry a probe mark, so the
+    # written positions of their stored rows are known.
+    subject_ids = {id(record) for _, group in subjects for record in group}
+    before = copy.deepcopy(records)
+    after = copy.deepcopy(records)
+    for original, plain, changed in zip(records, before, after):
+        if id(original) not in subject_ids:
+            continue
+        plain["_star_ims_probe"] = changed["_star_ims_probe"] = True
+        types = apn_row_types(changed["type"])
+        if "ims" in types and types != ["ims"]:
+            changed["type"] = ",".join(apn_type for apn_type in types if apn_type != "ims")
+    written_before = write_scope_steps(before, frozen_copies).written
+    written_after = write_scope_steps(after, frozen_copies).written
+    probe_before = {position for position, record in enumerate(written_before) if record.get("_star_ims_probe")}
+    leads_before = star_ims_gate_leads(written_before)
+    leads_after = star_ims_gate_leads(written_after)
+    for gate, lead in leads_before.items():
+        if lead is None or not set(lead["srcs"]) & probe_before:
+            continue
+        new = leads_after.get(gate)
+        if new is None or not any(
+            vendor_ims_row(written_after[position]) and not written_after[position].get("_star_ims_probe")
+            for position in new["base_srcs"]
+        ):
+            return []
+    changed_rows: list[dict[str, Any]] = []
+    for _, group in subjects:
+        for record in group:
+            types = apn_row_types(record["type"])
+            if "ims" not in types or types == ["ims"]:
+                continue
+            record["type"] = ",".join(apn_type for apn_type in types if apn_type != "ims")
+            record["_ims_left_out_star_group"] = True
+            changed_rows.append(record)
+    return changed_rows
+
+
 class ScopeRows(NamedTuple):
     """One scope as apns-conf.xml writes it (write_scope)."""
 
@@ -2549,18 +2713,33 @@ class ScopeRows(NamedTuple):
     # STALE_INTERNET_GROUP_TYPES, and the rows left out.
     stale_types: dict[str, int] = {}
     type_left_out: list[dict[str, Any]] = []
+    # Change 18's IMS mirror (rule round 37, item 2): the rows it retyped.
+    star_ims_left_out: list[dict[str, Any]] = []
 
 
 def write_scope(records: list[dict[str, Any]],
                 frozen_copies: frozenset[str] = FROZEN_PIXEL_COPY_SOURCES) -> ScopeRows:
     """Steps 4 to 9 of apn_xml_rows for the rows of one scope, in order: a
-    stale attach type left out, an emergency type without a stated reason left
-    out, the rows ranked, MMS sent to a current vendor's MMS row, the rows
-    Android stores as one written together (after step 2c,
-    take_type_off_internet_group, step 4b, put_vendor_attach_first, and step
-    2d, take_mms_off_type_internet_leads, rule round 36), D8 rule 1, and the
-    absorbed MMS-only rows left out. The rows are changed in place."""
+    stale attach type left out (change 1), the ims type of a *-typed group no
+    current vendor backs for ims left out (change 18's IMS mirror, rule round
+    37, leave_out_unbacked_star_ims), then write_scope_steps: an emergency
+    type without a stated reason left out, the rows ranked, MMS sent to a
+    current vendor's MMS row, the rows Android stores as one written together
+    (after step 2c, take_type_off_internet_group, step 4b,
+    put_vendor_attach_first, and step 2d, take_mms_off_type_internet_leads,
+    rule round 36), D8 rule 1, and the absorbed MMS-only rows left out. The
+    rows are changed in place."""
     ia_left_out = leave_out_stale_attach(records)
+    star_ims = leave_out_unbacked_star_ims(records, frozen_copies)
+    return write_scope_steps(records, frozen_copies)._replace(ia_left_out=ia_left_out, star_ims_left_out=star_ims)
+
+
+def write_scope_steps(records: list[dict[str, Any]],
+                      frozen_copies: frozenset[str] = FROZEN_PIXEL_COPY_SOURCES) -> ScopeRows:
+    """write_scope after change 1 and the IMS mirror: every later step, in
+    order. The IMS mirror's check 7 writes a scope with it. The rows are
+    changed in place; ia_left_out is 0."""
+    ia_left_out = 0
     scope_records, emergency_changed = leave_out_emergency(records)
     ranked, retyped = put_vendor_mms_first(rank_scope(scope_records))
     # Step 2c (rule round 34) runs right after put_vendor_mms_first, so after
@@ -2608,7 +2787,10 @@ def apn_xml_rows(
     where their role is no gap (keep_role_gap_rows, round 35) unless they are
     load-bearing for a gap role's lead (round 38, F1), a stale attach
     type left out
-    (leave_out_stale_attach), an emergency type that moves the emergency
+    (leave_out_stale_attach), the ims type of a *-typed group no current
+    vendor backs for ims left out where a current vendor's ims row takes the
+    IMS lead (leave_out_unbacked_star_ims, round 37), an emergency type that
+    moves the emergency
     request away from Android's default without a stated reason left out
     (leave_out_emergency), each scope ranked by its evidence, MMS sent to a
     current vendor's MMS row that serves a mobile network
@@ -2649,6 +2831,7 @@ def apn_xml_rows(
     frozen_copies = frozen_pixel_copy_sources(evidence)
     stale_types: Counter[str] = Counter({apn_type: 0 for apn_type in STALE_INTERNET_GROUP_TYPES})
     type_left_out: list[dict[str, Any]] = []
+    star_ims_left_out: list[dict[str, Any]] = []
     for scope in sorted(scopes):
         scope_records, gap_changed, gap_whole, gap_restored = keep_role_gap_rows_f1(scopes[scope])
         role_gap_left_out.extend(gap_changed)
@@ -2664,10 +2847,12 @@ def apn_xml_rows(
         mms_absorbed.extend(result.mms_absorbed)
         stale_types.update(result.stale_types)
         type_left_out.extend(result.type_left_out)
+        star_ims_left_out.extend(result.star_ims_left_out)
     return ApnRows(
         ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out),
         tuple(credentials_left_out), tuple(credentials_kept), tuple(role_gap_left_out), tuple(role_gap_kept_whole),
         tuple(sorted(stale_types.items())), tuple(type_left_out), tuple(role_gap_kept_load_bearing),
+        star_ims_left_out=tuple(star_ims_left_out),
     )
 
 
@@ -3086,6 +3271,7 @@ def write_metadata(
     stale_types_left_out: int = 0,
     rows_left_out_stored_with_internet: int = 0,
     role_gap_rows_kept_load_bearing: int = 0,
+    star_ims_types_left_out: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -3149,6 +3335,12 @@ def write_metadata(
             # nothing of them is left out. --explain marks them
             # role_gap_kept_load_bearing.
             "role_gap_rows_kept_load_bearing": role_gap_rows_kept_load_bearing,
+            # Change 18's IMS mirror (rule round 37, item 2): rows of a
+            # group Android stores as one, whose united types are TYPE_ALL
+            # and no current vendor backs for ims, that lost "ims" where a
+            # current vendor's ims row takes the IMS lead. --explain marks
+            # them ims_left_out_star_group. Profile JSON keeps the type.
+            "ims_types_left_out_star_group_not_vendor_backed": star_ims_types_left_out,
             # Rows of apns-conf.xml leave_out_emergency took the "emergency"
             # type off, by reason; a row whose only type it was is not
             # written. Android's own default emergency profile then applies
@@ -3243,6 +3435,7 @@ def main(argv: list[str]) -> int:
         sum(count for _, count in apn_rows.stale_types_left_out),
         len(apn_rows.rows_left_out_stored_with_internet),
         len(apn_rows.role_gap_kept_load_bearing),
+        len(apn_rows.star_ims_left_out),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -3264,6 +3457,7 @@ def main(argv: list[str]) -> int:
         f"is no gap ({sum(1 for record in apn_rows.role_gap_left_out if not record['type'])} left out), "
         f"{len(apn_rows.role_gap_kept_whole)} kept whole in scopes that would otherwise be gone, "
         f"{len(apn_rows.role_gap_kept_load_bearing)} given back their load-bearing types, "
+        f"{len(apn_rows.star_ims_left_out)} row(s) of a *-typed group no current vendor backs for ims without ims, "
         f"LineageOS's Pixel APN snapshot "
         f"{'superseded, a frozen Pixel copy for rule 1' if pixel_snapshot_superseded(evidence) else 'not superseded'}"
     )
@@ -3275,6 +3469,15 @@ def main(argv: list[str]) -> int:
         print(
             f"legacy list row kept load-bearing: {record.get('mcc', '')}/{record.get('mnc', '')}{selector} "
             f"{record['apn']} {','.join(record['_role_gap_kept_load_bearing'])}"
+        )
+    # The rows change 18's IMS mirror took "ims" off (rule round 37, item 2):
+    # the IMS lead of their scope moves to a current vendor's ims row, so
+    # every run names them.
+    for record in apn_rows.star_ims_left_out:
+        selector = f" {record['mvno_type']}" if record.get("mvno_type") else ""
+        print(
+            f"ims left out of a *-typed group: {record.get('mcc', '')}/{record.get('mnc', '')}{selector} "
+            f"{record['apn']} {record['type']}"
         )
     return 0
 
