@@ -725,6 +725,72 @@ class Round35HardeningTests(GuardCase):
         self.assertNotIn("fallback changes the internet APN", out)
 
 
+class Round38ReportTests(GuardCase):
+    """Rule round 38: the stop check's corrections in the report, never held
+    (E7b, B4 re-scoped, B5's three counts, the persist events and the new
+    MVNO scopes' host-fallback diff)."""
+
+    SUPL = 'mcc="262" mnc="01" apn="internet" type="supl" protocol="IPV4V6" roaming_protocol="IPV4V6"'
+
+    def test_e7b_a_first_profile_lead_on_an_apn_no_vendor_gives(self) -> None:
+        other = self.SUPL.replace('apn="internet"', 'apn="dnapro.example"')
+        vendor = [{"mcc": "262", "mnc": "01", "apn": "internet", "type": "supl", "_current": {"supl": ["google_carriersettings"]}}]
+        code, out, result = self.run_guard(xml(self.SUPL, WEB), xml(other, WEB), vendor)
+        self.assertEqual((code, result["verdict"], result["trips"]), (0, "pass", []))
+        self.assertIn("supl lead moves to an APN no current vendor gives for supl: 1: 262/01 "
+                      "(internet -> dnapro.example)", out)
+        # A lead that moves to an APN a current vendor gives for the type is not listed.
+        vendor.append({"mcc": "262", "mnc": "01", "apn": "dnapro.example", "type": "supl",
+                       "_current": {"supl": ["samsung_omc"]}})
+        _, out, _ = self.run_guard(xml(self.SUPL, WEB), xml(other, WEB), vendor)
+        self.assertNotIn("supl lead moves to an APN", out)
+        # A fota lead that moves onto a row of another role is listed; one
+        # that only appears is not a move.
+        fota = 'mcc="262" mnc="01" apn="admin.example" type="fota"'
+        wide = 'mcc="262" mnc="01" apn="web.example" type="default,fota"'
+        _, out, _ = self.run_guard(xml(WEB, fota), xml(wide, WEB, fota), [])
+        self.assertIn("fota lead moves to an APN no current vendor gives for fota: 1: 262/01 (admin.example -> web.example)", out)
+        _, out, _ = self.run_guard(xml(WEB), xml(WEB, fota), [])
+        self.assertNotIn("fota lead moves", out)
+
+    def test_e7b_mms_to_a_tuple_no_vendor_gives(self) -> None:
+        other = MMS.replace("http://mms.example/", "http://mms.other.example/")
+        code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB, other), [])
+        self.assertEqual((code, result["verdict"]), (0, "pass"))
+        self.assertIn("MMS moves to a tuple no current vendor gives: 1: 262/01", out)
+
+    def test_b4_and_b5_the_copys_leads_and_rows(self) -> None:
+        copy = {"default": ["lineageos_legacy_apn_list"], "supl": ["lineageos_legacy_apn_list"]}
+        google = {"default": ["google_carriersettings"]}
+        old = 'mcc="262" mnc="01" apn="web.old" type="default,supl"'
+        vendor_row = 'mcc="262" mnc="01" apn="web" type="default"'
+        records = records_of([(old, copy, {}), (vendor_row, google, google)])
+        _, out, result = self.run_guard(xml(old, vendor_row), xml(old, vendor_row), records)
+        # The base and head files are equal: the guard passes before it reads them.
+        self.assertEqual(result["verdict"], "pass")
+        base = 'mcc="262" mnc="02" apn="net" type="default"'
+        _, out, _ = self.run_guard(xml(old, vendor_row, base), xml(old, vendor_row), records)
+        self.assertIn("LineageOS's legacy list (B5): among the sources of 1 row(s) in 1 scope(s); alone backs a type "
+                      "on 1 row(s) in 1 scope(s); the only source of 1 row(s)", out)
+        self.assertIn("legacy list leads a role a current vendor gives, same as base: 1 scope(s): "
+                      "262/01 attach web.old, 262/01 internet web.old", out)
+        _, out, _ = self.run_guard(xml(vendor_row, base), xml(old, vendor_row), records)
+        self.assertIn("legacy list leads a role a current vendor gives, differs from base: 1 scope(s): "
+                      "262/01 attach web.old, 262/01 internet web.old", out)
+
+    def test_a_new_mvno_scope_lists_its_host_fallback_diff(self) -> None:
+        gid = 'mcc="262" mnc="01" mvno_type="gid" mvno_match_data="ab" apn="brand.web" type="default,supl"'
+        _, out, result = self.run_guard(xml(WEB), xml(WEB, gid))
+        self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
+        self.assertIn("MVNO scope new, its SIMs' internet APN changes from the host's: 1: 262/01 GID ab (web -> brand.web)", out)
+
+    def test_the_persist_events_change_is_listed(self) -> None:
+        dun = 'mcc="204" mnc="04" apn="live.example" type="default,dun"'
+        plain = 'mcc="204" mnc="04" apn="live.example" type="default"'
+        _, out, _ = self.run_guard(xml(WEB), xml(WEB, dun, plain))
+        self.assertIn("persist_apns_for_plmn events change: [] -> ['20404']", out)
+
+
 class DigestTests(GuardCase):
     def test_exact_digest_passes(self) -> None:
         code, out, result = self.run_guard(xml(WEB, MMS), xml(WEB))

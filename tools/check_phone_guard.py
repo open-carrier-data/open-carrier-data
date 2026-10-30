@@ -81,6 +81,28 @@ changed" the same way, report only and never held: #228's dry run moved
 204/04's tethering lead to another operator's APN and 244/04's and 244/13's
 SUPL leads to APNs no current vendor gives, and no line showed it.
 
+Rule round 38 also ports the stop check's corrections into the report, all
+never held (items 1, 3, 4, 5 and 7):
+- E7b: a dun, xcap, supl, fota or cbs lead (FIRST_PROFILE_ROLE_TYPES) that
+  moves to another APN no current vendor gives for that type ("<type> lead
+  moves to an APN no current vendor gives for <type>"), and MMS that moves
+  from a working tuple to another one no current vendor gives ("MMS moves to
+  a tuple no current vendor gives"), on the head's vendor rows. A lead that
+  only appears is not a move.
+- B4 re-scoped: a lead of LineageOS's legacy list (ROLE_GAP_COPY, every file
+  row behind it that serves the role's type backed for it by the copy alone)
+  where a current vendor gives an APN for the role on that network type, as
+  "same as base" or "differs from base" against the base's lead.
+- B5: three counts of the head's rows from the generator's records: rows the
+  copy is among the sources of, rows (and scopes) where it alone backs a
+  type, and rows only it gives.
+- E11: the persist_apns_for_plmn events, before and after, as before; a
+  change of the networks they fire on is its own line.
+- MVNO scopes new in the head, with the roles whose APN their SIMs got from
+  the host network's plain rows in the base and now get from the new scope.
+E12 (head to PR against base) needs a third build and stays in the dry run's
+stop check.
+
 The `emergency` lead is what the phone uses (rule decisions of 2026-10-18,
 round 21, S1-A): the first profile that can handle `emergency` (enabled, with
 the type; an empty type is Android's TYPE_ALL, which has no emergency bit,
@@ -141,6 +163,12 @@ WATCH_APN_TYPES = ("ims",)
 # Leads whose APN change alone is reported, never held (rule round 34: xcap;
 # rule round 38, item 5: dun and supl).
 REPORT_APN_CHANGE_TYPES = ("xcap", "dun", "supl")
+# E7b (rule round 38, item 5): the first-profile roles whose lead moving to an
+# APN no current vendor gives for the type is reported.
+FIRST_PROFILE_ROLE_TYPES = ("dun", "xcap", "supl", "fota", "cbs")
+# The role-gap copy (the public generator's ROLE_GAP_SOURCES): B4 and B5 of
+# rule round 38 read its leads and rows.
+ROLE_GAP_COPY = "lineageos_legacy_apn_list"
 WATCH_LIST_LIMIT = 30
 # Report lines that touch these network types are listed first (round 21).
 WATCH_FIRST = ("LTE", "NR", "IWLAN")
@@ -622,7 +650,7 @@ def typed_leads(rows: list[dict[str, Any]], tables: dict) -> dict:
                 entry[f"{kind}_internet"] = bool(lead and not lead.get("android_default")
                                                  and "default" in lead["types"])
                 entry[f"{kind}_srcs"] = tuple(lead["base_srcs"]) if lead and not lead.get("android_default") else ()
-            for kind in REPORT_APN_CHANGE_TYPES:
+            for kind in dict.fromkeys(REPORT_APN_CHANGE_TYPES + FIRST_PROFILE_ROLE_TYPES):
                 entry[kind] = phone.lead_key(next((p for p in settings if kind in p["types"]
                                                    and phone.serves(p, network_type) and phone.cellular(p)), None))
             entry["emergency"] = emergency_key(emergency_lead(emergency, network_type))
@@ -772,6 +800,109 @@ def star_ims_leads(typed: dict, rows: list[dict[str, Any]],
              "old": "", "new": v} for (s, v), t in sorted(found.items())]
 
 
+def arrival_changes(scope: phone.Scope, before: dict, after: dict,
+                    typed: tuple[dict, dict] | None) -> list[tuple[str, str]]:
+    """For an MVNO scope new in the head: the roles (internet, attach, MMS,
+    IMS) whose APN its SIMs got from the network's plain rows in the base and
+    now get from the new scope, on WATCH_TYPES (rule decisions round 38: the
+    new MVNO scopes are listed with their host-fallback diff)."""
+    host = (scope[0], scope[1], "", "")
+    if host not in before:
+        return [("internet", "the network had no plain rows")]
+    changes: dict[str, set[str]] = defaultdict(set)
+    for name in WATCH_TYPES:
+        if name not in before[host] or name not in after[scope]:
+            continue
+        b_inet, b_mms, b_attach = before[host][name][:3]
+        a_inet, a_mms, a_attach = after[scope][name][:3]
+        for role, old, new in (("internet", b_inet, a_inet), ("attach", b_attach, a_attach)):
+            if (old is None) != (new is None) or (old and new and str(old[0]).casefold() != str(new[0]).casefold()):
+                changes[role].add(f"{lead_text(old)} -> {lead_text(new)}")
+        if norm(b_mms) != norm(a_mms):
+            changes["MMS"].add(f"{mms_text(b_mms)} -> {mms_text(a_mms)}")
+        if typed is not None and host in typed[0] and scope in typed[1]:
+            old, new = typed[0][host][name]["ims"], typed[1][scope][name]["ims"]
+            if (old is None) != (new is None) or (old and new and str(old[0]).casefold() != str(new[0]).casefold()):
+                changes["IMS"].add(f"{lead_text(old)} -> {lead_text(new)}")
+    return [(role, "; ".join(sorted(values))) for role, values in sorted(changes.items())]
+
+
+def copy_counts(rows: list[dict[str, Any]], records: list[dict[str, Any]]) -> dict[str, int]:
+    """B5 of rule round 38: the head's rows the role-gap copy is among the
+    sources of, the rows and scopes where it alone backs a type, and the rows
+    only it gives, from the generator's records aligned with ROWS."""
+    among, alone, only = set(), set(), set()
+    for index, record in enumerate(records):
+        support = record.get("_support") or {}
+        if any(ROLE_GAP_COPY in sources for sources in support.values()):
+            among.add(index)
+        if any(sources and set(sources) <= {ROLE_GAP_COPY} for sources in support.values()):
+            alone.add(index)
+        everything = set().union(*map(set, support.values())) if support else set()
+        if everything and everything <= {ROLE_GAP_COPY}:
+            only.add(index)
+    return {
+        "rows_copy_among_sources": len(among),
+        "scopes_copy_among_sources": len({phone.scope_of(rows[index]) for index in among}),
+        "rows_copy_alone_backs_a_type": len(alone),
+        "scopes_copy_alone_backs_a_type": len({phone.scope_of(rows[index]) for index in alone}),
+        "rows_only_the_copy_gives": len(only),
+    }
+
+
+def copy_leads(before: dict, before_typed: dict, rows: list[dict[str, Any]], tables: dict,
+               records: list[dict[str, Any]], vendor: dict) -> dict[str, set[tuple[str, str, str]]]:
+    """B4 of rule round 38, re-scoped: the head's leads of the role-gap copy
+    (every file row behind the lead that serves the role's type is backed for
+    it by the copy alone) where a current vendor gives an APN for the role on
+    that network type of WATCH_TYPES, by whether the lead is the same as the
+    base's for that role and type."""
+    role_types = {"internet": "default", "attach": "ia", "MMS": "mms", "ims": "ims",
+                  **{kind: kind for kind in FIRST_PROFILE_ROLE_TYPES}}
+    vendor_types = {"internet": {"default"}, "attach": {"default", "ia"}}
+
+    def copy_alone(index: int, apn_type: str) -> bool:
+        sources = ((records[index].get("_support") or {}).get(apn_type)) or ()
+        return bool(sources) and set(sources) <= {ROLE_GAP_COPY}
+
+    found: dict[str, set[tuple[str, str, str]]] = defaultdict(set)
+    for scope in {phone.scope_of(row) for row in rows}:
+        settings = phone.profiles(phone.scope_rows(tables, scope))
+        known = vendor.get(scope, {})
+        for name, network_type in WATCH_TYPES.items():
+            internet, mms, attach = phone.leads(settings, network_type)
+            leads = {"internet": internet, "attach": attach, "MMS": mms}
+            for kind in ("ims",) + FIRST_PROFILE_ROLE_TYPES:
+                leads[kind] = next((p for p in settings if kind in p["types"] and phone.serves(p, network_type)
+                                    and phone.cellular(p)), None)
+            for role, lead in leads.items():
+                if lead is None:
+                    continue
+                want = "default" if role == "attach" and "ia" not in lead["types"] else role_types[role]
+                serving = [index for index in lead["srcs"] if 0 <= index < len(records)
+                           and want in phone.type_set(rows[index].get("type"))]
+                if not serving or not all(copy_alone(index, want) for index in serving):
+                    continue
+                wanted = vendor_types.get(role, {role_types[role]})
+                if not any((wanted & q["types"]) and phone.serves(q, network_type) and phone.cellular(q)
+                           and known.get(str(q["apn"]).casefold(), {}).get("types", set()) & wanted
+                           for q in settings):
+                    continue
+                if scope not in before or name not in before[scope]:
+                    same = False
+                elif role == "internet":
+                    same = before[scope][name][0] == phone.lead_key(lead)
+                elif role == "attach":
+                    same = before[scope][name][2] == phone.lead_key(lead)
+                elif role == "MMS":
+                    same = before[scope][name][4] == phone.lead_key(lead)
+                else:
+                    same = before_typed.get(scope, {}).get(name, {}).get(role) == phone.lead_key(lead)
+                found["legacy list leads a role a current vendor gives, " +
+                      ("same as base" if same else "differs from base")].add((fmt(scope), role, str(lead["apn"])))
+    return found
+
+
 def read_rows(path: Path) -> list[dict[str, Any]]:
     """The rows of an apns-conf.xml. The file must be well-formed XML with
     one `<apn>` element per line, as the generator writes it."""
@@ -833,9 +964,24 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
             for role, change in fallback_changes(scope, before, after, typed):
                 items[f"MVNO scope gone, its SIMs' fallback changes the {role} APN"].add(
                     f"{fmt(scope)} ({change})")
+    for scope in sorted(set(after) - set(before)):
+        if scope[2]:
+            for role, change in arrival_changes(scope, before, after, typed):
+                items[f"MVNO scope new, its SIMs' {role} APN changes from the host's"].add(f"{fmt(scope)} ({change})")
     for scope in sorted(set(before) & set(after)):
         b, a, s = before[scope], after[scope], fmt(scope)
         known = rows.get(scope, {})
+        # E7b (rule round 38, item 5): a first-profile role's lead moves to
+        # another APN no current vendor gives for the type.
+        if typed is not None and scope in typed[0] and scope in typed[1]:
+            for name in WATCH_TYPES:
+                for kind in FIRST_PROFILE_ROLE_TYPES:
+                    old, new = typed[0][scope][name].get(kind), typed[1][scope][name].get(kind)
+                    if not new or not old or str(old[0]).casefold() == str(new[0]).casefold():
+                        continue
+                    if kind not in (known.get(str(new[0]).casefold()) or {}).get("types", set()):
+                        items[f"{kind} lead moves to an APN no current vendor gives for {kind}"].add(
+                            f"{s} ({lead_text(old)} -> {lead_text(new)})")
         tuples = {norm(t) for t in vendor.get(scope, ())}
         lost: dict[str, set[str]] = defaultdict(set)
         for name in {**HOLD_TYPES, **OTHER_TYPES}:
@@ -872,6 +1018,10 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
                         and not ((vendor_apn or {}).get("types", set()) & ROLE_TYPES[role])):
                     items[f"{role} lead moves to an APN no current vendor gives for "
                           f"{' or '.join(sorted(ROLE_TYPES[role]))}"].add(s)
+            # E7b (rule round 38): MMS moves from a working tuple to another
+            # one no current vendor gives.
+            if works(b_mms) and works(a_mms) and norm(b_mms) != norm(a_mms) and norm(a_mms) not in tuples:
+                items["MMS moves to a tuple no current vendor gives"].add(f"{s} ({mms_text(b_mms)} -> {mms_text(a_mms)})")
             if b_mms != a_mms and works(b_mms) and works(a_mms) and norm(b_mms) != norm(a_mms):
                 if norm(a_mms) in tuples and norm(b_mms) not in tuples:
                     items["MMS moves to a vendor tuple"].add(s)
@@ -881,10 +1031,14 @@ def report(before: dict, after: dict, tables: tuple, vendor: dict, rows: dict,
             if groups == {"other"}:
                 items[f"{kind} lost only on IWLAN or CDMA"].add(s)
     lines = [f"stored rows: {phone.stored_count(tables[0])} -> {phone.stored_count(tables[1])}"]
+    fired = []
     for label, table in zip(("before", "after"), tables):
         events = phone.persist_events(table)
+        fired.append(sorted({numeric for numeric, _ in events}))
         if events:
-            lines.append(f"persist_apns_for_plmn fires {label}: {sorted({numeric for numeric, _ in events})}")
+            lines.append(f"persist_apns_for_plmn fires {label}: {fired[-1]}")
+    if fired[0] != fired[1]:
+        lines.append(f"persist_apns_for_plmn events change: {fired[0]} -> {fired[1]}")
     for key in sorted(items):
         scopes = sorted(items[key])
         more = f" and {len(scopes) - LIST_LIMIT} more" if len(scopes) > LIST_LIMIT else ""
@@ -937,6 +1091,20 @@ def main(argv: list[str]) -> int:
         if records is None:
             lines.append("credential sources: unknown, the generator's records of --generator are not "
                          "the head file's rows")
+        else:
+            counts = copy_counts(after_rows, records)
+            if counts["rows_copy_among_sources"]:
+                lines.append(
+                    f"LineageOS's legacy list (B5): among the sources of {counts['rows_copy_among_sources']} "
+                    f"row(s) in {counts['scopes_copy_among_sources']} scope(s); alone backs a type on "
+                    f"{counts['rows_copy_alone_backs_a_type']} row(s) in {counts['scopes_copy_alone_backs_a_type']} "
+                    f"scope(s); the only source of {counts['rows_only_the_copy_gives']} row(s)")
+            for key, scopes in sorted(copy_leads(before, before_typed, after_rows, after_tables, records,
+                                                 vendor_rows(args.generator.resolve())).items()):
+                listed = sorted(f"{scope} {role} {apn}" for scope, role, apn in scopes)
+                more = f" and {len(listed) - LIST_LIMIT} more" if len(listed) > LIST_LIMIT else ""
+                lines.append(f"{key}: {len({scope for scope, _role, _apn in scopes})} scope(s): "
+                             f"{', '.join(listed[:LIST_LIMIT])}{more}")
         watched = watch(before, after, before_typed, after_typed) + star_ims_leads(after_typed, after_rows, records)
         print(f"phone-level guard: {verdict.upper()}, {len(found)} trip(s) on {', '.join(HOLD_TYPES)}")
         for trip in found:
