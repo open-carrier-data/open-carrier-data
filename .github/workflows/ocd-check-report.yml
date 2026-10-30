@@ -25,7 +25,8 @@ name: OCD Check reports
 #   generated/devices/device-records.json and the OCD dataset manifest with
 #   tools/ocd_dataset.py, and opens or updates one bot pull request,
 #   automation/observed-reports, that touches only those files. A maintainer
-#   merges it after validate (with the phone guard) passes. It never commits
+#   queues it after validate (with the phone guard) passes; the job approves
+#   the held pull_request validate run of its push (round 37, item 3). It never commits
 #   to main. It runs daily too, so holds end and records expire on time.
 #   Reports of the owner's account skip the account filters.
 # - source-review: when devices/records/measured.json changes on main, and
@@ -200,10 +201,38 @@ jobs:
             gh pr create --base main --head "$BRANCH" \
               --title "Observed reports (unverified)" --body-file "$RUNNER_TEMP/pr-body.md"
           fi
-          # A push with the workflow token starts no workflow, so the required
-          # validate check is dispatched on the branch; checks_only skips the
-          # freshness alarm.
+          # validate is dispatched on the branch; checks_only skips the
+          # freshness alarm. Its check does not count for the pull request's
+          # required check: only a pull_request run's does, and GitHub holds
+          # the pull_request run of a push or pull request made with the
+          # workflow token for approval (measured on 2026-10-30, rule
+          # decisions round 37, item 3). So the job approves that one run:
+          # validate.yml at exactly the pushed commit, with its read-only
+          # token and no secret.
           gh workflow run validate.yml --ref "$BRANCH" -f checks_only=true
+          pushed="$(git rev-parse HEAD)"
+          started=""
+          for _attempt in $(seq 1 24); do
+            runs="$(gh api "repos/$GH_REPO/actions/runs?head_sha=$pushed&event=pull_request&per_page=100" \
+              --jq '.workflow_runs[] | select(.path | startswith(".github/workflows/validate.yml")) | "\(.id) \(.conclusion // "none")"' 2>/dev/null)" || runs=""
+            pending="$(awk '$2 == "action_required" {print $1; exit}' <<< "$runs")"
+            if [ -n "$pending" ]; then
+              gh api --method POST "repos/$GH_REPO/actions/runs/$pending/approve" > /dev/null
+              started="approved the pull_request validate run $pending"
+              break
+            fi
+            running="$(awk '$2 != "action_required" {print $1; exit}' <<< "$runs")"
+            if [ -n "$running" ]; then
+              started="the pull_request validate run $running started"
+              break
+            fi
+            sleep 5
+          done
+          if [ -z "$started" ]; then
+            echo "::warning::No pull_request validate run appeared for $pushed; the required check is missing until one runs."
+          else
+            echo "validate: $started." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
   source-review:
     if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
