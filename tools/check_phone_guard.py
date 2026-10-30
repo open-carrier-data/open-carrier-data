@@ -76,6 +76,10 @@ changed", the first data profile that serves `xcap` (REPORT_APN_CHANGE_TYPES)
 taking another APN (case-folded), and "attach lead APN changed", the attach
 lead (`android_phone_model.leads`) taking another APN, so a later import that
 moves either lead under change 18 step 2c or step 4b is seen in the publish.
+Rule round 38 (item 5) adds "dun lead APN changed" and "supl lead APN
+changed" the same way, report only and never held: #228's dry run moved
+204/04's tethering lead to another operator's APN and 244/04's and 244/13's
+SUPL leads to APNs no current vendor gives, and no line showed it.
 
 The `emergency` lead is what the phone uses (rule decisions of 2026-10-18,
 round 21, S1-A): the first profile that can handle `emergency` (enabled, with
@@ -134,8 +138,9 @@ LIST_LIMIT = 15
 # The IMS and emergency report (round 20): the hold types plus Wi-Fi calling.
 WATCH_TYPES = {**HOLD_TYPES, "IWLAN": 18}
 WATCH_APN_TYPES = ("ims",)
-# Leads whose APN change alone is reported, never held (rule round 34).
-REPORT_APN_CHANGE_TYPES = ("xcap",)
+# Leads whose APN change alone is reported, never held (rule round 34: xcap;
+# rule round 38, item 5: dun and supl).
+REPORT_APN_CHANGE_TYPES = ("xcap", "dun", "supl")
 WATCH_LIST_LIMIT = 30
 # Report lines that touch these network types are listed first (round 21).
 WATCH_FIRST = ("LTE", "NR", "IWLAN")
@@ -661,7 +666,8 @@ def watch(before: dict, after: dict, before_typed: dict, after_typed: dict) -> l
                            f"{kind.upper()}" if (not old or old_default) else
                            f"{kind.upper()} profile moves onto an internet APN", fmt(scope), old_text,
                            new_text)].append(name)
-            # Rule round 34: the xcap lead's APN change, report only.
+            # Rule rounds 34 and 38: the xcap, dun and supl leads' APN
+            # change, report only.
             for kind in REPORT_APN_CHANGE_TYPES:
                 old, new = before_typed[scope][name][kind], after_typed[scope][name][kind]
                 if old and new and str(old[0]).casefold() != str(new[0]).casefold():

@@ -421,6 +421,25 @@ class ImsEmergencyReportTests(GuardCase):
         code, _, result = self.run_guard(xml(WEB, self.XCAP), xml(WEB, upper))
         self.assertEqual((code, result["watch"]), (0, []))
 
+    def test_dun_and_supl_lead_apn_changed(self) -> None:
+        """Rule round 38, item 5: report only, never held."""
+        dun = 'mcc="262" mnc="01" apn="live.example" type="dun" protocol="IP" roaming_protocol="IP"'
+        other = dun.replace('apn="live.example"', 'apn="ctnet"')
+        result = self.assert_report_only([WEB, dun], [WEB, other], "dun lead APN changed: 1 scope(s)",
+                                         f"262/01: live.example IP/IP -> ctnet IP/IP ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["dun lead APN changed"])
+        # WEB serves supl itself; a supl row ahead of it leads.
+        supl = 'mcc="262" mnc="01" apn="internet" type="supl" protocol="IPV4V6" roaming_protocol="IPV4V6"'
+        other = supl.replace('apn="internet"', 'apn="dnapro.example"')
+        result = self.assert_report_only([supl, WEB], [other, WEB], "supl lead APN changed: 1 scope(s)",
+                                         f"262/01: internet IPV4V6/IPV4V6 -> dnapro.example IPV4V6/IPV4V6 ({self.WATCH})")
+        self.assertEqual([item["condition"] for item in result["watch"]], ["supl lead APN changed"])
+
+    def test_dun_and_supl_lead_case_changes_are_not_reported(self) -> None:
+        dun = 'mcc="262" mnc="01" apn="live.example" type="dun"'
+        code, _, result = self.run_guard(xml(WEB, dun), xml(WEB, dun.replace("live.example", "LIVE.example")))
+        self.assertEqual((code, result["watch"]), (0, []))
+
     def test_attach_lead_apn_changed(self) -> None:
         """Rule round 34: report only, never held."""
         attach = 'mcc="262" mnc="01" apn="attach.example" type="ia" protocol="IPV4V6" roaming_protocol="IPV6"'
