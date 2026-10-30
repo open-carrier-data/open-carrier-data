@@ -752,6 +752,8 @@ class Round38ReportTests(GuardCase):
         self.assertIn("fota lead moves to an APN no current vendor gives for fota: 1: 262/01 (admin.example -> web.example)", out)
         _, out, _ = self.run_guard(xml(WEB), xml(WEB, fota), [])
         self.assertNotIn("fota lead moves", out)
+        # Round 40: a lead that appears is its own line.
+        self.assertIn("fota lead appears on an APN no current vendor gives for fota: 1: 262/01 (none -> admin.example)", out)
 
     def test_e7b_mms_to_a_tuple_no_vendor_gives(self) -> None:
         other = MMS.replace("http://mms.example/", "http://mms.other.example/")
@@ -783,6 +785,28 @@ class Round38ReportTests(GuardCase):
         _, out, result = self.run_guard(xml(WEB), xml(WEB, gid))
         self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
         self.assertIn("MVNO scope new, its SIMs' internet APN changes from the host's: 1: 262/01 GID ab (web -> brand.web)", out)
+
+    def test_a_new_mvno_scope_moving_mms_to_another_proxy_is_listed(self) -> None:
+        """Round 40, item 2: 24-7 Wireless's snapshot SPN scope moved MMS from
+        the host's 209.4.229.46 to 9.4.229.46 on the same APN and MMSC."""
+        host = ('mcc="311" mnc="500" apn="WAP" type="default,mms" mmsc="http://mmsc.ctc.csky.us:6672/" '
+                'mmsproxy="209.4.229.46" mmsport="9201"')
+        spn = ('mcc="311" mnc="500" mvno_type="spn" mvno_match_data="24-7 WIRELESS" apn="wap" type="default,mms" '
+               'mmsc="http://mmsc.ctc.csky.us:6672/" mmsproxy="9.4.229.46" mmsport="9201"')
+        _, out, result = self.run_guard(xml(host), xml(host, spn), [])
+        self.assertEqual((result["verdict"], result["trips"]), ("pass", []))
+        self.assertIn("MVNO scope new, its SIMs' MMS moves off the host's tuple to one no current vendor gives: "
+                      "1: 311/500 SPN 24-7 wireless", out)
+        self.assertIn("mmsproxy=209.4.229.46", out)
+        # The same proxy as the host's, or a tuple a current vendor gives, is not listed.
+        same = spn.replace('mmsproxy="9.4.229.46"', 'mmsproxy="209.4.229.46"')
+        _, out, _ = self.run_guard(xml(host), xml(host, same), [])
+        self.assertNotIn("MMS moves off the host's tuple", out)
+        vendor = [{"mcc": "311", "mnc": "500", "mvno_type": "spn", "mvno_match_data": "24-7 WIRELESS", "apn": "wap",
+                   "type": "default,mms", "mmsc": "http://mmsc.ctc.csky.us:6672/", "mmsproxy": "9.4.229.46",
+                   "mmsport": "9201", "_current": {"mms": ["google_carriersettings"]}}]
+        _, out, _ = self.run_guard(xml(host), xml(host, spn), vendor)
+        self.assertNotIn("MMS moves off the host's tuple", out)
 
     def test_the_persist_events_change_is_listed(self) -> None:
         dun = 'mcc="204" mnc="04" apn="live.example" type="default,dun"'
