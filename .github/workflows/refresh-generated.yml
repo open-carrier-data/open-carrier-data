@@ -14,10 +14,17 @@ name: Refresh generated outputs on pull request branches
 # - always regenerates with the branch's own tools:
 #   tools/generate_android_outputs.py, tools/f5_read.py publish from main's
 #   chain (never with --agent-read) and tools/ocd_dataset.py generate;
-# - commits only generated/ changes, pushes with the built-in token, which
-#   starts no workflow, and dispatches validate on the branch. That run takes
-#   accept lines only from the one open pull request whose head SHA is the
-#   run's (tools/guard_context.py).
+# - commits only generated/ changes, pushes with the built-in token and
+#   dispatches validate on the branch. That run takes accept lines only from
+#   the one open pull request whose head SHA is the run's
+#   (tools/guard_context.py).
+# - approves the pull_request validate run of the pushed commit. GitHub gives
+#   the built-in token's push such a run, waiting for approval, and only a
+#   pull_request run's check counts for the pull request's required check:
+#   the dispatched run's check does not (measured on 2026-10-30 on test pull
+#   requests #348 and #349). The approved run is validate.yml at exactly the
+#   pushed commit, with its read-only token and no secret, and it takes the
+#   accept lines from the pull request's body as every pull request run does.
 #
 # A conflict outside generated/, a tool failure, an F5 read that holds, a
 # write outside generated/ or a refused push stops the bot for that branch.
@@ -194,6 +201,9 @@ jobs:
               --arg main "$MAIN_SHA" --arg head "$PLANNED_SHA" \
               '{number: $number, branch: $branch, status: $status, reason: $reason, main: $main, head: $head}' > "$outcome"
             echo "$1: $2" | tee -a "$GITHUB_STEP_SUMMARY"
+            if [ "$1" = attention ]; then
+              echo "::warning::$2"
+            fi
             if [ "$1" = stopped ]; then
               echo "::error::$2"
               exit 1
@@ -222,11 +232,36 @@ jobs:
             fi
             finish stopped "GitHub refused the push to $BRANCH: $(tail -n 2 "$RUNNER_TEMP/push.txt" | tr '\n' ' ')"
           fi
-          # A push with the workflow token starts no workflow; the required
-          # validate check runs by dispatch (checks_only skips the alarm).
+          pushed="$(git rev-parse HEAD)"
+          # The dispatched run (checks_only skips the alarm) runs the guard
+          # with the merge base and the pull request at this head SHA.
           gh workflow run validate.yml --ref "$BRANCH" -f checks_only=true \
-            || finish stopped "Pushed $(git rev-parse --short=12 HEAD), but validate could not be dispatched on $BRANCH."
-          finish refreshed "Merged main ${MAIN_SHA:0:12}, regenerated generated/ with the branch's tools, pushed $(git rev-parse --short=12 HEAD) and dispatched validate."
+            || finish attention "Pushed ${pushed:0:12}, but validate could not be dispatched on $BRANCH."
+          # The required check comes from the pull_request run of the pushed
+          # commit, which GitHub holds for approval after a push with the
+          # built-in token: approve that one validate.yml run, nothing else.
+          started=""
+          for _attempt in $(seq 1 24); do
+            runs="$(gh api "repos/$GH_REPO/actions/runs?head_sha=$pushed&event=pull_request&per_page=100" \
+              --jq '.workflow_runs[] | select(.path | startswith(".github/workflows/validate.yml")) | "\(.id) \(.conclusion // "none")"' 2>/dev/null)" || runs=""
+            pending="$(awk '$2 == "action_required" {print $1; exit}' <<< "$runs")"
+            if [ -n "$pending" ]; then
+              gh api --method POST "repos/$GH_REPO/actions/runs/$pending/approve" > /dev/null \
+                || finish attention "Pushed ${pushed:0:12}, but its pull_request validate run $pending could not be approved; approve it, or the required check stays missing."
+              started="approved the pull_request validate run $pending"
+              break
+            fi
+            running="$(awk '$2 != "action_required" {print $1; exit}' <<< "$runs")"
+            if [ -n "$running" ]; then
+              started="the pull_request validate run $running started without approval"
+              break
+            fi
+            sleep 5
+          done
+          if [ -z "$started" ]; then
+            finish attention "Pushed ${pushed:0:12} and dispatched validate, but no pull_request validate run appeared for it within two minutes, and the dispatched run's check does not count for the pull request. Push again or re-run validate by hand."
+          fi
+          finish refreshed "Merged main ${MAIN_SHA:0:12}, regenerated generated/ with the branch's tools, pushed ${pushed:0:12}, dispatched validate and $started."
 
       - name: Keep the outcome for the comment job
         if: ${{ always() }}
@@ -248,7 +283,7 @@ jobs:
         with:
           pattern: refresh-outcome-*
           path: ${{ runner.temp }}/outcomes
-      - name: Leave one comment per stopped branch
+      - name: Leave one comment per stopped branch, and on a refresh that needs a hand
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -266,6 +301,10 @@ jobs:
             if [ "$status" = stopped ]; then
               jq -r --arg marker "$marker" --arg run "$RUN_URL" \
                 '"\($marker)\nThe refresh bot stopped on main `\(.main[0:12])` and changed nothing on this branch:\n\n> \(.reason)\n\nRun: \($run). The bot tries again on the next push to main; remove the `refresh-generated` label to stop it."' \
+                "$file" > "$RUNNER_TEMP/comment.md"
+            elif [ "$status" = attention ]; then
+              jq -r --arg marker "$marker" --arg run "$RUN_URL" \
+                '"\($marker)\nThe refresh bot refreshed this branch on main `\(.main[0:12])`, but needs a hand:\n\n> \(.reason)\n\nRun: \($run)."' \
                 "$file" > "$RUNNER_TEMP/comment.md"
             elif [ "$status" = refreshed ] && [ -n "$existing" ]; then
               jq -r --arg marker "$marker" --arg run "$RUN_URL" \
