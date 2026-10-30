@@ -6148,6 +6148,185 @@ def check_lineageos_legacy_apn_list_role_gaps() -> None:
         )
 
 
+def check_role_gap_load_bearing_rows() -> None:
+    """Rule round 38, F1 (keep_load_bearing_rows): a legacy list row whose
+    left-out types are load-bearing for a gap role's lead gets them back,
+    read on all 11 network types with DataProfileManager's merge on and
+    off. A restore is kept only when it returns a gap role to its lead with
+    every copy type kept and moves no other role's lead."""
+    generator = generate_android_outputs
+    phone = android_phone_model
+    legacy = "lineageos_legacy_apn_list"
+    google = "google_carriersettings"
+    apple = "apple_carrier_bundles"
+    sony = "sony_open_devices_aosp"
+    mbpi = "mobile_broadband_provider_info"
+    assert_true(generator.ROLE_GAP_MERGE_MODES == (True, False), "F1 reads the leads with the merge on and off")
+
+    def apn(value: str, types: tuple[str, ...], **extra: object) -> dict:
+        return {"name": str(extra.pop("name", value)), "apn": value, "types": list(types), **extra}
+
+    algar_mms = {"mmsc": "http://mms.ctbccelular.com.br/was", "mmsproxy": "172.29.7.70", "mmsport": "8080"}
+    cases = {
+        # 204/04 (Vodafone NL): LineageOS's old "live.vodafone.com" default
+        # row is no gap (Google gives the internet APN), but Android stores
+        # it as one with Apple's dun-only row, which keeps tethering on
+        # live.vodafone.com. Alone, the dun row ranks behind China Telecom's
+        # ctnet.
+        "20404": [
+            (apn("live.vodafone.com", ("default", "supl"), user="vodafone", authtype=1, protocol="IPV4V6",
+                 roaming_protocol="IPV4V6"), (google,)),
+            (apn("live.vodafone.com", ("dun",), user="vodafone"), (apple,)),
+            (apn("live.vodafone.com", ("default",), name="Vodafone NL", user="vodafone", authtype=1), (legacy,)),
+            (apn("ctnet", ("default", "dun", "supl"), user="ctnet@mycdma.cn", password="vnet.mobi", authtype=3,
+                 protocol="IPV4V6", roaming_protocol="IPV4V6"), (legacy, sony)),
+        ],
+        # 724/32 (Algar): the copy's "algar.br" ia row is no gap (Google
+        # gives algar.br for the internet), but with the merge on Android
+        # merges the algar.br MMS row into it, ahead of mms.ctbc.br.
+        "72432": [
+            (apn("algar.br", ("default",), user="algar", password="1212", protocol="IPV4V6",
+                 roaming_protocol="IPV4V6"), (google,)),
+            (apn("ctbc.br", ("default", "dun"), name="CTBC Dados", user="CTBC", password="1212", authtype=1), (sony,)),
+            (apn("algar.br", ("ia",), name="Algar Telecom Internet", user="algar", password="1212"), (legacy,)),
+            (apn("mms.ctbc.br", ("mms",), name="CTBC MMS", user="CTBC", password="1212", authtype=1, **algar_mms),
+             (sony, mbpi)),
+            (apn("algar.br", ("mms",), name="Algar MMS", user="algar", password="1212", **algar_mms), (apple,)),
+        ],
+        # 00101: only the merge-off read sees the copy's attach row move:
+        # with the merge on, Android merges the "internet.v" ia row into
+        # Google's internet row; with it off, attach falls to a.example.
+        "00101": [
+            (apn("internet.v", ("default",)), (google,)),
+            (apn("legacy.example", ("ia",)), (legacy,)),
+            (apn("a.example", ("ia",)), (mbpi,)),
+            (apn("internet.v", ("ia",), mmsc="http://mms.v.example"), (mbpi,)),
+        ],
+        # 23213: no row is load-bearing; the role-gap decision stands.
+        "23213": [
+            (apn("internet", ("default", "supl")), (google,)),
+            (apn("gprsmms", ("mms",), mmsc="http://mmsc.example/mms", mmsproxy="10.12.0.20", mmsport="80"), (legacy,)),
+            (apn("web.old", ("default", "supl")), (legacy,)),
+            (apn("tether.old", ("default", "dun", "hipri")), (legacy,)),
+        ],
+    }
+    profiles = []
+    records = []
+    for mccmnc, rows in cases.items():
+        profile_id = f"open.{mccmnc}.a"
+        profiles.append(
+            {"profile_id": profile_id, "display_name": profile_id, "match": {"mccmnc": [mccmnc]},
+             "android_apns": [row for row, _ in rows]}
+        )
+        everything = sorted({source for _, group in rows for source in group})
+        facts = [
+            {"section": "android_apns", "key": generator.apn_fact_key(row, apn_type), "sources": sorted(group)}
+            for row, group in rows
+            for apn_type in row["types"]
+            if sorted(group) != everything
+        ]
+        records.append({"profile_id": profile_id, "sources": everything, "fact_sources": facts})
+
+    def leads(result: object) -> dict[tuple[str, bool, str], dict[str, object]]:
+        rows = phone.parse_lines(generator.apn_row_line(record) for record in result.records)
+        tables = phone.provider(rows)
+        out = {}
+        for scope in {phone.scope_of(row) for row in rows}:
+            stored = phone.scope_rows(tables, scope)
+            for merge in (True, False):
+                settings = phone.profiles(stored, merge)
+                for name, network_type in phone.ALL_NETWORK_TYPES.items():
+                    internet, mms, attach = phone.leads(settings, network_type)
+                    dun = next((profile for profile in settings if "dun" in profile["types"]
+                                and phone.serves(profile, network_type) and phone.cellular(profile)), None)
+                    out[(scope[0] + scope[1], merge, name)] = {
+                        "internet": internet and internet["apn"],
+                        "mms": phone.mms_of(mms, stored),
+                        "attach": attach and (attach["apn"], attach["protocol"], attach["roaming_protocol"]),
+                        "dun": dun and (dun["apn"], dun["protocol"], dun["authtype"]),
+                    }
+        return out
+
+    with tempfile.TemporaryDirectory() as tmp:
+        evidence_path = Path(tmp) / "evidence-index.json"
+        evidence_path.write_text(json.dumps({"profiles": records}), encoding="utf-8")
+        evidence = generator.load_apn_evidence(evidence_path)
+        result = generator.apn_xml_rows(profiles, evidence)
+        found = leads(result)
+        restored = sorted((record["mcc"] + record["mnc"], record["apn"], record["_role_gap_kept_load_bearing"])
+                          for record in result.role_gap_kept_load_bearing)
+        assert_true(
+            restored == [("00101", "legacy.example", ("ia",)), ("20404", "live.vodafone.com", ("default",)),
+                         ("72432", "algar.br", ("ia",))],
+            f"the load-bearing legacy rows get their types back, marked: {restored}",
+        )
+        assert_true(
+            not any(record.get("_role_gap_left_out") for record in result.role_gap_kept_load_bearing),
+            "a restored row is the copy's row as it was",
+        )
+        # 204/04's dun lead is live.vodafone.com on every type, merge on and off.
+        dun = {found[key]["dun"] for key in found if key[0] == "20404"}
+        assert_true(dun == {("live.vodafone.com", "IP", 1)}, f"204/04's dun lead stays on live.vodafone.com: {dun}")
+        # 724/32's MMS tuple is algar.br's with the merge on, and the attach
+        # lead is algar.br IP/IP.
+        mms = {found[key]["mms"] for key in found if key[0] == "72432" and key[1]}
+        assert_true(
+            mms == {("algar.br", "http://mms.ctbccelular.com.br/was", "172.29.7.70", 8080)},
+            f"724/32's MMS stays on the algar.br tuple: {mms}",
+        )
+        attach = {found[key]["attach"] for key in found if key[0] == "72432"}
+        assert_true(attach == {("algar.br", "IP", "IP")}, f"724/32 attaches on algar.br IP/IP: {attach}")
+        # A scope without a load-bearing row is written as keep_role_gap_rows
+        # decided it.
+        original = generator.keep_load_bearing_rows
+        try:
+            generator.keep_load_bearing_rows = lambda pristine, records, kept, changed, *rest: (kept, changed, [])
+            without = generator.apn_xml_rows(profiles, evidence)
+        finally:
+            generator.keep_load_bearing_rows = original
+
+        def scope(mccmnc: str, rows: object) -> list[tuple[str, str]]:
+            return [(record["apn"], record["type"]) for record in rows.records
+                    if record.get("mcc", "") + record.get("mnc", "") == mccmnc]
+
+        assert_true(
+            scope("23213", result) == scope("23213", without) and ("web.old", "default,supl") not in scope("23213", result),
+            f"a scope without a load-bearing row is unchanged: {scope('23213', result)}",
+        )
+        assert_true(
+            {(record["apn"], record["_role_gap_left_out"]) for record in result.role_gap_left_out}
+            == {("web.old", ("default", "supl")), ("tether.old", ("default", "hipri"))},
+            f"the other changed rows keep their marks: {result.role_gap_left_out}",
+        )
+        assert_true(
+            scope("20404", without) != scope("20404", result),
+            "without F1 204/04's legacy row is left out",
+        )
+        # The merge-off read: 00101's attach falls to a.example only with the
+        # merge off. A generator that reads the merge on alone keeps the row
+        # out, and this test fails.
+        assert_true(
+            {found[key]["attach"][0] for key in found if key[0] == "00101" and not key[1]} == {"legacy.example"},
+            "00101's attach stays on the legacy row with the merge off",
+        )
+        try:
+            generator.ROLE_GAP_MERGE_MODES = (True,)
+            merge_on_only = generator.apn_xml_rows(profiles, evidence)
+        finally:
+            generator.ROLE_GAP_MERGE_MODES = (True, False)
+        assert_true(
+            "00101" not in {record["mcc"] + record["mnc"] for record in merge_on_only.role_gap_kept_load_bearing},
+            "the merge-on read alone misses 00101: the merge-off read is load-bearing",
+        )
+        android_dir = Path(tmp) / "android"
+        generator.write_apns(android_dir / "apns-conf.xml", profiles, 8, evidence)
+        written = ET.parse(android_dir / "apns-conf.xml").getroot()
+        assert_true(
+            all(not any(key.startswith("_") for key in element.attrib) for element in written),
+            "the load-bearing mark is never written",
+        )
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -7858,6 +8037,7 @@ def main() -> int:
     check_lineageos_pixel_snapshot_family()
     print("LineageOS Pixel APN snapshot family tests passed")
     check_lineageos_legacy_apn_list_role_gaps()
+    check_role_gap_load_bearing_rows()
     print("LineageOS legacy APN list role-gap tests passed")
     check_current_vendor_attach()
     check_pixel_snapshot_build_conditional()

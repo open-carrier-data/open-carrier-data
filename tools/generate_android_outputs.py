@@ -486,6 +486,11 @@ class ApnRows(NamedTuple):
     # it left out.
     stale_types_left_out: tuple[tuple[str, int], ...] = ()
     rows_left_out_stored_with_internet: tuple[dict[str, Any], ...] = ()
+    # Rows of a role-gap copy keep_role_gap_rows gave their left-out types
+    # back because those types are load-bearing for a gap role's lead
+    # (keep_load_bearing_rows, rule round 38, F1), each marked
+    # "_role_gap_kept_load_bearing" with those types.
+    role_gap_kept_load_bearing: tuple[dict[str, Any], ...] = ()
 
 
 def canonical_json(value: Any) -> str:
@@ -2317,6 +2322,131 @@ def role_gaps(written: list[dict[str, Any]], records: list[dict[str, Any]]) -> t
     return gaps, iwlan
 
 
+# DataProfileManager's merge of similar data profiles, on and off: a role-gap
+# copy row's types count as load-bearing only where the leads hold in both
+# (keep_load_bearing_rows, rule round 38, F1).
+ROLE_GAP_MERGE_MODES = (True, False)
+
+
+def role_gap_leads(
+    written: list[dict[str, Any]], records: list[dict[str, Any]]
+) -> tuple[dict[tuple[bool, int, str], str | None], set[tuple[bool, int, str]]]:
+    """The lead of every role of ROLE_GAP_TYPES in one written scope, on
+    each of android_phone_model's 11 network types with DataProfileManager's
+    merge on and off (ROLE_GAP_MERGE_MODES), keyed (merge, network type,
+    role): the lead's APN without letter case, or None for no lead. And the
+    keys where the role is a gap: no lead, or a lead whose APN no current
+    vendor gives for that role's types (ROLE_GAP_VENDOR_TYPES) among RECORDS,
+    the scope's rows. The leads are read as role_gaps reads them."""
+    phone = android_phone_model
+    vendor: dict[str, set[str]] = defaultdict(set)
+    for record in records:
+        for apn_type, sources in (record.get("_current") or {}).items():
+            if sources:
+                vendor[apn_type].add(str(record["apn"]).casefold())
+    leads: dict[tuple[bool, int, str], str | None] = {}
+    gaps: set[tuple[bool, int, str]] = set()
+    if not written:
+        return leads, gaps
+    rows = phone.parse_lines(apn_row_line(record) for record in written)
+    stored = phone.scope_rows(phone.provider(rows), phone.scope_of(rows[0]))
+    for merge in ROLE_GAP_MERGE_MODES:
+        settings = phone.profiles(stored, merge)
+        for network_type in phone.ALL_NETWORK_TYPES.values():
+            internet, mms, attach = phone.leads(settings, network_type)
+            found = {"default": internet, "ia": attach, "mms": mms}
+            for apn_type in ROLE_GAP_TYPES[3:]:
+                found[apn_type] = next(
+                    (profile for profile in settings
+                     if apn_type in profile["types"] and phone.serves(profile, network_type) and phone.cellular(profile)),
+                    None,
+                )
+            for apn_type, lead in found.items():
+                key = (merge, network_type, apn_type)
+                apn = None if lead is None else str(lead["apn"]).casefold()
+                leads[key] = apn
+                backed = set().union(*(vendor[t] for t in ROLE_GAP_VENDOR_TYPES.get(apn_type, (apn_type,))))
+                if apn is None or apn not in backed:
+                    gaps.add(key)
+    return leads, gaps
+
+
+def keep_load_bearing_rows(
+    pristine: list[dict[str, Any]],
+    records: list[dict[str, Any]],
+    kept: list[dict[str, Any]],
+    changed: list[dict[str, Any]],
+    iwlan_case: frozenset[int] | set[int] = frozenset(),
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    """Give back the left-out types of a role-gap copy's rows where they are
+    load-bearing for a gap role's lead (rule decisions round 38, F1).
+    keep_role_gap_rows takes a copy type off where its role is no gap, but
+    the row it leaves can still hold a gap role's lead elsewhere in the scope:
+    TelephonyProvider stores rows equal on its unique fields as one, so a row
+    of the copy can carry another source's row into a better place. On 204/04
+    (Vodafone NL) LineageOS's old "live.vodafone.com" default row was the one
+    Android stored with Apple's dun-only "live.vodafone.com" row; without it
+    the dun lead moved to China Telecom's "ctnet" with CHAP credentials. On
+    724/32 to 724/34 (Algar) the copy's "algar.br" ia type held MMS on the
+    vendor's "algar.br" tuple; without it MMS moved to "mms.ctbc.br".
+
+    PRISTINE is the scope's rows before keep_role_gap_rows (deep copies),
+    RECORDS the same rows as it left them in place, KEPT the rows it writes
+    and CHANGED the rows that lost types. IWLAN_CASE holds the ids of the
+    rows of round 35's IWLAN case (role_gap_iwlan_case), which keep their own
+    test and are never restored; a scope kept whole never reaches this step.
+
+    1. Write the scope once with every copy type kept (PRISTINE) and once as
+       decided (KEPT), and read both scopes' leads on all 11 network types
+       with the merge on and off (role_gap_leads).
+    2. A role whose lead is a gap in the decided scope and differs from the
+       all-kept lead triggers a restore.
+    3. The changed rows, those of the IWLAN case aside, get their left-out
+       types back one row at a time, in the order rank_scope gives the
+       all-kept scope. A restore is kept only
+       if it returns at least one such role to its all-kept lead and moves no
+       other role's lead on any network type in either merge mode.
+
+    A restored row is the copy's row as it was, marked
+    "_role_gap_kept_load_bearing" with the types it got back. Returns the
+    rows to write, the changed rows still without types, and the restored
+    rows."""
+    full, _full_gaps = role_gap_leads(write_scope(copy.deepcopy(pristine)).written, pristine)
+    final, final_gaps = role_gap_leads(write_scope(copy.deepcopy(kept)).written, pristine)
+    moved = {key for key in final_gaps if final.get(key) != full.get(key)}
+    if not moved:
+        return kept, changed, []
+    index = {id(record): position for position, record in enumerate(records)}
+    kept_ids = {id(record) for record in kept}
+    state = {position: record for position, record in enumerate(records) if id(record) in kept_ids}
+    rank = {id(record): position for position, record in enumerate(rank_scope(list(pristine)))}
+    restored: list[int] = []
+    candidates = [record for record in changed if id(record) not in iwlan_case]
+    for record in sorted(candidates, key=lambda item: rank[id(pristine[index[id(item)]])]):
+        position = index[id(record)]
+        trial = dict(state)
+        trial[position] = copy.deepcopy(pristine[position])
+        trial_rows = [trial[key] for key in sorted(trial)]
+        leads, gaps = role_gap_leads(write_scope(copy.deepcopy(trial_rows)).written, pristine)
+        fixed = {key for key in moved if leads.get(key) == full.get(key)}
+        others = {key for key in set(final) | set(leads) if key not in moved and leads.get(key) != final.get(key)}
+        if fixed and not others:
+            trial[position]["_role_gap_kept_load_bearing"] = tuple(record["_role_gap_left_out"])
+            state = trial
+            final, final_gaps = leads, gaps
+            moved -= fixed
+            restored.append(position)
+        if not moved:
+            break
+    if not restored:
+        return kept, changed, []
+    return (
+        [state[key] for key in sorted(state)],
+        [record for record in changed if index[id(record)] not in restored],
+        [state[position] for position in sorted(restored)],
+    )
+
+
 def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     """Give the rows of a role-gap copy (ROLE_GAP_SOURCES, LineageOS's legacy
     list) in one scope only the types whose role is a gap in the scope without
@@ -2337,15 +2467,29 @@ def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, An
        leaves.
     4. Where the scope without the copy writes no row, the copy's rows are
        kept whole: the scope would otherwise be gone from apns-conf.xml.
+    5. A changed row whose left-out types are load-bearing for a gap role's
+       lead gets them back (keep_load_bearing_rows, rule round 38, F1),
+       marked "_role_gap_kept_load_bearing". The IWLAN case of step 2 keeps
+       its own test.
 
     The kept types leave by themselves once a current vendor gives an APN for
     the role, because every run tests the gaps again. A changed row is marked
     "_role_gap_left_out" with the types it lost; a row left with no type is
     not written. Profile JSON keeps every row and type. Returns the rows to
-    write, the changed rows, and the rows kept whole."""
+    write, the changed rows, and the rows kept whole; keep_role_gap_rows_f1
+    also returns the restored rows."""
+    kept, changed, whole, _restored = keep_role_gap_rows_f1(records)
+    return kept, changed, whole
+
+
+def keep_role_gap_rows_f1(
+    records: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    """keep_role_gap_rows, with the rows step 5 (keep_load_bearing_rows)
+    restored as a fourth list."""
     copy_types = {id(record): role_gap_copy_types(record) for record in records}
     if not any(copy_types.values()):
-        return records, [], []
+        return records, [], [], []
     without: list[dict[str, Any]] = []
     for record in records:
         types = copy_types[id(record)]
@@ -2360,18 +2504,21 @@ def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, An
         for record in records:
             if copy_types[id(record)]:
                 record["_role_gap_scope_kept_whole"] = True
-        return records, [], [record for record in records if copy_types[id(record)]]
+        return records, [], [record for record in records if copy_types[id(record)]], []
+    pristine = copy.deepcopy(records)
     gaps, iwlan_gaps = role_gaps(written, records)
     if "default" in gaps:
         gaps.add("hipri")
     kept: list[dict[str, Any]] = []
     changed: list[dict[str, Any]] = []
+    iwlan_case: set[int] = set()
     for record in records:
         types = copy_types[id(record)]
         if not types:
             kept.append(record)
             continue
         if role_gap_iwlan_case(record, records, copy_types):
+            iwlan_case.add(id(record))
             stay = {"ims"} & iwlan_gaps
         else:
             stay = {apn_type for apn_type in types if apn_type in gaps or apn_type == "emergency"}
@@ -2382,7 +2529,10 @@ def keep_role_gap_rows(records: list[dict[str, Any]]) -> tuple[list[dict[str, An
             drop_types(record, leave)
         if record["type"]:
             kept.append(record)
-    return kept, changed, []
+    if not changed:
+        return kept, changed, [], []
+    kept, changed, restored = keep_load_bearing_rows(pristine, records, kept, changed, iwlan_case)
+    return kept, changed, [], restored
 
 
 class ScopeRows(NamedTuple):
@@ -2455,7 +2605,8 @@ def apn_xml_rows(
     """Every APN XML row of these profiles in file order: rows LineageOS's
     apns-conf.xsd rejects left out, duplicates to Android collapsed, scopes in
     network code and MVNO selector order, a role-gap copy's types left out
-    where their role is no gap (keep_role_gap_rows, round 35), a stale attach
+    where their role is no gap (keep_role_gap_rows, round 35) unless they are
+    load-bearing for a gap role's lead (round 38, F1), a stale attach
     type left out
     (leave_out_stale_attach), an emergency type that moves the emergency
     request away from Android's default without a stated reason left out
@@ -2494,13 +2645,15 @@ def apn_xml_rows(
     credentials_kept: list[dict[str, Any]] = []
     role_gap_left_out: list[dict[str, Any]] = []
     role_gap_kept_whole: list[dict[str, Any]] = []
+    role_gap_kept_load_bearing: list[dict[str, Any]] = []
     frozen_copies = frozen_pixel_copy_sources(evidence)
     stale_types: Counter[str] = Counter({apn_type: 0 for apn_type in STALE_INTERNET_GROUP_TYPES})
     type_left_out: list[dict[str, Any]] = []
     for scope in sorted(scopes):
-        scope_records, gap_changed, gap_whole = keep_role_gap_rows(scopes[scope])
+        scope_records, gap_changed, gap_whole, gap_restored = keep_role_gap_rows_f1(scopes[scope])
         role_gap_left_out.extend(gap_changed)
         role_gap_kept_whole.extend(gap_whole)
+        role_gap_kept_load_bearing.extend(gap_restored)
         result = write_scope(scope_records, frozen_copies)
         ia_left_out += result.ia_left_out
         mms_left_out += result.mms_left_out
@@ -2514,7 +2667,7 @@ def apn_xml_rows(
     return ApnRows(
         ordered, schema_rejected, ia_left_out, mms_left_out, tuple(mms_absorbed), tuple(emergency_left_out),
         tuple(credentials_left_out), tuple(credentials_kept), tuple(role_gap_left_out), tuple(role_gap_kept_whole),
-        tuple(sorted(stale_types.items())), tuple(type_left_out),
+        tuple(sorted(stale_types.items())), tuple(type_left_out), tuple(role_gap_kept_load_bearing),
     )
 
 
@@ -2932,6 +3085,7 @@ def write_metadata(
     credential_rows_left_out: int = 0,
     stale_types_left_out: int = 0,
     rows_left_out_stored_with_internet: int = 0,
+    role_gap_rows_kept_load_bearing: int = 0,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -2989,6 +3143,12 @@ def write_metadata(
             "types_left_out_stored_with_internet_not_vendor_backed": stale_types_left_out,
             "rows_left_out_stored_with_internet_not_vendor_backed": rows_left_out_stored_with_internet,
             "credential_rows_left_out_superseded_google_copy": credential_rows_left_out,
+            # Rows of LineageOS's legacy list (a role-gap copy) whose types
+            # keep_role_gap_rows took off and gave back, because those types
+            # are load-bearing for a gap role's lead (rule round 38, F1):
+            # nothing of them is left out. --explain marks them
+            # role_gap_kept_load_bearing.
+            "role_gap_rows_kept_load_bearing": role_gap_rows_kept_load_bearing,
             # Rows of apns-conf.xml leave_out_emergency took the "emergency"
             # type off, by reason; a row whose only type it was is not
             # written. Android's own default emergency profile then applies
@@ -3082,6 +3242,7 @@ def main(argv: list[str]) -> int:
         len(apn_rows.credentials_left_out),
         sum(count for _, count in apn_rows.stale_types_left_out),
         len(apn_rows.rows_left_out_stored_with_internet),
+        len(apn_rows.role_gap_kept_load_bearing),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(
@@ -3102,9 +3263,19 @@ def main(argv: list[str]) -> int:
         f"{len(apn_rows.role_gap_left_out)} row(s) of LineageOS's legacy list without the types whose role "
         f"is no gap ({sum(1 for record in apn_rows.role_gap_left_out if not record['type'])} left out), "
         f"{len(apn_rows.role_gap_kept_whole)} kept whole in scopes that would otherwise be gone, "
+        f"{len(apn_rows.role_gap_kept_load_bearing)} given back their load-bearing types, "
         f"LineageOS's Pixel APN snapshot "
         f"{'superseded, a frozen Pixel copy for rule 1' if pixel_snapshot_superseded(evidence) else 'not superseded'}"
     )
+    # The rows of LineageOS's legacy list that got their load-bearing types
+    # back (rule round 38, F1), by network code and selector type: a restore
+    # changes the scope's leads, so every run names them.
+    for record in apn_rows.role_gap_kept_load_bearing:
+        selector = f" {record['mvno_type']}" if record.get("mvno_type") else ""
+        print(
+            f"legacy list row kept load-bearing: {record.get('mcc', '')}/{record.get('mnc', '')}{selector} "
+            f"{record['apn']} {','.join(record['_role_gap_kept_load_bearing'])}"
+        )
     return 0
 
 

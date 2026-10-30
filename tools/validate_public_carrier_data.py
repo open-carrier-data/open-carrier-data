@@ -2343,6 +2343,8 @@ def validate_android_metadata(
         # Rule round 34, change 18 step 2c (take_type_off_internet_group).
         "types_left_out_stored_with_internet_not_vendor_backed",
         "rows_left_out_stored_with_internet_not_vendor_backed",
+        # Rule round 38, F1 (keep_load_bearing_rows).
+        "role_gap_rows_kept_load_bearing",
     }
     if set(omissions) != expected_omission_keys:
         raise ValidationError(f"{metadata_path}: omission fields are invalid")
@@ -2361,6 +2363,8 @@ def validate_android_metadata(
          "count of rows stored with the internet row without a type no current vendor backs"),
         ("rows_left_out_stored_with_internet_not_vendor_backed",
          "count of rows stored with the internet row left out"),
+        ("role_gap_rows_kept_load_bearing",
+         "count of legacy list rows given back their load-bearing types"),
     ):
         count = omissions[key]
         if not isinstance(count, int) or isinstance(count, bool) or count < 0:

@@ -335,6 +335,11 @@ def explain(
                     # because their role is no gap in the scope without the
                     # list (keep_role_gap_rows, round 35); empty otherwise.
                     "role_gap_types_left_out": list(row.get("_role_gap_left_out") or ()),
+                    # The types of LineageOS's legacy list this row got back
+                    # because they are load-bearing for a gap role's lead
+                    # (keep_load_bearing_rows, rule round 38, F1); empty
+                    # otherwise.
+                    "role_gap_kept_load_bearing": list(row.get("_role_gap_kept_load_bearing") or ()),
                 },
             }
         )
