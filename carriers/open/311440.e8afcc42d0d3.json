@@ -17,6 +17,23 @@
       "apn": "IMS",
       "authtype": 0,
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1849,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Bluegrass IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
@@ -56,6 +73,21 @@
       "apn": "VZWADMIN",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1849,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Bluegrass FOTA",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
@@ -66,6 +98,16 @@
         "fota"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "carrier_id": 1849,
+      "name": "Bluegrass Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
     },
     {
       "apn": "VZWEMERGENCY",
@@ -136,6 +178,7 @@
     {
       "apn": "VZWINTERNET",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1849,
       "max_conns": 20,
       "max_conns_time": 300,
       "mmsc": "http://m.iot1.com/bluegrass/mms.php",
@@ -146,6 +189,42 @@
       "types": [
         "default",
         "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://m.iot1.com/bluegrass/mms.php",
+      "modem_cognitive": true,
+      "name": "Bluegrass",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1849,
+      "mmsc": "http://m.iot1.com/bluegrass/mms.php",
+      "mmsport": 80,
+      "mmsproxy": "66.255.55.23",
+      "name": "Bluegrass",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
         "mms",
         "supl"
       ]

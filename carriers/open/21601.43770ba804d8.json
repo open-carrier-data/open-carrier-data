@@ -32,6 +32,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1534,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
@@ -154,6 +165,18 @@
     },
     {
       "apn": "mms",
+      "authtype": 1,
+      "carrier_id": 1534,
+      "mmsc": "http://mmsc.yettel.hu",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "name": "Yettel MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "mmsc": "http://mmsc.yettel.hu/",
       "mmsport": 8080,
       "mmsproxy": "84.225.255.1",
@@ -218,21 +241,23 @@
     },
     {
       "apn": "online",
-      "carrier_id": 1534,
-      "name": "Telenor Online",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "online",
       "authtype": 1,
       "carrier_enabled": true,
       "name": "Yettel Online",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "online",
+      "authtype": 1,
+      "carrier_id": 1534,
+      "name": "online",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "supl",
@@ -267,6 +292,49 @@
       "types": [
         "default",
         "xcap"
+      ]
+    },
+    {
+      "apn": "online",
+      "carrier_id": 1534,
+      "name": "Telenor Online",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "mmsc": "http://mmsc.pgsm.hu/",
+      "mmsport": 8080,
+      "mmsproxy": "84.225.255.1",
+      "mvno_match_data": "DJUICE",
+      "mvno_type": "spn",
+      "name": "Djuice MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "net",
+      "authtype": 0,
+      "mvno_match_data": "DJUICE",
+      "mvno_type": "spn",
+      "name": "Djuice NET",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "wap",
+      "authtype": 0,
+      "mvno_match_data": "DJUICE",
+      "mvno_type": "spn",
+      "name": "Djuice WAP",
+      "port": 8080,
+      "proxy": "84.225.255.1",
+      "types": [
+        "default"
       ]
     },
     {
@@ -334,7 +402,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Yettel HU",
+  "display_name": "Yettel",
   "match": {
     "mccmnc": [
       "21601"

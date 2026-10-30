@@ -68,6 +68,15 @@
     {
       "apn": "hos",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1884,
+      "name": "CHT XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "name": "CHT XCAP",
       "types": [
         "xcap"
@@ -110,6 +119,15 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1884,
+      "name": "\u4e2d\u83ef\u96fb\u4fe1(Chunghwa) (IMS)",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "\u4e2d\u83ef\u96fb\u4fe1(Chunghwa) (IMS)",
       "types": [
         "ims"
@@ -138,9 +156,9 @@
       "apn": "internet",
       "carrier_id": 1884,
       "name": "\u4e2d\u83ef\u96fb\u4fe1(Chunghwa) (Internet)",
+      "protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -154,11 +172,62 @@
       ]
     },
     {
+      "apn": "internet",
+      "carrier_id": 1884,
+      "name": "\u4e2d\u83ef\u96fb\u4fe1(Chunghwa) (Internet)",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "sos",
       "name": "\u4e2d\u83ef\u96fb\u4fe1",
       "protocol": "IP",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "emome",
+      "mmsc": "http://mms.emome.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.1.1.1",
+      "mvno_match_data": "\u7121\u6846\u884c\u52d5",
+      "mvno_type": "spn",
+      "name": "\u7121\u6846\u884c\u52d5 (MMS)",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "mvno_match_data": "\u7121\u6846\u884c\u52d5",
+      "mvno_type": "spn",
+      "name": "\u7121\u6846\u884c\u52d5 XCAP",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "\u7121\u6846\u884c\u52d5",
+      "mvno_type": "spn",
+      "name": "\u7121\u6846\u884c\u52d5 (IMS)",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "mvno_match_data": "\u7121\u6846\u884c\u52d5",
+      "mvno_type": "spn",
+      "name": "\u7121\u6846\u884c\u52d5 (Internet)",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
       ]
     }
   ],

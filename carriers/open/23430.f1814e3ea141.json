@@ -147,6 +147,20 @@
       "user_editable": false
     },
     {
+      "apn": "eezone",
+      "authtype": 1,
+      "carrier_id": 718,
+      "mmsc": "http://mms/",
+      "mmsport": 8080,
+      "mmsproxy": "149.254.201.135",
+      "name": "EE MMS",
+      "password": "secure",
+      "types": [
+        "xcap"
+      ],
+      "user": "eesecure"
+    },
+    {
       "apn": "everywhere",
       "name": "Internet",
       "password": "secure",
@@ -210,6 +224,20 @@
     {
       "apn": "everywhere",
       "authtype": 1,
+      "carrier_id": 718,
+      "name": "EE Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "everywhere",
+      "authtype": 1,
       "name": "EE Internet",
       "password": "secure",
       "protocol": "IPV4V6",
@@ -247,18 +275,6 @@
       ],
       "user": "eesecure",
       "user_editable": false
-    },
-    {
-      "apn": "everywhere",
-      "authtype": 1,
-      "name": "EE Internet",
-      "password": "secure",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "supl"
-      ],
-      "user": "eesecure"
     },
     {
       "apn": "everywhere",
@@ -338,6 +354,20 @@
       "apn": "ims",
       "authtype": 1,
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 718,
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "password": "secure",
       "protocol": "IPV4V6",
@@ -423,6 +453,16 @@
     },
     {
       "apn": "sos",
+      "carrier_id": 718,
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "sos",
       "name": "EE Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -489,6 +529,47 @@
       "user": "user"
     },
     {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1280,
+      "mvno_match_data": "28000000",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "goto.virginmobile.uk",
+      "authtype": 1,
+      "mmsc": "http://mms.virginmobile.co.uk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "193.30.166.2",
+      "mvno_match_data": "28000000",
+      "mvno_type": "gid",
+      "name": "Virgin Media Mobile Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "user"
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14",
+      "mvno_match_data": "28000000",
+      "mvno_type": "gid",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "internet.btonephone.com",
       "carrier_id": 2103,
       "mvno_match_data": "B2",
@@ -534,10 +615,11 @@
       "mmsproxy": "149.254.201.135",
       "mvno_match_data": "B3",
       "mvno_type": "gid",
-      "name": "BT MMS",
+      "name": "eezone",
       "password": "secure",
       "types": [
-        "mms"
+        "mms",
+        "xcap"
       ],
       "user": "eesecure"
     },
@@ -559,6 +641,22 @@
       "user": "eesecure"
     },
     {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2102,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
       "apn": "ims",
       "authtype": 1,
       "carrier_id": 2102,
@@ -569,6 +667,34 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2102,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 2102,
+      "mvno_match_data": "B3",
+      "mvno_type": "gid",
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -592,10 +718,11 @@
       "mmsproxy": "149.254.201.135",
       "mvno_match_data": "C3",
       "mvno_type": "gid",
-      "name": "BT MMS",
+      "name": "eezone",
       "password": "secure",
       "types": [
-        "mms"
+        "mms",
+        "xcap"
       ],
       "user": "eesecure"
     },
@@ -617,6 +744,22 @@
       "user": "eesecure"
     },
     {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 2101,
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "eesecure"
+    },
+    {
       "apn": "ims",
       "authtype": 1,
       "carrier_id": 2101,
@@ -627,6 +770,34 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2101,
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 2101,
+      "mvno_match_data": "C3",
+      "mvno_type": "gid",
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {
@@ -756,6 +927,32 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "data.lycamobile.co.uk",
+      "carrier_id": 2152,
+      "mvno_match_data": "LycaMobile",
+      "mvno_type": "spn",
+      "name": "Lycamobile",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2152,
+      "mvno_match_data": "LycaMobile",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {

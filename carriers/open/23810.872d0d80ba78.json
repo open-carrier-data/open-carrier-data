@@ -29,6 +29,17 @@
   "android_apns": [
     {
       "apn": "MMS",
+      "carrier_id": 1463,
+      "mmsc": "http://mmsc.tdc.dk:8002",
+      "mmsport": 8080,
+      "mmsproxy": "inetproxy.tdc.dk",
+      "name": "TDC MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "MMS",
       "mmsc": "http://mmsc.tdc.dk:8002",
       "mmsport": 8080,
       "mmsproxy": "inetproxy.tdc.dk",
@@ -46,6 +57,17 @@
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1463,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -70,6 +92,17 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1463,
+      "name": "TDC DK",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "internet",
@@ -125,6 +158,16 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "carrier_id": 1463,
+      "name": "XCAP",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     },
     {

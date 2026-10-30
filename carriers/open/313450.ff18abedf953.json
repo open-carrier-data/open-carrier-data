@@ -2,10 +2,28 @@
   "android_apns": [
     {
       "apn": "spectrum.fwa",
+      "carrier_id": 10036,
       "name": "spectrum.fwa",
       "protocol": "IPV4V6",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "spectrum.fwa",
+      "name": "spectrum.fwa",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "spectrum.ota",
+      "carrier_id": 10036,
+      "name": "spectrum.ota",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
       ]
     },
     {
@@ -15,12 +33,111 @@
       "types": [
         "fota"
       ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum IMS",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "mvno_match_data": "BA01490000000000",
+      "mvno_type": "gid",
+      "name": "Spectrum",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
+        "supl"
+      ]
     }
   ],
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "unknown",
+    "mms": "supported",
     "rcs": "unknown",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -29,7 +146,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Spectrumdata Us",
+  "display_name": "Spectrum",
   "match": {
     "mccmnc": [
       "313450"

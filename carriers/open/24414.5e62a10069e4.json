@@ -41,6 +41,15 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 1477,
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "name": "IMS",
       "types": [
         "ims"
@@ -57,6 +66,17 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1477,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -120,6 +140,18 @@
     {
       "apn": "mms",
       "authtype": 1,
+      "carrier_id": 1477,
+      "mmsc": "http://mms.amt.aland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "194.110.177.70",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
       "mmsc": "http://mms.amt.aland.fi",
       "mmsport": 8080,
       "mmsproxy": "194.110.177.70",
@@ -128,6 +160,41 @@
         "mms"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "ALCOM",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "mvno_match_data": "ALCOM",
+      "mvno_type": "spn",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 1,
+      "mmsc": "http://mms.amt.aland.fi",
+      "mmsport": 8080,
+      "mmsproxy": "194.110.177.70",
+      "mvno_match_data": "ALCOM",
+      "mvno_type": "spn",
+      "name": "mms",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {

@@ -28,12 +28,31 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 1535,
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1535,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -116,6 +135,17 @@
       "protocol": "IP",
       "types": [
         "default"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1535,
+      "name": "Internet",
+      "types": [
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -204,6 +234,17 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 1535,
+      "mmsc": "http://mms.one.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "name": "MMS",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -301,6 +342,43 @@
         "default",
         "supl"
       ]
+    },
+    {
+      "apn": "mms.vodafone.net",
+      "mmsc": "http://mms.vodafone.hu/servlets/mms",
+      "mmsport": 8080,
+      "mmsproxy": "80.244.97.2",
+      "mvno_match_data": "21670xx1",
+      "mvno_type": "imsi",
+      "name": "Vodafone MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "vitamax.internet.vodafone.net",
+      "mvno_match_data": "21670xx1",
+      "mvno_type": "imsi",
+      "name": "Vodafone Internet VitaMAX",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "vitamax.wap.vodafone.net",
+      "authtype": 1,
+      "mvno_match_data": "21670xx1",
+      "mvno_type": "imsi",
+      "name": "Vodafone Live! VitaMAX",
+      "password": "vodawap",
+      "port": 8080,
+      "proxy": "10.9.8.7",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "vodawap"
     },
     {
       "apn": "mms.vodafone.net",

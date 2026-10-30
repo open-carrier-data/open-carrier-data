@@ -77,6 +77,44 @@
       ]
     },
     {
+      "apn": "chesapeake",
+      "mmsc": "http://mms.cape.net:10021",
+      "mvno_match_data": "2273",
+      "mvno_type": "gid",
+      "name": "Cape",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mvno_match_data": "2273",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "2273",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "sp.koodo.com",
       "mmsc": "http://aliasredirect.net/proxy/koodo/mmsc",
       "mmsport": 80,
@@ -102,8 +140,7 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "services.koodo.com",
@@ -120,8 +157,7 @@
       "types": [
         "mms",
         "xcap"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "services.koodo.com",
@@ -134,8 +170,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
@@ -147,8 +182,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sp.koodo.com",
@@ -159,15 +193,14 @@
       "mmsproxy": "mmscproxy.mobility.ca",
       "mvno_match_data": "4B4F",
       "mvno_type": "gid",
-      "name": "Koodo",
+      "name": "Koodo SP",
       "protocol": "IPV4V6",
       "types": [
         "default",
         "dun",
         "ia",
         "mms"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "sp.koodo.com",
@@ -199,9 +232,27 @@
     {
       "apn": "ccp-services.telus.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mmsgw.prod.telus.corenetcloud.net",
+      "mmsport": 8799,
+      "mmsproxy": "mmsgw.prod.telus.corenetcloud.net",
       "mvno_match_data": "4C4F",
       "mvno_type": "gid",
-      "name": "TELUS CCP XCAP",
+      "name": "CCP Services",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ccp-services.telus.com",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://mmsgw.prod.telus.corenetcloud.net",
+      "mmsport": 8799,
+      "mmsproxy": "mmsgw.prod.telus.corenetcloud.net",
+      "mvno_match_data": "4C4F",
+      "mvno_type": "gid",
+      "name": "ccp-services.telus.com",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
@@ -214,13 +265,12 @@
       "bearer_bitmask": "3|9|10|11|14|15|18|20",
       "mvno_match_data": "4C4F",
       "mvno_type": "gid",
-      "name": "TELUS IMS",
+      "name": "Telus IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "isp.telus.com",
@@ -231,15 +281,14 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "pp.telus.com",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mvno_match_data": "4C4F",
       "mvno_type": "gid",
-      "name": "TELUS CCP",
+      "name": "CCP Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -247,20 +296,18 @@
         "hipri",
         "ia",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "sos",
       "mvno_match_data": "4C4F",
       "mvno_type": "gid",
-      "name": "TELUS SOS",
+      "name": "Telus SOS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sp.telus.com",
@@ -284,13 +331,22 @@
       "carrier_id": 2089,
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "Public Mobile IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
+    },
+    {
+      "apn": "isp.mb.com",
+      "carrier_id": 2089,
+      "mvno_match_data": "4D4F",
+      "mvno_type": "gid",
+      "name": "Tethered Mobile Internet",
+      "types": [
+        "dun"
+      ]
     },
     {
       "apn": "isp.mb.com",
@@ -302,44 +358,29 @@
       ]
     },
     {
-      "apn": "isp.mb.com",
-      "carrier_id": 2089,
-      "mvno_match_data": "4D4F",
-      "mvno_type": "gid",
-      "name": "isp.mb.com",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
-      "types": [
-        "dun"
-      ],
-      "user_editable": false
-    },
-    {
       "apn": "services.mb.com",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "carrier_id": 2089,
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "Public Mobile XCAP",
+      "name": "XCAP",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
       "carrier_id": 2089,
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "Public Mobile SOS",
+      "name": "SOS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sp.mb.com",
@@ -349,9 +390,8 @@
       "mmsproxy": "mmscproxy.mobility.ca",
       "mvno_match_data": "4D4F",
       "mvno_type": "gid",
-      "name": "sp.mb.com",
+      "name": "Mobile Internet",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "fota",
@@ -359,8 +399,7 @@
         "ia",
         "mms",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "isp.mb.com",
@@ -390,11 +429,10 @@
       "carrier_id": 10006,
       "mvno_match_data": "5043",
       "mvno_type": "gid",
-      "name": "PC Mobile Tethered",
+      "name": "Tethered Mobile Internet",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "isp.mb.com",
@@ -404,6 +442,23 @@
       "name": "Tethered Mobile Internet",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "sp.mb.com",
+      "carrier_id": 10006,
+      "mmsc": "http://aliasredirect.net/proxy/mb/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mmscproxy.mobility.ca",
+      "mvno_match_data": "5043",
+      "mvno_type": "gid",
+      "name": "Mobile Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -421,24 +476,6 @@
         "mms",
         "supl"
       ]
-    },
-    {
-      "apn": "sp.mb.com",
-      "carrier_id": 10006,
-      "mmsc": "http://aliasredirect.net/proxy/mb/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mmscproxy.mobility.ca",
-      "mvno_match_data": "5043",
-      "mvno_type": "gid",
-      "name": "PC Mobile",
-      "protocol": "IPV4V6",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
-      ],
-      "user_editable": false
     },
     {
       "apn": "isp.telus.com",
@@ -474,8 +511,7 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "isp.telus.com",
@@ -483,13 +519,10 @@
       "mvno_match_data": "5455",
       "mvno_type": "gid",
       "name": "isp.telus.com",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
       "server": "*",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "services.telus.com",
@@ -506,8 +539,7 @@
       "types": [
         "mms",
         "xcap"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "services.telus.com",
@@ -520,8 +552,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
@@ -533,8 +564,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sp.telus.com",
@@ -545,17 +575,15 @@
       "mmsproxy": "mmscproxy.mobility.ca",
       "mvno_match_data": "5455",
       "mvno_type": "gid",
-      "name": "TELUS",
+      "name": "TELUS SP",
       "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "default",
         "hipri",
         "ia",
         "mms",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "sp.telus.com",
@@ -571,6 +599,107 @@
         "ia",
         "mms",
         "supl"
+      ]
+    },
+    {
+      "apn": "4g.mobi.net",
+      "carrier_id": 2464,
+      "mvno_match_data": "6624",
+      "mvno_type": "gid",
+      "name": "mobi Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2464,
+      "mvno_match_data": "6624",
+      "mvno_type": "gid",
+      "name": "mobi XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2464,
+      "mvno_match_data": "6624",
+      "mvno_type": "gid",
+      "name": "mobi IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "mms.mobi.net",
+      "carrier_id": 2464,
+      "mmsc": "http://mms.mobi.net",
+      "mvno_match_data": "6624",
+      "mvno_type": "gid",
+      "name": "mobi MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ota.mobi.net",
+      "carrier_id": 2464,
+      "mvno_match_data": "6624",
+      "mvno_type": "gid",
+      "name": "mobi OTA",
+      "types": [
+        "fota"
+      ]
+    },
+    {
+      "apn": "chesapeake",
+      "mmsc": "http://mms.cape.net:10021",
+      "mvno_match_data": "302220723",
+      "mvno_type": "imsi",
+      "name": "Cape",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "ia",
+        "mms"
+      ]
+    },
+    {
+      "apn": "hos",
+      "mvno_match_data": "302220723",
+      "mvno_type": "imsi",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "302220723",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     }
   ],

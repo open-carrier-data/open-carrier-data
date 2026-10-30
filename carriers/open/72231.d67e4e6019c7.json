@@ -18,9 +18,10 @@
       "carrier_id": 1338,
       "mmsc": "http://mms.claro.com.ar",
       "name": "Claro AR",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "mms",
         "supl"
       ]
@@ -39,11 +40,31 @@
     },
     {
       "apn": "igprs.claro.com.ar",
+      "carrier_id": 1338,
+      "mmsc": "http://mms.claro.com.ar",
+      "name": "Claro AR",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "igprs.claro.com.ar",
       "name": "Claro AR",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 1338,
+      "name": "Claro IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -93,7 +114,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Claro AR",
+  "display_name": "Claro",
   "match": {
     "mccmnc": [
       "72231"

@@ -64,6 +64,22 @@
     {
       "apn": "hmms",
       "authtype": 1,
+      "carrier_id": 1997,
+      "mmsc": "http://mms.trueh.com:8002/",
+      "mmsport": 8080,
+      "mmsproxy": "10.4.7.39",
+      "mvno_match_data": "01",
+      "mvno_type": "gid",
+      "name": "TRUE-H MMS",
+      "password": "true",
+      "types": [
+        "mms"
+      ],
+      "user": "true"
+    },
+    {
+      "apn": "hmms",
+      "authtype": 1,
       "carrier_id": 2336,
       "mmsc": "http://mms.trueh.com:8002/",
       "mmsport": 8080,
@@ -78,6 +94,19 @@
       "user": "true"
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1997,
+      "mvno_match_data": "01",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "internet",
       "authtype": 1,
       "carrier_id": 2336,
@@ -88,6 +117,20 @@
       "types": [
         "default",
         "ia",
+        "supl"
+      ],
+      "user": "true"
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1997,
+      "mvno_match_data": "01",
+      "mvno_type": "gid",
+      "name": "TRUE-H INTERNET",
+      "password": "true",
+      "types": [
+        "default",
         "supl"
       ],
       "user": "true"
@@ -126,7 +169,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "TrueMove-H",
+  "display_name": "CAT3G",
   "match": {
     "mccmnc": [
       "52000"

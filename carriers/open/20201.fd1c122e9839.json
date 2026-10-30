@@ -100,16 +100,6 @@
     },
     {
       "apn": "ims",
-      "authtype": 1,
-      "name": "Cosmote IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -182,11 +172,24 @@
     },
     {
       "apn": "mms",
+      "mmsc": "http://mmsc.cosmote.gr:8002",
+      "mmsport": 8080,
+      "mmsproxy": "10.10.10.20",
+      "name": "COSMOTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "mmsc": "http://mmsc.cosmote.gr:8002",
       "mmsport": 8080,
       "mmsproxy": "10.10.10.20",
       "name": "Cosmote MMS",
+      "protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -223,18 +226,6 @@
       "mmsport": 8080,
       "mmsproxy": "10.10.10.20",
       "name": "Cosmote Mms",
-      "types": [
-        "mms"
-      ]
-    },
-    {
-      "apn": "mms",
-      "mmsc": "http://mmsc.cosmote.gr:8002",
-      "mmsport": 8080,
-      "mmsproxy": "10.10.10.20",
-      "name": "mms",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]

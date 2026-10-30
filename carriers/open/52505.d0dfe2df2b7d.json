@@ -43,14 +43,13 @@
     },
     {
       "apn": "ims",
+      "apn_set_id": -1,
+      "bearer_bitmask": "14|18|20",
       "carrier_id": 1707,
-      "name": "SH IMS",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "SH ims",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ims",
@@ -175,6 +174,17 @@
     {
       "apn": "shwap",
       "apn_set_id": 1,
+      "carrier_id": 1707,
+      "name": "SH Data Postpaid",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "shwap",
+      "apn_set_id": 1,
       "name": "SH Data Postpaid",
       "protocol": "IPV4V6",
       "types": [
@@ -184,14 +194,13 @@
     },
     {
       "apn": "shxcap",
+      "apn_set_id": -1,
+      "bearer_bitmask": "14|20",
       "carrier_id": 1707,
-      "name": "SH XCAP",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "name": "XCAP",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "shxcap",
@@ -222,6 +231,93 @@
         "default",
         "ia",
         "supl"
+      ]
+    },
+    {
+      "apn": "globaldata",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "Globaldata",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "636F6E6E65637431",
+      "mvno_type": "gid",
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "gtnet",
+      "mvno_match_data": "525053095",
+      "mvno_type": "imsi",
+      "name": "GT Roaming",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "travelfy",
+      "carrier_id": 2472,
+      "mvno_match_data": "5250530996",
+      "mvno_type": "imsi",
+      "name": "travelfy",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "giga",
+      "carrier_id": 2434,
+      "mvno_match_data": "giga",
+      "mvno_type": "spn",
+      "name": "giga",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2434,
+      "mvno_match_data": "giga",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "shxcap",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2434,
+      "mvno_match_data": "giga",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
       ]
     }
   ],

@@ -11,9 +11,30 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "carrier_id": 1900,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "ims",
       "name": "OneCall",
       "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1900,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
@@ -50,16 +71,6 @@
     },
     {
       "apn": "internet",
-      "carrier_id": 1900,
-      "name": "NwN Internet",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
       "authtype": 0,
       "name": "OneCall Internet",
       "protocol": "IPV4V6",
@@ -81,12 +92,46 @@
       ]
     },
     {
+      "apn": "internet",
+      "authtype": 0,
+      "carrier_id": 1900,
+      "name": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1900,
+      "name": "NwN Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
       "apn": "mms",
       "carrier_id": 1900,
       "mmsc": "http://mms.nwn.no",
       "mmsport": 80,
       "mmsproxy": "188.149.250.10",
       "name": "NwN MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_id": 1900,
+      "mmsc": "http://mmsc/",
+      "mmsport": 80,
+      "mmsproxy": "10.100.100.100",
+      "name": "OneCall MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]

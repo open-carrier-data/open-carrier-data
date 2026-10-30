@@ -25,6 +25,7 @@
     },
     {
       "apn": "mms",
+      "carrier_id": 1951,
       "mmsc": "http://mm.myboostmobile.com",
       "mmsport": 80,
       "mmsproxy": "oap7.sprintpcs.com",
@@ -32,6 +33,28 @@
       "types": [
         "mms"
       ]
+    },
+    {
+      "apn": "mms",
+      "mmsc": "http://mm.myboostmobile.com",
+      "mmsport": 80,
+      "mmsproxy": "oap7.sprintpcs.com",
+      "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "otasn",
+      "carrier_id": 1951,
+      "name": "OTA",
+      "password": "null",
+      "protocol": "IPV4V6",
+      "types": [
+        "fota",
+        "ia"
+      ],
+      "user": "null"
     },
     {
       "apn": "otasn",
@@ -47,6 +70,20 @@
     {
       "apn": "sprint",
       "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1951,
+      "modem_cognitive": true,
+      "name": "Internet",
+      "profile_id": 1,
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "sprint",
+      "bearer_bitmask": "4|5|6|7|8|12",
       "modem_cognitive": true,
       "name": "Internet",
       "profile_id": 1,
@@ -57,6 +94,17 @@
         "supl"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "sprint",
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1951,
+      "name": "Internet",
+      "types": [
+        "cbs",
+        "default",
+        "supl"
+      ]
     },
     {
       "apn": "sprint",
@@ -79,6 +127,7 @@
     "carrier_volte_provisioning_required_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "cdma_3waycall_flash_delay_int": 0,
+    "default_mtu_int": 1422,
     "enableMMSDeliveryReports": false,
     "enableMMSReadReports": false,
     "enableMultipartSMS": true,

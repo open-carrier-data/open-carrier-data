@@ -30,6 +30,17 @@
     {
       "apn": "IMS",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 2555,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -37,6 +48,16 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 2555,
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
     },
     {
       "apn": "hos",
@@ -65,6 +86,18 @@
       "apn": "internet",
       "carrier_id": 1695,
       "name": "Internet",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 2555,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "ia",
@@ -105,6 +138,17 @@
       "carrier_id": 1695,
       "mmsc": "http://mms.media",
       "name": "MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 2555,
+      "mmsc": "http://mms.media",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -175,6 +219,80 @@
       "mmsport": 8799,
       "mmsproxy": "173.30.253.241",
       "name": "Telenor MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2524,
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 2524,
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "Telavox internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 2524,
+      "mmsc": "http://mms.media",
+      "mvno_match_data": "0E",
+      "mvno_type": "gid",
+      "name": "Telavox MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2524,
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 2524,
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
+      "name": "Telavox internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms",
+      "carrier_id": 2524,
+      "mmsc": "http://mms.media",
+      "mvno_match_data": "Telavox",
+      "mvno_type": "spn",
+      "name": "Telavox MMS",
       "types": [
         "mms"
       ]

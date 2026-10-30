@@ -35,6 +35,16 @@
     },
     {
       "apn": "data.apn",
+      "carrier_id": 1403,
+      "name": "Rogers Tethering",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "data.apn",
       "name": "Rogers Tethering",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
@@ -42,6 +52,17 @@
         "dun"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1403,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -103,18 +124,6 @@
       "types": [
         "ims"
       ]
-    },
-    {
-      "apn": "ims",
-      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 1403,
-      "name": "Rogers IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "ims"
-      ],
-      "user_visible": false
     },
     {
       "apn": "ims",
@@ -342,6 +351,24 @@
     {
       "apn": "mobile.apn",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "carrier_id": 1403,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Rogers Internet",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "hipri",
+        "ia",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mobile.apn",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
       "mmsc": "http://mms.gprs.rogers.com",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.rogers.com",
@@ -384,6 +411,21 @@
     {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
+      "carrier_id": 1403,
+      "mmsc": "http://mms.gprs.rogers.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.rogers.com",
+      "name": "Netsvcs",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "netsvcs",
+      "bearer_bitmask": "18",
       "mmsc": "http://mms.gprs.rogers.com",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.rogers.com",
@@ -398,36 +440,19 @@
     },
     {
       "apn": "netsvcs",
-      "bearer_bitmask": "18",
-      "carrier_id": 1403,
-      "mmsc": "http://mms.gprs.rogers.com",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.rogers.com",
-      "name": "Rogers Services",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
-      "types": [
-        "mms",
-        "xcap"
-      ],
-      "user_visible": false
-    },
-    {
-      "apn": "netsvcs",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "carrier_id": 1403,
       "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "carrier_id": 1403,
-      "name": "Rogers XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -491,13 +516,12 @@
     {
       "apn": "sos",
       "carrier_id": 1403,
-      "name": "Rogers SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
@@ -519,8 +543,7 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "ims",
@@ -528,13 +551,12 @@
       "carrier_id": 10025,
       "mvno_match_data": "A4",
       "mvno_type": "gid",
-      "name": "Rogers IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "mobile.apn",
@@ -554,8 +576,7 @@
         "ia",
         "mms",
         "supl"
-      ],
-      "user_editable": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -566,14 +587,13 @@
       "mmsproxy": "mmsproxy.rogers.com",
       "mvno_match_data": "A4",
       "mvno_type": "gid",
-      "name": "Rogers Services",
+      "name": "Netsvcs",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms",
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -581,53 +601,47 @@
       "carrier_id": 10025,
       "mvno_match_data": "A4",
       "mvno_type": "gid",
-      "name": "Rogers XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "sos",
       "carrier_id": 10025,
       "mvno_match_data": "A4",
       "mvno_type": "gid",
-      "name": "Rogers SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "EMERGENCY",
-      "carrier_id": 2090,
       "mvno_match_data": "BA",
       "mvno_type": "gid",
-      "name": "Tbaytel SOS",
+      "name": "Emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ims",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
-      "carrier_id": 2090,
       "mvno_match_data": "BA",
       "mvno_type": "gid",
-      "name": "Tbaytel IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -654,14 +668,13 @@
     {
       "apn": "ltemobile.apn",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "carrier_id": 2090,
       "mmsc": "http://mms.gprs.rogers.com",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.rogers.com",
       "mvno_match_data": "BA",
       "mvno_type": "gid",
       "name": "Tbaytel Internet",
-      "protocol": "IPV6",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
@@ -691,34 +704,30 @@
     {
       "apn": "netsvcs",
       "bearer_bitmask": "18",
-      "carrier_id": 2090,
       "mmsc": "http://mms.gprs.rogers.com",
       "mmsport": 80,
       "mmsproxy": "mmsproxy.rogers.com",
       "mvno_match_data": "BA",
       "mvno_type": "gid",
-      "name": "Tbaytel Services",
+      "name": "Netsvcs",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms",
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
       "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
-      "carrier_id": 2090,
       "mvno_match_data": "BA",
       "mvno_type": "gid",
-      "name": "Tbaytel XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -742,13 +751,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "D2",
       "mvno_type": "gid",
-      "name": "Chatr SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "chatrisp.apn",
@@ -803,13 +811,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "D2",
       "mvno_type": "gid",
-      "name": "Chatr IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -817,13 +824,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "D2",
       "mvno_type": "gid",
-      "name": "Chatr XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ltedata.apn",
@@ -946,13 +952,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x84",
       "mvno_type": "imsi",
-      "name": "Chatr SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "chatrisp.apn",
@@ -989,13 +994,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x84",
       "mvno_type": "imsi",
-      "name": "Chatr IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -1003,13 +1007,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x84",
       "mvno_type": "imsi",
-      "name": "Chatr XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "EMERGENCY",
@@ -1123,13 +1126,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x94",
       "mvno_type": "imsi",
-      "name": "Chatr SOS",
+      "name": "emergency",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "emergency"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "chatrisp.apn",
@@ -1225,13 +1227,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x94",
       "mvno_type": "imsi",
-      "name": "Chatr IMS",
+      "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "netsvcs",
@@ -1239,13 +1240,12 @@
       "carrier_id": 2055,
       "mvno_match_data": "302720x94",
       "mvno_type": "imsi",
-      "name": "Chatr XCAP",
+      "name": "Netsvcs XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
-      ],
-      "user_visible": false
+      ]
     },
     {
       "apn": "ltemobile.apn",
@@ -1344,8 +1344,10 @@
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
     "carrier_volte_tty_supported_bool": false,
+    "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "enabledMMS": true,
+    "enhanced_4g_lte_on_by_default_bool": true,
     "hide_enhanced_4g_lte_bool": true,
     "imsvoice.conference_subscribe_type_int": 0,
     "iwlan.epdg_static_address_string": "epdg.epc.mnc720.mcc302.pub.3gppnetwork.org",
@@ -1354,6 +1356,7 @@
     "maxMessageSize": 1048576,
     "maxSubjectLength": 80,
     "recipientLimit": 20,
+    "rtt_supported_bool": false,
     "support_video_conference_call_bool": true,
     "wfc_spn_format_idx_int": 1
   },

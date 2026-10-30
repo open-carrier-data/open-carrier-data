@@ -25,6 +25,16 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 2511,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|20",
       "name": "IMS",
       "protocol": "IPV4V6",
@@ -50,6 +60,18 @@
       "mmsport": 80,
       "mmsproxy": "10.248.1.12",
       "name": "Kena Mobile",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms.kenamobile.it",
+      "authtype": 0,
+      "carrier_id": 2511,
+      "mmsc": "http://mms.kenamobile.it/",
+      "mmsport": 80,
+      "mmsproxy": "10.248.1.12",
+      "name": "Kena Mobile MMS",
       "types": [
         "mms"
       ]
@@ -98,15 +120,14 @@
       ]
     },
     {
-      "apn": "mms.kenamobile.it",
-      "mmsc": "http://mms.kenamobile.it/",
-      "mmsport": 80,
-      "mmsproxy": "10.248.1.12",
-      "name": "Kena Mobile\u00a0MMS",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
+      "apn": "web.kenamobile.it",
+      "authtype": 0,
+      "carrier_id": 2511,
+      "name": "Kena Mobile web",
       "types": [
-        "mms"
+        "default",
+        "dun",
+        "supl"
       ]
     },
     {
@@ -143,6 +164,16 @@
       "name": "XCAP",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap.kenamobile.it",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "carrier_id": 2511,
+      "name": "XCAP",
+      "protocol": "IPV4V6",
       "types": [
         "xcap"
       ]

@@ -21,6 +21,16 @@
   "android_apns": [
     {
       "apn": "EMERGENCY",
+      "carrier_id": 1988,
+      "name": "emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "EMERGENCY",
       "name": "emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -35,6 +45,17 @@
       "types": [
         "default",
         "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1988,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -96,9 +117,10 @@
       "apn": "o2internet",
       "carrier_id": 1988,
       "name": "O2 internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -107,6 +129,14 @@
       "name": "O2 - SK",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "o2internet",
+      "carrier_id": 1988,
+      "name": "O2 internet",
+      "types": [
+        "ia"
       ]
     },
     {
@@ -125,6 +155,8 @@
       "mmsport": 8080,
       "mmsproxy": "10.97.1.11",
       "name": "O2 MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -149,6 +181,17 @@
       "protocol": "IPV6",
       "types": [
         "emergency"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1988,
+      "name": "O2 VoLTE",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "xcap"
       ]
     },
     {

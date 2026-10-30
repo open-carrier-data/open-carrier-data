@@ -31,6 +31,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1737,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -52,13 +63,23 @@
     },
     {
       "apn": "ims",
-      "authtype": 0,
       "name": "ims",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "ims"
       ]
+    },
+    {
+      "apn": "internet",
+      "name": "internet",
+      "password": "wap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default"
+      ],
+      "user": "wap"
     },
     {
       "apn": "internet",
@@ -75,24 +96,11 @@
       "authtype": 1,
       "carrier_id": 1737,
       "name": "AVEA INTERNET",
-      "types": [
-        "default",
-        "ia",
-        "supl"
-      ]
-    },
-    {
-      "apn": "internet",
-      "authtype": 1,
-      "name": "internet",
-      "password": "wap",
-      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
         "supl"
-      ],
-      "user": "wap"
+      ]
     },
     {
       "apn": "internet",
@@ -102,6 +110,24 @@
       "types": [
         "dun"
       ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 1,
+      "carrier_id": 1737,
+      "name": "AVEA INTERNET",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "internet",
+      "name": "AVEA",
+      "password": "wap",
+      "types": [
+        "supl"
+      ],
+      "user": "wap"
     },
     {
       "apn": "internet",
@@ -127,7 +153,6 @@
     },
     {
       "apn": "mms",
-      "authtype": 1,
       "mmsc": "http://mms.avea.com.tr/servlets/mms",
       "mmsport": 8080,
       "mmsproxy": "217.174.44.80",
@@ -203,7 +228,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "Turk Telekom",
+  "display_name": "Avea",
   "match": {
     "mccmnc": [
       "28603"

@@ -58,6 +58,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1515,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -70,9 +81,11 @@
       "apn": "internet",
       "carrier_id": 1515,
       "name": "MTN Internet GH",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia"
+        "supl"
       ]
     },
     {
@@ -94,6 +107,14 @@
     },
     {
       "apn": "internet",
+      "carrier_id": 1515,
+      "name": "MTN Internet GH",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "internet",
       "name": "XCAP",
       "protocol": "IPV4V6",
       "types": [
@@ -106,6 +127,18 @@
       "mmsport": 8080,
       "mmsproxy": "172.17.3.5",
       "name": "MTN",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "mms",
+      "authtype": 0,
+      "carrier_id": 1515,
+      "mmsc": "http://172.17.3.7",
+      "mmsport": 8080,
+      "mmsproxy": "172.17.3.7",
+      "name": "MTN MMS",
       "types": [
         "mms"
       ]

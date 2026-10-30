@@ -62,6 +62,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 667,
+      "name": "Telia hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "Telia hos",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -70,6 +80,17 @@
       ],
       "user_editable": false,
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 667,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -141,10 +162,11 @@
     {
       "apn": "internet.emt.ee",
       "carrier_id": 667,
-      "name": "EMT Internet",
+      "name": "internet.emt.ee",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -161,11 +183,16 @@
       ]
     },
     {
-      "apn": "mms.emt.ee",
+      "apn": "internet.emt.ee",
       "carrier_id": 667,
+      "name": "EMT Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "mms.emt.ee",
       "mmsc": "http://mms.emt.ee/servlets/mms",
-      "mmsport": 8080,
-      "mmsproxy": "217.71.32.82",
       "name": "EMT MMS",
       "types": [
         "mms"
@@ -173,8 +200,13 @@
     },
     {
       "apn": "mms.emt.ee",
+      "carrier_id": 667,
       "mmsc": "http://mms.emt.ee/servlets/mms",
-      "name": "EMT MMS",
+      "mmsport": 8080,
+      "mmsproxy": "217.71.32.82",
+      "name": "mms.emt.ee",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ]
@@ -287,7 +319,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "EMT",
+  "display_name": "Telia",
   "match": {
     "mccmnc": [
       "24801"

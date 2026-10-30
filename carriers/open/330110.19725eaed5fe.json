@@ -17,6 +17,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1955,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -39,11 +50,14 @@
       "apn": "lte.claropr.com",
       "authtype": 1,
       "carrier_id": 1955,
-      "name": "lte.claropr.com",
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "name": "Puerto Rico:Claro:LTE",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "dun",
-        "ia"
+        "mms",
+        "supl"
       ]
     },
     {
@@ -66,6 +80,16 @@
       "protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "lte.claropr.com",
+      "authtype": 1,
+      "carrier_id": 1955,
+      "name": "lte.claropr.com",
+      "types": [
+        "dun",
+        "ia"
       ]
     },
     {
@@ -128,6 +152,56 @@
       "types": [
         "emergency"
       ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "mvno_match_data": "DDFF",
+      "mvno_type": "gid",
+      "name": "TRACFONE",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "10.50.38.3",
+      "mvno_match_data": "DDFF",
+      "mvno_type": "gid",
+      "name": "TRACFONE MMS",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "carrier_id": 2022,
+      "mvno_match_data": "DEFF",
+      "mvno_type": "gid",
+      "name": "TRACFONE",
+      "types": [
+        "default",
+        "fota",
+        "hipri",
+        "supl"
+      ]
+    },
+    {
+      "apn": "wap.tracfone",
+      "carrier_id": 2022,
+      "mmsc": "http://mmsg.claropr.com:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "10.50.38.3",
+      "mvno_match_data": "DEFF",
+      "mvno_type": "gid",
+      "name": "TRACFONE MMS",
+      "types": [
+        "mms"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -159,7 +233,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Claro Puerto Rico",
+  "display_name": "Puerto Rico:Claro:",
   "match": {
     "mccmnc": [
       "330110"

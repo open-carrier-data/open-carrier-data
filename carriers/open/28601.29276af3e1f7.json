@@ -29,6 +29,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1735,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -74,15 +85,15 @@
       ]
     },
     {
-      "apn": "ims",
-      "authtype": 0,
-      "name": "Turkcell IMS",
+      "apn": "internet",
+      "name": "TURKCELL-ISP",
+      "password": "gprs",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
-        "ims"
+        "default"
       ],
-      "user_visible": false
+      "user": "gprs"
     },
     {
       "apn": "internet",
@@ -98,24 +109,19 @@
       "apn": "internet",
       "carrier_id": 1735,
       "name": "TURKCELL INTERNET",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
     {
       "apn": "internet",
-      "authtype": 1,
-      "name": "internet",
-      "password": "gprs",
-      "protocol": "IPV4V6",
-      "roaming_protocol": "IPV4V6",
+      "carrier_id": 1735,
+      "name": "TURKCELL INTERNET",
       "types": [
-        "default",
-        "supl"
-      ],
-      "user": "gprs"
+        "ia"
+      ]
     },
     {
       "apn": "internet",

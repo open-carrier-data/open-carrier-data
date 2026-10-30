@@ -72,6 +72,18 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 2369,
+      "mtu": 1400,
+      "name": "Orange Es IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "mtu": 1400,
       "name": "Orange Es IMS",
       "protocol": "IPV4V6",
@@ -175,6 +187,7 @@
     {
       "apn": "internet",
       "authtype": 1,
+      "carrier_enabled": true,
       "name": "Orange Internet PC",
       "password": "orange",
       "types": [
@@ -185,7 +198,6 @@
     {
       "apn": "internet",
       "authtype": 1,
-      "carrier_enabled": true,
       "name": "Orange Internet PC",
       "password": "orange",
       "types": [
@@ -224,6 +236,20 @@
     {
       "apn": "orangemms",
       "authtype": 1,
+      "carrier_id": 2369,
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "name": "Orange MMS",
+      "password": "orange",
+      "types": [
+        "mms"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangemms",
+      "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.orange.es",
       "mmsport": 8080,
@@ -253,6 +279,19 @@
     {
       "apn": "orangeworld",
       "authtype": 1,
+      "carrier_id": 2369,
+      "name": "Orange Internet M\u00f3vil",
+      "password": "orange",
+      "types": [
+        "default",
+        "ia",
+        "supl"
+      ],
+      "user": "orange"
+    },
+    {
+      "apn": "orangeworld",
+      "authtype": 1,
       "carrier_enabled": true,
       "name": "orangeworld",
       "password": "orange",
@@ -262,6 +301,82 @@
       ],
       "user": "orange",
       "user_editable": false
+    },
+    {
+      "apn": "internet.mundo-r.com",
+      "authtype": 1,
+      "mvno_match_data": "21403508",
+      "mvno_type": "imsi",
+      "name": "Internet R",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.mundo-r.com",
+      "authtype": 1,
+      "mmsc": "http://mms.mundo-r.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.157.169",
+      "mvno_match_data": "21403508",
+      "mvno_type": "imsi",
+      "name": "MMS R",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "internet.mundo-r.com",
+      "authtype": 1,
+      "mvno_match_data": "21403509",
+      "mvno_type": "imsi",
+      "name": "Internet R",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "mms.mundo-r.com",
+      "authtype": 1,
+      "mmsc": "http://mms.mundo-r.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.0.157.169",
+      "mvno_match_data": "21403509",
+      "mvno_type": "imsi",
+      "name": "MMS R",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "CARREFOURINTERNET",
+      "authtype": 1,
+      "carrier_id": 2133,
+      "mvno_match_data": "2140352",
+      "mvno_type": "imsi",
+      "name": "Carrefour",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "CARREFOURMMS",
+      "authtype": 1,
+      "carrier_id": 2133,
+      "mmsc": "http://mms.orange.es",
+      "mmsport": 8080,
+      "mmsproxy": "172.22.188.25",
+      "mvno_match_data": "2140352",
+      "mvno_type": "imsi",
+      "name": "Carrefour MMS",
+      "password": "CARREFOUR",
+      "types": [
+        "mms"
+      ],
+      "user": "CARREFOUR"
     },
     {
       "apn": "CARREFOURINTERNET",
@@ -295,6 +410,22 @@
     {
       "apn": "euskaltelmms.euskaltel.mobi",
       "authtype": 1,
+      "carrier_id": 1909,
+      "mmsc": "http://mms.euskaltel.mobi",
+      "mmsport": 8080,
+      "mmsproxy": "172.16.18.74",
+      "mvno_match_data": "2140359",
+      "mvno_type": "imsi",
+      "name": "Euskaltel MMS",
+      "password": "EUSKALTEL",
+      "types": [
+        "mms"
+      ],
+      "user": "MMS"
+    },
+    {
+      "apn": "euskaltelmms.euskaltel.mobi",
+      "authtype": 1,
       "mmsc": "http://mms.euskaltel.mobi",
       "mmsport": 8080,
       "mmsproxy": "172.16.18.74",
@@ -317,6 +448,20 @@
       "types": [
         "default",
         "ia",
+        "supl"
+      ],
+      "user": "CLIENTE"
+    },
+    {
+      "apn": "internet.euskaltel.mobi",
+      "authtype": 1,
+      "carrier_id": 1909,
+      "mvno_match_data": "2140359",
+      "mvno_type": "imsi",
+      "name": "Euskaltel Internet",
+      "password": "EUSKALTEL",
+      "types": [
+        "default",
         "supl"
       ],
       "user": "CLIENTE"
@@ -382,6 +527,19 @@
       ]
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1974,
+      "mvno_match_data": "JAZZTEL",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "jazzinternet",
       "carrier_id": 1974,
       "mvno_match_data": "JAZZTEL",
@@ -389,6 +547,7 @@
       "name": "jazzinternet",
       "types": [
         "default",
+        "dun",
         "ia",
         "supl"
       ]
@@ -424,7 +583,7 @@
       "mmsproxy": "37.132.0.10",
       "mvno_match_data": "JAZZTEL",
       "mvno_type": "spn",
-      "name": "MMS",
+      "name": "jazzmms",
       "types": [
         "mms"
       ]
@@ -506,6 +665,40 @@
       "user": "orange"
     },
     {
+      "apn": "datos",
+      "mvno_match_data": "PTV Telecom",
+      "mvno_type": "spn",
+      "name": "PTV Telecom",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "PTV Telecom",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "xcap",
+      "mvno_match_data": "PTV Telecom",
+      "mvno_type": "spn",
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "internet.racc.net",
       "carrier_id": 2298,
       "mvno_match_data": "RACC",
@@ -535,6 +728,20 @@
       "user": "MMS"
     },
     {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2125,
+      "mtu": 1400,
+      "mvno_match_data": "simyo",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "orangemms",
       "authtype": 1,
       "carrier_id": 2125,
@@ -560,6 +767,7 @@
       "password": "orange",
       "types": [
         "default",
+        "dun",
         "ia",
         "supl"
       ],

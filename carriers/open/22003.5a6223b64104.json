@@ -72,12 +72,12 @@
       "apn": "gprswap",
       "authtype": 1,
       "carrier_id": 1013,
-      "name": "MTS WAP",
+      "name": "gprswap",
       "password": "064",
+      "protocol": "IPV4V6",
       "server": "http://m.mondo.rs",
       "types": [
         "default",
-        "ia",
         "supl"
       ],
       "user": "mts"
@@ -106,6 +106,18 @@
     },
     {
       "apn": "gprswap",
+      "authtype": 1,
+      "carrier_id": 1013,
+      "name": "MTS WAP",
+      "password": "064",
+      "server": "http://m.mondo.rs",
+      "types": [
+        "ia"
+      ],
+      "user": "mts"
+    },
+    {
+      "apn": "gprswap",
       "name": "internet",
       "password": "064",
       "protocol": "IPV4V6",
@@ -116,6 +128,16 @@
     },
     {
       "apn": "hos",
+      "carrier_id": 1013,
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "HOS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -123,6 +145,17 @@
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 1013,
+      "name": "ims",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -150,8 +183,10 @@
       "mmsc": "http://mms.mts064.telekom.rs/mms/wapenc",
       "mmsport": 8080,
       "mmsproxy": "172.17.85.131",
-      "name": "MTS MMS",
+      "name": "mms",
       "password": "064",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],

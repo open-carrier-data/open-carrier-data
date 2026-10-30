@@ -15,6 +15,18 @@
   "android_apns": [
     {
       "apn": "cwc.apn",
+      "carrier_id": 1837,
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "cwc.apn",
       "name": "cwc.apn",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -22,6 +34,19 @@
         "default",
         "ia",
         "xcap"
+      ]
+    },
+    {
+      "apn": "cwc.mms",
+      "carrier_id": 1837,
+      "mmsc": "http://mms.cordova.mobi",
+      "mmsport": 80,
+      "mmsproxy": "mms.cordova.mobi",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {
@@ -64,6 +89,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 1837,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -71,6 +107,84 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "cwc.apn",
+      "mvno_match_data": "Cordova Wireless",
+      "mvno_type": "spn",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "cwc.mms",
+      "mmsc": "http://mms.cordova.mobi",
+      "mmsport": 80,
+      "mmsproxy": "mms.cordova.mobi",
+      "mvno_match_data": "Cordova Wireless",
+      "mvno_type": "spn",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "Cordova Wireless",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "cwc.apn",
+      "mvno_match_data": "CordovaWireless",
+      "mvno_type": "spn",
+      "name": "Internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "ia",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "cwc.mms",
+      "mmsc": "http://mms.cordova.mobi",
+      "mmsport": 80,
+      "mmsproxy": "mms.cordova.mobi",
+      "mvno_match_data": "CordovaWireless",
+      "mvno_type": "spn",
+      "name": "MMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "mvno_match_data": "CordovaWireless",
+      "mvno_type": "spn",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     }
   ],
   "android_carrier_config": {

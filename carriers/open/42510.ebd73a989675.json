@@ -21,12 +21,31 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 796,
+      "name": "HOS",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "name": "hos",
       "protocol": "IPV4V6",
       "types": [
         "xcap"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 796,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -73,6 +92,20 @@
       "protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "uinternet",
+      "authtype": 3,
+      "carrier_id": 796,
+      "mmsc": "http://192.168.220.15/servlets/mms",
+      "name": "Partner",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
       ]
     },
     {

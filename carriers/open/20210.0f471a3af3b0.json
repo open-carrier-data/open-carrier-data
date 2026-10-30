@@ -68,9 +68,9 @@
       "apn": "gint.b-online.gr",
       "carrier_id": 1519,
       "name": "Wind Internet",
+      "protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ]
     },
@@ -84,6 +84,22 @@
       ]
     },
     {
+      "apn": "gint.b-online.gr",
+      "carrier_id": 1519,
+      "name": "Wind Internet",
+      "types": [
+        "ia"
+      ]
+    },
+    {
+      "apn": "hos",
+      "carrier_id": 1519,
+      "name": "hos",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
       "apn": "hos",
       "authtype": 0,
       "carrier_enabled": true,
@@ -91,6 +107,17 @@
       "protocol": "IP",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1519,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -117,38 +144,12 @@
     },
     {
       "apn": "ims",
-      "name": "NOVA IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "authtype": 0,
       "carrier_enabled": true,
       "mtu": 1390,
-      "name": "NOVA IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV6",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "Wind IMS",
-      "protocol": "IPV6",
-      "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
       "name": "ims",
       "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -172,8 +173,6 @@
       "mmsport": 9401,
       "mmsproxy": "192.168.200.11",
       "name": "mnet.b-online.gr",
-      "protocol": "IP",
-      "roaming_protocol": "IP",
       "types": [
         "mms"
       ]
@@ -217,7 +216,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "NOVA",
+  "display_name": "Wind",
   "match": {
     "mccmnc": [
       "20210"

@@ -24,6 +24,16 @@
     },
     {
       "apn": "fast.t-mobile.com",
+      "carrier_id": 2650,
+      "mtu": 1440,
+      "name": "T-Mobile US",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
+      ]
+    },
+    {
+      "apn": "fast.t-mobile.com",
       "mtu": 1440,
       "name": "T-Mobile US",
       "protocol": "IPV4V6",
@@ -168,6 +178,98 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "asw.data",
+      "mmsc": "http://mms.msg.eng-asw.com/mms/wapenc",
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "Data",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "asw.tether",
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "Tether",
+      "protocol": "IPV6",
+      "types": [
+        "dun"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1440,
+      "mvno_match_data": "1A53",
+      "mvno_type": "gid",
+      "name": "Assurance IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "TMUS",
+      "bearer_bitmask": "18",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "MetroPCS MMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "fast.metropcs.com",
+      "bearer_bitmask": "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20",
+      "mmsc": "http://metropcs.mmsmvno.com/mms/wapenc",
+      "mtu": 1440,
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "MetroPCS",
+      "protocol": "IPV6",
+      "types": [
+        "default",
+        "hipri",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mtu": 1440,
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "MetroPCS IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "pcweb.metropcs.com",
+      "mvno_match_data": "6D38",
+      "mvno_type": "gid",
+      "name": "MetroPCS Tethering",
+      "protocol": "IPV4V6",
+      "types": [
+        "dun"
+      ]
     }
   ],
   "android_carrier_config": {
@@ -213,7 +315,7 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "T-Mobile",
+  "display_name": "MetroPCS",
   "match": {
     "mccmnc": [
       "311660"

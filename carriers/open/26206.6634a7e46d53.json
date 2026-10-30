@@ -93,6 +93,22 @@
     {
       "apn": "hos",
       "authtype": 1,
+      "carrier_id": 2395,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "mmsproxy.telekom.de",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
       "carrier_id": 3,
       "mmsc": "http://mms.t-mobile.de/servlets/mms",
       "mmsport": 8008,
@@ -197,6 +213,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 2395,
+      "name": "Telekom IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "lingering_network_type_bitmask": "1|2|3|8|9|10|13|14|15|18|20",
       "name": "Telekom IMS",
       "protocol": "IPV4V6",
@@ -286,6 +313,19 @@
     },
     {
       "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "carrier_id": 2395,
+      "name": "Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "supl"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "internet.v6.telekom",
       "name": "Telekom.de",
       "password": "telekom",
       "protocol": "IPV4V6",
@@ -303,6 +343,49 @@
       "password": "telekom",
       "protocol": "IPV4V6",
       "types": [
+        "supl"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "hos",
+      "authtype": 1,
+      "mmsc": "http://mms.t-mobile.de/servlets/mms",
+      "mmsport": 8008,
+      "mmsproxy": "mmsproxy.telekom.de",
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms",
+        "xcap"
+      ],
+      "user": "telekom"
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.v6.telekom",
+      "authtype": 1,
+      "mvno_match_data": "44",
+      "mvno_type": "gid",
+      "name": "Internet",
+      "password": "telekom",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
         "supl"
       ],
       "user": "telekom"

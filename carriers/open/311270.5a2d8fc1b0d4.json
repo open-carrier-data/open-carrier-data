@@ -4,6 +4,23 @@
       "apn": "IMS",
       "authtype": 0,
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 2,
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ia",
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "authtype": 0,
+      "bearer_bitmask": "14|18|20",
       "max_conns": 20,
       "max_conns_time": 300,
       "modem_cognitive": true,
@@ -16,6 +33,21 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWADMIN",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 3,
+      "protocol": "IPV4V6",
+      "types": [
+        "fota"
+      ]
     },
     {
       "apn": "VZWADMIN",
@@ -36,6 +68,23 @@
       "apn": "VZWAPP",
       "authtype": 0,
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 4,
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "mms"
+      ]
+    },
+    {
+      "apn": "VZWAPP",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
       "max_conns": 20,
       "max_conns_time": 300,
       "mmsc": "http://mms.vtext.com/servlets/mms",
@@ -51,6 +100,16 @@
     },
     {
       "apn": "VZWEMERGENCY",
+      "carrier_id": 1839,
+      "name": "Verizon Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
+      ]
+    },
+    {
+      "apn": "VZWEMERGENCY",
       "name": "Verizon Emergency",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -58,6 +117,23 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "authtype": 0,
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|18|20",
+      "carrier_id": 1839,
+      "max_conns": 20,
+      "max_conns_time": 300,
+      "modem_cognitive": true,
+      "name": "Verizon",
+      "profile_id": 0,
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -72,6 +148,23 @@
       "types": [
         "default",
         "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet",
+      "authtype": 3,
+      "bearer_bitmask": "4|5|6|7|8|12",
+      "carrier_id": 1839,
+      "mmsc": "http://mms.vtext.com/servlets/mms",
+      "name": "Verizon",
+      "protocol": "IPV4V6",
+      "types": [
+        "cbs",
+        "default",
+        "dun",
+        "fota",
+        "mms",
         "supl"
       ]
     },
@@ -206,7 +299,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Verizon Us",
+  "display_name": "Verizon",
   "match": {
     "mccmnc": [
       "311270"

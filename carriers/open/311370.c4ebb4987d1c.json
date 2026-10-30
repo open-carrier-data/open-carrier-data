@@ -2,6 +2,20 @@
   "android_apns": [
     {
       "apn": "hos.gci",
+      "carrier_id": 1843,
+      "mmsc": "http://mmsc.gci.net",
+      "mmsport": 9201,
+      "mmsproxy": "24.237.158.34",
+      "name": "HOS",
+      "port": 9201,
+      "proxy": "24.237.158.34",
+      "types": [
+        "mms",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos.gci",
       "mmsc": "http://mmsc.gci.net",
       "mmsport": 9201,
       "mmsproxy": "24.237.158.34",
@@ -13,6 +27,17 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 1843,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "ims",
@@ -136,7 +161,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
   },
-  "display_name": "GCI Data",
+  "display_name": "GCI",
   "match": {
     "mccmnc": [
       "311370"

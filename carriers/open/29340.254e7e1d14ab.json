@@ -24,6 +24,16 @@
   "android_apns": [
     {
       "apn": "hos",
+      "carrier_id": 1709,
+      "name": "hos",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "hos",
       "carrier_enabled": true,
       "mtu": 1358,
       "name": "hos",
@@ -31,6 +41,17 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1709,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -90,9 +111,10 @@
       "carrier_id": 1709,
       "name": "Si.mobil GPRS",
       "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ],
       "user": "simobil"
@@ -107,6 +129,17 @@
       "types": [
         "default",
         "supl"
+      ],
+      "user": "simobil"
+    },
+    {
+      "apn": "internet.simobil.si",
+      "authtype": 1,
+      "carrier_id": 1709,
+      "name": "Si.mobil GPRS",
+      "password": "internet",
+      "types": [
+        "ia"
       ],
       "user": "simobil"
     },
@@ -171,6 +204,8 @@
       "mmsproxy": "80.95.224.46",
       "name": "Si.mobil MMS",
       "password": "internet",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
       ],

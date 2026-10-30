@@ -33,6 +33,7 @@
       "authtype": 0,
       "carrier_id": 1505,
       "name": "3hotspot",
+      "protocol": "IPV4V6",
       "types": [
         "dun"
       ]
@@ -46,6 +47,18 @@
         "dun"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 1505,
+      "mtu": 1500,
+      "name": "ims",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "IMS",
@@ -76,20 +89,6 @@
       "roaming_protocol": "IPV6",
       "types": [
         "ims"
-      ]
-    },
-    {
-      "apn": "three.co.uk",
-      "carrier_id": 1505,
-      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
-      "mmsport": 8799,
-      "mmsproxy": "mms.three.co.uk",
-      "name": "3",
-      "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
       ]
     },
     {
@@ -126,6 +125,22 @@
     },
     {
       "apn": "three.co.uk",
+      "carrier_id": 1505,
+      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.co.uk",
+      "mtu": 1440,
+      "name": "3",
+      "protocol": "IPV4V6",
+      "types": [
+        "default",
+        "mms",
+        "supl",
+        "xcap"
+      ]
+    },
+    {
+      "apn": "three.co.uk",
       "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
       "mmsport": 8799,
       "mmsproxy": "mms.three.co.uk",
@@ -140,6 +155,17 @@
         "xcap"
       ],
       "user_editable": false
+    },
+    {
+      "apn": "three.co.uk",
+      "carrier_id": 1505,
+      "mmsc": "http://mms.um.three.co.uk:10021/mmsc",
+      "mmsport": 8799,
+      "mmsproxy": "mms.three.co.uk",
+      "name": "3",
+      "types": [
+        "ia"
+      ]
     }
   ],
   "android_carrier_config": {

@@ -37,6 +37,16 @@
     {
       "apn": "XCAP",
       "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
+      "carrier_id": 34,
+      "name": "XCAP",
+      "protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "XCAP",
+      "bearer_bitmask": "1|2|3|9|10|11|13|14|15|20",
       "name": "XCAP",
       "protocol": "IPV4V6",
       "types": [
@@ -51,6 +61,17 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 34,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
       ]
     },
     {
@@ -152,11 +173,9 @@
       "mmsproxy": "10.138.255.5",
       "name": "Movistar",
       "password": "telefonica",
+      "protocol": "IPV4V6",
       "types": [
-        "default",
-        "ia",
-        "mms",
-        "supl"
+        "default"
       ],
       "user": "telefonica"
     },
@@ -225,6 +244,22 @@
     {
       "apn": "telefonica.es",
       "authtype": 1,
+      "carrier_id": 34,
+      "mmsc": "http://mms.movistar.com",
+      "mmsport": 8080,
+      "mmsproxy": "10.138.255.5",
+      "name": "Movistar",
+      "password": "telefonica",
+      "types": [
+        "ia",
+        "mms",
+        "supl"
+      ],
+      "user": "telefonica"
+    },
+    {
+      "apn": "telefonica.es",
+      "authtype": 1,
       "carrier_enabled": true,
       "mmsc": "http://mms.movistar.com",
       "mmsport": 8080,
@@ -253,6 +288,50 @@
       "protocol": "IP",
       "types": [
         "xcap"
+      ]
+    },
+    {
+      "apn": "MetTel",
+      "carrier_id": 2656,
+      "mvno_match_data": "8915518F",
+      "mvno_type": "gid",
+      "name": "MetTel",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.t-2.net",
+      "mmsc": "http://www.mms.t-2.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.18.137",
+      "mvno_match_data": "2140759577",
+      "mvno_type": "imsi",
+      "name": "T-2",
+      "types": [
+        "default",
+        "ims",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "internet.t-2.net",
+      "mmsc": "http://www.mms.t-2.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "172.20.18.137",
+      "mvno_match_data": "2140796692",
+      "mvno_type": "imsi",
+      "name": "T-2",
+      "types": [
+        "default",
+        "ims",
+        "mms",
+        "supl"
       ]
     },
     {

@@ -40,6 +40,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|18|20",
+      "carrier_id": 1644,
+      "name": "IMS",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
       "name": "IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IPV6",
@@ -134,7 +145,8 @@
       "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia"
+        "ia",
+        "supl"
       ]
     },
     {
@@ -246,7 +258,7 @@
     {
       "apn": "ut",
       "carrier_id": 1644,
-      "name": "UT-Interface",
+      "name": "ut",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -266,6 +278,69 @@
       "user_visible": false
     },
     {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "truphone.com",
+      "mmsc": "http://mmsc.truphone.com:1981/mm1",
+      "mvno_match_data": "314747454E45524943",
+      "mvno_type": "gid",
+      "name": "DATA",
+      "types": [
+        "default",
+        "dun",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "hos",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "1GLOBAL HOS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 2143,
+      "mvno_match_data": "547275554B3030656E",
+      "mvno_type": "gid",
+      "name": "1GLOBAL IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
       "apn": "ims",
       "carrier_id": 2143,
       "mvno_match_data": "547275554B3030656E",
@@ -283,12 +358,40 @@
       "mmsc": "http://mmsc.truphone.com:1981/mm1",
       "mvno_match_data": "547275554B3030656E",
       "mvno_type": "gid",
-      "name": "Truphone",
+      "name": "truphone.com",
       "types": [
         "default",
         "dun",
         "ia",
         "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
+      "carrier_id": 2149,
+      "mvno_match_data": "204080950",
+      "mvno_type": "imsi",
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "internet.mvno.mobi",
+      "authtype": 1,
+      "carrier_id": 2149,
+      "mvno_match_data": "204080950",
+      "mvno_type": "imsi",
+      "name": "Enreach NL",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "default",
+        "dun",
         "supl"
       ]
     },
@@ -319,6 +422,30 @@
         "supl"
       ],
       "user": "mvno"
+    },
+    {
+      "apn": "rabo",
+      "carrier_id": 2406,
+      "mvno_match_data": "RABO MOBIEL",
+      "mvno_type": "spn",
+      "name": "Rabo Mobiel Int.",
+      "types": [
+        "default",
+        "supl"
+      ]
+    },
+    {
+      "apn": "rabo",
+      "carrier_id": 2406,
+      "mmsc": "http://mp.mobiel.kpn/mmsc",
+      "mmsport": 5080,
+      "mmsproxy": "10.10.100.10",
+      "mvno_match_data": "RABO MOBIEL",
+      "mvno_type": "spn",
+      "name": "Rabo Mobiel MMS",
+      "types": [
+        "mms"
+      ]
     },
     {
       "apn": "rabo",

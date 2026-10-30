@@ -37,7 +37,8 @@
       "name": "EE MMS",
       "password": "secure",
       "types": [
-        "mms"
+        "mms",
+        "xcap"
       ],
       "user": "eesecure"
     },
@@ -75,9 +76,10 @@
       "carrier_id": 718,
       "name": "EE Internet",
       "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "default",
-        "ia",
         "supl"
       ],
       "user": "eesecure"
@@ -144,6 +146,31 @@
       "user": "eesecure"
     },
     {
+      "apn": "everywhere",
+      "authtype": 1,
+      "carrier_id": 718,
+      "name": "EE Internet",
+      "password": "secure",
+      "types": [
+        "ia"
+      ],
+      "user": "eesecure"
+    },
+    {
+      "apn": "ims",
+      "authtype": 1,
+      "bearer_bitmask": "14|18|20",
+      "carrier_id": 718,
+      "name": "IMS",
+      "password": "secure",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ],
+      "user": "eesecure"
+    },
+    {
       "apn": "ims",
       "authtype": 1,
       "bearer_bitmask": "14|18|20",
@@ -190,6 +217,16 @@
       "protocol": "IPV6",
       "types": [
         "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "carrier_id": 718,
+      "name": "EE Emergency",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "emergency"
       ]
     },
     {

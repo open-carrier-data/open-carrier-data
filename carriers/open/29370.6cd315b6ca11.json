@@ -25,6 +25,17 @@
     {
       "apn": "ims",
       "bearer_bitmask": "14|20",
+      "carrier_id": 1712,
+      "name": "IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "bearer_bitmask": "14|20",
       "name": "IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
@@ -95,6 +106,19 @@
       "types": [
         "default",
         "ims"
+      ]
+    },
+    {
+      "apn": "internet",
+      "carrier_id": 1712,
+      "mmsc": "http://mms.telemach.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "name": "Internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
       ]
     },
     {
@@ -173,6 +197,16 @@
     },
     {
       "apn": "xcap",
+      "carrier_id": 1712,
+      "name": "xcap",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV4V6",
+      "types": [
+        "xcap"
+      ]
+    },
+    {
+      "apn": "xcap",
       "carrier_enabled": true,
       "name": "xcap",
       "protocol": "IPV4V6",
@@ -180,6 +214,22 @@
       "types": [
         "xcap"
       ]
+    },
+    {
+      "apn": "telemach.net",
+      "mmsc": "http://mms.telemach.net:8002",
+      "mmsport": 8080,
+      "mmsproxy": "91.185.221.85",
+      "mvno_match_data": "29370029",
+      "mvno_type": "imsi",
+      "name": "Telemach Internet",
+      "password": "internet",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ],
+      "user": "telemach"
     },
     {
       "apn": "telemach.net",
