@@ -601,6 +601,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Hotmobile Il",
       "has_android_carrier_config": true,
       "match": {
@@ -635,6 +640,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon Wireless",
       "has_android_carrier_config": true,
       "match": {
@@ -672,6 +682,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "VZW",
       "has_android_carrier_config": true,
       "match": {
@@ -2279,6 +2297,24 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -2344,6 +2380,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-09-24",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SaskTel",
       "has_android_carrier_config": true,
       "match": {
@@ -2749,6 +2790,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "KPN NL",
       "has_android_carrier_config": true,
       "match": {
@@ -3012,6 +3064,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telfort",
       "has_android_carrier_config": true,
       "match": {
@@ -3117,6 +3177,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -3775,6 +3840,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -4779,6 +4849,26 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Proximus",
       "has_android_carrier_config": true,
       "match": {
@@ -5818,6 +5908,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Proximus (BTBD)",
       "has_android_carrier_config": true,
       "match": {
@@ -6475,6 +6570,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "BASE",
       "has_android_carrier_config": true,
       "match": {
@@ -6983,6 +7089,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "BTBD (ORANGE)",
       "has_android_carrier_config": true,
       "match": {
@@ -7017,6 +7131,21 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Orange France",
       "has_android_carrier_config": true,
       "match": {
@@ -8077,6 +8206,20 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SFR",
       "has_android_carrier_config": true,
       "match": {
@@ -11101,6 +11244,20 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SFR",
       "has_android_carrier_config": true,
       "match": {
@@ -12862,6 +13019,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Bouygues Telecom",
       "has_android_carrier_config": true,
       "match": {
@@ -13067,6 +13229,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Bouygues Telecom",
       "has_android_carrier_config": true,
       "match": {
@@ -14327,6 +14494,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -14664,6 +14836,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "EUSKALTEL",
       "has_android_carrier_config": true,
       "match": {
@@ -14766,6 +14943,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "mobil R",
       "has_android_carrier_config": true,
       "match": {
@@ -15078,6 +15260,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "mobil R",
       "has_android_carrier_config": true,
       "match": {
@@ -15180,6 +15367,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Orange",
       "has_android_carrier_config": true,
       "match": {
@@ -16212,6 +16411,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Yoigo",
       "has_android_carrier_config": true,
       "match": {
@@ -16660,6 +16864,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Pepephone",
       "has_android_carrier_config": true,
       "match": {
@@ -17526,6 +17735,23 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -18166,6 +18392,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Mobiler Es",
       "has_android_carrier_config": true,
       "match": {
@@ -19016,6 +19247,23 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -19251,6 +19499,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Euskaltel",
       "has_android_carrier_config": true,
       "match": {
@@ -23618,6 +23871,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "TIM",
       "has_android_carrier_config": true,
       "match": {
@@ -24426,6 +24687,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -25991,6 +26257,16 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fast",
       "has_android_carrier_config": true,
       "match": {
@@ -26127,6 +26403,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -26220,6 +26501,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Digi.Mobil",
       "has_android_carrier_config": true,
       "match": {
@@ -26480,6 +26766,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Swisscom",
       "has_android_carrier_config": true,
       "match": {
@@ -26651,6 +26942,14 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "Sunrise",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "ch.sunrise.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -26682,6 +26981,14 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "Salt",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "ch.salt.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -27551,6 +27858,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "GPRS",
       "has_android_carrier_config": true,
       "match": {
@@ -27746,6 +28058,17 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "4ka",
       "has_android_carrier_config": true,
       "match": {
@@ -29418,6 +29741,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Yesss",
       "has_android_carrier_config": true,
       "match": {
@@ -31046,6 +31374,20 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "O2",
       "has_android_carrier_config": true,
       "match": {
@@ -31624,6 +31966,20 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -33720,6 +34076,20 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "EE",
       "has_android_carrier_config": true,
       "match": {
@@ -35413,6 +35783,20 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "TDC",
       "has_android_carrier_config": true,
       "match": {
@@ -35783,6 +36167,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "3",
       "has_android_carrier_config": true,
       "match": {
@@ -37131,6 +37520,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telenor",
       "has_android_carrier_config": true,
       "match": {
@@ -38219,6 +38614,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Tele2",
       "has_android_carrier_config": true,
       "match": {
@@ -38868,6 +39268,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telenor",
       "has_android_carrier_config": true,
       "match": {
@@ -39755,6 +40160,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telenor",
       "has_android_carrier_config": true,
       "match": {
@@ -40210,6 +40626,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Ice",
       "has_android_carrier_config": true,
       "match": {
@@ -40733,6 +41155,16 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "DNA",
       "has_android_carrier_config": true,
       "match": {
@@ -40798,6 +41230,16 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "DNA",
       "has_android_carrier_config": true,
       "match": {
@@ -41083,6 +41525,17 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telia",
       "has_android_carrier_config": true,
       "match": {
@@ -41625,6 +42078,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MegaFon",
       "has_android_carrier_config": true,
       "match": {
@@ -42198,6 +42656,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Tele2",
       "has_android_carrier_config": true,
       "match": {
@@ -42387,6 +42853,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Motiv",
       "has_android_carrier_config": true,
       "match": {
@@ -42638,6 +43109,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SberMobile",
       "has_android_carrier_config": true,
       "match": {
@@ -45897,7 +46373,47 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telekom",
+      "for_you": {
+        "esim": {
+          "brands": [
+            "Lebara",
+            "Telekom Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "brands": [
+            "Lebara",
+            "Telekom Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "brands": [
+            "Lebara",
+            "Telekom Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -45929,6 +46445,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -45963,6 +46499,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -45997,6 +46553,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46031,6 +46607,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46065,6 +46661,26 @@
       },
       "checks_through": "2026-10-24",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46102,6 +46718,26 @@
       },
       "checks_through": "2026-10-24",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46139,6 +46775,44 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "congstar.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.congstar.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.volte"
+          ]
+        },
+        "vonr": {
+          "state": "not_offered",
+          "statements": [
+            "de.congstar.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46176,6 +46850,44 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "congstar.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.congstar.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.volte"
+          ]
+        },
+        "vonr": {
+          "state": "not_offered",
+          "statements": [
+            "de.congstar.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46256,6 +46968,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46290,6 +47022,44 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "congstar.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.congstar.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.volte"
+          ]
+        },
+        "vonr": {
+          "state": "not_offered",
+          "statements": [
+            "de.congstar.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46324,6 +47094,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46439,6 +47229,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46473,6 +47283,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46541,6 +47371,26 @@
       },
       "checks_through": "2026-10-24",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46578,6 +47428,26 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46612,6 +47482,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46646,6 +47536,26 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "Telekom.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.volte"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telekom.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46680,6 +47590,32 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "fraenk",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.fraenk.esim"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.fraenk.volte"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.fraenk.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.fraenk.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46717,6 +47653,44 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "congstar.de",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.congstar.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.volte"
+          ]
+        },
+        "vonr": {
+          "state": "not_offered",
+          "statements": [
+            "de.congstar.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46787,6 +47761,44 @@
       },
       "checks_through": "2026-10-12",
       "display_name": "Congstar De",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.congstar.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.volte"
+          ]
+        },
+        "vonr": {
+          "state": "not_offered",
+          "statements": [
+            "de.congstar.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.congstar.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46821,6 +47833,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "1&1",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.vodafone.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46855,6 +47875,75 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "Vodafone",
+      "for_you": {
+        "esim": {
+          "brands": [
+            "BILDmobil",
+            "LIDL Connect",
+            "Vodafone Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.vodafone.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.vodafone.mms"
+          ]
+        },
+        "volte": {
+          "brands": [
+            "BILDmobil",
+            "LIDL Connect",
+            "Vodafone Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.vodafone.volte"
+          ]
+        },
+        "vonr": {
+          "brands": [
+            "BILDmobil",
+            "LIDL Connect",
+            "Vodafone Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.vodafone.vonr"
+          ]
+        },
+        "vowifi": {
+          "brands": [
+            "BILDmobil",
+            "LIDL Connect",
+            "Vodafone Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.lidl-connect.wifi_calling",
+            "de.vodafone.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "brands": [
+            "BILDmobil",
+            "LIDL Connect",
+            "Vodafone Deutschland"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.vodafone.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -46886,6 +47975,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "vf nl",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.vodafone.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "iccid_prefixes": [
@@ -46920,6 +48017,44 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "o2 DE",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -46954,6 +48089,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Enreach De",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -46988,6 +48131,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Enreach De",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -47022,6 +48173,88 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "O2 DE",
+      "for_you": {
+        "esim": {
+          "brands": [
+            "ALDI TALK",
+            "Blau",
+            "Telef\u00f3nica Deutschland (O2)",
+            "simyo",
+            "sipgate"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.aldi-talk.esim",
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "brands": [
+            "ALDI TALK",
+            "Blau",
+            "Telef\u00f3nica Deutschland (O2)",
+            "simyo",
+            "sipgate"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.aldi-talk.volte",
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "brands": [
+            "ALDI TALK",
+            "Blau",
+            "Telef\u00f3nica Deutschland (O2)",
+            "simyo",
+            "sipgate"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "brands": [
+            "ALDI TALK",
+            "Blau",
+            "Telef\u00f3nica Deutschland (O2)",
+            "simyo",
+            "sipgate"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.aldi-talk.wifi_calling",
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "brands": [
+            "ALDI TALK",
+            "Blau",
+            "Telef\u00f3nica Deutschland (O2)",
+            "simyo",
+            "sipgate"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.aldi-talk.wifi_calling_abroad",
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -47053,6 +48286,44 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "o2 DE",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -47804,6 +49075,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "1&1",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -47838,6 +49117,44 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "O2Prepaid De",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -47872,6 +49189,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Carrier 26207",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -47942,6 +49267,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Carrier 26207",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -47976,6 +49309,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "mobilcom-debitel",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -48010,6 +49351,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Tchibo De",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -48044,6 +49393,44 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "o2 DE",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -48078,6 +49465,79 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "O2",
+      "for_you": {
+        "esim": {
+          "brands": [
+            "FONIC",
+            "Lidl Mobile (on O2)",
+            "Telef\u00f3nica Deutschland (O2)",
+            "netzclub"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "brands": [
+            "FONIC",
+            "Lidl Mobile (on O2)",
+            "Telef\u00f3nica Deutschland (O2)",
+            "netzclub"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "brands": [
+            "FONIC",
+            "Lidl Mobile (on O2)",
+            "Telef\u00f3nica Deutschland (O2)",
+            "netzclub"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "brands": [
+            "FONIC",
+            "Lidl Mobile (on O2)",
+            "Telef\u00f3nica Deutschland (O2)",
+            "netzclub"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "brands": [
+            "FONIC",
+            "Lidl Mobile (on O2)",
+            "Telef\u00f3nica Deutschland (O2)",
+            "netzclub"
+          ],
+          "reason": "brand_not_tellable",
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -48109,6 +49569,44 @@
       },
       "checks_through": "2026-10-11",
       "display_name": "o2 DE",
+      "for_you": {
+        "esim": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.esim"
+          ]
+        },
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        },
+        "volte": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.volte"
+          ]
+        },
+        "vonr": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.vonr"
+          ]
+        },
+        "vowifi": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling"
+          ]
+        },
+        "wifi_calling_roaming": {
+          "state": "depends_on_plan",
+          "statements": [
+            "de.telefonica.wifi_calling_abroad"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "gid1_prefixes": [
@@ -48143,6 +49641,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "Carrier 26207",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.telefonica.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "imsi_prefix_patterns": [
@@ -48431,6 +49937,14 @@
       },
       "checks_through": "2026-07-14",
       "display_name": "1&1",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "de.1und1.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -49219,6 +50733,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Gibtel",
       "has_android_carrier_config": true,
       "match": {
@@ -49891,7 +51410,26 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "POST",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "lu.post.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -51703,6 +53241,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "PrimeTel",
       "has_android_carrier_config": true,
       "match": {
@@ -53216,6 +54765,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Salt",
       "has_android_carrier_config": true,
       "match": {
@@ -53612,6 +55166,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-07-14",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Telekom.me",
       "has_android_carrier_config": true,
       "match": {
@@ -57717,6 +59276,23 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fido",
       "has_android_carrier_config": true,
       "match": {
@@ -58222,6 +59798,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-09-24",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Videotron",
       "has_android_carrier_config": true,
       "match": {
@@ -58464,6 +60045,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vid\u00e9otron",
       "has_android_carrier_config": true,
       "match": {
@@ -58702,6 +60288,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Bell Mobility",
       "has_android_carrier_config": true,
       "match": {
@@ -59443,6 +61040,23 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-09-24",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Rogers",
       "has_android_carrier_config": true,
       "match": {
@@ -60426,6 +62040,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SaskTel",
       "has_android_carrier_config": true,
       "match": {
@@ -61181,6 +62800,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -61435,6 +63059,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon Wireless",
       "has_android_carrier_config": true,
       "match": {
@@ -61758,6 +63387,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-30",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile - US",
       "has_android_carrier_config": true,
       "match": {
@@ -61832,6 +63466,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -62728,6 +64367,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Corr",
       "has_android_carrier_config": true,
       "match": {
@@ -63235,6 +64879,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-24",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Sprint",
       "has_android_carrier_config": true,
       "match": {
@@ -64020,6 +65670,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Cricket",
       "has_android_carrier_config": true,
       "match": {
@@ -64422,6 +66078,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -64626,6 +66287,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -64657,6 +66330,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -64725,6 +66403,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -65121,6 +66805,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -65155,6 +66844,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -65220,6 +66921,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -65254,6 +66960,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -65322,6 +67033,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -65353,6 +67076,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -65421,6 +67149,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -65455,6 +67188,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -65523,6 +67261,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -65656,6 +67406,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -65690,6 +67445,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -65721,6 +67488,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -66303,6 +68075,22 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -67746,6 +69534,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Us",
       "has_android_carrier_config": true,
       "match": {
@@ -67848,6 +69644,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -68735,6 +70536,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "U264A Us",
       "has_android_carrier_config": true,
       "match": {
@@ -68905,6 +70711,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -69498,6 +71309,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -69529,6 +71352,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -69631,6 +71459,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -71396,6 +73229,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -73133,6 +74971,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -73952,6 +75795,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Us",
       "has_android_carrier_config": true,
       "match": {
@@ -73986,6 +75837,21 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -74289,6 +76155,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -74320,6 +76198,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -74354,6 +76237,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -74728,6 +76616,16 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -76022,6 +77920,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Truphone Zz",
       "has_android_carrier_config": true,
       "match": {
@@ -76121,6 +78025,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Truphone",
       "has_android_carrier_config": true,
       "match": {
@@ -76220,6 +78136,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MetroPCS",
       "has_android_carrier_config": true,
       "match": {
@@ -76319,6 +78240,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -76455,6 +78381,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -76811,6 +78749,25 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -78607,6 +80564,16 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -79368,6 +81335,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -79402,6 +81374,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -79433,6 +81417,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -79535,6 +81524,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MetroPCS 530",
       "has_android_carrier_config": true,
       "match": {
@@ -79566,6 +81567,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MetroPCS",
       "has_android_carrier_config": true,
       "match": {
@@ -79600,6 +81606,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -79968,6 +81980,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Inland Cellular",
       "has_android_carrier_config": true,
       "match": {
@@ -80169,6 +82186,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -80294,6 +82316,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Xfinity Mobile 2.0",
       "has_android_carrier_config": true,
       "match": {
@@ -80460,6 +82487,19 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -81043,6 +83083,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Xfinity Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -81411,6 +83456,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -81547,6 +83597,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -81644,6 +83699,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -81804,6 +83864,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -81838,6 +83903,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -81998,6 +84068,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -82032,6 +84107,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -82158,6 +84238,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -82841,6 +84926,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -82909,6 +84999,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -83491,6 +85589,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Airfire GPRS",
       "has_android_carrier_config": true,
       "match": {
@@ -83522,6 +85632,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MetroPCS",
       "has_android_carrier_config": true,
       "match": {
@@ -83590,6 +85705,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-30",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 310650",
       "has_android_carrier_config": true,
       "match": {
@@ -83621,6 +85742,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -83652,6 +85785,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -83754,6 +85892,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -83819,6 +85962,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -83983,6 +86132,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "ATT Broadband",
       "has_android_carrier_config": true,
       "match": {
@@ -84310,6 +86465,18 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -84341,6 +86508,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -84375,6 +86547,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -84873,6 +87050,15 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -84904,6 +87090,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "ATT Broadband",
       "has_android_carrier_config": true,
       "match": {
@@ -85603,6 +87795,23 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -86824,6 +89033,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "ATT Broadband",
       "has_android_carrier_config": true,
       "match": {
@@ -87109,6 +89324,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "VIYA",
       "has_android_carrier_config": true,
       "match": {
@@ -89239,6 +91462,25 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "AT&T",
       "has_android_carrier_config": true,
       "match": {
@@ -89946,6 +92188,15 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -90073,6 +92324,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -91359,6 +93615,24 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon",
       "has_android_carrier_config": true,
       "match": {
@@ -92533,6 +94807,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Bluegrass Us",
       "has_android_carrier_config": true,
       "match": {
@@ -92737,6 +95016,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Fi Extended Us",
       "has_android_carrier_config": true,
       "match": {
@@ -93151,6 +95435,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizon Generic Mvno Us",
       "has_android_carrier_config": true,
       "match": {
@@ -93713,6 +96002,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Cellcom Us",
       "has_android_carrier_config": true,
       "match": {
@@ -94876,6 +97170,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -94910,6 +97209,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-24",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Virgin Mobile US",
       "has_android_carrier_config": true,
       "match": {
@@ -95649,6 +97953,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "UScellular",
       "has_android_carrier_config": true,
       "match": {
@@ -96203,6 +98515,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "U.S. Cellular",
       "has_android_carrier_config": true,
       "match": {
@@ -96732,6 +99052,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "United",
       "has_android_carrier_config": true,
       "match": {
@@ -96797,6 +99128,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -96831,6 +99167,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "MetroPCS",
       "has_android_carrier_config": true,
       "match": {
@@ -96896,6 +99240,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -97620,6 +99969,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -97651,6 +100008,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -97685,6 +100047,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -98425,6 +100792,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-30",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 312190",
       "has_android_carrier_config": true,
       "match": {
@@ -98487,6 +100860,14 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "T-Mobile",
       "has_android_carrier_config": true,
       "match": {
@@ -98518,6 +100899,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Metro",
       "has_android_carrier_config": true,
       "match": {
@@ -98552,6 +100938,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Assurance",
       "has_android_carrier_config": true,
       "match": {
@@ -98840,6 +101231,21 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-24",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Sprint CdmaNai",
       "has_android_carrier_config": true,
       "match": {
@@ -99495,6 +101901,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "FirstNet",
       "has_android_carrier_config": true,
       "match": {
@@ -99625,6 +102036,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "VZW US",
       "has_android_carrier_config": true,
       "match": {
@@ -100076,6 +102493,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "FirstNet",
       "has_android_carrier_config": true,
       "match": {
@@ -100141,6 +102563,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "FirstNet",
       "has_android_carrier_config": true,
       "match": {
@@ -100172,6 +102599,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "FirstNet",
       "has_android_carrier_config": true,
       "match": {
@@ -100237,6 +102669,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "FirstNet",
       "has_android_carrier_config": true,
       "match": {
@@ -100930,6 +103367,20 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SOS",
       "has_android_carrier_config": true,
       "match": {
@@ -103364,6 +105815,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Xfinity Mobile 2.0",
       "has_android_carrier_config": true,
       "match": {
@@ -103953,6 +106409,15 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Puerto Rico:Claro:",
       "has_android_carrier_config": true,
       "match": {
@@ -104444,6 +106909,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -107512,6 +109982,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -122966,6 +125441,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Claro",
       "has_android_carrier_config": true,
       "match": {
@@ -124293,6 +126773,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -124666,6 +127151,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -124790,6 +127280,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -124852,6 +127347,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -124914,6 +127414,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -125069,6 +127574,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -125224,6 +127734,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -125317,6 +127832,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -125689,6 +128209,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -125782,6 +128307,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vi",
       "has_android_carrier_config": true,
       "match": {
@@ -126154,6 +128684,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -126278,6 +128813,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "BSNL",
       "has_android_carrier_config": true,
       "match": {
@@ -126377,6 +128917,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance",
       "has_android_carrier_config": true,
       "match": {
@@ -127498,6 +130043,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -127560,6 +130110,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -127622,6 +130177,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130257,6 +132817,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130288,6 +132853,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130350,6 +132920,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130381,6 +132956,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130412,6 +132992,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130443,6 +133028,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130474,6 +133064,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130505,6 +133100,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -130536,6 +133136,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -131900,6 +134505,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132410,6 +135021,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132441,6 +135058,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132472,6 +135095,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132503,6 +135132,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132534,6 +135169,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132565,6 +135206,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132596,6 +135243,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132627,6 +135280,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132658,6 +135317,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132689,6 +135354,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132720,6 +135391,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132751,6 +135428,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132782,6 +135465,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132813,6 +135502,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132844,6 +135539,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132875,6 +135576,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132906,6 +135613,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132937,6 +135650,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132968,6 +135687,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -132999,6 +135724,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -133030,6 +135761,12 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Reliance Jio",
       "has_android_carrier_config": true,
       "match": {
@@ -137026,6 +139763,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Etisalat",
       "has_android_carrier_config": true,
       "match": {
@@ -140574,6 +143316,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "OCN",
       "has_android_carrier_config": true,
       "match": {
@@ -141048,6 +143795,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "KDDI",
       "has_android_carrier_config": true,
       "match": {
@@ -141367,6 +144122,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "J:COM MOBILE",
       "has_android_carrier_config": true,
       "match": {
@@ -141506,6 +144266,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "KDDI",
       "has_android_carrier_config": true,
       "match": {
@@ -142502,6 +145267,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 45000",
       "has_android_carrier_config": true,
       "match": {
@@ -142765,6 +145535,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "SK Telecom",
       "has_android_carrier_config": true,
       "match": {
@@ -142796,6 +145572,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "LG U+",
       "has_android_carrier_config": true,
       "match": {
@@ -142858,6 +145640,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "KT",
       "has_android_carrier_config": true,
       "match": {
@@ -143208,6 +145996,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "sms_over_ims": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Viettel",
       "has_android_carrier_config": true,
       "match": {
@@ -144173,6 +146972,15 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "CSL",
       "has_android_carrier_config": true,
       "match": {
@@ -146446,6 +149254,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SmarTone",
       "has_android_carrier_config": true,
       "match": {
@@ -147454,6 +150267,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "CMHK",
       "has_android_carrier_config": true,
       "match": {
@@ -148840,6 +151661,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "CTExcel",
       "has_android_carrier_config": true,
       "match": {
@@ -149298,6 +152124,16 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vonr": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u56fd\u7535\u4fe1",
       "has_android_carrier_config": true,
       "match": {
@@ -149453,6 +152289,19 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ],
+        "vonr": [
+          "device",
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u56fd\u7535\u4fe1(\u6fb3\u95e8)",
       "has_android_carrier_config": true,
       "match": {
@@ -149991,6 +152840,19 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "ims_conference": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "China Unicom",
       "has_android_carrier_config": true,
       "match": {
@@ -150053,6 +152915,19 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "ims_conference": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "CTNET",
       "has_android_carrier_config": true,
       "match": {
@@ -150151,6 +153026,16 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 46005",
       "has_android_carrier_config": true,
       "match": {
@@ -150182,6 +153067,16 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u6c83\u5bbd\u5e26\u7528\u6237\u8fde\u63a5\u4e92\u8054\u7f51",
       "has_android_carrier_config": true,
       "match": {
@@ -150275,6 +153170,19 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "ims_conference": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "China Unicom 3G",
       "has_android_carrier_config": true,
       "match": {
@@ -150337,6 +153245,19 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "ims_conference": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u56fd\u7535\u4fe1",
       "has_android_carrier_config": true,
       "match": {
@@ -150368,6 +153289,16 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "device",
+          "sources_disagree"
+        ],
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u56fd\u7535\u4fe1\u4e92\u8054\u7f51\u8bbe\u7f6eCTNET",
       "has_android_carrier_config": true,
       "match": {
@@ -150430,6 +153361,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u56fd\u5e7f\u7535",
       "has_android_carrier_config": true,
       "match": {
@@ -150685,6 +153622,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u9060\u50b3\u96fb\u4fe1(Far EasTone) (Internet)",
       "has_android_carrier_config": true,
       "match": {
@@ -151096,6 +154038,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "\u4e2d\u83ef\u96fb\u4fe1",
       "has_android_carrier_config": true,
       "match": {
@@ -151658,6 +154605,14 @@
       },
       "checks_through": "2026-10-28",
       "display_name": "BICS",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "my.maxis.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "iccid_prefixes": [
@@ -151692,6 +154647,14 @@
       },
       "checks_through": "2026-10-10",
       "display_name": "Maxis",
+      "for_you": {
+        "mms": {
+          "state": "ended",
+          "statements": [
+            "my.maxis.mms"
+          ]
+        }
+      },
       "has_android_carrier_config": true,
       "match": {
         "mccmnc": [
@@ -153385,6 +156348,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-06",
+      "depends_on": {
+        "vowifi": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Vodafone",
       "has_android_carrier_config": true,
       "match": {
@@ -155194,6 +158163,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "AIS",
       "has_android_carrier_config": true,
       "match": {
@@ -155738,6 +158712,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-25",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Singtel",
       "has_android_carrier_config": true,
       "match": {
@@ -155942,6 +158921,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "M1",
       "has_android_carrier_config": true,
       "match": {
@@ -156514,6 +159498,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "StarHub",
       "has_android_carrier_config": true,
       "match": {
@@ -156613,6 +159602,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-10",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "SIMBA",
       "has_android_carrier_config": true,
       "match": {
@@ -171464,6 +174458,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "TIM",
       "has_android_carrier_config": true,
       "match": {
@@ -171566,6 +174566,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "TIM",
       "has_android_carrier_config": true,
       "match": {
@@ -171597,6 +174603,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-11",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "TIM",
       "has_android_carrier_config": true,
       "match": {
@@ -173549,6 +176561,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ],
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Claro",
       "has_android_carrier_config": true,
       "match": {
@@ -174588,6 +177611,14 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -175152,6 +178183,17 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-30",
+      "depends_on": {
+        "video_calling": [
+          "sources_disagree"
+        ],
+        "volte": [
+          "sources_disagree"
+        ],
+        "vowifi": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 73800",
       "has_android_carrier_config": true,
       "match": {
@@ -175372,6 +178414,11 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-12",
+      "depends_on": {
+        "mms": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Movistar",
       "has_android_carrier_config": true,
       "match": {
@@ -175970,6 +179017,12 @@
         "wifi_calling_roaming": "unknown"
       },
       "checks_through": "2026-10-30",
+      "depends_on": {
+        "volte": [
+          "device",
+          "sources_disagree"
+        ]
+      },
       "display_name": "Carrier 90118",
       "has_android_carrier_config": true,
       "match": {
@@ -193184,6 +196237,11 @@
         "wifi_calling_roaming": "supported"
       },
       "checks_through": "2026-10-28",
+      "depends_on": {
+        "rcs": [
+          "sources_disagree"
+        ]
+      },
       "display_name": "Verizononsitelte Us",
       "has_android_carrier_config": true,
       "match": {

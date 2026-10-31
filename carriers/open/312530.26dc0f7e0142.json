@@ -529,6 +529,21 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "unknown"
   },
+  "depends_on": {
+    "rcs": [
+      "sources_disagree"
+    ],
+    "sms_over_ims": [
+      "sources_disagree"
+    ],
+    "volte": [
+      "device",
+      "sources_disagree"
+    ],
+    "vowifi": [
+      "sources_disagree"
+    ]
+  },
   "display_name": "Sprint CdmaNai",
   "match": {
     "mccmnc": [

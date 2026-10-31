@@ -589,6 +589,18 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
+  "depends_on": {
+    "rcs": [
+      "sources_disagree"
+    ],
+    "volte": [
+      "device",
+      "sources_disagree"
+    ],
+    "vowifi": [
+      "sources_disagree"
+    ]
+  },
   "display_name": "T-Mobile",
   "match": {
     "mccmnc": [

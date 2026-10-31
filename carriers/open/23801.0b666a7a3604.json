@@ -509,6 +509,20 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
+  "depends_on": {
+    "sms_over_ims": [
+      "sources_disagree"
+    ],
+    "video_calling": [
+      "sources_disagree"
+    ],
+    "volte": [
+      "sources_disagree"
+    ],
+    "vowifi": [
+      "sources_disagree"
+    ]
+  },
   "display_name": "TDC",
   "match": {
     "mccmnc": [

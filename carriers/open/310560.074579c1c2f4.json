@@ -323,6 +323,12 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
+  "depends_on": {
+    "volte": [
+      "device",
+      "sources_disagree"
+    ]
+  },
   "display_name": "AT&T",
   "match": {
     "mccmnc": [
