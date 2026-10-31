@@ -2442,7 +2442,11 @@ def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None
     """lookup.json lists every profile once, except those flagged
     old_selector_superseded (D7), which it leaves out. newest_entry, where
     present, repeats the month the evidence index publishes for that profile,
-    and is present exactly where the evidence index has one."""
+    and is present exactly where the evidence index has one. weight, where
+    present, is Android's weight of the profile on each of its network codes
+    (rule round 45), as tools/resolve_carrier_profiles.py computes it."""
+    import resolve_carrier_profiles
+
     path = generated_dir / "android" / "lookup.json"
     lookup = load_json(path)
     require_type(path, lookup, dict, "lookup")
@@ -2469,12 +2473,21 @@ def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None
         "checks_through",
         "stale_after",
         "newest_entry",
+        "weight",
     }
     for index, record in enumerate(profiles):
         label = f"profiles[{index}]"
         require_type(path, record, dict, label)
         if set(record) - allowed:
             raise ValidationError(f"{path}: {label} has unknown keys")
+        if "weight" in record:
+            match = record.get("match") if isinstance(record.get("match"), dict) else {}
+            expected = {
+                str(code): resolve_carrier_profiles.android_weight(match, str(code), resolve_carrier_profiles.default_table())
+                for code in match.get("mccmnc", [])
+            }
+            if record["weight"] != expected:
+                raise ValidationError(f"{path}: {label}.weight is not Android's weight of its match (rule round 45)")
         profile_id = record.get("profile_id")
         if profile_id in seen or profile_id not in expected_profile_ids:
             raise ValidationError(f"{path}: {label}.profile_id is unknown or repeated")

@@ -24,6 +24,7 @@ import android_phone_model
 from android_phone_model import PERSIST_APNS_FOR_PLMN
 from lineageos_apns import fits_lineageos_schema
 from validate_public_carrier_data import STALE_AFTER_DAYS
+import resolve_carrier_profiles
 
 
 def load_json(path: Path) -> Any:
@@ -2880,15 +2881,17 @@ def apn_row_line(record: dict[str, Any]) -> str:
 # commit that published it.
 PROJECT_URL = "https://github.com/open-carrier-data/open-carrier-data"
 DATA_LICENSE = "CC0-1.0"
-DIGEST_TOOLS = ("generate_android_outputs.py", "carrier_config_types.py", "lineageos_apns.py")
+# aosp/carrier-id-table.json: Android's carrier ID rules behind lookup.json's
+# weight field (rule round 45, item 3).
+DIGEST_TOOLS = ("generate_android_outputs.py", "carrier_config_types.py", "lineageos_apns.py", "aosp/carrier-id-table.json")
 
 
 def data_digest(
     carriers_dir: Path, paths: list[Path], evidence_index_path: Path | None
 ) -> str:
     """SHA-256 over the inputs of the generated files, each named by its path
-    in the repository: the profile files, generated/evidence-index.json, and
-    the generator's source."""
+    in the repository: the profile files, generated/evidence-index.json, the
+    generator's source and the carrier ID table behind lookup.json's weight."""
     digest = hashlib.sha256()
 
     def add(name: str, data: bytes) -> None:
@@ -3087,6 +3090,20 @@ def match_specificity(match: dict[str, Any]) -> int:
     )
 
 
+def lookup_weight(match: dict[str, Any]) -> dict[str, int]:
+    """Android's weight of the profile on each of its network codes (rule
+    round 45, item 3): CarrierResolver's score of the fields it pins, with a
+    carrier-ID selector counted by Android's rules behind the ID there
+    (tools/aosp/carrier-id-table.json). Step 1 of the resolution order that
+    docs/compatibility.md announces; resolve_carrier_profiles.py --order
+    android uses it."""
+    table = resolve_carrier_profiles.default_table()
+    return {
+        str(mccmnc): resolve_carrier_profiles.android_weight(match, str(mccmnc), table)
+        for mccmnc in match.get("mccmnc", [])
+    }
+
+
 def lookup_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any]) -> dict[str, Any]:
     return {
         "profile_id": profile["profile_id"],
@@ -3094,6 +3111,7 @@ def lookup_record(carriers_dir: Path, profile_path: Path, profile: dict[str, Any
         "path": profile_path.relative_to(carriers_dir.parent).as_posix(),
         "match": profile["match"],
         "specificity": match_specificity(profile["match"]),
+        "weight": lookup_weight(profile["match"]),
         "capabilities": profile["capabilities"],
         "android_apn_count": len(profile.get("android_apns", []) or []),
         "has_android_carrier_config": bool(profile.get("android_carrier_config")),

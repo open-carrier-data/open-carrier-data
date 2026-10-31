@@ -331,25 +331,74 @@ class PublishedSelectorsTest(unittest.TestCase):
             self.assertTrue(set(row["profiles"]) <= known)
 
     def test_tie_report(self) -> None:
-        ties = ocd.tie_report(self.profiles)
-        same = [item for item in ties if item["shared"]]
-        print(f"\nprofiles of equal specificity one SIM can match together: {len(ties)} pairs (the later id serves), "
-              f"{len(same)} of them with overlapping selectors of one dimension; tools/ocd_dataset.py ties lists them all")
-        for item in same[:10]:
-            print(f"  {item['network']} specificity {item['specificity']}: {item['first']} < {item['serves']} ({'+'.join(item['shared'])})")
+        """Rule round 45: the resolution order leaves ties only up to the
+        profile ID, and none of them may serve a SIM differently."""
+        ties = ocd.tie_report(self.profiles, self.index)
+        counts = ocd.step_counts(self.profiles)
+        print(f"\npairs one SIM can match, by the step of the resolution order that orders them: "
+              + ", ".join(f"{step} {counts[step]}" for step in ocd.ORDER_STEPS)
+              + f"; {len(ties)} tie(s) up to the profile ID, {sum(1 for t in ties if t['served'])} served differently")
         for item in ties:
+            print(f"  {item['network']}: {item['first']} < {item['serves']} ({'+'.join(item['shared']) or 'different dimensions'}; "
+                  f"{'; '.join(item['served']) or 'served the same'})")
             self.assertLess(item["first"].encode(), item["serves"].encode())
+        self.assertEqual(counts["profile_id"], len(ties))
+        self.assertEqual(ocd.tie_problems(self.profiles, self.index), [])
+
+
+def tie_profile(suffix: str, match: dict, values: dict | None = None, fill: list | None = None, apn_rows: int = 0, kind: str = "ocd") -> dict:
+    full = {"mccmnc": [{"mcc": "999", "mnc": "02"}], **match}
+    return {"id": f"{'open' if kind == 'ocd' else 'fill'}.99902.00000000000{suffix}", "kind": kind, "match": full,
+            "specificity": ocd.specificity_of(full), "values": values or {}, "fill": fill or [], "apn_rows": apn_rows}
+
+
+def tie_network(*profiles: dict) -> dict:
+    return {"networks": {"999-02": {"mcc": "999", "mnc": "02", "profiles": sorted(profiles, key=ocd.stack_order)}}}
 
 
 class TieFixtureTest(unittest.TestCase):
-    def test_disjoint_selectors_do_not_tie(self) -> None:
-        profiles = {"networks": {"999-02": {"mcc": "999", "mnc": "02", "profiles": [
-            {"id": "open.99902.000000000001", "specificity": 1, "match": {"mccmnc": [{"mcc": "999", "mnc": "02"}], "gid1_prefixes": ["01"]}},
-            {"id": "open.99902.000000000002", "specificity": 1, "match": {"mccmnc": [{"mcc": "999", "mnc": "02"}], "gid1_prefixes": ["02"]}},
-            {"id": "open.99902.000000000003", "specificity": 1, "match": {"mccmnc": [{"mcc": "999", "mnc": "02"}], "spn": ["X"]}},
-        ]}}}
-        pairs = [(t["first"][-1], t["serves"][-1], t["shared"]) for t in ocd.tie_report(profiles)]
-        self.assertEqual(pairs, [("1", "3", []), ("2", "3", [])])
+    def test_disjoint_or_weighted_apart_selectors_do_not_tie(self) -> None:
+        profiles = tie_network(
+            tie_profile("1", {"gid1_prefixes": ["01"]}), tie_profile("2", {"gid1_prefixes": ["02"]}), tie_profile("3", {"spn": ["X"]}),
+        )
+        self.assertEqual(ocd.tie_report(profiles), [])  # 1 and 2 never meet; 3 weighs 258 against 288
+        self.assertEqual(ocd.step_counts(profiles)["weight"], 2)
+
+    def test_equal_fixed_digits_tie_up_to_the_id(self) -> None:
+        """302720x84 against 30272098 on 302-720: the same weight, eight fixed
+        digits each, one value and one network each."""
+        a = tie_profile("1", {"imsi_prefix_patterns": ["99902x84"]}, {"maxMessageSize": 1}, [{"entry": "a", "when": None}])
+        b = tie_profile("2", {"imsi_prefix_patterns": ["9990298"]}, {"maxMessageSize": 1}, [{"entry": "a", "when": {"kind": "imsi", "value": "99902x84"}},
+                                                                                          {"entry": "b", "when": None}])
+        ties = ocd.tie_report(tie_network(a, b))
+        self.assertEqual([(t["first"][-1], t["serves"][-1], t["served"]) for t in ties], [("1", "2", [])])
+        # A SIM of both is served the same: equal values, and b's fill picks a for it.
+        self.assertEqual(ocd.tie_problems(tie_network(a, b), None), [])
+        # Different values for a key both set: the checker fails.
+        c = dict(b, values={"maxMessageSize": 2})
+        problems = ocd.tie_problems(tie_network(a, c), None)
+        self.assertEqual(len(problems), 1)
+        self.assertIn("carrier_config: maxMessageSize", problems[0])
+        # A fill whose pick differs for a SIM of both: the checker fails.
+        d = dict(b, fill=[{"entry": "b", "when": None}])
+        self.assertIn("google_fill", ocd.tie_report(tie_network(a, d))[0]["served"])
+        # Both with APN rows and no index to show that a SIM of both gets rows of each: counted as a difference.
+        e, f = dict(a, apn_rows=1), dict(b, apn_rows=1)
+        self.assertEqual(ocd.tie_report(tie_network(e, f))[0]["served"], ["apn_coupling"])
+        index = {"rows": [{"profiles": [e["id"]]}, {"profiles": [f["id"]]}]}
+        self.assertEqual(ocd.tie_report(tie_network(e, f), index)[0]["served"], [])
+
+    def test_the_tie_steps(self) -> None:
+        """Steps 3 to 5 settle what the weight and the prefix leave: OCD above fill-only, fewer values, fewer networks."""
+        fill = tie_profile("1", {"spn": ["X"]}, kind="fill_only")
+        two_values = tie_profile("2", {"spn": ["X", "Y"]})
+        two_networks = dict(tie_profile("3", {"spn": ["X"]}))
+        two_networks["match"] = {"mccmnc": [{"mcc": "999", "mnc": "02"}, {"mcc": "999", "mnc": "03"}], "spn": ["X"]}
+        plain = tie_profile("4", {"spn": ["X"]})
+        stack = ocd.resolve_stack([plain, two_networks, two_values, fill], {"mcc": "999", "mnc": "02", "spn": "x"})
+        self.assertEqual([p["id"][-1] for p in stack], ["1", "2", "3", "4"])
+        self.assertEqual(ocd.serving_reason(stack, "99902"), "fewer_networks")
+        self.assertEqual(ocd.tie_report(tie_network(plain, two_networks, two_values, fill)), [])
 
 
 # ---------------------------------------------------------------- the generator on a small checkout

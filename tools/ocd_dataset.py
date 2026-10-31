@@ -31,17 +31,22 @@ docs/ocd-dataset.md explains them for consumers.
   validate [--root DIR] [--base-manifest FILE]
       The schemas, the reader's checks 4 to 10 of spec 2.12 (manifest,
       digests, strict parse, closed and typed keys, specificity, network
-      copies, APN version, APN index), the device-record rules, the privacy
-      guard, and a regeneration that must give the same bytes. With
+      copies, APN version, APN index), the conflict checker of rule round 45
+      (no tie up to the profile ID with served values that differ), the
+      device-record rules, the privacy guard, and a regeneration that must
+      give the same bytes. With
       --base-manifest (main's manifest, on a pull request), a changed dataset
       must carry a later generated_at. Exit 1 on a problem.
   match --mcc MCC --mnc MNC [--spn S] [--imsi I] [--gid1 G] [--gid2 G] [--iccid I]
         [--carrier-id N] [--specific-carrier-id N] [--root DIR]
-      The stack, the serving profile and the fill pick for one SIM, as the
-      reader computes them (spec 4.2 and 2.5.5). Use synthetic identities.
+      The stack, the serving profile, the step of the resolution order that
+      made it serve, and the fill pick for one SIM, as the reader computes
+      them (spec 4.2 with rule round 45, and 2.5.5). Use synthetic identities.
   ties [--root DIR]
-      Pairs of profiles of equal specificity on one network that one SIM can
-      match together (spec 4.2 rule 5): the tie report.
+      Pairs of profiles on one network that one SIM can match together and
+      that the resolution order (rule round 45) puts apart only by profile
+      ID: the tie report, with what such a SIM is served differently. Exit 1
+      when any is served differently (validate fails on the same).
 
 Only the standard library is used, as in the other public tools.
 """
@@ -434,13 +439,113 @@ def specificity_of(match: dict[str, Any]) -> int:
 
 
 def stack_order(profile: dict[str, Any]) -> tuple[int, bytes]:
+    """The order of a network's profiles in profiles.json (specificity, then
+    id in byte order). Since rule round 45 it is only the file's order; the
+    reader sorts a SIM's stack by resolution_key."""
     return (profile["specificity"], profile["id"].encode("utf-8"))
 
 
+# ---------------------------------------------------------------- resolution order (rule round 45, item 3)
+#
+# OcdCarrierSettings, the OCD Check app and this tool sort a SIM's profiles
+# generic to specific by:
+#   1. Android's weight (CarrierResolver.CarrierMatchingRule): MCC/MNC 256,
+#      IMSI prefix 128, ICCID prefix 64, GID1 32, GID2 16, PLMN 8, access rule
+#      4, SPN 2, APN 1 for the fields the profile pins. A carrier-ID selector
+#      stays a match condition and adds the fields of Android's rules behind
+#      the ID on the SIM's network (the lowest weight when there are several;
+#      MCC/MNC alone when the ID has none there or the table is missing); at
+#      equal weight a profile with a carrier-ID selector ranks above.
+#   2. Longer prefix or more fixed digits: IMSI (digits other than x), ICCID,
+#      GID1, GID2, each the shortest of the profile's values.
+#   3. An OCD profile above a fill-only one.
+#   4. Fewer list values.  5. Fewer network codes.
+#   6. The id in byte order, which tie_problems keeps from deciding between
+#      profiles whose served values differ.
+# profiles.json is unchanged: the reader computes all of this from match and
+# kind, and the phone reads carrier-ID rules from its own carrier ID table.
+# tools/resolve_carrier_profiles.py --order android is the same order over
+# lookup.json; the golden vectors in tests/vectors/ hold both to it.
+
+ORDER_STEPS = ("weight", "carrier_id", "prefix", "ocd_before_fill_only", "fewer_values", "fewer_networks", "profile_id")
+MCCMNC_WEIGHT = 256
+SELECTOR_WEIGHTS = {"imsi_prefix_patterns": 128, "iccid_prefixes": 64, "gid1_prefixes": 32, "gid2_prefixes": 16, "spn": 2}
+RULE_WEIGHTS = {"mccmnc": 256, "imsi_prefix_xpattern": 128, "iccid_prefix": 64, "gid1": 32, "gid2": 16, "plmn": 8,
+                "privilege_access_rule": 4, "spn": 2, "apn": 1}
+PREFIX_DIMENSIONS = ("imsi_prefix_patterns", "iccid_prefixes", "gid1_prefixes", "gid2_prefixes")
+CARRIER_ID_TABLE_FILE = "aosp/carrier-id-table.json"
+_carrier_id_tables: dict[str, dict[tuple[int, str], list[int]] | None] = {}
+
+
+def carrier_id_table(path: Path | None = None) -> dict[tuple[int, str], list[int]] | None:
+    """(carrier ID, MCC+MNC) to the weights of Android's rules for that ID
+    there, from tools/aosp/carrier-id-table.json (the AOSP carrier list of
+    the ROM's Android version); None when the file is missing."""
+    path = path or TOOLS / CARRIER_ID_TABLE_FILE
+    key = str(path)
+    if key not in _carrier_id_tables:
+        if not path.is_file():
+            _carrier_id_tables[key] = None
+        else:
+            table: dict[tuple[int, str], list[int]] = {}
+            for row in read_json_file(path)["rows"]:
+                if row.get("mccmnc") is not None:
+                    weight = sum(w for column, w in RULE_WEIGHTS.items() if row.get(column) is not None)
+                    table.setdefault((int(row["carrier_id"]), row["mccmnc"]), []).append(weight)
+            _carrier_id_tables[key] = table
+    return _carrier_id_tables[key]
+
+
+def android_weight(match: dict[str, Any], mccmnc: str, table: dict[tuple[int, str], list[int]] | None) -> int:
+    """Step 1 on network MCCMNC (MCC and MNC without a dash)."""
+    raw = MCCMNC_WEIGHT + sum(w for d, w in SELECTOR_WEIGHTS.items() if match.get(d))
+    weight = None
+    for carrier_id in match.get("android_carrier_ids") or []:
+        for rule in (table or {}).get((carrier_id, mccmnc)) or [MCCMNC_WEIGHT]:
+            weight = raw | rule if weight is None else min(weight, raw | rule)
+    return raw if weight is None else weight
+
+
+def fixed_length(dimension: str, value: str) -> int:
+    return sum(1 for c in value if c not in "xX") if dimension == "imsi_prefix_patterns" else len(value)
+
+
+def resolution_key(profile: dict[str, Any], mccmnc: str, table: dict[tuple[int, str], list[int]] | None = None) -> tuple[Any, ...]:
+    """The sort key of PROFILE on network MCCMNC, one element per step of ORDER_STEPS."""
+    match = profile["match"]
+    table = carrier_id_table() if table is None else table
+    return (
+        android_weight(match, mccmnc, table),
+        1 if match.get("android_carrier_ids") else 0,
+        tuple(min(fixed_length(d, v) for v in match[d]) if match.get(d) else 0 for d in PREFIX_DIMENSIONS),
+        0 if profile.get("kind") == "fill_only" else 1,
+        -sum(len(match[d]) for d in DIMENSIONS if match.get(d)),
+        -len(match["mccmnc"]),
+        profile["id"].encode("utf-8"),
+    )
+
+
+def deciding_step(lower: tuple[Any, ...], upper: tuple[Any, ...]) -> str | None:
+    for step, a, b in zip(ORDER_STEPS, lower, upper):
+        if a != b:
+            return step
+    return None
+
+
 def resolve_stack(network_profiles: list[dict[str, Any]], sim: dict[str, Any]) -> list[dict[str, Any]]:
-    """Every profile of the SIM's network that holds, generic to specific
-    (specificity, then id in byte order); the last one serves."""
-    return sorted((p for p in network_profiles if profile_holds(p, sim)), key=stack_order)
+    """Every profile of the SIM's network that holds, generic to specific in
+    the resolution order; the last one serves."""
+    mccmnc = f"{sim.get('mcc')}{sim.get('mnc')}"
+    return sorted((p for p in network_profiles if profile_holds(p, sim)), key=lambda p: resolution_key(p, mccmnc))
+
+
+def serving_reason(stack: list[dict[str, Any]], mccmnc: str) -> str:
+    """`default`, `only`, or the step that put the serving profile above the one below it."""
+    if not stack:
+        return "default"
+    if len(stack) == 1:
+        return "only"
+    return deciding_step(resolution_key(stack[-2], mccmnc), resolution_key(stack[-1], mccmnc)) or "profile_id"
 
 
 def when_holds(when: dict[str, str] | None, sim: dict[str, Any]) -> bool:
@@ -1148,7 +1253,7 @@ def group_a_candidates(profiles: dict[str, Any], lane: dict[str, Any] | None) ->
     for network in profiles["networks"].values():
         items = network["profiles"]
         for profile in items:
-            stack = profile_stack(items, profile)
+            stack = profile_stack(items, profile, network["mcc"] + network["mnc"])
             served: dict[str, tuple[Any, dict[str, Any]]] = {}
             for q in stack:
                 for key, value in q["values"].items():
@@ -2070,6 +2175,7 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
                         out.append(f"profiles.json: {profile['id']} has an IMSI pattern outside OCD's 5 to 10 characters")
             elif not FILL_ID_RE.fullmatch(profile["id"]):
                 out.append(f"profiles.json: {profile['id']} is not a fill-only profile id")
+    out += tie_problems(parsed["profiles"], parsed.get("apn_index"))
     records, declared, reads = read_record_sources(root)
     for path, read in reads.items():
         if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA:
@@ -2134,12 +2240,14 @@ def implied_match(specific: dict[str, Any], generic: dict[str, Any]) -> bool:
     return True
 
 
-def profile_stack(network_profiles: list[dict[str, Any]], profile: dict[str, Any]) -> list[dict[str, Any]]:
-    """The stack a SIM that PROFILE matches always has: the less specific
-    profiles of the network that every such SIM also matches, then PROFILE."""
+def profile_stack(network_profiles: list[dict[str, Any]], profile: dict[str, Any], mccmnc: str) -> list[dict[str, Any]]:
+    """The stack a SIM that PROFILE matches on network MCCMNC always has: the
+    profiles of the network below it in the resolution order that every such
+    SIM also matches, then PROFILE."""
+    top = resolution_key(profile, mccmnc)
     stack = [q for q in network_profiles if q is profile or q["id"] == profile["id"]
-             or (q["specificity"] < profile["specificity"] and implied_match(profile["match"], q["match"]))]
-    return sorted(stack, key=stack_order)
+             or (resolution_key(q, mccmnc) < top and implied_match(profile["match"], q["match"]))]
+    return sorted(stack, key=lambda q: resolution_key(q, mccmnc))
 
 
 # ---------------------------------------------------------------- ties
@@ -2157,18 +2265,122 @@ def selectors_can_overlap(a: dict[str, Any], b: dict[str, Any]) -> bool:
     return True
 
 
-def tie_report(profiles: dict[str, Any]) -> list[dict[str, Any]]:
+def fill_under(fill: list[dict[str, Any]], a: dict[str, Any], b: dict[str, Any]) -> list[tuple[str, tuple[str, str] | None]]:
+    """FILL as it reads for the SIMs that match both A and B: items whose
+    condition no such SIM meets drop out, an item whose condition every such
+    SIM meets ends the list unconditionally, the rest keep their condition."""
+    out: list[tuple[str, tuple[str, str] | None]] = []
+    for item in fill:
+        when = item["when"]
+        if when is None:
+            out.append((item["entry"], None))
+            break
+        kind, value = when["kind"], when["value"]
+        dimension = KIND_DIMENSION[kind]
+        lists = [m[dimension] for m in (a["match"], b["match"]) if m.get(dimension)]
+        if lists:
+            combos = [c for c in ([(x,) for x in lists[0]] if len(lists) == 1 else
+                                  [(x, y) for x in lists[0] for y in lists[1] if values_overlap(kind, x, y)])]
+            if not any(all(values_overlap(kind, w, value) for w in combo) for combo in combos):
+                continue
+            if all(any(value_implies(kind, w, value) for w in combo) for combo in combos):
+                out.append((item["entry"], None))
+                break
+        out.append((item["entry"], (kind, value)))
+    return out
+
+
+def single_mvno_dimension(match: dict[str, Any]) -> str | None:
+    used = [d for d in DIMENSIONS if match.get(d)]
+    return used[0] if len(used) == 1 and used[0] in ("spn", "imsi_prefix_patterns", "gid1_prefixes", "iccid_prefixes") else None
+
+
+def served_difference(a: dict[str, Any], b: dict[str, Any], rows: dict[str, set[frozenset[str]]] | None = None) -> list[str]:
+    """What a SIM that matches both A and B is served differently when one or
+    the other ranks higher: CarrierConfig keys both set to different values,
+    the Google fill each would pick for such a SIM, and the APN coupling
+    (rule round 45: the profile ID may decide only where none differs). ROWS
+    maps a profile ID to the owner sets of its apns-conf.xml rows."""
+    out = []
+    keys = sorted(k for k in set(a["values"]) & set(b["values"]) if compact(a["values"][k]) != compact(b["values"][k]))
+    if keys:
+        out.append("carrier_config: " + ", ".join(keys))
+    if fill_under(a["fill"], a, b) != fill_under(b["fill"], b, a):
+        out.append("google_fill")
+    if a["apn_rows"] and b["apn_rows"]:
+        # TelephonyProvider gives a SIM every MVNO row that matches it. When
+        # each profile has its own single MVNO selector and rows only it owns,
+        # a SIM of both gets rows of each, so the coupling is a mismatch
+        # whichever serves; any other case counts as a difference.
+        both_mismatch = (
+            rows is not None
+            and single_mvno_dimension(a["match"]) and single_mvno_dimension(b["match"])
+            and any(a["id"] in owners and b["id"] not in owners for owners in rows.get(a["id"], ()))
+            and any(b["id"] in owners and a["id"] not in owners for owners in rows.get(b["id"], ()))
+        )
+        if not both_mismatch:
+            out.append("apn_coupling")
+    return out
+
+
+def apn_row_owners(apn_index: dict[str, Any] | None) -> dict[str, set[frozenset[str]]] | None:
+    if apn_index is None:
+        return None
+    out: dict[str, set[frozenset[str]]] = defaultdict(set)
+    for row in apn_index["rows"]:
+        owners = frozenset(row["profiles"])
+        for profile_id in owners:
+            out[profile_id].add(owners)
+    return out
+
+
+def tie_report(profiles: dict[str, Any], apn_index: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Every pair of profiles on one network that one SIM can match together
+    and that the resolution order puts apart only at its last step, the
+    profile ID: the tie report (rule round 45). `served` lists what such a
+    SIM would be served differently (served_difference); `shared` the
+    dimensions both use."""
+    rows = apn_row_owners(apn_index)
     out = []
     for key, network in profiles["networks"].items():
-        items = network["profiles"]
+        mccmnc = network["mcc"] + network["mnc"]
+        items = sorted(network["profiles"], key=lambda p: resolution_key(p, mccmnc))
+        keys = [resolution_key(p, mccmnc) for p in items]
         for i, first in enumerate(items):
-            for second in items[i + 1:]:
-                if second["specificity"] != first["specificity"]:
+            for j in range(i + 1, len(items)):
+                if keys[j][:-1] != keys[i][:-1]:
                     break
-                if first["specificity"] and selectors_can_overlap(first["match"], second["match"]):
+                second = items[j]
+                if selectors_can_overlap(first["match"], second["match"]):
                     shared = sorted(d for d in DIMENSIONS if d in first["match"] and d in second["match"])
-                    out.append({"network": key, "specificity": first["specificity"], "first": first["id"], "serves": second["id"], "shared": shared})
+                    out.append({"network": key, "first": first["id"], "serves": second["id"], "shared": shared,
+                                "served": served_difference(first, second, rows)})
     return out
+
+
+def step_counts(profiles: dict[str, Any]) -> dict[str, int]:
+    """How many pairs that one SIM can match together each step of the
+    resolution order puts apart."""
+    counts = {step: 0 for step in ORDER_STEPS}
+    for network in profiles["networks"].values():
+        mccmnc = network["mcc"] + network["mnc"]
+        items = network["profiles"]
+        keys = [resolution_key(p, mccmnc) for p in items]
+        for i, first in enumerate(items):
+            for j in range(i + 1, len(items)):
+                if selectors_can_overlap(first["match"], items[j]["match"]):
+                    lower, upper = sorted((keys[i], keys[j]))
+                    counts[deciding_step(lower, upper) or "profile_id"] += 1
+    return counts
+
+
+def tie_problems(profiles: dict[str, Any], apn_index: dict[str, Any] | None) -> list[str]:
+    """The conflict checker (rule round 45): a SIM must never be served
+    different values because of profile ID order alone. It fails on every
+    tie of the report with a served difference; there is no baseline."""
+    return [f"profiles.json: {t['network']}: {t['first']} and {t['serves']} tie up to the profile ID and a SIM of both is served "
+            f"differently ({'; '.join(t['served'])}); a source must settle which applies (rule round 45)"
+            for t in tie_report(profiles, apn_index) if t["served"]]
 
 
 # ---------------------------------------------------------------- CLI
@@ -2189,8 +2401,10 @@ def explain_sim(profiles: dict[str, Any], lane: dict[str, Any] | None, sim: dict
     pick = pick_fill(fill, sim, lane["entries"] if lane else None)
     return {
         "network": f"{sim.get('mcc')}-{sim.get('mnc')}",
-        "stack": [{"id": p["id"], "specificity": p["specificity"], "kind": p["kind"], "name": p["name"]} for p in stack],
+        "stack": [{"id": p["id"], "specificity": p["specificity"], "weight": android_weight(p["match"], f"{sim.get('mcc')}{sim.get('mnc')}", carrier_id_table()),
+                   "kind": p["kind"], "name": p["name"]} for p in stack],
         "serving": serving["id"] if serving else "default",
+        "reason": serving_reason(stack, f"{sim.get('mcc')}{sim.get('mnc')}"),
         "fill": fill,
         "fill_pick": pick,
     }
@@ -2257,13 +2471,18 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(explain_sim(data["profiles"], data["lane"], sim), indent=2, ensure_ascii=False))
             return 0
         if args.command == "ties":
-            report = tie_report(read_json_file(args.root / FILES["profiles"][1]))
+            profiles = read_json_file(args.root / FILES["profiles"][1])
+            index_path = args.root / FILES["apn_index"][1]
+            report = tie_report(profiles, read_json_file(index_path) if index_path.is_file() else None)
             for item in report:
                 how = "overlapping " + "+".join(item["shared"]) if item["shared"] else "different dimensions"
-                print(f"{item['network']} specificity {item['specificity']}: {item['first']} < {item['serves']} (the later one serves; {how})")
-            same = sum(1 for item in report if item["shared"])
-            print(f"{len(report)} tie(s): {same} with overlapping selectors of one dimension, {len(report) - same} only for a SIM that carries both selectors")
-            return 0
+                served = "served differently: " + "; ".join(item["served"]) if item["served"] else "served the same"
+                print(f"{item['network']}: {item['first']} < {item['serves']} (the profile ID decides; {how}; {served})")
+            counts = step_counts(profiles)
+            conflicting = sum(1 for item in report if item["served"])
+            print(f"{len(report)} tie(s) up to the profile ID, {conflicting} served differently; pairs one SIM can match, "
+                  "by the step that orders them: " + ", ".join(f"{step} {counts[step]}" for step in ORDER_STEPS))
+            return 1 if conflicting else 0
     except DatasetError as error:
         print(f"error: {error}", file=sys.stderr)
         return 1

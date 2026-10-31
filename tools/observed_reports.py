@@ -745,7 +745,7 @@ def record_candidate_problems(record: dict[str, Any], dataset: dict[str, Any], w
         for network in profiles["networks"].values():
             for profile in network["profiles"]:
                 if profile["id"] == carrier["profile_id"]:
-                    stacks.append(ocd_dataset.profile_stack(network["profiles"], profile))
+                    stacks.append(ocd_dataset.profile_stack(network["profiles"], profile, network["mcc"] + network["mnc"]))
                     fills |= {item["entry"] for item in profile["fill"]}
         if not stacks:
             return [f"{where}.carrier.profile_id: is not a profile of the data commit (record_unknown_profile)"]
@@ -1509,7 +1509,7 @@ def published_value(profiles: dict[str, Any] | None, record: dict[str, Any]) -> 
         for profile in network["profiles"]:
             if profile["id"] == record["carrier"]["profile_id"]:
                 values = {}
-                for item in ocd_dataset.profile_stack(network["profiles"], profile):
+                for item in ocd_dataset.profile_stack(network["profiles"], profile, network["mcc"] + network["mnc"]):
                     values.update(item["values"])
                 return (key in values), values.get(key)
     return False, None
