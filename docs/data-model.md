@@ -2,7 +2,7 @@
 
 This page lists every field of a carrier profile as `schemas/carrier-profile.schema.json` defines it, in schema order. It then lists the fields that the generated indexes add. Each section says which file the field lives in.
 
-A carrier profile is one file at `carriers/open/<mccmnc>.<hash>.json`. Its top-level fields are `schema_version`, `profile_id`, `display_name`, `match`, `capabilities`, `android_carrier_config`, `addons`, and `android_apns`. The schema allows no other top-level field.
+A carrier profile is one file at `carriers/open/<mccmnc>.<12 hex>.json`, named after its `profile_id`. Its top-level fields are `schema_version`, `profile_id`, `display_name`, `match`, `capabilities`, `android_carrier_config`, `addons`, and `android_apns`. The schema allows no other top-level field.
 
 ## Top-level fields
 
@@ -11,7 +11,7 @@ The first five fields identify the profile and say when it applies.
 | Field | Required | Type | Rule |
 | --- | --- | --- | --- |
 | `schema_version` | yes | integer | always `1` |
-| `profile_id` | yes | string | `open.<mccmnc>.<12 hex>`, matches the file name. It is a hash of the match set, so a change of selectors replaces IDs: when Samsung's networks moved from network-name SPN selectors to Samsung's own SIM rules (change 32), 2,149 profiles keyed by a network name left, 512 profiles under Samsung's rules were added, and the profile count fell from 7,997 to 6,360 (dry run of 2026-10-13) |
+| `profile_id` | yes | string | `open.<mccmnc>.<12 hex>`, matches the file name; `<mccmnc>` is one of the profile's network codes. Since rule round 45 (item 1) an ID is assigned once and kept. A new match set gets the first 12 hex digits of a SHA-256 over it (`hash_id` in `tools/profile_ids.py`, hashed again with a counter when that equals a live or retired ID). The ID stays while the profile covers exactly the same SIMs, or across a change an accepted continuity entry allows; any other change of its SIMs, and every split or merge, retires it into `aliases/ids.json` with the profile or profiles its SIMs match now ([Profile ID aliases](#profile-id-aliases)). Until then the ID was the hash of the current match set, so a change of selectors replaced IDs: when Samsung's networks moved from network-name SPN selectors to Samsung's own SIM rules (change 32), 2,149 profiles keyed by a network name left, 512 profiles under Samsung's rules were added, and the profile count fell from 7,997 to 6,360 (dry run of 2026-10-13) |
 | `display_name` | yes | string | 1 to 120 characters |
 | `match` | yes | object | see the match selector table |
 | `capabilities` | yes | object | see the capabilities table |
@@ -155,6 +155,19 @@ An add-on value is a boolean, an integer from -1000000 to 1000000, or a string o
 The allowed `types` values are `*`, `default`, `mms`, `supl`, `dun`, `hipri`, `fota`, `ims`, `cbs`, `ia`, `emergency`, `mcx`, `xcap`, `vsim`, `bip`, `enterprise`, and `rcs`. `cbs` is Android's type for carrier branded services, not cell broadcast: OCD publishes no emergency-alert (cell broadcast) channels, which Android takes from its own per-country and per-carrier CellBroadcastReceiver configuration.
 
 ## Stable index entries
+
+## Profile ID aliases
+
+`aliases/ids.json` ([`schemas/profile-id-aliases.schema.json`](../schemas/profile-id-aliases.schema.json)) is the other half of the ID registry (rule round 45, item 1): the live IDs are the files in `carriers/open`, the retired ones are here. The private sanitizer writes it with `tools/profile_ids.py`, the one ID function every writer and validator uses, and entries are only ever added.
+
+| Field | What it holds |
+| --- | --- |
+| `aliases` | one entry per retired ID, sorted by `id`: `kind` (`replaced`: one new profile took its SIMs; `split`: several did; `merge`: one new profile took the SIMs of several retired IDs; `withdrawn`: no new profile took them), `to` (the profiles a SIM of the old rule provably matches in the data it was retired in: the most specific covering profiles and every profile that takes part of its SIMs; a rule on other selectors is not counted), `match` (the retired match set), `match_set_hash` and `retired_on` |
+| `continued` | one entry per live ID whose match set is not the one it was issued for: `basis` `same_sims` (the same SIMs written differently, proved by the tool) or `continuity_entry` (a continuity entry the tool computed for a replacement and a reviewer accepted in private `state/id-continuity.json`), the hashes before and after, and `since` |
+
+The **canonical match-set hash** of a profile is the hash part of `hash_id` over its normalised match set (lists sorted, without duplicates). For an ID issued from a match set that is still its own, it equals the ID's last 12 hex digits. Every record keyed by a profile ID, a group A read and a measured or cell record, stores the hash it was made under in its source file (`match_set_hashes` in a read under `devices/records/reads/group-a/`, `match_set_hash` in an item of `devices/records/measured.json`); a record made before 2026-11-01 takes it from its profile ID. `tools/ocd_dataset.py` serves such a record only while the profile's current hash is that one: otherwise a group A read lapses and the value waits for a new read in `group-a-pending.json`, and a measured record is left out of `device-records.json` and is only the first candidate for the next test. An alias never carries a record or a value to another profile.
+
+`tools/profile_ids.py check` runs in `validate`: every live ID is the issued hash of its match set or explained under `continued`, no ID is live and retired, every alias points into the registry, and every profile ID a generated file or side file names (`index.json`, `lookup.json`, `metadata.json`, `carrier-config-list.xml`, the evidence index's profiles, `carrier-identity.json`, `carrier-variants.json`, the device and cell records, the OCD dataset and the group A reads) is in the registry. Against the base commit it also checks that every base ID is still live or aliased, that alias entries are only added, that a profile covering the same SIMs as a base profile keeps that ID, that a kept ID covers other SIMs only with an accepted continuity entry, and that a new ID is the issued form for a new match set. `tools/profile_ids.py changes --base-ref <ref>` lists the IDs added and removed, every kept ID whose match set changed, with the old and new selectors, and every new alias entry; the publish pull request and the release notes carry the same list.
 
 `generated/index.json` has `schema_version` and a `profiles` array. Each entry has `profile_id`, `display_name`, and `path`. `path` is the profile file relative to the repo root.
 

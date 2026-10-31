@@ -236,6 +236,9 @@ READ_SCHEMA = "ocd-group-a-read/1"
 # devices/records/reads/ (ocd-group-a-read/2) and are copied, with the
 # candidates still waiting for a read, into generated/ocd-dataset/group-a-reads.json.
 GROUP_A_READ_SCHEMA = "ocd-group-a-read/2"
+# Rule round 45, item 1: profile IDs are frozen from this day; a record made
+# later stores the match-set hash it was made under.
+ID_FREEZE_DATE = "2026-10-31"
 GROUP_A_EFFECTS = ("call_path", "display_only")
 GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
@@ -927,8 +930,10 @@ def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dic
         if set(document) != {"schema_version", "description", "as_of", "records"} or document["schema_version"] != 1:
             raise DatasetError(f"{measured}: must hold exactly schema_version 1, description, as_of and records")
         for item in document["records"]:
-            if not isinstance(item, dict) or set(item) != {"issue", "record"}:
-                raise DatasetError(f"{measured}: each item must hold exactly issue and record")
+            # Rule round 45, item 1: an item may carry the canonical match-set
+            # hash its record was made under (measured_match_set_hashes).
+            if not isinstance(item, dict) or set(item) - {"match_set_hash"} != {"issue", "record"}:
+                raise DatasetError(f"{measured}: each item must hold exactly issue and record, and may hold match_set_hash")
             records.append(item["record"])
     keys: dict[str, dict[str, Any]] = {}
     if (base / "keys.json").is_file():
@@ -941,6 +946,57 @@ def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dic
         for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
             reads[path.relative_to(root).as_posix()] = read_json_file(path)
     return records, keys, reads
+
+
+def current_match_set_hashes(root: Path, lookup: dict[str, Any]) -> dict[str, str] | None:
+    """Rule round 45, item 1: profile ID -> the canonical match-set hash of
+    its current match set (tools/profile_ids.py), for every profile in
+    lookup.json. None for a tree from before frozen IDs, where every ID is
+    still that hash and no record can lapse."""
+    path = root / "tools/profile_ids.py"
+    if not path.is_file():
+        return None
+    ids = load_module("profile_ids", path)
+    return {entry["profile_id"]: ids.match_set_hash(entry["match"]) for entry in lookup["profiles"]}
+
+
+def made_under(stored: Any, profile_id: str) -> str | None:
+    """The match-set hash a record keyed by PROFILE_ID was made under: the one
+    it stores, else (made before the freeze) its open ID's hash part; None for
+    a fill-only profile, whose ID changes with its rule."""
+    if isinstance(stored, str) and re.fullmatch(r"[0-9a-f]{12}", stored):
+        return stored
+    found = re.fullmatch(r"open\.[0-9]{5,6}\.([0-9a-f]{12})", profile_id)
+    return found.group(1) if found else None
+
+
+def under_current_match_set(profile_id: str, stored: Any, current: dict[str, str] | None) -> bool:
+    """Whether a record keyed by PROFILE_ID may serve as a value: only while
+    its profile's current match-set hash is the one the record was made
+    under. A record that lapses never serves; a group A read needs a new
+    read, and a measured or cell record is only the first candidate for the
+    next test (round 31)."""
+    if current is None:
+        return True
+    made = made_under(stored, profile_id)
+    return made is None or current.get(profile_id) == made
+
+
+def measured_match_set_hashes(root: Path) -> dict[str, str]:
+    """record_key -> match_set_hash of the measured.json items that carry one."""
+    path = root / MEASURED_FILE
+    if not path.is_file():
+        return {}
+    document = read_json_file(path)
+    return {item["record"]["record_key"]: item["match_set_hash"]
+            for item in document.get("records", []) if isinstance(item, dict) and "match_set_hash" in item}
+
+
+def record_serves(record: dict[str, Any], stored: dict[str, str], current: dict[str, str] | None) -> bool:
+    carrier = record.get("carrier") or {}
+    if carrier.get("scope") != "profile":
+        return True
+    return under_current_match_set(carrier["profile_id"], stored.get(record["record_key"]), current)
 
 
 def read_problems(read: dict[str, Any], where: str) -> list[str]:
@@ -1175,9 +1231,22 @@ def group_a_read_problems(read: Any, where: str) -> list[str]:
     """A round 31 group A read (ocd-group-a-read/2), beyond its schema."""
     required = {"schema", "subject", "key", "value", "families", "profiles", "rom_family", "ims_stack", "effect",
                 "reader", "builder", "read_at", "sources_read", "findings", "verdict", "notes"}
-    if not isinstance(read, dict) or set(read) != required:
-        return [f"{where}: a group A read holds exactly {', '.join(sorted(required))}"]
+    if not isinstance(read, dict) or set(read) - {"match_set_hashes"} != required:
+        return [f"{where}: a group A read holds exactly {', '.join(sorted(required))}, and may hold match_set_hashes"]
     out = []
+    # Rule round 45, item 1: the canonical match-set hash of each open
+    # profile the read covers, as it was when read; a read made after the
+    # freeze names one for every open profile it lists.
+    hashes = read.get("match_set_hashes")
+    if hashes is not None and (not isinstance(hashes, dict) or not all(
+            isinstance(k, str) and k in (read.get("profiles") or []) and isinstance(v, str) and re.fullmatch(r"[0-9a-f]{12}", v)
+            for k, v in hashes.items())):
+        out.append(f"{where}: match_set_hashes maps profiles the read lists to 12 hex digits")
+    elif isinstance(read.get("read_at"), str) and read["read_at"][:10] > ID_FREEZE_DATE and read.get("subject") == "value":
+        named = set(hashes or {})
+        unnamed = [p for p in read.get("profiles") or [] if isinstance(p, str) and OCD_ID_RE.fullmatch(p) and p not in named]
+        if unnamed:
+            out.append(f"{where}: a read made after {ID_FREEZE_DATE} names the match-set hash of every open profile it lists (match_set_hashes)")
     if read["subject"] not in ("value", "key"):
         out.append(f"{where}: subject is value or key")
     if read["effect"] not in GROUP_A_EFFECTS:
@@ -1224,7 +1293,8 @@ def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
 
 
 def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[str, Any] | None,
-                      reads: dict[str, dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
+                      reads: dict[str, dict[str, Any]],
+                      current: dict[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
     """(group-a-reads.json, group-a-pending.json) from the round 31 group A
     reads on main (devices/records/reads/group-a/).
 
@@ -1257,6 +1327,14 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
     left = sorted(left_group_a_keys(dict(key_reads)))
     candidates = group_a_candidates(profiles, lane)
     by_value = {(c["key"], compact(c["value"])): c for c in candidates}
+    # Rule round 45, item 1: a read covers a profile only while the profile's
+    # match set is the one it was read under (CURRENT, from
+    # current_match_set_hashes); otherwise it lapses and the value waits for
+    # a new read in group-a-pending.json.
+    def covers(read: dict[str, Any], profile_id: str) -> bool:
+        return profile_id in read["profiles"] and under_current_match_set(
+            profile_id, (read.get("match_set_hashes") or {}).get(profile_id), current)
+
     items, unrecorded = [], []
     for path, read in value_reads:
         candidate = by_value.get((read["key"], compact(read["value"])), {"profiles": {}})
@@ -1264,6 +1342,8 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
             families = candidate["profiles"].get(profile_id)
             if families is None:
                 continue  # the profile no longer carries this value
+            if not covers(read, profile_id):
+                continue  # read under another match set: lapsed
             covered = [f for f in families if f in read["families"]]
             if not families:
                 unrecorded.append({"key": read["key"], "value": read["value"], "profile_id": profile_id, "reference": path})
@@ -1284,7 +1364,7 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
             covering = [r for _, r in value_reads if r["key"] == candidate["key"] and compact(r["value"]) == compact(candidate["value"])
                         and (r["rom_family"], r["ims_stack"]) == target]
             waiting = {p: fams for p, fams in candidate["profiles"].items()
-                       if not any(p in r["profiles"] and set(fams) <= set(r["families"]) for r in covering)}
+                       if not any(covers(r, p) and set(fams) <= set(r["families"]) for r in covering)}
             if waiting:
                 pending.append({"key": candidate["key"], "value": candidate["value"], "rom_family": target[0], "ims_stack": target[1],
                                 "families": sorted({f for fams in waiting.values() for f in fams}), "profiles": sorted(waiting)})
@@ -1712,8 +1792,10 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
             apn_counts[profile_id] += 1
     profiles_doc, profile_counts = build_profiles(inputs, registry, apn_counts, carriers)
     lane = lane_document(inputs)
-    served = served_records(records)
-    group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads)
+    current = current_match_set_hashes(root, inputs.lookup)
+    stored = measured_match_set_hashes(root)
+    served = [r for r in served_records(records) if record_serves(r, stored, current)]
+    group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads, current)
     group_a_bytes = dump_lines(group_a, ("key_findings", "reads"))
     files_by_role = {
         "profiles": dump_lines(profiles_doc, ("keys", "networks")),

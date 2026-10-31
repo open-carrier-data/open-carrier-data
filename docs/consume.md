@@ -33,7 +33,7 @@ What every ROM maintainer must know:
 3. **The phone must load the file.** Keep `<apns version>` equal to your framework's `frameworks/base/core/res/res/xml/apns.xml`. On a mismatch TelephonyProvider loads no APN at all.
 4. **The preferred APN survives an update.** New rows and a new order apply to a newly inserted SIM or after Reset to default.
 5. **Pin one snapshot and check its window.** Do not ship after `stale_after`.
-6. **`profile_id` is a hash of the match set** and changes when a source's selectors change. Key your own records by the SIM's facts (MCC and MNC, SPN, GID1, IMSI, carrier id) and the snapshot, and resolve them again against each new one.
+6. **A `profile_id` is kept once assigned** (rule round 45), and a retired one is listed in `aliases/ids.json` with the profile or profiles its SIMs match now. Profiles are still added, split and retired with the sources, so key your own records by the SIM's facts (MCC and MNC, SPN, GID1, IMSI, carrier id) and the snapshot, and resolve them again against each new one; follow an alias to update a link, never to carry a value over ([compatibility.md](compatibility.md)).
 7. **Most values rest on one source family.** `generated/evidence-index.json` names it.
 8. **Data rights.** OCD waives its own rights in the data (CC0). Several sources state no terms, and whether Samsung's and Apple's terms allow extracting facts is open. This is not legal advice; [DATA-LICENSE.md](../DATA-LICENSE.md) has the details.
 

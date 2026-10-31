@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 from datetime import date, datetime, timedelta, timezone
 import json
-import hashlib
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -23,6 +22,7 @@ from carrier_config_types import (
     expected_config_type,
 )
 from lineageos_apns import fits_lineageos_schema
+import profile_ids
 
 
 STALE_AFTER_DAYS = 180
@@ -568,9 +568,9 @@ def canonical_json(value: Any) -> str:
 
 
 def canonical_profile_id(match: dict[str, Any]) -> str:
-    mccmnc = str(match["mccmnc"][0])
-    digest = hashlib.sha256(canonical_json(match).encode("utf-8")).hexdigest()[:12]
-    return f"open.{mccmnc}.{digest}"
+    """The ID a new match set gets once (rule round 45, item 1: IDs are then
+    kept, never recomputed). The one ID function is tools/profile_ids.py."""
+    return profile_ids.hash_id(match)
 
 
 def public_path_for(profile_id: str) -> Path:
@@ -787,10 +787,13 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         if value not in CAPABILITY_VALUES:
             raise ValidationError(f"{path}: invalid capability value for {key}")
 
-    expected_profile_id = canonical_profile_id(match)
-    if profile_id != expected_profile_id:
+    # Rule round 45, item 1: an ID is assigned once and kept, so it is no
+    # longer the hash of the current match set. main() checks it against the
+    # registry (carriers/open and aliases/ids.json, tools/profile_ids.py).
+    id_match = profile_ids.ID_RE.fullmatch(profile_id)
+    if id_match is None or id_match.group(1) not in [str(code) for code in match["mccmnc"]]:
         raise ValidationError(
-            f"{path}: profile_id must be canonical {expected_profile_id}"
+            f"{path}: profile_id must be open.<one of its MCC/MNCs>.<12 hex>"
         )
 
     config = data.get("android_carrier_config")
@@ -2616,6 +2619,19 @@ def main(argv: list[str]) -> int:
                     )
                 generic_network_profiles[mccmnc] = profile_id
 
+    # Rule round 45, item 1: the registry check that replaced the hash check.
+    # Every live ID is the issued hash of its match set or a continued ID that
+    # aliases/ids.json explains; no ID is both live and aliased; every alias
+    # points into the registry.
+    try:
+        registry_problems = profile_ids.alias_document_problems(
+            profile_ids.load_aliases(carriers_dir.parent),
+            {profile["profile_id"]: profile["match"] for profile in profiles_by_path.values()},
+        )
+    except profile_ids.ProfileIdError as exc:
+        raise ValidationError(str(exc)) from exc
+    if registry_problems:
+        raise ValidationError("; ".join(registry_problems[:5]))
     index_window = validate_index(index_path, profiles_by_path)
     validate_generated_files(index_path.parent)
     window = validate_evidence_index(

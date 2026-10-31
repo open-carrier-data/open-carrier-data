@@ -113,6 +113,7 @@ sys.path.insert(0, str(TOOLS))
 
 from validate_public_carrier_data import SCHEMA_TYPES, load_schema, schema_json_text  # noqa: E402
 import ocd_dataset  # noqa: E402
+import profile_ids  # noqa: E402
 
 REPORT_SCHEMA = "ocd-check-report.schema.json"
 SUMMARY_SCHEMA = "observed-summary.schema.json"
@@ -1294,10 +1295,14 @@ MEASURED_DESCRIPTION = (
 )
 
 
-def measured_document(records: list[dict[str, Any]], as_of: date) -> dict[str, Any]:
+def measured_document(records: list[dict[str, Any]], as_of: date, hashes: dict[str, str] | None = None) -> dict[str, Any]:
     """devices/records/measured.json as of AS_OF: the records of the owner's
     counted submissions, one per record_key (the newest last_measured, then
-    the newest issue), without those past valid_until on AS_OF."""
+    the newest issue), without those past valid_until on AS_OF. HASHES gives
+    a record keyed by a profile the canonical match-set hash it was made
+    under (rule round 45, item 1), which the item stores as match_set_hash;
+    the dataset serves the record only while its profile still has it."""
+    hashes = hashes or {}
     best: dict[str, tuple[tuple[str, int], dict[str, Any]]] = {}
     for item in sorted(records, key=lambda r: r["issue"]):
         if item["tester"] != OWNER or item["status"] != "counted" or not is_record(item["report"]):
@@ -1307,7 +1312,11 @@ def measured_document(records: list[dict[str, Any]], as_of: date) -> dict[str, A
                 continue
             rank = (record["last_measured"], item["issue"])
             if record["record_key"] not in best or best[record["record_key"]][0] <= rank:
-                best[record["record_key"]] = (rank, {"issue": item["issue"], "record": record})
+                entry = {"issue": item["issue"], "record": record}
+                made = hashes.get(f"{item['issue']}|{record['record_key']}")
+                if made is not None:
+                    entry["match_set_hash"] = made
+                best[record["record_key"]] = (rank, entry)
     return {"schema_version": 1, "description": MEASURED_DESCRIPTION, "as_of": as_of.isoformat(),
             "records": [best[key][1] for key in sorted(best)]}
 
@@ -1320,12 +1329,52 @@ def without_as_of(document: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in document.items() if key != "as_of"}
 
 
-def write_measured(root: Path, records: list[dict[str, Any]], today: date) -> None:
+def made_under_hashes(records: list[dict[str, Any]], releases: "Releases | None") -> dict[str, str]:
+    """Rule round 45, item 1: for each owner record keyed by an open profile,
+    the canonical match-set hash of that profile at the record's data commit
+    (its file there), keyed by issue and record_key. A record whose profile
+    file cannot be read there gets none; the dataset then takes the hash from
+    the profile ID, which errs towards not serving it."""
+    out: dict[str, str] = {}
+    for item in records:
+        report = item.get("report")
+        if releases is None or not is_record(report) or (report.get("carrier") or {}).get("scope") != "profile":
+            continue
+        profile_id = report["carrier"]["profile_id"]
+        commit = (report.get("data") or {}).get("commit")
+        found = profile_ids.ID_RE.fullmatch(profile_id)
+        if not found or not commit:
+            continue
+        text = releases.file(commit, f"carriers/open/{found.group(1)}.{found.group(2)}.json")
+        if not text:
+            continue
+        try:
+            out[f"{item['issue']}|{report['record_key']}"] = profile_ids.match_set_hash(json.loads(text)["match"])
+        except (ValueError, KeyError, TypeError):
+            continue
+    return out
+
+
+def stored_hashes(path: Path) -> dict[str, str]:
+    """The match_set_hash values devices/records/measured.json already stores, keyed like made_under_hashes."""
+    if not path.is_file():
+        return {}
+    try:
+        document = strict_json(path.read_text(encoding="utf-8"))
+        return {f"{item['issue']}|{item['record']['record_key']}": item["match_set_hash"]
+                for item in document.get("records", []) if isinstance(item, dict) and "match_set_hash" in item}
+    except (ValueError, TypeError, KeyError):
+        return {}
+
+
+def write_measured(root: Path, records: list[dict[str, Any]], today: date, releases: "Releases | None" = None) -> None:
     """Writes devices/records/measured.json as of TODAY, but keeps the file
     (and its as_of) when TODAY changes nothing in it, so a quiet day makes no
-    bot pull request. validate rebuilds it as of its own as_of."""
+    bot pull request. validate rebuilds it as of its own as_of. A hash already
+    stored is kept: it is the match set the record was made under."""
     path = root / MEASURED_FILE
-    current = measured_document(records, today)
+    hashes = {**made_under_hashes(records, releases), **stored_hashes(path)}
+    current = measured_document(records, today, hashes)
     if path.is_file():
         try:
             old = strict_json(path.read_text(encoding="utf-8"))
@@ -1333,7 +1382,7 @@ def write_measured(root: Path, records: list[dict[str, Any]], today: date) -> No
         except (ValueError, TypeError, KeyError):
             old = None
         if old is not None and old_day <= today:
-            again = measured_document(records, old_day)
+            again = measured_document(records, old_day, hashes)
             if path.read_text(encoding="utf-8") == dump_sorted(again) and without_as_of(again) == without_as_of(current):
                 return
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -1363,7 +1412,7 @@ def rebuild(issues: list[dict[str, Any]], root: Path, today: date, releases: Rel
         if not path.exists() or path.read_text(encoding="utf-8") != text:
             path.write_text(text, encoding="utf-8")
     (root / OBSERVED / "summary.json").write_text(dump(summarize(records)), encoding="utf-8")
-    write_measured(root, records, today)
+    write_measured(root, records, today, releases)
     # Round 29's observed/retested.json is folded into the measured records.
     (root / OBSERVED / RETESTED_FILE).unlink(missing_ok=True)
     return {"written": [item["issue"] for item in records], "left_out": left_out,
@@ -1437,7 +1486,7 @@ def validate_measured(root: Path, records: list[dict[str, Any]], today: date) ->
         return [f"{name}: not valid JSON with an as_of date ({error})"]
     if as_of > today + timedelta(days=1):
         return [f"{name}: as_of is in the future"]
-    if path.read_text(encoding="utf-8") != dump_sorted(measured_document(records, as_of)):
+    if path.read_text(encoding="utf-8") != dump_sorted(measured_document(records, as_of, stored_hashes(path))):
         return [f"{name}: is not what the reports give as of {as_of.isoformat()}; run tools/observed_reports.py rebuild"]
     return []
 

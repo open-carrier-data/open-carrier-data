@@ -55,6 +55,23 @@ jobs:
         run: python3 tools/guard_context.py resolve --out "$RUNNER_TEMP/guard-context.json"
       - name: Validate carrier profiles and the stable index
         run: python3 tools/validate_public_carrier_data.py carriers generated/index.json --freshness warn
+      # Rule round 45, item 1: profile IDs are assigned once and kept. The
+      # registry (carriers/open and aliases/ids.json) against itself and every
+      # generated or side file, and against the base: every base ID still live
+      # or aliased, aliases only added, the same SIMs under the same ID, and a
+      # new ID only in the issued form for a new match set.
+      - name: Test frozen profile IDs
+        run: python3 tools/test_profile_ids.py
+      - name: Check profile IDs against the registry and the base
+        env:
+          BASE_SHA: ${{ steps.context.outputs.base || github.event.before }}
+        run: |
+          base=()
+          if [ -n "$BASE_SHA" ] && [ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            base=(--base-ref "$BASE_SHA")
+          fi
+          python3 tools/profile_ids.py check --root . --require-aliases "${base[@]}"
       - name: Validate the device catalog
         run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
       - name: Validate the device records

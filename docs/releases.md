@@ -50,7 +50,7 @@ Each file below is an asset of the GitHub release:
   - credentials from old lists: the class (a) list of the candidate, every line, and the rows rule 1 left out (rule round 32, D8; [consume.md](consume.md#credentials-from-old-lists));
   - capability value changes, as counts;
   - CarrierConfig: the emergency, TTY, RTT, WPS and `iwlan.*` keys in full, every other key as counts;
-  - profile IDs added and removed per MCC/MNC;
+  - profile IDs added and removed per MCC/MNC, every kept ID whose match set changed (old and new selectors) and every new `aliases/ids.json` entry (rule round 45, item 1);
   - the pull requests in between, the announced changes and the standing notice;
 - `SHA256SUMS` over the other assets, so `sha256sum -c SHA256SUMS` checks them.
 
@@ -72,7 +72,7 @@ The guarantees cover the files and the process that made them, never that a valu
 
 - That a value works on a network, a plan or a phone model, or that the operator still offers the service. Values are configured, not verified: `verified_observation_count` is 0.
 - Anything about emergency calls. OCD never tests or places one.
-- That a `profile_id` stays the same. It is a hash of the match set and changes when a source's selectors change; key what you store by the SIM's facts and the release.
+- That a profile keeps its SIMs. Since rule round 45 a `profile_id` is kept once assigned and a retired one is never reused and has an alias in `aliases/ids.json`, but profiles are added, split and retired with the sources; key what you store by the SIM's facts and the release.
 - Anything about `main` between releases.
 - A response time, or that releases continue. One maintainer and one self-hosted runner run the pipeline.
 

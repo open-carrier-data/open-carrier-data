@@ -73,6 +73,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | Path | Contents |
 | --- | --- |
 | `carriers/open/` | the carrier profiles, one JSON file per profile, listed in `generated/index.json` |
+| `aliases/ids.json` | the retired profile IDs, each with the profile or profiles its SIMs match now: an ID is assigned once and kept, and a retired one is never reused (rule round 45, [docs/compatibility.md](docs/compatibility.md)) |
 | `generated/index.json` | one entry per profile in the latest publish |
 | `generated/evidence-index.json` | source revisions, check dates, fact sources, exact source versions, conflicts, newest entry dates |
 | `generated/android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` |
