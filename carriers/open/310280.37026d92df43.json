@@ -1557,6 +1557,16 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
+  "depends_on": {
+    "video_calling": [
+      "device",
+      "sources_disagree"
+    ],
+    "volte": [
+      "device",
+      "sources_disagree"
+    ]
+  },
   "display_name": "AT&T",
   "match": {
     "mccmnc": [
