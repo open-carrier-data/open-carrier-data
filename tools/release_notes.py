@@ -30,7 +30,9 @@ The notes have these sections, in this order:
 - CarrierConfig (`diff_carrier_config.py`): the safety class in full, every
   other key as counts;
 - profile IDs added and removed per MCC/MNC (counts; the full lists are in
-  the JSON and in `release.json`);
+  the JSON and in `release.json`), every kept ID whose match set changed
+  (old and new selectors) and every new `aliases/ids.json` entry (rule round
+  45, item 1);
 - the pull requests in between, announced changes and the standing notice.
 
 Exit 0 after writing the notes, 2 on any error (the guard failing included).
@@ -56,6 +58,7 @@ sys.path.insert(0, str(TOOLS))
 import android_phone_model as phone  # noqa: E402
 import check_phone_guard as guard  # noqa: E402
 import diff_carrier_config  # noqa: E402
+import profile_ids  # noqa: E402
 
 ANDROID = "generated/android"
 BASE_FILES = ("apns-conf.xml", "carrier-config-list.xml", "lookup.json", "metadata.json")
@@ -196,14 +199,33 @@ def profile_changes(base_lookup: dict[str, Any], head_lookup: dict[str, Any]) ->
         for key in set(before) | set(after):
             if before.get(key) != after.get(key):
                 transitions[(key, before.get(key, "absent"), after.get(key, "absent"))] += 1
+    # Rule round 45, item 1: an ID is kept when its match set changes, so a
+    # selector change no longer shows as an ID added and removed.
+    kept_changed = [
+        {"id": pid, "old": profile_ids.selector_text(old[pid].get("match") or {}),
+         "new": profile_ids.selector_text(new[pid].get("match") or {})}
+        for pid in sorted(set(old) & set(new))
+        if profile_ids.canonical_json(profile_ids.normalise_match(old[pid].get("match") or {}))
+        != profile_ids.canonical_json(profile_ids.normalise_match(new[pid].get("match") or {}))
+    ]
     return {
         "added": sorted(set(new) - set(old)),
         "removed": sorted(set(old) - set(new)),
         "kept": len(set(old) & set(new)),
+        "kept_with_changed_match_set": kept_changed,
         "capability_changes": [
             {"capability": k, "old": o, "new": n, "profiles": c} for (k, o, n), c in sorted(transitions.items())
         ],
     }
+
+
+def new_aliases(base: Path, head: Path) -> list[dict[str, Any]]:
+    """The aliases/ids.json entries HEAD adds to BASE (rule round 45, item 1)."""
+    before = {item["id"] for item in profile_ids.load_aliases(base).get("aliases", [])}
+    return [
+        {"id": item["id"], "kind": item["kind"], "to": item["to"], "match": profile_ids.selector_text(item["match"])}
+        for item in profile_ids.load_aliases(head).get("aliases", []) if item["id"] not in before
+    ]
 
 
 def carrier_config_changes(base_xml: Path, head_xml: Path) -> dict[str, Any]:
@@ -268,6 +290,7 @@ def compute(base: Path, head: Path, pull_requests: list[str] | None = None,
         "leads": lead_changes(b / "apns-conf.xml", h / "apns-conf.xml"),
         "credentials": credential_list(head),
         "profiles": profile_changes(load_json(b / "lookup.json"), load_json(h / "lookup.json")),
+        "new_aliases": new_aliases(base, head),
         "carrier_config": carrier_config_changes(b / "carrier-config-list.xml", h / "carrier-config-list.xml"),
         "pull_requests": pull_requests or [],
         "announced_changes": announced or [],
@@ -432,15 +455,25 @@ def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, tod
         added[profile_id.split(".")[1]] += 1
     for profile_id in profiles["removed"]:
         removed[profile_id.split(".")[1]] += 1
+    kept_changed = profiles.get("kept_with_changed_match_set", [])
+    aliases = result.get("new_aliases", [])
     out += ["## Profile IDs", "",
-            f"{len(profiles['added'])} added and {len(profiles['removed'])} removed. A profile ID is a hash of the "
-            "match set and changes when the match set does; key what you store by the SIM's facts and the "
-            "release ([compatibility.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/docs/"
+            f"{len(profiles['added'])} added and {len(profiles['removed'])} removed. A profile ID is assigned once "
+            "and kept (rule round 45): it is not recomputed when the match set changes. A retired ID is never "
+            "reused and gets an entry in `aliases/ids.json` naming the profile or profiles a SIM of its old rule "
+            "matches now ([compatibility.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/docs/"
             "compatibility.md)). `release.json` lists every ID.", ""]
     if added or removed:
         out += ["| MCC/MNC | Added | Removed |", "| --- | ---: | ---: |"]
         out += [f"| {code_} | {added[code_]} | {removed[code_]} |" for code_ in sorted(set(added) | set(removed))]
         out.append("")
+    out += [f"Kept IDs whose match set changed: {len(kept_changed)}.", ""]
+    if kept_changed:
+        out += code([f"{item['id']}: {item['old']} -> {item['new']}" for item in kept_changed]) + [""]
+    out += [f"New alias entries: {len(aliases)}.", ""]
+    if aliases:
+        out += code([f"{item['id']} ({item['match']}) {item['kind']} -> {', '.join(item['to']) or 'none'}"
+                     for item in aliases]) + [""]
 
     publishes = sum(1 for title in result["pull_requests"] if title.startswith("Update sanitized carrier data"))
     others = [title for title in result["pull_requests"] if not title.startswith("Update sanitized carrier data")]
@@ -462,7 +495,8 @@ def render(result: dict[str, Any], tag: str, base_name: str, head_name: str, tod
             "- `carrier-config-list.xml` is not for ROM application before its per-key safety review.",
             "- Keep `<apns version>` equal to your framework's `apns.xml`; a mismatch loads no APN at all.",
             "- Check `SHA256SUMS`, and do not ship after `stale_after`.",
-            "- `profile_id` values change when match sets change.",
+            "- A `profile_id` is kept once assigned; a retired ID is listed in `aliases/ids.json` with where its "
+            "SIMs go now.",
             "- There is no service level: one maintainer and one self-hosted runner.",
             ""]
     return "\n".join(out)
@@ -535,7 +569,11 @@ def main(argv: list[str]) -> int:
         if args.repo:
             base_commit, head_commit = resolve(args.repo, args.base), resolve(args.repo, args.head)
             base_tree, head_tree = Path(tmp) / "base", Path(tmp) / "head"
-            extract_files(args.repo, base_commit, [f"{ANDROID}/{name}" for name in BASE_FILES], base_tree)
+            base_paths = [f"{ANDROID}/{name}" for name in BASE_FILES]
+            if subprocess.run(["git", "-C", str(args.repo), "cat-file", "-e", f"{base_commit}:{profile_ids.ALIASES_PATH}"],
+                              capture_output=True).returncode == 0:
+                base_paths.append(profile_ids.ALIASES_PATH)
+            extract_files(args.repo, base_commit, base_paths, base_tree)
             extract_tree(args.repo, head_commit, head_tree)
             prs = pull_request_titles(args.repo, base_commit, head_commit)
             base_name, head_name = f"{args.base_name or args.base} ({base_commit})", head_commit

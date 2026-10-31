@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/android-lookup.schema.json",
   "title": "Open Carrier Data profile lookup (generated/android/lookup.json)",
-  "description": "One entry per published carrier profile, for apps and tools that pick a profile from a SIM's facts. profile_id is a hash of the match set and changes when the match set changes; key stored results by the SIM's facts and the release, never by profile_id (docs/compatibility.md). tools/validate_public_carrier_data.py checks this schema and what a schema cannot: every published profile listed once, and newest_entry against the evidence index.",
+  "description": "One entry per published carrier profile, for apps and tools that pick a profile from a SIM's facts. profile_id is assigned once and kept (rule round 45); a retired ID is listed in aliases/ids.json with the profiles its SIMs match now. Key stored results by the SIM's facts and the release, and follow an alias only to update a link (docs/compatibility.md). tools/validate_public_carrier_data.py checks this schema and what a schema cannot: every published profile listed once, and newest_entry against the evidence index.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "resolution_order", "match_semantics", "profiles"],

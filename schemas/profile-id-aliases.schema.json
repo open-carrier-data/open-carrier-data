@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/profile-id-aliases.schema.json",
+  "title": "Retired and continued carrier profile IDs (aliases/ids.json)",
+  "description": "Rule round 45, item 1. A carrier profile's ID is assigned once and kept; it is not recomputed from its match set. The registry is carriers/open plus the retired IDs here. A retired ID is never reused; its entry names the profile or profiles a SIM of its old rule matches now, computed by tools/profile_ids.py, never mapped by hand, and it is a redirect for links and saved reports that never carries a value. continued lists live IDs whose match set is no longer the one they were issued for. tools/profile_ids.py check and tools/validate_public_carrier_data.py check what a schema cannot: targets in the registry, hashes of the stated match sets, entries only ever added.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "aliases", "continued"],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"},
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{12}$"},
+    "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "codes": {"type": "array", "items": {"type": "string", "pattern": "^[0-9]{5,6}$"}},
+    "prefixes": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 80}}
+  },
+  "properties": {
+    "schema_version": {"const": 1},
+    "description": {"type": "string"},
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "to", "match", "match_set_hash", "retired_on"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id", "description": "The retired ID."},
+          "kind": {
+            "enum": ["replaced", "split", "merge", "withdrawn"],
+            "description": "replaced: one new profile took its SIMs; split: several new profiles took them; merge: one new profile took the SIMs of several retired IDs; withdrawn: no new profile took them."
+          },
+          "to": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/id"},
+            "description": "The profiles a SIM of the old rule provably matches in the data the ID was retired in: the most specific covering profiles and every profile that takes part of its SIMs. Sorted. Each is live or itself aliased."
+          },
+          "match": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["mccmnc"],
+            "description": "The retired match set, as it was published.",
+            "properties": {
+              "mccmnc": {"$ref": "#/$defs/codes"},
+              "gid1_prefixes": {"$ref": "#/$defs/prefixes"},
+              "gid2_prefixes": {"$ref": "#/$defs/prefixes"},
+              "iccid_prefixes": {"$ref": "#/$defs/prefixes"},
+              "imsi_prefix_patterns": {"$ref": "#/$defs/prefixes"},
+              "spn": {"$ref": "#/$defs/prefixes"},
+              "android_carrier_ids": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 1000000}}
+            }
+          },
+          "match_set_hash": {"$ref": "#/$defs/hash", "description": "The canonical match-set hash of match."},
+          "retired_on": {"$ref": "#/$defs/date"}
+        }
+      }
+    },
+    "continued": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "basis", "match_set_hash", "from_match_set_hash", "since"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "basis": {
+            "enum": ["same_sims", "continuity_entry"],
+            "description": "same_sims: the resolver proved the new match set covers exactly the same SIMs (order, case or duplicates differ); continuity_entry: a continuity entry the resolver computed and a reviewer accepted."
+          },
+          "match_set_hash": {"$ref": "#/$defs/hash", "description": "The hash of the ID's current match set."},
+          "from_match_set_hash": {"$ref": "#/$defs/hash", "description": "The hash of the match set it carried over from."},
+          "since": {"$ref": "#/$defs/date"}
+        }
+      }
+    }
+  }
+}

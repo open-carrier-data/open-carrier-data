@@ -57,6 +57,17 @@
       },
       "description": "The profiles whose own value the read covers; empty for a key read."
     },
+    "match_set_hashes": {
+      "type": "object",
+      "description": "Rule round 45, item 1: for each open profile the read lists, the canonical match-set hash of that profile when it was read (tools/profile_ids.py match_set_hash). The read covers a profile only while the profile still has that match set; otherwise it lapses and the value needs a new read. A read made before 2026-11-01 may leave it out and takes the hash from each profile ID; a value read made later names every open profile it lists.",
+      "propertyNames": {
+        "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{12}$"
+      }
+    },
     "rom_family": {
       "enum": [
         "aosp",

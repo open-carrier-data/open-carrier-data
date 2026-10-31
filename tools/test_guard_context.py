@@ -313,7 +313,9 @@ class Workflow(unittest.TestCase):
         self.assertNotIn("github.event.pull_request.body", text)
         self.assertNotIn("if: github.event_name == 'pull_request'", text)
         self.assertEqual(text.count("${{ steps.context.outputs.base }}"), 3)
-        self.assertEqual(text.count("${{ steps.context.outputs.base || github.event.before }}"), 1)
+        # The F5 read check and the profile ID check (rule round 45, item 1)
+        # also run on a push to main, against the commit before it.
+        self.assertEqual(text.count("${{ steps.context.outputs.base || github.event.before }}"), 2)
 
 
 if __name__ == "__main__":
