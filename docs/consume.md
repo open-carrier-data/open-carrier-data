@@ -226,7 +226,7 @@ The summary counts rows in both, rows only in ours, and rows only in yours split
 
 ## Use the data in an app or tool
 
-Read the profiles directly when you need the full shape. `generated/index.json` lists every profile with its path. `generated/android/lookup.json` adds `match`, `capabilities`, `specificity` and `weight` per profile, so most tools never open the individual files.
+Read the profiles directly when you need the full shape. `generated/index.json` lists every profile with its path. `generated/android/lookup.json` adds `match`, `capabilities`, `specificity` and `weight`, and, where a profile has them, `depends_on` and `for_you` per profile, so most tools never open the individual files.
 
 To resolve every profile for one SIM, run the resolver with what you know:
 
@@ -251,6 +251,12 @@ The resolver accepts `--mccmnc`, `--spn`, `--gid1`, `--gid2`, `--iccid`, `--imsi
 Since rule round 32, `generated/operators/statements.json` (schema `schemas/operator-statements.schema.json`, checked by `tools/validate_operators.py`) records what operators themselves say they offer: MMS, VoLTE, Wi-Fi calling at home and abroad, VoLTE roaming, eSIM, and 5G SA with VoNR. It starts with Telekom, Vodafone, Telefónica and 1&1 in Germany, the brands congstar and fraenk, and LIDL Connect and Aldi Talk. Each entry names the operator's own page, the day it was read and a paraphrase, never quoted text. A statement says what the operator sells, not what a tariff includes or a phone supports. Show it as "the operator states it offers X (read on <date>); whether your tariff includes it is not checked", never as "works". Apart from the MMS case above, statements change no value. An entry that is not confirmed for 180 days, or not swept for 365, lapses to `unknown`.
 
 The same folder carries the carrier-identity table: which operators, brands and MVNOs run on which network codes, with the SIM selectors a source states and `host_only` where none does. A host-only brand, such as LIDL Connect on 26202, cannot be told apart from its host's SIMs, so show it as a brand on that network, never as a statement about the SIM. Every selector in it passes the same prefix limits as every other published file.
+
+### Two answers: what the phone tries, and what the brand states
+
+Since rule round 45 (item 4) a profile can carry two maps next to `capabilities`, and `lookup.json` repeats them ([data-model.md](data-model.md#two-answers-per-feature)). `capabilities` is unchanged: what the phone should be set up to try. `for_you` says, per feature, what an admitted operator or brand statement says about availability for this customer: `ended`, `not_offered` or `depends_on_plan` today (`included`, `free_option` and `paid_option` only where a statement says exactly that). A missing entry means unknown. `depends_on` says why a `conditional` value is not single: `device`, `firmware`, `ims_stack` or `sources_disagree`.
+
+Show them apart. Label `capabilities` as what the phone is set up to try, and `for_you` as what the brand states, with the words that the person's plan is not checked. Never turn either into "works", "booked" or "you have it". On a plain profile shared with host-only brands, such as LIDL Connect on Vodafone's 26202, `for_you` is `depends_on_plan` with `reason` `brand_not_tellable` and the `brands` whose SIMs land there: say that the phone cannot tell which brand the SIM belongs to, and show no single brand's offer as the SIM's.
 
 ### Device records for the four IMS switches
 

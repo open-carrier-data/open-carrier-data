@@ -3057,6 +3057,11 @@ def write_lookup(
     profiles = []
     for profile_path, profile in profile_items:
         record = lookup_record(carriers_dir, profile_path, profile)
+        # Rule round 45, item 4: the two answers' sibling maps, where the
+        # profile has them; capabilities stay the configure answer.
+        for name in ("depends_on", "for_you"):
+            if profile.get(name):
+                record[name] = profile[name]
         window = (windows or {}).get(profile["profile_id"])
         if window:
             record["checks_through"] = window["checks_through"]

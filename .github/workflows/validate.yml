@@ -72,6 +72,23 @@ jobs:
             base=(--base-ref "$BASE_SHA")
           fi
           python3 tools/profile_ids.py check --root . --require-aliases "${base[@]}"
+      # Rule round 45, item 4: depends_on and for_you are exactly what
+      # tools/two_answers.py derives from the published statements, identity
+      # table, evidence index and device records, lookup.json repeats them,
+      # and, against the base, a profile whose for_you or depends_on changed
+      # while its capability evidence did not keeps its capabilities.
+      - name: Test the two answers (depends_on, for_you)
+        run: python3 tools/test_two_answers.py
+      - name: Check depends_on and for_you against the published files and the base
+        env:
+          BASE_SHA: ${{ steps.context.outputs.base || github.event.before }}
+        run: |
+          base=()
+          if [ -n "$BASE_SHA" ] && [ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            base=(--base-ref "$BASE_SHA")
+          fi
+          python3 tools/two_answers.py check --root . "${base[@]}"
       - name: Validate the device catalog
         run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
       - name: Validate the device records
