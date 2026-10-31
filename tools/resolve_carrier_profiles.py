@@ -45,6 +45,15 @@ def any_prefix_matches(prefixes: list[Any], value: str) -> bool:
     )
 
 
+def sim_carrier_ids(identity: dict[str, Any]) -> list[int]:
+    """The SIM's Android carrier ID and specific carrier ID, where known (-1 is none)."""
+    return [
+        value
+        for value in (identity.get("android_carrier_id"), identity.get("android_specific_carrier_id"))
+        if isinstance(value, int) and not isinstance(value, bool) and value >= 0
+    ]
+
+
 def profile_matches(match: dict[str, Any], identity: dict[str, Any]) -> bool:
     if identity.get("mccmnc") not in match.get("mccmnc", []):
         return False
@@ -81,7 +90,7 @@ def profile_matches(match: dict[str, Any], identity: dict[str, Any]) -> bool:
         return False
 
     expected_carrier_ids = match.get("android_carrier_ids", [])
-    if expected_carrier_ids and identity.get("android_carrier_id") not in expected_carrier_ids:
+    if expected_carrier_ids and not any(value in expected_carrier_ids for value in sim_carrier_ids(identity)):
         return False
     return True
 
@@ -90,7 +99,182 @@ def specificity(match: dict[str, Any]) -> int:
     return sum(bool(match.get(key)) for key in MATCH_DIMENSIONS)
 
 
-def resolve(lookup: dict[str, Any], identity: dict[str, Any]) -> list[dict[str, Any]]:
+# ---------------------------------------------------------------- Android's order (rule round 45, item 3)
+#
+# A SIM's profiles sorted generic to specific by, in this order:
+#   1. Android's weight: CarrierResolver.CarrierMatchingRule's score of the
+#      fields the profile pins, MCC/MNC 256, IMSI prefix 128, ICCID prefix 64,
+#      GID1 32, GID2 16, PLMN 8, access rule 4, SPN 2, APN 1. A carrier-ID
+#      selector stays a match condition; it adds the fields of Android's rules
+#      behind the ID on the SIM's network (the lowest such weight when the ID
+#      has several rules there, or MCC/MNC alone when it has none), and at
+#      equal weight a profile with a carrier-ID selector ranks above a raw one.
+#   2. Longer prefix or more fixed digits, the selector types in weight order:
+#      IMSI (digits other than x), ICCID, GID1, GID2, each the shortest of the
+#      profile's values.
+#   3. An OCD profile above a fill-only one.
+#   4. Fewer list values.
+#   5. Fewer network codes.
+#   6. The profile ID in byte order; the conflict checker
+#      (tools/ocd_dataset.py) makes sure it never decides between profiles
+#      whose served values differ.
+# Mismatching any selector rejects the profile, as before.
+
+ORDER_STEPS = ("weight", "carrier_id", "prefix", "ocd_before_fill_only", "fewer_values", "fewer_networks", "profile_id")
+MCCMNC_WEIGHT = 256
+SELECTOR_WEIGHTS = {
+    "imsi_prefix_patterns": 128,
+    "iccid_prefixes": 64,
+    "gid1_prefixes": 32,
+    "gid2_prefixes": 16,
+    "spn": 2,
+}
+# CarrierIdProvider's columns and CarrierResolver's score for each.
+RULE_WEIGHTS = {
+    "mccmnc": 256,
+    "imsi_prefix_xpattern": 128,
+    "iccid_prefix": 64,
+    "gid1": 32,
+    "gid2": 16,
+    "plmn": 8,
+    "privilege_access_rule": 4,
+    "spn": 2,
+    "apn": 1,
+}
+PREFIX_DIMENSIONS = ("imsi_prefix_patterns", "iccid_prefixes", "gid1_prefixes", "gid2_prefixes")
+CARRIER_ID_TABLE = Path(__file__).resolve().parent / "aosp" / "carrier-id-table.json"
+
+CarrierIdTable = dict[tuple[int, str], list[int]]
+
+
+def rule_weight(row: dict[str, Any]) -> int:
+    """CarrierResolver's score of one rule: the sum of the weights of the fields it has."""
+    return sum(weight for column, weight in RULE_WEIGHTS.items() if row.get(column) is not None)
+
+
+def load_carrier_id_table(path: Path = CARRIER_ID_TABLE) -> CarrierIdTable:
+    """(carrier ID, MCC+MNC) to the weights of Android's rules for that ID there."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    table: CarrierIdTable = {}
+    for row in document["rows"]:
+        if row.get("mccmnc") is None:
+            continue
+        table.setdefault((int(row["carrier_id"]), str(row["mccmnc"])), []).append(rule_weight(row))
+    return table
+
+
+def raw_weight(match: dict[str, Any]) -> int:
+    return MCCMNC_WEIGHT + sum(weight for dimension, weight in SELECTOR_WEIGHTS.items() if match.get(dimension))
+
+
+def android_weight(
+    match: dict[str, Any],
+    mccmnc: str,
+    table: CarrierIdTable | None,
+    fallbacks: list[tuple[int, str]] | None = None,
+) -> int:
+    """Step 1: Android's weight of the profile on network MCCMNC (no dash).
+    A carrier ID without a rule on that network counts at the MCC/MNC-only
+    weight, and is noted in FALLBACKS."""
+    raw = raw_weight(match)
+    carrier_ids = match.get("android_carrier_ids") or []
+    if not carrier_ids:
+        return raw
+    weight: int | None = None
+    for carrier_id in carrier_ids:
+        rules = (table or {}).get((int(carrier_id), mccmnc))
+        if not rules:
+            if fallbacks is not None:
+                fallbacks.append((int(carrier_id), mccmnc))
+            rules = [MCCMNC_WEIGHT]
+        for rule in rules:
+            combined = raw | rule
+            weight = combined if weight is None else min(weight, combined)
+    return weight if weight is not None else raw
+
+
+def fixed_length(dimension: str, value: str) -> int:
+    """Step 2's measure of one selector value: the digits other than x for
+    an IMSI pattern, the length for a prefix."""
+    if dimension == "imsi_prefix_patterns":
+        return sum(1 for char in value if char not in "xX")
+    return len(value)
+
+
+def list_value_count(match: dict[str, Any]) -> int:
+    return sum(len(match.get(dimension) or []) for dimension in MATCH_DIMENSIONS)
+
+
+def order_key(
+    match: dict[str, Any],
+    mccmnc: str,
+    kind: str,
+    profile_id: str,
+    table: CarrierIdTable | None,
+    fallbacks: list[tuple[int, str]] | None = None,
+) -> tuple[Any, ...]:
+    """The sort key of one profile on network MCCMNC, generic to specific:
+    one element per step of ORDER_STEPS."""
+    prefix = tuple(
+        min(fixed_length(dimension, str(value)) for value in match[dimension]) if match.get(dimension) else 0
+        for dimension in PREFIX_DIMENSIONS
+    )
+    return (
+        android_weight(match, mccmnc, table, fallbacks),
+        1 if match.get("android_carrier_ids") else 0,
+        prefix,
+        0 if kind == "fill_only" else 1,
+        -list_value_count(match),
+        -len(match.get("mccmnc") or []),
+        profile_id.encode("utf-8"),
+    )
+
+
+def deciding_step(lower: tuple[Any, ...], upper: tuple[Any, ...]) -> str | None:
+    """The step of ORDER_STEPS that orders two keys; None when they are equal."""
+    for step, (a, b) in zip(ORDER_STEPS, zip(lower, upper)):
+        if a != b:
+            return step
+    return None
+
+
+_TABLE_CACHE: dict[Path, CarrierIdTable] = {}
+
+
+def default_table() -> CarrierIdTable:
+    if CARRIER_ID_TABLE not in _TABLE_CACHE:
+        _TABLE_CACHE[CARRIER_ID_TABLE] = load_carrier_id_table(CARRIER_ID_TABLE)
+    return _TABLE_CACHE[CARRIER_ID_TABLE]
+
+
+def android_key(profile: dict[str, Any], mccmnc: str, table: CarrierIdTable | None = None) -> tuple[Any, ...]:
+    """order_key of a lookup.json profile (an OCD profile unless it says otherwise)."""
+    return order_key(
+        profile["match"],
+        mccmnc,
+        str(profile.get("kind", "ocd")),
+        str(profile.get("profile_id", "")),
+        default_table() if table is None else table,
+    )
+
+
+ORDERS = ("count", "android")
+
+
+def resolve(
+    lookup: dict[str, Any],
+    identity: dict[str, Any],
+    order: str = "count",
+    table: CarrierIdTable | None = None,
+) -> list[dict[str, Any]]:
+    """The profiles matching IDENTITY, generic to specific. ORDER "count" is
+    lookup.json's documented order (the number of selectors used, then the
+    profile ID); "android" is the order of rule round 45 (above), which
+    OcdCarrierSettings, the OCD Check app and the golden vectors use, and
+    which lookup.json's documented order becomes after the notice of
+    docs/compatibility.md."""
+    if order not in ORDERS:
+        raise ValueError(f"unknown order {order}")
     profiles = lookup.get("profiles", [])
     if not isinstance(profiles, list):
         raise ValueError("lookup.profiles must be a list")
@@ -101,6 +285,9 @@ def resolve(lookup: dict[str, Any], identity: dict[str, Any]) -> list[dict[str, 
         and isinstance(profile.get("match"), dict)
         and profile_matches(profile["match"], identity)
     ]
+    if order == "android":
+        mccmnc = str(identity.get("mccmnc"))
+        return sorted(matches, key=lambda profile: android_key(profile, mccmnc, table))
     return sorted(
         matches,
         key=lambda profile: (
@@ -108,6 +295,18 @@ def resolve(lookup: dict[str, Any], identity: dict[str, Any]) -> list[dict[str, 
             str(profile.get("profile_id", "")),
         ),
     )
+
+
+def serving_reason(stack: list[dict[str, Any]], mccmnc: str, table: CarrierIdTable | None = None) -> str:
+    """Why the last profile of an Android-ordered stack serves: `default`
+    without a profile, `only` with one, otherwise the step that put it above
+    the one below it."""
+    if not stack:
+        return "default"
+    if len(stack) == 1:
+        return "only"
+    step = deciding_step(android_key(stack[-2], mccmnc, table), android_key(stack[-1], mccmnc, table))
+    return step or "profile_id"
 
 
 def mvno_row_matches(row: dict[str, Any], identity: dict[str, Any]) -> bool:
@@ -143,12 +342,13 @@ def explain(
     identity: dict[str, Any],
     root: Path,
     evidence_index_path: Path,
+    order: str = "count",
 ) -> dict[str, Any]:
     """Why a SIM gets what it gets. root is the repository the lookup's paths
-    are relative to."""
+    are relative to; ORDER as for resolve."""
     import generate_android_outputs as generator
 
-    stack = resolve(lookup, identity)
+    stack = resolve(lookup, identity, order)
     evidence_index = json.loads(evidence_index_path.read_text(encoding="utf-8"))
     evidence = {item["profile_id"]: item for item in evidence_index.get("profiles", [])}
     files = {
@@ -175,6 +375,7 @@ def explain(
             "profile_id": item["profile_id"],
             "display_name": item["display_name"],
             "specificity": specificity(item["match"]),
+            **({"weight": android_weight(item["match"], str(identity.get("mccmnc")), default_table())} if order == "android" else {}),
             "match": item["match"],
             "sources": evidence.get(item["profile_id"], {}).get("sources", []),
             **{
@@ -498,6 +699,18 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--iccid")
     parser.add_argument("--imsi")
     parser.add_argument("--android-carrier-id", type=int)
+    parser.add_argument(
+        "--android-specific-carrier-id",
+        type=int,
+        help="the SIM's specific carrier ID; a profile's android_carrier_ids match either ID",
+    )
+    parser.add_argument(
+        "--order",
+        choices=ORDERS,
+        default="count",
+        help="count: lookup.json's documented order (selectors used, then profile ID); android: the order "
+        "of rule round 45 that OcdCarrierSettings and the OCD Check app use, announced in docs/compatibility.md",
+    )
     args = parser.parse_args(argv[1:])
     lookup = json.loads(args.lookup.read_text(encoding="utf-8"))
     identity = {
@@ -510,25 +723,25 @@ def main(argv: list[str]) -> int:
             "iccid": args.iccid,
             "imsi": args.imsi,
             "android_carrier_id": args.android_carrier_id,
+            "android_specific_carrier_id": args.android_specific_carrier_id,
         }.items()
         if value is not None
     }
     if args.explain:
         root = args.lookup.resolve().parents[2]
         evidence_index = args.evidence_index or args.lookup.resolve().parents[1] / "evidence-index.json"
-        print(json.dumps(explain(lookup, identity, root, evidence_index), indent=2, sort_keys=True))
+        print(json.dumps(explain(lookup, identity, root, evidence_index, args.order), indent=2, sort_keys=True))
         return 0
-    print(
-        json.dumps(
-            {
-                "schema_version": 1,
-                "resolution_order": "generic_to_specific",
-                "profiles": resolve(lookup, identity),
-            },
-            indent=2,
-            sort_keys=True,
-        )
-    )
+    stack = resolve(lookup, identity, args.order)
+    result: dict[str, Any] = {
+        "schema_version": 1,
+        "resolution_order": "generic_to_specific",
+        "profiles": stack,
+    }
+    if args.order == "android":
+        result["order"] = "android"
+        result["serving_reason"] = serving_reason(stack, args.mccmnc)
+    print(json.dumps(result, indent=2, sort_keys=True))
     return 0
 
 

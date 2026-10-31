@@ -54,6 +54,77 @@ def check_resolution() -> None:
     assert resolver.any_prefix_matches(["aB"], "AB12")
 
 
+def check_android_order() -> None:
+    """Rule round 45, item 3: Android's weights, then the written-out tie
+    rule, offered as --order android while lookup.json's documented order
+    stays the count until the notice of docs/compatibility.md runs out."""
+    table = {(1454, "26207"): [256], (2055, "302720"): [384, 384, 288]}
+    lookup = {
+        "profiles": [
+            profile("open.26207.000000000001", {"mccmnc": ["26207"]}),
+            # Two selectors (count 2) but SPN and GID1 weigh 2 + 32: below one IMSI prefix (128).
+            profile("open.26207.000000000002", {"mccmnc": ["26207"], "spn": ["Example"], "gid1_prefixes": ["AB"]}),
+            profile("open.26207.000000000003", {"mccmnc": ["26207"], "imsi_prefix_patterns": ["2620750"]}),
+            profile("open.26207.000000000004", {"mccmnc": ["26207"], "imsi_prefix_patterns": ["26207500"]}),
+            # Carrier ID 1454's rule is MCC/MNC alone: 256, above the plain profile by the carrier-ID step.
+            profile("open.26207.000000000005", {"mccmnc": ["26207"], "android_carrier_ids": [1454]}),
+        ]
+    }
+    sim = {"mccmnc": "26207", "spn": "example", "gid1": "AB01", "imsi": "262075000000001", "android_carrier_id": 1454}
+    count = [p["profile_id"][-1] for p in resolver.resolve(lookup, sim)]
+    android = resolver.resolve(lookup, sim, "android", table)
+    assert count == ["1", "3", "4", "5", "2"], count
+    assert [p["profile_id"][-1] for p in android] == ["1", "5", "2", "3", "4"], android
+    assert resolver.serving_reason(android, "26207", table) == "prefix"
+    assert resolver.android_weight(lookup["profiles"][1]["match"], "26207", table) == 290
+    # A carrier ID with several rules on the network takes the lowest; one without any counts at 256.
+    fallbacks: list = []
+    assert resolver.android_weight({"mccmnc": ["302720"], "android_carrier_ids": [2055]}, "302720", table) == 288
+    assert resolver.android_weight({"mccmnc": ["302720"], "android_carrier_ids": [9], "spn": ["X"]}, "302720", table, fallbacks) == 258
+    assert fallbacks == [(9, "302720")], fallbacks
+    # The specific carrier ID matches too, as on the phone.
+    only_specific = {"mccmnc": "26207", "android_carrier_id": 7, "android_specific_carrier_id": 1454}
+    assert [p["profile_id"][-1] for p in resolver.resolve(lookup, only_specific, "android", table)] == ["1", "5"]
+    # Steps 3 to 6: an OCD profile above a fill-only one, then fewer values, fewer networks, and the ID last.
+    tied = {
+        "profiles": [
+            {"profile_id": "fill.26207.000000000009", "kind": "fill_only", "match": {"mccmnc": ["26207"], "spn": ["X"]}},
+            profile("open.26207.00000000000a", {"mccmnc": ["26207", "26211"], "spn": ["X"]}),
+            profile("open.26207.00000000000b", {"mccmnc": ["26207"], "spn": ["X", "Y"]}),
+            profile("open.26207.00000000000c", {"mccmnc": ["26207"], "spn": ["X"]}),
+            profile("open.26207.00000000000d", {"mccmnc": ["26207"], "spn": ["X"]}),
+        ]
+    }
+    stack = resolver.resolve(tied, {"mccmnc": "26207", "spn": "x"}, "android", table)
+    assert [p["profile_id"][-1] for p in stack] == ["9", "b", "a", "c", "d"], stack
+    steps = [resolver.deciding_step(resolver.android_key(a, "26207", table), resolver.android_key(b, "26207", table))
+             for a, b in zip(stack, stack[1:])]
+    assert steps == ["ocd_before_fill_only", "fewer_values", "fewer_networks", "profile_id"], steps
+    # The pinned table is the AOSP carrier list of the ROM's Android version.
+    document = json.loads(resolver.CARRIER_ID_TABLE.read_text(encoding="utf-8"))
+    assert document["version"] == 134217778 and document["source"]["commit"] == "7a49c7eb2e351071a801e34c98eae5cf9537d220"
+
+
+def check_golden_vectors() -> None:
+    """The golden vectors (tests/vectors/resolution-order.json) against this
+    resolver and tools/ocd_dataset.py's matcher."""
+    import order_vectors
+
+    path = Path(__file__).resolve().parents[1] / "tests/vectors/resolution-order.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+    problems = order_vectors.check(document)
+    assert not problems, problems[:10]
+    for item in document["sets"]:
+        for vector in item["vectors"]:
+            if vector["group"] == "spec":
+                continue  # the spec appendix's own synthetic values
+            # Synthetic values only: a published pattern or prefix of at most
+            # 10 or 13 digits, zero padded, ending in 1.
+            imsi, iccid = vector["sim"].get("imsi"), vector["sim"].get("iccid")
+            assert imsi is None or (len(imsi) == 15 and imsi[10:] == "00001"), (vector["id"], "imsi")
+            assert iccid is None or (len(iccid) == 20 and iccid[13:] == "0000001"), (vector["id"], "iccid")
+
+
 def write_json(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -888,6 +959,8 @@ def check_explain_emergency() -> None:
 
 def main() -> int:
     check_resolution()
+    check_android_order()
+    check_golden_vectors()
     check_explain()
     check_explain_shared_file()
     check_explain_proxy_free_first()

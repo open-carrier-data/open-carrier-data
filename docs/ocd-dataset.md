@@ -22,11 +22,11 @@ The whole set, with the `pin.json` a fetcher writes beside it, stays under 64 Mi
 - **Digests.** Every file but the manifest names `based_on_data_digest`, and the manifest names `data_digest`. Both are OCD's data digest of the publish, the same value as in `generated/android/metadata.json` and the `apns-conf.xml` header. `dataset_digest` is SHA-256 over, for each listed file in byte order of its name, the three lines `name`, `sha256` and `bytes`.
 - **Order.** Of two datasets with different `dataset_digest`, the one with the later `generated_at` is newer. `generated_at` changes only when a file changes; on a pull request, `validate` refuses a changed dataset whose `generated_at` is not later than `main`'s.
 - **The pin.** A file cannot name the commit that contains it. Whoever fetches the set writes `pin.json` beside it, with the commit and each file's git blob SHA-1: the owner app for a download, the ROM pin step for the build. It is never on `main`.
-- **Strict reading.** A repeated member, NaN or Infinity, an unknown member, an unknown `schema_version`, a key outside the registry or a value of another type makes the whole set unreadable. `tools/ocd_dataset.py validate` runs the reader's checks 4 to 10 of the spec: manifest, sizes, SHA-256, dataset digest, data digest agreement, strict parse, closed and typed keys with their domains, specificity, network copies, APN version 8 and the APN index.
+- **Strict reading.** A repeated member, NaN or Infinity, an unknown member, an unknown `schema_version`, a key outside the registry or a value of another type makes the whole set unreadable. `tools/ocd_dataset.py validate` runs the reader's checks 4 to 10 of the spec: manifest, sizes, SHA-256, dataset digest, data digest agreement, strict parse, closed and typed keys with their domains, specificity, network copies, APN version 8 and the APN index. It also runs the conflict checker of rule round 45 (below).
 
 ## Profiles
 
-`networks` is keyed `<mcc>-<mnc>`, with the MNC as the SIM reports it: `302-37` and `302-370` are different networks. A profile that lists several networks appears in full under each, with its own fill list per network. Each network's profiles are in OCD's resolve order: specificity, then `id` in byte order.
+`networks` is keyed `<mcc>-<mnc>`, with the MNC as the SIM reports it: `302-37` and `302-370` are different networks. A profile that lists several networks appears in full under each, with its own fill list per network. Each network's profiles are listed by specificity, then `id` in byte order. That is only the file's order: since rule round 45 the reader sorts a SIM's stack by the resolution order below, which it computes from `match` and `kind`, so the file and its count-valued `specificity` stay as they were.
 
 A profile carries:
 
@@ -44,9 +44,24 @@ A profile carries:
 2. SPN compares with Java's `equalsIgnoreCase`: "Straße" and "STRASSE" differ.
 3. An IMSI pattern matches when it is no longer than the IMSI and each position is `x` or the IMSI's digit.
 4. GID1 and GID2 are prefixes, ignoring case. An ICCID is a prefix. A carrier ID is the SIM's carrier ID or specific carrier ID.
-5. The most specific profile that holds serves. With none, `default` serves, and with no SIM, `no_sim`.
+5. Any selector that does not hold rejects the profile. The profiles that hold form the SIM's stack, generic to specific in the resolution order, and the last one serves. With none, `default` serves, and with no SIM, `no_sim`.
 
-`python3 tools/ocd_dataset.py match --mcc 001 --mnc 01 --gid1 ABCD2025` shows the stack, the serving profile and the fill a synthetic SIM on the test network 001-01 gets; `--imsi` takes a synthetic IMSI the same way. `python3 tools/ocd_dataset.py ties` lists the profiles of equal specificity that one SIM can match together; the later `id` serves.
+**The resolution order** (rule round 45, item 3) sorts the stack by, in this order:
+
+1. **Android's weight**, the score Android's `CarrierResolver` gives a carrier ID rule: MCC/MNC 256, IMSI prefix 128, ICCID prefix 64, GID1 32, GID2 16, PLMN 8, access rule 4, SPN 2, APN 1, for the fields the profile pins. A carrier-ID selector stays a match condition against the SIM's carrier ID; it adds the fields of Android's rules behind that ID on the SIM's network, the lowest-weight rule when the ID has several there. At equal weight a profile with a carrier-ID selector ranks above one without. The phone reads those rules from its own carrier ID table (`content://carrier_id/all`); when the read fails, or the ID has no rule on that network, the selector counts at the MCC/MNC-only weight and the phone logs it. The public tools read the same rules from `tools/aosp/carrier-id-table.json`, Android's table from the AOSP carrier list of the ROM's Android version (version 134217778, TelephonyProvider `7a49c7eb`, the S20's LineageOS 24.0 tree).
+2. **Longer prefix or more fixed digits**, the selector types in weight order: IMSI (the digits other than `x`), ICCID, GID1, GID2, each the shortest of the profile's values.
+3. **An OCD profile above a fill-only one.**
+4. **Fewer list values.**
+5. **Fewer network codes.**
+6. **The profile `id`** in byte order, the later one above. It only makes the order total: the conflict checker makes sure it never decides between profiles whose served values differ.
+
+OCD's own LIDL SIM on 262-02 does not move. On `main` of 2026-10-31 the order flips 9,768 pairs of profiles one SIM can match, nearly all only for a SIM that carries both profiles' selectors (an SPN of one MVNO and a GID1 of another, say).
+
+**The conflict checker.** `validate` fails when two profiles one SIM can match tie up to the profile `id` and such a SIM would be served differently: a CarrierConfig key both set to different values, a different Google fill pick, or a different APN coupling. A new or changed tie of that kind blocks the publish until a source settles which profile applies; there is no baseline. On `main` of 2026-10-31 one pair ties up to the `id`, `302-720`'s IMSI patterns `302720x84` and `30272098`, and a SIM of both is served the same.
+
+`python3 tools/ocd_dataset.py match --mcc 001 --mnc 01 --gid1 ABCD2025` shows the stack with each profile's weight, the serving profile, the step that made it serve and the fill a synthetic SIM on the test network 001-01 gets; `--imsi` takes a synthetic IMSI the same way. `python3 tools/ocd_dataset.py ties` lists the pairs that tie up to the profile `id`, what a SIM of both would be served differently, and how many pairs each step of the order puts apart.
+
+**Golden vectors.** `tests/vectors/resolution-order.json` holds synthetic SIMs with the stack, serving profile, reason (the step of the order that made it serve) and fill pick they must get: the spec's 27 matcher vectors, the owner's SIM groups, a SIM of every profile on 262-01, 262-02, 262-03 and 262-07, every SIM case the dry run of rule round 45 lists, the remaining tie and a carrier ID without a rule. It pins the carrier ID table's version and carries the rows its carrier IDs need. `tools/order_vectors.py check` runs it against this tool and `tools/resolve_carrier_profiles.py --order android`; OcdCarrierSettings and the OCD Check app run the same file. Every SIM value in it is built from published selectors: an IMSI or ICCID is a published pattern or prefix padded with zeros and a final 1.
 
 ### The Google-lane fill
 
@@ -60,7 +75,7 @@ The phone takes the first item whose `when` is null or holds for the SIM. MTS Mo
 
 ### Fill-only profiles
 
-Every Google rule without an OCD profile of exactly its match (the same single network and the same single selector) becomes a fill-only profile. Its `id` is `fill.<mcc><mnc>.` plus the first 12 hex digits of SHA-256 over `google-rule\n<name>\n<mcc>-<mnc>\n<kind or "none">\n<value or "">`. It has no values and no APN rows. At equal specificity an OCD profile wins, because `fill.` sorts before `open.`. On 2026-10-25 there were 66: 46 IMSI rules, 14 network rules (test PLMNs among them), 5 SPN rules and 1 GID1 rule. Since 2026-10-28 there are 20, with no IMSI rule: all 46 had IMSI patterns of 11 to 13 characters, which rule 3 does not allow (below).
+Every Google rule without an OCD profile of exactly its match (the same single network and the same single selector) becomes a fill-only profile. Its `id` is `fill.<mcc><mnc>.` plus the first 12 hex digits of SHA-256 over `google-rule\n<name>\n<mcc>-<mnc>\n<kind or "none">\n<value or "">`. It has no values and no APN rows. Where the weight, the prefix and nothing else tell them apart, an OCD profile ranks above a fill-only one (step 3 of the resolution order). On 2026-10-25 there were 66: 46 IMSI rules, 14 network rules (test PLMNs among them), 5 SPN rules and 1 GID1 rule. Since 2026-10-28 there are 20, with no IMSI rule: all 46 had IMSI patterns of 11 to 13 characters, which rule 3 does not allow (below).
 
 ## The Google lane
 
