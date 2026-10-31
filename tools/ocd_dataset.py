@@ -2240,10 +2240,16 @@ def implied_match(specific: dict[str, Any], generic: dict[str, Any]) -> bool:
     return True
 
 
-def profile_stack(network_profiles: list[dict[str, Any]], profile: dict[str, Any], mccmnc: str) -> list[dict[str, Any]]:
+def profile_stack(network_profiles: list[dict[str, Any]], profile: dict[str, Any], mccmnc: str | None = None) -> list[dict[str, Any]]:
     """The stack a SIM that PROFILE matches on network MCCMNC always has: the
     profiles of the network below it in the resolution order that every such
-    SIM also matches, then PROFILE."""
+    SIM also matches, then PROFILE. Without MCCMNC (callers from before rule
+    round 45, such as the private exporter's served bundles), the network is
+    the one every profile of NETWORK_PROFILES lists."""
+    if mccmnc is None:
+        codes = [{n["mcc"] + n["mnc"] for n in q["match"]["mccmnc"]} for q in network_profiles] or [set()]
+        common = sorted(set.intersection(*codes))
+        mccmnc = common[0] if common else profile["match"]["mccmnc"][0]["mcc"] + profile["match"]["mccmnc"][0]["mnc"]
     top = resolution_key(profile, mccmnc)
     stack = [q for q in network_profiles if q is profile or q["id"] == profile["id"]
              or (resolution_key(q, mccmnc) < top and implied_match(profile["match"], q["match"]))]

@@ -356,6 +356,17 @@ def tie_network(*profiles: dict) -> dict:
     return {"networks": {"999-02": {"mcc": "999", "mnc": "02", "profiles": sorted(profiles, key=ocd.stack_order)}}}
 
 
+class ProfileStackTest(unittest.TestCase):
+    def test_the_network_defaults_to_the_one_every_profile_lists(self) -> None:
+        """The private exporter's served bundles call profile_stack(items, profile)."""
+        plain = tie_profile("1", {})
+        gid = tie_profile("2", {"gid1_prefixes": ["2C"]})
+        longer = tie_profile("3", {"gid1_prefixes": ["2C00"]})
+        items = [plain, gid, longer]
+        self.assertEqual([p["id"][-1] for p in ocd.profile_stack(items, longer)], ["1", "2", "3"])
+        self.assertEqual(ocd.profile_stack(items, longer), ocd.profile_stack(items, longer, "99902"))
+
+
 class TieFixtureTest(unittest.TestCase):
     def test_disjoint_or_weighted_apart_selectors_do_not_tie(self) -> None:
         profiles = tie_network(
