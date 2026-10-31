@@ -1,4 +1,18 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "EndPreviousCall"
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true
+    },
+    "operator_display": {
+      "indicator_icon_branding": "OYA",
+      "refer_eons_without_lac": true
+    }
+  },
   "android_apns": [
     {
       "apn": "EMERGENCY",
@@ -12,19 +26,28 @@
     },
     {
       "apn": "chatrisp.apn",
-      "name": "Chatr Tethering",
-      "protocol": "IPV6",
-      "roaming_protocol": "IPV4V6",
+      "name": "chatrisp.apn",
+      "protocol": "IPV4V6",
       "types": [
+        "default",
         "dun"
       ]
     },
     {
       "apn": "chatrisp.apn",
       "name": "Chatr Tethering",
-      "protocol": "IPV4V6",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV4V6",
       "types": [
         "dun"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "name": "chatr Internet",
+      "protocol": "IPV4V6",
+      "types": [
+        "default"
       ]
     },
     {
@@ -35,19 +58,6 @@
       "name": "Chatr Internet",
       "protocol": "IPV6",
       "roaming_protocol": "IPV4V6",
-      "types": [
-        "default",
-        "mms",
-        "supl"
-      ]
-    },
-    {
-      "apn": "chatrweb.apn",
-      "mmsc": "http://mms.chatrwireless.com",
-      "mmsport": 80,
-      "mmsproxy": "mmsproxy.chatrwireless.com",
-      "name": "Chatr Internet",
-      "protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -62,6 +72,19 @@
       "name": "Chatr Internet",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
+      "types": [
+        "default",
+        "mms",
+        "supl"
+      ]
+    },
+    {
+      "apn": "chatrweb.apn",
+      "mmsc": "http://mms.chatrwireless.com",
+      "mmsport": 80,
+      "mmsproxy": "mmsproxy.chatrwireless.com",
+      "name": "chatrweb.apn",
+      "protocol": "IPV4V6",
       "types": [
         "default",
         "mms",
@@ -143,7 +166,7 @@
     "vowifi": "unknown",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Chatr Ca",
+  "display_name": "chatr",
   "match": {
     "imsi_prefix_patterns": [
       "302720x84"
