@@ -581,6 +581,16 @@
     "vowifi": "conditional",
     "wifi_calling_roaming": "supported"
   },
+  "depends_on": {
+    "volte": [
+      "device",
+      "sources_disagree"
+    ],
+    "vowifi": [
+      "device",
+      "sources_disagree"
+    ]
+  },
   "display_name": "DNA",
   "match": {
     "mccmnc": [
