@@ -127,6 +127,33 @@
         }
       }
     },
+    "depends_on": {
+      "type": "object",
+      "description": "Rule round 45, item 4: why a conditional capability value is not single, only for capabilities whose value is conditional. device: carrier-variants.json records an on and an off on different devices of one software stack; firmware: it records one device on and off under different stacks; ims_stack: a record keyed by IMS stack backs it; sources_disagree: the evidence index records a conflict of source families, or nothing records another basis. tools/two_answers.py derives it; capabilities stays the configure answer, unchanged.",
+      "propertyNames": { "$ref": "#/$defs/capabilityKey" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "uniqueItems": true,
+        "items": { "enum": ["sources_disagree", "device", "firmware", "ims_stack"] }
+      }
+    },
+    "for_you": {
+      "type": "object",
+      "description": "Rule round 45, item 4: whether this customer has the feature, as an admitted operator or brand statement that has not lapsed states it (generated/operators/statements.json), only where one gives a state; missing means unknown. It says what the brand states, never that the person's plan includes it, and never feeds capabilities, CarrierConfig, APN rows or the OCD dataset. reason brand_not_tellable with brands: a plain profile on a network where host-only brands ride, so the phone cannot tell whose SIM it is. tools/two_answers.py derives it.",
+      "propertyNames": { "$ref": "#/$defs/capabilityKey" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state", "statements"],
+        "properties": {
+          "state": { "enum": ["included", "free_option", "paid_option", "not_offered", "ended", "depends_on_plan"] },
+          "statements": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9._-]{1,120}$" } },
+          "reason": { "const": "brand_not_tellable" },
+          "brands": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 120 } }
+        }
+      }
+    },
     "android_carrier_config": {
       "description": "Reviewed Android CarrierConfig subset. Key names and Android value types are fixed.",
       "type": "object",
@@ -560,6 +587,9 @@
     }
   },
   "$defs": {
+    "capabilityKey": {
+      "enum": ["volte", "vowifi", "vonr", "video_calling", "sms_over_ims", "mms", "rcs", "esim", "ims_conference", "wifi_calling_roaming"]
+    },
     "capabilityStatus": {
       "type": "string",
       "enum": [

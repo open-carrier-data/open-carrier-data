@@ -673,6 +673,53 @@ def imsi_fits_network(pattern: str, code: str) -> bool:
     return all(pattern[i] in ("x", code[i]) for i in range(min(len(pattern), len(code))))
 
 
+# Rule round 45, item 4: depends_on and for_you, the sibling maps of the
+# configure answer (capabilities). tools/two_answers.py derives them and
+# checks that they are exactly what it derives from the published files.
+DEPENDS_ON_REASONS = ("sources_disagree", "device", "firmware", "ims_stack")
+FOR_YOU_STATES = ("included", "free_option", "paid_option", "not_offered", "ended", "depends_on_plan")
+FOR_YOU_KEYS = {"state", "statements", "reason", "brands"}
+
+
+def validate_two_answers(path: Path, data: dict[str, Any], capabilities: dict[str, Any]) -> None:
+    depends_on = data.get("depends_on")
+    if depends_on is not None:
+        require_type(path, depends_on, dict, "depends_on")
+        if not depends_on:
+            raise ValidationError(f"{path}: depends_on is left out when empty")
+        for key, reasons in depends_on.items():
+            if capabilities.get(key) != "conditional":
+                raise ValidationError(f"{path}: depends_on.{key} is only for a conditional capability")
+            if not isinstance(reasons, list) or not reasons or reasons != sorted(set(reasons)) \
+                    or any(reason not in DEPENDS_ON_REASONS for reason in reasons):
+                raise ValidationError(f"{path}: depends_on.{key} is a sorted list of {', '.join(DEPENDS_ON_REASONS)}")
+    for_you = data.get("for_you")
+    if for_you is not None:
+        require_type(path, for_you, dict, "for_you")
+        if not for_you:
+            raise ValidationError(f"{path}: for_you is left out when empty")
+        for key, item in for_you.items():
+            if key not in CAPABILITY_KEYS:
+                raise ValidationError(f"{path}: for_you.{key} is not a capability")
+            if not isinstance(item, dict) or not {"state", "statements"} <= set(item) <= FOR_YOU_KEYS:
+                raise ValidationError(f"{path}: for_you.{key} holds state and statements, and may hold reason and brands")
+            if item["state"] not in FOR_YOU_STATES:
+                raise ValidationError(f"{path}: for_you.{key}.state is one of {', '.join(FOR_YOU_STATES)}")
+            statements = item["statements"]
+            if not isinstance(statements, list) or not statements or statements != sorted(set(statements)) \
+                    or not all(isinstance(s, str) and s for s in statements):
+                raise ValidationError(f"{path}: for_you.{key}.statements is a sorted list of statement ids")
+            if ("reason" in item) != ("brands" in item):
+                raise ValidationError(f"{path}: for_you.{key}: reason and brands go together")
+            if "reason" in item:
+                brands = item["brands"]
+                if item["reason"] != "brand_not_tellable" or item["state"] != "depends_on_plan":
+                    raise ValidationError(f"{path}: for_you.{key}: reason brand_not_tellable comes with depends_on_plan")
+                if not isinstance(brands, list) or not brands or brands != sorted(set(brands)) \
+                        or not all(isinstance(b, str) and b for b in brands):
+                    raise ValidationError(f"{path}: for_you.{key}.brands is a sorted list of brand names")
+
+
 def validate_profile(path: Path) -> dict[str, Any]:
     data = load_json(path)
     return validate_profile_object(path, data)
@@ -690,6 +737,8 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         "android_carrier_config",
         "addons",
         "android_apns",
+        "depends_on",
+        "for_you",
     }
     extra = set(data) - allowed_root
     if extra:
@@ -795,6 +844,8 @@ def validate_profile_object(path: Path, data: dict[str, Any]) -> dict[str, Any]:
         raise ValidationError(
             f"{path}: profile_id must be open.<one of its MCC/MNCs>.<12 hex>"
         )
+
+    validate_two_answers(path, data, capabilities)
 
     config = data.get("android_carrier_config")
     if config is not None:
@@ -2477,6 +2528,8 @@ def validate_lookup(generated_dir: Path, expected_profile_ids: set[str]) -> None
         "stale_after",
         "newest_entry",
         "weight",
+        "depends_on",
+        "for_you",
     }
     for index, record in enumerate(profiles):
         label = f"profiles[{index}]"
