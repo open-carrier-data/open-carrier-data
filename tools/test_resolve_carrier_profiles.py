@@ -56,8 +56,8 @@ def check_resolution() -> None:
 
 def check_android_order() -> None:
     """Rule round 45, item 3: Android's weights, then the written-out tie
-    rule, offered as --order android while lookup.json's documented order
-    stays the count until the notice of docs/compatibility.md runs out."""
+    rule, lookup.json's documented order since schema_version 2 and the
+    resolver's default; --order count keeps the order before it."""
     table = {(1454, "26207"): [256], (2055, "302720"): [384, 384, 288]}
     lookup = {
         "profiles": [
@@ -71,8 +71,9 @@ def check_android_order() -> None:
         ]
     }
     sim = {"mccmnc": "26207", "spn": "example", "gid1": "AB01", "imsi": "262075000000001", "android_carrier_id": 1454}
-    count = [p["profile_id"][-1] for p in resolver.resolve(lookup, sim)]
+    count = [p["profile_id"][-1] for p in resolver.resolve(lookup, sim, "count")]
     android = resolver.resolve(lookup, sim, "android", table)
+    assert [p["profile_id"] for p in resolver.resolve(lookup, sim, table=table)] == [p["profile_id"] for p in android]
     assert count == ["1", "3", "4", "5", "2"], count
     assert [p["profile_id"][-1] for p in android] == ["1", "5", "2", "3", "4"], android
     assert resolver.serving_reason(android, "26207", table) == "prefix"

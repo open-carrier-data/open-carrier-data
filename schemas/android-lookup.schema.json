@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/android-lookup.schema.json",
   "title": "Open Carrier Data profile lookup (generated/android/lookup.json)",
-  "description": "One entry per published carrier profile, for apps and tools that pick a profile from a SIM's facts. profile_id is assigned once and kept (rule round 45); a retired ID is listed in aliases/ids.json with the profiles its SIMs match now. Key stored results by the SIM's facts and the release, and follow an alias only to update a link (docs/compatibility.md). tools/validate_public_carrier_data.py checks this schema and what a schema cannot: every published profile listed once, and newest_entry against the evidence index.",
+  "description": "One entry per published carrier profile, for apps and tools that pick a profile from a SIM's facts. Since schema_version 2 (rule round 45, item 3) the profiles a SIM matches resolve generic to specific by weight, a carrier-ID selector above a raw profile of equal weight, the longer prefix or more fixed digits, fewer list values, fewer network codes, then profile_id (docs/data-model.md, tools/resolve_carrier_profiles.py); specificity stays the count of selectors used. profile_id is assigned once and kept (rule round 45); a retired ID is listed in aliases/ids.json with the profiles its SIMs match now. Key stored results by the SIM's facts and the release, and follow an alias only to update a link (docs/compatibility.md). tools/validate_public_carrier_data.py checks this schema and what a schema cannot: every published profile listed once, and newest_entry against the evidence index.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "resolution_order", "match_semantics", "profiles"],
   "properties": {
-    "schema_version": { "const": 1 },
+    "schema_version": { "const": 2 },
     "resolution_order": { "const": "generic_to_specific" },
     "match_semantics": { "const": "OR within a match list; AND between match dimensions" },
     "profiles": {

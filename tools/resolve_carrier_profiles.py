@@ -264,15 +264,14 @@ ORDERS = ("count", "android")
 def resolve(
     lookup: dict[str, Any],
     identity: dict[str, Any],
-    order: str = "count",
+    order: str = "android",
     table: CarrierIdTable | None = None,
 ) -> list[dict[str, Any]]:
-    """The profiles matching IDENTITY, generic to specific. ORDER "count" is
-    lookup.json's documented order (the number of selectors used, then the
-    profile ID); "android" is the order of rule round 45 (above), which
-    OcdCarrierSettings, the OCD Check app and the golden vectors use, and
-    which lookup.json's documented order becomes after the notice of
-    docs/compatibility.md."""
+    """The profiles matching IDENTITY, generic to specific. ORDER "android"
+    is lookup.json's documented order since schema_version 2 (rule round 45,
+    above), which OcdCarrierSettings, the OCD Check app and the golden
+    vectors use; "count" is the order before it (the number of selectors
+    used, then the profile ID), for comparison."""
     if order not in ORDERS:
         raise ValueError(f"unknown order {order}")
     profiles = lookup.get("profiles", [])
@@ -342,7 +341,7 @@ def explain(
     identity: dict[str, Any],
     root: Path,
     evidence_index_path: Path,
-    order: str = "count",
+    order: str = "android",
 ) -> dict[str, Any]:
     """Why a SIM gets what it gets. root is the repository the lookup's paths
     are relative to; ORDER as for resolve."""
@@ -707,9 +706,9 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--order",
         choices=ORDERS,
-        default="count",
-        help="count: lookup.json's documented order (selectors used, then profile ID); android: the order "
-        "of rule round 45 that OcdCarrierSettings and the OCD Check app use, announced in docs/compatibility.md",
+        default="android",
+        help="android (default): lookup.json's documented order since schema_version 2 (rule round 45), as "
+        "OcdCarrierSettings and the OCD Check app sort; count: the order before it (selectors used, then profile ID)",
     )
     args = parser.parse_args(argv[1:])
     lookup = json.loads(args.lookup.read_text(encoding="utf-8"))
@@ -738,8 +737,8 @@ def main(argv: list[str]) -> int:
         "resolution_order": "generic_to_specific",
         "profiles": stack,
     }
+    result["order"] = args.order
     if args.order == "android":
-        result["order"] = "android"
         result["serving_reason"] = serving_reason(stack, args.mccmnc)
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0
