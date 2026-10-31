@@ -1,5 +1,58 @@
 {
-  "aliases": [],
+  "aliases": [
+    {
+      "id": "open.302720.30417f01b298",
+      "kind": "withdrawn",
+      "match": {
+        "imsi_prefix_patterns": [
+          "30272098"
+        ],
+        "mccmnc": [
+          "302720"
+        ]
+      },
+      "match_set_hash": "30417f01b298",
+      "retired_on": "2026-10-31",
+      "to": [
+        "open.302720.08eb0cbd0df0",
+        "open.302720.0a128f6babc4"
+      ]
+    },
+    {
+      "id": "open.302720.927a757371a9",
+      "kind": "withdrawn",
+      "match": {
+        "imsi_prefix_patterns": [
+          "30272084"
+        ],
+        "mccmnc": [
+          "302720"
+        ]
+      },
+      "match_set_hash": "927a757371a9",
+      "retired_on": "2026-10-31",
+      "to": [
+        "open.302720.08eb0cbd0df0"
+      ]
+    },
+    {
+      "id": "open.302720.ccbb3a704c53",
+      "kind": "withdrawn",
+      "match": {
+        "imsi_prefix_patterns": [
+          "30272094"
+        ],
+        "mccmnc": [
+          "302720"
+        ]
+      },
+      "match_set_hash": "ccbb3a704c53",
+      "retired_on": "2026-10-31",
+      "to": [
+        "open.302720.08eb0cbd0df0"
+      ]
+    }
+  ],
   "continued": [],
   "description": "Retired carrier profile IDs (rule round 45, item 1). A profile ID is assigned once and kept; it is not recomputed from the match set. When a profile's SIMs change and the ID cannot carry over, the old ID is retired, never reused, and listed here with the profile or profiles a SIM of its old rule matches now, computed by tools/profile_ids.py, never mapped by hand. kind: replaced (one new profile took its SIMs), split (several new profiles took them), merge (one new profile took the SIMs of several retired IDs), withdrawn (no new profile took them; to names where they fall now, if anywhere). An alias is a redirect for links and saved reports; it never carries a value. continued lists the live IDs whose match set is no longer the one they were issued for: the same SIMs written differently (same_sims), or an accepted continuity entry (continuity_entry).",
   "schema_version": 1
