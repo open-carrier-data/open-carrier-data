@@ -1,0 +1,72 @@
+{
+  "issue": 339,
+  "reported_on": "2026-10-30",
+  "report_sha256": "sha256:c0ce9b772ae7b38ae421c1dfd77af327a13e7a36dc1d93aaa5707dc67a90ed49",
+  "release": "db60eb4d5ad34af88f0d95755c2e275bb2bbf3df",
+  "status": "held",
+  "status_reasons": [
+    "new_account: the account's first accepted report is less than 14 days old"
+  ],
+  "verification": "unverified",
+  "report": {
+    "schema": "ocd-check-test-report",
+    "schema_version": 1,
+    "app": {
+      "name": "OCD Check",
+      "build": "owner",
+      "version": "0.4.0-owner"
+    },
+    "tested_on": "2026-10-28",
+    "release": {
+      "commit": "db60eb4d5ad34af88f0d95755c2e275bb2bbf3df",
+      "data_digest": "sha256:eb0a6d10d7a871b4497fca24dd572ae423ddf6514d12d324862e0b87d5472588"
+    },
+    "data_source": "pulled",
+    "device": {
+      "model": "SM-G981B",
+      "codename": "x1s",
+      "android_major": 17,
+      "rom_family": "lineageos",
+      "build_type": "userdebug",
+      "ims_stack": "aosp_imsstack",
+      "build": "CP2A.260605.016 1793218910"
+    },
+    "sim": {
+      "mccmnc": "26203",
+      "android_carrier_id": 2360,
+      "spn": "o2 - de",
+      "gid1_prefix": "010301"
+    },
+    "ocd_profile": "open.26203.ec645827a22d",
+    "results": [
+      {
+        "entry": "volte:on",
+        "ocd": true,
+        "phone": true,
+        "how": "observed",
+        "result": "failed",
+        "reason": "calls_out_failed",
+        "method": "wfc_override",
+        "settled": {
+          "level": "l2",
+          "bearer": "lte",
+          "method": "real_call",
+          "measured_on": "2026-10-28"
+        }
+      },
+      {
+        "entry": "vowifi:on",
+        "ocd": false,
+        "phone": true,
+        "how": "observed",
+        "result": "signed_in",
+        "settled": {
+          "level": "l2",
+          "bearer": "iwlan",
+          "method": "mailbox_call",
+          "measured_on": "2026-10-30"
+        }
+      }
+    ]
+  }
+}

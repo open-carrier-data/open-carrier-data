@@ -1,0 +1,58 @@
+{
+  "issue": 323,
+  "reported_on": "2026-10-28",
+  "report_sha256": "sha256:dde2306efbc064e3567ad20ed3557e5bf98ab3303a4aeeab287e0612c1307c27",
+  "release": "614e0a5facdf5c4ddc35be53d20c9c93833c0065",
+  "status": "superseded",
+  "status_reasons": [
+    "a newer report of the same account for the same phone, SIM and software counts instead"
+  ],
+  "verification": "unverified",
+  "report": {
+    "schema": "ocd-check-test-report",
+    "schema_version": 1,
+    "app": {
+      "name": "OCD Check",
+      "build": "owner",
+      "version": "0.4.0-owner"
+    },
+    "tested_on": "2026-10-28",
+    "release": {
+      "commit": "614e0a5facdf5c4ddc35be53d20c9c93833c0065",
+      "data_digest": "sha256:4610479e03ec583580f6a1c3df7db0f987b4e093788cd10e47a81f31de00a50f"
+    },
+    "data_source": "pulled",
+    "device": {
+      "model": "SM-G981B",
+      "codename": "x1s",
+      "android_major": 17,
+      "rom_family": "lineageos",
+      "build_type": "userdebug",
+      "ims_stack": "aosp_imsstack",
+      "build": "CP2A.260605.016 1793218910"
+    },
+    "sim": {
+      "mccmnc": "26203",
+      "android_carrier_id": 2360,
+      "spn": "o2 - de",
+      "gid1_prefix": "010301"
+    },
+    "ocd_profile": "open.26203.ec645827a22d",
+    "results": [
+      {
+        "entry": "volte:on",
+        "ocd": true,
+        "phone": true,
+        "how": "observed",
+        "result": "signed_in",
+        "method": "wfc_override",
+        "settled": {
+          "level": "l2",
+          "bearer": "lte",
+          "method": "real_call",
+          "measured_on": "2026-10-28"
+        }
+      }
+    ]
+  }
+}
