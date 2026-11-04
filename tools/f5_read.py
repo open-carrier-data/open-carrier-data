@@ -63,6 +63,15 @@ that has rows R0 and takes rows Rn walks the chain back from Rn to R0; it
 takes the change only when every entry on the way proceeds or has no lines.
 It is a companion file of the dataset, not a manifest role (round 31).
 
+A bridge (rule round 46) moves the chain's start back so that it reaches older
+rows, data-2026.10's: `backfill --onto` puts reads of the older changes in
+front of the chain and leaves the chain's reads as they are. `check` takes
+that one change to the chain's front, and only when every new read proceeds or
+has no lines. Any other change to reads on main is refused. Commits from before
+round 30 carry no Google lane, without which foreign_name and unreachable_scope
+cannot decide, so backfill refuses them unless --lane-from names the commit whose
+carrier list the rules read.
+
 usage:
   f5_read.py lines BASE_XML HEAD_XML
   f5_read.py read BASE_XML HEAD_XML [--root CHECKOUT] [--base-commit SHA]
@@ -70,7 +79,8 @@ usage:
                      [--agent-read FILE] [--builder NAME]
   f5_read.py check [--root DIR] [--base-xml BASE_XML --base-file BASE_F5_READS] [--base-commit SHA]
   f5_read.py chain [--root DIR] --from APN_ROWS_SHA256 [--gate full|narrow --networks 262-02,262-03]
-  f5_read.py backfill --repo CLONE --since SHA [--until REF] [--root DIR] [--agent-reads DIR]
+  f5_read.py backfill --repo CLONE --since SHA [--until REF] [--root DIR] [--agent-reads DIR] [--onto F5_READS]
+                      [--lane-from REF]
 
 Exit codes: 0 proceed, no lines or valid; 1 a check refused; 2 an error;
 3 publish wrote a hold (the publisher holds the publish).
@@ -531,6 +541,27 @@ def append_read(document: dict[str, Any] | None, read: dict[str, Any], since_com
     return {**document, "reads": document["reads"] + [read], "apn_rows_sha256": read["head"]["apn_rows_sha256"]}
 
 
+def bridged(bridge: dict[str, Any], chain: dict[str, Any]) -> dict[str, Any]:
+    """CHAIN with the reads of BRIDGE in front of it, its own reads untouched:
+    the chain now starts where BRIDGE starts (rule round 46)."""
+    if bridge["apn_rows_sha256"] != chain["since"]["apn_rows_sha256"]:
+        raise F5Error(f"{FILE}: the chain starts at {chain['since']['apn_rows_sha256'][:12]}, the bridge ends at {bridge['apn_rows_sha256'][:12]}")
+    return {**chain, "since": bridge["since"], "reads": bridge["reads"] + chain["reads"]}
+
+
+def bridge_problems(document: dict[str, Any], base_document: dict[str, Any]) -> list[str]:
+    """Why DOCUMENT is not BASE_DOCUMENT with a bridge in front of it. The
+    base's reads must stand unchanged at the end of the chain, and each read
+    in front of them must proceed or have no lines: a read that holds needs
+    the usual independent read first."""
+    reads, kept = document["reads"], base_document["reads"]
+    added = len(reads) - len(kept)
+    if added <= 0 or not kept or reads[added:] != kept or document["since"]["commit"] is None:
+        return [f"{FILE}: does not extend the base's chain; reads on main are never rewritten"]
+    return [f"{FILE}: bridge read {index} is {read['verdict']}; a bridge enters main only with reads that proceed"
+            for index, read in enumerate(reads[:added]) if read["verdict"] not in ("proceed", "no_lines")]
+
+
 def with_agent_read(read: dict[str, Any], agent: dict[str, Any], builder: str) -> tuple[dict[str, Any], list[str]]:
     """READ with an agent's proceed read standing in for its held lines, or
     READ unchanged with the reasons the agent read does not stand in."""
@@ -620,6 +651,8 @@ def main(argv: list[str] | None = None) -> int:
     bf.add_argument("--root", type=Path, default=TOOLS.parent, help="where to write generated/ocd-dataset/f5-reads.json")
     bf.add_argument("--read-at")
     bf.add_argument("--agent-reads", type=Path, help="a folder of agents' reads named <lines digest>.json, which stand in for held reads")
+    bf.add_argument("--lane-from", help="for a commit with no Google lane: the commit whose generated/ocd-dataset/google-lane.json the rules read")
+    bf.add_argument("--onto", type=Path, help="an f5-reads.json whose chain starts where --until ends: the new reads go in front of it, and its own reads stay as they are")
     args = parser.parse_args(argv)
     try:
         if args.command == "lines":
@@ -671,7 +704,7 @@ def main(argv: list[str] | None = None) -> int:
                 if base_document is not None:
                     prefix = base_document["reads"]
                     if document["since"] != base_document["since"] or document["reads"][:len(prefix)] != prefix:
-                        problems.append(f"{FILE}: does not extend the base's chain; reads on main are never rewritten")
+                        problems += bridge_problems(document, base_document)
                 if apn_rows_sha256(base_xml) != apn_rows_sha256(xml):
                     path = chain_path(document, apn_rows_sha256(base_xml))
                     if path is None or len(path) != 1:
@@ -719,6 +752,12 @@ def main(argv: list[str] | None = None) -> int:
                     continue
                 with tempfile.TemporaryDirectory(prefix="f5-backfill-") as folder:
                     checkout_tree(args.repo, commit, Path(folder))
+                    if not (Path(folder) / LANE_FILE).is_file():
+                        lane = git_show(args.repo, args.lane_from, LANE_FILE) if args.lane_from else None
+                        if lane is None:
+                            raise F5Error(f"{commit[:12]} has no {LANE_FILE}, so foreign_name and unreachable_scope cannot decide; name one with --lane-from")
+                        (Path(folder) / LANE_FILE).parent.mkdir(parents=True, exist_ok=True)
+                        (Path(folder) / LANE_FILE).write_bytes(lane)
                     read = read_files(base_xml, head_xml, Path(folder), previous, read_at=args.read_at)
                 agent_path = args.agent_reads / f"{read['lines_digest']}.json" if args.agent_reads and read["lines_digest"] else None
                 if read["verdict"] == "hold" and agent_path and agent_path.is_file():
@@ -730,6 +769,11 @@ def main(argv: list[str] | None = None) -> int:
                 for finding in read["findings"]:
                     print(f"  {finding['verdict']:7} {finding['rule']:17} {finding['line'][:200]}")
                 base_xml, previous = head_xml, commit
+            if args.onto:
+                chain = load_file(args.onto)
+                if chain is None:
+                    raise F5Error(f"{args.onto} is missing")
+                document = bridged(document, chain)
             (args.root / FILE).parent.mkdir(parents=True, exist_ok=True)
             (args.root / FILE).write_bytes(dump(document))
             print(f"wrote {FILE}: {len(document['reads'])} read(s) since {args.since[:12]}")

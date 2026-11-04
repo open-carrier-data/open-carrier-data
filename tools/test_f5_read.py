@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 
@@ -167,6 +168,67 @@ class ChainTest(unittest.TestCase):
         lines = json.loads(json.dumps(document))
         lines["reads"][1]["lines_digest"] = "0" * 16
         self.assertTrue(any("lines_digest" in p for p in f5.file_problems(lines, files[-1])))
+
+    def test_a_bridge_goes_in_front_and_changes_no_read(self) -> None:
+        """Rule round 46: the chain's start moves back to older rows."""
+        older = xml(INTERNET, 'carrier="Old" mcc="999" mnc="01" apn="old" type="default"')
+        document, files = self.chain()
+        base = {**document, "since": {"commit": "1" * 40, "apn_rows_sha256": f5.apn_rows_sha256(files[0])}}
+        bridge = f5.append_read(None, read(older, files[0]), "2" * 40, files[0])
+        moved = f5.bridged(bridge, base)
+        self.assertEqual(moved["since"], bridge["since"])
+        self.assertEqual(moved["reads"][1:], base["reads"])
+        self.assertEqual(f5.file_problems(moved, files[-1]), [])
+        self.assertEqual(f5.bridge_problems(moved, base), [])
+        self.assertEqual(len(f5.chain_path(moved, f5.apn_rows_sha256(older))), 4)
+        with self.assertRaises(f5.F5Error):
+            f5.bridged(bridge, {**base, "since": {"commit": "1" * 40, "apn_rows_sha256": "f" * 64}})
+
+    def test_a_bridge_that_holds_or_rewrites_is_refused(self) -> None:
+        document, files = self.chain()
+        base = {**document, "since": {"commit": "1" * 40, "apn_rows_sha256": f5.apn_rows_sha256(files[0])}}
+        older = xml(INTERNET, emergency("sos", "IPV6", "IPV6"))
+        bridge = f5.append_read(None, read(older, files[0]), "2" * 40, files[0])
+        held = {**bridge, "reads": [{**bridge["reads"][0], "verdict": "hold"}]}
+        self.assertTrue(any("is hold" in p for p in f5.bridge_problems(f5.bridged(held, base), base)))
+        moved = f5.bridged(bridge, base)
+        rewritten = json.loads(json.dumps(moved))
+        rewritten["reads"][-1]["notes"] = "rewritten"
+        self.assertTrue(any("never rewritten" in p for p in f5.bridge_problems(rewritten, base)))
+        shorter = {**base, "reads": base["reads"][:-1]}
+        self.assertTrue(any("never rewritten" in p for p in f5.bridge_problems(shorter, base)))
+        nameless = {**moved, "since": {"commit": None, "apn_rows_sha256": moved["since"]["apn_rows_sha256"]}}
+        self.assertTrue(any("never rewritten" in p for p in f5.bridge_problems(nameless, base)))
+
+    def test_backfill_refuses_a_commit_without_a_lane(self) -> None:
+        """Without Google's carrier list foreign_name and unreachable_scope
+        cannot decide, so a read would pass on `stated` alone."""
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder) / "repo"
+            for name in ("carriers/x", "tools/x", "schemas/x", f5.APN_FILE):
+                (repo / name).parent.mkdir(parents=True, exist_ok=True)
+                (repo / name).write_bytes(xml(INTERNET))
+
+            def git(*args: str) -> str:
+                return subprocess.run(["git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@example.invalid", *args],
+                                      capture_output=True, text=True, check=True).stdout.strip()
+
+            git("init", "-q")
+            git("add", ".")
+            git("commit", "-q", "-m", "base")
+            base = git("rev-parse", "HEAD")
+            (repo / f5.APN_FILE).write_bytes(xml(INTERNET, IMS))
+            git("commit", "-q", "-am", "head")
+            out = Path(folder) / "out"
+            self.assertEqual(f5.main(["backfill", "--repo", str(repo), "--since", base, "--until", "HEAD", "--root", str(out)]), 2)
+            self.assertFalse((out / f5.FILE).exists())
+            (repo / f5.LANE_FILE).parent.mkdir(parents=True)
+            (repo / f5.LANE_FILE).write_text('{"rules": []}', encoding="utf-8")
+            git("add", ".")
+            git("commit", "-q", "-m", "lane")
+            lane = git("rev-parse", "HEAD")
+            self.assertEqual(f5.main(["backfill", "--repo", str(repo), "--since", base, "--until", "HEAD~1", "--root", str(out), "--lane-from", lane]), 0)
+            self.assertEqual(len(f5.load_file(out / f5.FILE)["reads"]), 1)
 
     def test_an_agent_read_stands_in_only_for_its_lines(self) -> None:
         held = read(xml(INTERNET, IMS), xml(INTERNET, IMS, emergency("sos", "IPV6", "IPV6")))
