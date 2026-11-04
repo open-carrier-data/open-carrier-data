@@ -3070,8 +3070,12 @@ def write_lookup(
         if newest:
             record["newest_entry"] = newest
         profiles.append(record)
+    # schema_version 2 (rule round 45, item 3, after the notice of
+    # docs/compatibility.md): the documented resolution order is Android's
+    # weight and the tie rule of tools/resolve_carrier_profiles.py, no longer
+    # specificity and profile_id.
     value = {
-        "schema_version": 1,
+        "schema_version": 2,
         "resolution_order": "generic_to_specific",
         "match_semantics": "OR within a match list; AND between match dimensions",
         "profiles": profiles,
