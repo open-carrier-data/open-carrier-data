@@ -1,8 +1,8 @@
 # Ship OCD in a ROM
 
-This guide is for people who build Android ROMs. It says how a ROM ships Open Carrier Data (OCD) as its carrier data, what the build must check before it ships, where the device's own fixes go, what the app does on its own, and why nothing leaves a phone by itself.
+This guide is for people who build Android ROMs. It says how a ROM ships Open Carrier Data (OCD) as its carrier data, what the build must check before it ships, where the device's own fixes go, what the app does on its own, what leaves a phone, and what you owe the people who use your ROM.
 
-Rule round 31 (2026-10-28) set these rules. Before it, only the owner's Galaxy S20 ran OCD's dataset. Now any ROM whose builder chooses OCD may ship it, once its build meets the ship minimum below. There is no further approval round: meeting the ship minimum is a build check, not a vote. Rule round 47 (2026-11-04) made the app the same on every phone, the S20 included: there is no owner build, no token and no exception. The app and OcdCarrierSettings side of round 47 ships in one ROM build, *being built*.
+Rule round 31 (2026-10-28) set these rules. Before it, only the owner's Galaxy S20 ran OCD's dataset. Now any ROM whose builder chooses OCD may ship it, once its build meets the ship minimum below. There is no further approval round: meeting the ship minimum is a build check, not a vote. Rule round 47 (2026-11-04) made the app the same on every phone, the S20 included: there is no owner build, no token and no exception. The app and OcdCarrierSettings side of round 47 ships in one ROM build, *being built*. Rule round 48 (2026-11-04) made the app invisible on a ROM and added one automatic send, after the person's own yes. Its relay and its app side are *being built*, and sending stays closed until they are live together ([What leaves a phone](#what-leaves-a-phone)).
 
 > **Status on 2026-10-30.** The owner's S20 build (LineageOS 24.0 for microG, AOSP ImsStack) is the only ROM that ships OCD today. The parts of round 31 marked *being built* below are not in that build yet. OcdCarrierSettings is published as the second app of [ocd-android](https://github.com/open-carrier-data/ocd-android), in [`carriersettings/`](https://github.com/open-carrier-data/ocd-android/tree/main/carriersettings), with its own tags (`carriersettings/v1.0.1` today). Since rule round 37 the S20 builds it from there, pinned to that tag. The OCD app, OCD Android, is the other app in that repository.
 
@@ -17,7 +17,7 @@ On a ROM that ships OCD, OCD's dataset is the phone's carrier data. It replaces 
 ## Two ways to ship it
 
 1. **OcdCarrierSettings with a baked dataset.** The image carries OcdCarrierSettings, a build of Android's CarrierSettings app (package `com.android.carriersettings`) that serves OCD's dataset, and one complete dataset at a pinned commit. New data arrives with your ROM's updates. The module is OcdCarrierSettingsDataset in [ocd-android's `carriersettings/`](https://github.com/open-carrier-data/ocd-android/tree/main/carriersettings). Your ROM adds one manifest project pinned to a `carriersettings/v*` tag (never `main`), `PRODUCT_PACKAGES += OcdCarrierSettingsDataset`, your writer settings or explicitly none (SM5), and a baked dataset. [Add it to a ROM](https://github.com/open-carrier-data/ocd-android/blob/main/carriersettings/README.md#add-it-to-a-rom) has the steps and the build check.
-2. **The same, plus the OCD app.** Your own build of the OCD app pulls the newest validated `main` commit, hands it to OcdCarrierSettings to install, and checks it on the phone without anyone seeing it. Whether the app pulls and installs is your choice as builder. Calls, SMS and USSD run only on the person's tap (SM9).
+2. **The same, plus the OCD app.** Your own build of the OCD app pulls the newest validated `main` commit, hands it to OcdCarrierSettings to install, and checks it on the phone without anyone seeing it. Whether the app pulls and installs is your choice as builder. Calls, SMS and USSD run only on the person's tap (SM9). The app asks the person once whether it may send a weekly summary, unless you set the question off (SM11).
 
 If you take only OCD's APN file, for example into `vendor/apn`, [consume.md](consume.md) shows how. Pin a validated `main` commit, and take a change to an emergency APN row only with OCD's published read of it (SM6). `carrier-config-list.xml` stays reference-only: it has none of OcdCarrierSettings's safety rules, so CarrierConfig values reach a ROM only through OcdCarrierSettings.
 
@@ -29,7 +29,7 @@ For each SIM, OcdCarrierSettings picks one OCD profile with OCD's own exact matc
 2. OCD's `default` profile.
 3. The Google-lane fill, for keys the profile does not publish.
 4. The matched profile's values.
-5. This phone's own local results, which never leave it (see [Results stay on the phone](#results-stay-on-the-phone)). No published result is served: `device-records.json` stays empty.
+5. This phone's own local results, which no other phone is ever served (see [Results stay on the phone](#results-stay-on-the-phone)). No published result is served: `device-records.json` stays empty.
 6. Last, your device tree's override and LineageOS's own fixed key, exactly as LineageOS's CarrierService applies them. This step also runs when OCD's dataset fails to load.
 
 Between steps 5 and 6, OcdCarrierSettings enforces its fixed rules: group A (the emergency call keys), group B (the metered lists) and, on every phone, SM7. It enforces them with its own compiled-in copy, whatever the data says.
@@ -44,17 +44,26 @@ A ROM may ship OCD as soon as all eleven hold in its build. Each one is there be
 | **SM2, one carrier data source** | Ship no other carrier file that Telephony reads: no Google protobufs, no AOSP CarrierConfig assets as a second default. The build check proves it. | Two datasets with different match rules would decide a SIM's values, and no test would know which one did. |
 | **SM3, the device** | Keep the device's own fixes in your device tree, applied last. The build check fails if the tree ships an override the image does not read. Before each build for a device ships, check on that device, with the previous build kept: IMS registers, and a call out over LTE stays up past 15 s, and so does one over Wi-Fi calling where the SIM has it. | Replacing CarrierSettings would otherwise drop a device's fixes without a sound. On the S20, without its fix, every VoLTE call was cancelled after 8 s. Only a call on the device shows such a quirk. |
 | **SM4, a complete public dataset** | A build from public validated `main` alone gives every SIM its full settings, the Google-lane keys included. The build check lists every key that falls to Android's default because OCD withholds it for privacy, such as voicemail numbers. | Google's file sets about 160 keys for one German SIM. Android's defaults for missing ones would change codecs, SIP timers, IPsec and data retry, all untested. |
-| **SM5, your own writer** | Only your ROM's build of the OCD app may write the dataset. Its certificate and package are build parameters, `OCD_WRITER_CERT` and `OCD_WRITER_PACKAGE`, with no default: set both, or set both to `none` and no app can write. A build with the provider and neither fails. Every call checks the caller. adb and root may read and clear, never write. | Otherwise any app or a shell could replace the data every call depends on. |
+| **SM5, your own writer** | Only your ROM's build of the OCD app may write the dataset. Its certificate and package are build parameters, `OCD_WRITER_CERT` and `OCD_WRITER_PACKAGE`, with no default: set both, or set both to `none` and no app can write. A build with the provider and neither fails. Every call checks the caller. adb and root may read and clear, never write. Next to them sits the app's build switch, the string resource `ocd_week_report`, `ask` or `off`, default `ask`: **shipping the app with `ask` may make you share responsibility for the send**, so read [Your duties as a builder](#your-duties-as-a-builder). | Otherwise any app or a shell could replace the data every call depends on. |
 | **SM6, the data pin and emergency rows** | Bake a validated `main` commit. `main` has no waiting period ([releases.md](releases.md#main-has-no-waiting-period)): run the phone guard and the F5 walk from your old pin to your new one, and read [changelog.md](changelog.md) before you move. OCD publishes an independent read for each `main` commit that changes emergency APN lines, in `generated/ocd-dataset/f5-reads.json` ([F5 reads](ocd-dataset.md#f5-reads)), and a build pin or a runtime install takes such a change only with that read. Once the emergency data test's first use has passed on your device family (SM10), only a change to the APN name or roaming protocol of the SIM's emergency row needs the read. | Emergency APN rows decide the data path of an emergency call over IMS, and without the emergency data test nothing on the phone checks them. One import bug has already put a foreign emergency row into OCD's file. |
 | **SM7, every phone** | No test call runs by itself on any phone, so on every phone, the S20 included, OcdCarrierSettings serves the values below only where they equal the Google-lane value: VoLTE, Wi-Fi calling or SMS over IMS turned off, provisioning that turns voice off, a Wi-Fi-only calling mode, and values that hide or lock the VoLTE or Wi-Fi calling switch, remove the option to turn IMS off, or block APN editing. No automatic trial ever applies such a value. By a rough count this holds back about 1,250 values in about 650 of 6,789 profiles, 1,115 of them switches hidden or locked and 135 turned off. | These values are safe only when a test checks them first, and no automatic test can. A VoLTE off removes every call on a network without 2G or 3G, a Wi-Fi-only mode removes calls on Wi-Fi that cannot reach the carrier, and a lock-out takes away the person's own way out. |
 | **SM8, tests calibrated per IMS stack** | The app's active results count only on an IMS stack where one calls-out pass has confirmed, against the stack's own logs, that the app reads the right bearer and media counters. Today that is AOSP ImsStack. On other stacks results read "not counted", and no automatic trial runs. | Other stacks fill other counters. An uncalibrated test can read a failed call as a pass and keep a broken value, or the other way round. |
 | **SM9, calls and SMS on a tap** | Automatic runs use only what nobody can see, hear or pay for. Test calls, test SMS, balance USSD, Test now trials, the voice-loss hold split and MMS APN candidates run only when the person taps, on every phone. There is no opt-in to turn them on in the background. See [What the app does on its own](#what-the-app-does-on-its-own). | Otherwise the phone would ring or show a call screen at night, leave entries in the call log, send SMS nobody wrote, and cost money on some tariffs. |
 | **SM10, the emergency data test per device family** | The emergency data test never runs by itself, and no person gets a tap for it. Only you, the builder, run it over adb, the same for every builder: first on a device family (modem and RIL) and IMS stack, with `adb logcat` streamed, under round 30's five first-run checks. Once that first use has passed, your build declares it. Only such a build grants the app `CONNECTIVITY_USE_RESTRICTED_NETWORKS`. | It opens an emergency bearer that the operator logs under the person's SIM, and another modem may handle an emergency data request without a call differently, for example by entering emergency mode. Only that device shows it. |
-| **SM11, nothing leaves the phone by itself** | A result leaves a phone only when the person taps, reads the prefilled report and submits it under their own GitHub login. No key or token exists in the app, the repository or CI, no background job posts results, and no relay exists. See [Nothing leaves a phone by itself](#nothing-leaves-a-phone-by-itself). | A shared key would let anyone flood the report path, results would leave phones unasked, and a fake or a bug would change what every phone serves. |
+| **SM11, what leaves a phone** | Nothing leaves a phone by itself unless the person said yes. After that one yes, and only on a ROM install, the app sends one closed week report per SIM to OCD's relay, only on an unmetered network and never while roaming. It holds no identifier, no free text, no day or time and no call details, and the person can stop it at any time. A hand install never sends by itself. Any other result leaves only when the person taps and submits it under their own GitHub login. No result, sent or tapped, ever sets a value on any phone: a carrier value changes only through a source-backed change on `main`. The app's download from GitHub carries no identifier. See [What leaves a phone](#what-leaves-a-phone). | Data would otherwise leave strangers' phones without valid consent, a shared key would let anyone write to the dataset, and a fake or a bug would change what every phone serves. |
 
 SM12, owner records on other phones, ended with rule round 47: no result of any account is served on another phone. Every ROM builder signs with their own key under SM5, and the S20 is one such builder.
 
 Unchanged on every ROM: groups A and B, the privacy rules, the refusals around calls and emergencies, the roaming rule, the caps on test calls and IMS re-registrations, the stop events, and the hard limits. No emergency number is ever dialled, and no record holds a phone number, IMSI or ICCID.
+
+### Your duties as a builder
+
+Shipping the app gives you four duties. None of them needs any work at build time beyond what SM5 already asks, but the first two are yours to keep.
+
+1. **Name the app in your ROM's public notes.** Say that the ROM ships the OCD app and what it does on its own (the [line below](#what-the-app-does-on-its-own) is enough). A person on your ROM never sees the app by accident, so they have no other way to learn who changes their carrier data when they look for the cause of a fault.
+2. **Know what `ask` means.** The build switch, the app's string resource `ocd_week_report`, has two states, `ask` and `off`, default `ask`, and no on state. Anything but `ask` reads as off. With `ask` the app asks each person once, by itself. You do nothing, but you chose to ship an app that can send, and that may make you share responsibility for the send with OCD's controller (GDPR, § 25 TDDDG). This is not legal advice. To stay out of it, overlay `ocd_week_report` with `off` in your build of the app, next to `OCD_WRITER_CERT` and `OCD_WRITER_PACKAGE`: the app then never asks and never sends.
+3. **Never answer for the person.** Silence, a swipe, a build default, a preset, a script or your own choice never counts as a yes. Only the person's own tap does, and docs alone never count as telling them. You may show the same words on a setup screen instead of the app's notification ([the words](privacy.md#the-question)), with Yes and No equal, and the app then skips the notification. If you do, the answer on that screen is the only answer, and the same rules hold.
+4. **Leave the app in sight of Settings.** The app has no icon on a ROM install, and it stays listed in Settings > Apps, where it can be disabled. Disabling is the way back to the build's dataset without a PC. Never hide it from the app list or remove its entry in About phone: a hidden privileged app with network access looks like spyware, and the person must be able to reach Resume and the send switch.
 
 ### When the app's tests get something wrong
 
@@ -99,7 +108,7 @@ An override never sets an emergency key without an independent read of it. The S
 
 ## Results stay on the phone
 
-A result such as "VoLTE works on S20 with o2, LineageOS 24.0 and AOSP ImsStack" stays on the phone that measured it. It belongs to one cell:
+A result such as "VoLTE works on S20 with o2, LineageOS 24.0 and AOSP ImsStack" stays on the phone that measured it as a value. After the person's yes, one flag per entry goes into the [weekly report](#what-leaves-a-phone), which counts it and sets nothing. The result belongs to one cell:
 
 - the device (`Build.DEVICE` and model);
 - the OCD carrier profile, or the network code plus GID1 or SPN for a SIM without a profile;
@@ -121,7 +130,11 @@ The S20's device values, once records for every carrier, are back in the S20's d
 
 ## What the app does on its own
 
-The app's first screen says this in one line, and no notice or opt-in comes before it:
+On a ROM install the app is invisible to anyone who is not looking for it. It has no launcher icon. Its entry is the last row of Settings > About phone, and Settings search finds it by words such as calls, VoLTE, Wi-Fi calling and carrier. That screen holds the send switch, the last week report in full, Resume and this one line:
+
+> On its own, this app only reads the phone's state, installs new carrier data, repairs a failure it measured and, if you said yes, sends OCD one weekly summary. It makes no calls and sends no SMS unless you tap for it.
+
+An install by hand has no background work and sends nothing by itself. It keeps its launcher icon and today's line:
 
 > On its own, OCD Android installs new carrier data, reads the phone's state, watches real calls and SMS, and repairs a measured failure. It calls, texts or dials a code only when you tap, and it sends a report only when you submit it.
 
@@ -134,7 +147,7 @@ The app's first screen says this in one line, and no notice or opt-in comes befo
 - dataset installs ([How new data reaches a phone](#how-new-data-reaches-a-phone));
 - repair after a measured failure ([When the app's tests get something wrong](#when-the-apps-tests-get-something-wrong)).
 
-Automatic runs show no notification. Only a run where calls were lost, or the person must act, shows one, and the voice-loss and stop-event notifications stay. Reading carrier SMS keeps its own switch, off by default.
+Automatic runs show no notification. Only a run where calls were lost, or the person must act, shows one, and the voice-loss and stop-event notifications stay. The voice-loss notice has its own ID and comes back at most once a day until Resume, so a swipe cannot strand the person. The one other notification is the question about the weekly summary, once per install. Reading carrier SMS keeps its own switch, off by default.
 
 **Only on the person's tap,** on every phone: a test call, a test SMS, the balance USSD, Test now trials, the voice-loss hold split and MMS APN candidates.
 
@@ -145,7 +158,7 @@ Automatic runs show no notification. Only a run where calls were lost, or the pe
 
 **Never automatic,** even where research lists them as silent: a call to the phone's own number, a headless mailbox call, a call to a reserved fictional ("drama") number, SIP OPTIONS to the phone's own number, an MMS send request, and TS.43. Only a later rule round with evidence changes this list. No IMS stack change for NOTIFY or RTCP counters is authorised.
 
-The data itself needs no consent from the person, because you as builder decide whether the ROM uses OCD.
+The carrier data itself needs no consent from the person, because you as builder decide whether the ROM uses OCD. The weekly send is different: it needs the person's own yes ([What leaves a phone](#what-leaves-a-phone)).
 
 ## How new data reaches a phone
 
@@ -159,14 +172,27 @@ No ROM build or release sits between `main` and a phone. A phone cannot be pushe
 
 Faster pulling ships in the same ROM build as SM7 everywhere, the real-call watch and skip-notify. There is no separate switch-on step.
 
-## Nothing leaves a phone by itself
+## What leaves a phone
 
-- No automatic report and no telemetry. The app's download from GitHub carries no identifier.
-- Results stay on the phone that measured them. They never change what any other phone serves.
-- To send a result, the person taps, reads the prefilled closed report and submits it under their own GitHub login, which the app never holds. The form says the issue is public under their account. A person without a GitHub account can read the report but not send it.
-- This is the same for everyone. There is no owner path, no key or token in the app, the repository or CI, no background job that posts results, and no relay server.
-- A report stays a pointer that can start a source review, never a value, under round 19's anti-fake rules ([community/README.md](../community/README.md)). Every result reads "reported, not checked by OCD", with its date, a count of accounts and whether it is contested.
-- No report or record holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address, and a report holds a date, never a time. The app's privacy scan runs again in the bot.
+> **Status on 2026-11-04.** Sending is closed. `relay_open` in `community/relay.json` is false, the relay is not deployed, and the app's side is *being built*. `relay_open` turns true only when the question, the first-screen line and the [privacy page](privacy.md) are live in the same build.
+
+Nothing leaves a phone by itself unless the person said yes. After that one yes, and only on a ROM install, the app sends one closed week report per SIM to OCD's relay, only on an unmetered network and never while roaming. It holds no identifier, no free text, no day or time and no call details, and the person can stop it at any time. A hand install never sends by itself. Any other result leaves only when the person taps and submits it under their own GitHub login. No result, sent or tapped, ever sets a value on any phone: a carrier value changes only through a source-backed change on `main`. The app's download from GitHub carries no identifier.
+
+**The question.** The app asks by itself, once per install: one notification on the first boot with a SIM, opening one screen with equal Yes and No. Dismissed or ignored means no, and it is never asked again. If notifications are blocked, nothing is asked and the answer stays no. The words are on the [privacy page](privacy.md#the-question).
+
+**The report.** `ocd-week-report` version 1 holds the ISO week, the app's major and minor version, the device's model (on OCD's public list, else `other`), ROM family, Android major and IMS stack, the carrier (OCD profile ID, or the home network code when no profile matches), and at most 16 pairs of entry and result. The [privacy page](privacy.md#what-is-sent) has the exact fields and the full list of what is never sent. Plan is never sent, so the published tree's plan level always reads `unknown`. A result is `works` (calls both ways by packet counts, round 26's L3), `calls_out` (an outgoing call only), `signed_in`, `service_off`, `not_possible` or `failed`. No sound was checked, nothing here speaks for emergency calls, and a call result shows that calls happened that week. On an uncalibrated stack (SM8) only `signed_in`, `service_off` and `not_possible` are sent.
+
+**The send.** A small weekly step in the existing 15-minute job, on a privileged install only. A random moment in the week, one POST per SIM, HTTPS only, no redirects, no cookies, a constant User-Agent, at most 4 KB. Only on an unmetered network, not roaming, with Data Saver off and no call in progress, and with no notification. On any non-2xx the phone drops that week's report, keeps no queue and retries nothing. A missed week is dropped. Turning the switch off stops it at once and clears the local buffer.
+
+**What stops it.** The relay's address is compiled into the APK. `relay_open` in [`community/relay.json`](../community/relay.json) on `main` can only stop sending, never redirect it. The app reads it once a week, at the branch name, because it is no dataset file and a flip changes no dataset digest. Absent, false, or a last pull of `main` older than 30 days means no send, so a ROM with no updates stops by itself and nobody has to renew the flag.
+
+**The relay.** A small Cloudflare Worker on a free account, in its own public repository, [week-counts](https://github.com/open-carrier-data/week-counts). It holds no GitHub credential, so nothing on this path can write to the dataset. It stores counters only: no report body, IP address, hash of an address, headers or logs. Rows leave after 8 weeks.
+
+**Fakes.** With no account they cannot be stopped, so they are bounded and made worthless. A counter stops at 500 a week and a week at 50,000 rows. A row at its cap is not published that week. Anything that is not on OCD's public lists is dropped. At Cloudflare's free limits the relay fails closed, and no payment method is on the account, so no bill is possible.
+
+**Published.** Only rows with at least 3 reports in one ISO week, by month, as device > carrier > plan, in the week-counts repository and never on this repository's `main`. Every row reads "automatic, reported by phones, not checked by OCD, counts can be faked". Phones and ROM builds never read these counts. They never enter `observed/` or the manifest, and `validate` fails if they do. Nothing opens an issue or a source review by itself. A person or an agent may start one after reading them.
+
+**The tap report stays as it is.** To send any other result, the person taps, reads the prefilled closed report and submits it under their own GitHub login, which the app never holds. The form says the issue is public under their account. A person without a GitHub account can read that report but not send it. No key or token exists in the APK, and none anywhere can write to GitHub for a phone. A report stays a pointer that can start a source review, never a value, under round 19's anti-fake rules ([community/README.md](../community/README.md)). Every such result reads "reported, not checked by OCD", with its date, a count of accounts and whether it is contested. No report or record holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address, and a report holds a date, never a time. The app's privacy scan runs again in the bot.
 
 ## Samsung's RIL can hide the network's refusal code
 
@@ -198,4 +224,4 @@ Those patterns are the S20 blob's. Yours will differ. Then put the hash of the f
 
 ## Where the rules are
 
-The full rule record is private. This page follows rule round 31, rule round 37 for where OcdCarrierSettings lives, and rule round 47 for what runs by itself and how data and results travel. [ocd-dataset.md](ocd-dataset.md) describes the dataset files, [consume.md](consume.md) the APN file and the other outputs, and [releases.md](releases.md) the one channel.
+The full rule record is private. This page follows rule round 31, rule round 37 for where OcdCarrierSettings lives, rule round 47 for what runs by itself and how data travels, and rule round 48 for the invisible app, the weekly send and your duties. [ocd-dataset.md](ocd-dataset.md) describes the dataset files, [consume.md](consume.md) the APN file and the other outputs, and [releases.md](releases.md) the one channel.

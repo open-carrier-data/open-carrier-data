@@ -6468,6 +6468,47 @@ def check_role_gap_load_bearing_rows() -> None:
         )
 
 
+def check_relay_flag() -> None:
+    """Rule round 48: community/relay.json holds one boolean, and true needs a finished privacy page."""
+    check = validate_public_carrier_data.validate_relay_flag
+    repository = Path(__file__).resolve().parents[1]
+    check(repository)
+    metadata = json.loads((repository / "generated/android/metadata.json").read_text(encoding="utf-8"))
+    assert "relay_open" not in metadata
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        check(root)
+        flag = root / validate_public_carrier_data.RELAY_FLAG
+        flag.parent.mkdir()
+
+        def write(value: object) -> None:
+            flag.write_text(json.dumps(value), encoding="utf-8")
+
+        def refused(value: object, text: str) -> None:
+            write(value)
+            try:
+                check(root)
+            except validate_public_carrier_data.ValidationError as error:
+                assert text in str(error), error
+            else:
+                raise AssertionError(f"{value!r} passed")
+
+        write({"relay_open": False})
+        check(root)
+        refused({"relay_open": "true"}, "exactly relay_open")
+        refused({"relay_open": 1}, "exactly relay_open")
+        refused({"relay_open": False, "url": "https://example.test"}, "exactly relay_open")
+        refused([], "exactly relay_open")
+        refused({"relay_open": True}, "is missing")
+        page = root / validate_public_carrier_data.PRIVACY_PAGE
+        page.parent.mkdir()
+        page.write_text((repository / validate_public_carrier_data.PRIVACY_PAGE).read_text(encoding="utf-8"), encoding="utf-8")
+        refused({"relay_open": True}, "names no controller")
+        page.write_text("Controller: a name and an address\n", encoding="utf-8")
+        write({"relay_open": True})
+        check(root)
+
+
 def main() -> int:
     exact_device_id = "android:" + "a" * 20
     artifact_schema = load_json(
@@ -8222,6 +8263,8 @@ def main() -> int:
     print("emergency row tests passed")
     check_android_schemas()
     print("lookup.json and metadata.json schema tests passed")
+    check_relay_flag()
+    print("relay flag tests passed (round 48)")
     with tempfile.TemporaryDirectory() as tmp:
         check_apn_value_rules(Path(tmp))
     print("APN value rule tests passed")

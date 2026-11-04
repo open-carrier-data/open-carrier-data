@@ -873,6 +873,71 @@ class ServingPathTest(unittest.TestCase):
             self.assertEqual(["observed/results.json: the app reads it (app/src/owner/java/ObservedReports.kt)"], obs.validate_tree(root, Path(app)))
 
 
+class WeekCountsTest(unittest.TestCase):
+    """The automatic week counts never enter observed/, the manifest or the app (rule round 48, item 2)."""
+
+    MARK = "automatic, reported by phones, not checked by OCD, counts can be faked"
+
+    def root(self, tmp: str) -> Path:
+        root = Path(tmp)
+        obs.rebuild([], root, date(2026, 10, 25), RELEASES)
+        return root
+
+    def test_the_repository_is_clean(self) -> None:
+        self.assertEqual([], obs.week_counts_problems(REPO))
+
+    def test_no_other_file_in_observed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            self.assertEqual([], obs.validate_tree(root))
+            (root / "observed/automatic.json").write_text("{}\n", encoding="utf-8")
+            self.assertTrue(any("observed/automatic.json" in e for e in obs.validate_tree(root)))
+
+    def test_summary_and_results_may_not_hold_them(self) -> None:
+        for name in ("summary.json", "results.json"):
+            with tempfile.TemporaryDirectory() as tmp:
+                root = self.root(tmp)
+                path = root / "observed" / name
+                value = json.loads(path.read_text(encoding="utf-8"))
+                value["description"] = self.MARK
+                path.write_text(obs.dump(value), encoding="utf-8")
+                self.assertIn(f"observed/{name}: holds the automatic week counts, which never enter it", obs.validate_tree(root))
+
+    def test_a_report_file_may_not_hold_them(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            path = root / "observed/reports/issue-7.json"
+            path.parent.mkdir(exist_ok=True)
+            path.write_text('{"schema": "ocd-week-report"}\n', encoding="utf-8")
+            self.assertIn("observed/reports/issue-7.json: holds the automatic week counts, which never enter it", obs.validate_tree(root))
+
+    def test_the_manifest_may_not_hold_them(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            manifest = root / ocd_dataset.FILES["manifest"][1]
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({"files": [{"role": "profiles", "path": "generated/ocd-dataset/profiles.json"}]}), encoding="utf-8")
+            self.assertEqual([], obs.validate_tree(root))
+            manifest.write_text(json.dumps({"counts": {"week_counts": 1}, "files": [{"path": "results/automatic.json"}]}), encoding="utf-8")
+            self.assertIn("generated/ocd-dataset/manifest.json: holds the automatic week counts, which never enter it", obs.validate_tree(root))
+
+    def test_the_pull_file_list_may_not_name_them(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            with unittest.mock.patch.dict(ocd_dataset.FILES, {"counts": ("automatic.json", "generated/ocd-dataset/automatic.json", 1024)}):
+                self.assertTrue(any("counts is a file phones read" in e for e in obs.validate_tree(root)))
+
+    def test_the_app_may_send_to_the_relay_but_not_read_the_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as app:
+            root = self.root(tmp)
+            source = Path(app) / "app/src/main/java/WeekSend.kt"
+            source.parent.mkdir(parents=True)
+            source.write_text('const val RELAY = "https://week-counts.example.workers.dev/v1/week-report"\n', encoding="utf-8")
+            self.assertEqual([], obs.validate_tree(root, Path(app)))
+            source.write_text('const val COUNTS = "https://raw.githubusercontent.com/open-carrier-data/week-counts/main/results/automatic.json"\n', encoding="utf-8")
+            self.assertEqual(["week counts: the app reads them (app/src/main/java/WeekSend.kt)"], obs.validate_tree(root, Path(app)))
+
+
 class SourceReviewTest(unittest.TestCase):
     """Rule 10, rule round 47, item 2: a review opens from a counted report that names a failure and a passing alternative."""
 

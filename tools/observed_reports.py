@@ -12,12 +12,13 @@ the phone measured. No report can bring a new value onto a phone; a report
 can only make a phone test an entry earlier, and the phone keeps nothing that
 fails its own test.
 
-Results reach OCD the same way for everyone (rule round 47, item 2): the
-person taps, reads the prefilled "OCD Android report" issue form with its one
-fenced JSON block (schemas/ocd-check-report.schema.json) and submits it under
-their own GitHub login, which the app never holds. No key or token exists, no
-background job posts a result, and no account or list gives a report a
-stronger status. This tool is the whole logic of
+Results reach this path the same way for everyone (rule round 47, item 2):
+the person taps, reads the prefilled "OCD Android report" issue form with its
+one fenced JSON block (schemas/ocd-check-report.schema.json) and submits it
+under their own GitHub login, which the app never holds. No key or token
+exists, nothing posts here by itself, and no account or list gives a report a
+stronger status. The automatic week counts of rule round 48 are a separate
+path and never come here. This tool is the whole logic of
 .github/workflows/ocd-check-report.yml, so it runs the same way on a laptop:
 
   check-issue --event EVENT.json --result RESULT.json --comment COMMENT.md
@@ -162,6 +163,14 @@ EXPIRED_REASON = f"tested more than {EXPIRE_DAYS} days ago"
 PULL_LISTS = (ocd_dataset.FILES["manifest"][1], "schemas/ocd-dataset-manifest.schema.json")
 APP_SOURCES = ("app/src/main", "app/src/owner", "carriersettings/ocd/src")
 APP_READ_RE = re.compile(r"\bresults\.json\b|observed/results|\$RAW/results")
+# Rule round 48, item 2: the automatic week counts live in their own repository,
+# open-carrier-data/week-counts, which can be rewritten if a value leaks. main
+# cannot. Phones read observed/ and the manifest, so the counts stay out of both
+# and out of the app's pointer logic. These marks are what they carry: their
+# schemas, their file, their repository and their label.
+OBSERVED_FILES = {"README.md", "summary.json", RESULTS_FILE, "reports"}
+WEEK_COUNTS_RE = re.compile(r"ocd-automatic-results|ocd-relay-closed|ocd-week-report|automatic\.json|open-carrier-data/week-counts|counts can be faked")
+APP_COUNTS_RE = re.compile(r"automatic\.json|open-carrier-data/week-counts")
 
 # The privacy scan: the same patterns as the app's PrivacyScan
 # (app-ocd-check, core/PrivacyScan.kt), which ports BLOCK_PATTERNS of the
@@ -1215,6 +1224,26 @@ def serving_problems(root: Path, app: Path | None = None) -> list[str]:
     return out
 
 
+def week_counts_problems(root: Path, app: Path | None = None) -> list[str]:
+    """The automatic week counts never enter observed/, the dataset manifest
+    or, with APP, the app's pointer logic (rule round 48, item 2). A count
+    fed by the internet with no human step stays away from files phones read."""
+    observed = root / OBSERVED
+    out = [f"{OBSERVED}/{path.name}: only reports, their summary and their results tree belong here"
+           for path in sorted(observed.glob("*")) if path.name not in OBSERVED_FILES]
+    out += [f"week counts: {role} is a file phones read ({path})" for role, (_, path, _) in ocd_dataset.FILES.items()
+            if path is not None and WEEK_COUNTS_RE.search(path)]
+    read = [observed / "summary.json", observed / RESULTS_FILE, *sorted((observed / "reports").glob("*")), *(root / listed for listed in PULL_LISTS)]
+    out += [f"{path.relative_to(root).as_posix()}: holds the automatic week counts, which never enter it"
+            for path in read if path.is_file() and WEEK_COUNTS_RE.search(path.read_text(encoding="utf-8"))]
+    if app is not None:
+        for folder in APP_SOURCES:
+            for path in sorted((app / folder).rglob("*.kt")):
+                if APP_COUNTS_RE.search(path.read_text(encoding="utf-8")):
+                    out.append(f"week counts: the app reads them ({path.relative_to(app).as_posix()})")
+    return out
+
+
 def validate_tree(root: Path, app: Path | None = None) -> list[str]:
     records, errors = read_records(root)
     documents: dict[str, Any] = {}
@@ -1236,7 +1265,7 @@ def validate_tree(root: Path, app: Path | None = None) -> list[str]:
         for file, built in (("summary.json", summarize(records)), (RESULTS_FILE, results_tree(records))):
             if (root / OBSERVED / file).read_text(encoding="utf-8") != dump(built):
                 errors.append(f"{OBSERVED}/{file}: is not what the reports give; run tools/observed_reports.py rebuild")
-    return errors + serving_problems(root, app)
+    return errors + serving_problems(root, app) + week_counts_problems(root, app)
 
 
 def pr_body(result: dict[str, list[int]], before: set[int]) -> str:
