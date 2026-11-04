@@ -1,6 +1,6 @@
 # Community reports
 
-A community report is what a phone measured, uploaded by its owner. Today there is one kind: the test report of the OCD Check app's owner build. It is an **unverified hint**:
+A community report is what a phone measured, uploaded by its owner. Today there is one kind: the test report of the OCD Android app's owner build. It is an **unverified hint**:
 
 - it never changes an OCD value, a file under `carriers/` or `generated/`, or a release;
 - it never makes a phone skip its own test, and it never switches anything off;
@@ -8,7 +8,7 @@ A community report is what a phone measured, uploaded by its owner. Today there 
 
 No gate can tell a true report from a well-made fake: anyone can open an issue, nothing checks who sent a report or whether the phone exists, and no carrier signal can prove to a third party that a setting worked. So OCD does not ask "is this report true?". A report can only point, and every phone proves for itself.
 
-The owner's own phones are the one exception (rule round 30, item 4; round 29 fired O1 of round 18): the OCD Check owner build submits its settled results as **measured records**, which enter `devices/records/measured.json` and from there `generated/devices/device-records.json`, with a 90-day expiry. They are served only on the owner's phones of the same device, ROM line and IMS stack, and they never change OCD's configured carrier values ([The owner's measured records](#the-owners-measured-records)). Round 29's `observed/retested.json` is folded into them.
+The owner's own phones are the one exception (rule round 30, item 4; round 29 fired O1 of round 18): the OCD Android owner build submits its settled results as **measured records**, which enter `devices/records/measured.json` and from there `generated/devices/device-records.json`, with a 90-day expiry. They are served only on the owner's phones of the same device, ROM line and IMS stack, and they never change OCD's configured carrier values ([The owner's measured records](#the-owners-measured-records)). Round 29's `observed/retested.json` is folded into them.
 
 ## A report points, it carries no value
 
@@ -49,9 +49,9 @@ A report holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, t
 
 ## Upload a report
 
-The app does it: its "Open report on GitHub" action opens the `OCD Check report` issue form with the report filled in, in the browser, and shows the report's hash. Read it and submit it yourself. Do not edit the report.
+The app does it: its "Open report on GitHub" action opens the `OCD Android report` issue form with the report filled in, in the browser, and shows the report's hash. Read it and submit it yourself. Do not edit the report.
 
-The owner build can also submit its settled reports itself (rule round 29). That needs a fine-grained GitHub token that the owner creates and enters on his phone: Issues read and write on this one repository and nothing else. The token is held only on the owner's phones, in credential-encrypted storage, and can be removed in the app or revoked on GitHub at any time. The app sends the same report, privacy-scanned, as an issue on the same form through GitHub's REST API, so the bot checks it the same way. Without a token the app only opens the prefilled form. The read-only builds never send anything. The OCD Check README describes the token.
+The owner build can also submit its settled reports itself (rule round 29). That needs a fine-grained GitHub token that the owner creates and enters on his phone: Issues read and write on this one repository and nothing else. The token is held only on the owner's phones, in credential-encrypted storage, and can be removed in the app or revoked on GitHub at any time. The app sends the same report, privacy-scanned, as an issue on the same form through GitHub's REST API, so the bot checks it the same way. Without a token the app only opens the prefilled form. The read-only builds never send anything. The OCD Android README describes the token.
 
 The issue is public under your GitHub account, and public archives of GitHub can keep a copy after the issue is deleted.
 

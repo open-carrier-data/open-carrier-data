@@ -270,7 +270,7 @@ def resolve(
     """The profiles matching IDENTITY, generic to specific. ORDER "count" is
     lookup.json's documented order (the number of selectors used, then the
     profile ID); "android" is the order of rule round 45 (above), which
-    OcdCarrierSettings, the OCD Check app and the golden vectors use, and
+    OcdCarrierSettings, the OCD Android app and the golden vectors use, and
     which lookup.json's documented order becomes after the notice of
     docs/compatibility.md."""
     if order not in ORDERS:
@@ -709,7 +709,7 @@ def main(argv: list[str]) -> int:
         choices=ORDERS,
         default="count",
         help="count: lookup.json's documented order (selectors used, then profile ID); android: the order "
-        "of rule round 45 that OcdCarrierSettings and the OCD Check app use, announced in docs/compatibility.md",
+        "of rule round 45 that OcdCarrierSettings and the OCD Android app use, announced in docs/compatibility.md",
     )
     args = parser.parse_args(argv[1:])
     lookup = json.loads(args.lookup.read_text(encoding="utf-8"))

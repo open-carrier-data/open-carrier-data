@@ -4,7 +4,7 @@ This guide is for people who build Android ROMs. It says how a ROM ships Open Ca
 
 Rule round 31 (2026-10-28) set these rules. Before it, only the owner's Galaxy S20 ran OCD's dataset. Now any ROM whose builder chooses OCD may ship it, once its build meets the ship minimum below. There is no further approval round: meeting the ship minimum is a build check, not a vote.
 
-> **Status on 2026-10-30.** The owner's S20 build (LineageOS 24.0 for microG, AOSP ImsStack) is the only ROM that ships OCD today. The parts of round 31 marked *being built* below are not in that build yet. OcdCarrierSettings is published as the second app of [ocd-android](https://github.com/open-carrier-data/ocd-android), in [`carriersettings/`](https://github.com/open-carrier-data/ocd-android/tree/main/carriersettings), with its own tags (`carriersettings/v1.0.1` today). Since rule round 37 the S20 builds it from there, pinned to that tag. The OCD app, OCD Check, is the other app in that repository.
+> **Status on 2026-10-30.** The owner's S20 build (LineageOS 24.0 for microG, AOSP ImsStack) is the only ROM that ships OCD today. The parts of round 31 marked *being built* below are not in that build yet. OcdCarrierSettings is published as the second app of [ocd-android](https://github.com/open-carrier-data/ocd-android), in [`carriersettings/`](https://github.com/open-carrier-data/ocd-android/tree/main/carriersettings), with its own tags (`carriersettings/v1.0.1` today). Since rule round 37 the S20 builds it from there, pinned to that tag. The OCD app, OCD Android, is the other app in that repository.
 
 ## What OCD replaces
 

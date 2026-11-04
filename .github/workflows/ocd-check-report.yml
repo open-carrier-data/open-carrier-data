@@ -1,11 +1,11 @@
-name: OCD Check reports
+name: OCD Android reports
 
-# The "OCD Check report" issue form (.github/ISSUE_TEMPLATE/ocd-check-report.yml)
-# carries one JSON document from the OCD Check app: a test report of
+# The "OCD Android report" issue form (.github/ISSUE_TEMPLATE/ocd-check-report.yml)
+# carries one JSON document from the OCD Android app: a test report of
 # pointers to entries of OCD's data at one commit of main (round 29 S13; apps
 # before it name a data release tag), each with the result the phone
 # measured, never a value. Issues labelled ocd-device-record ("[OCD device
-# record] ...") carry one measured record each from the OCD Check owner build,
+# record] ...") carry one measured record each from the OCD Android owner build,
 # taken from the owner's account only (rule round 30, item 4).
 # This workflow checks it and keeps observed/ and devices/records/measured.json
 # in step with the report issues. All logic is in tools/observed_reports.py;
@@ -59,6 +59,7 @@ jobs:
     if: >-
       github.event_name == 'issues' && github.event.action != 'closed' &&
       (contains(github.event.issue.labels.*.name, 'ocd-check-report') ||
+       startsWith(github.event.issue.title, '[OCD Android report]') ||
        startsWith(github.event.issue.title, '[OCD Check report]') ||
        contains(github.event.issue.labels.*.name, 'ocd-device-record') ||
        startsWith(github.event.issue.title, '[OCD device record]'))
@@ -93,13 +94,13 @@ jobs:
           cat "$RUNNER_TEMP/comment.md" >> "$GITHUB_STEP_SUMMARY"
       - name: Label the issue and update the bot comment
         run: |
-          gh label create ocd-check-report --description "A test report from the OCD Check app" --color 1D76DB --force
-          gh label create ocd-device-record --description "A measured record from the OCD Check owner build (owner's account only)" --color 5319E7 --force
+          gh label create ocd-check-report --description "A test report from the OCD Android app" --color 1D76DB --force
+          gh label create ocd-device-record --description "A measured record from the OCD Android owner build (owner's account only)" --color 5319E7 --force
           intake="$(jq -r .intake_label "$RUNNER_TEMP/result.json")"
-          gh label create report:valid --description "The OCD Check report passed the checks (unverified)" --color 0E8A16 --force
+          gh label create report:valid --description "The OCD Android report passed the checks (unverified)" --color 0E8A16 --force
           gh label create report:suspect --description "Valid, but held by a plausibility check until a maintainer looks" --color FBCA04 --force
-          gh label create report:invalid --description "The OCD Check report did not pass the checks" --color D93F0B --force
-          gh label create report:hold-released --description "A maintainer lifted the hold on this OCD Check report" --color C5DEF5 --force
+          gh label create report:invalid --description "The OCD Android report did not pass the checks" --color D93F0B --force
+          gh label create report:hold-released --description "A maintainer lifted the hold on this OCD Android report" --color C5DEF5 --force
           if [ "$(jq -r .valid "$RUNNER_TEMP/result.json")" != "true" ]; then
             gh issue edit "$ISSUE" --add-label "$intake" --add-label report:invalid --remove-label report:valid --remove-label report:suspect
           elif [ "$(jq -r .suspect "$RUNNER_TEMP/result.json")" = "true" ]; then
@@ -121,6 +122,7 @@ jobs:
       !cancelled() &&
       (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' ||
        contains(github.event.issue.labels.*.name, 'ocd-check-report') ||
+       startsWith(github.event.issue.title, '[OCD Android report]') ||
        startsWith(github.event.issue.title, '[OCD Check report]') ||
        contains(github.event.issue.labels.*.name, 'ocd-device-record') ||
        startsWith(github.event.issue.title, '[OCD device record]'))
@@ -185,7 +187,7 @@ jobs:
           base="$(git rev-parse HEAD)"
           git checkout -B "$BRANCH"
           git add -A "${owned[@]}"
-          git commit -q -m "Record observed OCD Check reports and the owner's measured records"
+          git commit -q -m "Record observed OCD Android reports and the owner's measured records"
           # The same tree on the same main as the open pull request: nothing to push.
           if [ -n "$existing" ] && git fetch -q --depth=2 origin "$BRANCH" \
             && [ "$(git rev-parse 'FETCH_HEAD^{tree}')" = "$(git rev-parse 'HEAD^{tree}')" ] \
