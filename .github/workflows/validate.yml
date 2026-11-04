@@ -8,7 +8,7 @@ on:
         required: false
         default: ""
       checks_only:
-        description: "Run only the validate job, without the freshness alarm. The OCD Check reports workflow sets it for its pull request branch."
+        description: "Run only the validate job, without the freshness alarm. The OCD Android reports workflow sets it for its pull request branch."
         type: boolean
         required: false
         default: false
@@ -115,7 +115,7 @@ jobs:
         run: python3 tools/test_release_notes.py
       - name: Test the release build
         run: python3 tools/test_build_release.py
-      - name: Test the OCD Check report tool
+      - name: Test the OCD Android report tool
         run: python3 tools/test_observed_reports.py
       - name: Test the OCD dataset (matcher vectors, selectors, generator, reader checks)
         run: python3 tools/test_ocd_dataset.py

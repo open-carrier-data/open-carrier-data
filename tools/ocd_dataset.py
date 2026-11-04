@@ -248,7 +248,7 @@ GROUP_A_EFFECTS = ("call_path", "display_only")
 GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
 # Whether the manifest lists group-a-reads.json as the role group_a_reads.
-# The round 31 readers (OcdCarrierSettings protocol 3, the OCD Check owner
+# The round 31 readers (OcdCarrierSettings protocol 3, the OCD Android owner
 # app) take it, and a round 30 reader (protocol 2) refuses a manifest that
 # lists it. Implementation order step 8 lists it; before that the file sat
 # beside the dataset and CarrierSettings served the Google-lane value for
@@ -450,7 +450,7 @@ def stack_order(profile: dict[str, Any]) -> tuple[int, bytes]:
 
 # ---------------------------------------------------------------- resolution order (rule round 45, item 3)
 #
-# OcdCarrierSettings, the OCD Check app and this tool sort a SIM's profiles
+# OcdCarrierSettings, the OCD Android app and this tool sort a SIM's profiles
 # generic to specific by:
 #   1. Android's weight (CarrierResolver.CarrierMatchingRule): MCC/MNC 256,
 #      IMSI prefix 128, ICCID prefix 64, GID1 32, GID2 16, PLMN 8, access rule

@@ -269,7 +269,7 @@ def resolve(
 ) -> list[dict[str, Any]]:
     """The profiles matching IDENTITY, generic to specific. ORDER "android"
     is lookup.json's documented order since schema_version 2 (rule round 45,
-    above), which OcdCarrierSettings, the OCD Check app and the golden
+    above), which OcdCarrierSettings, the OCD Android app and the golden
     vectors use; "count" is the order before it (the number of selectors
     used, then the profile ID), for comparison."""
     if order not in ORDERS:
@@ -708,7 +708,7 @@ def main(argv: list[str]) -> int:
         choices=ORDERS,
         default="android",
         help="android (default): lookup.json's documented order since schema_version 2 (rule round 45), as "
-        "OcdCarrierSettings and the OCD Check app sort; count: the order before it (selectors used, then profile ID)",
+        "OcdCarrierSettings and the OCD Android app sort; count: the order before it (selectors used, then profile ID)",
     )
     args = parser.parse_args(argv[1:])
     lookup = json.loads(args.lookup.read_text(encoding="utf-8"))

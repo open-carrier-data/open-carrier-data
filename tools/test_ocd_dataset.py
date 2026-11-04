@@ -22,7 +22,7 @@ REPO = Path(__file__).resolve().parents[1]
 
 # Appendix A of the S20 project's "OCD round 30 dataset spec" (2026-10-25),
 # verbatim: the vectors every implementation (this generator,
-# OcdCarrierSettings and the OCD Check owner app) must pass. The IMSIs and
+# OcdCarrierSettings and the OCD Android owner app) must pass. The IMSIs and
 # ICCIDs are synthetic, and so are networks 999-01 and 999-02.
 APPENDIX_A = r"""
 {

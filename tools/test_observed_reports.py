@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""tools/observed_reports.py: the OCD Check report form, its checks, the
+"""tools/observed_reports.py: the OCD Android report form, its checks, the
 pointers into a main commit or a release, the noise filters and observed/."""
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ def entry(name: str, ocd: bool, phone: bool, result: str, reason: str | None = N
 REPORT = {
     "schema": "ocd-check-test-report",
     "schema_version": 1,
-    "app": {"name": "OCD Check", "build": "owner", "version": "0.3.0-owner"},
+    "app": {"name": "OCD Android", "build": "owner", "version": "0.3.0-owner"},
     "tested_on": "2026-10-20",
     "release": {"tag": "data-2026.10", "data_digest": DIGEST},
     "data_source": "pulled",
@@ -151,7 +151,7 @@ def body(report_text: str, ticked: bool = True) -> str:
     )
 
 
-def issue(number: int = 7, report: object = REPORT, title: str = "[OCD Check report] SM-G981B on 26202 (LIDL Connect)",
+def issue(number: int = 7, report: object = REPORT, title: str = "[OCD Android report] SM-G981B on 26202 (LIDL Connect)",
           login: str = "alice", created: str = "2026-10-20T10:00:00Z", user_id: int | None = None, **extra: object) -> dict:
     text = report if isinstance(report, str) else json.dumps(report, indent=1)
     user = {"login": login} if user_id is None else {"login": login, "id": user_id}
@@ -176,7 +176,7 @@ def settled(level: str, method: str, measured_on: str, bearer: str | None = None
 OWNER_REPORT = {
     "schema": "ocd-check-test-report",
     "schema_version": 1,
-    "app": {"name": "OCD Check", "build": "owner", "version": "0.3.0-owner"},
+    "app": {"name": "OCD Android", "build": "owner", "version": "0.3.0-owner"},
     "tested_on": "2026-10-24",
     "release": {"commit": COMMIT, "data_digest": DIGEST},
     "data_source": "pulled",
@@ -241,6 +241,11 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(REPORT, check.report)
         self.assertEqual("data-2026.10", check.ref)
         self.assertEqual(obs.report_hash(json.dumps(REPORT, indent=1)), check.sha256)
+
+    def test_a_report_written_before_the_rename_is_still_valid(self) -> None:
+        old = json.loads(json.dumps(REPORT))
+        old["app"]["name"] = "OCD Check"
+        self.assertEqual([], errors_of(old))
 
     def test_the_hash_is_of_the_text_the_app_prefilled(self) -> None:
         text = json.dumps(REPORT)
@@ -315,7 +320,7 @@ class ReportTest(unittest.TestCase):
         for value in ["sip:+4917012345678@ims.example", "10.0.0.1", "a@b.example", "8949" + "0" * 15, "+4917012345678", "0170 1234567"]:
             self.assertTrue(any("private data" in e or "phone number" in e or "allowed form" in e for e in errors_of(changed(lambda r: r["sim"].update(spn=value)))), value)
         self.assertTrue(errors_of(changed(lambda r: r["device"].update(model="SM-G981B 353456789012345"))))
-        title = issue(title="[OCD Check report] call me +4917012345678")
+        title = issue(title="[OCD Android report] call me +4917012345678")
         self.assertIn("the title: looks like private data (international_phone)", obs.check_issue(title, TODAY, RELEASES).errors)
         outside = issue()
         outside["body"] += "\nMy number is 0170 1234567\n"
@@ -348,7 +353,7 @@ class ReportTest(unittest.TestCase):
             self.assertTrue(any(fragment in e for e in found), (fragment, found))
 
         has("$.tested_on: is in the future", lambda r: r.update(tested_on="2026-10-25"))
-        has("older than the OCD Check owner build", lambda r: r.update(tested_on="2026-01-01"))
+        has("older than the OCD Android owner build", lambda r: r.update(tested_on="2026-01-01"))
         has("works needs a passed T2 call test", lambda r: r["results"][0].pop("call_types"))
         has("a T2 call must be on the feature's bearer", lambda r: r["results"][0].update(call_types=[{"test": "t2", "network": "iwlan"}]))
         has("covers only volte:on and vowifi:on", lambda r: r["results"][2].update(call_types=[{"test": "t2", "network": "lte"}]))
@@ -733,7 +738,7 @@ def record_issue(number: int, record: dict, owner: bool = True, created: str = "
     key = record["target"].get("key") or record["target"]["type"]
     scope = record["carrier"].get("profile_id") or f"{record['carrier'].get('mcc')}-{record['carrier'].get('mnc')}"
     body = ("### Record\n\n```json\n" + json.dumps(record, separators=(",", ":"), ensure_ascii=False) + "\n```\n\n### Privacy check\n\n"
-            "- [X] The OCD Check app's privacy scan passed: the record holds no IMSI, ICCID, IMEI, phone number, SIP URI or IP address.\n")
+            "- [X] The OCD Android app's privacy scan passed: the record holds no IMSI, ICCID, IMEI, phone number, SIP URI or IP address.\n")
     user = {"login": "belagrf", "id": OWNER_ID} if owner else {"login": "mallory", "id": 4}
     return {"number": number, "title": f"[OCD device record] {record['result']}: {key} for {scope} on {record['device']['model']}",
             "body": body, "state": "open", "state_reason": None, "labels": [{"name": obs.RECORD_LABEL}], "user": user,
@@ -876,7 +881,7 @@ class FormTest(unittest.TestCase):
 
     def test_the_form_matches_the_tool(self) -> None:
         form = (REPO / ".github" / "ISSUE_TEMPLATE" / obs.TEMPLATE).read_text(encoding="utf-8")
-        self.assertRegex(form, r"(?m)^name: OCD Check report$")
+        self.assertRegex(form, r"(?m)^name: OCD Android report$")
         self.assertIn(f'title: "{obs.TITLE_PREFIX} "', form)
         self.assertRegex(form, rf"(?m)^labels:\n  - {re.escape(obs.LABEL)}$")
         report = re.search(r"(?ms)^  - type: textarea\n    id: report\n    attributes:\n      label: (.+?)\n.*?      render: json\n", form)
@@ -885,6 +890,7 @@ class FormTest(unittest.TestCase):
         self.assertRegex(form, rf"(?m)^      label: {obs.PRIVACY_HEADING}$")
         workflow = (REPO / ".github" / "workflows" / "ocd-check-report.yml").read_text(encoding="utf-8")
         self.assertIn(f"startsWith(github.event.issue.title, '{obs.TITLE_PREFIX}')", workflow)
+        self.assertIn(f"startsWith(github.event.issue.title, '{obs.LEGACY_TITLE_PREFIX}')", workflow)
         self.assertIn(f"'{obs.LABEL}'", workflow)
         for label in (obs.VALID_LABEL, obs.SUSPECT_LABEL, obs.INVALID_LABEL):
             self.assertIn(label, workflow)
