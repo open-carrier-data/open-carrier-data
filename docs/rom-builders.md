@@ -135,6 +135,34 @@ Without the opt-in the app still watches: IMS registration, whether mobile data 
 - Only the owner's token writes measured records to `main`, and the owner's build with that token never runs on anyone else's phone.
 - No record holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address.
 
+## Samsung's RIL can hide the network's refusal code
+
+If you build for an Exynos Samsung phone, the radio library `libsec-ril-impl.so` may be hiding why the network refused a data connection. OCD Android reads the refusal code from Android to tell a wrong APN from a blocked account, so this matters for any test that depends on the real cause.
+
+**What happens.** When the network refuses a data connection with a permanent 3GPP cause (for example ESM #33, "service option not subscribed"), Samsung's RIL replaces the code with a made-up value (-7). Once your fix passes the real code on, the RIL tries to be helpful in a second way: it asks the modem again at once, and the modem answers with a local back-off value (-8) while its retry timer runs. That second answer overwrites the first. Either way Android sees `UNKNOWN` and not the cause the network gave.
+
+**The fix, three byte changes** in `vendor/lib64/libsec-ril-impl.so` (AArch64):
+
+- Two places in `CustomizeFailCause` load -7 (`mov w24, #-7`, bytes `D8 00 80 12`). Change each to `mov w24, w19`, which keeps the network's code (`F8 03 13 2A`).
+- One place in `ContextActivationDca::OnDataCallDisconnected` branches into the "try again due to throttle" re-ask (`tbnz w0, #31`, bytes `60 06 F8 37`). Change it to a `nop` (`1F 20 03 D5`). The first cause then goes out as final. The RIL still passes on its retry time, so Android keeps its own retry timing. The change applies to every cause, not only #33: failures that were going to be throttled are now reported at once.
+
+**Proven only on the S20.** One phone (Galaxy S20, SM-G981B, `x1s`), one blob, one network. The blob is the one that TheMuppets extracts for that phone, SHA-1 `216643fd9da4fdfe944a53e3b372c00db3fe16ce`; with the three changes it is `c89f532a60e91c3f6bb6b39e6fd6f62969ba027f`, same length, 12 bytes different. Nothing is known about other Samsung phones or other firmware.
+
+**Do not copy the offsets.** They belong to that blob (the changes sit at file offsets 0x2ee52c, 0x2ee588 and 0x2eddd8) and are different in every other build. Find the same code in your own blob: the two `CustomizeFailCause` sites are the only places where a failure cause is set to -7 and the next instructions compare it with a constant, and the re-ask branch is the single branch in `OnDataCallDisconnected` taken when `CustomizeRetryTime` returned a negative number, in front of calls to `IsNeedToSetPermanent` and `IsReasonApnThrottledAndPerm`. A disassembler such as Ghidra or rizin shows both quickly. Then check that your byte pattern occurs once in the file before you change it.
+
+**How to carry it in a device tree.** The S20's device tree is not published (its base, [LineageOS's `android_device_samsung_universal9830-common`](https://github.com/LineageOS/android_device_samsung_universal9830-common), does not have the change), so here is the pattern. In `extract-files.py`, add `sig_replace` lines to the blob's fixups. Each pattern is the bytes to change plus a few bytes after them, so it matches in one place only:
+
+```python
+'vendor/lib64/libsec-ril-impl.so': blob_fixup()
+    .sig_replace('D8 00 80 12 7F 8E 00 71 28 01 00 54', 'F8 03 13 2A 7F 8E 00 71 28 01 00 54')
+    .sig_replace('D8 00 80 12 E8 E3 40 39 68 00 00 36', 'F8 03 13 2A E8 E3 40 39 68 00 00 36')
+    .sig_replace('60 06 F8 37 E0 03 18 AA', '1F 20 03 D5 E0 03 18 AA'),
+```
+
+Those patterns are the S20 blob's. Yours will differ. Then put the hash of the fixed file in `proprietary-files.txt` so a build with another blob stops and does not ship a half-fixed one.
+
+**How to test.** Set a made-up APN that no carrier has (use a new name each time: the modem's back-off timer runs per APN) and let the phone try to connect. With the fix, `logcat -b radio` shows the real cause in the data call result, for example `cause=SERVICE_OPTION_NOT_SUBSCRIBED(0x21)`, and Telephony logs the same. Without it you see `UNKNOWN(0x10000)` or a raw -7 or -8. The modem's end-reason log should show one refusal and no second request right after it. On the S20 it showed `/11` and no `/63`. Restore your APN list afterwards, and do not place any call as part of this test.
+
 ## Where the rules are
 
 The full rule record is private. This page follows rule round 31, and rule round 37 for where OcdCarrierSettings lives. [ocd-dataset.md](ocd-dataset.md) describes the dataset files, [consume.md](consume.md) the APN file and the other outputs, and [releases.md](releases.md) the two channels.
