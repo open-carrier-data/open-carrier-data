@@ -5,7 +5,7 @@
 Rule round 31 (2026-10-28), SM6: "OCD's publisher runs F5's independent read
 for each main commit that changes emergency lines, and publishes the read
 with that commit. Build pins and runtime installs take an emergency-line
-change only with that read." Releases keep their draft read.
+change only with that read."
 
 The read is this tool: a deterministic, documented check that anyone can
 rerun, not an agent. OCD's checks run on free GitHub runners only, where no

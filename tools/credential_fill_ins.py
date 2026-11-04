@@ -15,7 +15,7 @@ and the network types, then the rows rule 1 left out of apns-conf.xml.
 CHECKOUT is a public checkout: its generated/android/apns-conf.xml, read with
 `android_phone_model`, and its generator's records of its carriers/ and
 generated/evidence-index.json (`check_phone_guard.class_a_list`). Each
-publish pull request and each release's notes carry this list. It changes
+publish pull request carries this list. It changes
 nothing and never fails a publish: exit 0 after printing, 2 on an error.
 """
 

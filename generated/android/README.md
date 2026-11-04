@@ -4,12 +4,12 @@ These files are generated from the carrier profiles by `tools/generate_android_o
 
 | File | Meaning | Tier |
 | --- | --- | --- |
-| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them, current vendors' values first, and the attach type `ia` only on rows a current vendor backs where one gives the attach APN | for ROMs: supported since the boot check on the owner's phone passed with `data-2026.10` on 2026-10-20 (`data-2026.10`'s `release.json`, published before, still says `rom, pending the S20 boot check`) |
-| `carrier-config-list.xml` | CarrierConfig XML in Android's `vendor.xml` format, blocks in generic-to-specific order | not for ROM application and not a release asset until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run |
-| `lookup.json` | every profile with `match`, `capabilities`, `specificity`, counts, its freshness window and the month of its newest upstream entry | supported for apps and tools, since `data-2026.10` |
-| `metadata.json` | target version, output counts, the profile IDs left out of each XML, the APN rows LineageOS's schema rejects, the rows that lost `ia`, the data digest and the freshness window | supported for apps and tools, since `data-2026.10` |
+| `apns-conf.xml` | Android APN XML, `version="8"`, each network and MVNO selector's rows ranked by the sources behind them, current vendors' values first, and the attach type `ia` only on rows a current vendor backs where one gives the attach APN | supported for ROMs. The boot check passed once, on one file, one SIM network and one phone; it says nothing about later commits or other networks ([docs/releases.md](../../docs/releases.md#the-s20-boot-check-of-apns-confxml)) |
+| `carrier-config-list.xml` | CarrierConfig XML in Android's `vendor.xml` format, blocks in generic-to-specific order | **not for ROM application: its safety keys are unreviewed.** It stays so until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run. Its own header says this too. Do not copy it into a build with the rest of this folder |
+| `lookup.json` | every profile with `match`, `capabilities`, `specificity`, counts, its freshness window and the month of its newest upstream entry | supported for apps and tools |
+| `metadata.json` | target version, output counts, the profile IDs left out of each XML, the APN rows LineageOS's schema rejects, the rows that lost `ia`, the data digest and the freshness window | supported for apps and tools |
 
-The files here are the latest publish on `main`, the edge channel, and change several times a day. The tiers above hold for the files of a release; the first is `data-2026.10`, published on 2026-10-19. [docs/releases.md](../../docs/releases.md) describes the monthly releases and their tiers.
+The files here are the latest publish on `main`, the one channel, and change several times a day. `main` has no waiting period, and `supported` is not a claim that a value works. [docs/releases.md](../../docs/releases.md) describes the channel, the tiers and what a consumer checks before moving a pin.
 
 The counts change with every publish, so this page does not repeat them. `metadata.json` carries the APN row and CarrierConfig block counts under `output`. Print them with this command:
 

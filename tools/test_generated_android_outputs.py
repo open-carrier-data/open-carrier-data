@@ -1748,6 +1748,14 @@ def check_provenance_and_lookup(carriers_dir: Path, generated_dir: Path) -> None
                 and "    stale_after: 2027-01-06" in lines,
                 f"{path.name} starts with the provenance comment: {lines[:12]}",
             )
+        # Rule round 46: on one channel the file's own header is the barrier.
+        config_head = config_path.read_text(encoding="utf-8").split("\n")[:5]
+        assert_true(
+            config_head[3].startswith("    NOT FOR ROM APPLICATION.") and "unreviewed" in config_head[3],
+            f"carrier-config-list.xml says it is not for ROM application: {config_head}",
+        )
+        assert_true("NOT FOR ROM APPLICATION" not in apns_path.read_text(encoding="utf-8"), "apns-conf.xml carries no such warning")
+        ET.parse(config_path)
         root = ET.parse(apns_path).getroot()
         assert_true(root.tag == "apns" and root.attrib == {"version": "8"}, "the comment leaves the APN root alone")
         lookup = {item["profile_id"]: item for item in load_json(lookup_path)["profiles"]}

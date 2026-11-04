@@ -249,7 +249,7 @@ def specificity(match: dict[str, Any]) -> int:
 
 
 def selector_text(match: dict[str, Any]) -> str:
-    """A match set in one line, for dry runs and release notes."""
+    """A match set in one line, for dry runs and publish bodies."""
     parts = []
     for key in MATCH_KEYS:
         values = match.get(key) or []

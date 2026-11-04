@@ -4,27 +4,22 @@ This guide shows how to package the generated files, how to resolve profiles fro
 
 ## Read this first
 
-The files on `main` are the edge channel: each publish replaces them, several times a day. The production channel is the monthly release, `data-YYYY.MM`. The first, [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), was published on 2026-10-19 from `main` commit `8cb64d63`. [releases.md](releases.md) describes the releases and their tiers:
+`main` is the one channel: each publish replaces the files, several times a day. There are no monthly releases. [releases.md](releases.md) describes the channel and its tiers:
 
-| File | Tier in `data-2026.10` |
+| File | Tier |
 | --- | --- |
-| `generated/android/apns-conf.xml` | supported for ROMs, since 2026-10-20. It carries the review of its emergency APN rows, and the boot check on the owner's phone passed with `data-2026.10`: mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi on one 26202 SIM. MMS was not checked, because that network has ended it ([releases.md](releases.md#the-s20-boot-check-of-apns-confxml) says what the check covered) |
+| `generated/android/apns-conf.xml` | supported for ROMs. It carries the review of its emergency APN rows. The boot check passed once, on one file (`data-2026.10`'s), one SIM network (26202) and one phone: mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi. It says nothing about later commits or other networks ([releases.md](releases.md#the-s20-boot-check-of-apns-confxml)) |
 | `generated/android/lookup.json`, `generated/android/metadata.json` | supported, for apps and tools |
 | `generated/devices/carrier-variants.json` | supported as information, for apps and tools; never an export |
-| `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
+| `generated/android/carrier-config-list.xml` | not for ROM application: its safety keys are unreviewed, as its own header says, until the per-key review has run |
 | the other files under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
-| `observed/` | never supported and never a release asset: unverified OCD Android reports and the owner's "re-tested by OCD" records, apart from the data |
+| `observed/` | never supported: unverified OCD Android reports and the owner's "re-tested by OCD" records, apart from the data |
 
 To replace a ROM's whole carrier data with OCD's dataset, through OcdCarrierSettings, read [rom-builders.md](rom-builders.md): it lists the ship minimum SM1 to SM12 that the build must meet (rule round 31).
 
-Take a release and check its files:
+**`main` has no waiting period.** A commit that passes the checks reaches you at once. Pin one commit whose `validate` check passed, and record the commit, the SHA-256 of each file you take and its `data_digest` with your build. If you do not verify on a phone, run `tools/check_phone_guard.py` and the F5 walk from your old pin to your new pin, and read [changelog.md](changelog.md) before you move; [releases.md](releases.md#main-has-no-waiting-period) has the commands.
 
-```sh
-gh release download data-2026.10 -R open-carrier-data/open-carrier-data -D data-2026.10
-cd data-2026.10 && sha256sum -c SHA256SUMS
-```
-
-`release.json` names the commit, the `data_digest`, the window and each file's tier. Record the tag and the `data_digest` with your build. If you take files from `main` instead, pin one commit by hand and record the SHA-256 of each file you take and its `data_digest`.
+[`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10) was the last release. If you use it, move to a validated `main` commit or back to your ROM's own list ([releases.md](releases.md#data-202610-the-last-release)).
 
 What every ROM maintainer must know:
 
@@ -73,11 +68,11 @@ prebuilt_etc_xml {
 
 A device turns it on with `$(call soong_config_set,lineage_apn,source,open_carrier_data)` in its makefile. The module keeps its name and its install path, `/product/etc/apns-conf.xml`. A phone that already has the list in its database loads the new one only when the file's checksum changes and TelephonyProvider reloads, for example after `content delete --uri content://telephony/carriers/update_db` as root; a new build with the same build ID does not reload it by itself.
 
-The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_digest`, `checks_through` and `stale_after`. A file from a release carries the same `data_digest` as that release's `release.json`. `git log -S <data_digest> -- generated/android/metadata.json` in a clone finds the commit that published it.
+The first lines of `apns-conf.xml` say which snapshot it is: the licence, `data_digest`, `checks_through` and `stale_after`. `git log -S <data_digest> -- generated/android/metadata.json` in a clone finds the commit that published it.
 
 ### carrier-config-list.xml is a vendor.xml
 
-Not supported for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run (rule decisions of 2026-10-18, round 20), and no release will carry it before then. A maintainer who applies it anyway does so on their own review. This section says what such a merge involves.
+Not supported for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run (rule decisions of 2026-10-18, round 20), and the file's own header says so. A maintainer who applies it anyway does so on their own review. This section says what such a merge involves.
 
 `carrier-config-list.xml` has the format of the CarrierConfig app's `res/xml/vendor.xml`. That file is not one carrier's config: `DefaultCarrierConfigService` first reads the per-carrier asset AOSP ships for the SIM, then applies every matching block of `vendor.xml` on top with `putAll`, so each key here overrides AOSP's own value for that carrier on every device that installs it. A build has one `vendor.xml`, and devices often ship their own (the S20 tree's overlay has one), so merge the blocks into it instead of replacing it, and keep only keys you have reason to apply. Profiles whose match needs a GID or ICCID prefix are left out, because `vendor.xml` matches GID1 only exactly; `metadata.json` says so (`carrier_config_gid_matching` and `carrier_config_iccid_matching` are `omitted`) and lists them. No value in this file has been tested on a phone.
 
@@ -163,7 +158,7 @@ TelephonyProvider stores rows of one APN that differ only in username, password,
 
 Built (rule round 32, D8):
 
-- `tools/credential_fill_ins.py CHECKOUT` prints the class (a) list per scope and role: the APN, the filled-in fields, the sources of the filling rows, whether the lead sends them or only stores them, and the network types. The release notes carry it under "Credentials from old lists". On public `a8fd1898` it has 48 LTE lead roles in 25 scopes, 25 of them sent, in 17 scopes.
+- `tools/credential_fill_ins.py CHECKOUT` prints the class (a) list per scope and role: the APN, the filled-in fields, the sources of the filling rows, whether the lead sends them or only stores them, and the network types. On public `a8fd1898` it has 48 LTE lead roles in 25 scopes, 25 of them sent, in 17 scopes.
 - `tools/resolve_carrier_profiles.py --explain` names, under `apns.credential_sources`, the row and the sources of every username, password, auth type and MTU a SIM's internet, attach and MMS lead carries, and whether a lower-ranked row filled it in.
 - The phone guard reports "credentials filled in from a non-current source on the {role} lead", with the sources, wherever a change creates or changes such a fill-in. Report only.
 - Rule 1: where every source of the values is Google's frozen Pixel copies, no other source gives credentials for that APN and type, Google's current file gives the same APN bare, and the operator's own page names no credentials, the filling row leaves `apns-conf.xml`. The phone then sends what a current Pixel sends. Since 2026-10-28 that is one row: 262/20's frozen `MVNO DE` row of `internet.mvno.mobi`, so 262/20's internet and attach leads send no username or password. Vodafone Portugal's own manuals name credentials for `net2.vodafone.pt`, so 268/91 and 268/92 keep theirs. The profile JSON keeps every row. `credential_fill_ins.py` and `--explain` list the rows rule 1 left out, and `metadata.json` counts them (`omissions.credential_rows_left_out_superseded_google_copy`).
@@ -351,7 +346,7 @@ python3 -c 'print(*[__import__("json").load(open("generated/android/metadata.jso
 
 It prints two dates, `checks_through` and then `stale_after`.
 
-`checks_through` is the oldest source check behind the data: the last day a lane fetched its source with success, or confirmed an observation. `stale_after` is `checks_through` plus 180 days. It is a lane-liveness deadline: after it, at least one lane behind the data has not run for six months. Do not ship a snapshot after `stale_after`. The per-profile `stale_after` in `generated/android/lookup.json` is the precise value for each profile; the file-wide one is the earliest of them.
+`checks_through` is the oldest source check behind the data: the last day a lane fetched its source with success, or confirmed an observation. `stale_after` is `checks_through` plus 180 days. It is a lane-liveness deadline: after it, at least one lane behind the data has not run for six months. Do not ship a snapshot after `stale_after`. The S20's pin step refuses such a commit, names the oldest record behind the date, and warns when fewer than 30 days are left. The per-profile `stale_after` in `generated/android/lookup.json` is the precise value for each profile; the file-wide one is the earliest of them.
 
 A check date does not say a value is current. Only two lanes ask the vendor: Samsung's update service confirms that the firmware build an observation came from is current, and the GrapheneOS Pixel lane checks every Pixel against Google's update service. For every other lane a check means the lane ran. How old the data is shows in `newest_entry`, the month of the newest upstream entry behind a profile, in `generated/android/lookup.json` and `generated/evidence-index.json`. On 2026-10-04, 1,009 profiles rest only on entries from before October 2021, and 711 of them put 1,056 APN rows into `apns-conf.xml`. APN rows LineageOS removed are left out unless a newer source gives them, and a capability with only old evidence from one family is `unknown`; [how-it-is-built.md](how-it-is-built.md) has both rules.
 
