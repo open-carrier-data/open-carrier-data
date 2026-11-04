@@ -10,4 +10,6 @@ Phone results: the test reports people send from the OCD Android app through the
 
 **Reports are unverified.** A report only points at an entry of OCD's data at one commit of `main`, or of a data release for older app builds (`volte:on`, `apn:<row key>`, ...); it never carries a value. It never changes an OCD value, a file under `carriers/` or `generated/`, or a release, and it never makes a phone skip its own test: at most a phone tests that entry earlier. No result of any account is served on another phone. This folder is not a release asset.
 
+The automatic weekly summaries of rule round 48 are not here and never come here. They have their own repository, because phones read this folder and `main` cannot be rewritten ([community/README.md](../community/README.md#the-automatic-week-report)).
+
 The files are written by `tools/observed_reports.py` from the current report issues, so a deleted issue drops out at the next rebuild; do not edit them by hand. The `validate` check fails when a file breaks its schema or the privacy scan, when `summary.json` or `results.json` is not what the reports give, or when `results.json` enters the dataset manifest, the pull file list or the app's reads.

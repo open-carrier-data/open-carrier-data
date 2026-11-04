@@ -142,6 +142,10 @@ source families -> candidate observations -> the sanitizer -> carrier profiles -
 
 [CONTRIBUTING.md](CONTRIBUTING.md) explains the four issue forms under [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) and the pull request path for tools and docs. A correction reaches stable data through a maintained source, or a maintainer changes an importer, mapping or source with the evidence in the pull request. A field report never changes a published value by itself. It starts a review of the source or importer behind the value, and a fix reaches the data through that source or importer. There are no per-carrier overrides. A test report from the OCD Android app goes in the `OCD Android report` form and is recorded under `observed/`, marked unverified, apart from the data ([community/README.md](community/README.md)).
 
+## Privacy
+
+[docs/privacy.md](docs/privacy.md) covers OCD Android's weekly report, which leaves a phone only after its owner's yes. Sending is closed today.
+
 ## License
 
 Software and documentation are Apache-2.0. The text is in [LICENSE](LICENSE). The published carrier values are facts the project derived and normalized. The project publishes no vendor files and waives its own rights in the data under CC0 1.0. The details are in [DATA-LICENSE.md](DATA-LICENSE.md).

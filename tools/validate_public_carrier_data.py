@@ -2315,6 +2315,33 @@ def validate_evidence_index(
     return window
 
 
+# Rule round 48, item 2: the flag that can only stop OCD Android's weekly send.
+# A file of its own, read once a week by the app: no dataset file changes, and
+# neither OcdCarrierSettings' strict readers nor builds K and L ever see it.
+# The send stays closed until the page that tells people about it is complete:
+# docs/privacy.md marks every value only the controller can give with this text.
+RELAY_FLAG = "community/relay.json"
+PRIVACY_PAGE = "docs/privacy.md"
+PRIVACY_PLACEHOLDER = "[NOT FILLED IN YET"
+
+
+def validate_relay_flag(root: Path) -> None:
+    """The flag holds exactly relay_open, and true only beside a finished privacy page."""
+    path = root / RELAY_FLAG
+    if not path.is_file():
+        return
+    flag = load_json(path)
+    if not isinstance(flag, dict) or set(flag) != {"relay_open"} or not isinstance(flag["relay_open"], bool):
+        raise ValidationError(f"{path}: must hold exactly relay_open, true or false")
+    if not flag["relay_open"]:
+        return
+    page = root / PRIVACY_PAGE
+    if not page.is_file():
+        raise ValidationError(f"{path}: relay_open is true, but {PRIVACY_PAGE} is missing")
+    if PRIVACY_PLACEHOLDER in page.read_text(encoding="utf-8"):
+        raise ValidationError(f"{path}: relay_open is true, but {PRIVACY_PAGE} still names no controller")
+
+
 def validate_android_metadata(
     generated_dir: Path,
     expected_profile_ids: set[str],
@@ -2331,6 +2358,7 @@ def validate_android_metadata(
         "data_digest",
     }:
         raise ValidationError(f"{metadata_path}: metadata has invalid keys")
+    validate_relay_flag(generated_dir.parent)
     digest = metadata["data_digest"]
     if not isinstance(digest, str) or not DATA_DIGEST_RE.fullmatch(digest):
         raise ValidationError(f"{metadata_path}: data_digest is invalid")

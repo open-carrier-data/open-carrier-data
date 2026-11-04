@@ -1,6 +1,11 @@
 # Community reports
 
-A community report is what a phone measured, sent by the person who holds it. Today there is one kind: the test report of the OCD Android app. It is an **unverified hint**:
+A community report is what a phone measured, sent by the person who holds it. There are two kinds, and they never mix:
+
+- **The test report:** the person taps, reads it and submits it under their own GitHub login. Most of this page describes it.
+- **The automatic week report:** after the person's one yes, a ROM install sends a closed weekly summary to OCD's relay. See [The automatic week report](#the-automatic-week-report). Sending is closed today.
+
+Both are **unverified hints**:
 
 - it never changes an OCD value, a file under `carriers/` or `generated/`, or a release;
 - it never makes a phone skip its own test, and it never switches anything off;
@@ -9,7 +14,7 @@ A community report is what a phone measured, sent by the person who holds it. To
 
 No gate can tell a true report from a well-made fake: anyone can open an issue, nothing checks who sent a report or whether the phone exists, and no carrier signal can prove to a third party that a setting worked. So OCD does not ask "is this report true?". A report can only point, and every phone proves for itself.
 
-There is no exception. Results reach OCD the same way for everyone, the project's owner included (rule round 47, item 2): the person taps, reads the prefilled report and submits it under their own GitHub login, which the app never holds. No key or token exists in the app, the repository or CI, no background job posts results, and no account or list gives a report a stronger status. Every result reads "reported, not checked by OCD", with its date, a count of distinct accounts and whether it is contested.
+There is no exception. Results reach OCD the same way for everyone, the project's owner included (rule rounds 47 and 48): by these two paths and no other. The app never holds a GitHub login, no key or token exists in the APK, nothing on a phone or the relay can write to GitHub, and no account or list gives a report a stronger status. Every test report reads "reported, not checked by OCD", with its date, a count of distinct accounts and whether it is contested.
 
 ## A report points, it carries no value
 
@@ -58,7 +63,7 @@ A plan is a label the person chose, not a fact about the tariff. It is never a m
 
 ## Upload a report
 
-The app does it, and only on your tap: its "Open report on GitHub" action opens the `OCD Android report` issue form with the report filled in, in your browser, and shows the report's hash. Read it and submit it yourself, under your own GitHub login, which the app never holds. Do not edit the report. Without a GitHub account you can read the report but not send it. Nothing else leaves the phone: results stay on it until you submit one.
+The app does it, and only on your tap: its "Open report on GitHub" action opens the `OCD Android report` issue form with the report filled in, in your browser, and shows the report's hash. Read it and submit it yourself, under your own GitHub login, which the app never holds. Do not edit the report. Without a GitHub account you can read the report but not send it. A test report leaves the phone only when you submit it. The one other thing that can leave is the [automatic week report](#the-automatic-week-report), and only after your yes.
 
 The issue is public under your GitHub account, so anyone can link your GitHub name to the carrier and any plan in the report. If you delete the issue, the report leaves `observed/` at the next rebuild, but older versions stay in git history, and public archives of GitHub can keep a copy.
 
@@ -110,11 +115,32 @@ These order what people read and keep review time down. They are not a defence, 
 - an account's reports are `held` until its first accepted report here is 14 days old. The age counts from that report, not from the account's sign-up, because old accounts are easy to buy. The accounts are read from the issues on each rebuild and never written to `observed/`, only counted;
 - a report `expires` 90 days after its test.
 
+## The automatic week report
+
+> **Status on 2026-11-04.** Sending is closed. `relay_open` in [`relay.json`](relay.json) is false, the relay is not deployed, and the app's side is being built. `relay_open` turns true only when the question, the first-screen line and the [privacy page](../docs/privacy.md) are live in the same build. Until then a test report is the only way a result leaves a phone.
+
+Nothing leaves a phone by itself unless the person said yes. After that one yes, and only on a ROM install, the app sends one closed week report per SIM to OCD's relay, only on an unmetered network and never while roaming. It holds no identifier, no free text, no day or time and no call details, and the person can stop it at any time. A hand install never sends by itself. Any other result leaves only when the person taps and submits it under their own GitHub login. No result, sent or tapped, ever sets a value on any phone: a carrier value changes only through a source-backed change on `main`. The app's download from GitHub carries no identifier.
+
+**The yes.** A ROM install asks once: one notification on the first boot with a SIM, opening one screen with equal Yes and No. Dismissed or ignored means no, and it is never asked again. A person stops the send at any time in Settings > About phone > Open Carrier Data, and the phone clears what it had collected. The [privacy page](../docs/privacy.md) has the words, the exact fields, the list of what is never sent, who is responsible and how long anything is kept.
+
+**What it says.** One flag per entry and SIM for the week, with the model, ROM family, Android version, IMS stack and carrier. Entries are the same pointers as in a test report, without any emergency row. Results are `works`, `calls_out`, `signed_in`, `service_off`, `not_possible` and `failed`, and an uncalibrated stack sends only `signed_in`, `service_off` and `not_possible`. Here `works` means calls both ways by packet counts and `calls_out` an outgoing call only. No sound was checked, and neither speaks for emergency calls. `plan` is never sent. A report cannot be found or removed afterwards, because it holds no ID.
+
+**What happens to it.** The relay checks the closed shape and adds one to a counter. It keeps no report, address, header or log, and it holds no GitHub credential. A weekly Action in the separate [week-counts](https://github.com/open-carrier-data/week-counts) repository reads the counters and drops every value that is not on OCD's public lists. It publishes a row only with at least 3 reports in one ISO week, by month, as device > carrier > plan with plan `unknown`. Counters leave the relay after 8 weeks. A row at its cap of 500 in a week is not published that week.
+
+**What it never does.** A week count is not a test report:
+
+- every row reads "automatic, reported by phones, not checked by OCD, counts can be faked";
+- it is never added to a count of accounts, and it never enters `observed/`, the dataset manifest or a phone: `validate` fails if it does;
+- it opens no issue and no source review by itself. A person or an agent may start one after reading it;
+- it needs no GitHub account, so nothing ties it to a person, and nothing proves it either.
+
+**ROM builders** carry duties for this send: name the app in the ROM's public notes, know that shipping the question may make them share responsibility, never answer for the person, and leave the app in Settings > Apps. A builder can set the question off and can never turn the send on. [Your duties as a builder](../docs/rom-builders.md#your-duties-as-a-builder) has the details.
+
 ## Why it stays apart
 
 OCD's values say what carrier tables configure, from maintained sources. A phone result is a different kind of evidence, kept beside the data, never in it:
 
-- no report changes a capability value, an APN row, a CarrierConfig key, a device record or a release asset, and `generated/devices/device-records.json` stays empty: no result of any account is served on another phone;
+- no report, tapped or automatic, changes a capability value, an APN row, a CarrierConfig key, a device record or a release asset, and `generated/devices/device-records.json` stays empty: no result of any account is served on another phone;
 - `observed/` is not part of a release and has no compatibility promise;
 - counts are not votes: a `signed_in` from one phone says nothing about another phone, stack or plan, and a result with a plan never says that a tariff includes a feature;
 - a ROM maintainer who uses a cell still makes his own test call; a phone that acts on a report still runs its own test and keeps nothing that fails.
