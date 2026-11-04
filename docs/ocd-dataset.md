@@ -1,8 +1,8 @@
 # The OCD dataset
 
-Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Android app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. A ROM bakes it at a validated `main` commit. Today the owner's S20 is the only ROM that ships it.
+Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM11 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Android app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. A ROM bakes it at a validated `main` commit. Today the owner's S20 is the only ROM that ships it.
 
-`tools/ocd_dataset.py` writes and checks it from one checkout of `main`. The private publisher writes the Google lane first, then runs it on every publish; the report bot runs it when the owner's measured records change. `validate` checks every file on every pull request.
+`tools/ocd_dataset.py` writes and checks it from one checkout of `main`. The private publisher writes the Google lane first, then runs it on every publish. `validate` checks every file on every pull request.
 
 ## The files
 
@@ -13,7 +13,7 @@ One set per commit of `main`:
 | manifest | `generated/ocd-dataset/manifest.json` | the data digest, `generated_at`, every other file with its size and SHA-256, the dataset digest, counts | 256 KiB |
 | profiles | `generated/ocd-dataset/profiles.json` | the closed key registry, groups A, B and X6, and every network's profiles with OCD's match rules, values and Google-lane fill | 32 MiB |
 | google_lane | `generated/ocd-dataset/google-lane.json` | the Google lane's values as source family `google` | 8 MiB |
-| device_records | `generated/devices/device-records.json` | the per-device records of the owner's devices | 4 MiB |
+| device_records | `generated/devices/device-records.json` | an empty role: no result of any account is served on another phone (rule round 47) | 4 MiB |
 | apn_xml | `generated/android/apns-conf.xml` | OCD's APN file, unchanged | 16 MiB |
 | apn_index | `generated/ocd-dataset/apn-index.json` | each APN row's line, key and profiles | 16 MiB |
 
@@ -21,8 +21,21 @@ The whole set, with the `pin.json` a fetcher writes beside it, stays under 64 Mi
 
 - **Digests.** Every file but the manifest names `based_on_data_digest`, and the manifest names `data_digest`. Both are OCD's data digest of the publish, the same value as in `generated/android/metadata.json` and the `apns-conf.xml` header. `dataset_digest` is SHA-256 over, for each listed file in byte order of its name, the three lines `name`, `sha256` and `bytes`.
 - **Order.** Of two datasets with different `dataset_digest`, the one with the later `generated_at` is newer. `generated_at` changes only when a file changes; on a pull request, `validate` refuses a changed dataset whose `generated_at` is not later than `main`'s.
-- **The pin.** A file cannot name the commit that contains it. Whoever fetches the set writes `pin.json` beside it, with the commit and each file's git blob SHA-1: the owner app for a download, the ROM pin step for the build. It is never on `main`.
+- **The pin.** A file cannot name the commit that contains it. Whoever fetches the set writes `pin.json` beside it, with the commit and each file's git blob SHA-1: the app for a download, the ROM pin step for the build. It is never on `main`.
 - **Strict reading.** A repeated member, NaN or Infinity, an unknown member, an unknown `schema_version`, a key outside the registry or a value of another type makes the whole set unreadable. `tools/ocd_dataset.py validate` runs the reader's checks 4 to 10 of the spec: manifest, sizes, SHA-256, dataset digest, data digest agreement, strict parse, closed and typed keys with their domains, specificity, network copies, APN version 8 and the APN index. It also runs the conflict checker of rule round 45 (below).
+
+## How a phone takes new data
+
+Rule round 47 (item 3): a phone takes data straight from `main`, with no ROM build or release in between. "No pin" means no step between `main` and the phone; the ROM pin exists only for the baked copy. Phones cannot be pushed to, so the fastest path is the next check.
+
+- **The check.** On an unmetered network one periodic job runs at WorkManager's 15-minute floor. It reads `generated/ocd-dataset/manifest.json` from `main` on the raw host with a conditional request and compares `dataset_digest` and `data_digest` with the installed set. It stores the ETag only after a pull for that digest finished, so a commit still in `validate` is tried again. On a metered network the check runs every 6 hours. The branch read is a hint: no data is taken from it.
+- **The pull.** Only a difference starts the normal pull by commit SHA, through the API. On a metered network at most one full pull a day, and none while roaming or with Data Saver on. When CarrierSettings asks again (`status.pullAgain`), only the daily limit lifts.
+- **Backoff.** On 403 or 429 from either host the app honours Retry-After, backs off and doubles up to 6 hours. Unauthenticated API reads are limited per address, and phones can share one.
+- **What stays on the phone: F1 to F5.** F1, one commit SHA per pull. F2, only a commit whose `validate` passed. F3, an unknown schema is refused and the last good set stays. F4, only changed values make checks due. F5, the emergency-line read published with the commit. A set never moves back.
+- **Activation.** If a SIM's served values and APN rows are unchanged, OcdCarrierSettings records the commit and skips both the notify and the proof for that SIM. If they changed, it activates at the first moment with every Guard refusal clear, not roaming, with the screen off and no media or VoIP audio.
+- **Older ROMs.** An app on a ROM without skip-notify keeps the old daily pull, told by the provider's protocol version.
+
+A bad commit that passes the checks reaches phones sooner, and the fix is the next commit. So this ships only in the ROM build that also has SM7 on every phone, the real-call watch and skip-notify, with no separate switch-on step. The baked copy keeps all its roles: app disabled, voice-loss hold and stop, crash guard, corrupt data ([rom-builders.md](rom-builders.md#how-new-data-reaches-a-phone)).
 
 ## Profiles
 
@@ -125,9 +138,9 @@ OcdCarrierSettings enforces groups A, B and X6 with its own compiled-in copy as 
 
 ## Records by cell (rule round 31)
 
-Rule round 31 (2026-10-28) keys records by cell. OCD is carrier data: its index is the carrier profile, and where a fact also depends on the device, the index is the device and the carrier together. No OCD record is keyed by device alone. A value whose reason holds on every carrier is a device quirk and belongs in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)); a value a test measured on a device with a carrier is an OCD cell record. The S20's four served values move back into its `carrier_config_override.xml`, and the bearer-wait key stays unset.
+Rule round 47 (item 2) ended published records: no result of any account is served on another phone, `generated/devices/device-records.json` stays empty, and `validate` refuses a record in it. A cell stays the key of a phone's own local results, which never leave it. The format below is what readers still parse.
 
-A record keyed by a carrier profile is served only while that profile has the match set it was measured under (rule round 45, item 1): `tools/observed_reports.py rebuild` stores the profile's canonical match-set hash at the record's data commit as `match_set_hash` in the record's item of `devices/records/measured.json` (an item without one takes it from the profile ID), and `generate` leaves a record whose profile's current hash differs out of `device-records.json`. Such a record is then only the first candidate for the next test, as in a neighbouring cell. `device-records.json` gains no member.
+Rule round 31 (2026-10-28) keys records by cell. OCD is carrier data: its index is the carrier profile, and where a fact also depends on the device, the index is the device and the carrier together. No OCD record is keyed by device alone. A value whose reason holds on every carrier is a device quirk and belongs in the ROM's device tree ([rom-builders.md](rom-builders.md#device-quirks-stay-in-your-device-tree)); a value a test measured on a device with a carrier is a cell record, kept on that phone. The S20's four served values move back into its `carrier_config_override.xml`, and the bearer-wait key stays unset.
 
 A cell record ([`schemas/cell-records.schema.json`](../schemas/cell-records.schema.json), `device-records.json` with `schema_version` 2) belongs to one cell:
 
@@ -136,7 +149,7 @@ A cell record ([`schemas/cell-records.schema.json`](../schemas/cell-records.sche
 - the ROM: `rom.family` (`aosp`, `lineageos`, `stock` or `other`), `rom.line` (for example `24.0`) and `rom.forks`, the sorted names of the builder's forks the result can depend on, as the build declares them;
 - the IMS stack: `ims_stack.id` with `ims_stack.fork`.
 
-It also states `rom.incremental` (`Build.VERSION.INCREMENTAL`) and `ims_stack.version`. These are recorded, not matched: a changed incremental or stack version makes the record due for a test at once on a phone with the tester. The kind is `measured` only, and so is the claim; there is no `second_agent_read`, because group A and group B keys are refused in a cell record.
+It also states `rom.incremental` (`Build.VERSION.INCREMENTAL`) and `ims_stack.version`. These are recorded, not matched. The kind is `measured` only, and so is the claim; there is no `second_agent_read`, because group A and group B keys are refused in a cell record.
 
 `record_key` is `r:` plus the first 16 hex digits of SHA-256 over ten lines joined with `\n`: kind, device codename, upper-cased model, ROM family, ROM line, the ROM forks joined with commas (empty for none), IMS stack id, IMS stack fork (empty for none), the carrier text (`profile:<id>`, `sim:<mcc>-<mnc>:gid1=<upper GID1>` or `sim:<mcc>-<mnc>:spn=<SPN>`) and the target text (`config:<key>`, `apn:<row_key>` or `emergency_data:<row_key or default>`). Two vectors:
 
@@ -147,20 +160,19 @@ It also states `rom.incremental` (`Build.VERSION.INCREMENTAL`) and `ims_stack.ve
 
 Serving:
 
-- A record is served as a value only in its exact cell.
-- In a neighbouring cell (same device and carrier, another ROM family, line, forks or stack), it may only be tried as the first candidate, and only where a tester runs. It is never served there without a test.
-- The app tries no candidates, and writes no record, for a key the ROM's device override sets on that phone.
-- Last, after carrier values and cell records, the ROM applies LineageOS's fixed key and its device override (`carrier_config_override.xml`), also when the dataset fails to load.
+- A phone serves its own record as a value only in its exact cell.
+- In a neighbouring cell (same device and carrier, another ROM family, line, forks or stack), it may only be tried as the first candidate of a repair after a measured failure. It is never served there without a test.
+- The app tries no candidates, and keeps no record, for a key the ROM's device override sets on that phone.
+- Last, after carrier values and the phone's own records, the ROM applies LineageOS's fixed key and its device override (`carrier_config_override.xml`), also when the dataset fails to load.
 
-**Since step 8.** `validate` refuses every record without a carrier key and every `configured_device` record (`record_no_carrier`, `record_kind`), and the record schema knows the kind `measured` only. The S20's five round 30 records, valid for every carrier, left `main` once the build with the restored device override had passed on the phone (round 31, implementation order step 8); their four values now come from the S20's `carrier_config_override.xml`, and builds without it are no longer rollback targets. Public main still serves `device-records.json` in `schema_version` 1, the format the readers on the phones parse; the switch to `schema_version` 2 (`SERVED_RECORDS_SCHEMA_VERSION` in `tools/ocd_dataset.py`) follows once they parse it. Until then the report bot takes the owner build's records in that format (measured, with a carrier key), and its intake of cell records comes with the switch. A cell record placed in `devices/records/measured.json` before then is checked and waits there unserved. A round 30 measured record does not carry over into `schema_version` 2: its cell lacks the ROM forks and the incremental, so it is due for a new test anyway.
+**Since step 8.** `validate` refuses every record without a carrier key and every `configured_device` record (`record_no_carrier`, `record_kind`), and the record schema knows the kind `measured` only. The S20's five round 30 records, valid for every carrier, left `main` once the build with the restored device override had passed on the phone (round 31, implementation order step 8); their four values now come from the S20's `carrier_config_override.xml`, and builds without it are no longer rollback targets. Public main still serves `device-records.json` in `schema_version` 1, the format the readers on the phones parse; the file holds no records in either format.
 
 ## Per-device records (round 30)
 
-`generated/devices/device-records.json` ([`schemas/device-records.schema.json`](../schemas/device-records.schema.json)) is written from `devices/records/`:
+`generated/devices/device-records.json` ([`schemas/device-records.schema.json`](../schemas/device-records.schema.json)) stays in the set with no records. Removing the role would make current apps refuse the whole pull. Nothing writes to it: the report bot's `measured.json` ended with rule round 47. `devices/records/` keeps:
 
-- `measured.json` holds the owner's measured records, written by the report bot from the owner's `ocd-device-record` issues, one record per issue, from user ID 122638570 only ([community/README.md](../community/README.md#the-owners-measured-records)), each for 90 days after its last measurement.
-- `keys.json` gives the registry entries of the keys records use.
-- `reads/` holds the reads: round 30's second-agent reads of group A records, and round 31's group A reads in `reads/group-a/`.
+- `keys.json`, the registry entries of keys records used;
+- `reads/`, the reads: round 30's second-agent reads of group A records, and round 31's group A reads in `reads/group-a/`.
 
 A round 30 record is keyed by its device, ROM line, IMS stack with its fork, carrier and target, and its `record_key` is `r:` plus the first 16 hex digits of SHA-256 over those nine lines. It never holds a phone number, IMSI, ICCID, IMEI, SIP URI or IP address.
 

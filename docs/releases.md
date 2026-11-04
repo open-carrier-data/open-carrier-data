@@ -25,7 +25,7 @@ python3 new/tools/f5_read.py chain --root new --from "$ROWS"
 
 Run these in a clone of this repository, with OLD and NEW the two commit SHAs. `tools/diff_apns_conf.py` and `tools/diff_carrier_config.py` list the changes between any two files.
 
-If a commit turns out bad, the recovery is a fix-forward commit, your previous pin (F1), the last good set (F3), the tests that a value change makes due (F4) and SM7 on phones without a tester. A ROM baked at a bad commit needs a new build, so [changelog.md](changelog.md#bad-data) names the commit range and the reason of every published commit found harmful.
+If a commit turns out bad, the recovery is a fix-forward commit, your previous pin (F1), the last good set (F3), the checks that a value change makes due (F4) and SM7 on every phone. A ROM baked at a bad commit needs a new build, so [changelog.md](changelog.md#bad-data) names the commit range and the reason of every published commit found harmful.
 
 ## What checks a commit
 
@@ -45,12 +45,12 @@ The daily freshness alarm runs `--freshness fail` and opens a `stale-data` issue
 
 ## F1 to F5
 
-Five checks stand behind a pin. The owner's ROM and the ROM builds of the OCD Android app run all five.
+Five checks stand behind a pin. The ROM builds of the OCD Android app run all five.
 
 - **F1, one commit.** Each ROM build and each app pull resolves `main` once to a commit SHA and reads every file at that SHA, never by the branch name. `data_digest` must agree across `metadata.json`, `carrier-variants.json` and the `apns-conf.xml` header. The SHA and `data_digest` are recorded with everything that is built, served, tested or reported, so a bad build can go back to the previous pin.
 - **F2, `validate` passed.** Only a commit whose `validate` check run on `main` concluded `success` is taken. The check run is read from GitHub's public API, without a token.
 - **F3, a known format.** A file whose `schema_version` the consumer does not know is refused, and the last good set is kept whole. A ROM build fails.
-- **F4, value changes.** A new pin makes a test due only when a value of the SIM's profile, or an APN row of its scope, changed against the previous pin.
+- **F4, value changes.** A new pin makes a check due only when a value of the SIM's profile, or an APN row of its scope, changed against the previous pin.
 - **F5, emergency rows read before a ROM build.** The ROM build's pin step runs `tools/check_phone_guard.py --report-json` from the previous build's commit to the new one. A trip, or any emergency line (an emergency lead gained, lost, or changed to anything other than Android's default request; a network type left without an emergency profile; or an emergency profile missing under an APN set), keeps the previous commit until an agent other than the builder has read the lines. An emergency APN row is the one change no phone can test.
 
 Since rule round 31 (2026-10-28) any ROM that serves OCD through OcdCarrierSettings, or takes only OCD's APN file, may bake a validated `main` commit under F1 to F3. It takes a change to emergency APN lines only with the independent read that OCD publishes for that commit (SM6 in [rom-builders.md](rom-builders.md)).

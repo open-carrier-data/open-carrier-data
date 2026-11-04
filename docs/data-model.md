@@ -330,3 +330,33 @@ What the records are not:
 The validator checks the field list, that every profile is published and every device is in the catalog, one value per profile, capability, device and stack, that each record's source is listed in the profile's `capability_sources` for that capability under its state, no Samsung `off`, `newest_entry` inside five years of `checks_through`, `basis` exactly where `capability_basis` names it, the digest, the freshness window and canonical bytes. It also checks that every `volte`, `vowifi` or `video_calling` value published `supported` against one family's off has an `off` record here from each off source and at least one `on` record, that a `single_family_off:<capability>` gate next to `supported` names a real off, and fails without the file when such a value exists.
 
 Labels that rest on device records (round 17, step 2). Round 8 (2026-10-10) deferred one change: an on against an off that one maker's or maintainer's per-device files alone give is published `supported`, not `conditional`, for `volte`, `vowifi` and `video_calling` only, and only where the off stays visible. Round 17 made it its second step, after the device records published. The private sanitizer applies it in the merge, from the same device values the builder lists: the off must come from one non-operator family (rule 9's family test, unchanged), no source may call the capability `conditional` itself, the on must publish standing alone under the five-year rule, every off observation the merge counts must become an `off` record of its own source for every device it names, and at least one device record of the same profile and capability must say `on` (round 22, 2026-10-19: the device file shows both sides; an existence test, never a count). An off that is older than five years, that binds to no single catalog device, that is not a per-device file, or whose device's other overlay layer says on keeps the value `conditional`, and so does a value whose ons come only from carrier-wide tables or device files older than five years. The value's `capability_newest_entries` month is then the on side's; the off records carry their own months. On the dry run of 2026-10-18 it published 122 values `supported` in 109 profiles (VoLTE 50, Wi-Fi calling 21, video calling 51) and kept 283 of the same kind `conditional`: 259 because some off is not in the device file (204 with an off older than five years, 68 with a codename two catalog devices share, 3 with a device whose overlay layers disagree; some for more than one reason), 12 because no device record says on, and 12 because the on would not publish standing alone. No CarrierConfig value, APN row or device record changed. The device builder stops the publish when a `supported` value's off is not in the file, or when a `conditional` value of the three should have changed. `mms`, `vonr`, `ims_conference` and every other capability keep the `conditional` rule. CarrierConfig and APN rows do not change: change 33 already publishes the true switch of these values.
+
+## Results tree
+
+`observed/results.json` ([`schemas/observed-results.schema.json`](../schemas/observed-results.schema.json)) publishes what people reported as device > carrier > plan (rule round 47, item 4). OCD starts with carrier data from sources, so a carrier's data stays once, in `carriers/`. Device and plan exist only here, inside results, and no carrier value is copied into the file.
+
+`tools/observed_reports.py` rebuilds it from the current report issues, so a deleted issue drops out at the next rebuild, though older versions stay in git history. A report that passed every noise filter enters it; a held one does not. A report with no OCD profile has no carrier to sit under and stays out. An entry that was `not_tested` is no result.
+
+| Level | Field | Rule |
+| --- | --- | --- |
+| device | `model` | `Build.MODEL` |
+| device | `firmware` | the report's public build string: `Build.ID` and the build's UTC time in seconds, for example `CP2A.260605.016 1792814506`; `unknown` when the report names none. Never the fingerprint, the incremental, a serial or a host name |
+| device | `rom_family` | `stock`, `lineageos` or `other` |
+| device | `rom_line` | the ROM's line as a report can name it: `android-` and its Android major. The firmware tells the builds of one line apart |
+| device | `ims_stack` | the report's IMS stack |
+| carrier | `carrier` | OCD's profile ID |
+| plan | `plan` | `unknown`, or `offer` with `options` from the carrier's published list, as the person chose. Old reports read as `unknown`. Until a carrier has an offer list, `unknown` is the only choice |
+| result | `entry`, `result` | an entry of OCD's closed list and its result: one leaf per entry and result |
+| result | `tested_on` | the newest test date behind the leaf; a date, never a time |
+| result | `old_after` | `tested_on` plus 90 days. Past this date the result is old. It is a date and not a stored flag, so the file needs no daily commit, and a reader compares it with today |
+| result | `newer_firmware_has_results` | a newer firmware of this model has results in the file |
+| result | `accounts` | how many distinct accounts reported this result here. The filters leave one report per account in a leaf |
+| result | `contested` | a report here measured a clean failure of this entry |
+| result | `status` | always "reported, not checked by OCD". No account or list gives a stronger status |
+
+How to read it:
+
+- **It shows what was reported, and no more.** A result is one report's or a few reports' claim. It does not say that a tariff includes a feature, and it is no proof for another SIM. It says nothing about emergency calls.
+- **A plan is a label.** The person chose it. It is never a matching key, and plan families the SIM itself shows stay in carrier data as selectors. A plan result feeds no `for_you` answer and no carrier value: it can only open a source review.
+- **Phones never read it.** Neither do ROM builds. `validate` fails if the file enters the dataset manifest, the pull file list or the app's reads: a report is never a value. It lives outside `generated/ocd-dataset/` for that reason.
+- **Privacy.** It holds no IMSI, ICCID, IMEI, phone number, SIP URI, IP address or location, no time of day, and no account name.

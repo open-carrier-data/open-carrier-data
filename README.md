@@ -81,8 +81,8 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `generated/android/` | APN XML, CarrierConfig XML, `lookup.json`, `metadata.json` |
 | `generated/devices/` | the device catalog, carrier artifact registries, and the device records (`carrier-variants.json`) |
 | `generated/ocd-dataset/` | the OCD dataset that OcdCarrierSettings serves as a ROM's carrier data (rule rounds 30 and 31, [docs/rom-builders.md](docs/rom-builders.md)): the manifest, the profiles per network with OCD's match rules and the Google-lane fill, the Google lane's values as source family `google`, and the APN row index ([docs/ocd-dataset.md](docs/ocd-dataset.md)) |
-| `devices/records/` | the sources of `generated/devices/device-records.json`: the owner's devices' configured records, the owner's measured records (written by the report bot) and the second-agent reads group A records need |
-| `observed/` | test reports from the OCD Android app, one file per report issue; people's reports counted as unverified hints (`observed/summary.json`): pointers to entries with the measured result, never a value; they never change an OCD value |
+| `devices/records/` | the key registry entries and the reads beside the dataset's records: the second-agent reads, the group A reads and the F5 reads |
+| `observed/` | test reports from the OCD Android app, one file per report issue, counted as unverified hints (`observed/summary.json`) and shown as device > carrier > plan (`observed/results.json`): pointers to entries with the measured result, never a value; they never change an OCD value |
 | `community/` | how community reports reach `observed/` and why they stay apart from the data |
 | `schemas/` | JSON schemas for the data files and for OCD Android reports |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
