@@ -24,7 +24,7 @@ TODAY = date(2026, 10, 20)
 DIGEST = "sha256:36d5f7ebb084a1a915c4961f8a5f3a11c70150b0fca7f68ccc050ffbe3989d37"
 PROFILE = "open.26202.8cebd7550c67"
 PROFILE_2 = "open.26203.0a1b2c3d4e5f"
-# A commit of main the owner build pinned (round 29 S13), with data-2026.10's data.
+# A commit of main the app pinned (round 29 S13), with data-2026.10's data.
 COMMIT = "e32fd75687d01e7271b640c3adb41c52d42af6a8"
 
 
@@ -159,8 +159,6 @@ def issue(number: int = 7, report: object = REPORT, title: str = "[OCD Android r
             "labels": [{"name": obs.LABEL}], "user": user, "created_at": created, **extra}
 
 
-# Rule round 29: the owner's account, by its GitHub user ID.
-OWNER_ID = 122638570
 BUILD = "CP2A.260605.016 1792814506"
 
 
@@ -169,11 +167,11 @@ def settled(level: str, method: str, measured_on: str, bearer: str | None = None
     return out if bearer is None else {**out, "bearer": bearer}
 
 
-# The S20 on LineageOS 24.0 with AOSP ImsStack and the LIDL SIM, as the owner
-# build writes it since round 29: the data commit, the ROM build, and the
+# The S20 on LineageOS 24.0 with AOSP ImsStack and the LIDL SIM, as the app
+# writes it since round 29: the data commit, the ROM build, and the
 # settled results of rounds 26 to 28 (VoLTE works, Wi-Fi calling calls out,
 # SMS both ways).
-OWNER_REPORT = {
+SETTLED_REPORT = {
     "schema": "ocd-check-test-report",
     "schema_version": 1,
     "app": {"name": "OCD Android", "build": "owner", "version": "0.3.0-owner"},
@@ -196,23 +194,23 @@ OWNER_REPORT = {
 }
 
 
-def owner_changed(change) -> dict:
-    report = copy.deepcopy(OWNER_REPORT)
+def settled_changed(change) -> dict:
+    report = copy.deepcopy(SETTLED_REPORT)
     change(report)
     return report
 
 
-# A correction on the owner's second SIM: OCD's profile gives VoLTE off
+# A correction on a second SIM: OCD's profile gives VoLTE off
 # (unsupported, no device record), the phone tested VoLTE on, it works, and
 # the phone keeps it.
-CORRECTION = owner_changed(lambda r: r.update(ocd_profile=PROFILE_2, sim={"mccmnc": "26203"}, results=[
+CORRECTION = settled_changed(lambda r: r.update(ocd_profile=PROFILE_2, sim={"mccmnc": "26203"}, results=[
     entry("volte:on", False, False, "works", calls=[{"test": "t2", "network": "lte"}], kept=True, restored=True,
           settled=settled("l3", "real_call+real_call", "2026-10-24", "lte")),
     entry("volte:off", True, True, "service_off"),
 ]))
 # A clean measured failure of OCD's value: Wi-Fi calling on, tested, its
 # mailbox call failed; the phone's state came back.
-FAILURE = owner_changed(lambda r: r.update(results=[
+FAILURE = settled_changed(lambda r: r.update(results=[
     entry("vowifi:on", True, False, "failed", "calls_out_failed", restored=True, settled=settled("l2", "mailbox_call", "2026-10-24", "iwlan")),
     entry("vowifi:off", False, True, "service_off"),
 ]))
@@ -230,7 +228,7 @@ def changed(change) -> dict:
 
 class ReportTest(unittest.TestCase):
     def test_the_schemas_use_only_the_validators_keywords(self) -> None:
-        for name in (obs.REPORT_SCHEMA, obs.SUMMARY_SCHEMA, obs.RECORD_SCHEMA):
+        for name in (obs.REPORT_SCHEMA, obs.SUMMARY_SCHEMA, obs.RESULTS_SCHEMA):
             obs.load_schema(name, REPO / "schemas")
 
     def test_the_s20_report_is_valid(self) -> None:
@@ -353,7 +351,7 @@ class ReportTest(unittest.TestCase):
             self.assertTrue(any(fragment in e for e in found), (fragment, found))
 
         has("$.tested_on: is in the future", lambda r: r.update(tested_on="2026-10-25"))
-        has("older than the OCD Android owner build", lambda r: r.update(tested_on="2026-01-01"))
+        has("older than the OCD Android app", lambda r: r.update(tested_on="2026-01-01"))
         has("works needs a passed T2 call test", lambda r: r["results"][0].pop("call_types"))
         has("a T2 call must be on the feature's bearer", lambda r: r["results"][0].update(call_types=[{"test": "t2", "network": "iwlan"}]))
         has("covers only volte:on and vowifi:on", lambda r: r["results"][2].update(call_types=[{"test": "t2", "network": "lte"}]))
@@ -435,12 +433,12 @@ class ReportTest(unittest.TestCase):
 
     def test_a_settled_result_agrees_with_rounds_26_to_28(self) -> None:
         """Rule round 29: a pass at L2 or L3, SMS both ways, or a clean measured failure, with the data commit and the ROM build."""
-        for report in (OWNER_REPORT, CORRECTION, FAILURE):
-            check = obs.check_issue(issue(report=report, user_id=OWNER_ID), date(2026, 10, 25), RELEASES)
+        for report in (SETTLED_REPORT, CORRECTION, FAILURE):
+            check = obs.check_issue(issue(report=report), date(2026, 10, 25), RELEASES)
             self.assertEqual(([], []), (check.errors, check.flags))
 
         def has(fragment: str, change) -> None:
-            found = obs.check_issue(issue(report=owner_changed(change)), date(2026, 10, 25), RELEASES).errors
+            found = obs.check_issue(issue(report=settled_changed(change)), date(2026, 10, 25), RELEASES).errors
             self.assertTrue(any(fragment in e for e in found), (fragment, found))
 
         has("needs the data commit and its digest in $.release (round 29 S13)", lambda r: r.update(release={"tag": "data-2026.10", "data_digest": DIGEST}))
@@ -457,7 +455,7 @@ class ReportTest(unittest.TestCase):
         has("works for sms_over_ims:on needs SMS both ways settled", lambda r: r["results"][4].pop("settled"))
         has("$.results[0].settled.measured_on: is in the future", lambda r: r["results"][0]["settled"].update(measured_on="2026-10-27"))
         # The call ledger can settle a level after the run the report names (same build): not an error.
-        later = obs.check_issue(issue(report=owner_changed(lambda r: r["results"][0]["settled"].update(measured_on="2026-10-25"))), date(2026, 10, 25), RELEASES)
+        later = obs.check_issue(issue(report=settled_changed(lambda r: r["results"][0]["settled"].update(measured_on="2026-10-25"))), date(2026, 10, 25), RELEASES)
         self.assertEqual([], later.errors)
         has("is more than 90 days before tested_on", lambda r: r["results"][0]["settled"].update(measured_on="2026-07-20"))
         has("only a pass or a clean measured failure is settled",
@@ -466,31 +464,39 @@ class ReportTest(unittest.TestCase):
             lambda r: r["results"][2].update(result="failed", reason="calls_out_failed", restored=False))
         has("a measured failure names the one call that failed",
             lambda r: r["results"][2].update(result="failed", reason="calls_out_failed", settled=settled("l2", "mailbox_call+real_call", "2026-10-24", "iwlan")))
-        has("an incoming call is one of the owner's own calls",
+        has("an incoming call is one of the person's own calls",
             lambda r: r["results"][2].update(result="failed", reason="incoming_failed", settled=settled("l3", "mailbox_call", "2026-10-24", "iwlan")))
         for bad in ({"level": "l4", "method": "real_call", "measured_on": "2026-10-24"}, {"level": "l2", "method": "dtmf", "measured_on": "2026-10-24"},
                     {"level": "l2", "method": "real_call"}, {"level": "l2", "method": "real_call", "measured_on": "2026-10-24", "value": True}):
-            found = obs.check_issue(issue(report=owner_changed(lambda r: r["results"][2].update(settled=bad))), date(2026, 10, 25), RELEASES).errors
+            found = obs.check_issue(issue(report=settled_changed(lambda r: r["results"][2].update(settled=bad))), date(2026, 10, 25), RELEASES).errors
             self.assertTrue(any(e.startswith("$.results[2].settled") for e in found), (bad, found))
 
     def test_the_rom_build_is_not_taken_for_a_phone_number(self) -> None:
         # "016 1792814506" has a phone number's shape; the build is a fixed-shape field.
-        self.assertEqual([], obs.privacy_problems(OWNER_REPORT))
-        found = obs.check_issue(issue(report=owner_changed(lambda r: r["device"].update(build="eng.bela.20261024"))), date(2026, 10, 25), RELEASES).errors
+        self.assertEqual([], obs.privacy_problems(SETTLED_REPORT))
+        found = obs.check_issue(issue(report=settled_changed(lambda r: r["device"].update(build="eng.bela.20261024"))), date(2026, 10, 25), RELEASES).errors
         self.assertIn("$.device.build: does not have the allowed form", found)
 
-    def test_the_comment_names_the_settled_results_and_who_sent_them(self) -> None:
-        check = obs.check_issue(issue(report=OWNER_REPORT, user_id=OWNER_ID), date(2026, 10, 25), RELEASES)
-        text = obs.comment(check, 30, "open-carrier-data/open-carrier-data", owner=True)
+    def test_the_comment_names_the_settled_results_the_same_for_everyone(self) -> None:
+        check = obs.check_issue(issue(report=SETTLED_REPORT), date(2026, 10, 25), RELEASES)
+        text = obs.comment(check, 30, "open-carrier-data/open-carrier-data")
         self.assertIn("- VoLTE on: works (L3): calls both ways over LTE (audio from packet counts); mailbox_call+real_call, measured 2026-10-23", text)
         self.assertIn("- Wi-Fi calling on: calls out (L2) over Wi-Fi, incoming not tested", text)
         self.assertIn("- SMS over IMS on: SMS both ways over IMS (L3); self_sms, measured 2026-10-22", text)
-        self.assertIn("ocd-device-record", text)
-        self.assertIn("devices/records/measured.json", text)
-        self.assertIn("as the owner's report it is not counted in `observed/summary.json`", text)
+        self.assertIn("reported, not checked by OCD", text)
         self.assertIn("IMS stack aosp_imsstack, build CP2A.260605.016 1792814506.", text)
-        outside = obs.comment(obs.check_issue(issue(report=OWNER_REPORT), date(2026, 10, 25), RELEASES), 31, "open-carrier-data/open-carrier-data")
-        self.assertIn("Not from the owner's account", outside)
+        self.assertIn("Plan: unknown.", text)
+        self.assertNotIn("owner", text.lower())
+
+    def test_the_plan_is_unknown_or_nothing_until_a_carrier_has_an_offer_list(self) -> None:
+        self.assertEqual([], errors_of(changed(lambda r: r.update(plan="unknown"))))
+        self.assertEqual("unknown", obs.plan_of(REPORT), "an old report reads as unknown")
+        chosen = errors_of(changed(lambda r: r.update(plan={"offer": "de.lidl-connect.smart", "options": ["de.lidl-connect.wifi-calling"]})))
+        self.assertEqual(["$.plan: no carrier has a published offer list yet, so the only choice is unknown"], chosen)
+        for bad in ("Smart S", "", 3, {"offer": "My tariff"}, {"offer": "de.lidl-connect.smart", "note": "x"},
+                    {"options": ["de.lidl-connect.smart"]}, {"offer": "de.lidl-connect.smart", "options": []}):
+            found = errors_of(changed(lambda r: r.update(plan=bad)))
+            self.assertTrue(any(e.startswith("$.plan") for e in found), (bad, found))
 
     def test_commit_pointers_are_read_from_main_s_history_and_a_commit_off_main_is_refused(self) -> None:
         """A real git history: two commits on main and one on a branch never merged, all with files under generated/."""
@@ -568,7 +574,7 @@ class ObservedTest(unittest.TestCase):
             stale.write_text("{}", encoding="utf-8")
             today = date(2026, 10, 25)
             result = obs.rebuild(self.issues(), root, today, RELEASES)
-            self.assertEqual({"written": [4, 5, 6, 7, 11, 14], "left_out": [8], "counted": [4, 7, 11], "owner": [], "records": []}, result)
+            self.assertEqual({"written": [4, 5, 6, 7, 11, 14], "left_out": [8], "counted": [4, 7, 11]}, result)
             self.assertFalse(stale.exists(), "a withdrawn report leaves observed/")
 
             def item(n: int) -> dict:
@@ -680,200 +686,257 @@ class ObservedTest(unittest.TestCase):
         self.assertEqual([], obs.validate_tree(REPO))
 
 
-class OwnerPointerReportsTest(unittest.TestCase):
-    """Rule round 30: the owner's pointer reports stay pointers in observed/; round 29's retested.json is folded into the measured records."""
+class SameForEveryoneTest(unittest.TestCase):
+    """Rule round 47, item 2: no account takes another path or gets another status."""
 
     TODAY = date(2026, 10, 25)
+    # The GitHub user ID of the account that once skipped the filters.
+    ONCE_THE_OWNER = 122638570
 
-    def owner(self, number: int, report: dict, created: str = "2026-10-24T03:00:00Z", **extra) -> dict:
-        return issue(number, report=report, login="belagrf", user_id=OWNER_ID, created=created, **extra)
+    def test_no_account_skips_a_filter(self) -> None:
+        newcomer = issue(30, report=SETTLED_REPORT, login="belagrf", user_id=self.ONCE_THE_OWNER, created="2026-10-24T03:00:00Z")
+        results = []
+        for item in (newcomer, issue(31, report=settled_changed(lambda r: r.update(tested_on="2026-10-23")), login="mallory", user_id=1,
+                                     created="2026-10-24T03:00:00Z")):
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                obs.rebuild([item], root, self.TODAY, RELEASES)
+                written = json.loads((root / "observed" / "reports" / f"issue-{item['number']}.json").read_text(encoding="utf-8"))
+                self.assertNotIn("tester", written)
+                results.append((written["status"], written["status_reasons"]))
+                self.assertEqual([], obs.validate_tree(root))
+        self.assertEqual(results[0], results[1])
+        self.assertEqual("held", results[0][0], "the 14-day hold applies to every account")
 
-    def issues(self) -> list[dict]:
-        again = owner_changed(lambda r: (r.update(tested_on="2026-10-25"), r["results"][0]["settled"].update(measured_on="2026-10-25")))
-        stranger = issue(40, report=json.dumps(OWNER_REPORT), login="mallory", user_id=1, created="2026-10-24T05:00:00Z")
-        imposter = issue(41, report=json.dumps(CORRECTION), login="belagrf", user_id=2, created="2026-10-24T06:00:00Z")
-        return [self.owner(30, OWNER_REPORT), self.owner(31, again, "2026-10-25T03:00:00Z"), self.owner(33, CORRECTION),
-                self.owner(34, FAILURE), stranger, imposter]
-
-    def test_owner_pointer_reports_make_no_records_and_retested_json_goes(self) -> None:
+    def test_every_counted_report_is_in_the_summary_and_one_per_account_counts(self) -> None:
+        first = issue(30, report=SETTLED_REPORT, login="old", user_id=5, created="2026-10-01T03:00:00Z")
+        renamed = issue(31, report=settled_changed(lambda r: r.update(tested_on="2026-10-25")), login="renamed", user_id=5, created="2026-10-02T03:00:00Z")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "observed").mkdir()
-            (root / "observed" / "retested.json").write_text("{}", encoding="utf-8")
-            result = obs.rebuild(self.issues(), root, self.TODAY, RELEASES)
-            self.assertEqual([30, 31, 33, 34], result["owner"])
-            self.assertEqual([], result["records"])
-            self.assertFalse((root / "observed" / "retested.json").exists(), "round 29's file is folded into the records")
-            measured = json.loads((root / obs.MEASURED_FILE).read_text(encoding="utf-8"))
-            self.assertEqual(([], "2026-10-25"), (measured["records"], measured["as_of"]))
-            self.assertEqual("owner", json.loads((root / "observed" / "reports" / "issue-30.json").read_text(encoding="utf-8"))["tester"])
-            self.assertEqual("outside", json.loads((root / "observed" / "reports" / "issue-41.json").read_text(encoding="utf-8"))["tester"])
+            result = obs.rebuild([first, renamed], root, self.TODAY, RELEASES)
+            self.assertEqual([31], result["counted"], "an account is its user ID, not its login")
             summary = json.loads((root / "observed" / "summary.json").read_text(encoding="utf-8"))
-            self.assertEqual({"counted": 0, "duplicate": 0, "expired": 0, "held": 2, "superseded": 0}, summary["reports"])
-            self.assertTrue(all(c["retested_by_ocd"] is None for c in summary["cells"]))
-            self.assertEqual([], obs.validate_tree(root, self.TODAY))
-            (root / "observed" / "retested.json").write_text("{}", encoding="utf-8")
-            self.assertTrue(any("folded" in e for e in obs.validate_tree(root, self.TODAY)))
+            volte = [c for c in summary["cells"] if c["entry"] == "volte:on"][0]
+            self.assertEqual(1, volte["reported"]["count"])
+            self.assertIsNone(volte["retested_by_ocd"], "removed only after the app without it is on the phone")
+
+    def test_the_owner_path_is_gone(self) -> None:
+        tool = (REPO / "tools" / "observed_reports.py").read_text(encoding="utf-8")
+        workflow = (REPO / ".github" / "workflows" / "ocd-check-report.yml").read_text(encoding="utf-8")
+        for text in (tool, workflow):
+            for word in ("OWNER_ACCOUNTS", "record_issue_problems", "ocd-device-record", "measured.json"):
+                self.assertNotIn(word, text)
+        self.assertFalse((REPO / "devices" / "records" / "measured.json").exists())
+        records = json.loads((REPO / "generated" / "devices" / "device-records.json").read_text(encoding="utf-8"))
+        self.assertEqual([], records["records"], "device-records.json stays as an empty role")
+
+    def test_a_measured_record_is_no_report(self) -> None:
+        record = {"record_key": "r:0000000000000000", "kind": "measured"}
+        check = obs.check_issue(issue(report=record), self.TODAY, RELEASES)
+        self.assertFalse(check.valid)
+        titled = issue(report=record, title="[OCD device record] works: x for y on z")
+        titled["labels"] = [{"name": "ocd-device-record"}]
+        self.assertEqual([], obs.report_issues([titled]), "the intake reads report issues only")
 
 
-def measured_record(key: str = "carrier_volte_available_bool", value: object = True, result: str = "works", level: str = "L3", **extra) -> dict:
-    """A measured record as the owner build writes it (rule round 30, spec 2.10)."""
-    record = {
-        "kind": "measured", "device": {"codename": "x1s", "model": "SM-G981B"}, "rom": {"family": "lineageos", "line": "24.0"},
-        "ims_stack": {"id": "aosp_imsstack", "fork": None, "version": 36}, "carrier": {"scope": "profile", "profile_id": PROFILE},
-        "target": {"type": "config", "key": key}, "value_kind": "value", "value": value, "claim": "measured", "label": None,
-        "basis": "outgoing and incoming calls over LTE with audio both ways (packet counts)", "level": level, "result": result,
-        "method": "mailbox_call+real_call", "bearer": "lte", "n": 2, "first_measured": "2026-10-23", "last_measured": "2026-10-24",
-        "valid_until": "2027-01-22", "data": {"commit": COMMIT, "data_digest": DIGEST}, "tester": "owner",
-        "differs_between_sims": None, "second_agent_read": None,
-    }
-    record.update(extra)
-    record["record_key"] = ocd_dataset.record_key_of(record)
-    return record
+def at_firmware(build: str | None, **changes) -> dict:
+    def change(r: dict) -> None:
+        if build is None:
+            r["device"].pop("build")
+        else:
+            r["device"]["build"] = build
+        for result in r["results"]:
+            result.pop("settled", None)
+        r.update(results=[entry("volte:on", True, True, "signed_in"), entry("vowifi:on", True, False, "failed", "settle_timeout", restored=True)], **changes)
+    return settled_changed(change)
 
 
-def record_issue(number: int, record: dict, owner: bool = True, created: str = "2026-10-25T03:00:00Z", **extra) -> dict:
-    """One measured record as the owner build (ocd-android #29, RecordReport) opens it: label
-    ocd-device-record, the record as the body's only JSON block, compact as kotlinx writes it."""
-    key = record["target"].get("key") or record["target"]["type"]
-    scope = record["carrier"].get("profile_id") or f"{record['carrier'].get('mcc')}-{record['carrier'].get('mnc')}"
-    body = ("### Record\n\n```json\n" + json.dumps(record, separators=(",", ":"), ensure_ascii=False) + "\n```\n\n### Privacy check\n\n"
-            "- [X] The OCD Android app's privacy scan passed: the record holds no IMSI, ICCID, IMEI, phone number, SIP URI or IP address.\n")
-    user = {"login": "belagrf", "id": OWNER_ID} if owner else {"login": "mallory", "id": 4}
-    return {"number": number, "title": f"[OCD device record] {record['result']}: {key} for {scope} on {record['device']['model']}",
-            "body": body, "state": "open", "state_reason": None, "labels": [{"name": obs.RECORD_LABEL}], "user": user,
-            "created_at": created, **extra}
-
-
-def profile_int_key() -> tuple[str, int]:
-    """An int key OCD publishes for PROFILE, with its value: a non-switch key whose candidates are closed."""
-    profiles = json.loads((REPO / ocd_dataset.FILES["profiles"][1]).read_text(encoding="utf-8"))
-    profile = next(p for p in profiles["networks"]["262-02"]["profiles"] if p["id"] == PROFILE)
-    return next((k, v) for k, v in sorted(profile["values"].items()) if profiles["keys"][k]["type"] == "int" and k not in ocd_dataset.CONFIG_VALUE_DOMAINS)
-
-
-@unittest.skipUnless((REPO / ocd_dataset.FILES["profiles"][1]).is_file(), "needs this checkout's generated/ocd-dataset/")
-class MeasuredRecordsTest(unittest.TestCase):
-    """Rule round 30, item 4: the owner's ocd-device-record issues enter devices/records/measured.json, and only those."""
+class ResultsTreeTest(unittest.TestCase):
+    """Rule round 47, item 4: observed/results.json, device > carrier > plan."""
 
     TODAY = date(2026, 10, 25)
+    OLD = "2026-10-01T00:00:00Z"
 
-    def check(self, record: dict, owner: bool = True, today: date | None = None, **extra) -> obs.Check:
-        return obs.check_issue(record_issue(60, record, owner, **extra), today or self.TODAY, RELEASES)
-
-    def test_a_valid_record_issue_from_the_owner(self) -> None:
-        check = self.check(measured_record())
-        self.assertEqual([], check.errors)
-        self.assertEqual(COMMIT, check.ref)
-        text = obs.comment(check, 60, "open-carrier-data/open-carrier-data", owner=True)
-        self.assertIn("Valid measured record", text)
-        self.assertIn("`config:carrier_volte_available_bool`", text)
-
-    def test_the_app_s_shapes_pass(self) -> None:
-        # The app writes n null, an X5 trial's calls out at L3, and the observed method (ocd-android #29).
-        x5 = measured_record("carrier_volte_available_bool", False, result="calls_out", level="L3", method="override_trial", n=None)
-        self.assertEqual([], self.check(x5).errors)
-        self.assertEqual([], self.check(measured_record(method="observed", bearer=None)).errors)
-        sim_key = measured_record(carrier={"scope": "sim_key", "mcc": "262", "mnc": "09", "spn": "Example Mobile"},
-                                  result="sms_both_ways", level="sms_both_ways", method="self_sms",
-                                  target={"type": "config", "key": "imssms.sms_over_ims_supported_bool"})
-        self.assertEqual([], self.check(sim_key).errors)
-
-    def test_only_the_owner_s_account_counts(self) -> None:
-        check = self.check(measured_record(), owner=False)
-        self.assertFalse(check.valid)
-        self.assertIn("only from the owner's account", check.errors[0])
-
-    def test_one_json_block_per_issue(self) -> None:
-        raised = record_issue(60, measured_record())
-        raised["body"] += "\n```json\n{}\n```\n"
-        errors = obs.check_issue(raised, self.TODAY, RELEASES).errors
-        self.assertTrue(any("exactly one JSON block" in e for e in errors), errors)
-        raised = record_issue(60, measured_record())
-        raised["body"] = raised["body"].replace("- [X]", "- [ ]")
-        self.assertTrue(any("box is not ticked" in e for e in obs.check_issue(raised, self.TODAY, RELEASES).errors))
-        raised = record_issue(60, measured_record())
-        raised["body"] += "\nCall me on +491701234567\n"
-        self.assertTrue(any("outside the record" in e for e in obs.check_issue(raised, self.TODAY, RELEASES).errors))
-
-    def test_the_intake_refuses(self) -> None:
-        key, value = profile_int_key()
-        cases = {
-            "record_group_a": measured_record("imsemergency.emergency_domain_preference_int_array", [2, 1]),
-            "record_group_b": measured_record("carrier_metered_apn_types_strings", ["default"]),
-            "record_not_candidate": measured_record(key, value + 1),
-            "unknown_key": measured_record("no_such_key_bool", True),
-            "record_unknown_profile": measured_record(carrier={"scope": "profile", "profile_id": "open.26202.000000000000"}),
-            "private data": measured_record(basis="called +491701234567 from the A50"),
-            "has expired": measured_record(first_measured="2026-07-01", last_measured="2026-07-02", valid_until="2026-09-30"),
-            "result and level": measured_record(level="L2"),
-            "not a commit of OCD's main": measured_record(data={"commit": "0" * 40, "data_digest": DIGEST}),
-            # Round 31 step 8: the schema itself knows the kind measured only.
-            'must be one of "measured"': {**measured_record(), "kind": "configured_device", "claim": "configured", "valid_until": None},
-            "record_key": {**measured_record(), "record_key": "r:0000000000000000"},
-        }
-        for code, record in cases.items():
-            with self.subTest(code=code):
-                errors = self.check(record).errors
-                self.assertTrue(any(code in e for e in errors), errors)
-        self.assertEqual([], self.check(measured_record(key, value)).errors, "OCD's own value is a candidate")
-
-    def test_rebuild_keeps_the_newest_record_per_key_and_drops_expired_ones(self) -> None:
-        older = measured_record()
-        newer = measured_record(last_measured="2026-10-25", valid_until="2027-01-23", n=3)
-        winner = measured_record("carrier_wfc_ims_available_bool", False, result="winner_after_failure", level="L2", method="override_trial",
-                                 bearer="iwlan", first_measured="2026-10-25", last_measured="2026-10-25", valid_until="2027-01-23")
-        issues = [record_issue(60, older), record_issue(61, newer), record_issue(62, winner),
-                  record_issue(63, newer, created="2026-10-26T03:00:00Z"),  # sent again unchanged: a duplicate
-                  record_issue(64, newer, owner=False)]
+    def tree(self, issues: list[dict], today: date | None = None) -> dict:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            result = obs.rebuild(issues, root, self.TODAY, RELEASES)
-            self.assertEqual([60, 61, 62], result["records"])
-            self.assertIn(64, result["left_out"])
-            self.assertEqual("duplicate", json.loads((root / "observed" / "reports" / "issue-63.json").read_text(encoding="utf-8"))["status"])
-            measured = json.loads((root / obs.MEASURED_FILE).read_text(encoding="utf-8"))
-            self.assertEqual(2, len(measured["records"]))
-            volte = next(item for item in measured["records"] if item["record"]["target"]["key"] == "carrier_volte_available_bool")
-            self.assertEqual((61, 3), (volte["issue"], volte["record"]["n"]))
-            self.assertEqual([], obs.validate_tree(root, self.TODAY))
-            first = (root / obs.MEASURED_FILE).read_text(encoding="utf-8")
-            obs.rebuild(issues, root, date(2026, 11, 3), RELEASES)
-            self.assertEqual(first, (root / obs.MEASURED_FILE).read_text(encoding="utf-8"), "a quiet day keeps the file")
-            obs.rebuild(issues, root, date(2027, 1, 24), RELEASES)
-            self.assertEqual([], json.loads((root / obs.MEASURED_FILE).read_text(encoding="utf-8"))["records"], "expired")
-            data = json.loads(first)
-            data["records"][0]["record"]["n"] += 1
-            (root / obs.MEASURED_FILE).write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-            self.assertTrue(any("is not what the reports give" in e for e in obs.validate_tree(root, date(2027, 1, 24))))
+            obs.rebuild(issues, root, today or self.TODAY, RELEASES)
+            self.assertEqual([], obs.validate_tree(root))
+            return json.loads((root / "observed" / obs.RESULTS_FILE).read_text(encoding="utf-8"))
 
-    def test_the_check_command_names_the_intake_label(self) -> None:
+    def test_the_tree_nests_device_carrier_plan_and_each_leaf_says_reported(self) -> None:
+        tree = self.tree([issue(30, report=at_firmware(BUILD), login="a", created=self.OLD),
+                          issue(31, report=at_firmware(BUILD, tested_on="2026-10-20"), login="b", created=self.OLD)])
+        self.assertEqual("unverified", tree["verification"])
+        node = tree["devices"][0]
+        self.assertEqual({"model": "SM-G981B", "firmware": BUILD, "rom_family": "lineageos", "rom_line": "android-16", "ims_stack": "aosp_imsstack"}, node["device"])
+        self.assertEqual(PROFILE, node["carriers"][0]["carrier"])
+        plan = node["carriers"][0]["plans"][0]
+        self.assertEqual("unknown", plan["plan"], "old reports read as unknown")
+        volte = next(r for r in plan["results"] if r["entry"] == "volte:on")
+        self.assertEqual({"entry": "volte:on", "result": "signed_in", "tested_on": "2026-10-24", "old_after": "2027-01-22", "newer_firmware_has_results": False,
+                          "accounts": 2, "contested": False, "status": "reported, not checked by OCD"}, volte)
+        self.assertTrue(next(r for r in plan["results"] if r["entry"] == "vowifi:on")["contested"])
+
+    def test_no_carrier_data_time_or_identifier_enters_the_tree(self) -> None:
+        text = json.dumps(self.tree([issue(30, report=SETTLED_REPORT, login="alice", created=self.OLD)])["devices"])
+        for word in ("alice", "LIDL", "26202\"", "T0", "codename", "x1s", "emergency", "issue", "capabilities", "values"):
+            self.assertNotIn(word, text)
+
+    def test_a_newer_firmware_of_the_model_marks_the_older_one(self) -> None:
+        newer = "CP2A.260605.016 1792900000"
+        tree = self.tree([issue(30, report=at_firmware(BUILD), login="a", created=self.OLD), issue(31, report=at_firmware(newer), login="b", created=self.OLD),
+                          issue(32, report=at_firmware(None), login="c", created=self.OLD)])
+        marks = {d["device"]["firmware"]: d["carriers"][0]["plans"][0]["results"][0]["newer_firmware_has_results"] for d in tree["devices"]}
+        self.assertEqual({BUILD: True, newer: False, "unknown": False}, marks)
+
+    def test_an_old_result_stays_with_its_dates_and_a_held_one_never_enters(self) -> None:
+        reports = [issue(30, report=at_firmware(BUILD), login="a", created=self.OLD), issue(31, report=at_firmware(BUILD, tested_on="2026-10-25"), login="new", created="2026-10-25T00:00:00Z")]
+        tree = self.tree(reports)
+        self.assertEqual(1, tree["devices"][0]["carriers"][0]["plans"][0]["results"][0]["accounts"], "the new account's report waits")
+        later = self.tree([reports[0]], date(2027, 3, 1))
+        leaf = later["devices"][0]["carriers"][0]["plans"][0]["results"][0]
+        self.assertEqual(("2026-10-24", "2027-01-22"), (leaf["tested_on"], leaf["old_after"]), "past old_after the result is old, and still there")
+        suspect = [issue(30, report=changed(lambda r: r.update(ocd_profile=PROFILE, tested_on="2026-10-02", results=[entry("video_calling:on", True, True, "signed_in")])),
+                         login="a", created="2026-10-02T00:00:00Z")]
+        self.assertEqual([], self.tree(suspect, date(2027, 3, 1))["devices"], "a report the filters held does not enter when it expires")
+
+    def test_one_account_counts_once_and_a_deleted_issue_drops_out(self) -> None:
+        reports = [issue(30, report=at_firmware(BUILD), login="a", created=self.OLD),
+                   issue(31, report=at_firmware(BUILD, sim={"mccmnc": "26203"}), login="a", created=self.OLD)]
+        leaf = self.tree(reports)["devices"][0]["carriers"][0]["plans"][0]["results"][0]
+        self.assertEqual(1, leaf["accounts"], "the same place in the tree: only the newest report of an account")
+        self.assertEqual([], self.tree([])["devices"])
+
+    def test_a_report_with_no_profile_stays_out(self) -> None:
+        none = changed(lambda r: r.update(ocd_profile=None, results=[entry("volte:on", False, True, "signed_in")]))
+        self.assertEqual([], self.tree([issue(30, report=none, login="a", created=self.OLD)])["devices"])
+
+    def test_not_tested_is_no_result(self) -> None:
+        tree = self.tree([issue(30, report=SETTLED_REPORT, login="a", created=self.OLD)])
+        entries = [r["entry"] for r in tree["devices"][0]["carriers"][0]["plans"][0]["results"]]
+        self.assertEqual(["sms_over_ims:on", "volte:on", "vowifi:on"], entries)
+
+    def test_validate_catches_a_hand_edit_of_the_tree(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            event = Path(tmp) / "event.json"
-            event.write_text(json.dumps({"issue": record_issue(60, measured_record())}), encoding="utf-8")
-            with contextlib.redirect_stdout(io.StringIO()), unittest.mock.patch.object(obs, "Releases", lambda root, main="HEAD": RELEASES):
-                obs.main(["check-issue", "--event", str(event), "--result", str(Path(tmp) / "r.json"), "--comment", str(Path(tmp) / "c.md"), "--today", "2026-10-25"])
-            result = json.loads((Path(tmp) / "r.json").read_text(encoding="utf-8"))
-            self.assertEqual((True, obs.RECORD_LABEL), (result["valid"], result["intake_label"]))
+            root = Path(tmp)
+            obs.rebuild([issue(30, report=SETTLED_REPORT, login="a", created=self.OLD)], root, self.TODAY, RELEASES)
+            path = root / "observed" / obs.RESULTS_FILE
+            data = json.loads(path.read_text(encoding="utf-8"))
+            data["devices"][0]["carriers"][0]["plans"][0]["results"][0]["accounts"] = 9
+            path.write_text(obs.dump(data), encoding="utf-8")
+            self.assertTrue(any("is not what the reports give" in e for e in obs.validate_tree(root)))
+            data["devices"][0]["carriers"][0]["plans"][0]["results"][0]["status"] = "re-tested by OCD"
+            path.write_text(obs.dump(data), encoding="utf-8")
+            self.assertTrue(any("status: must be" in e for e in obs.validate_tree(root)))
+            path.unlink()
+            self.assertIn("observed/results.json: is missing", obs.validate_tree(root))
 
-    def test_source_reviews_for_corrections_and_winners(self) -> None:
-        key, value = profile_int_key()
-        winner = measured_record("carrier_wfc_ims_available_bool", False, result="winner_after_failure", level="L2", method="override_trial", bearer="iwlan")
-        plain = measured_record()
-        default = measured_record(key, None, value_kind="android_default", result="winner_after_failure", level="L2", method="override_trial")
-        document = {"as_of": "2026-10-25", "records": [{"issue": 61, "record": r} for r in (winner, plain, default)]}
-        profiles = json.loads((REPO / ocd_dataset.FILES["profiles"][1]).read_text(encoding="utf-8"))
-        plan = obs.review_plan(document, [], "open-carrier-data/open-carrier-data", profiles)
-        self.assertEqual(sorted([f"profile:{PROFILE}|config:carrier_wfc_ims_available_bool", f"profile:{PROFILE}|config:{key}"]), sorted(p["key"] for p in plan))
-        body = next(p for p in plan if p["key"].endswith("carrier_wfc_ims_available_bool"))["body"]
-        self.assertTrue(body.startswith("<!-- ocd-source-review key=profile:"))
-        self.assertIn("winner_after_failure (L2)", body)
+
+class ServingPathTest(unittest.TestCase):
+    """Phones and ROM builds never read observed/results.json (rule round 47, item 4)."""
+
+    def root(self, tmp: str) -> Path:
+        root = Path(tmp)
+        obs.rebuild([], root, date(2026, 10, 25), RELEASES)
+        return root
+
+    def test_the_repository_is_clean(self) -> None:
+        self.assertEqual([], obs.serving_problems(REPO))
+
+    def test_the_manifest_may_not_list_it(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            manifest = root / ocd_dataset.FILES["manifest"][1]
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({"files": [{"role": "profiles", "path": "generated/ocd-dataset/profiles.json"}]}), encoding="utf-8")
+            self.assertEqual([], obs.validate_tree(root))
+            manifest.write_text(json.dumps({"files": [{"role": "results", "path": "observed/results.json"}]}), encoding="utf-8")
+            self.assertTrue(any("generated/ocd-dataset/manifest.json" in e for e in obs.validate_tree(root)))
+            manifest.write_text(json.dumps({"files": [{"role": "results", "name": "results.json"}]}), encoding="utf-8")
+            self.assertTrue(any("manifest.json" in e for e in obs.validate_tree(root)))
+
+    def test_the_pull_file_list_may_not_name_it(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self.root(tmp)
+            with unittest.mock.patch.dict(ocd_dataset.FILES, {"results": ("results.json", "observed/results.json", 1024)}):
+                self.assertTrue(any("results is a file phones read" in e for e in obs.validate_tree(root)))
+
+    def test_the_app_may_not_read_it(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as app:
+            root = self.root(tmp)
+            source = Path(app) / "app/src/owner/java/ObservedReports.kt"
+            source.parent.mkdir(parents=True)
+            source.write_text('const val SUMMARY_URL = "$RAW/summary.json"\n', encoding="utf-8")
+            self.assertEqual([], obs.validate_tree(root, Path(app)))
+            source.write_text('const val RESULTS_URL = "$RAW/results.json"\n', encoding="utf-8")
+            self.assertEqual(["observed/results.json: the app reads it (app/src/owner/java/ObservedReports.kt)"], obs.validate_tree(root, Path(app)))
+
+
+class SourceReviewTest(unittest.TestCase):
+    """Rule 10, rule round 47, item 2: a review opens from a counted report that names a failure and a passing alternative."""
+
+    TODAY = date(2026, 10, 25)
+    OLD = "2026-10-01T00:00:00Z"
+    REPOSITORY = "open-carrier-data/open-carrier-data"
+
+    def records(self, *issues: dict) -> list[dict]:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            obs.rebuild(list(issues), root, self.TODAY, RELEASES)
+            records, errors = obs.read_records(root)
+            self.assertEqual([], errors)
+            return records
+
+    def test_a_failure_with_a_passing_alternative_opens_one_review(self) -> None:
+        records = self.records(issue(34, report=FAILURE, login="a", created=self.OLD))
+        plan = obs.review_plan(records, [], self.REPOSITORY)
+        self.assertEqual([("create", f"{PROFILE}|vowifi:on")], [(step["action"], step["key"]) for step in plan])
+        self.assertEqual(f"[Source review] Wi-Fi calling on for {PROFILE}", plan[0]["title"])
+        body = plan[0]["body"]
+        self.assertIn("`vowifi:off`", body)
+        self.assertIn("calls_out_failed", body)
+        self.assertIn("#34", body)
+        self.assertIn("Reported, not checked by OCD", body)
         self.assertIn("changes nothing by itself", body)
-        bot = {"login": "github-actions[bot]"}
-        opened = [{"number": 50 + i, "state": "open", "user": bot, "body": step["body"]} for i, step in enumerate(plan)]
-        self.assertEqual([], obs.review_plan(document, opened, "open-carrier-data/open-carrier-data", profiles))
-        closed = [dict(i, state="closed") for i in opened]
-        self.assertEqual([], obs.review_plan(document, closed, "open-carrier-data/open-carrier-data", profiles), "a closed review stays closed")
+        self.assertNotIn("owner", body)
+
+    def test_what_opens_no_review(self) -> None:
+        alone = settled_changed(lambda r: r.update(results=[entry("vowifi:on", True, False, "failed", "settle_timeout", restored=True)]))
+        not_ocds = settled_changed(lambda r: r.update(results=[entry("vowifi:on", False, False, "failed", "settle_timeout", restored=True), entry("vowifi:off", True, True, "service_off")]))
+        broke = settled_changed(lambda r: r.update(results=[entry("vowifi:on", True, False, "failed", "revert_not_proven"), entry("vowifi:off", False, True, "service_off")]))
+        for report in (alone, not_ocds, broke):
+            self.assertEqual([], obs.review_plan(self.records(issue(34, report=report, login="a", created=self.OLD)), [], self.REPOSITORY))
+        held = self.records(issue(34, report=FAILURE, login="new", created="2026-10-24T00:00:00Z"))
+        self.assertEqual([], obs.review_plan(held, [], self.REPOSITORY), "a held report opens nothing")
+
+    def test_an_apn_alternative_shares_a_type(self) -> None:
+        one, two, three = "apn:a.example|default,supl|IPV4V6", "apn:b.example|default|IPV4V6", "apn:c.example|mms|IPV4V6"
+        failed, passed, other = entry(one, True, False, "failed", "no_data", restored=True), entry(two, True, False, "works"), entry(three, True, False, "works")
+        self.assertTrue(obs.same_target(failed, passed))
+        self.assertFalse(obs.same_target(failed, other))
+        self.assertFalse(obs.same_target(failed, failed))
+
+    def test_the_bot_updates_its_open_issue_and_a_closed_one_stays_closed(self) -> None:
+        records = self.records(issue(34, report=FAILURE, login="a", created=self.OLD))
+        body = obs.review_plan(records, [], self.REPOSITORY)[0]["body"]
+        mine = {"number": 90, "state": "open", "user": {"login": obs.BOT_LOGIN}, "body": body}
+        self.assertEqual([], obs.review_plan(records, [mine], self.REPOSITORY))
+        self.assertEqual([("update", 90)], [(s["action"], s["number"]) for s in obs.review_plan(records, [{**mine, "body": body + "x"}], self.REPOSITORY)])
+        self.assertEqual([], obs.review_plan(records, [{**mine, "state": "closed"}], self.REPOSITORY))
+        marker = body.splitlines()[0]
+        other = marker.split(" signature=")[0] + " signature=000000000000 -->"
+        self.assertEqual(["create"], [s["action"] for s in obs.review_plan(records, [{**mine, "state": "closed", "body": other}], self.REPOSITORY)])
+        self.assertEqual(["create"], [s["action"] for s in obs.review_plan(records, [{**mine, "user": {"login": "someone"}}], self.REPOSITORY)])
+
+    def test_the_command_writes_the_plan(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            obs.rebuild([issue(34, report=FAILURE, login="a", created=self.OLD)], root, self.TODAY, RELEASES)
+            (root / "reviews.json").write_text("[]", encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, obs.main(["source-reviews", "--root", str(root), "--issues", str(root / "reviews.json"), "--out", str(root / "out")]))
+            self.assertEqual(1, len(json.loads((root / "out" / "plan.json").read_text(encoding="utf-8"))))
 
 
 class FormTest(unittest.TestCase):
@@ -896,16 +959,20 @@ class FormTest(unittest.TestCase):
             self.assertIn(label, workflow)
         self.assertNotIn("github.event.issue.body", workflow, "the body reaches the tool only as a file")
 
-    def test_the_workflow_takes_record_issues(self) -> None:
+    def test_the_form_says_the_issue_is_public_and_stays_in_history(self) -> None:
+        form = (REPO / ".github" / "ISSUE_TEMPLATE" / obs.TEMPLATE).read_text(encoding="utf-8")
+        self.assertIn("public, under your own GitHub account", form)
+        self.assertIn("older versions stay in git history", form)
+
+    def test_the_bot_touches_only_observed(self) -> None:
         workflow = (REPO / ".github" / "workflows" / "ocd-check-report.yml").read_text(encoding="utf-8")
-        self.assertIn(f"contains(github.event.issue.labels.*.name, '{obs.RECORD_LABEL}')", workflow)
-        self.assertIn(f"startsWith(github.event.issue.title, '{obs.RECORD_TITLE_PREFIX}')", workflow)
-        self.assertIn(f"labels={obs.RECORD_LABEL}&state=all", workflow)
-        self.assertIn("intake_label", workflow)
+        job = workflow.split("\n  observed:\n", 1)[1].split("\n  source-review:\n", 1)[0]
+        self.assertIn("git status --porcelain -- . ':!observed'", job)
+        self.assertNotIn("ocd_dataset.py", job, "a report never regenerates the dataset")
 
     def test_the_workflow_opens_source_reviews_from_main(self) -> None:
         workflow = (REPO / ".github" / "workflows" / "ocd-check-report.yml").read_text(encoding="utf-8")
-        self.assertRegex(workflow, r"(?ms)^  push:\n    branches: \[main\]\n    paths:\n      - devices/records/measured\.json$")
+        self.assertRegex(workflow, r"(?ms)^  push:\n    branches: \[main\]\n    paths:\n      - observed/reports/\*\*$")
         job = workflow.split("\n  source-review:\n", 1)[1]
         self.assertIn("issues: write", job)
         self.assertNotIn("contents: write", job)

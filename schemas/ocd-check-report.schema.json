@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-check-report.schema.json",
   "title": "OCD Android test report (the \"OCD Android report\" issue form)",
-  "description": "What the OCD Android owner build measured on one phone with one SIM, as pointers: each result names an entry of the closed list of one OCD data commit or release (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that data's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the checks against the named commit or release that a schema cannot express.",
+  "description": "What OCD Android measured on one phone with one SIM, as pointers: each result names an entry of the closed list of one OCD data commit or release (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that data's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the checks against the named commit or release that a schema cannot express.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -28,7 +28,7 @@
         "name": { "enum": ["OCD Android", "OCD Check"] },
         "build": {
           "enum": ["owner"],
-          "description": "Only the owner build tests values; the read-only builds write no test report."
+          "description": "A fixed word the testing app writes; the read-only builds write no test report. It gives no person or account any status."
         },
         "version": { "type": "string", "pattern": "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}(-[a-z]{1,16})?$" }
       }
@@ -130,6 +130,27 @@
       ],
       "description": "The most specific profile of the named data the SIM matched; null when none matched."
     },
+    "plan": {
+      "anyOf": [
+        { "const": "unknown" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["offer"],
+          "properties": {
+            "offer": { "$ref": "#/$defs/offer_id" },
+            "options": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/offer_id" }
+            }
+          }
+        }
+      ],
+      "description": "The plan the person chose next to the report (rule round 47, item 4): unknown, or a closed offer ID with booked options from the carrier's published list. Never free text, and never read from an account, USSD, carrier SMS or TS.43. A report without it reads as unknown. Until a carrier has an offer list, unknown is the only choice the bot takes. Plan is never a matching key and feeds no carrier value: it shows in observed/results.json and can only open a source review."
+    },
     "results": {
       "type": "array",
       "minItems": 1,
@@ -144,6 +165,11 @@
     }
   },
   "$defs": {
+    "offer_id": {
+      "type": "string",
+      "pattern": "^[a-z]{2}\\.[a-z0-9-]{1,40}\\.[a-z0-9-]{1,40}$",
+      "description": "An ID of the carrier's published offer list: country, brand and offer, for example de.lidl-connect.smart."
+    },
     "code": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]{0,63}$",
@@ -204,7 +230,7 @@
           "type": "object",
           "additionalProperties": false,
           "required": ["level", "method", "measured_on"],
-          "description": "A settled result under rounds 26 to 28 (rule round 29): a pass at L2 or L3, SMS both ways, or a clean measured failure, as the owner build measured it on this ROM build, with the evidence behind it. Only volte:on, vowifi:on and sms_over_ims:on carry it, and only in a report that names a data commit and the ROM build. From the owner's account it is recorded in observed/retested.json as \"re-tested by OCD\" for 90 days; from any other account it changes nothing and the report stays \"reported, not checked by OCD\". It never carries a value.",
+          "description": "A settled result under rounds 26 to 28 (rule round 29): a pass at L2 or L3, SMS both ways, or a clean measured failure, as the app measured it on this ROM build, with the evidence behind it. Only volte:on, vowifi:on and sms_over_ims:on carry it, and only in a report that names a data commit and the ROM build. From every account alike it changes nothing and the report stays \"reported, not checked by OCD\". It never carries a value.",
           "properties": {
             "level": {
               "enum": ["l2", "l3"],
@@ -216,7 +242,7 @@
             },
             "method": {
               "enum": ["mailbox_call", "real_call", "mailbox_call+real_call", "real_call+real_call", "self_sms"],
-              "description": "How each leg was measured: the app's own muted mailbox call, one of the owner's own calls measured passively, both legs for l3 (outgoing+incoming), or the data SMS to the phone's own number."
+              "description": "How each leg was measured: the mailbox call the person tapped, one of the person's own calls measured passively, both legs for l3 (outgoing+incoming), or the data SMS to the phone's own number the person tapped."
             },
             "measured_on": {
               "type": "string",
@@ -234,7 +260,7 @@
       "properties": {
         "test": {
           "enum": ["t2", "with_feature_off"],
-          "description": "t2: the guided call test's passed outgoing and incoming calls; with_feature_off: a call of the owner's own that went active while the feature was off."
+          "description": "t2: the guided call test's passed outgoing and incoming calls; with_feature_off: a call of the person's own that went active while the feature was off."
         },
         "network": {
           "enum": [

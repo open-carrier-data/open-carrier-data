@@ -124,7 +124,7 @@ jobs:
         run: python3 tools/test_validate_operators.py
       - name: Validate generated/operators and rule 3's prefix limits on every published file
         run: python3 tools/validate_operators.py . --freshness warn
-      # The OCD dataset for the owner's ROM (rule round 30): the schemas, the
+      # The OCD dataset (rule round 30): the schemas, the
       # reader's checks 4 to 10, the device-record rules, the privacy guard on
       # the Google lane, and a regeneration that must give the same bytes. On
       # a pull request a changed dataset must also carry a later generated_at
@@ -160,8 +160,17 @@ jobs:
             fi
           fi
           python3 tools/f5_read.py check --root . "${args[@]}"
+      # Rule round 47, item 4: observed/results.json stays out of what phones
+      # read, so the check also reads the app's code.
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          repository: open-carrier-data/ocd-android
+          path: ocd-android-checkout
+          persist-credentials: false
       - name: Validate observed/ (unverified reports, apart from the data)
-        run: python3 tools/observed_reports.py validate --root .
+        run: |
+          python3 tools/observed_reports.py validate --root . --app ocd-android-checkout
+          rm -rf ocd-android-checkout
       - name: Regenerate Android outputs and confirm nothing drifted
         run: |
           python3 tools/generate_android_outputs.py carriers generated --apn-version 8

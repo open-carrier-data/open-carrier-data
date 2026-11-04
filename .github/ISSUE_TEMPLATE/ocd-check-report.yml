@@ -7,14 +7,16 @@ body:
   - type: markdown
     attributes:
       value: |
-        The OCD Android app (owner build) opens this form with its test report filled in. Read it, then submit it. Do not edit the report: a bot checks it against [schemas/ocd-check-report.schema.json](https://github.com/open-carrier-data/open-carrier-data/blob/main/schemas/ocd-check-report.schema.json) and the OCD data it names (a commit of main, or a data release for older app builds), and labels the issue `report:valid`, `report:suspect` or `report:invalid`, with a comment that says exactly what is wrong and gives the report's hash.
+        The OCD Android app opens this form with its test report filled in, when you tap to send it. Read it, then submit it. Do not edit the report: a bot checks it against [schemas/ocd-check-report.schema.json](https://github.com/open-carrier-data/open-carrier-data/blob/main/schemas/ocd-check-report.schema.json) and the OCD data it names (a commit of main, or a data release for older app builds), and labels the issue `report:valid`, `report:suspect` or `report:invalid`, with a comment that says exactly what is wrong and gives the report's hash.
 
-        The report only points at entries of that data (`volte:on`, `apn:<row key>`, ...) with the result your phone measured. A valid report is recorded under `observed/` as "reported, not checked by OCD". It is a hint: it never changes an OCD value, a file under `generated/` or a release, and it never makes a phone skip its own test. Measured records are not sent with this form: the owner build sends each as an issue labelled `ocd-device-record` from the owner's account only (rule round 30), and they enter OCD's per-device records for the owner's phones. The owner build may also send this report through the API with the same fields. [community/README.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/community/README.md) explains the path.
+        **This issue is public, under your own GitHub account.** Anyone can link your GitHub name to the carrier and any plan in the report. The app never holds your login, and nothing is sent until you submit this form. If you later delete the issue, the report leaves OCD's current files at the next rebuild, but older versions stay in git history.
+
+        The report only points at entries of that data (`volte:on`, `apn:<row key>`, ...) with the result your phone measured. A valid report is recorded under `observed/` as "reported, not checked by OCD". It is a hint: it never changes an OCD value, a file under `generated/` or a release, it never makes a phone skip its own test, and no result changes what another phone gets. Every account takes this same path. [community/README.md](https://github.com/open-carrier-data/open-carrier-data/blob/main/community/README.md) explains it.
   - type: textarea
     id: report
     attributes:
       label: Report
-      description: The app's JSON test report. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day or location.
+      description: The app's JSON test report. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text.
       render: json
     validations:
       required: true

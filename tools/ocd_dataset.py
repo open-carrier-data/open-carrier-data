@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""The OCD dataset for the owner's ROM (rule round 30): generate, validate, match.
+"""The OCD dataset (rule round 30): generate, validate, match.
 
-Rule round 30 (2026-10-25) replaces Google's carrier data on the owner's ROM
-with one OCD dataset per commit of main. OcdCarrierSettings reads it, the OCD
-Check owner app pulls it, and the ROM pin step bakes it into the build. This
+Rule round 30 (2026-10-25) replaces Google's carrier data on a ROM with one OCD
+dataset per commit of main. OcdCarrierSettings reads it, the OCD Android app
+pulls it, and the ROM pin step bakes it into the build. This
 tool writes and checks that dataset from the files of one checkout of main:
 
   generated/ocd-dataset/manifest.json    the header: digests, file list, counts
@@ -16,8 +16,8 @@ tool writes and checks that dataset from the files of one checkout of main:
                                          publisher; this tool only re-stamps it
   generated/ocd-dataset/apn-index.json   each apns-conf.xml row's line, key and
                                          profiles
-  generated/devices/device-records.json  the per-device records, from
-                                         devices/records/
+  generated/devices/device-records.json  the per-device records role: stays
+                                         empty (rule round 47, item 2)
   schemas/carrier-config-keys.json       the closed key registry
 
 The file formats are those of the round 30 dataset spec (S20 project report
@@ -95,8 +95,6 @@ FILES = {
 TOTAL_CAP = 64 * 1024 * 1024
 REGISTRY_PATH = "schemas/carrier-config-keys.json"
 RECORDS_DIR = "devices/records"
-CONFIGURED_DIR = f"{RECORDS_DIR}/configured"
-MEASURED_FILE = f"{RECORDS_DIR}/measured.json"
 READS_DIR = f"{RECORDS_DIR}/reads"
 KEYS_FILE = f"{RECORDS_DIR}/keys.json"
 
@@ -205,9 +203,9 @@ CARRIER_SCOPES = ("profile", "sim_key")
 # main serves schema_version 1 (the round 30 format, which every reader on a
 # phone today parses); implementation order step 8 dropped the five S20
 # records, and SERVED_RECORDS_SCHEMA_VERSION switches to 2 once the readers on
-# the phones parse it. The report bot takes schema_version 1 records until the
-# switch; a cell record placed in devices/records/measured.json before then is
-# checked and waits there unserved.
+# the phones parse it. Rule round 47, item 2: no result of any account is served
+# on another phone, so nothing writes records and validate refuses one; the file
+# stays as an empty role, because a reader refuses a pull without it.
 CELL_RECORDS_SCHEMA_VERSION = 2
 SERVED_RECORDS_SCHEMA_VERSION = 1
 FORK_RE = re.compile(r"[a-z][a-z0-9_-]{0,31}")
@@ -1008,38 +1006,11 @@ def any_record_problems(record: Any, registry: dict[str, dict[str, Any]], reads:
     return record_problems(record, registry, reads, where)
 
 
-def served_records(records: list[dict[str, Any]], version: int | None = None) -> list[dict[str, Any]]:
-    """The records device-records.json carries in schema_version VERSION
-    (SERVED_RECORDS_SCHEMA_VERSION by default): round 30 records in 1, cell
-    records in 2. A cell record waits for 2; a round 30 record does not
-    carry over into 2, because its cell lacks the ROM forks and incremental."""
-    version = SERVED_RECORDS_SCHEMA_VERSION if version is None else version
-    return [r for r in records if is_cell_record(r) == (version == CELL_RECORDS_SCHEMA_VERSION)]
-
-
-def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
-    """(records, declared keys, reads) from devices/records/: every
-    configured/*.json, measured.json (written by the report bot), keys.json
-    (the registry entries of keys only records use) and reads/*.json (the
-    second-agent reads group A records need)."""
+def read_record_sources(root: Path) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    """(declared keys, reads) from devices/records/: keys.json (the registry
+    entries of keys only records use) and reads/*.json (the second-agent reads
+    group A records need)."""
     base = root / RECORDS_DIR
-    records: list[dict[str, Any]] = []
-    for path in sorted((base / "configured").glob("*.json")) if (base / "configured").is_dir() else []:
-        document = read_json_file(path)
-        if set(document) != {"schema_version", "description", "records"} or document["schema_version"] != 1:
-            raise DatasetError(f"{path}: must hold exactly schema_version 1, description and records")
-        records.extend(document["records"])
-    measured = base / "measured.json"
-    if measured.is_file():
-        document = read_json_file(measured)
-        if set(document) != {"schema_version", "description", "as_of", "records"} or document["schema_version"] != 1:
-            raise DatasetError(f"{measured}: must hold exactly schema_version 1, description, as_of and records")
-        for item in document["records"]:
-            # Rule round 45, item 1: an item may carry the canonical match-set
-            # hash its record was made under (measured_match_set_hashes).
-            if not isinstance(item, dict) or set(item) - {"match_set_hash"} != {"issue", "record"}:
-                raise DatasetError(f"{measured}: each item must hold exactly issue and record, and may hold match_set_hash")
-            records.append(item["record"])
     keys: dict[str, dict[str, Any]] = {}
     if (base / "keys.json").is_file():
         document = read_json_file(base / "keys.json")
@@ -1050,7 +1021,7 @@ def read_record_sources(root: Path) -> tuple[list[dict[str, Any]], dict[str, dic
     for folder in (base / "reads", base / "reads" / "group-a"):
         for path in sorted(folder.glob("*.json")) if folder.is_dir() else []:
             reads[path.relative_to(root).as_posix()] = read_json_file(path)
-    return records, keys, reads
+    return keys, reads
 
 
 def current_match_set_hashes(root: Path, lookup: dict[str, Any]) -> dict[str, str] | None:
@@ -1085,23 +1056,6 @@ def under_current_match_set(profile_id: str, stored: Any, current: dict[str, str
         return True
     made = made_under(stored, profile_id)
     return made is None or current.get(profile_id) == made
-
-
-def measured_match_set_hashes(root: Path) -> dict[str, str]:
-    """record_key -> match_set_hash of the measured.json items that carry one."""
-    path = root / MEASURED_FILE
-    if not path.is_file():
-        return {}
-    document = read_json_file(path)
-    return {item["record"]["record_key"]: item["match_set_hash"]
-            for item in document.get("records", []) if isinstance(item, dict) and "match_set_hash" in item}
-
-
-def record_serves(record: dict[str, Any], stored: dict[str, str], current: dict[str, str] | None) -> bool:
-    carrier = record.get("carrier") or {}
-    if carrier.get("scope") != "profile":
-        return True
-    return under_current_match_set(carrier["profile_id"], stored.get(record["record_key"]), current)
 
 
 def read_problems(read: dict[str, Any], where: str) -> list[str]:
@@ -1871,7 +1825,7 @@ def now_utc() -> str:
 
 
 def generate(root: Path, generated_at: str | None = None, previous_manifest: dict[str, Any] | None = None,
-             lane_override: dict[str, Any] | None = None, records_override: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+             lane_override: dict[str, Any] | None = None) -> dict[str, Any]:
     """Every dataset file of ROOT as bytes, keyed by repository path, with a
     report. The manifest keeps PREVIOUS_MANIFEST's generated_at when no file
     changed. LANE_OVERRIDE replaces google-lane.json (a bake from a commit
@@ -1883,9 +1837,9 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
         raise DatasetError(f"{FILES['google_lane'][1]}: missing; the private publisher writes the Google lane (round 30)")
     generator = load_module("generate_android_outputs", root / "tools/generate_android_outputs.py")
     lineage = load_module("lineageos_apns", root / "tools/lineageos_apns.py")
-    records, declared, reads = read_record_sources(root)
-    if records_override is not None:
-        records = records_override
+    declared, reads = read_record_sources(root)
+    # Rule round 47, item 2: device-records.json stays an empty role.
+    records: list[dict[str, Any]] = []
     registry = build_registry(inputs, records, declared, left_group_a_keys(reads))
     carriers = {e["profile_id"]: inputs.carrier_profile(e["path"]) for e in inputs.lookup["profiles"]}
     apn_index, version = build_apn_index(inputs, generator, lineage, [(e, carriers[e["profile_id"]]) for e in inputs.lookup["profiles"]])
@@ -1898,14 +1852,12 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     profiles_doc, profile_counts = build_profiles(inputs, registry, apn_counts, carriers)
     lane = lane_document(inputs)
     current = current_match_set_hashes(root, inputs.lookup)
-    stored = measured_match_set_hashes(root)
-    served = [r for r in served_records(records) if record_serves(r, stored, current)]
     group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads, current)
     group_a_bytes = dump_lines(group_a, ("key_findings", "reads"))
     files_by_role = {
         "profiles": dump_lines(profiles_doc, ("keys", "networks")),
         "google_lane": dump_lines(lane, ("entries", "rules")),
-        "device_records": dump_lines(records_document(inputs, served), ("records",)),
+        "device_records": dump_lines(records_document(inputs, records), ("records",)),
         "apn_xml": inputs.apn_xml,
         "apn_index": dump_lines(apn_index, ("rows",)),
     }
@@ -1917,7 +1869,7 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
         "fill_only_profiles": profile_counts["fill_only_profiles"],
         "google_entries": len(lane["entries"]),
         "apn_rows": len(apn_index["rows"]),
-        "records": len(served),
+        "records": len(records),
     }
     keep = None
     if previous_manifest is not None:
@@ -1941,7 +1893,7 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
                         "key_findings": len(group_a["key_findings"]), "left_group_a": group_a_pending["left_group_a"],
                         "pending": len(group_a_pending["pending"]), "pending_profiles": sum(len(p["profiles"]) for p in group_a_pending["pending"]),
                         "listed_in_manifest": LIST_GROUP_A_READS},
-            "records_waiting": len(records) - len(served), "lane_rules_left_out": inputs.lane_rules_left_out}
+            "records_waiting": 0, "lane_rules_left_out": inputs.lane_rules_left_out}
 
 
 def previous_manifest_of(root: Path) -> dict[str, Any] | None:
@@ -2258,7 +2210,7 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
             elif not FILL_ID_RE.fullmatch(profile["id"]):
                 out.append(f"profiles.json: {profile['id']} is not a fill-only profile id")
     out += tie_problems(parsed["profiles"], parsed.get("apn_index"))
-    records, declared, reads = read_record_sources(root)
+    _, reads = read_record_sources(root)
     for path, read in reads.items():
         if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA:
             problems = group_a_read_problems(read, path)
@@ -2273,11 +2225,8 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
             out.append(f"{where}: record_key {record['record_key']} appears twice")
         seen_keys.add(record["record_key"])
         out += any_record_problems(record, registry, reads, where)
-    for index, record in enumerate(r for r in records if r not in served_records(records)):
-        where = f"{MEASURED_FILE}: waiting cell record {index}"
-        problems = cell_record_problems(record, registry, where)
-        out += problems or schema_check(root, {"schema_version": CELL_RECORDS_SCHEMA_VERSION, "based_on_data_digest": metadata.get("data_digest"),
-                                                "expire_days": EXPIRE_DAYS, "records": [record]}, "cell-records.schema.json", where)
+    if parsed["device_records"]["records"]:
+        out.append("device-records.json: must stay empty: no result of any account is served on another phone (rule round 47, item 2)")
     group_a_path = root / GROUP_A_READS_FILE
     if group_a_path.is_file() and "group_a_reads" not in parsed:
         out += schema_check(root, read_json_file(group_a_path), "ocd-dataset-group-a-reads.schema.json", GROUP_A_READS_FILE)

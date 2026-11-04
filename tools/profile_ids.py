@@ -619,7 +619,7 @@ def referenced_ids(root: Path) -> dict[str, set[str]]:
                 "generated/operators/carrier-identity.json", "generated/devices/carrier-variants.json",
                 "generated/devices/device-records.json", "generated/ocd-dataset/profiles.json",
                 "generated/ocd-dataset/group-a-reads.json", "generated/ocd-dataset/group-a-pending.json",
-                "generated/ocd-dataset/apn-index.json", "devices/records/measured.json"):
+                "generated/ocd-dataset/apn-index.json"):
         scan_text(rel)
     evidence = root / "generated/evidence-index.json"
     if evidence.is_file():

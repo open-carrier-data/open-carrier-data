@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/observed-results.schema.json",
+  "title": "Open Carrier Data results tree (observed/results.json)",
+  "description": "What people reported from OCD Android, nested device > carrier > plan (rule round 47, item 4). Built by tools/observed_reports.py from observed/reports/, so a deleted issue drops out at the next rebuild. Every result is unverified and reads \"reported, not checked by OCD\". Carrier data stays at the carrier: device and plan exist only here, inside results, and no carrier value is copied into this file. Phones and ROM builds never read it, and validate fails if it enters the dataset manifest, the pull file list or the app's reads. It holds dates and never a time, and no IMSI, ICCID, IMEI, phone number, SIP URI, IP address or location.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "verification", "devices"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "verification": { "const": "unverified" },
+    "devices": { "type": "array", "items": { "$ref": "#/$defs/device_node" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date" },
+    "offer_id": { "type": "string", "pattern": "^[a-z]{2}\\.[a-z0-9-]{1,40}\\.[a-z0-9-]{1,40}$" },
+    "device_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device", "carriers"],
+      "properties": {
+        "device": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["model", "firmware", "rom_family", "rom_line", "ims_stack"],
+          "properties": {
+            "model": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9 ._()+-]{0,39}$" },
+            "firmware": {
+              "type": "string",
+              "pattern": "^(unknown|[A-Za-z0-9][A-Za-z0-9._-]{0,31} [0-9]{9,11})$",
+              "description": "The report's public build string: Build.ID and the build's UTC time in seconds. Never the fingerprint, the incremental, a serial or a host name. unknown when the report names no build."
+            },
+            "rom_family": { "enum": ["stock", "lineageos", "other"] },
+            "rom_line": {
+              "type": "string",
+              "pattern": "^android-[0-9]{2}$",
+              "description": "The ROM's line as a report can name it: its Android major. The firmware tells the builds of one line apart."
+            },
+            "ims_stack": { "enum": ["phh_ims", "samsung_ims", "aosp_imsstack", "other", "not_known"] }
+          }
+        },
+        "carriers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/carrier_node" } }
+      }
+    },
+    "carrier_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carrier", "plans"],
+      "properties": {
+        "carrier": {
+          "type": "string",
+          "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$",
+          "description": "OCD's profile ID. The profile's data stays in carriers/. A report with no OCD profile has no carrier to sit under and stays out of this file."
+        },
+        "plans": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/plan_node" } }
+      }
+    },
+    "plan_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plan", "results"],
+      "properties": {
+        "plan": {
+          "anyOf": [
+            { "const": "unknown" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["offer"],
+              "properties": {
+                "offer": { "$ref": "#/$defs/offer_id" },
+                "options": { "type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": { "$ref": "#/$defs/offer_id" } }
+              }
+            }
+          ],
+          "description": "The person's own choice from the carrier's closed offer list, or unknown. A label, not a fact about the tariff."
+        },
+        "results": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/result" } }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry", "result", "tested_on", "old_after", "newer_firmware_has_results", "accounts", "contested", "status"],
+      "properties": {
+        "entry": { "type": "string", "minLength": 1, "description": "An entry of OCD's closed list, as in the report." },
+        "result": { "enum": ["works", "signed_in", "service_off", "not_possible", "failed"] },
+        "tested_on": { "$ref": "#/$defs/date", "description": "The newest test date of the reports behind this result." },
+        "old_after": { "$ref": "#/$defs/date", "description": "tested_on plus 90 days. Past this date the result is old. A date, not a stored flag, so the file needs no daily commit." },
+        "newer_firmware_has_results": { "type": "boolean", "description": "A newer firmware of this model has results in this file." },
+        "accounts": { "type": "integer", "minimum": 1, "description": "How many distinct accounts reported this result here." },
+        "contested": { "type": "boolean", "description": "A report here measured a clean failure of this entry." },
+        "status": { "const": "reported, not checked by OCD" }
+      }
+    }
+  }
+}
