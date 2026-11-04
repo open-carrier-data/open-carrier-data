@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OCD Check reports: check an issue, rebuild observed/, validate observed/.
+"""OCD Android reports: check an issue, rebuild observed/, validate observed/.
 
 A report points, phones prove (the anti-fake design of 2026-10-20). An OCD
 Check report names entries of the closed list of one OCD data commit or
@@ -12,7 +12,7 @@ the phone measured. No report can bring a new value onto a phone; a report
 can only make a phone test an entry earlier, and the phone keeps nothing that
 fails its own test.
 
-The "OCD Check report" issue form carries one fenced JSON block that the OCD
+The "OCD Android report" issue form carries one fenced JSON block that the OCD
 Check owner build prefills (schemas/ocd-check-report.schema.json). This tool
 is the whole logic of .github/workflows/ocd-check-report.yml, so it runs the
 same way on a laptop:
@@ -129,7 +129,9 @@ VALID_LABEL = "report:valid"
 SUSPECT_LABEL = "report:suspect"
 INVALID_LABEL = "report:invalid"
 HOLD_RELEASED_LABEL = "report:hold-released"
-TITLE_PREFIX = "[OCD Check report]"
+TITLE_PREFIX = "[OCD Android report]"
+# Issues opened before the rename (an older app, or an open form) carry the old title; the workflow still takes them.
+LEGACY_TITLE_PREFIX = "[OCD Check report]"
 TEMPLATE = "ocd-check-report.yml"
 BOT_MARKER = "<!-- ocd-check-report-bot -->"
 REPORT_HEADING = "Report"
@@ -413,7 +415,7 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
     if tested_on > today + timedelta(days=1):
         out.append("$.tested_on: is in the future")
     if tested_on < EARLIEST_TEST:
-        out.append(f"$.tested_on: is before {EARLIEST_TEST.isoformat()}, older than the OCD Check owner build")
+        out.append(f"$.tested_on: is before {EARLIEST_TEST.isoformat()}, older than the OCD Android owner build")
     if report["ocd_profile"] is None and "gid1_prefix" in report["sim"]:
         out.append("$.sim.gid1_prefix: is sent only with the OCD profile that matches by it")
     seen: set[str] = set()
@@ -852,7 +854,7 @@ def check_record_issue(issue: dict[str, Any], today: date, releases: Releases | 
     errors += [e.replace("$", "the title", 1) for e in scan_text("$", title, phone_heuristics=False)]
     blocks = FENCED_JSON_RE.findall(body)
     if len(blocks) != 1:
-        errors.append(f"the issue body must hold exactly one JSON block (it holds {len(blocks)}): the OCD Check owner build sends one record per issue")
+        errors.append(f"the issue body must hold exactly one JSON block (it holds {len(blocks)}): the OCD Android owner build sends one record per issue")
         return Check(False, errors, [], None, None, None)
     raw = blocks[0].strip()
     # The app's privacy box names the identifiers it left out ("IMEI"), so
@@ -942,7 +944,7 @@ def check_issue(issue: dict[str, Any], today: date, releases: Releases | None) -
     errors += [e.replace("$", "the title", 1) for e in scan_text("$", title)]
     sections = form_sections(body)
     if REPORT_HEADING not in sections:
-        errors.append(f"the issue has no \"{REPORT_HEADING}\" field: open it with the OCD Check report form, as the app does")
+        errors.append(f"the issue has no \"{REPORT_HEADING}\" field: open it with the OCD Android report form, as the app does")
         return Check(False, errors, [], None, None, None)
     raw = unfence(sections[REPORT_HEADING])
     rest = HEADING_RE.sub(lambda m: "" if m.group(1).strip() == REPORT_HEADING else m.group(0), body)
@@ -1051,7 +1053,7 @@ def comment(check: Check, number: int, repository: str, owner: bool = False) -> 
         device = report["device"]
         label = SUSPECT_LABEL if check.flags else VALID_LABEL
         lines += [
-            f"**Valid OCD Check report** (`{label}`). Report hash: `{check.sha256}`.",
+            f"**Valid OCD Android report** (`{label}`). Report hash: `{check.sha256}`.",
             "",
             "A report points at entries of OCD's data (a commit of main or a release); it never changes an OCD value, a file under `generated/` "
             "or a release, and it never makes a phone skip its own test. At most it makes a phone test an entry earlier. "
@@ -1100,7 +1102,7 @@ def comment(check: Check, number: int, repository: str, owner: bool = False) -> 
             lines.append(f"- and {len(check.errors) - len(shown)} more")
         lines += [
             "",
-            "Edit the issue to fix it, and the check runs again. A report passes as the OCD Check app writes it; "
+            "Edit the issue to fix it, and the check runs again. A report passes as the OCD Android app writes it; "
             "if it was changed by hand, open a new one from the app instead.",
         ]
         if any("private data" in error or "phone number" in error or "private identifier" in error for error in check.errors):
@@ -1275,7 +1277,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "schema_version": 1,
         "description": (
-            "Unverified observations from OCD Check reports of people's phones (observed/reports/, every account but the "
+            "Unverified observations from OCD Android reports of people's phones (observed/reports/, every account but the "
             "owner's), per device, carrier profile, software stack and entry. A report only points at an entry of OCD's "
             "data at one commit or release; it never changes an OCD value, a file under generated/ or a release, and it "
             "never makes a phone skip its own test. Nothing here is a support claim. The owner's results are measured "
@@ -1289,7 +1291,7 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 MEASURED_DESCRIPTION = (
-    "The owner's measured records (rule round 30, item 4): settled results the OCD Check owner build submitted from the "
+    "The owner's measured records (rule round 30, item 4): settled results the OCD Android owner build submitted from the "
     "owner's GitHub account, one per record_key, the newest kept and each dropped after its valid_until. Written only by "
     "tools/observed_reports.py rebuild from the report issues; outside reports stay pointers in observed/."
 )
@@ -1517,7 +1519,7 @@ def pr_body(result: dict[str, list[int]], before: set[int]) -> str:
     added = [n for n in result["written"] if n not in before]
     removed = sorted(before - set(result["written"]))
     lines = [
-        "Observed reports from OCD Check report issues: people's reports recorded as **unverified**, the owner's measured records as per-device records (rule round 30).",
+        "Observed reports from OCD Android report issues: people's reports recorded as **unverified**, the owner's measured records as per-device records (rule round 30).",
         "",
         "- `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, its release, its tester (`owner` or `outside`) and its status after the noise filters.",
         "- `observed/summary.json`: other accounts' reports per device × carrier profile × stack × entry, \"reported, not checked by OCD\" by result, \"contested\" for a clean measured failure, and the held reports.",

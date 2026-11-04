@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/ocd-check-report.schema.json",
-  "title": "OCD Check test report (the \"OCD Check report\" issue form)",
-  "description": "What the OCD Check owner build measured on one phone with one SIM, as pointers: each result names an entry of the closed list of one OCD data commit or release (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that data's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the checks against the named commit or release that a schema cannot express.",
+  "title": "OCD Android test report (the \"OCD Android report\" issue form)",
+  "description": "What the OCD Android owner build measured on one phone with one SIM, as pointers: each result names an entry of the closed list of one OCD data commit or release (volte, vowifi, sms_over_ims, video_calling or vonr, on or off, or apn: and a row key that data's apns-conf.xml has for the SIM's network) and the result class the phone measured. It never carries a value: no report can bring a new setting onto a phone. An observation, unverified: it never changes an OCD value, a generated file or a release, and it never makes a phone skip its own test. It holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, time of day, location or free text. tools/observed_reports.py checks it against this schema with stdlib code (the keyword subset of tools/validate_public_carrier_data.py), then runs the privacy scan, the consistency checks and the checks against the named commit or release that a schema cannot express.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -25,7 +25,7 @@
       "additionalProperties": false,
       "required": ["name", "build", "version"],
       "properties": {
-        "name": { "const": "OCD Check" },
+        "name": { "enum": ["OCD Android", "OCD Check"] },
         "build": {
           "enum": ["owner"],
           "description": "Only the owner build tests values; the read-only builds write no test report."

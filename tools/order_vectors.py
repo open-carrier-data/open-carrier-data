@@ -4,7 +4,7 @@
 Rule round 45 replaces the count of filled selectors with Android's weights
 and a written-out tie rule (tools/ocd_dataset.py, "resolution order"). This
 tool lists what that changes and writes the golden vectors that the public
-resolver, OcdCarrierSettings and the OCD Check app must all pass.
+resolver, OcdCarrierSettings and the OCD Android app must all pass.
 
   dry-run [--root DIR] [--out FILE]
       Every network and pair of profiles one SIM can match whose order flips
@@ -363,7 +363,7 @@ def golden(root: Path, commit: str) -> dict[str, Any]:
         "schema": SCHEMA,
         "about": "Golden vectors of OCD's resolution order (rule round 45, item 3): a synthetic SIM in, the stack generic to specific, "
                  "the serving profile, the step of the order that made it serve (reason) and the Google fill it picks out. "
-                 "tools/resolve_carrier_profiles.py --order android, tools/ocd_dataset.py, OcdCarrierSettings and the OCD Check app "
+                 "tools/resolve_carrier_profiles.py --order android, tools/ocd_dataset.py, OcdCarrierSettings and the OCD Android app "
                  "pass every vector. All SIM values are synthetic, built from published selectors.",
         "order": list(ocd.ORDER_STEPS),
         "carrier_id_table": {"version": table["version"], "source": table["source"], "rows": table_rows(sets)},
