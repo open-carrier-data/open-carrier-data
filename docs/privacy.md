@@ -23,7 +23,7 @@ A ROM builder who ships the app may share this responsibility ([rom-builders.md]
 
 ## The question
 
-The app asks this once per install, in one notification on the first boot with a SIM, or the ROM shows the same words on a setup screen:
+The app asks this once per install, on one screen with equal Yes and No. Its one notification on the first boot with a SIM opens that screen, or the ROM's setup opens it instead:
 
 > Help improve carrier settings? Once a week, on Wi-Fi and never while roaming, this phone can send Open Carrier Data which carrier features and data settings signed in or worked, with your phone model, ROM family, Android version, IMS software and carrier. It sends no name, number or SIM ID, no location, no times and no call details. Your internet address reaches OCD's relay at Cloudflare (USA) while sending and OCD does not keep it. Results are published only for groups of phones and hold no ID, so what was sent cannot be taken back. You can stop any time in Settings > About phone > Open Carrier Data. [Details] [No] [Yes]
 
