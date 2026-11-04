@@ -521,10 +521,10 @@ class GeneratorTest(unittest.TestCase):
         root = self.fresh()
         again = generate_into(root, "2026-10-26T10:00:00Z")
         self.assertEqual(again["manifest"]["generated_at"], "2026-10-25T10:00:00Z")
-        measured = root / "devices/records/measured.json"
-        document = json.loads(measured.read_text())
-        document["records"] = [{"issue": 1, "record": round30_record()}]
-        measured.write_text(json.dumps(document), encoding="utf-8")
+        keys = root / "devices/records/keys.json"
+        document = json.loads(keys.read_text())
+        document["keys"]["imsvoice.round47_test_key_bool"] = {"type": "bool", "fork": "ocd"}
+        keys.write_text(json.dumps(document), encoding="utf-8")
         changed = generate_into(root, "2026-10-26T10:00:00Z")
         self.assertEqual(changed["manifest"]["generated_at"], "2026-10-26T10:00:00Z")
         self.assertNotEqual(changed["manifest"]["dataset_digest"], again["manifest"]["dataset_digest"])
@@ -533,6 +533,15 @@ class GeneratorTest(unittest.TestCase):
         stale = dict(changed["manifest"])
         self.assertTrue(any("generated_at" in p for p in ocd.validate(root, {**base, "generated_at": "2026-10-27T00:00:00Z"})))
         del stale
+
+    def test_a_record_in_device_records_json_is_refused(self) -> None:
+        root = self.fresh()
+        path = root / ocd.FILES["device_records"][1]
+        document = json.loads(path.read_text())
+        document["records"] = [round30_record()]
+        path.write_bytes(ocd.dump_lines(document, ("records",)))
+        self.assertTrue(any("must stay empty" in p for p in ocd.validate(root, regenerate=False)) or
+                        any("size or SHA-256" in p for p in ocd.validate(root)))
 
     def test_drift_is_refused(self) -> None:
         root = self.fresh()
@@ -701,12 +710,11 @@ class Round31RecordsTest(unittest.TestCase):
         self.assertTrue(any("record_kind" in p for p in problems), problems)
         self.assertFalse((REPO / "devices/records/configured").is_dir() and any((REPO / "devices/records/configured").glob("*.json")))
 
-    def test_served_records_follow_the_schema_version(self) -> None:
-        old = round30_record()
-        mixed = [old, cell_record()]
-        self.assertEqual(ocd.SERVED_RECORDS_SCHEMA_VERSION, 1)
-        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 1)], [old["record_key"]])
-        self.assertEqual([r["record_key"] for r in ocd.served_records(mixed, 2)], ["r:3e3c08bfd829cafe"])
+    def test_device_records_json_stays_an_empty_role(self) -> None:
+        """Rule round 47, item 2: nothing writes a record, and validate refuses one."""
+        self.assertEqual(ocd.FILES["device_records"][1], "generated/devices/device-records.json")
+        self.assertFalse((REPO / "devices/records/measured.json").exists())
+        self.assertEqual(json.loads((REPO / ocd.FILES["device_records"][1]).read_text())["records"], [])
 
 
 def tiny_profiles(values: dict, fill: list) -> dict:
