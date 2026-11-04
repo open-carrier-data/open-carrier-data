@@ -56,7 +56,7 @@ filled-in values. Each scope names the sources of the filling rows, read from
 the generator's records of CHECKOUT when they are exactly the head file's
 rows (`aligned_records`); otherwise the report says the sources are unknown.
 `class_a_list` gives the whole class (a) list of a checkout, which
-`credential_fill_ins.py` prints for each publish and the release notes carry.
+`credential_fill_ins.py` prints for each publish.
 
 Also reported, never held, on WATCH_TYPES (HOLD_TYPES plus IWLAN; rule
 decisions of 2026-10-18, round 20): the `ims` lead of each scope in both

@@ -6,7 +6,7 @@ Open Carrier Data is a public database of mobile carrier settings. It stores neu
 
 ## Get the data
 
-You can get the data in three ways. Each one takes the latest publish on `main`, the edge channel: it changes several times a day, and the validators and the phone guard are its only checks. For a fixed, checked snapshot, take a release instead. The first is [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10); [Releases and support](#releases-and-support) below says what it supports.
+You can get the data in three ways. Each one takes the latest publish on `main`, the one channel: it changes several times a day, with no waiting period. For a fixed snapshot, pin a commit. [The channel and support](#the-channel-and-support) below says what is supported.
 
 To take everything, including tools and schemas, clone the public repo:
 
@@ -14,7 +14,7 @@ To take everything, including tools and schemas, clone the public repo:
 git clone https://github.com/open-carrier-data/open-carrier-data.git
 ```
 
-To read the latest publish on `main` (edge) without a checkout, download the raw index:
+To read the latest publish on `main` without a checkout, download the raw index:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/generated/index.json | head -c 200
@@ -26,24 +26,26 @@ To ship the APN list in a build, copy the one file Android reads:
 cp generated/android/apns-conf.xml /path/to/your/build/vendor/apn/open-carrier-data/apns-conf.xml
 ```
 
-[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides. Take the file from a release, or pin one commit, and record the file's SHA-256 and the `data_digest` in its header. In `data-2026.10` this file is not supported yet: it waits for the boot check on the owner's phone.
+[docs/consume.md](docs/consume.md) shows the `Android.bp` switch that installs it and what `carrier-config-list.xml` overrides. Pin one commit whose `validate` check passed, and record the file's SHA-256 and the `data_digest` in its header.
 
 Read [docs/consume.md](docs/consume.md) before you ship the XML. The checked-in APN XML targets database version 8. `carrier-config-list.xml` is not for ROM application until the per-key review of its emergency, TTY, RTT, WPS and `iwlan.*` keys has run.
 
-## Releases and support
+## The channel and support
 
-`main` is the edge channel: every publish lands there, several times a day. It is guarded by the `validate` check and the phone guard, and OCD makes no other promise about it. The production channel is monthly tagged releases, `data-YYYY.MM`, drafted by tooling and published by the owner or, on his direction, by an agent after an independent read. The first, [`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10), was published on 2026-10-19; the next, `data-2026.11`, is planned for about 2026-11-02. [docs/releases.md](docs/releases.md) describes the releases: the tiers, what a release guarantees and what it never does.
+`main` is the one channel: every publish lands there, several times a day, and a commit SHA is the pin. There are no monthly releases, and **`main` has no waiting period**: a commit that passes the automatic checks reaches consumers at once. If you do not verify on a phone, pin a commit, run the phone guard and the F5 walk from your old pin to your new pin, and read [docs/changelog.md](docs/changelog.md) before you move. Values are configured, not verified, and OCD says nothing about emergency calls. [docs/releases.md](docs/releases.md) describes the channel, the tiers and what OCD never guarantees.
 
-The tiers in `data-2026.10`, in short:
+[`data-2026.10`](https://github.com/open-carrier-data/open-carrier-data/releases/tag/data-2026.10) was the last release. Its tag and files stay. No `data-2026.11` will come. If you use it, move to a validated `main` commit, or back to your ROM's own list by its `stale_after`, 2027-01-10.
+
+The tiers, in short:
 
 | File | Tier |
 | --- | --- |
-| `generated/android/apns-conf.xml` | supported for ROMs, since 2026-10-20. It carries the review of its emergency APN rows, and the boot check on the owner's phone passed with `data-2026.10`: mobile data, IMS registration, and outgoing calls over LTE and Wi-Fi on one 26202 SIM. MMS was not checked, because that network has ended it. [docs/releases.md](docs/releases.md#the-s20-boot-check-of-apns-confxml) says what the check covered |
+| `generated/android/apns-conf.xml` | supported for ROMs. It carries the review of its emergency APN rows. The boot check passed once, on one file, one SIM network and one phone; it says nothing about later commits or other networks ([docs/releases.md](docs/releases.md#the-s20-boot-check-of-apns-confxml)) |
 | `generated/android/lookup.json`, `generated/android/metadata.json`, `generated/devices/carrier-variants.json` | supported for apps and tools; the device records as information, never an export |
-| `generated/android/carrier-config-list.xml` | not for ROM application and not a release asset until the per-key review of its safety keys has run |
+| `generated/android/carrier-config-list.xml` | not for ROM application: its safety keys are unreviewed, as its own header says, until the per-key review has run |
 | everything else under `carriers/` and `generated/` | reference: for the resolver and for reviewers |
-| `generated/ocd-dataset/`, `generated/devices/device-records.json` | the OCD dataset, which OcdCarrierSettings serves as a ROM's carrier data on every ROM whose builder chooses it, baked at a validated `main` commit or a release's commit and kept current by the ROM's own build of the OCD Android app; not a release asset (rule rounds 30 and 31, [docs/rom-builders.md](docs/rom-builders.md), [docs/ocd-dataset.md](docs/ocd-dataset.md)). The records are the owner's measured results, served only in their exact cell, with a 90-day expiry, and, until round 31's S20 build has passed, the S20's device fixes |
-| `observed/` | never supported and never a release asset: unverified phone reports from the OCD Android app ([community/README.md](community/README.md)) |
+| `generated/ocd-dataset/`, `generated/devices/device-records.json` | the OCD dataset, which OcdCarrierSettings serves as a ROM's carrier data on every ROM whose builder chooses it, baked at a validated `main` commit and kept current by the ROM's own build of the OCD Android app (rule rounds 30 and 31, [docs/rom-builders.md](docs/rom-builders.md), [docs/ocd-dataset.md](docs/ocd-dataset.md)). The records are the owner's measured results, served only in their exact cell, with a 90-day expiry, and, until round 31's S20 build has passed, the S20's device fixes |
+| `observed/` | never supported: unverified phone reports from the OCD Android app ([community/README.md](community/README.md)) |
 
 ## Resolve one SIM
 
@@ -84,7 +86,7 @@ Profiles come back in generic-to-specific order. Apply each one as an overlay on
 | `community/` | how community reports reach `observed/` and why they stay apart from the data |
 | `schemas/` | JSON schemas for the data files and for OCD Android reports |
 | `tools/` | validators, the Android generator, the resolver, a diff against your own `apns-conf.xml`, tests |
-| `docs/` | data model, build explanation, consumer guide, the guide for ROM builders who ship OCD's dataset, release plan |
+| `docs/` | data model, build explanation, consumer guide, the guide for ROM builders who ship OCD's dataset, the channel page, the changelog |
 
 ## Status
 

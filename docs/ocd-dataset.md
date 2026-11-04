@@ -1,6 +1,6 @@
 # The OCD dataset
 
-Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Android app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. It is not a release asset: a ROM bakes it at a validated `main` commit or at a release's commit. Today the owner's S20 is the only ROM that ships it.
+Rule round 30 (2026-10-25) replaced Google's carrier data on the owner's ROM with OCD's own dataset. Rule round 31 (2026-10-28) opens it to every ROM whose builder chooses it, once the build meets the ship minimum SM1 to SM12 ([rom-builders.md](rom-builders.md)), keys records by cell, and publishes the F5 and group A reads with each commit. OcdCarrierSettings reads the dataset, the ROM's own build of the OCD Android app pulls it from validated `main` pinned per commit, and the ROM pin step bakes it into the build as the last resort. A ROM bakes it at a validated `main` commit. Today the owner's S20 is the only ROM that ships it.
 
 `tools/ocd_dataset.py` writes and checks it from one checkout of `main`. The private publisher writes the Google lane first, then runs it on every publish; the report bot runs it when the owner's measured records change. `validate` checks every file on every pull request.
 
@@ -184,7 +184,7 @@ On 2026-10-28 the reads ran for every non-Google group A value on `main` (32 val
 
 ## F5 reads
 
-Rule round 31, SM6: OCD's publisher runs F5's independent read for each `main` commit that changes emergency lines, and publishes the read with that commit. Build pins and runtime installs take an emergency-line change only with that read. On a phone of a device family whose emergency data test first use has passed (SM10), only a change to the APN name or the roaming protocol of a matched emergency row needs it. Releases keep their draft read.
+Rule round 31, SM6: OCD's publisher runs F5's independent read for each `main` commit that changes emergency lines, and publishes the read with that commit. Build pins and runtime installs take an emergency-line change only with that read. On a phone of a device family whose emergency data test first use has passed (SM10), only a change to the APN name or the roaming protocol of a matched emergency row needs it.
 
 The read is `tools/f5_read.py`: a deterministic, documented check that anyone can rerun, and that public `validate` reruns on every pull request and push. Free GitHub runners run no agent. Its lines are round 29's F5 lines: the phone-level guard's emergency items (an emergency lead gained, lost or changed, a network type left without an emergency profile, an emergency profile missing under an APN set, an emergency-named APN becoming a data lead), plus the emergency lead of a scope only one side has, against what its SIMs get on the other side. Each line is decided by the first rule that applies:
 

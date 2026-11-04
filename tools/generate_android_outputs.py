@@ -2883,6 +2883,12 @@ PROJECT_URL = "https://github.com/open-carrier-data/open-carrier-data"
 DATA_LICENSE = "CC0-1.0"
 # aosp/carrier-id-table.json: Android's carrier ID rules behind lookup.json's
 # weight field (rule round 45, item 3).
+# Rule round 46: on one channel this file sits beside apns-conf.xml, and its
+# own header is what stops a maintainer who copies the folder.
+CARRIER_CONFIG_WARNING = (
+    "NOT FOR ROM APPLICATION. Its safety keys (emergency, TTY, RTT, WPS, iwlan.*) are unreviewed.",
+    "Do not copy this file into a build; see generated/android/README.md.",
+)
 DIGEST_TOOLS = ("generate_android_outputs.py", "carrier_config_types.py", "lineageos_apns.py", "aosp/carrier-id-table.json")
 
 
@@ -2907,12 +2913,14 @@ def data_digest(
     return "sha256:" + digest.hexdigest()
 
 
-def provenance_header(what: str, digest: str | None, freshness: dict[str, str]) -> list[str]:
-    """The XML declaration and the provenance comment of a generated file."""
+def provenance_header(what: str, digest: str | None, freshness: dict[str, str], warning: tuple[str, ...] = ()) -> list[str]:
+    """The XML declaration and the provenance comment of a generated file,
+    with WARNING's lines right after the title."""
     lines = [
         '<?xml version="1.0" encoding="utf-8"?>',
         "<!--",
         f"    {what} from Open Carrier Data",
+        *(f"    {line}" for line in warning),
         f"    {PROJECT_URL}",
         f"    SPDX-License-Identifier: {DATA_LICENSE}",
         "    The project waives its rights in these derived facts; DATA-LICENSE.md",
@@ -3103,9 +3111,8 @@ def lookup_weight(match: dict[str, Any]) -> dict[str, int]:
     """Android's weight of the profile on each of its network codes (rule
     round 45, item 3): CarrierResolver's score of the fields it pins, with a
     carrier-ID selector counted by Android's rules behind the ID there
-    (tools/aosp/carrier-id-table.json). Step 1 of the resolution order that
-    docs/compatibility.md announces; resolve_carrier_profiles.py --order
-    android uses it."""
+    (tools/aosp/carrier-id-table.json). Step 1 of lookup.json's documented
+    resolution order; resolve_carrier_profiles.py --order android uses it."""
     table = resolve_carrier_profiles.default_table()
     return {
         str(mccmnc): resolve_carrier_profiles.android_weight(match, str(mccmnc), table)
@@ -3464,7 +3471,7 @@ def main(argv: list[str]) -> int:
     config_xml_count = write_carrier_config_xml(
         generated_dir / "android" / "carrier-config-list.xml",
         profiles,
-        provenance_header("Android CarrierConfig list (vendor.xml format)", digest, freshness),
+        provenance_header("Android CarrierConfig list (vendor.xml format)", digest, freshness, CARRIER_CONFIG_WARNING),
     )
     write_metadata(
         generated_dir / "android" / "metadata.json",
