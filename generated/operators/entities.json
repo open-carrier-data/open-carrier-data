@@ -411,7 +411,7 @@
       "runs_on": []
     }
   ],
-  "description": "Migration step 5 of the device > carrier > plan model (rule round 47, item 4): the carrier-identity table's entries as named things. networks keep MCC and MNC as two fields and name the holder as the regulator lists it, with that list's date; the regulator gives no earlier holders and no assignment dates. vendor_names records what the vendor lists call a network, with agrees false where the name differs from the holder. operators say what kind of company each is. brands carry dated runs_on links, oldest first, where a source was read: an empty list says nothing about the host. Nothing here changes a match, a value or a phone, and phones never read this file.",
+  "description": "Migration step 5 of the device > carrier > plan model (rule round 47, item 4): the carrier-identity table's entries as named things. networks keep MCC and MNC as two fields and name the holder as the regulator lists it, with that list's date; the regulator gives no earlier holders and no assignment dates. vendor_names records what the vendor lists call a network, with agrees false where the name differs from the holder. operators say what kind of company each is. brands carry dated runs_on links, oldest first, where a source was read: an empty list says nothing about the host. Nothing here changes a match, a value or a phone, and phones never read this file. The file's CC0 covers OCD's own work, not a regulator's list: networks give the code and holder of all its rows, and its terms are recorded in regulators.",
   "license": "CC0-1.0",
   "networks": [
     {
@@ -2663,6 +2663,7 @@
     {
       "as_of": "2026-08-03",
       "country": "DE",
+      "license_expression": "NOASSERTION",
       "publisher": "Bundesnetzagentur",
       "read_on": "2026-11-05",
       "sha256": "sha256:93bbdb50b1d7c17670636e156f861a49f36119dd98e1ac09649a5e9953dd334c",
