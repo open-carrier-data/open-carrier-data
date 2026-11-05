@@ -492,7 +492,7 @@ class ReportTest(unittest.TestCase):
         self.assertEqual([], errors_of(changed(lambda r: r.update(plan="unknown"))))
         self.assertEqual("unknown", obs.plan_of(REPORT), "an old report reads as unknown")
         chosen = errors_of(changed(lambda r: r.update(plan={"offer": "de.lidl-connect.smart", "options": ["de.lidl-connect.wifi-calling"]})))
-        self.assertEqual(["$.plan: no carrier has a published offer list yet, so the only choice is unknown"], chosen)
+        self.assertEqual(["$.plan: no phone sends a plan (rule round 48), so the only choice is unknown"], chosen)
         for bad in ("Smart S", "", 3, {"offer": "My tariff"}, {"offer": "de.lidl-connect.smart", "note": "x"},
                     {"options": ["de.lidl-connect.smart"]}, {"offer": "de.lidl-connect.smart", "options": []}):
             found = errors_of(changed(lambda r: r.update(plan=bad)))

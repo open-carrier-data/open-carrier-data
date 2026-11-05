@@ -240,6 +240,20 @@ The regulator gives no earlier holders and no assignment dates, so a holder is t
 
 Round 47 keeps plan families in carrier data as today's selectors, so a family is a label over profiles that already exist. It makes no new SIM group, and a plan is never a matching key. `profiles` lists the profiles inside the child's rules, `parent_profiles` the ones that name the parent's ID, and `rules_without_profile` counts the child's rules no profile states: they are counted, not filled in, because a new profile would change what phones load. `segment` comes from Android's name: `prepaid`, `postpaid`, `5g`, `5g_sa`, `business`, or `other` for a child that names something else, such as a host network. Android's names are in `tools/aosp/carrier-id-names.json`, apart from the table, which the data digest covers.
 
+### Offers
+
+`generated/operators/offers.json` ([`schemas/operator-offers.schema.json`](../schemas/operator-offers.schema.json), checked by `tools/validate_operators.py`) grows the operator statements into dated tariffs, options and packs (migration step 8, rule round 47, item 4). It starts with Germany's 5G standalone, Wi-Fi calling and MMS.
+
+No phone can see an offer, so an offer is a dated claim from the carrier's own page, never proof that a line has a feature. It feeds no `for_you` answer, no value and no match. No phone sends a plan (rule round 48), so reports and `observed/results.json` keep `unknown`, and phones never read this file.
+
+| Part | What it holds |
+| --- | --- |
+| `offers` | `id` (country, brand and offer, the form of a report's `offer_id`), `brand`, `type` (`tariff`, `option` or `pack`), `name`, `condition`, `valid_from`, `valid_to`, `features`, `sources` and a paraphrase, never quoted text |
+| `features` | each `service`, its `state`, and the operator `statement` it rests on |
+| `brand_features` | what a brand states for a feature with no named offer, repeated from its statement |
+
+The states are `for_you`'s: `included`, `free_option`, `paid_option`, `not_offered`, `ended`, `depends_on_plan`, plus `unknown`. `included`, `free_option` and `paid_option` need a passage of the carrier's own page that says so for that brand. In `brand_features`, a statement's `offered` reads `depends_on_plan`. An offer lapses like a statement: 180 days without a confirmed passage or 365 without a sweep, and a lapsed offer or statement reads `unknown`. Where a carrier's pages do not tie a feature to a tariff, the state stays `unknown`, as for LIDL Connect's tariffs and WLAN calls. No whole tariff or price table is copied: an offer holds a name, never a price.
+
 ## Provenance fields in the evidence index
 
 The evidence index is OCD's per-source record: which families give each value. `generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.
@@ -380,7 +394,7 @@ Labels that rest on device records (round 17, step 2). Round 8 (2026-10-10) defe
 | device | `rom_line` | the ROM's line as a report can name it: `android-` and its Android major. The firmware tells the builds of one line apart |
 | device | `ims_stack` | the report's IMS stack |
 | carrier | `carrier` | OCD's profile ID |
-| plan | `plan` | `unknown`, or `offer` with `options` from the carrier's published list, as the person chose. Old reports read as `unknown`. Until a carrier has an offer list, `unknown` is the only choice |
+| plan | `plan` | `unknown`. The field also has a form for `offer` with `options` from the carrier's published list, as the person chose, but no phone sends a plan (rule round 48), so the bot takes only `unknown`. Old reports read as `unknown` |
 | result | `entry`, `result` | an entry of OCD's closed list and its result: one leaf per entry and result |
 | result | `tested_on` | the newest test date behind the leaf; a date, never a time |
 | result | `old_after` | `tested_on` plus 90 days. Past this date the result is old. It is a date and not a stored flag, so the file needs no daily commit, and a reader compares it with today |

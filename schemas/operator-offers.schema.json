@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-offers.schema.json",
+  "title": "Offers (generated/operators/offers.json)",
+  "description": "Migration step 8 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: dated tariffs, options and packs as the carrier's own pages name them, with feature states, and what a brand states for a feature with no named offer. No phone can see an offer: this is a dated claim, never proof that a line has a feature. It feeds no for_you answer, no value and no match, no phone sends a plan (rule round 48), and phones never read this file. tools/validate_operators.py checks the file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "license", "display_rule", "counts", "offers", "brand_features"],
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z]{2}\\.[a-z0-9][a-z0-9-]{1,40}$"
+    },
+    "day": {
+      "type": "string",
+      "format": "date"
+    },
+    "bound": {
+      "description": "A day, or a day with the prefix ≤ when only an upper bound is known.",
+      "type": "string",
+      "pattern": "^≤?[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "own_words": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600,
+      "pattern": "^[^\"“”„‟«»@]*$"
+    },
+    "service": {
+      "enum": ["mms", "volte", "wifi_calling", "wifi_calling_abroad", "volte_roaming", "esim", "5g_sa", "vonr"]
+    },
+    "state": {
+      "enum": ["included", "free_option", "paid_option", "not_offered", "ended", "depends_on_plan", "unknown"]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "publisher", "kind", "date", "read_on", "role", "passage_sha256"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://[^\\s\"'<>]{4,500}$"
+        },
+        "publisher": {
+          "$ref": "#/$defs/own_words"
+        },
+        "kind": {
+          "enum": ["operator", "brand", "mvno"]
+        },
+        "date": {
+          "anyOf": [
+            { "$ref": "#/$defs/day" },
+            { "type": "null" }
+          ]
+        },
+        "read_on": {
+          "$ref": "#/$defs/day"
+        },
+        "role": {
+          "const": "admits"
+        },
+        "passage_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["service", "state", "statement"],
+      "properties": {
+        "service": {
+          "$ref": "#/$defs/service"
+        },
+        "state": {
+          "$ref": "#/$defs/state"
+        },
+        "statement": {
+          "description": "The operator statement this feature rests on, with its liveness.",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        }
+      }
+    },
+    "lapsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "since"],
+      "properties": {
+        "reason": {
+          "enum": ["not_confirmed_180_days", "not_swept_365_days"]
+        },
+        "since": {
+          "$ref": "#/$defs/day"
+        }
+      }
+    },
+    "offer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "brand", "country", "type", "name", "condition", "valid_from", "valid_to", "checked_at", "swept_at", "paraphrase", "features", "sources"],
+      "properties": {
+        "id": {
+          "description": "Closed, and of the form the report schema's offer_id has.",
+          "type": "string",
+          "pattern": "^[a-z]{2}\\.[a-z0-9-]{1,40}\\.[a-z0-9-]{1,40}$"
+        },
+        "brand": {
+          "$ref": "#/$defs/key"
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "type": {
+          "enum": ["tariff", "option", "pack"]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "condition": {
+          "anyOf": [
+            { "$ref": "#/$defs/own_words" },
+            { "type": "null" }
+          ]
+        },
+        "valid_from": {
+          "anyOf": [
+            { "$ref": "#/$defs/bound" },
+            { "type": "null" }
+          ]
+        },
+        "valid_to": {
+          "anyOf": [
+            { "$ref": "#/$defs/bound" },
+            { "type": "null" }
+          ]
+        },
+        "checked_at": {
+          "$ref": "#/$defs/day"
+        },
+        "swept_at": {
+          "$ref": "#/$defs/day"
+        },
+        "paraphrase": {
+          "$ref": "#/$defs/own_words"
+        },
+        "features": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/feature"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "lapsed": {
+          "$ref": "#/$defs/lapsed"
+        }
+      }
+    },
+    "brand_feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brand", "service", "state", "statement", "checked_at"],
+      "properties": {
+        "brand": {
+          "$ref": "#/$defs/key"
+        },
+        "service": {
+          "$ref": "#/$defs/service"
+        },
+        "state": {
+          "enum": ["not_offered", "ended", "depends_on_plan", "unknown"]
+        },
+        "statement": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,80}$"
+        },
+        "checked_at": {
+          "$ref": "#/$defs/day"
+        },
+        "first_day_without": {
+          "$ref": "#/$defs/day"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "display_rule": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offers", "lapsed", "brand_features"],
+      "properties": {
+        "offers": { "$ref": "#/$defs/count" },
+        "lapsed": { "$ref": "#/$defs/count" },
+        "brand_features": { "$ref": "#/$defs/count" }
+      }
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/offer"
+      }
+    },
+    "brand_features": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/brand_feature"
+      }
+    }
+  }
+}

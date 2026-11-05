@@ -6,6 +6,10 @@ For what changed in the data itself, read the publish pull requests, `tools/chec
 
 ## Format and meaning changes
 
+### 2026-11-05: new file `generated/operators/offers.json`
+
+Dated offers with feature states (migration step 8, rule round 47, item 4). A new file for people: no existing file, value or match changes. The report bot's refusal of a named plan now gives round 48's reason. See [data model](data-model.md#offers).
+
 ### 2026-11-05: new file `generated/operators/plan-families.json`
 
 Plan families the SIM shows, as labels over existing profiles (migration step 7, rule round 47, item 4). A new file for people: no existing file, value or match changes. See [data model](data-model.md#plan-families).

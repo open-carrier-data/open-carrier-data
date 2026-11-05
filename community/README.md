@@ -57,7 +57,7 @@ A report holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, t
 
 ### The plan
 
-Next to the report the app shows one picker, default `unknown`. `plan` is optional: `unknown`, or an object with `offer`, a closed offer ID from the carrier's published list, and `options`, the booked options from that list. A report without it reads as `unknown`. Until a carrier has an offer list, `unknown` is the only choice, and the bot refuses anything else. The plan comes only from the person's own choice: never free text, and never read from an account, USSD, carrier SMS or TS.43.
+Next to the report the app shows one picker, default `unknown`. `plan` is optional: `unknown`, or an object with `offer`, a closed offer ID from the carrier's published list, and `options`, the booked options from that list. A report without it reads as `unknown`. No phone sends a plan (rule round 48), so `unknown` is the only choice, and the bot refuses anything else, even though `generated/operators/offers.json` now lists offers. The plan comes only from the person's own choice: never free text, and never read from an account, USSD, carrier SMS or TS.43.
 
 A plan is a label the person chose, not a fact about the tariff. It is never a matching key and feeds no carrier value or `for_you` answer. A result with a plan shows in `observed/results.json` and can only open a source review.
 
