@@ -452,9 +452,13 @@ def entity_problems(document: dict[str, Any], identity: dict[str, Any] | None) -
                 if problem:
                     out.append(problem)
     if identity is not None:
+        operator_of = {item["key"]: item["operator_key"] for item in document["brands"]}
         for entry in identity["entries"]:
             if entry["key"] not in brands:
                 out.append(f"{ENTITIES}: identity entry {entry['key']} is not a brand here")
+            elif entry["operator_key"] != operator_of[entry["key"]]:
+                # Rule round 51, item 5: this file decides, the table copies it.
+                out.append(f"{ENTITIES}: the identity table gives {entry['key']} the operator {entry['operator_key']}, this file {operator_of[entry['key']]}")
             if entry["kind"] == "operator" and entry["key"] not in operators:
                 out.append(f"{ENTITIES}: identity operator {entry['key']} is not an operator here")
         known = {entry["key"] for entry in identity["entries"]}

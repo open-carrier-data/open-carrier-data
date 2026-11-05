@@ -71,7 +71,7 @@ def sharing_keys(identity: two_answers.Identity, listing: list[str], match: dict
 
 def row_of(profile_id: str, match: dict[str, Any], identity: two_answers.Identity) -> dict[str, Any] | None:
     listing = sorted({entry["key"] for entry in identity.listing.get(profile_id, [])})
-    if not any(match.get(key) for key in profile_ids.SELECTOR_KEYS):
+    if identity.plain(match):
         riding = {entry["key"] for entry in identity.host_only_on([str(code) for code in match["mccmnc"]])}
         brands = sorted(set(listing) | riding)
         tellable = "no" if riding else "yes"
@@ -89,7 +89,7 @@ def row_of(profile_id: str, match: dict[str, Any], identity: two_answers.Identit
 def build(root: Path) -> dict[str, Any]:
     profiles = two_answers.load_profiles(root)
     matches = {pid: profile["match"] for pid, (_, profile) in profiles.items()}
-    identity = two_answers.Identity(two_answers.read_json(root / two_answers.IDENTITY), matches)
+    identity = two_answers.load_identity(root, matches)
     rows = [row for row in (row_of(pid, matches[pid], identity) for pid in sorted(matches)) if row]
     tally = {name: sum(1 for row in rows if row["tellable"] == name) for name in ("yes", "ambiguous", "no")}
     return {
