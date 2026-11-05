@@ -7,7 +7,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:f05ff216e991fe8e88ef191155472c2c5936c16070498306148edb72d06e64da
+    data_digest: sha256:d68c9a9b7e384d101a308425a82287147d9414a3952dbcbd2f97d2ef0b4c246f
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -7188,10 +7188,10 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_provisioned_bool" value="true" />
+    <boolean name="carrier_volte_tty_supported_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="carrier_wfc_supports_wifi_only_bool" value="false" />
-    <int name="cdma_3waycall_flash_delay_int" value="300" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="false" />
@@ -7548,14 +7548,6 @@
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
-  </carrier_config>
-  <!-- open.31009.6dfac779d1b0 -->
-  <carrier_config mcc="310" mnc="09" name="Carrier 31009">
-    <int name="carrier_default_wfc_ims_mode_int" value="1" />
-    <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
-    <boolean name="editable_wfc_mode_bool" value="false" />
-    <boolean name="editable_wfc_roaming_mode_bool" value="true" />
-    <boolean name="rtt_supported_bool" value="true" />
   </carrier_config>
   <!-- open.310090.4f00a20e9474 -->
   <carrier_config mcc="310" mnc="090" name="Edge MMS Prepay">
@@ -9588,12 +9580,6 @@
     <int name="maxSubjectLength" value="80" />
     <int name="recipientLimit" value="20" />
     <int name="smsToMmsTextThreshold" value="7" />
-  </carrier_config>
-  <!-- open.31103.05b41730b917 -->
-  <carrier_config mcc="311" mnc="03" name="Carrier 31103">
-    <int name="cdma_3waycall_flash_delay_int" value="300" />
-    <boolean name="rtt_supported_bool" value="true" />
-    <boolean name="rtt_supported_while_roaming_bool" value="true" />
   </carrier_config>
   <!-- open.311040.6affd35a48d4 -->
   <carrier_config mcc="311" mnc="040" name="VIYA">
@@ -20381,7 +20367,6 @@
   </carrier_config>
   <!-- open.51502.bb928c55b675 -->
   <carrier_config mcc="515" mnc="02" name="MyGlobe INET">
-    <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
