@@ -310,7 +310,7 @@ class EntitiesTest(unittest.TestCase):
         with Tree(statements_file([statement()]), identity_file()) as tree:
             tree.write(vo.ENTITIES, entities_file())
             tree.write(vo.MANIFEST, {"files": [{"path": vo.ENTITIES}]})
-            self.assertTrue(any("phones never read" in e for e in tree.validate()[0]))
+            self.assertTrue(any("no carrier settings component reads" in e for e in tree.validate()[0]))
 
 
 def offers_file():
@@ -372,7 +372,7 @@ class OffersTest(unittest.TestCase):
     def test_phones_never_pull_it(self):
         with Tree(statements_file([statement()]), identity_file()) as tree:
             tree.write(vo.MANIFEST, {"files": [{"path": vo.OFFERS}]})
-            self.assertTrue(any("phones never read" in e for e in tree.validate()[0]))
+            self.assertTrue(any("no carrier settings component reads" in e for e in tree.validate()[0]))
 
 
 class OverrideTest(unittest.TestCase):

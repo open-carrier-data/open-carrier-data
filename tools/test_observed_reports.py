@@ -488,11 +488,9 @@ class ReportTest(unittest.TestCase):
         self.assertIn("Plan: unknown.", text)
         self.assertNotIn("owner", text.lower())
 
-    def test_the_plan_is_unknown_or_nothing_until_a_carrier_has_an_offer_list(self) -> None:
+    def test_a_plan_of_the_wrong_shape_stays_refused(self) -> None:
         self.assertEqual([], errors_of(changed(lambda r: r.update(plan="unknown"))))
         self.assertEqual("unknown", obs.plan_of(REPORT), "an old report reads as unknown")
-        chosen = errors_of(changed(lambda r: r.update(plan={"offer": "de.lidl-connect.smart", "options": ["de.lidl-connect.wifi-calling"]})))
-        self.assertEqual(["$.plan: no phone sends a plan (rule round 48), so the only choice is unknown"], chosen)
         for bad in ("Smart S", "", 3, {"offer": "My tariff"}, {"offer": "de.lidl-connect.smart", "note": "x"},
                     {"options": ["de.lidl-connect.smart"]}, {"offer": "de.lidl-connect.smart", "options": []}):
             found = errors_of(changed(lambda r: r.update(plan=bad)))
@@ -749,6 +747,145 @@ def at_firmware(build: str | None, **changes) -> dict:
             result.pop("settled", None)
         r.update(results=[entry("volte:on", True, True, "signed_in"), entry("vowifi:on", True, False, "failed", "settle_timeout", restored=True)], **changes)
     return settled_changed(change)
+
+
+OFFER = "de.lidl-connect.smart-s"
+
+
+def offer(offer_id: str = OFFER, brand: str = "de.lidl-connect", **extra: object) -> dict:
+    return {"id": offer_id, "brand": brand, "valid_from": "≤2026-11-05", "valid_to": None, **extra}
+
+
+PLAN_LISTS = obs.PlanLists({
+    OFFER: offer(),
+    "de.lidl-connect.exact": offer("de.lidl-connect.exact", valid_from="2027-01-01"),
+    "de.lidl-connect.old": offer("de.lidl-connect.old", valid_to="2026-10-23"),
+    "de.lidl-connect.last-day": offer("de.lidl-connect.last-day", valid_to="2026-10-24"),
+    "de.lidl-connect.bound": offer("de.lidl-connect.bound", valid_to="≤2026-10-23"),
+    "de.lidl-connect.lapsed": offer("de.lidl-connect.lapsed", lapsed={"reason": "not_confirmed_180_days", "since": "2026-10-24"}),
+    "de.lidl-connect.lapsed-later": offer("de.lidl-connect.lapsed-later", lapsed={"reason": "not_swept_365_days", "since": "2026-10-25"}),
+    "de.telekom.5g-plus-ultra": offer("de.telekom.5g-plus-ultra", "de.telekom"),
+}, {PROFILE: {"de.bild-mobil", "de.lidl-connect", "de.vodafone"}})
+
+
+def with_plan(plan: object, change=lambda r: None) -> dict:
+    def edit(report: dict) -> None:
+        report["plan"] = plan
+        change(report)
+    return settled_changed(edit)
+
+
+class PlanCheckTest(unittest.TestCase):
+    """Rule round 51, item 4: a bad plan never loses a report and never makes a false leaf."""
+
+    TODAY = date(2026, 10, 25)
+    FILES = {obs.OFFERS_FILE: {"offers": [offer()]},
+             obs.SIM_GROUPS_FILE: {"profiles": [{"profile_id": PROFILE, "brands": ["de.lidl-connect", "de.vodafone"], "tellable": "no"}]}}
+
+    def check(self, report: dict, lists: obs.PlanLists | None = PLAN_LISTS) -> obs.Check:
+        return obs.check_issue(issue(30, report=report), self.TODAY, RELEASES, lists)
+
+    def rebuilt(self, files: dict | None, *reports: dict) -> Path:
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        root = Path(folder.name)
+        if files is not None:
+            (root / "generated" / "operators").mkdir(parents=True)
+            for name, document in files.items():
+                (root / name).write_text(json.dumps(document), encoding="utf-8")
+        issues = [issue(30 + n, report=r, login=f"user{n}", created="2026-10-01T00:00:00Z") for n, r in enumerate(reports)]
+        result = obs.rebuild(issues, root, self.TODAY, RELEASES)
+        self.assertEqual([], result["left_out"])
+        self.assertEqual([], obs.validate_tree(root))
+        return root
+
+    def tree_plans(self, root: Path) -> list:
+        tree = json.loads((root / "observed" / obs.RESULTS_FILE).read_text(encoding="utf-8"))
+        return [plan for device in tree["devices"] for carrier in device["carriers"] for plan in carrier["plans"]]
+
+    def test_a_live_offer_of_a_brand_on_the_profile_stands(self) -> None:
+        check = self.check(with_plan({"offer": OFFER}))
+        self.assertEqual(([], None), (check.errors, check.plan_doubt))
+        self.assertEqual({"offer": OFFER}, obs.plan_of(check.report))
+        self.assertIn(f"Plan: {OFFER}.", obs.comment(check, 30, "open-carrier-data/open-carrier-data"))
+
+    def test_only_valid_to_and_lapsed_decide_that_an_offer_is_not_live(self) -> None:
+        for name in ("exact", "last-day", "lapsed-later"):
+            plan = {"offer": f"de.lidl-connect.{name}"}
+            self.assertEqual(plan, obs.plan_of(self.check(with_plan(plan)).report), name)
+        # SETTLED_REPORT was tested before the upper bound in valid_from: still live.
+        self.assertLess(SETTLED_REPORT["tested_on"], "2026-11-05")
+        for name in ("old", "bound", "lapsed"):
+            check = self.check(with_plan({"offer": f"de.lidl-connect.{name}"}))
+            self.assertEqual("the offer was not live on the test date", check.plan_doubt, name)
+
+    def test_a_failed_check_keeps_the_report_and_reads_unknown(self) -> None:
+        brand = "the offer's brand is not on the report's carrier profile"
+        cases = [
+            (with_plan({"offer": "de.lidl-connect.gone"}), PLAN_LISTS, "the offer is not on OCD's list"),
+            (with_plan({"offer": "de.lidl-connect.old"}), PLAN_LISTS, "the offer was not live on the test date"),
+            (with_plan({"offer": "de.telekom.5g-plus-ultra"}), PLAN_LISTS, brand),
+            (with_plan({"offer": OFFER}, lambda r: r.update(ocd_profile=PROFILE_2, sim={"mccmnc": "26203"}, results=CORRECTION["results"])), PLAN_LISTS, brand),
+            (with_plan({"offer": OFFER, "options": ["de.lidl-connect.lapsed-later"]}), PLAN_LISTS, "OCD's list has no booked options: a pack or option is an offer of its own"),
+            (with_plan({"offer": OFFER}), None, "OCD's offer list could not be read"),
+        ]
+        for report, lists, doubt in cases:
+            check = self.check(report, lists)
+            self.assertEqual(([], doubt), (check.errors, check.plan_doubt), report["plan"])
+            self.assertTrue(check.valid)
+            self.assertEqual("unknown", obs.plan_of(check.report))
+            self.assertEqual(obs.report_hash(json.dumps(report, indent=1)), check.sha256, "the hash stays the text's")
+            text = obs.comment(check, 30, "open-carrier-data/open-carrier-data")
+            self.assertIn("Plan: unknown.", text)
+            self.assertIn(f"reads `unknown`, and the report is kept: {doubt}.", text)
+            self.assertNotIn(report["plan"]["offer"], text)
+
+    def test_a_plan_of_the_wrong_shape_is_still_refused(self) -> None:
+        self.assertFalse(self.check(with_plan("Smart S")).valid)
+
+    def test_digits_in_an_offer_id_reach_no_file_and_no_comment(self) -> None:
+        check = self.check(with_plan({"offer": "de.lidl-connect.491761234567"}))
+        self.assertEqual("unknown", obs.plan_of(check.report))
+        self.assertNotIn("491761234567", obs.comment(check, 30, "open-carrier-data/open-carrier-data"))
+
+    def test_the_rebuild_reads_the_two_files_and_no_false_leaf_reaches_the_tree(self) -> None:
+        gone = with_plan({"offer": "de.lidl-connect.gone"})
+        root = self.rebuilt(self.FILES, with_plan({"offer": OFFER}), gone)
+        plans = self.tree_plans(root)
+        self.assertEqual(["unknown", {"offer": OFFER}], [node["plan"] for node in plans])
+        kept = json.loads((root / "observed" / "reports" / "issue-31.json").read_text(encoding="utf-8"))
+        self.assertEqual("unknown", kept["report"]["plan"], "the refused pick is in no file")
+        self.assertEqual(obs.report_hash(json.dumps(gone, indent=1)), kept["report_sha256"])
+        results = [result for node in plans for result in node["results"]]
+        self.assertTrue(results and all(result["status"] == obs.STATUS_TEXT["reported"] for result in results), "a plan changes no status")
+
+    def test_without_the_two_files_every_report_is_kept_and_reads_unknown(self) -> None:
+        self.assertEqual(["unknown"], [node["plan"] for node in self.tree_plans(self.rebuilt(None, with_plan({"offer": OFFER})))])
+        broken = {obs.OFFERS_FILE: {"no": "offers"}, obs.SIM_GROUPS_FILE: {"profiles": []}}
+        self.assertEqual(["unknown"], [node["plan"] for node in self.tree_plans(self.rebuilt(broken, with_plan({"offer": OFFER})))])
+
+    def test_a_plan_feeds_nothing_but_the_tree(self) -> None:
+        summary = lambda root: (root / "observed" / "summary.json").read_text(encoding="utf-8")
+        named = summary(self.rebuilt(self.FILES, with_plan({"offer": OFFER})))
+        self.assertEqual(summary(self.rebuilt(self.FILES, with_plan("unknown"))), named)
+        self.assertNotIn(OFFER, named)
+
+    def test_a_change_to_the_list_never_fails_validate(self) -> None:
+        root = self.rebuilt(self.FILES, with_plan({"offer": OFFER}))
+        (root / obs.OFFERS_FILE).write_text(json.dumps({"offers": []}), encoding="utf-8")
+        self.assertEqual([], obs.validate_tree(root), "data must never wait for observed/")
+
+    def test_main_s_own_files_read_and_hold_the_lidl_tariff(self) -> None:
+        lists = obs.read_plan_lists(REPO)
+        self.assertIsNotNone(lists)
+        self.assertIsNone(obs.plan_doubt(with_plan({"offer": OFFER}), lists))
+        self.assertIsNotNone(obs.plan_doubt(with_plan({"offer": "de.telekom.5g-plus-ultra"}), lists))
+
+    def test_the_public_issue_and_git_history_sentence_stays_before_submit(self) -> None:
+        form = (REPO / ".github" / "ISSUE_TEMPLATE" / "ocd-check-report.yml").read_text(encoding="utf-8")
+        self.assertIn("**This issue is public, under your own GitHub account.** Anyone can link your GitHub name to the carrier and any plan in the report.", form)
+        self.assertLess(form.index("older versions stay in git history"), form.index("id: report"), "the words come before the report field")
+        self.assertIn("older versions stay in git history", (REPO / "community" / "README.md").read_text(encoding="utf-8"))
 
 
 class ResultsTreeTest(unittest.TestCase):

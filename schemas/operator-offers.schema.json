@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-offers.schema.json",
   "title": "Offers (generated/operators/offers.json)",
-  "description": "Migration step 8 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: dated tariffs, options and packs as the carrier's own pages name them, with feature states, and what a brand states for a feature with no named offer. No phone can see an offer: this is a dated claim, never proof that a line has a feature. It feeds no for_you answer, no value and no match, no phone sends a plan (rule round 48), and phones never read this file. tools/validate_operators.py checks the file.",
+  "description": "Migration step 8 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: dated tariffs, options and packs as the carrier's own pages name them, with feature states, and what a brand states for a feature with no named offer. No phone can see an offer: this is a dated claim, never proof that a line has a feature. It feeds no for_you answer, no value and no match. No automatic report names a plan; only the person's tapped report may (rule round 51, item 4). OCD Android reads this file for the plan picker only, and no carrier settings component reads it. tools/validate_operators.py checks the file.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "description", "license", "display_rule", "counts", "offers", "brand_features"],
