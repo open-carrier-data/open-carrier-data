@@ -6502,7 +6502,7 @@ def check_relay_flag() -> None:
         refused({"relay_open": True}, "is missing")
         page = root / validate_public_carrier_data.PRIVACY_PAGE
         page.parent.mkdir()
-        page.write_text((repository / validate_public_carrier_data.PRIVACY_PAGE).read_text(encoding="utf-8"), encoding="utf-8")
+        page.write_text(f"Controller: {validate_public_carrier_data.PRIVACY_PLACEHOLDER}: a name]\n", encoding="utf-8")
         refused({"relay_open": True}, "names no controller")
         page.write_text("Controller: a name and an address\n", encoding="utf-8")
         write({"relay_open": True})
