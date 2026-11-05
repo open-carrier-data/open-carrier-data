@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-sim-groups.schema.json",
+  "title": "Brands per SIM group (generated/operators/sim-groups.json)",
+  "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: which brands each OCD profile holds and whether a phone can tell them apart. tools/sim_groups.py derives the file from the carrier-identity table and the profiles, and validate compares it. A label for people: nothing here changes a match, a value or a phone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "license", "counts", "profiles"],
+  "$defs": {
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "brands", "tellable"],
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+        },
+        "brands": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2}\\.[a-z0-9][a-z0-9-]{1,40}$"
+          }
+        },
+        "tellable": {
+          "enum": ["yes", "ambiguous", "no"]
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profiles", "yes", "ambiguous", "no"],
+      "properties": {
+        "profiles": { "$ref": "#/$defs/count" },
+        "yes": { "$ref": "#/$defs/count" },
+        "ambiguous": { "$ref": "#/$defs/count" },
+        "no": { "$ref": "#/$defs/count" }
+      }
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/row"
+      }
+    }
+  }
+}

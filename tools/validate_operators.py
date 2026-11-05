@@ -61,7 +61,8 @@ ENTITIES = f"{OPERATORS_DIR}/entities.json"
 # What phones pull: the dataset's manifest. The files below are for people and
 # are never a value, so they stay out of it (rule round 47, item 4).
 MANIFEST = "generated/ocd-dataset/manifest.json"
-NEVER_PULLED = (ENTITIES,)
+SIM_GROUPS = f"{OPERATORS_DIR}/sim-groups.json"
+NEVER_PULLED = (ENTITIES, SIM_GROUPS,)
 OPERATOR_STATEMENT = "operator_statement"
 LAPSED_GATE = "operator_statement_lapsed"
 LAPSE_UNCONFIRMED_DAYS = 180

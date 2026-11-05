@@ -222,6 +222,18 @@ The **canonical match-set hash** of a profile is the hash part of `hash_id` over
 
 The regulator gives no earlier holders and no assignment dates, so a holder is true on the list's date. `operator_key` on a brand can differ from the identity table's where a source says so: the table has Lebara under Telekom, and the regulator lists 262-14 for Lebara itself.
 
+### Brands per SIM group
+
+`generated/operators/sim-groups.json` ([`schemas/operator-sim-groups.schema.json`](../schemas/operator-sim-groups.schema.json)) links each profile the identity table reaches to its brand or brands (migration step 6, rule round 47, item 4). `tools/sim_groups.py` derives it from the table and the profiles, and validate rebuilds and compares it, so it is never edited. A profile the table does not reach has no row, which says nothing about its brand.
+
+| `tellable` | Meaning |
+| --- | --- |
+| `yes` | the profile is one entry's alone |
+| `ambiguous` | entries share the profile, a crossing rule shares some of its SIMs, or another entry's rule sits inside it, so a SIM without the narrower field could be either: GID1 `44` with no SPN could be congstar or fraenk |
+| `no` | a plain profile on a network with host-only brands: no phone can tell their SIMs from the host's, as with LIDL Connect on 262-02 |
+
+`brands` lists the entries, the operator included. The file changes no profile and no match: the table still never changes OCD's matcher (rule round 32). `tellable` feeds no `for_you` answer; `for_you` keeps its own rule that a brand's statement speaks only for a profile the table maps to that brand alone. There is no `observed_only` value and no profile built from a name seen on a real SIM, because no ruling allows one.
+
 ## Provenance fields in the evidence index
 
 The evidence index is OCD's per-source record: which families give each value. `generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.
