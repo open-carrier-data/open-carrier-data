@@ -8,8 +8,8 @@ This page covers the one automatic send of OCD Android: the weekly report a phon
 
 | | |
 |---|---|
-| **Controller** | [NOT FILLED IN YET: the controller's name] |
-| **Contact** | [NOT FILLED IN YET: a contact address for privacy questions] |
+| **Controller** | Open Carrier Data, the [open-carrier-data](https://github.com/open-carrier-data) project on GitHub |
+| **Contact** | parcel-herbal-smog@duck.com |
 
 A ROM builder who ships the app may share this responsibility ([rom-builders.md](rom-builders.md#your-duties-as-a-builder)).
 
@@ -59,7 +59,7 @@ Any connection shows your internet address to the other end, so it reaches the r
 
 | Recipient | Role |
 |---|---|
-| **Cloudflare, Inc.** (USA) | Processor. It runs the relay and the counters on a free plan. Its data processing addendum names the EU-US Data Privacy Framework, with standard contractual clauses as the fallback. [NOT FILLED IN YET: confirm that these terms apply to this free account] |
+| **Cloudflare, Inc.** (USA) | Processor. It runs the relay and the counters on a free plan. Its data processing addendum names the EU-US Data Privacy Framework, with standard contractual clauses as the fallback. The relay's account is on Cloudflare's Self-Serve Subscription Agreement, whose section 6.1 brings in that addendum (version 6.4, read on 2026-11-05). Neither text names the free plan, so applying it here is our reading. |
 | **GitHub, Inc.** (USA) | Hosts the published counts. It receives no report: a scheduled job reads only the counters that passed the threshold below. |
 | **Everyone** | Reads the published counts. |
 
