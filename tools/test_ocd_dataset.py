@@ -799,6 +799,46 @@ class Round31GroupATest(unittest.TestCase):
         served, status = ocd.group_a_documents("sha256:" + "0" * 64, bare, self.LANE, {value_path: group_a_read(families=[])})
         self.assertEqual((served["reads"], [u["profile_id"] for u in status["unrecorded_basis"]]), ([], ["open.26207.c07dcc040b58"]))
 
+    def test_a_value_resting_only_on_unapplied_blocks_gets_no_proceed(self) -> None:
+        """Rule round 56, item 1: the refusal lands before any further group
+        A read. The read is refused, and if one is there anyway it admits
+        nothing: the value stays pending and its SIMs stay on Google's value."""
+        profile = "open.26207.c07dcc040b58"
+        marked = {(profile, "rtt_supported_bool")}
+        where = "devices/records/reads/group-a/rtt_supported_bool.000000000001.json"
+        refused = ocd.group_a_unapplied_problems(group_a_read(), where, marked)
+        self.assertEqual(len(refused), 1)
+        self.assertIn(profile, refused[0])
+        self.assertIn("unapplied_on_lineage_build", refused[0])
+        # A hold, another key, an unmarked profile and a key read all pass.
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(verdict="hold"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(key="allow_hold_call_during_emergency_bool"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=["open.26201.13528695fee7"]), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(), where, set()), [])
+        profiles = tiny_profiles({"rtt_supported_bool": True}, [{"entry": "o2_de", "when": None}])
+        digest = "sha256:" + "0" * 64
+        served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: group_a_read()}, None, marked)
+        self.assertEqual(served["reads"], [])
+        self.assertEqual([(p["key"], p["profiles"]) for p in status["pending"]], [("rtt_supported_bool", [profile])])
+        # The flag gone (a live source came, or upstream fixed the build): the same read admits it.
+        served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: group_a_read()}, None, set())
+        self.assertEqual(([r["verdict"] for r in served["reads"]], status["pending"]), (["proceed"], []))
+        # A hold stays recorded on a marked value: it serves nothing.
+        served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: group_a_read(verdict="hold")}, None, marked)
+        self.assertEqual(([r["verdict"] for r in served["reads"]], status["pending"]), (["hold"], []))
+
+    def test_unapplied_values_come_from_the_evidence_index(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(ocd.unapplied_values(root), set())
+            (root / "generated").mkdir()
+            (root / ocd.EVIDENCE_INDEX_FILE).write_text(json.dumps({"profiles": [
+                {"profile_id": "open.26207.c07dcc040b58", "flags": [
+                    {"section": "android_carrier_config", "key": "rtt_supported_bool", "flag": "unapplied_on_lineage_build"},
+                    {"section": "capabilities", "key": "mms", "flag": "old_single_source"}]},
+                {"profile_id": "open.26201.13528695fee7"}]}), encoding="utf-8")
+            self.assertEqual(ocd.unapplied_values(root), {("open.26207.c07dcc040b58", "rtt_supported_bool")})
+
     def test_read_refusals(self) -> None:
         self.assertTrue(ocd.group_a_read_problems(group_a_read(reader="the importer"), "r"))
         self.assertTrue(ocd.group_a_read_problems(group_a_read(subject="key", value=None, families=[], profiles=[], effect="call_path"), "r"))

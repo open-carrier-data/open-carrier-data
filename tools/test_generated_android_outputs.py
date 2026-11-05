@@ -2644,6 +2644,24 @@ def check_old_selector_superseded() -> None:
     assert_true(not flags_valid(["lineageos", "samsung_omc"]), "the flag needs Samsung as the only source")
     assert_true(not flags_valid(["samsung_omc"], "spn"), "the flag names the selector")
 
+    # Round 56, item 1: a label on a CarrierConfig key of a profile the device overlays source.
+    def unapplied_valid(section: str, sources: list[str], config: dict | None) -> bool:
+        evidence = {"sources": sources, "flags": [
+            {"section": section, "key": "wfc_spn_format_idx_int", "flag": "unapplied_on_lineage_build"}]}
+        try:
+            validate_public_carrier_data.validate_flags(Path("x.json"), evidence, 0, None, config)
+        except validate_public_carrier_data.ValidationError:
+            return False
+        return True
+
+    overlay = "lineageos_device_overlays"
+    published = {"wfc_spn_format_idx_int": 1}
+    assert_true(unapplied_valid("android_carrier_config", [overlay], published), "the validator takes the flag on a published key")
+    assert_true(unapplied_valid("android_carrier_config", ["aosp", overlay], published), "another family may source the profile")
+    assert_true(not unapplied_valid("capabilities", [overlay], published), "the flag belongs to android_carrier_config")
+    assert_true(not unapplied_valid("android_carrier_config", ["aosp"], published), "the flag needs the device overlays as a source")
+    assert_true(not unapplied_valid("android_carrier_config", [overlay], {}), "the flag names a published key")
+
 
 def check_superseded_pack_values() -> None:
     """A Samsung value that only carrier packs superseded for the fact's type
