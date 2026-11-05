@@ -321,6 +321,12 @@ def exact_key(match: dict[str, Any]) -> str:
     return canonical_json(normalise_match(match))
 
 
+def retired_order(item: dict[str, Any]) -> tuple[str, int]:
+    """Sorts alias entries of the same SIMs by when they left: by day, and on
+    one day by counter, since a match set that returns gets the next one."""
+    return item["retired_on"], issued_counter(item["id"], item["match"]) or 0
+
+
 class Registry:
     """The IDs of the previous tree and the assignment of one build."""
 
@@ -339,6 +345,12 @@ class Registry:
             self.by_key[key] = profile_id
             self.by_exact[exact_key(match)] = profile_id
         self.continuity = list(continuity)
+        # The same SIMs -> their retired ID, the last one if they left twice,
+        # and which exact match set of the build names it (withdrawn_id).
+        self.retired_by_key: dict[str, str] = {}
+        for item in sorted(self.aliases.values(), key=retired_order):
+            self.retired_by_key[same_sims_key(item["match"])] = item["id"]
+        self.retired_owner: dict[str, str] = {}
         # exact match set -> ID, and which exact match set holds a live ID's SIMs.
         self.assigned: dict[str, str] = {}
         self.key_owner: dict[str, str] = {}
@@ -421,6 +433,24 @@ class Registry:
             found = candidate
             self.issued[found] = exact
         self.assigned[exact] = found
+        return found
+
+    def withdrawn_id(self, match: dict[str, Any], assigned: str) -> str:
+        """The ID a withdrawn_profiles entry names, for the match set the
+        build ASSIGNED an ID to and then published no fact of. Assignment is
+        for what goes live, and a retired ID is never reused, so assign gives
+        a code that left the next counter's hash, a new ID on every code that
+        leaves. The entry is a record of what left: it keeps the live ID on
+        the build that retires it and that same frozen ID afterwards. Same
+        SIMs written twice share one retired ID, so the second writing keeps
+        ASSIGNED. A match set that was never live has no retired ID and keeps
+        ASSIGNED too, which is its hash."""
+        if assigned in self.live:
+            return assigned
+        exact = exact_key(match)
+        found = self.retired_by_key.get(same_sims_key(match))
+        if found is None or self.retired_owner.setdefault(found, exact) != exact:
+            return assigned
         return found
 
     def finish(self, new_live: dict[str, dict[str, Any]], today: date) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -605,8 +635,9 @@ def alias_document_problems(document: dict[str, Any], live: dict[str, dict[str, 
 
 def referenced_ids(root: Path) -> dict[str, set[str]]:
     """Every open profile ID a generated file or side file names, by file.
-    Structured fields only: the evidence index's would-be IDs of withdrawn
-    profiles and the prose of F5 reads are not references."""
+    Structured fields only: the evidence index's withdrawn_profiles, whose
+    never-live match sets have no registry ID, and the prose of F5 reads are
+    not references."""
     found: dict[str, set[str]] = {}
 
     def scan_text(rel: str) -> None:

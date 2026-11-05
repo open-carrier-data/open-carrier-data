@@ -201,6 +201,65 @@ class RetirementTest(unittest.TestCase):
         self.assertEqual(len(second["aliases"]["aliases"]), 1)
 
 
+class WithdrawnIdTest(unittest.TestCase):
+    """A withdrawn_profiles entry names the frozen retired ID, not assign's
+    next counter (public #403 moved every data_digest line that way)."""
+
+    @staticmethod
+    def alias(pid: str, match: dict, day: str = "2026-11-05") -> dict:
+        return {"id": pid, "kind": "withdrawn", "to": [], "match": ids.normalise_match(match),
+                "match_set_hash": ids.match_set_hash(match), "retired_on": day}
+
+    def registry(self, live: dict, *aliases: dict) -> ids.Registry:
+        document = ids.empty_aliases()
+        document["aliases"] = sorted(aliases, key=lambda item: item["id"])
+        return ids.Registry(live, document)
+
+    def entry_id(self, registry: ids.Registry, match: dict) -> str:
+        return registry.withdrawn_id(match, registry.assign(match))
+
+    def test_a_code_that_left_keeps_its_id_from_the_build_that_retires_it_on(self) -> None:
+        gone = ids.hash_id(PLAIN)
+        leaving = ids.Registry({gone: PLAIN})
+        self.assertEqual(self.entry_id(leaving, PLAIN), gone)
+        document, _ = leaving.finish({}, TODAY)
+        left = ids.Registry({}, document)
+        self.assertEqual(left.assign(PLAIN), ids.hash_id(PLAIN, 1))
+        left = ids.Registry({}, document)
+        self.assertEqual(self.entry_id(left, PLAIN), gone)
+
+    def test_the_retired_id_is_never_handed_to_a_live_profile(self) -> None:
+        gone = ids.hash_id(PLAIN)
+        registry = self.registry({}, self.alias(gone, PLAIN))
+        self.assertEqual(registry.assign(PLAIN), ids.hash_id(PLAIN, 1))
+
+    def test_a_match_set_that_was_never_live_keeps_its_hash(self) -> None:
+        registry = self.registry({})
+        self.assertEqual(self.entry_id(registry, PLAIN), ids.hash_id(PLAIN))
+
+    def test_the_same_sims_written_otherwise_name_the_retired_id(self) -> None:
+        gone = ids.hash_id(SPN_UPPER)
+        registry = self.registry({}, self.alias(gone, SPN_UPPER))
+        self.assertEqual(self.entry_id(registry, SPN_LOWER), gone)
+
+    def test_two_writings_of_the_same_sims_never_share_an_entry_id(self) -> None:
+        gone = ids.hash_id(SPN_UPPER)
+        registry = self.registry({}, self.alias(gone, SPN_UPPER))
+        first, second = self.entry_id(registry, SPN_UPPER), self.entry_id(registry, SPN_LOWER)
+        self.assertEqual(first, gone)
+        self.assertEqual(second, ids.hash_id(SPN_LOWER))
+
+    def test_a_code_that_left_twice_names_the_id_it_last_had(self) -> None:
+        first, second = ids.hash_id(PLAIN), ids.hash_id(PLAIN, 1)
+        self.assertEqual(self.entry_id(self.registry({}, self.alias(first, PLAIN, "2026-11-05"),
+                                                     self.alias(second, PLAIN, "2026-11-06")), PLAIN), second)
+        self.assertEqual(self.entry_id(self.registry({}, self.alias(first, PLAIN), self.alias(second, PLAIN)), PLAIN), second)
+
+    def test_a_live_id_wins_over_an_older_retired_one(self) -> None:
+        first, second = ids.hash_id(PLAIN), ids.hash_id(PLAIN, 1)
+        self.assertEqual(self.entry_id(self.registry({second: PLAIN}, self.alias(first, PLAIN)), PLAIN), second)
+
+
 class ContinuityTest(unittest.TestCase):
     def test_an_accepted_replacement_keeps_the_id(self) -> None:
         old, plain = ids.hash_id(GID_BOTH), ids.hash_id(PLAIN)
