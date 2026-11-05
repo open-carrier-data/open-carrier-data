@@ -982,20 +982,58 @@
     {
       "country": "DE",
       "host_networks": [
+        "26201",
+        "26214"
+      ],
+      "host_only": false,
+      "host_only_networks": [
         "26201"
       ],
-      "host_only": true,
       "key": "de.lebara",
       "kind": "mvno",
       "labels": [
         {
           "families": [
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "26214 De",
+          "networks": [
+            "26214"
+          ]
+        },
+        {
+          "families": [
             "lineageos_legacy_apn_list",
+            "samsung_omc",
             "sony_open_devices_aosp"
           ],
           "label": "Lebara",
           "networks": [
-            "26201"
+            "26201",
+            "26214"
+          ],
+          "sales_codes": [
+            "DBT",
+            "EUX"
+          ]
+        },
+        {
+          "families": [
+            "samsung_ims"
+          ],
+          "label": "Lebara DE",
+          "networks": [
+            "26214"
+          ]
+        },
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings"
+          ],
+          "label": "Lebara De",
+          "networks": [
+            "26214"
           ]
         },
         {
@@ -1007,11 +1045,50 @@
           "networks": [
             "26201"
           ]
+        },
+        {
+          "families": [
+            "lineageos_pixel_apn_snapshot"
+          ],
+          "label": "lebara",
+          "networks": [
+            "26214"
+          ]
         }
       ],
       "name": "Lebara",
-      "operator_key": "de.telekom",
-      "selectors": []
+      "operator_key": "de.lebara",
+      "selectors": [
+        {
+          "families": [
+            "google_carriersettings",
+            "google_pixel_vendor_carriersettings",
+            "samsung_ims"
+          ],
+          "match": {
+            "mccmnc": [
+              "26214"
+            ],
+            "spn": [
+              "Lebara"
+            ]
+          },
+          "profile_id": "open.26214.2f7f57cf5dcc"
+        },
+        {
+          "families": [
+            "lineageos_device_overlays",
+            "lineageos_pixel_apn_snapshot",
+            "samsung_omc"
+          ],
+          "match": {
+            "mccmnc": [
+              "26214"
+            ]
+          },
+          "profile_id": "open.26214.63bd727f0749"
+        }
+      ]
     },
     {
       "country": "DE",
@@ -1244,7 +1321,7 @@
         }
       ],
       "name": "sipgate",
-      "operator_key": "de.telefonica",
+      "operator_key": "de.sipgate",
       "selectors": []
     },
     {
