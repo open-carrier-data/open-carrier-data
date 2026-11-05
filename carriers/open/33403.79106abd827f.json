@@ -185,13 +185,12 @@
   "android_carrier_config": {
     "allow_hold_call_during_emergency_bool": false,
     "carrier_supports_ss_over_ut_bool": true,
-    "carrier_volte_available_bool": true,
-    "maxMessageSize": 512000
+    "carrier_volte_available_bool": true
   },
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "conditional",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "unknown",
     "video_calling": "unknown",
@@ -199,11 +198,6 @@
     "vonr": "unknown",
     "vowifi": "unknown",
     "wifi_calling_roaming": "unknown"
-  },
-  "depends_on": {
-    "mms": [
-      "sources_disagree"
-    ]
   },
   "display_name": "Movistar",
   "match": {
