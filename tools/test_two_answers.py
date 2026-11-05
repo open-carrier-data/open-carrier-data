@@ -109,6 +109,75 @@ class HostOnlyPerNetworkTest(unittest.TestCase):
         self.assertEqual(identity.host_only_on(["00102"]), [])
 
 
+class ReachTest(unittest.TestCase):
+    """Rule round 51, item 2, on the four profiles it changes. IDs 3 and the
+    rest as in Android's pinned table: ID 3 has GID1 and SPN rules only, 2395
+    and 1454 have a rule on the network code alone."""
+
+    TELEKOM = [statement("t.volte", "de.telekom", "volte", "offered", "brand", ["26201"])]
+    O2 = [statement("o.volte", "de.telefonica", "volte", "offered", "brand", ["26203", "26207"]),
+          statement("o.mms", "de.telefonica", "mms", "ended", "network", ["26203", "26207"])]
+    NETWORKS = [{"mcc": "262", "mnc": mnc, "on_regulator_list": True, "operator_key": key}
+                for mnc, key in (("01", "de.telekom"), ("03", "de.telefonica"), ("06", "de.telekom"),
+                                 ("07", "de.telefonica"), ("11", "de.telefonica"))]
+
+    def derive(self, profiles, statements, entries, networks=None) -> dict:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = write_tree(Path(tmp), profiles, statements=statements, identity=entries)
+            (root / ta.ENTITIES).write_text(json.dumps({"networks": self.NETWORKS if networks is None else networks}), encoding="utf-8")
+            return ta.derive(root)
+
+    @staticmethod
+    def host(key: str, name: str, codes: list[str], selectors: list[dict]) -> dict:
+        return {**entry(key, name, codes, selectors), "kind": "operator"}
+
+    def test_a_brands_own_multi_code_profile_gets_the_plain_line(self) -> None:
+        for match in ({"mccmnc": ["26201", "26206"], "android_carrier_ids": [3], "gid1_prefixes": ["01"]},
+                      {"mccmnc": ["26201", "26206"], "android_carrier_ids": [3], "spn": ["Privat"]}):
+            p = profile(match)
+            out = self.derive([p], self.TELEKOM, [self.host("de.telekom", "Telekom", ["26201", "26206"], [p])])
+            self.assertEqual(out[p["profile_id"]]["for_you"]["volte"], {"state": "depends_on_plan", "statements": ["t.volte"]})
+
+    def test_a_network_rule_profile_on_telekom_names_the_riders(self) -> None:
+        p = profile({"mccmnc": ["26201", "26206"], "android_carrier_ids": [2395]})
+        rider = {**entry("de.lebara", "Lebara", ["26201"], []), "kind": "mvno", "host_only": True}
+        out = self.derive([p], self.TELEKOM, [self.host("de.telekom", "Telekom", ["26201", "26206"], [p]), rider])
+        volte = out[p["profile_id"]]["for_you"]["volte"]
+        self.assertEqual(volte["reason"], "brand_not_tellable")
+        self.assertEqual(volte["brands"], ["Lebara", "Telekom"])
+
+    def test_a_network_rule_profile_on_o2_names_the_riders_and_keeps_the_mms_end(self) -> None:
+        p = profile({"mccmnc": ["26207", "26211"], "android_carrier_ids": [1454]})
+        rider = {**entry("de.fonic", "FONIC", ["26207"], []), "host_only": True}
+        out = self.derive([p], self.O2, [self.host("de.telefonica", "O2", ["26203", "26207", "26211"], [p]), rider])
+        for_you = out[p["profile_id"]]["for_you"]
+        self.assertEqual(for_you["volte"]["reason"], "brand_not_tellable")
+        self.assertEqual(for_you["volte"]["brands"], ["FONIC", "O2"])
+        self.assertEqual(for_you["mms"], {"state": "ended", "statements": ["o.mms"]})
+
+    def test_a_network_rule_profile_is_never_one_brands_alone(self) -> None:
+        p = profile({"mccmnc": ["26201", "26206"], "android_carrier_ids": [2395]})
+        out = self.derive([p], self.TELEKOM, [self.host("de.telekom", "Telekom", ["26201", "26206"], [p])])
+        self.assertNotIn("for_you", out.get(p["profile_id"], {}))
+
+    def test_an_unlisted_code_never_qualifies(self) -> None:
+        p = profile({"mccmnc": ["26201", "26206"], "android_carrier_ids": [3], "gid1_prefixes": ["01"]})
+        entries = [self.host("de.telekom", "Telekom", ["26201", "26206"], [p])]
+        out = self.derive([p], self.TELEKOM, entries, [row for row in self.NETWORKS if row["mnc"] != "06"])
+        self.assertNotIn("for_you", out.get(p["profile_id"], {}))
+
+    def test_two_companies_never_share_a_reach(self) -> None:
+        p = profile({"mccmnc": ["26201", "26207"], "android_carrier_ids": [3], "gid1_prefixes": ["01"]})
+        out = self.derive([p], self.TELEKOM, [self.host("de.telekom", "Telekom", ["26201", "26207"], [p])])
+        self.assertNotIn("for_you", out.get(p["profile_id"], {}))
+
+    def test_capabilities_stay_byte_identical(self) -> None:
+        p = profile({"mccmnc": ["26207", "26211"], "android_carrier_ids": [1454]}, volte="supported")
+        before = ta.dump_profile(p)
+        self.derive([p], self.O2, [self.host("de.telefonica", "O2", ["26207"], [p])])
+        self.assertEqual(ta.dump_profile(p), before)
+
+
 class ForYouTest(unittest.TestCase):
     def derived(self, profiles: list[dict], **kwargs) -> dict:
         with tempfile.TemporaryDirectory() as tmp:

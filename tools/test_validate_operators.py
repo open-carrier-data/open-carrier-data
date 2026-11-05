@@ -314,6 +314,12 @@ class EntitiesTest(unittest.TestCase):
         identity["entries"].insert(0, brand)
         self.assertTrue(any("zz.brand is not a brand here" in e for e in self.errors(entities_file(), identity)))
 
+    def test_the_table_copies_the_operator(self):
+        identity = identity_file()
+        document = entities_file()
+        document["brands"][0]["operator_key"] = None
+        self.assertTrue(any("the identity table gives zz.net" in e for e in self.errors(document, identity)))
+
     def test_phones_never_pull_it(self):
         with Tree(statements_file([statement()]), identity_file()) as tree:
             tree.write(vo.ENTITIES, entities_file())

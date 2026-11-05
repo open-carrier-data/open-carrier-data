@@ -89,7 +89,7 @@ Rule round 45 (item 4) keeps two answers per feature apart. `capabilities` stays
 
 A reason other than `sources_disagree` is set only where the device records give that basis.
 
-**`for_you`** appears only where an admitted operator or brand statement that has not lapsed (`generated/operators/statements.json`) gives a state. A missing entry means unknown. Each entry has `state`, the `statements` it rests on, and on a plain profile shared with host-only brands `reason` and `brands`:
+**`for_you`** appears only where an admitted operator or brand statement that has not lapsed (`generated/operators/statements.json`) gives a state. A statement reaches a profile all of whose network codes it names, and a profile with several codes when it names one of them and `entities.json`'s regulator rows give every code to one operator. A profile whose only selector is `android_carrier_ids`, each with a rule on the network code alone in Android's pinned table, counts as plain: every SIM there with no narrower rule gets it, so it is never one brand's alone (rule round 51, item 2). A missing entry means unknown. Each entry has `state`, the `statements` it rests on, and on a plain profile shared with host-only brands `reason` and `brands`:
 
 | State | From |
 | --- | --- |

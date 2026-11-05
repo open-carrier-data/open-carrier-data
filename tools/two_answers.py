@@ -20,14 +20,20 @@ key rename risks an installed reader finding none. Two sibling maps join them:
   `not_offered` gives `not_offered`, `offered` gives `depends_on_plan`;
   `included`, `free_option` and `paid_option` come only from a statement
   whose status says exactly that. A network-wide statement reaches every
-  profile all of whose network codes it names. A brand's statement reaches a
+  profile all of whose network codes it names, and a profile with several
+  codes when it names one of them and entities.json's regulator rows give all
+  of them to one operator; a brand's statement reaches that far too, and a
+  statement's own mccmnc is never edited for this. A brand's statement reaches a
   profile only when the carrier-identity table maps that profile to that
   brand alone: the profile has a selector, only that brand's entry lists it,
   and no other entry's selector shares its SIMs without being narrower. On a
   network where host-only brands ride (no source gives a selector, so OCD
   does not tell them apart; the SIM may still show a name), the plain profile gets at most
   `depends_on_plan` with the reason `brand_not_tellable` and the brands'
-  names, never the host's or one brand's own state or option text. A
+  names, never the host's or one brand's own state or option text. A profile
+  whose only selector is android_carrier_ids, each with a rule in Android's
+  pinned table on just the network code, counts as plain, since every SIM
+  there with no narrower rule gets it (rule round 51, item 2). A
   missing `for_you` means unknown. Nothing here comes from a single SIM, an
   account read or a field record, and nothing here feeds `capabilities`,
   CarrierConfig, APN rows, the OCD dataset or a test decision.
@@ -86,6 +92,8 @@ BRAND_NOT_TELLABLE = "brand_not_tellable"
 FIELDS = ("depends_on", "for_you")
 STATEMENTS = "generated/operators/statements.json"
 IDENTITY = "generated/operators/carrier-identity.json"
+ENTITIES = "generated/operators/entities.json"
+CARRIER_ID_TABLE = Path(__file__).resolve().parent / "aosp" / "carrier-id-table.json"
 EVIDENCE = "generated/evidence-index.json"
 VARIANTS = "generated/devices/carrier-variants.json"
 LOOKUP = "generated/android/lookup.json"
@@ -158,11 +166,29 @@ def live_statements(document: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-class Identity:
-    """The carrier-identity table, as for_you reads it."""
+def network_rule_ids() -> dict[int, set[str]]:
+    """Android's carrier IDs with a rule on the network code alone, and those
+    codes: every SIM on such a code with no narrower rule gets the ID."""
+    found: dict[int, set[str]] = {}
+    for row in read_json(CARRIER_ID_TABLE)["rows"]:
+        if set(row) <= {"carrier_id", "mccmnc", "parent_carrier_id"}:
+            found.setdefault(row["carrier_id"], set()).add(str(row["mccmnc"]))
+    return found
 
-    def __init__(self, document: dict[str, Any], live: dict[str, dict[str, Any]]) -> None:
+
+class Identity:
+    """The carrier-identity table, as for_you reads it, with the regulator rows
+    of entities.json (networks) for who holds a code."""
+
+    def __init__(self, document: dict[str, Any], live: dict[str, dict[str, Any]],
+                 networks: list[dict[str, Any]] | None = None) -> None:
         self.entries = [e for e in document.get("entries", []) if isinstance(e, dict)]
+        self.by_key = {e.get("key"): e for e in self.entries}
+        self.holders = {
+            f"{row['mcc']}{row['mnc']}": row["operator_key"]
+            for row in networks or [] if row.get("on_regulator_list") is True and row.get("operator_key")
+        }
+        self.network_rules = network_rule_ids()
         self.listing: dict[str, list[dict[str, Any]]] = {}
         self.selectors: list[tuple[dict[str, Any], dict[str, Any]]] = []
         for entry in self.entries:
@@ -186,6 +212,43 @@ class Identity:
     def host_only_on(self, codes: list[str]) -> list[dict[str, Any]]:
         return [e for e in self.entries if set(codes) & self.host_only_networks(e)]
 
+    def one_operator(self, codes: list[str]) -> str | None:
+        """The operator the regulator rows give every one of these codes, or
+        None: an unlisted code never qualifies."""
+        owners = {self.holders.get(code) for code in codes}
+        return owners.pop() if len(owners) == 1 and None not in owners else None
+
+    def reaches(self, statement: dict[str, Any], codes: list[str]) -> bool:
+        """A statement reaches a profile all of whose codes it names, or one
+        with several codes when it names one and the regulator rows give all
+        of them to one operator (rule round 51, item 2)."""
+        named = set(statement["mccmnc"])
+        if set(codes) <= named:
+            return True
+        return len(codes) > 1 and bool(named & set(codes)) and self.one_operator(codes) is not None
+
+    def plain_like(self, match: dict[str, Any]) -> bool:
+        """A profile whose only selector is android_carrier_ids, each with a
+        rule on just one of its network codes. Every SIM on those codes with no
+        narrower rule lands here, so it acts as the plain profile and is never
+        one brand's alone: Fonic and netzclub SIMs on 262-07 get carrier ID
+        1454 (rule round 51, item 2)."""
+        if {key for key in profile_ids.SELECTOR_KEYS if match.get(key)} != {"android_carrier_ids"}:
+            return False
+        codes = {str(code) for code in match["mccmnc"]}
+        return all(self.network_rules.get(item, set()) & codes for item in match["android_carrier_ids"])
+
+    def plain(self, match: dict[str, Any]) -> bool:
+        return not any(match.get(key) for key in profile_ids.SELECTOR_KEYS) or self.plain_like(match)
+
+    def hosts(self, profile_id: str, match: dict[str, Any]) -> list[dict[str, Any]]:
+        """The entries that own a plain profile: the table's, and on a plain-like
+        profile the operator of its codes."""
+        if self.plain_like(match):
+            owner = self.by_key.get(self.one_operator([str(code) for code in match["mccmnc"]]))
+            return [owner] if owner else []
+        return self.listing.get(profile_id, [])
+
     def brand_alone(self, profile_id: str, match: dict[str, Any]) -> dict[str, Any] | None:
         """The one entry the table maps this profile to, or None: the profile
         has a selector, only that entry lists it, and no other entry has a
@@ -196,7 +259,7 @@ class Identity:
         specificity, so neither brand's statement may speak for it (congstar
         and fraenk share GID1 44). A rule on other selectors does not count:
         whether a SIM matches both depends on fields neither rule names."""
-        if not any(match.get(key) for key in profile_ids.SELECTOR_KEYS):
+        if self.plain(match):
             return None
         listing = {e["key"]: e for e in self.listing.get(profile_id, [])}
         if len(listing) != 1:
@@ -213,17 +276,23 @@ class Identity:
         return entry
 
 
+def load_identity(root: Path, live: dict[str, dict[str, Any]]) -> Identity:
+    document = read_json(root / IDENTITY) if (root / IDENTITY).is_file() else {"entries": []}
+    networks = read_json(root / ENTITIES).get("networks", []) if (root / ENTITIES).is_file() else []
+    return Identity(document, live, networks)
+
+
 def for_you_of(profile: dict[str, Any], statements: list[dict[str, Any]], identity: Identity) -> dict[str, dict[str, Any]]:
     profile_id = profile["profile_id"]
     match = profile["match"]
     codes = [str(code) for code in match["mccmnc"]]
-    plain = not any(match.get(key) for key in profile_ids.SELECTOR_KEYS)
+    plain = identity.plain(match)
     riding = identity.host_only_on(codes) if plain else []
     brand = identity.brand_alone(profile_id, match)
-    hosts = identity.listing.get(profile_id, []) if plain else []
+    hosts = identity.hosts(profile_id, match) if plain else []
     out: dict[str, dict[str, Any]] = {}
     for capability in sorted(set(CAPABILITY_OF_SERVICE.values())):
-        about = [s for s in statements if CAPABILITY_OF_SERVICE[s["service"]] == capability and set(codes) <= set(s["mccmnc"])]
+        about = [s for s in statements if CAPABILITY_OF_SERVICE[s["service"]] == capability and identity.reaches(s, codes)]
         network = [s for s in about if s["scope"] == "network"]
         if network:
             states = {STATE_OF_STATUS[s["status"]] for s in network}
@@ -270,8 +339,7 @@ def derive(root: Path, variants_profiles: dict[str, Any] | None = None,
     if variants_profiles is None:
         variants_profiles = read_json(root / VARIANTS).get("profiles", {}) if (root / VARIANTS).is_file() else {}
     statements = live_statements(read_json(root / STATEMENTS)) if (root / STATEMENTS).is_file() else []
-    identity_document = read_json(root / IDENTITY) if (root / IDENTITY).is_file() else {"entries": []}
-    identity = Identity(identity_document, {pid: p["match"] for pid, (_, p) in profiles.items()})
+    identity = load_identity(root, {pid: p["match"] for pid, (_, p) in profiles.items()})
     out: dict[str, dict[str, Any]] = {}
     for pid, (_, profile) in profiles.items():
         fields = {
