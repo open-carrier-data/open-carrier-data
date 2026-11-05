@@ -65,8 +65,10 @@ STATEMENTS = f"{OPERATORS_DIR}/statements.json"
 IDENTITY = f"{OPERATORS_DIR}/carrier-identity.json"
 ENTITIES = f"{OPERATORS_DIR}/entities.json"
 OFFERS = f"{OPERATORS_DIR}/offers.json"
-# What phones pull: the dataset's manifest. The files below are for people and
-# are never a value, so they stay out of it (rule round 47, item 4).
+# What carrier settings read: the dataset's manifest. The files below are for
+# people and are never a value, so they stay out of it (rule round 47, item 4).
+# OCD Android reads offers.json and sim-groups.json for the plan picker only, by
+# the pull's own path, never through the manifest (rule round 51, item 4).
 MANIFEST = "generated/ocd-dataset/manifest.json"
 SIM_GROUPS = f"{OPERATORS_DIR}/sim-groups.json"
 PLAN_FAMILIES = f"{OPERATORS_DIR}/plan-families.json"
@@ -508,12 +510,12 @@ def offer_problems(document: dict[str, Any], statements: dict[str, Any] | None, 
 
 
 def pulled_problems(root: Path) -> list[str]:
-    """Files for people stay out of what phones pull."""
+    """Files for people stay out of what carrier settings read."""
     path = root / MANIFEST
     if not path.is_file():
         return []
     listed = {str(item.get("path")) for item in load(path).get("files", []) if isinstance(item, dict)}
-    return [f"{MANIFEST}: lists {name}, which phones never read" for name in NEVER_PULLED if name in listed]
+    return [f"{MANIFEST}: lists {name}, which no carrier settings component reads" for name in NEVER_PULLED if name in listed]
 
 
 # ---------------------------------------------------------------- main

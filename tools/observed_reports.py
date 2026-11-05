@@ -28,7 +28,8 @@ path and never come here. This tool is the whole logic of
       express, and the data it names: a commit on main (or a release tag)
       that exists, whose data digest matches, and that holds the profile and
       every APN row key. Plausibility checks against that data flag a report
-      as suspect. Writes {"valid", "suspect",
+      as suspect. A plan that is not a live offer of a brand on the report's
+      profile reads unknown, and the report stays valid. Writes {"valid", "suspect",
       "errors", "flags", "report_sha256"} and the bot's comment. Exit 0
       whether the report is valid or not.
 
@@ -156,8 +157,12 @@ STATUS_DESCRIPTIONS = {
 }
 # The plan a report names (rule round 47, item 4): the person's own choice from
 # the carrier's closed offer list, default unknown. Never free text, never read
-# from an account, USSD, carrier SMS or TS.43, and never a matching key.
+# from an account, USSD, carrier SMS or TS.43, and never a matching key. No
+# automatic report names a plan; only the person's tapped report may (rule round
+# 51, item 4). These two files decide whether a named plan stands.
 PLAN_UNKNOWN = "unknown"
+OFFERS_FILE = "generated/operators/offers.json"
+SIM_GROUPS_FILE = "generated/operators/sim-groups.json"
 EXPIRED_REASON = f"tested more than {EXPIRE_DAYS} days ago"
 # What phones read: observed/results.json must stay out of all of it.
 PULL_LISTS = (ocd_dataset.FILES["manifest"][1], "schemas/ocd-dataset-manifest.schema.json")
@@ -210,6 +215,12 @@ HEX_FIELDS = {"$.ocd_profile", "$.sim.gid1_prefix", "$.release.commit", "$.relea
 SAFE_KEY = re.compile(r"[a-z][a-z0-9_]{0,40}")
 
 
+class PlanLists(NamedTuple):
+    """What the plan check reads: the offers by ID and the brands of each profile."""
+    offers: dict[str, dict[str, Any]]
+    brands: dict[str, set[str]]
+
+
 class Check(NamedTuple):
     valid: bool
     errors: list[str]
@@ -218,6 +229,8 @@ class Check(NamedTuple):
     sha256: str | None
     # The data the report points into: a main commit (40 hex) or a release tag.
     ref: str | None
+    # Why the plan the report named reads unknown; None when it stands.
+    plan_doubt: str | None = None
 
 
 # ---------------------------------------------------------------- schema
@@ -386,11 +399,6 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
         out.append(f"$.tested_on: is before {EARLIEST_TEST.isoformat()}, older than the OCD Android app")
     if report["ocd_profile"] is None and "gid1_prefix" in report["sim"]:
         out.append("$.sim.gid1_prefix: is sent only with the OCD profile that matches by it")
-    if plan_of(report) != PLAN_UNKNOWN:
-        # Round 47 opens this field once an offer list exists, and round 48 keeps
-        # the plan off what a phone sends. generated/operators/offers.json now
-        # exists, but no ruling lets a report name an offer.
-        out.append("$.plan: no phone sends a plan (rule round 48), so the only choice is unknown")
     seen: set[str] = set()
     pointers: dict[str, dict[str, list[str]]] = {}
     for index, result in enumerate(report["results"]):
@@ -674,6 +682,47 @@ def plan_of(report: dict[str, Any]) -> Any:
     return report.get("plan", PLAN_UNKNOWN)
 
 
+def read_plan_lists(root: Path) -> PlanLists | None:
+    """The offer list and the SIM groups of ROOT, or None when either cannot be
+    read: then no plan can be checked, and every named plan reads unknown."""
+    try:
+        offers = json.loads((root / OFFERS_FILE).read_text(encoding="utf-8"))["offers"]
+        groups = json.loads((root / SIM_GROUPS_FILE).read_text(encoding="utf-8"))["profiles"]
+        return PlanLists({item["id"]: item for item in offers}, {row["profile_id"]: set(row["brands"]) for row in groups})
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def live_on(offer: dict[str, Any], day: str) -> bool:
+    """Whether OFFER was live on DAY. Only valid_to and lapsed decide: valid_from
+    is often an upper bound such as ≤2026-11-05, so an earlier test proves nothing."""
+    valid_to = (offer.get("valid_to") or "").removeprefix("≤")
+    lapsed = offer.get("lapsed")
+    return not (valid_to and day > valid_to) and not (lapsed and day >= lapsed["since"])
+
+
+def plan_doubt(report: dict[str, Any], lists: PlanLists | None) -> str | None:
+    """Why the plan REPORT names reads unknown, or None when it stands (rule
+    round 51, item 4). These checks run on every report, whatever the app did. A
+    failed one never refuses the report: a stale list must not lose a real
+    result, and the tree must not get a false leaf."""
+    plan = plan_of(report)
+    if plan == PLAN_UNKNOWN:
+        return None
+    if lists is None:
+        return "OCD's offer list could not be read"
+    if plan.get("options"):
+        return "OCD's list has no booked options: a pack or option is an offer of its own"
+    offer = lists.offers.get(plan["offer"])
+    if offer is None:
+        return "the offer is not on OCD's list"
+    if not live_on(offer, report["tested_on"]):
+        return "the offer was not live on the test date"
+    if offer["brand"] not in lists.brands.get(report["ocd_profile"], ()):
+        return "the offer's brand is not on the report's carrier profile"
+    return None
+
+
 def plan_label(plan: Any) -> str:
     if plan == PLAN_UNKNOWN:
         return PLAN_UNKNOWN
@@ -730,8 +779,10 @@ def form_sections(body: str) -> dict[str, str]:
     return {heading.strip(): value for heading, value in HEADING_RE.findall(body)}
 
 
-def check_issue(issue: dict[str, Any], today: date, releases: Releases | None) -> Check:
-    """Every problem of one report issue, or none, and its plausibility flags."""
+def check_issue(issue: dict[str, Any], today: date, releases: Releases | None, plans: PlanLists | None = None) -> Check:
+    """Every problem of one report issue, or none, and its plausibility flags.
+    A valid report comes back with the plan PLANS lets stand: unknown after a
+    failed plan check, with the reason in plan_doubt."""
     errors: list[str] = []
     title = issue.get("title") or ""
     body = (issue.get("body") or "").replace("\r\n", "\n")
@@ -763,7 +814,12 @@ def check_issue(issue: dict[str, Any], today: date, releases: Releases | None) -
         return Check(False, errors, [], None, digest, None)
     problems, flags, ref = report_problems(report, today, releases)
     errors = list(dict.fromkeys(errors + problems))
-    return Check(not errors, errors, flags if not errors else [], report if not errors else None, digest, ref)
+    if errors:
+        return Check(False, errors, [], None, digest, ref)
+    doubt = plan_doubt(report, plans)
+    if doubt:
+        report = {**report, "plan": PLAN_UNKNOWN}
+    return Check(True, [], flags, report, digest, ref, doubt)
 
 
 ENTRY_NAMES = {
@@ -848,6 +904,8 @@ def comment(check: Check, number: int, repository: str) -> str:
                 f"| {entry_name(result['entry'])} | {'yes' if result['ocd'] else ''} | {'yes' if result['phone'] else ''} "
                 f"| {result['how']} | {result['result']}{reason} |"
             )
+        if check.plan_doubt:
+            lines += ["", f"The plan this report named reads `{PLAN_UNKNOWN}`, and the report is kept: {check.plan_doubt.replace('`', chr(39))}."]
         settled = [result for result in report["results"] if "settled" in result]
         if settled:
             lines += ["", "Settled results (rule round 29):"]
@@ -987,8 +1045,9 @@ def statuses(accepted: list[tuple[dict[str, Any], Check]], today: date) -> dict[
 
 
 def record(issue: dict[str, Any], check: Check, status: tuple[str, list[str]]) -> dict[str, Any]:
-    """One file under observed/reports/: the report as submitted, its issue,
-    its hash and the data it points into (`release`: the main commit or the
+    """One file under observed/reports/: the report as submitted, apart from a
+    plan that failed its check, which reads unknown; its issue, the hash of the
+    text submitted and the data it points into (`release`: the main commit or the
     release tag), the status after the noise filters, and the mark every
     report file carries: the raw report stays unverified."""
     return {
@@ -1138,8 +1197,11 @@ def rebuild(issues: list[dict[str, Any]], root: Path, today: date, releases: Rel
     reports_dir.mkdir(parents=True, exist_ok=True)
     accepted = []
     left_out = []
+    # Every rebuild checks every plan again, so validate needs no offer list: a
+    # change to offers.json can never fail observed/ or hold back a data commit.
+    plans = read_plan_lists(root)
     for issue in report_issues(issues):
-        check = check_issue(issue, today, releases)
+        check = check_issue(issue, today, releases, plans)
         if check.valid:
             accepted.append((issue, check))
         else:
@@ -1276,7 +1338,7 @@ def pr_body(result: dict[str, list[int]], before: set[int]) -> str:
     lines = [
         "Observed reports from OCD Android report issues, recorded as **unverified**, the same for every account.",
         "",
-        "- `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, its release and its status after the noise filters.",
+        "- `observed/reports/issue-N.json`: one file per valid report, as submitted apart from a plan that failed its check, with its hash, its release and its status after the noise filters.",
         "- `observed/summary.json`: the reports per device × carrier profile × stack × entry, \"reported, not checked by OCD\" by result, \"contested\" for a clean measured failure, and the held reports.",
         "- `observed/results.json`: the same results as device > carrier > plan, with dates and the count of accounts. Phones never read it.",
         "",
@@ -1452,7 +1514,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "check-issue":
         event = json.loads(args.event.read_text(encoding="utf-8"))
         issue = event["issue"]
-        result = check_issue(issue, today_utc(args.today), Releases(args.root, args.main))
+        result = check_issue(issue, today_utc(args.today), Releases(args.root, args.main), read_plan_lists(args.root))
         args.result.write_text(dump({
             "issue": issue["number"], "valid": result.valid, "suspect": bool(result.flags), "errors": result.errors,
             "flags": result.flags, "report_sha256": result.sha256, "release": result.ref,
@@ -1511,6 +1573,9 @@ def main(argv: list[str] | None = None) -> int:
         for flag in flags:
             print(f"suspect: {flag}", file=sys.stderr)
         if not problems:
+            doubt = plan_doubt(report, read_plan_lists(args.root))
+            if doubt:
+                print(f"plan reads {PLAN_UNKNOWN}: {doubt}", file=sys.stderr)
             print(f"valid against {data_label(ref or '')}{' (suspect)' if flags else ''}; {report_hash(text)}")
         return 1 if problems else 0
     return 2

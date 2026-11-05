@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-sim-groups.schema.json",
   "title": "Brands per SIM group (generated/operators/sim-groups.json)",
-  "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: which brands each OCD profile holds and whether a phone can tell them apart. tools/sim_groups.py derives the file from the carrier-identity table and the profiles, and validate compares it. A label for people: nothing here changes a match, a value or a phone.",
+  "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: which brands each OCD profile holds and whether a phone can tell them apart. tools/sim_groups.py derives the file from the carrier-identity table and the profiles, and validate compares it. A label for people: nothing here changes a match, a value or a phone. OCD Android reads this file for the plan picker only, and no carrier settings component reads it.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "description", "license", "counts", "profiles"],

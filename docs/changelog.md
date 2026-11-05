@@ -6,6 +6,10 @@ For what changed in the data itself, read the publish pull requests, `tools/chec
 
 ## Format and meaning changes
 
+### 2026-11-05: a report may name a plan, and a doubtful plan reads `unknown`
+
+The plan picker opens for tapped reports (rule round 51, item 4). OCD Android now reads `generated/operators/offers.json` and `generated/operators/sim-groups.json` for the picker only, and no carrier settings component reads them. The report bot no longer refuses a well-formed plan: one that is not on the list, was not live on the test date or whose brand is not on the profile reads `unknown`, and the report is kept. No automatic report names a plan. See [community/README.md](../community/README.md#the-plan).
+
 ### 2026-11-05: new file `generated/operators/offers.json`
 
 Dated offers with feature states (migration step 8, rule round 47, item 4). A new file for people: no existing file, value or match changes. The report bot's refusal of a named plan now gives round 48's reason. See [data model](data-model.md#offers).

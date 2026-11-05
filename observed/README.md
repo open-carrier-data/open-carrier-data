@@ -4,7 +4,7 @@ Phone results: the test reports people send from the OCD Android app through the
 
 | Path | Contents |
 |---|---|
-| `reports/issue-N.json` | one valid report per issue, as submitted (`schemas/ocd-check-report.schema.json`), with its issue number, report date, SHA-256 hash, release, `"verification": "unverified"` and its status after the noise filters (`counted`, `held`, `superseded`, `duplicate`, `expired`) |
+| `reports/issue-N.json` | one valid report per issue, as submitted apart from a plan that failed its check (`schemas/ocd-check-report.schema.json`), with its issue number, report date, SHA-256 hash, release, `"verification": "unverified"` and its status after the noise filters (`counted`, `held`, `superseded`, `duplicate`, `expired`) |
 | `summary.json` | every account's reports per device × carrier profile × stack × entry: "reported, not checked by OCD", "contested" and the held reports (`schemas/observed-summary.schema.json`). One report counts per account and cell, so a count is a count of distinct accounts. Its `retested_by_ocd` is always null, and leaves once the app without it is on the phones |
 | `results.json` | the same results as device > carrier > plan, with dates and the count of accounts (`schemas/observed-results.schema.json`, [docs/data-model.md](../docs/data-model.md#results-tree)). Phones and ROM builds never read it |
 

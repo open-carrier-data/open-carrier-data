@@ -5,7 +5,7 @@
   "profiles": 84,
   "yes": 74
  },
- "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4): which brands each OCD profile holds, from the carrier-identity table. tellable says whether a phone can tell them apart: yes, the profile is one entry's alone; ambiguous, entries may share its SIMs; no, a plain profile on a network with host-only brands. A profile the table does not reach has no row, which says nothing about its brand. Nothing here changes a match, a value or a phone, and phones never read this file. The dated host links, core and same_subscribers are on the brands in entities.json.",
+ "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4): which brands each OCD profile holds, from the carrier-identity table. tellable says whether a phone can tell them apart: yes, the profile is one entry's alone; ambiguous, entries may share its SIMs; no, a plain profile on a network with host-only brands. A profile the table does not reach has no row, which says nothing about its brand. Nothing here changes a match, a value or a phone. OCD Android reads this file for the plan picker only, and no carrier settings component reads it. The dated host links, core and same_subscribers are on the brands in entities.json.",
  "license": "CC0-1.0",
  "profiles": [
   {

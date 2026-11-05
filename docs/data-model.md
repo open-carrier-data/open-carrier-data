@@ -244,7 +244,7 @@ Round 47 keeps plan families in carrier data as today's selectors, so a family i
 
 `generated/operators/offers.json` ([`schemas/operator-offers.schema.json`](../schemas/operator-offers.schema.json), checked by `tools/validate_operators.py`) grows the operator statements into dated tariffs, options and packs (migration step 8, rule round 47, item 4). It starts with Germany's 5G standalone, Wi-Fi calling and MMS.
 
-No phone can see an offer, so an offer is a dated claim from the carrier's own page, never proof that a line has a feature. It feeds no `for_you` answer, no value and no match. No phone sends a plan (rule round 48), so reports and `observed/results.json` keep `unknown`, and phones never read this file.
+No phone can see an offer, so an offer is a dated claim from the carrier's own page, never proof that a line has a feature. It feeds no `for_you` answer, no value and no match. No automatic report names a plan; only the person's tapped report may (rule round 51, item 4). OCD Android reads this file and `sim-groups.json` for that picker only, and no carrier settings component reads them: `validate` fails if either enters the dataset manifest. The app offers the live offers of the brands in the profile's `sim-groups.json` row. A new `offers.json` alone starts no pull, because the data digest does not cover it, so a phone's list can lag until the next data change. The report bot's check covers that lag.
 
 | Part | What it holds |
 | --- | --- |
@@ -394,7 +394,7 @@ Labels that rest on device records (round 17, step 2). Round 8 (2026-10-10) defe
 | device | `rom_line` | the ROM's line as a report can name it: `android-` and its Android major. The firmware tells the builds of one line apart |
 | device | `ims_stack` | the report's IMS stack |
 | carrier | `carrier` | OCD's profile ID |
-| plan | `plan` | `unknown`. The field also has a form for `offer` with `options` from the carrier's published list, as the person chose, but no phone sends a plan (rule round 48), so the bot takes only `unknown`. Old reports read as `unknown` |
+| plan | `plan` | `unknown`, or the `offer` the person tapped on the carrier's published list. The bot checks every plan: one that is not on the list, was not live on the test date or whose brand is not on the profile reads `unknown`, with the report kept. Old reports read as `unknown` |
 | result | `entry`, `result` | an entry of OCD's closed list and its result: one leaf per entry and result |
 | result | `tested_on` | the newest test date behind the leaf; a date, never a time |
 | result | `old_after` | `tested_on` plus 90 days. Past this date the result is old. It is a date and not a stored flag, so the file needs no daily commit, and a reader compares it with today |

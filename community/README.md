@@ -57,9 +57,11 @@ A report holds no IMSI, ICCID, IMEI, phone number, SIP or tel URI, IP address, t
 
 ### The plan
 
-Next to the report the app shows one picker, default `unknown`. `plan` is optional: `unknown`, or an object with `offer`, a closed offer ID from the carrier's published list, and `options`, the booked options from that list. A report without it reads as `unknown`. No phone sends a plan (rule round 48), so `unknown` is the only choice, and the bot refuses anything else, even though `generated/operators/offers.json` now lists offers. The plan comes only from the person's own choice: never free text, and never read from an account, USSD, carrier SMS or TS.43.
+Next to the report the app shows one picker, default `unknown`. `plan` is optional: `unknown`, or an object with `offer`, a closed offer ID from the carrier's published list, and `options`, the booked options from that list. A report without it reads as `unknown`. No automatic report names a plan; only the person's tapped report may (rule round 51, item 4). The list comes from `generated/operators/offers.json` and `generated/operators/sim-groups.json`: OCD Android reads these two files for the picker only, and no carrier settings component reads them. The plan comes only from the person's own choice: never free text, never preselected, and never read from SPN, GID1, an account, USSD, carrier SMS or TS.43. A pack or option is an offer of its own, so `options` stays empty.
 
-A plan is a label the person chose, not a fact about the tariff. It is never a matching key and feeds no carrier value or `for_you` answer. A result with a plan shows in `observed/results.json` and can only open a source review.
+The bot checks every plan, whatever the app did. An offer that is not on OCD's list, was not live on the test date (only `valid_to` and `lapsed` decide this: `valid_from` is often an upper bound) or whose brand is not on the report's profile reads `unknown`. The report is kept, and the bot's comment says why. A plan of the wrong shape, such as free text, makes the report invalid, like any other shape error. Without a readable list every named plan reads `unknown`.
+
+A plan is a label the person chose, not a fact about the tariff. It is never a matching key and feeds no carrier value or `for_you` answer. A result with a plan shows in `observed/results.json`, where it stays "reported, not checked by OCD", and can only open a source review.
 
 ## Upload a report
 
@@ -75,7 +77,7 @@ The issue is public under your GitHub account, so anyone can link your GitHub na
    - `report:suspect`: valid, but a plausibility check against the named data flags it (for example video calling that signed in on PHH IMS, which has no video, or an entry marked as OCD's value that the data does not give). It is held until a maintainer looks;
    - `report:invalid`: the comment lists exactly what is wrong. It names the field and the rule, never the value. Edit the issue to fix it, and the check runs again.
 3. The bot rebuilds `observed/` from every report issue, once per issue event and once a day, and opens or updates one pull request, `automation/observed-reports`, titled "Observed reports (unverified)". It touches only `observed/`:
-   - `observed/reports/issue-N.json`: one file per valid report, as submitted, with its hash, the commit or release it points into (`release`), `"verification": "unverified"` and its status after the noise filters;
+   - `observed/reports/issue-N.json`: one file per valid report, as submitted apart from a plan that failed its check, with its hash, the commit or release it points into (`release`), `"verification": "unverified"` and its status after the noise filters;
    - `observed/summary.json`: every account's reports per device × carrier profile × stack (ROM family, IMS stack, Android major) × entry, the statuses below;
    - `observed/results.json`: the same results as device > carrier > plan, with dates and the count of accounts ([docs/data-model.md](../docs/data-model.md#results-tree)). Phones and ROM builds never read it.
 4. A maintainer merges the pull request after `validate`, with the phone guard, passes. Merging accepts the files; it does not verify the results. The issues close with it.
