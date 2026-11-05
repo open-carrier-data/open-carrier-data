@@ -128,6 +128,7 @@
     "carrier_vt_available_bool": true,
     "carrier_wfc_ims_available_bool": true,
     "editable_wfc_mode_bool": false,
+    "enabledMMS": true,
     "ims_conference_size_limit_int": 6,
     "imssms.sms_over_ims_supported_bool": true,
     "is_ims_conference_size_enforced_bool": true,
@@ -139,7 +140,7 @@
   "capabilities": {
     "esim": "unknown",
     "ims_conference": "unknown",
-    "mms": "conditional",
+    "mms": "supported",
     "rcs": "supported",
     "sms_over_ims": "supported",
     "video_calling": "supported",
@@ -147,11 +148,6 @@
     "vonr": "unknown",
     "vowifi": "supported",
     "wifi_calling_roaming": "unknown"
-  },
-  "depends_on": {
-    "mms": [
-      "sources_disagree"
-    ]
   },
   "display_name": "Claro",
   "match": {
