@@ -234,6 +234,12 @@ The regulator gives no earlier holders and no assignment dates, so a holder is t
 
 `brands` lists the entries, the operator included. The file changes no profile and no match: the table still never changes OCD's matcher (rule round 32). `tellable` feeds no `for_you` answer; `for_you` keeps its own rule that a brand's statement speaks only for a profile the table maps to that brand alone. There is no `observed_only` value and no profile built from a name seen on a real SIM, because no ruling allows one.
 
+### Plan families
+
+`generated/operators/plan-families.json` ([`schemas/operator-plan-families.schema.json`](../schemas/operator-plan-families.schema.json)) lists the plan families a SIM itself shows (migration step 7, rule round 47, item 4): the child IDs of Android's pinned carrier ID table, such as `o2prepaid_de`, an IMSI block of 262-07. `tools/plan_families.py` derives it, and validate rebuilds and compares it.
+
+Round 47 keeps plan families in carrier data as today's selectors, so a family is a label over profiles that already exist. It makes no new SIM group, and a plan is never a matching key. `profiles` lists the profiles inside the child's rules, `parent_profiles` the ones that name the parent's ID, and `rules_without_profile` counts the child's rules no profile states: they are counted, not filled in, because a new profile would change what phones load. `segment` comes from Android's name: `prepaid`, `postpaid`, `5g`, `5g_sa`, `business`, or `other` for a child that names something else, such as a host network. Android's names are in `tools/aosp/carrier-id-names.json`, apart from the table, which the data digest covers.
+
 ## Provenance fields in the evidence index
 
 The evidence index is OCD's per-source record: which families give each value. `generated/evidence-index.json` has `schema_version`, `description`, `source_snapshots`, and `profiles`. It may also carry `checks_through` and `stale_after`, the freshness window that `generated/android/metadata.json` republishes, `vendor_build_grace`, `withdrawn_profiles` and `apn_removal_commits`, all described below. It never contains raw source material.

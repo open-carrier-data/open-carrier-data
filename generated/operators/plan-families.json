@@ -1,0 +1,700 @@
+{
+ "android_carrier_list_version": 134217778,
+ "counts": {
+  "families": 41,
+  "profiles": 97,
+  "with_profile": 38
+ },
+ "description": "Migration step 7 of the device > carrier > plan model (rule round 47, item 4): the plan families a SIM itself shows, from the child IDs of Android's pinned carrier ID table, as labels over the OCD profiles that already state their rules. segment is read from Android's name: prepaid, postpaid, 5g, 5g_sa or business; other marks a child that names something else, such as a host network. profiles lists the OCD profiles inside the child's rules, parent_profiles the ones that name the parent's ID, and rules_without_profile counts the child's rules no profile states. A plan family stays a selector in carrier data: it is never a new SIM group or a matching key, nothing here changes a value, and phones never read this file.",
+ "families": [
+  {
+   "android_carrier_id": 10000,
+   "id": "android.10000",
+   "name": "Tracfone-ATT",
+   "parent_android_carrier_id": 2022,
+   "parent_name": "TracFone",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310280.0c183fbf9bad",
+    "open.310280.1c129a0f45a3",
+    "open.310280.45bacfa96750",
+    "open.310410.a782b2874b78",
+    "open.310410.cbeb27eae3f4",
+    "open.310950.8a1f8e044b0a",
+    "open.310950.e1871dd74e76",
+    "open.311180.a47b53d1a018",
+    "open.311180.c61c9112925e"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10001,
+   "id": "android.10001",
+   "name": "Tracfone-TMO",
+   "parent_android_carrier_id": 2022,
+   "parent_name": "TracFone",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310240.f7745e4cc5c6",
+    "open.310260.2bdde6048afe",
+    "open.310260.7a4437b4e0ea"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10002,
+   "id": "android.10002",
+   "name": "o2prepaid_gb",
+   "parent_android_carrier_id": 1492,
+   "parent_name": "O2",
+   "parent_profiles": [
+    "open.23410.a65df9fb31b5"
+   ],
+   "profiles": [
+    "open.23410.0363e50b8b1f",
+    "open.23410.c200f372b622",
+    "open.23410.ecadf72e8481",
+    "open.23410.f83bf458d684"
+   ],
+   "rules_without_profile": 0,
+   "segment": "prepaid"
+  },
+  {
+   "android_carrier_id": 10003,
+   "id": "android.10003",
+   "name": "o2prepaid_de",
+   "parent_android_carrier_id": 1454,
+   "parent_name": "O2",
+   "parent_profiles": [
+    "open.26207.394d5585811d"
+   ],
+   "profiles": [
+    "open.26207.1c95803fdfb1"
+   ],
+   "rules_without_profile": 0,
+   "segment": "prepaid"
+  },
+  {
+   "android_carrier_id": 10004,
+   "id": "android.10004",
+   "name": "sprintprepaid_us",
+   "parent_android_carrier_id": 1788,
+   "parent_name": "Sprint",
+   "parent_profiles": [
+    "open.310120.ed48f0031a42"
+   ],
+   "profiles": [
+    "open.310120.c46d6e83cc9c"
+   ],
+   "rules_without_profile": 0,
+   "segment": "prepaid"
+  },
+  {
+   "android_carrier_id": 10005,
+   "id": "android.10005",
+   "name": "pcmobile_prepaid_bell",
+   "parent_android_carrier_id": 2053,
+   "parent_name": "PC mobile",
+   "parent_profiles": [],
+   "profiles": [
+    "open.302610.d6fb9663a40e"
+   ],
+   "rules_without_profile": 3,
+   "segment": "prepaid"
+  },
+  {
+   "android_carrier_id": 10006,
+   "id": "android.10006",
+   "name": "pcmobile_postpaid_telus",
+   "parent_android_carrier_id": 2053,
+   "parent_name": "PC mobile",
+   "parent_profiles": [],
+   "profiles": [
+    "open.302220.3112f358447a",
+    "open.302221.715fe7b91ba3"
+   ],
+   "rules_without_profile": 0,
+   "segment": "postpaid"
+  },
+  {
+   "android_carrier_id": 10008,
+   "id": "android.10008",
+   "name": "Tracfone-VZW",
+   "parent_android_carrier_id": 2022,
+   "parent_name": "TracFone",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310590.0a4d8b840b51",
+    "open.310590.a0ecde0cc60e",
+    "open.310591.ea13af4474f4",
+    "open.310592.dd01b0e787f3",
+    "open.310593.c50a133a4e1f",
+    "open.310594.5bb3e4081569",
+    "open.310595.632e62119e23",
+    "open.310596.7c811140464c",
+    "open.310597.4f18dc1dfe85",
+    "open.310598.b7ddd2c5e207",
+    "open.310599.bdd35dd210f0",
+    "open.311480.e1b9bbe42bf7"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10009,
+   "id": "android.10009",
+   "name": "C Spire-US",
+   "parent_android_carrier_id": 1836,
+   "parent_name": "C Spire",
+   "parent_profiles": [
+    "open.20404.794a32576a5e",
+    "open.310023.51a83ea39327"
+   ],
+   "profiles": [
+    "open.310023.51a83ea39327",
+    "open.310023.e277adc857c7",
+    "open.311230.f26b17512881"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10010,
+   "id": "android.10010",
+   "name": "C Spire-NL",
+   "parent_android_carrier_id": 1836,
+   "parent_name": "C Spire",
+   "parent_profiles": [
+    "open.20404.794a32576a5e",
+    "open.310023.51a83ea39327"
+   ],
+   "profiles": [
+    "open.20404.794a32576a5e",
+    "open.20404.c5518ffe003b"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10011,
+   "id": "android.10011",
+   "name": "Red Pocket-TMO",
+   "parent_android_carrier_id": 2026,
+   "parent_name": "Red Pocket",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310260.76823568b7f2"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10012,
+   "id": "android.10012",
+   "name": "Red Pocket-ATT",
+   "parent_android_carrier_id": 2026,
+   "parent_name": "Red Pocket",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310280.3471c1073329",
+    "open.310410.574f87849a32",
+    "open.310950.a80116961999",
+    "open.311180.b7030660ad1c"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10013,
+   "id": "android.10013",
+   "name": "FirstNet Pacific",
+   "parent_android_carrier_id": 2119,
+   "parent_name": "FirstNet",
+   "parent_profiles": [
+    "open.312670.4e2b008c0ffb"
+   ],
+   "profiles": [
+    "open.313110.111b80ddf995",
+    "open.313110.3706361bcea0",
+    "open.313120.9af1d7beee4e"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10014,
+   "id": "android.10014",
+   "name": "Google Fi-TMO",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.310240.548525a8b473",
+    "open.310240.82888faac4c9",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.310260.d958335c7e37",
+    "open.310260.f1bffd2ff7b4"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10015,
+   "id": "android.10015",
+   "name": "Google Fi-Sprint",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.310120.53fe464fbdf5",
+    "open.310120.54ca513b7ffe",
+    "open.310120.a9fe3c58c86e",
+    "open.310120.bc811b1f493b",
+    "open.310120.dd365e29a243"
+   ],
+   "rules_without_profile": 1,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10016,
+   "id": "android.10016",
+   "name": "Google Fi-USCellular",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.311580.05fbae55864d",
+    "open.311580.c832b3393eca"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10017,
+   "id": "android.10017",
+   "name": "Google Fi-3UK",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.23420.b7dfa1ff345d",
+    "open.23420.d97165beb4d9"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10018,
+   "id": "android.10018",
+   "name": "Google Fi-3HK",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.45403.566648879e6c"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10019,
+   "id": "android.10019",
+   "name": "Google Fi-3AT",
+   "parent_android_carrier_id": 1989,
+   "parent_name": "Google Fi",
+   "parent_profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23420.d97165beb4d9",
+    "open.310120.bc811b1f493b",
+    "open.310240.548525a8b473",
+    "open.310260.a5563c06ab93",
+    "open.310260.c18c3104424e",
+    "open.311580.05fbae55864d",
+    "open.312580.6cd279e8dc09",
+    "open.45403.566648879e6c"
+   ],
+   "profiles": [
+    "open.23210.76e7119f09ea",
+    "open.23210.bf14d32543b6"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10020,
+   "id": "android.10020",
+   "name": "CTC Telecom Inc",
+   "parent_android_carrier_id": 1854,
+   "parent_name": "CTC Telecom Inc",
+   "parent_profiles": [],
+   "profiles": [
+    "open.20404.62ee33104b14",
+    "open.20404.9f44c1948172"
+   ],
+   "rules_without_profile": 4,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10021,
+   "id": "android.10021",
+   "name": "AT&T 5G",
+   "parent_android_carrier_id": 1187,
+   "parent_name": "AT&T",
+   "parent_profiles": [
+    "open.310030.82b9c25f1bc1"
+   ],
+   "profiles": [
+    "open.310280.5a04d84e422a",
+    "open.310410.ac2292006d4e",
+    "open.310950.e1b3969e3729",
+    "open.311180.d96a8bd7d24e"
+   ],
+   "rules_without_profile": 0,
+   "segment": "5g"
+  },
+  {
+   "android_carrier_id": 10022,
+   "id": "android.10022",
+   "name": "Consumer Cellular ATT",
+   "parent_android_carrier_id": 2023,
+   "parent_name": "Consumer Cellular",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310280.75874cd37179",
+    "open.310410.65b560527490",
+    "open.310950.20bf93469abc",
+    "open.311180.bb968038f139"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10023,
+   "id": "android.10023",
+   "name": "Consumer Cellular TMO",
+   "parent_android_carrier_id": 2023,
+   "parent_name": "Consumer Cellular",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310260.6886d27d1b11"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10024,
+   "id": "android.10024",
+   "name": "Cellcom Core",
+   "parent_android_carrier_id": 1802,
+   "parent_name": "cellcom",
+   "parent_profiles": [
+    "open.310600.11db2d084477",
+    "open.311480.cb4dff3103f1",
+    "open.311840.08f73fca04e6",
+    "open.311850.7d3d8a4a7eca"
+   ],
+   "profiles": [
+    "open.311840.08f73fca04e6",
+    "open.311840.27cbdffba2bc"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10025,
+   "id": "android.10025",
+   "name": "Rogers 5G",
+   "parent_android_carrier_id": 1403,
+   "parent_name": "Rogers",
+   "parent_profiles": [
+    "open.30272.3fab5c52defb"
+   ],
+   "profiles": [
+    "open.302720.782faf86bef2"
+   ],
+   "rules_without_profile": 0,
+   "segment": "5g"
+  },
+  {
+   "android_carrier_id": 10026,
+   "id": "android.10026",
+   "name": "DOCOMO ahamo",
+   "parent_android_carrier_id": 850,
+   "parent_name": "NTT DOCOMO",
+   "parent_profiles": [
+    "open.44010.b85efa52ac89"
+   ],
+   "profiles": [
+    "open.44010.7bda1bc812e3"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10027,
+   "id": "android.10027",
+   "name": "LINEMO",
+   "parent_android_carrier_id": 1894,
+   "parent_name": "SoftBank",
+   "parent_profiles": [
+    "open.44020.a813f274ed8a"
+   ],
+   "profiles": [
+    "open.44020.8f4f2fe420d6"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10028,
+   "id": "android.10028",
+   "name": "AT&T 5G SA",
+   "parent_android_carrier_id": 1187,
+   "parent_name": "AT&T",
+   "parent_profiles": [
+    "open.310030.82b9c25f1bc1"
+   ],
+   "profiles": [
+    "open.310280.e63c8ee82220",
+    "open.310410.8613608b8613",
+    "open.310950.c429c8935ef6",
+    "open.311180.ac1aea41e984"
+   ],
+   "rules_without_profile": 0,
+   "segment": "5g_sa"
+  },
+  {
+   "android_carrier_id": 10029,
+   "id": "android.10029",
+   "name": "Cricket 5G",
+   "parent_android_carrier_id": 1779,
+   "parent_name": "Cricket Wireless",
+   "parent_profiles": [
+    "open.310150.fa7066c99339"
+   ],
+   "profiles": [
+    "open.310150.a4557d8795f4"
+   ],
+   "rules_without_profile": 0,
+   "segment": "5g"
+  },
+  {
+   "android_carrier_id": 10030,
+   "id": "android.10030",
+   "name": "TANGO-US",
+   "parent_android_carrier_id": 2531,
+   "parent_name": "TANGO",
+   "parent_profiles": [],
+   "profiles": [
+    "open.313770.09001e499234",
+    "open.313770.fb97a55ec318"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10031,
+   "id": "android.10031",
+   "name": "TANGO-UK",
+   "parent_android_carrier_id": 2531,
+   "parent_name": "TANGO",
+   "parent_profiles": [],
+   "profiles": [
+    "open.23453.493dfc12021f",
+    "open.23453.ee17ef538fea"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10032,
+   "id": "android.10032",
+   "name": "U+264A-3AT Operational",
+   "parent_android_carrier_id": 2560,
+   "parent_name": "U+264A",
+   "parent_profiles": [],
+   "profiles": [
+    "open.23210.ee4ef441e235"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10033,
+   "id": "android.10033",
+   "name": "U+264A-3AT Provisioning",
+   "parent_android_carrier_id": 2560,
+   "parent_name": "U+264A",
+   "parent_profiles": [],
+   "profiles": [
+    "open.23210.27d4d7ad3ba0"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10034,
+   "id": "android.10034",
+   "name": "U+264A-Telus",
+   "parent_android_carrier_id": 2560,
+   "parent_name": "U+264A",
+   "parent_profiles": [],
+   "profiles": [
+    "open.302760.2c3dd7cd038c"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10035,
+   "id": "android.10035",
+   "name": "U+264A-TMO",
+   "parent_android_carrier_id": 2560,
+   "parent_name": "U+264A",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310240.d5a185b6cf0f"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10036,
+   "id": "android.10036",
+   "name": "Spectrum NaaS",
+   "parent_android_carrier_id": 2126,
+   "parent_name": "Spectrum Mobile",
+   "parent_profiles": [
+    "open.310599.9d2e36097ee5",
+    "open.313450.e6063c091b3c"
+   ],
+   "profiles": [],
+   "rules_without_profile": 2,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10037,
+   "id": "android.10037",
+   "name": "U+264A-Bell",
+   "parent_android_carrier_id": 2560,
+   "parent_name": "U+264A",
+   "parent_profiles": [],
+   "profiles": [
+    "open.302690.4959e7d06d53"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10038,
+   "id": "android.10038",
+   "name": "Cricket 5G SA",
+   "parent_android_carrier_id": 1779,
+   "parent_name": "Cricket Wireless",
+   "parent_profiles": [
+    "open.310150.fa7066c99339"
+   ],
+   "profiles": [],
+   "rules_without_profile": 1,
+   "segment": "5g_sa"
+  },
+  {
+   "android_carrier_id": 10039,
+   "id": "android.10039",
+   "name": "Orange FR NTN",
+   "parent_android_carrier_id": 32,
+   "parent_name": "Orange",
+   "parent_profiles": [
+    "open.20800.48bb2915f5b0"
+   ],
+   "profiles": [],
+   "rules_without_profile": 1,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10040,
+   "id": "android.10040",
+   "name": "Ultra IOT",
+   "parent_android_carrier_id": 2083,
+   "parent_name": "Ultra/Univision",
+   "parent_profiles": [],
+   "profiles": [
+    "open.310240.cd71cd179976",
+    "open.310260.284623180253"
+   ],
+   "rules_without_profile": 0,
+   "segment": "other"
+  },
+  {
+   "android_carrier_id": 10041,
+   "id": "android.10041",
+   "name": "Telia SE B2B",
+   "parent_android_carrier_id": 1690,
+   "parent_name": "Telia Sverige AB",
+   "parent_profiles": [
+    "open.24001.ebde0a765539",
+    "open.24005.c7b45240c959"
+   ],
+   "profiles": [
+    "open.24001.f40536418256"
+   ],
+   "rules_without_profile": 0,
+   "segment": "business"
+  }
+ ],
+ "license": "CC0-1.0",
+ "schema_version": 1
+}

@@ -617,6 +617,7 @@ def referenced_ids(root: Path) -> dict[str, set[str]]:
     for rel in ("generated/index.json", "generated/android/lookup.json", "generated/android/metadata.json",
                 "generated/android/apns-conf.xml", "generated/android/carrier-config-list.xml",
                 "generated/operators/carrier-identity.json", "generated/operators/sim-groups.json",
+                "generated/operators/plan-families.json",
                 "generated/devices/carrier-variants.json",
                 "generated/devices/device-records.json", "generated/ocd-dataset/profiles.json",
                 "generated/ocd-dataset/group-a-reads.json", "generated/ocd-dataset/group-a-pending.json",
