@@ -3,7 +3,7 @@
 A community report is what a phone measured, sent by the person who holds it. There are two kinds, and they never mix:
 
 - **The test report:** the person taps, reads it and submits it under their own GitHub login. Most of this page describes it.
-- **The automatic week report:** after the person's one yes, a ROM install sends a closed weekly summary to OCD's relay. See [The automatic week report](#the-automatic-week-report). Sending is closed today.
+- **The automatic week report:** after the person's one yes, a ROM install sends a closed weekly summary to OCD's relay. See [The automatic week report](#the-automatic-week-report). Sending is open.
 
 Both are **unverified hints**:
 
@@ -119,7 +119,7 @@ These order what people read and keep review time down. They are not a defence, 
 
 ## The automatic week report
 
-> **Status on 2026-11-05.** The relay is deployed, and sending stays closed: `relay_open` in [`relay.json`](relay.json) is false, so no phone sends anything. `relay_open` turns true only when the question, the first-screen line and the [privacy page](../docs/privacy.md) are live in the same build. Until then a test report is the only way a result leaves a phone.
+> **Status on 2026-11-05.** The relay is deployed and sending is open: `relay_open` in [`relay.json`](relay.json) is true. A phone sends only after its person said yes, and setting the flag to false stops it.
 
 **Changing the flag.** Maintainers set it in [`relay.json`](relay.json), and the app reads the copy in `generated/android/metadata.json`. A pull request that changes the word carries the regeneration, or `validate` refuses it:
 

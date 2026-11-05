@@ -174,7 +174,7 @@ Faster pulling ships in the same ROM build as SM7 everywhere, the real-call watc
 
 ## What leaves a phone
 
-> **Status on 2026-11-05.** The relay is deployed, and sending stays closed: `relay_open` in `community/relay.json` is false, so no phone sends anything. `relay_open` turns true only when the question, the first-screen line and the [privacy page](privacy.md) are live in the same build.
+> **Status on 2026-11-05.** The relay is deployed and sending is open: `relay_open` in `community/relay.json` is true. A phone sends only after its person said yes, and setting the flag to false stops it.
 
 Nothing leaves a phone by itself unless the person said yes. After that one yes, and only on a ROM install, the app sends one closed week report per SIM to OCD's relay, only on an unmetered network and never while roaming. It holds no identifier, no free text, no day or time and no phone numbers, call lengths or counts, though a result can show that calls happened that week, on mobile or Wi-Fi, whether they worked, and that one was outgoing, and the person can stop it at any time. A hand install never sends by itself. Any other result leaves only when the person taps and submits it under their own GitHub login. No result, sent or tapped, ever sets a value on any phone: a carrier value changes only through a source-backed change on `main`. The app's download from GitHub carries no identifier.
 
