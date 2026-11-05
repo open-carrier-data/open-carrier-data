@@ -213,7 +213,7 @@ The **canonical match-set hash** of a profile is the hash part of `hash_id` over
 | --- | --- |
 | `regulators` | each regulator's list OCD read: the page, its date (`as_of`), the day OCD read it, the hash of the file and `license_expression`, `NOASSERTION` for a list that names no open licence. Germany's Bundesnetzagentur is the first |
 | `networks` | one row per network code, with `mcc` and `mnc` as two fields; `holder`, as the regulator lists it on that list's date; `on_regulator_list`, which is `null` where OCD read no list for the country; `operator_key`; `vendor_names` |
-| `operators` | `kind` (`radio_network_operator`, `full_mvno`, `service_provider` or `unknown`) and `own_core`, set only from a source read for it |
+| `operators` | `kind` (`radio_network_operator`, `full_mvno`, `service_provider` or `unknown`) and `own_core`, set only from a source read for it. `full_mvno` means an MVNO a read source says runs its own core, so that kind has `own_core` true, and any kind other than `unknown` has a source |
 | `brands` | every identity entry, its `operator_key`, `part_of`, and `runs_on`: dated host links, oldest first |
 
 **`vendor_names`** lists what the vendor lists call a network on its plain scope, and Android's carrier ID names. `agrees` is false where a name differs from the holder: Android still names 262-14 after Quam and 262-20 after Voiceworks, while the regulator lists Lebara and Telefónica. Access point purposes such as `IMS` are left out. A false says the lists differ, not which one a SIM follows: OCD's matcher and values do not read this file.
