@@ -1733,9 +1733,18 @@ def validate_capability_sources(
 # leaves it out of apns-conf.xml, carrier-config-list.xml and lookup.json. It
 # names the match's selector, and only Samsung OMC gives the profile.
 OLD_SELECTOR_SUPERSEDED = "old_selector_superseded"
+# unapplied_on_lineage_build (round 56, item 1): every observation behind this
+# CarrierConfig key is a device overlay block whose build lost the leading zero
+# of a selector, so that build never applied it. The block names its network as
+# written and the value stays. It is a label: no merge, conflict, capability or
+# gate reads it. Only the group A tooling does (tools/ocd_dataset.py refuses a
+# proceed read on such a value).
+UNAPPLIED_ON_LINEAGE_BUILD = "unapplied_on_lineage_build"
+LINEAGE_OVERLAY_SOURCE = "lineageos_device_overlays"
 FLAG_SECTIONS = {
     "old_single_source": "capabilities",
     OLD_SELECTOR_SUPERSEDED: "match",
+    UNAPPLIED_ON_LINEAGE_BUILD: "android_carrier_config",
 }
 SELECTOR_MATCH_KEYS = {"spn", "gid1_prefixes", "imsi_prefix_patterns", "iccid_prefixes"}
 
@@ -1749,7 +1758,9 @@ def validate_flags(
 ) -> None:
     """flags is optional: a non-empty list of section, key and flag, sorted and
     unique. old_single_source names a capability that capability_sources names
-    and capability_newest_entries dates."""
+    and capability_newest_entries dates. unapplied_on_lineage_build names a
+    published CarrierConfig key of a profile the LineageOS device overlays
+    source."""
     if "flags" not in evidence:
         return
     label = f"profiles[{index}].flags"
@@ -1770,6 +1781,15 @@ def validate_flags(
             if key != "selector" or evidence.get("sources") != ["samsung_omc"]:
                 raise ValidationError(
                     f"{path}: {item_label} flags a profile that is not an old Samsung selector"
+                )
+            keys.append((section, key, flag))
+            continue
+        if flag == UNAPPLIED_ON_LINEAGE_BUILD:
+            if LINEAGE_OVERLAY_SOURCE not in (evidence.get("sources") or []) or (
+                config_keys is not None and key not in config_keys
+            ):
+                raise ValidationError(
+                    f"{path}: {item_label} flags a key the profile does not publish from the LineageOS device overlays"
                 )
             keys.append((section, key, flag))
             continue

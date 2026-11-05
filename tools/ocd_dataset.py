@@ -244,6 +244,12 @@ GROUP_A_READ_SCHEMA = "ocd-group-a-read/2"
 ID_FREEZE_DATE = "2026-10-31"
 GROUP_A_EFFECTS = ("call_path", "display_only")
 GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
+# Rule round 56, item 1: the evidence flag on a value whose every supporting
+# observation is an overlay block no LineageOS build applied. No read reaches
+# proceed on such a value (group_a_unapplied_problems) and no proceed admits it
+# (group_a_documents), so its SIMs stay on the Google-lane value.
+EVIDENCE_INDEX_FILE = "generated/evidence-index.json"
+UNAPPLIED_FLAG = "unapplied_on_lineage_build"
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
 # Whether the manifest lists group-a-reads.json as the role group_a_reads.
 # The round 31 readers (OcdCarrierSettings protocol 3, the OCD Android owner
@@ -1345,6 +1351,27 @@ def group_a_read_problems(read: Any, where: str) -> list[str]:
     return out
 
 
+def unapplied_values(root: Path) -> set[tuple[str, str]]:
+    """(profile, key) of every value the evidence index flags
+    unapplied_on_lineage_build. Empty when the index is not there."""
+    path = root / EVIDENCE_INDEX_FILE
+    if not path.is_file():
+        return set()
+    return {(profile["profile_id"], flag["key"]) for profile in read_json_file(path)["profiles"]
+            for flag in profile.get("flags", []) if flag["flag"] == UNAPPLIED_FLAG}
+
+
+def group_a_unapplied_problems(read: dict[str, Any], where: str, unapplied: set[tuple[str, str]]) -> list[str]:
+    """A proceed value read may not cover a value that rests only on blocks no
+    LineageOS build applied (rule round 56, item 1). A hold may."""
+    if read.get("subject") != "value" or read.get("verdict") != "proceed":
+        return []
+    marked = sorted(p for p in read.get("profiles") or [] if (p, read.get("key")) in unapplied)
+    if not marked:
+        return []
+    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS build applied (unapplied_on_lineage_build, rule round 56)"]
+
+
 def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
     """gar: and the first 16 hex digits of SHA-256 over the read record's
     path, the profile and the source family, joined with \\n."""
@@ -1353,7 +1380,8 @@ def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
 
 def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[str, Any] | None,
                       reads: dict[str, dict[str, Any]],
-                      current: dict[str, str] | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+                      current: dict[str, str] | None = None,
+                      unapplied: set[tuple[str, str]] | frozenset[tuple[str, str]] = frozenset()) -> tuple[dict[str, Any], dict[str, Any]]:
     """(group-a-reads.json, group-a-pending.json) from the round 31 group A
     reads on main (devices/records/reads/group-a/).
 
@@ -1367,7 +1395,10 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
     group-a-pending.json is the status beside it: every candidate (a group A
     value that differs from the Google lane) no read covers yet, the values
     a read covered whose basis is not recorded, every key read, and the keys
-    that left group A."""
+    that left group A.
+
+    UNAPPLIED is unapplied_values: a proceed read does not cover such a
+    value, which stays in pending (rule round 56, item 1)."""
     registry = profiles["keys"]
     value_reads, key_reads = [], []
     for path, read in sorted(reads.items()):
@@ -1391,6 +1422,8 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
     # current_match_set_hashes); otherwise it lapses and the value waits for
     # a new read in group-a-pending.json.
     def covers(read: dict[str, Any], profile_id: str) -> bool:
+        if read["verdict"] == "proceed" and (profile_id, read["key"]) in unapplied:
+            return False
         return profile_id in read["profiles"] and under_current_match_set(
             profile_id, (read.get("match_set_hashes") or {}).get(profile_id), current)
 
@@ -1852,7 +1885,7 @@ def generate(root: Path, generated_at: str | None = None, previous_manifest: dic
     profiles_doc, profile_counts = build_profiles(inputs, registry, apn_counts, carriers)
     lane = lane_document(inputs)
     current = current_match_set_hashes(root, inputs.lookup)
-    group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads, current)
+    group_a, group_a_pending = group_a_documents(inputs.data_digest, profiles_doc, lane_document(inputs), reads, current, unapplied_values(root))
     group_a_bytes = dump_lines(group_a, ("key_findings", "reads"))
     files_by_role = {
         "profiles": dump_lines(profiles_doc, ("keys", "networks")),
@@ -2211,10 +2244,13 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
                 out.append(f"profiles.json: {profile['id']} is not a fill-only profile id")
     out += tie_problems(parsed["profiles"], parsed.get("apn_index"))
     _, reads = read_record_sources(root)
+    unapplied = unapplied_values(root)
     for path, read in reads.items():
         if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA:
             problems = group_a_read_problems(read, path)
             out += problems or schema_check(root, read, "group-a-read.schema.json", path)
+            if not problems:
+                out += group_a_unapplied_problems(read, path, unapplied)
         else:
             out += read_problems(read, path)
     registry = parsed["profiles"]["keys"]
