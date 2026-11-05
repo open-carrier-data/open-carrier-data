@@ -95,6 +95,12 @@ jobs:
         run: python3 tools/test_sim_groups.py
       - name: Check the brands per SIM group against the identity table
         run: python3 tools/sim_groups.py check --root .
+      # Migration step 7 (rule round 47, item 4): plan families as labels over
+      # the profiles that state them; never a new SIM group or a matching key.
+      - name: Test the plan families
+        run: python3 tools/test_plan_families.py
+      - name: Check the plan families against Android's table and the profiles
+        run: python3 tools/plan_families.py check --root .
       - name: Validate the device catalog
         run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
       - name: Validate the device records

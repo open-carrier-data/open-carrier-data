@@ -62,7 +62,8 @@ ENTITIES = f"{OPERATORS_DIR}/entities.json"
 # are never a value, so they stay out of it (rule round 47, item 4).
 MANIFEST = "generated/ocd-dataset/manifest.json"
 SIM_GROUPS = f"{OPERATORS_DIR}/sim-groups.json"
-NEVER_PULLED = (ENTITIES, SIM_GROUPS,)
+PLAN_FAMILIES = f"{OPERATORS_DIR}/plan-families.json"
+NEVER_PULLED = (ENTITIES, SIM_GROUPS, PLAN_FAMILIES,)
 OPERATOR_STATEMENT = "operator_statement"
 LAPSED_GATE = "operator_statement_lapsed"
 LAPSE_UNCONFIRMED_DAYS = 180

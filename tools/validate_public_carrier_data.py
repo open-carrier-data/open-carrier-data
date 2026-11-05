@@ -341,6 +341,7 @@ GENERATED_FILES = {
     "operators/README.md",
     "operators/carrier-identity.json",
     "operators/entities.json",
+    "operators/plan-families.json",
     "operators/sim-groups.json",
     "operators/statements.json",
 }

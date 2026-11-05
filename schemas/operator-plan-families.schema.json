@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-plan-families.schema.json",
+  "title": "Plan families (generated/operators/plan-families.json)",
+  "description": "Migration step 7 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0: the plan families a SIM itself shows, from the child IDs of Android's pinned carrier ID table, as labels over the OCD profiles that already state their rules. tools/plan_families.py derives the file and validate compares it. A plan family stays a selector in carrier data: it is never a new SIM group or a matching key, and phones never read this file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "license", "android_carrier_list_version", "counts", "families"],
+  "$defs": {
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^open\\.[0-9]{5,6}\\.[0-9a-f]{12}$"
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "android_carrier_id", "name", "segment", "parent_android_carrier_id", "parent_name", "profiles", "parent_profiles", "rules_without_profile"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^android\\.[0-9]{1,8}$"
+        },
+        "android_carrier_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "segment": {
+          "enum": ["prepaid", "postpaid", "5g", "5g_sa", "business", "other"]
+        },
+        "parent_android_carrier_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parent_name": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "profiles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/profile_id"
+          }
+        },
+        "parent_profiles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/profile_id"
+          }
+        },
+        "rules_without_profile": {
+          "$ref": "#/$defs/count"
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "android_carrier_list_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["families", "with_profile", "profiles"],
+      "properties": {
+        "families": { "$ref": "#/$defs/count" },
+        "with_profile": { "$ref": "#/$defs/count" },
+        "profiles": { "$ref": "#/$defs/count" }
+      }
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/family"
+      }
+    }
+  }
+}
