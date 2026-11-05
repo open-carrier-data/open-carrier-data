@@ -1,0 +1,46 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays",
+    "sony_open_devices_aosp"
+  ],
+  "findings": {
+    "basis": "The value is new on this profile for one reason: rule round 51, item 8 stops padding the one-digit block mcc 310 mnc 0, and three of those dead blocks (the MediaTek file of motorola mt6768-common, xiaomi mt6768-common and xelex mt6789-common) said false, which kept the key out as a source conflict. No source added anything. What is left is 93 device overlay observations of plain mnc=\"00\" blocks, the Qualcomm/CAF vendor.xml that LineageOS device repositories copy, and one Sony carrier block. These blocks are live on the reader as text, since the overlays keep raw values and checkFilters compares strings, but they match only a SIM that reports 310 with a two-digit MNC. That needs EF_AD to say 2 on a US SIM (IccRecords.updateOperatorPlmn; MccTable gives 310 three digits), and Android's carrier list, ITU and Google's rules give no 310-00. This is the same class as the 310-01, 310-02, 310-88 and 311-00 profiles of read carrier_volte_tty_supported_bool.75fc83c11f7c, which held them. The name Verizon on this profile is a guess: Verizon's own AOSP and Google entries are on other codes.",
+    "effect": "Re-read here for this profile. The key is true by default in CarrierConfigManager and false in the Google lane's default entry, which is what CarrierSettings serves without a read. With true, a TTY call may stay on IMS: ImsManager.isNonTtyOrTtyOnVolteEnabled keeps voice and video on LTE and NR in TTY mode, and GsmCdmaPhone.useImsForEmergency stays open, so an emergency call in TTY mode can go over IMS on the legacy path, because domain selection is off in this tree (empty config_domain_selection_service_component_name). With false, the call goes to CS. CallFeature.isTtySupported in the AOSP ImsStack reads the same key.",
+    "risk": "No commercial SIM is known to report this code, so the practical effect is small, but the direction is the wrong one: true moves a TTY call, an emergency TTY call included, onto an IMS path read 75fc83c11f7c found not shown to work, with a basis that names no real carrier. Holding costs nothing, because the SIM keeps what it gets today."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "carrier_volte_tty_supported_bool",
+  "match_set_hashes": {
+    "open.31000.b20b0cb7aa13": "b20b0cb7aa13"
+  },
+  "notes": "Hold. The value reaches this profile only because a dead block's false left, and what remains are two-digit MNC blocks under MCC 310 with no carrier behind them. CarrierSettings keeps serving the Google lane's false, so nothing changes on a phone.",
+  "profiles": [
+    "open.31000.b20b0cb7aa13"
+  ],
+  "read_at": "2026-11-05T15:55:54Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder), fresh read of round 51 item 8",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "packages/apps/CarrierConfig/src/com/android/carrierconfig/DefaultCarrierConfigService.java:loadConfig,readConfigFromXml,checkFilters",
+    "packages/apps/CarrierConfig/Android.bp:13",
+    "packages/services/Telephony/src/com/android/phone/CarrierConfigLoader.java:953-976",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/uicc/SIMRecords.java:884-915",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/uicc/IccRecords.java:634-662",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/MccTable.java:255-263,326",
+    "frameworks/base/core/java/android/content/res/XmlBlock.java:287-310",
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1075,11859",
+    "frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:695-703",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1243-1252",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/enabler/mtc/CallFeature.java:80-83",
+    "packages/services/Telephony/res/values/config.xml:393",
+    "LineageOS device overlays vendor.xml, every block of mcc 310 with mnc 0 or 00",
+    "devices/records/reads/group-a/carrier_volte_tty_supported_bool.75fc83c11f7c.json",
+    "generated/ocd-dataset/google-lane.json:default"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}
