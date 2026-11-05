@@ -6,6 +6,10 @@ For what changed in the data itself, read the publish pull requests, `tools/chec
 
 ## Format and meaning changes
 
+### 2026-11-05: `metadata.json` has `relay_open`, and `data_digest` covers the flag
+
+`generated/android/metadata.json` has a new field, `relay_open`, a JSON boolean copied from `community/relay.json`. OCD Android reads the flag there, and until now no tool wrote it. `data_digest` also covers `community/relay.json` now, so a flip reaches phones like any new data. The flag stays false. `schema_version` stays 1, and no value, row or match changes. See [data model](data-model.md).
+
 ### 2026-11-05: a report may name a plan, and a doubtful plan reads `unknown`
 
 The plan picker opens for tapped reports (rule round 51, item 4). OCD Android now reads `generated/operators/offers.json` and `generated/operators/sim-groups.json` for the picker only, and no carrier settings component reads them. The report bot no longer refuses a well-formed plan: one that is not on the list, was not live on the test date or whose brand is not on the profile reads `unknown`, and the report is kept. No automatic report names a plan. See [community/README.md](../community/README.md#the-plan).

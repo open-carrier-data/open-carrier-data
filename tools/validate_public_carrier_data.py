@@ -2340,8 +2340,10 @@ def validate_evidence_index(
 
 
 # Rule round 48, item 2: the flag that can only stop OCD Android's weekly send.
-# A file of its own, read once a week by the app: no dataset file changes, and
-# neither OcdCarrierSettings' strict readers nor builds K and L ever see it.
+# Maintainers set it in this file. tools/generate_android_outputs.py copies it
+# into generated/android/metadata.json, which is where the app reads it, at its
+# pinned commit, and takes the file into data_digest, so a flip reaches phones
+# like any new data. OcdCarrierSettings' strict readers never read metadata.json.
 # The send stays closed until the page that tells people about it is complete:
 # docs/privacy.md marks every value only the controller can give with this text.
 RELAY_FLAG = "community/relay.json"
@@ -2349,21 +2351,23 @@ PRIVACY_PAGE = "docs/privacy.md"
 PRIVACY_PLACEHOLDER = "[NOT FILLED IN YET"
 
 
-def validate_relay_flag(root: Path) -> None:
-    """The flag holds exactly relay_open, and true only beside a finished privacy page."""
+def validate_relay_flag(root: Path) -> bool:
+    """The flag holds exactly relay_open, and true only beside a finished privacy page.
+    Returns its value; no file is closed."""
     path = root / RELAY_FLAG
     if not path.is_file():
-        return
+        return False
     flag = load_json(path)
     if not isinstance(flag, dict) or set(flag) != {"relay_open"} or not isinstance(flag["relay_open"], bool):
         raise ValidationError(f"{path}: must hold exactly relay_open, true or false")
     if not flag["relay_open"]:
-        return
+        return False
     page = root / PRIVACY_PAGE
     if not page.is_file():
         raise ValidationError(f"{path}: relay_open is true, but {PRIVACY_PAGE} is missing")
     if PRIVACY_PLACEHOLDER in page.read_text(encoding="utf-8"):
         raise ValidationError(f"{path}: relay_open is true, but {PRIVACY_PAGE} still names no controller")
+    return True
 
 
 def validate_android_metadata(
@@ -2380,9 +2384,15 @@ def validate_android_metadata(
         "output",
         "omissions",
         "data_digest",
+        "relay_open",
     }:
         raise ValidationError(f"{metadata_path}: metadata has invalid keys")
-    validate_relay_flag(generated_dir.parent)
+    relay_open = validate_relay_flag(generated_dir.parent)
+    if metadata["relay_open"] is not relay_open:
+        raise ValidationError(
+            f"{metadata_path}: relay_open must be {RELAY_FLAG}'s {str(relay_open).lower()}, a JSON boolean; "
+            "run tools/generate_android_outputs.py"
+        )
     digest = metadata["data_digest"]
     if not isinstance(digest, str) or not DATA_DIGEST_RE.fullmatch(digest):
         raise ValidationError(f"{metadata_path}: data_digest is invalid")

@@ -119,7 +119,18 @@ These order what people read and keep review time down. They are not a defence, 
 
 ## The automatic week report
 
-> **Status on 2026-11-04.** Sending is closed. `relay_open` in [`relay.json`](relay.json) is false, the relay is not deployed, and the app's side is being built. `relay_open` turns true only when the question, the first-screen line and the [privacy page](../docs/privacy.md) are live in the same build. Until then a test report is the only way a result leaves a phone.
+> **Status on 2026-11-05.** The relay is deployed, and sending stays closed: `relay_open` in [`relay.json`](relay.json) is false, so no phone sends anything. `relay_open` turns true only when the question, the first-screen line and the [privacy page](../docs/privacy.md) are live in the same build. Until then a test report is the only way a result leaves a phone.
+
+**Changing the flag.** Maintainers set it in [`relay.json`](relay.json), and the app reads the copy in `generated/android/metadata.json`. A pull request that changes the word carries the regeneration, or `validate` refuses it:
+
+```sh
+python3 tools/generate_android_outputs.py carriers generated --apn-version 8
+digest=$(python3 -c 'import json; print(json.load(open("generated/android/metadata.json"))["data_digest"])')
+sed -i "1s/\"based_on_data_digest\":\"[^\"]*\"/\"based_on_data_digest\":\"$digest\"/" generated/devices/carrier-variants.json
+python3 tools/ocd_dataset.py generate --root .
+```
+
+The flag is an input of `data_digest`, so the pull request moves digest lines and no value, and a phone takes it at its next 15-minute check like any new data.
 
 Nothing leaves a phone by itself unless the person said yes. After that one yes, and only on a ROM install, the app sends one closed week report per SIM to OCD's relay, only on an unmetered network and never while roaming. It holds no identifier, no free text, no day or time and no phone numbers, call lengths or counts, though a result can show that calls happened that week, on mobile or Wi-Fi, whether they worked, and that one was outgoing, and the person can stop it at any time. A hand install never sends by itself. Any other result leaves only when the person taps and submits it under their own GitHub login. No result, sent or tapped, ever sets a value on any phone: a carrier value changes only through a source-backed change on `main`. The app's download from GitHub carries no identifier.
 
