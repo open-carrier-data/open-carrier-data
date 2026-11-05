@@ -1,9 +1,9 @@
 {
  "counts": {
   "ambiguous": 2,
-  "no": 8,
+  "no": 10,
   "profiles": 86,
-  "yes": 76
+  "yes": 74
  },
  "description": "Migration step 6 of the device > carrier > plan model (rule round 47, item 4): which brands each OCD profile holds, from the carrier-identity table. tellable says whether OCD can tell them apart: yes, the profile is one entry's alone; ambiguous, entries may share its SIMs; no, a plain profile on a network with host-only brands: no source gives a selector, so OCD does not tell them apart; the SIM may still show a name. A profile the table does not reach has no row, which says nothing about its brand. Nothing here changes a match, a value or a phone. OCD Android reads this file for the plan picker only, and no carrier settings component reads it. The dated host links, core and same_subscribers are on the brands in entities.json.",
  "license": "CC0-1.0",
@@ -228,10 +228,11 @@
   },
   {
    "brands": [
+    "de.lebara",
     "de.telekom"
    ],
    "profile_id": "open.26201.fb727a260df2",
-   "tellable": "yes"
+   "tellable": "no"
   },
   {
    "brands": [
@@ -463,10 +464,13 @@
   },
   {
    "brands": [
+    "de.fonic",
+    "de.lidl-mobile",
+    "de.netzclub",
     "de.telefonica"
    ],
    "profile_id": "open.26207.394d5585811d",
-   "tellable": "yes"
+   "tellable": "no"
   },
   {
    "brands": [
