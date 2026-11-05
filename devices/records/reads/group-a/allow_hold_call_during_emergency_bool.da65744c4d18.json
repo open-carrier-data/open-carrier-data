@@ -1,0 +1,47 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "The source is one file: Motorola's carrier config as imported into LineageOS's android_device_motorola_lyriq (commit title names stock build V1TLS35.73-60-3-14). 2026-10-24 is the import date; the value's own age is not known, and stock itself was not read. Each listed block states the value explicitly for its exact network code and GID. Blocks 730, 731. True is Android's default. Samsung names this GID (BA0162) on 311-480 only; Motorola lists it on all three Verizon codes, and Google's list carries its other Verizon GIDs across the same three codes, so the identity carries over. These profiles have no recorded source family, so no read can admit them: no served item results (see unrecorded_basis in docs/ocd-dataset.md).",
+    "effect": "allow_hold_call_during_emergency_bool (CarrierConfigManager.java:2509-2516, default true at :12089). With false, TelephonyConnectionService hangs up every other TelephonyConnection and conference with cause OUTGOING_EMERGENCY_CALL_PLACED before it places the emergency call (TelephonyConnectionService.java:2392-2408; the same in recreateEmergencyConnection at 3545-3559; read at 3704-3714). Telecom's CallSequencingController also disconnects a managed ongoing call whose account carries false (CallSequencingController.java:1016-1037, 1097-1100); CallsManager.java:4623-4647 fills a missing key with true. The hangup marks the ImsPhoneCall DISCONNECTING (ImsPhoneCall.java:251-260), which is not alive (Call.java:53-55), so checkForDialIssues and prepareForDialing go straight to the dial (ImsPhoneCallTracker.java:2716-2734, 1648-1697). With true the tracker first holds the active call, and prepareForDialing throws 'cannot dial in current state' if that hold fails (1683-1689); a live foreground and background call stop the dial with ERROR_TOO_MANY_CALLS (2730-2733). No other reader of the key exists in the telephony, Telecom, IMS framework or ImsStack sources, the ocd fork included, so no TTY, RTT or priority path reads it. The cited files are the same on lineage-24.0. On a phone: a group A value is admitted only for the most specific profile that sets the key, else the Google-lane value, else Android's default (Serving.kt:405-440).",
+    "risk": "None: true is the default, and no item is served."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_hold_call_during_emergency_bool",
+  "match_set_hashes": {
+    "open.310590.4b81daaf0f07": "4b81daaf0f07",
+    "open.310599.43046fff0752": "43046fff0752"
+  },
+  "notes": "Proceed on the value; it has no effect, since the profiles have no recorded source family.",
+  "profiles": [
+    "open.310590.4b81daaf0f07",
+    "open.310599.43046fff0752"
+  ],
+  "read_at": "2026-11-05T21:46:01Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2509-2516,12089",
+    "packages/services/Telephony/src/com/android/services/telephony/TelephonyConnectionService.java:2388-2412,3541-3562,3703-3716",
+    "packages/services/Telecomm/src/com/android/server/telecom/callsequencing/CallSequencingController.java:1005-1040,1090-1104",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:4623-4650",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1648-1697,2716-2736",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCall.java:251-260",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/Call.java:53-55",
+    "grep of the key over frameworks/base/telephony, frameworks/opt/telephony/src, frameworks/opt/net/ims, packages/services/Telephony/src, packages/services/Telecomm/src, packages/modules/ImsStack",
+    "rom-repos/platform_packages_modules_ImsStack.git branch ocd (fd360f32): git grep for the key, no hits",
+    "LineageOS lineage-24.0 through the GitHub API: TelephonyConnectionService.java, CallSequencingController.java, CallsManager.java, CarrierConfigManager.java whole-file diff against the 23.2 tree, 0 lines; ImsPhoneCallTracker.java differs by 4 lines at 3683-3686, outside these paths",
+    "Open_Carrier_Data/app-ocd-check/carriersettings/ocd/src/com/android/carriersettings/ocd/Serving.kt:405-440 (applyGroupA, admitted)",
+    "r56-build pub/generated/ocd-dataset/group-a-pending.json, pub/generated/ocd-dataset/profiles.json, dry/marked.json",
+    "r56-build pub/generated/ocd-dataset/google-lane.json (rules and entries, Google lane kodiak CD1A.260714.001.A9)",
+    "r56-build dry/priv/candidates/lineage-device-carrier-overlays/profiles-*.json (private_source.device_identity of each observation)",
+    "packages/providers/TelephonyProvider/assets/latest_carrier_id/carrier_list.textpb (grep of the GIDs and network codes)",
+    "r56-build dry/priv/candidates/samsung/samsung/vzw.311480.vzw.*.json (samsung_sim_rules)",
+    "r56-build raw/work/files/android_device_motorola_lyriq/760dc91c1379-vendor.xml:16679-16792,16793-16907 (LineageOS android_device_motorola_lyriq, overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, commit f684947b, 2026-10-24)"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "proceed"
+}
