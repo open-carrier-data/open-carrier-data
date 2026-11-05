@@ -2,8 +2,9 @@
 """Two answers per feature (rule round 45, item 4): depends_on and for_you.
 
 A profile's `capabilities` stay what they are: the configure answer, what the
-phone should be set up to try, byte-identical (the rename to `configure`
-waits for the full rewrite of a later step). Two sibling maps join them:
+phone should be set up to try, byte-identical. `capabilities` is the
+configure answer for good: rule round 51, item 3 dropped the rename, because a
+key rename risks an installed reader finding none. Two sibling maps join them:
 
 - `depends_on`, only for a capability whose value is `conditional`: why the
   value is not single. `device` where generated/devices/carrier-variants.json
@@ -23,8 +24,8 @@ waits for the full rewrite of a later step). Two sibling maps join them:
   profile only when the carrier-identity table maps that profile to that
   brand alone: the profile has a selector, only that brand's entry lists it,
   and no other entry's selector shares its SIMs without being narrower. On a
-  network where host-only brands ride (no source gives them a selector, so
-  no phone tells their SIMs from the host's), the plain profile gets at most
+  network where host-only brands ride (no source gives a selector, so OCD
+  does not tell them apart; the SIM may still show a name), the plain profile gets at most
   `depends_on_plan` with the reason `brand_not_tellable` and the brands'
   names, never the host's or one brand's own state or option text. A
   missing `for_you` means unknown. Nothing here comes from a single SIM, an

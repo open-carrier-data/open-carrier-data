@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Which brands a SIM group holds, and whether a phone can tell them apart.
+"""Which brands a SIM group holds, and whether OCD can tell them apart.
 
 Migration step 6 (rule round 47, item 4). generated/operators/sim-groups.json
 links each OCD profile that the carrier-identity table reaches to its brand or
@@ -11,8 +11,9 @@ brands, with a tellable value:
              entry shares some of its SIMs, or another entry's rule sits inside
              it, so a SIM without the narrower field could be either: GID1 44
              with no SPN could be congstar or fraenk.
-  no         a plain profile on a network with host-only brands: no phone can
-             tell their SIMs from the host's (LIDL Connect on 262-02).
+  no         a plain profile on a network with host-only brands: no source gives
+             a selector, so OCD does not tell them apart; the SIM may still show
+             a name (LIDL Connect on 262-02).
 
 The file is a view of the identity table, entities.json and the profiles, so it
 is derived, never edited, and validate rebuilds and compares it. It changes no
@@ -46,8 +47,9 @@ FILE = "generated/operators/sim-groups.json"
 SCHEMA = "operator-sim-groups.schema.json"
 DESCRIPTION = (
     "Migration step 6 of the device > carrier > plan model (rule round 47, item 4): which brands each OCD profile holds, "
-    "from the carrier-identity table. tellable says whether a phone can tell them apart: yes, the profile is one entry's alone; "
-    "ambiguous, entries may share its SIMs; no, a plain profile on a network with host-only brands. A profile the table does not "
+    "from the carrier-identity table. tellable says whether OCD can tell them apart: yes, the profile is one entry's alone; "
+    "ambiguous, entries may share its SIMs; no, a plain profile on a network with host-only brands: no source gives a selector, "
+    "so OCD does not tell them apart; the SIM may still show a name. A profile the table does not "
     "reach has no row, which says nothing about its brand. Nothing here changes a match, a value or a phone. OCD Android reads "
     "this file for the plan picker only, and no carrier settings component reads it. The dated host links, core and same_subscribers are on the brands in entities.json."
 )

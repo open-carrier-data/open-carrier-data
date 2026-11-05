@@ -76,7 +76,7 @@ For `volte`, `vowifi`, `video_calling` and `vonr`, the profile value is a summar
 
 ## Two answers per feature
 
-Rule round 45 (item 4) keeps two answers per feature apart. `capabilities` stays what it was: the **configure** answer, what the phone should be set up to try, from vendor and OS carrier tables. It is unchanged byte for byte, and nothing below moves it; its rename to `configure` waits for the later rewrite of every file. Two sibling maps join it, keyed by capability name. `tools/two_answers.py` derives both from published files, the private publisher writes them in its device-records step, `generate_android_outputs.py` copies them into `lookup.json`, and `validate` checks that every profile carries exactly what the tool derives.
+Rule round 45 (item 4) keeps two answers per feature apart. `capabilities` stays what it was: the **configure** answer, what the phone should be set up to try, from vendor and OS carrier tables. It is unchanged byte for byte, and nothing below moves it. It is the configure answer for good: rule round 51, item 3 dropped the rename to `configure`. Two sibling maps join it, keyed by capability name. `tools/two_answers.py` derives both from published files, the private publisher writes them in its device-records step, `generate_android_outputs.py` copies them into `lookup.json`, and `validate` checks that every profile carries exactly what the tool derives.
 
 **`depends_on`** appears only for capabilities whose value is `conditional`, and says why the value is not single, as a sorted list:
 
@@ -211,7 +211,7 @@ The **canonical match-set hash** of a profile is the hash part of `hash_id` over
 
 | Part | What it holds |
 | --- | --- |
-| `regulators` | each regulator's list OCD read: the page, its date (`as_of`), the day OCD read it and the hash of the file. Germany's Bundesnetzagentur is the first |
+| `regulators` | each regulator's list OCD read: the page, its date (`as_of`), the day OCD read it, the hash of the file and `license_expression`, `NOASSERTION` for a list that names no open licence. Germany's Bundesnetzagentur is the first |
 | `networks` | one row per network code, with `mcc` and `mnc` as two fields; `holder`, as the regulator lists it on that list's date; `on_regulator_list`, which is `null` where OCD read no list for the country; `operator_key`; `vendor_names` |
 | `operators` | `kind` (`radio_network_operator`, `full_mvno`, `service_provider` or `unknown`) and `own_core`, set only from a source read for it |
 | `brands` | every identity entry, its `operator_key`, `part_of`, and `runs_on`: dated host links, oldest first |
@@ -220,7 +220,7 @@ The **canonical match-set hash** of a profile is the hash part of `hash_id` over
 
 **A `runs_on` link** names a `host` and carries `valid_from`, `valid_to`, `note`, `sources`, `core` and `same_subscribers`. A date with the prefix `≤` is an upper bound, and `null` means no date is known, not that the link still runs. A brand may have two links at once while it moves in waves. An empty list says nothing about the host. `core` is `host`, `own` or `null`; `same_subscribers` is true for the same customers split by a SIM field, false for another brand's customers, and `null` when no source read says. Both are recorded links only: nothing reads them to carry a value or a `for_you` answer across.
 
-The regulator gives no earlier holders and no assignment dates, so a holder is true on the list's date. `operator_key` on a brand can differ from the identity table's where a source says so: the table has Lebara under Telekom, and the regulator lists 262-14 for Lebara itself.
+The regulator gives no earlier holders and no assignment dates, so a holder is true on the list's date. `networks` publishes the code and holder of every row of the list, with source and date: [DATA-LICENSE.md](../DATA-LICENSE.md#regulator-lists) says what that means for the licence. `operator_key` on a brand can differ from the identity table's where a source says so: the table has Lebara under Telekom, and the regulator lists 262-14 for Lebara itself.
 
 ### Brands per SIM group
 
@@ -230,15 +230,15 @@ The regulator gives no earlier holders and no assignment dates, so a holder is t
 | --- | --- |
 | `yes` | the profile is one entry's alone |
 | `ambiguous` | entries share the profile, a crossing rule shares some of its SIMs, or another entry's rule sits inside it, so a SIM without the narrower field could be either: GID1 `44` with no SPN could be congstar or fraenk |
-| `no` | a plain profile on a network with host-only brands: no phone can tell their SIMs from the host's, as with LIDL Connect on 262-02 |
+| `no` | a plain profile on a network with host-only brands: no source gives a selector, so OCD does not tell them apart; the SIM may still show a name, as with LIDL Connect on 262-02 |
 
-`brands` lists the entries, the operator included. The file changes no profile and no match: the table still never changes OCD's matcher (rule round 32). `tellable` feeds no `for_you` answer; `for_you` keeps its own rule that a brand's statement speaks only for a profile the table maps to that brand alone. There is no `observed_only` value and no profile built from a name seen on a real SIM, because no ruling allows one.
+`brands` lists the entries, the operator included. The file changes no profile and no match: the table still never changes OCD's matcher (rule round 32). `tellable` feeds no `for_you` answer; `for_you` keeps its own rule that a brand's statement speaks only for a profile the table maps to that brand alone. There is no `observed_only` value and no profile built from a name seen on a real SIM: rule round 51, item 1 holds this, and matching stays source-backed. The way back in is a vendor list or the brand's own page stating the selector, through the identity table.
 
 ### Plan families
 
 `generated/operators/plan-families.json` ([`schemas/operator-plan-families.schema.json`](../schemas/operator-plan-families.schema.json)) lists the plan families a SIM itself shows (migration step 7, rule round 47, item 4): the child IDs of Android's pinned carrier ID table, such as `o2prepaid_de`, an IMSI block of 262-07. `tools/plan_families.py` derives it, and validate rebuilds and compares it.
 
-Round 47 keeps plan families in carrier data as today's selectors, so a family is a label over profiles that already exist. It makes no new SIM group, and a plan is never a matching key. `profiles` lists the profiles inside the child's rules, `parent_profiles` the ones that name the parent's ID, and `rules_without_profile` counts the child's rules no profile states: they are counted, not filled in, because a new profile would change what phones load. `segment` comes from Android's name: `prepaid`, `postpaid`, `5g`, `5g_sa`, `business`, or `other` for a child that names something else, such as a host network. Android's names are in `tools/aosp/carrier-id-names.json`, apart from the table, which the data digest covers.
+Round 47 keeps plan families in carrier data as today's selectors, so a family is a label over profiles that already exist. It makes no new SIM group, and a plan is never a matching key. Any new profile for a plan family comes only from an importer reading a source that states the selector, never from this file (rule round 51, item 3). `profiles` lists the profiles inside the child's rules, `parent_profiles` the ones that name the parent's ID, and `rules_without_profile` counts the child's rules no profile states: they are counted, not filled in, because a new profile would change what phones load. `segment` comes from Android's name: `prepaid`, `postpaid`, `5g`, `5g_sa`, `business`, or `other` for a child that names something else, such as a host network. Android's names are in `tools/aosp/carrier-id-names.json`, apart from the table, which the data digest covers.
 
 ### Offers
 
@@ -382,7 +382,7 @@ Labels that rest on device records (round 17, step 2). Round 8 (2026-10-10) defe
 
 ## Results tree
 
-`observed/results.json` ([`schemas/observed-results.schema.json`](../schemas/observed-results.schema.json)) publishes what people reported as device > carrier > plan (rule round 47, item 4). OCD starts with carrier data from sources, so a carrier's data stays once, in `carriers/`. Device and plan exist only here, inside results, and no carrier value is copied into the file.
+`observed/results.json` ([`schemas/observed-results.schema.json`](../schemas/observed-results.schema.json)) publishes what people reported as device > carrier > plan (rule round 47, item 4). OCD starts with carrier data from sources, so a carrier's data stays once, in `carriers/`. Device and plan exist only here, inside results, and no carrier value is copied into the file. To see a SIM-shown plan family, join the carrier profile ID with `generated/operators/plan-families.json`.
 
 `tools/observed_reports.py` rebuilds it from the current report issues, so a deleted issue drops out at the next rebuild, though older versions stay in git history. A report that passed every noise filter enters it; a held one does not. A report with no OCD profile has no carrier to sit under and stays out. An entry that was `not_tested` is no result.
 
