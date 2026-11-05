@@ -2,7 +2,7 @@
 
 This page covers the one automatic send of OCD Android: the weekly report a phone sends after its owner said yes. Nothing is sent without that yes.
 
-> **Status: sending is closed.** `relay_open` in `community/relay.json` is false, so no phone sends anything. It stays false until this page is complete, and the question and the app's new first-screen line are live in the same build. The `validate` check refuses `relay_open: true` while any "not filled in yet" below remains.
+> **Status on 2026-11-05: sending is closed.** The relay is deployed, but `relay_open` in `community/relay.json` is false, so no phone sends anything. It stays false until this page, the question and the app's new first-screen line are live in the same build. The `validate` check refuses `relay_open: true` while this page has a "not filled in yet" mark.
 
 ## Who is responsible
 

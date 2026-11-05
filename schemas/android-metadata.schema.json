@@ -2,13 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/android-metadata.schema.json",
   "title": "Open Carrier Data Android build metadata (generated/android/metadata.json)",
-  "description": "The target, output counts, omissions, data digest and freshness window of the generated Android files. tools/validate_public_carrier_data.py checks this schema and what a schema cannot: counts against the XML files, omission IDs against the published profiles, the window against the evidence index, and the XML provenance headers.",
+  "description": "The target, output counts, omissions, data digest, relay flag and freshness window of the generated Android files. tools/validate_public_carrier_data.py checks this schema and what a schema cannot: counts against the XML files, omission IDs against the published profiles, the window against the evidence index, and the XML provenance headers.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "target", "output", "omissions", "data_digest"],
+  "required": ["schema_version", "target", "output", "omissions", "data_digest", "relay_open"],
   "properties": {
     "schema_version": { "const": 1 },
     "data_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "relay_open": {
+      "type": "boolean",
+      "description": "community/relay.json's flag, which can only stop OCD Android's weekly send. Exactly true opens it; false, absent or any other type keeps it closed."
+    },
     "checks_through": { "type": "string", "format": "date" },
     "stale_after": { "type": "string", "format": "date" },
     "target": {

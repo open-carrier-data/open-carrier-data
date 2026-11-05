@@ -2875,10 +2875,11 @@ def apn_row_line(record: dict[str, Any]) -> str:
 # freshness window. The publish commit cannot be named, because it is made
 # after the file is written and squash-merged into a new commit, and the
 # public check regenerates the file and fails on any difference. The digest is
-# stable instead: SHA-256 over the profile files, the evidence index, and the
-# generator's own source, so it names one snapshot, and metadata.json repeats
-# it, so `git log -S <digest> -- generated/android/metadata.json` finds the
-# commit that published it.
+# stable instead: SHA-256 over the profile files, the evidence index, the
+# generator's own source and community/relay.json, so it names one snapshot,
+# and metadata.json repeats it, so
+# `git log -S <digest> -- generated/android/metadata.json` finds the commit
+# that published it.
 PROJECT_URL = "https://github.com/open-carrier-data/open-carrier-data"
 DATA_LICENSE = "CC0-1.0"
 # aosp/carrier-id-table.json: Android's carrier ID rules behind lookup.json's
@@ -2890,6 +2891,13 @@ CARRIER_CONFIG_WARNING = (
     "Do not copy this file into a build; see generated/android/README.md.",
 )
 DIGEST_TOOLS = ("generate_android_outputs.py", "carrier_config_types.py", "lineageos_apns.py", "aosp/carrier-id-table.json")
+# Rule round 48, item 2: the flag that can only stop OCD Android's weekly send.
+# Maintainers set it in this file, and the app reads the copy in metadata.json
+# at its pinned commit. On a ROM with skip-notify, the app's 15-minute job
+# starts a pull only when the manifest's digests differ from what the phone
+# holds, so the flag is an input of data_digest: without that, a flip would
+# sit on main and reach those phones only with the next unrelated publish.
+RELAY_FLAG = "community/relay.json"
 
 
 def data_digest(
@@ -2897,7 +2905,8 @@ def data_digest(
 ) -> str:
     """SHA-256 over the inputs of the generated files, each named by its path
     in the repository: the profile files, generated/evidence-index.json, the
-    generator's source and the carrier ID table behind lookup.json's weight."""
+    generator's source, the carrier ID table behind lookup.json's weight and
+    the relay flag."""
     digest = hashlib.sha256()
 
     def add(name: str, data: bytes) -> None:
@@ -2910,7 +2919,20 @@ def data_digest(
     tools = Path(__file__).resolve().parent
     for name in DIGEST_TOOLS:
         add(f"tools/{name}", (tools / name).read_bytes())
+    flag = carriers_dir.parent / RELAY_FLAG
+    if flag.is_file():
+        add(RELAY_FLAG, flag.read_bytes())
     return "sha256:" + digest.hexdigest()
+
+
+def relay_flag_open(root: Path) -> bool:
+    """community/relay.json under ROOT: only exactly true opens, and no file
+    is closed. tools/validate_public_carrier_data.py refuses any other shape."""
+    path = root / RELAY_FLAG
+    if not path.is_file():
+        return False
+    flag = json.loads(path.read_text(encoding="utf-8"))
+    return isinstance(flag, dict) and flag.get("relay_open") is True
 
 
 def provenance_header(what: str, digest: str | None, freshness: dict[str, str], warning: tuple[str, ...] = ()) -> list[str]:
@@ -3329,6 +3351,7 @@ def write_metadata(
     rows_left_out_stored_with_internet: int = 0,
     role_gap_rows_kept_load_bearing: int = 0,
     star_ims_types_left_out: int = 0,
+    relay_open: bool = False,
 ) -> None:
     apn_unrepresentable_ids = sorted(
         str(profile["profile_id"])
@@ -3342,6 +3365,9 @@ def write_metadata(
     )
     value = {
         "schema_version": 1,
+        # OCD Android's stop-only flag, always written, so a flip changes one
+        # value and no reader meets a new member at go-live.
+        "relay_open": relay_open,
         # carrier-config-list.xml has no gid1, gid2 or ICCID filter: a profile
         # whose match needs a GID or ICCID prefix is left out of it and listed
         # under omissions, because Android's vendor.xml can match GID1 only
@@ -3491,6 +3517,7 @@ def main(argv: list[str]) -> int:
         len(apn_rows.rows_left_out_stored_with_internet),
         len(apn_rows.role_gap_kept_load_bearing),
         len(apn_rows.star_ims_left_out),
+        relay_flag_open(carriers_dir.parent),
     )
     config_count = sum(1 for profile in profiles if profile.get("android_carrier_config"))
     print(

@@ -5830,6 +5830,9 @@ def check_android_schemas() -> None:
         (lambda v: v["omissions"].update(apn_profile_ids_with_unrepresentable_match=["open.1.x"]), "does not match"),
         (lambda v: v.update(stale_after="2027-02-30"), "not a date"),
         (lambda v: v.update(data_digest="sha256:abc"), "does not match"),
+        (lambda v: v.update(relay_open="true"), "not of type boolean"),
+        (lambda v: v.update(relay_open=1), "not of type boolean"),
+        (lambda v: v.pop("relay_open"), "lacks relay_open"),
     ):
         rejected(changed(metadata, edit), "android-metadata.schema.json", reason)
     for edit, reason in (
@@ -6486,13 +6489,97 @@ def check_role_gap_load_bearing_rows() -> None:
         )
 
 
+def app_relay_open(metadata: str) -> bool:
+    """Relay.open of OCD Android (WeekReport.kt) in Python: exactly a JSON true
+    opens. Absent, false, another type or a broken file stays closed."""
+    try:
+        return json.loads(metadata).get("relay_open") is True
+    except (AttributeError, ValueError):
+        return False
+
+
+def check_relay_open_in_metadata(carriers_dir: Path, generated_dir: Path) -> None:
+    """Rule round 48: community/relay.json reaches the file the app reads, as a
+    JSON boolean, and moves data_digest. The app's 15-minute job starts a pull
+    only when the manifest's digests differ from what the phone holds, so a
+    flip that left the digest alone would not reach it."""
+    root = carriers_dir.parent
+    flag = root / generate_android_outputs.RELAY_FLAG
+    page = root / validate_public_carrier_data.PRIVACY_PAGE
+    metadata_path = generated_dir / "android/metadata.json"
+    apns_path = generated_dir / "android/apns-conf.xml"
+
+    def generate(value: bool | None) -> tuple[str, str]:
+        """Writes the flag, or none, and regenerates: metadata.json's text and its digest."""
+        flag.unlink(missing_ok=True)
+        if value is not None:
+            flag.parent.mkdir(exist_ok=True)
+            flag.write_text(json.dumps({"relay_open": value}, indent=2) + "\n", encoding="utf-8")
+        with contextlib.redirect_stdout(io.StringIO()):
+            assert_true(
+                generate_android_outputs.main(["generate_android_outputs.py", str(carriers_dir), str(generated_dir)]) == 0,
+                "generator returned a non-zero status",
+            )
+        text = metadata_path.read_text(encoding="utf-8")
+        digest = json.loads(text)["data_digest"]
+        assert_true(f"data_digest: {digest}" in apns_path.read_text(encoding="utf-8"), "the XML header follows the digest")
+        return text, digest
+
+    def validate() -> None:
+        validate_public_carrier_data.main(
+            ["validate_public_carrier_data.py", str(carriers_dir), str(generated_dir / "index.json")]
+        )
+
+    def refused(reason: str) -> None:
+        try:
+            validate()
+        except validate_public_carrier_data.ValidationError as exc:
+            assert_true(reason in str(exc), f"unexpected error: {exc}")
+            return
+        raise AssertionError(f"the validator passed what it must refuse ({reason})")
+
+    page.parent.mkdir(exist_ok=True)
+    page.write_text("Controller: a name and an address\n", encoding="utf-8")
+    try:
+        text, no_file = generate(None)
+        assert_true('"relay_open": false' in text and not app_relay_open(text), "no flag file is closed")
+        validate()
+
+        text, closed = generate(False)
+        assert_true('"relay_open": false' in text and not app_relay_open(text), "false stays closed")
+        validate()
+
+        text, opened = generate(True)
+        assert_true('"relay_open": true' in text, f"true must be a JSON boolean: {text[:80]}")
+        assert_true(json.loads(text)["relay_open"] is True and app_relay_open(text), "the app must read true as open")
+        validate()
+        assert_true(len({no_file, closed, opened}) == 3, "the flag must move data_digest, or a flip reaches no phone")
+
+        # The flag and metadata.json disagree: no flip without the regeneration.
+        flag.write_text('{"relay_open": false}\n', encoding="utf-8")
+        refused("relay_open must be community/relay.json's false")
+        flag.write_text('{"relay_open": true}\n', encoding="utf-8")
+        for wrong in ('"true"', "1", "null"):
+            metadata_path.write_text(text.replace('"relay_open": true', f'"relay_open": {wrong}'), encoding="utf-8")
+            assert_true(not app_relay_open(metadata_path.read_text(encoding="utf-8")), f"the app must not read {wrong} as open")
+            refused("relay_open")
+
+        # A stop goes the same way back.
+        text, stopped = generate(False)
+        assert_true(stopped == closed and not app_relay_open(text), "a stop must move the digest back")
+    finally:
+        generate(None)
+        flag.parent.rmdir()
+        page.unlink()
+        page.parent.rmdir()
+
+
 def check_relay_flag() -> None:
     """Rule round 48: community/relay.json holds one boolean, and true needs a finished privacy page."""
     check = validate_public_carrier_data.validate_relay_flag
     repository = Path(__file__).resolve().parents[1]
-    check(repository)
     metadata = json.loads((repository / "generated/android/metadata.json").read_text(encoding="utf-8"))
-    assert "relay_open" not in metadata
+    assert metadata["relay_open"] is check(repository)
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         check(root)
@@ -7936,6 +8023,7 @@ def main() -> int:
         check_freshness_rules(carriers_dir, generated_dir)
         check_evidence_format(carriers_dir, generated_dir)
         check_provenance_and_lookup(carriers_dir, generated_dir)
+        check_relay_open_in_metadata(carriers_dir, generated_dir)
 
         apn_root = ET.parse(generated_dir / "android/apns-conf.xml").getroot()
         assert_true(apn_root.attrib["version"] == "8", "APN XML should target version 8")
