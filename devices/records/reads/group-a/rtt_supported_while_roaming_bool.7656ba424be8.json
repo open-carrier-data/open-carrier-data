@@ -1,0 +1,57 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "The source is one file: Motorola's carrier config as imported into LineageOS's android_device_motorola_lyriq (commit title names stock build V1TLS35.73-60-3-14). 2026-10-24 is the import date; the value's own age is not known, and stock itself was not read. Block 53 (232-28) states true, without rtt_supported_bool. spusu is real on this code: Samsung's rules list it with VoLTE (2023 and 2024). Google has no rule for 232-28, but its spusu_at on 232-17 sets rtt_supported_while_roaming_bool true, with rtt_supported_bool true, so the value matches the operator's own setting on its other code.",
+    "effect": "rtt_supported_while_roaming_bool (CarrierConfigManager.java:10991-10992, default false at :12197) only narrows RTT while roaming, and every reader sits behind rtt_supported_bool: ImsRegistrationTracker.isRttSupported reads it only once RTT provisioning is on (ImsRegistrationTracker.java:585-598), which needs rtt_supported_bool (ImsManager.java:2756-2797); AosCondition.IsRttSupported returns false first when rtt_supported_bool is false (AosCondition.cpp:998-1011); TelecomAccountRegistry needs isRttEnabled, which is false while config_support_rtt is false (TelecomAccountRegistry.java:1136-1154, PhoneInterfaceManager.java:7995-8035, config.xml:235, same on lineage-24.0). The emergency registration does not read it (AosHandleEmergencyMtc.cpp:45-63). Emergency routing and TTY routing do not read it (EmergencyCallDomainSelector.java:755-756, 2045-2057). With RTT on, true lets the roaming registration carry TEXT and stops the native TTY-mode deregistration while roaming (AosCondition.cpp:1026-1031). On a phone: admitted only for the most specific profile that sets the key, else the Google-lane value, else Android's default false (Serving.kt:405-440).",
+    "risk": "None: rtt_supported_bool is not set on this profile by any source, so it stays false and every reader of this key is passed by first. The value is served and does nothing. If rtt_supported_bool ever reaches this profile, its own read must take this value into account."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_supported_while_roaming_bool",
+  "match_set_hashes": {
+    "open.23228.ba2c8df322ad": "ba2c8df322ad"
+  },
+  "notes": "Proceed. The value has no effect on a phone while rtt_supported_bool stays false for this network.",
+  "profiles": [
+    "open.23228.ba2c8df322ad"
+  ],
+  "read_at": "2026-11-05T21:46:01Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1481,3418,10991-10992,11996,12190,12197",
+    "frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:1745-1785,2756-2800",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsRegistrationTracker.java:410-430,580-602",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/core/CapabilityConfigs.java:99-115",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/provider/AosNConfiguration.cpp:149-157,1568-1570",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/handle/AosHandleEmergencyMtc.cpp:40-70",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/condition/AosCondition.cpp:805-830,998-1031",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/registration/AosRegistration.cpp:1200-1245",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/utility/CallTypeUtil.cpp:24-66",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/media/MtcMediaUtil.cpp:74-100",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/call/state/IdleState.cpp:545-556",
+    "packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java:7995-8035",
+    "packages/services/Telephony/src/com/android/services/telephony/TelecomAccountRegistry.java:862-880,1128-1156",
+    "packages/services/Telephony/src/com/android/phone/settings/AccessibilitySettingsFragment.java:288-298",
+    "packages/services/Telephony/src/com/android/services/telephony/domainselection/EmergencyCallDomainSelector.java:755-756,1168-1169,2045-2057",
+    "packages/services/Telephony/res/values/config.xml:235,261",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:2644-2664",
+    "grep of config_support_rtt over device/samsung/x1s, device/samsung/universal9830-common, vendor/extra: no overlay",
+    "rom-repos/platform_packages_modules_ImsStack.git branch ocd (fd360f32), which local_manifests/x1s-microg.xml:38-40 builds: the cited ImsStack files are identical to the tree except ImsRegistrationTracker.java and AosRegistration.cpp, whose differences are deregistration reporting (no RTT or TEXT logic)",
+    "LineageOS lineage-24.0 through the GitHub API: PhoneInterfaceManager.java, TelecomAccountRegistry.java, EmergencyCallDomainSelector.java, CarrierConfigManager.java, CallsManager.java, res/values/config.xml whole-file diff against the 23.2 tree, 0 lines",
+    "android.googlesource.com/robots.txt read in full; platform/frameworks/opt/net/ims at refs/tags/android-17.0.0_r1 (the lineage-24.0 manifest's AOSP revision), src/java/com/android/ims/ImsManager.java plain page view: same text as the 23.2 tree",
+    "Open_Carrier_Data/app-ocd-check/carriersettings/ocd/src/com/android/carriersettings/ocd/Serving.kt:405-440 (applyGroupA, admitted)",
+    "r56-build pub/generated/ocd-dataset/group-a-pending.json, pub/generated/ocd-dataset/profiles.json, dry/marked.json",
+    "r56-build pub/generated/ocd-dataset/google-lane.json (rules and entries, Google lane kodiak CD1A.260714.001.A9)",
+    "r56-build dry/priv/candidates/lineage-device-carrier-overlays/profiles-*.json (private_source.device_identity of each observation)",
+    "r56-build dry/priv/candidates/samsung/samsung/bundle.d2310d3c18bce1089e8f4a94db8ca3d0.json, bundle.fb2092979aa2df192edcaddf8d24a7dc.json (spusu on 232-28)",
+    "r56-build raw/work/files/android_device_motorola_lyriq/760dc91c1379-vendor.xml:649-658 (LineageOS android_device_motorola_lyriq, overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, commit f684947b, 2026-10-24)"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "proceed"
+}

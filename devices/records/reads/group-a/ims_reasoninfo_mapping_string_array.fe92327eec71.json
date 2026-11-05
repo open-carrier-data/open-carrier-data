@@ -1,0 +1,53 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [],
+  "findings": {
+    "basis": "The source is one file: Motorola's carrier config as imported into LineageOS's android_device_motorola_lyriq (commit title names stock build V1TLS35.73-60-3-14). 2026-10-24 is the import date; the value's own age is not known, and stock itself was not read. Blocks 719, 725 (gid1 written 15FF on 310-280 and 15ff on 310-410; checkFilters ignores case). The two entries are AOSP's AT&T value (carrier_config_carrierid_1187_AT&T.xml:44-47), which read 894861d376ff passed for carrier ID 1187. That read does not cover this scope: no other source names gid1 15FF on any code (Google's rules, AOSP's carrier list, Samsung), so nothing shows whose SIM this is. These profiles have no recorded source family, so no read can admit them: no served item results (see unrecorded_basis in docs/ocd-dataset.md).",
+    "effect": "ims_reasoninfo_mapping_string_array (CarrierConfigManager.java:2827-2828, default null at :12152) is read only by ImsPhoneCallTracker, which parses each 'FROM|MESSAGE|TO' entry, lower-cases the message and matches by code and message prefix (ImsPhoneCallTracker.java:2020-2064, 3226-3295, 1205-1250). maybeRemapReasonCode feeds getDisconnectCauseFromReasonInfo (3298-3353). The ImsStack and its ocd fork do not read the key. The extra message is the Reason text, and a Q.850 reason arrives prefixed 'q.850;' so a plain entry does not match it (CallReasonInfo.h:325-354, carrier_config.xml:314). The key read 6dc7fbef894f names the four ways a mapped code reaches emergency handling: a target or source of 363 or 364, a target of 501, 111 or 1500, a target of 143, 1017 or 1404, and a target of 1501. An emergency INVITE failure normally reaches the framework as CS retry 146 with an empty message (EmergencyStartErrorHandler.cpp:72-141), and, by that read, redial decisions use the raw code. On a phone: admitted only for the most specific profile that sets the key, else the Google-lane value (Serving.kt:405-440).",
+    "risk": "None from holding: these SIMs keep the Google-lane att_us value, whose four entries include both of these. Serving this value would only drop '510|Call completed elsewhere|1014' and the Wi-Fi label entry. Both entries it keeps start and stop no emergency retry."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "ims_reasoninfo_mapping_string_array",
+  "match_set_hashes": {
+    "open.310280.b0a61a6bf9ed": "b0a61a6bf9ed",
+    "open.310410.2d86f197ffad": "2d86f197ffad"
+  },
+  "notes": "Hold. The value is harmless but its scope has no identity, it is a subset of what the lane already serves, and it could not be served.",
+  "profiles": [
+    "open.310280.b0a61a6bf9ed",
+    "open.310410.2d86f197ffad"
+  ],
+  "read_at": "2026-11-05T21:46:01Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:2827-2828,12152",
+    "frameworks/base/telephony/java/android/telephony/ims/ImsReasonInfo.java:247,266,470,568,578,642,657",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:926-944,1205-1250,2020-2064,3226-3295,3298-3353",
+    "packages/services/Telephony/src/com/android/services/telephony/DisconnectCauseUtil.java:223-226 (grep of INVALID_NUMBER and NUMBER_UNREACHABLE over packages/services/Telephony/src and packages/services/Telecomm/src)",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/call/termination/CancelHandler.cpp:26-27,44-102",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/call/termination/EmergencyStartErrorHandler.cpp:72-141",
+    "packages/modules/ImsStack/native/libimsstack/enabler/interface/mtc/CallReasonInfo.h:325-354",
+    "packages/modules/ImsStack/java/assets/carrier_config/carrier_config.xml:314",
+    "rom-repos/platform_packages_modules_ImsStack.git branch ocd (fd360f32): CancelHandler.cpp, EmergencyStartErrorHandler.cpp, StartErrorHandler.cpp, TerminationHandler.cpp identical to the tree; git grep for the key, no hits",
+    "LineageOS lineage-24.0 through the GitHub API: ImsPhoneCallTracker.java differs from the 23.2 tree by 4 lines at 3683-3686 (a failed call with a tracked connection now disconnects), not in the remap; CarrierConfigManager.java 0 lines",
+    "r56-build pub/devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.6dc7fbef894f.json (key read: its four doors, re-checked here only for the entries that differ from the lane)",
+    "Open_Carrier_Data/app-ocd-check/carriersettings/ocd/src/com/android/carriersettings/ocd/Serving.kt:405-440 (applyGroupA, admitted)",
+    "r56-build pub/generated/ocd-dataset/group-a-pending.json, pub/generated/ocd-dataset/profiles.json, dry/marked.json",
+    "r56-build pub/generated/ocd-dataset/google-lane.json (rules and entries, Google lane kodiak CD1A.260714.001.A9)",
+    "r56-build dry/priv/candidates/lineage-device-carrier-overlays/profiles-*.json (private_source.device_identity of each observation)",
+    "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1187_AT&T.xml:44-47",
+    "packages/apps/CarrierConfig/src/com/android/carrierconfig/DefaultCarrierConfigService.java:345-380",
+    "packages/providers/TelephonyProvider/assets/latest_carrier_id/carrier_list.textpb (grep of the GIDs and network codes)",
+    "r56-build pub/devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.894861d376ff.json",
+    "r56-build raw/work/files/android_device_motorola_lyriq/760dc91c1379-vendor.xml:16229-16298,16496-16565 (LineageOS android_device_motorola_lyriq, overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, commit f684947b, 2026-10-24)"
+  ],
+  "subject": "value",
+  "value": [
+    "352|emergency calls over wifi not allowed in this location|1622",
+    "332|service not allowed in this location|1623"
+  ],
+  "verdict": "hold"
+}
