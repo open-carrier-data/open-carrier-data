@@ -7,7 +7,7 @@
   "findings": {
     "basis": "The source is one file: Motorola's carrier config as imported into LineageOS's android_device_motorola_lyriq (commit title names stock build V1TLS35.73-60-3-14). 2026-10-24 is the import date; the value's own age is not known, and stock itself was not read. Each listed block states the value explicitly for its exact network code and GID. Blocks 395, 400, 408, 412, 423: 311-560, 311-670, 312-130, 312-480 and 313-380. The networks are real and have IMS: each profile has IMS APN rows, Samsung's IMS and carrier data list the code, AOSP's carrier list names 311-670 Pine Belt, 312-130 Appalachian Wireless and 313-380 OptimERA, and Google has entries for those three with VoLTE on. On 311-560 the name 'ATT Broadband' is an old APN label; the IMS APN rows and Google's SPN rule say OTZ. The setting is selective: 243 of 988 blocks set true, and of the 20 lyriq scopes with this key and a matching Google rule, 11 agree with Google, 9 are unset by Google and none is opposite. Google's own entries for Pine Belt, Appalachian, OptimERA and OTZ leave the key unset, and Google has no rule at all for 312-480, so Motorola is the only explicit setting and no second source confirms it.",
     "effect": "rtt_supported_bool (CarrierConfigManager.java:3418, default false at :12190). With true and ignore_rtt_mode_setting_bool at its default true (:11996), ImsManager.updateRttConfigValue provisions RTT on and keeps IMS turned on even when nothing else needs it (ImsManager.java:2756-2797, 1763-1785). ImsRegistrationTracker then adds TEXT beside each VOICE capability, using rtt_supported_while_roaming_bool when roaming (ImsRegistrationTracker.java:419-424, 585-598). AosHandleEmergencyMtc adds TEXT to the emergency registration whenever the key is true, with no roaming or network check (AosHandleEmergencyMtc.cpp:45-63). AosCondition.IsDeregRequiredForTty deregisters in TTY mode only when RTT is off, VoLTE TTY is unsupported and the phone is combined-attached (AosCondition.cpp:998-1031). AosRegistration.UpdateNetworkFeatureRtt marks TEXT unavailable on a normal registration the network does not confirm (AosRegistration.cpp:1210-1245). A call type is cut down to the registered features (CallTypeUtil.cpp:24-66), and a voice call stays audio only (MtcMediaUtil.cpp:74-92, IdleState.cpp:550-552). Emergency TTY routing reads carrier_volte_tty_supported_bool, not this key (EmergencyCallDomainSelector.java:755-756, 1168-1169, 2045-2057). Telephony's own gate needs R.bool.config_support_rtt, which is false on 23.2 and on lineage-24.0 (config.xml:235, no overlay in the x1s device trees), so isRttSupported and isRttEnabled are false and the PhoneAccount has no RTT capability (PhoneInterfaceManager.java:7995-8035, TelecomAccountRegistry.java:1128-1154). Telecom still creates RTT streams for an emergency call when the calling app asks for RTT (CallsManager.java:2650-2662). ImsManager.java at android-17.0.0_r1 equals the tree. On a phone: admitted only for the most specific profile that sets the key, else the Google-lane value, else Android's default false (Serving.kt:405-440).",
-    "risk": "Against the default false these SIMs get now: a voice emergency call keeps its routing and stays audio only. The emergency registration gains the TEXT tag with no network check, and IMS stays on even when the user turns VoLTE off. No source shows how these networks treat that tag from this stack, and Motorola's setting was made for Motorola's own IMS client. Google's entries leave RTT off for four of these carriers. On this ROM the gain is small: the stock dialler cannot start RTT, so what changes is mainly that a text offer can be answered where the network confirms TEXT. TTY emergency routing reads carrier_volte_tty_supported_bool, so it does not change. This is the weakest proceed of this round."
+    "risk": "A second read turned the first read's proceed to a hold. No harm was found. If this value were served, against the default false these SIMs get now: a voice emergency call keeps its routing and stays audio only, but the emergency registration gains the TEXT tag with no network check, IMS stays on with VoLTE off, and the native TTY deregistration stops. No source shows how these networks treat that tag from this stack, and no test can see it, so a wrong value would stay hidden until someone needs help. The basis is one file from one maker, with no operator-level word: Google names four of these networks with VoLTE on and leaves RTT unset, and has no rule for 312-480. Unset is no proof of off, as Google leaves RTT unset on 31 of its 101 plain US scopes with VoLTE on. Motorola's 2021 sm7250-common and its 2026 MediaTek list each name three of them without RTT. The gain on this ROM is small: the stock dialler cannot start RTT, since config_support_rtt is false. From holding: Android's default false stays, as on a Pixel with these SIMs."
   },
   "ims_stack": "aosp_imsstack",
   "key": "rtt_supported_bool",
@@ -18,7 +18,7 @@
     "open.312480.3db29cf4eb59": "3db29cf4eb59",
     "open.313380.ecab3c32a785": "ecab3c32a785"
   },
-  "notes": "Proceed on the rule's own test: an explicit, selective setting for the exact network, from a maker's stock file, on a block the LineageOS build applied, for SIMs that exist. It does not touch voice emergency routing. One maker only; read, not tested.",
+  "notes": "Hold, by the independent second read of round 56. The first read's facts stand: each block is a whole RTT template for a real network, and no source says false. Against that, the value reaches the emergency registration, rests on one maker's file, and gives little on this ROM. A second source for a network, such as a Google entry or an operator statement, releases it.",
   "profiles": [
     "open.311560.feedaea5700f",
     "open.311670.f3b14792947b",
@@ -26,8 +26,8 @@
     "open.312480.3db29cf4eb59",
     "open.313380.ecab3c32a785"
   ],
-  "read_at": "2026-11-05T21:46:01Z",
-  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "read_at": "2026-11-05T23:30:17Z",
+  "reader": "independent second reader of round 56 (Claude subagent, neither the value's builder nor the first reader)",
   "rom_family": "lineageos",
   "schema": "ocd-group-a-read/2",
   "sources_read": [
@@ -60,9 +60,12 @@
     "r56-build dry/pubB/generated/evidence-index.json (per-profile sources)",
     "r56-build dry/priv/candidates/samsung-ims/samsung-ims/*.json (312130 and others: no RTT setting there)",
     "r56-build pub/carriers/open/311560.feedaea5700f.json, 311670.f3b14792947b.json, 312130.c2f677d43fc1.json, 312480.3db29cf4eb59.json, 313380.ecab3c32a785.json",
-    "r56-build raw/work/files/android_device_motorola_lyriq/760dc91c1379-vendor.xml:5335-5352,5381-5403,5456-5471,5523-5539,5645-5656 (LineageOS android_device_motorola_lyriq, overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, commit f684947b, 2026-10-24)"
+    "r56-build raw/work/files/android_device_motorola_lyriq/760dc91c1379-vendor.xml:5335-5352,5381-5403,5456-5471,5523-5539,5645-5656 (LineageOS android_device_motorola_lyriq, overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, commit f684947b, 2026-10-24)",
+    "second read: LineageOS android_device_motorola_lyriq f684947b overlay/CarrierConfigOverlayLyriq/res/xml/vendor.xml, blocks 395, 400, 408, 412, 423 read directly",
+    "second read: private candidates lineage-device-carrier-overlays (motorola_sm7250-common and motorola_mt6768-common blocks for these networks), google-lane.json rules and entries",
+    "second read: packages/modules/ImsStack/native/libimsstack/enabler/aos/handle/AosHandleEmergencyMtc.cpp:45-63, frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:1766-1774,2756-2797"
   ],
   "subject": "value",
   "value": true,
-  "verdict": "proceed"
+  "verdict": "hold"
 }
