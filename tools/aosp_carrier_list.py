@@ -12,7 +12,10 @@ version (TelephonyProvider assets/latest_carrier_id/carrier_list.textpb).
   import TEXTPB --commit SHA --tree TEXT [--out tools/aosp/carrier-id-table.json]
       Expands every carrier_attribute into the rows CarrierIdProvider stores
       (one row per combination of its repeated fields, GID1, GID2 and SPN in
-      lower case, duplicates once) and writes them, one row per line.
+      lower case, duplicates once) and writes them, one row per line. Next to
+      it, tools/aosp/carrier-id-names.json takes each ID's name and, for a
+      child ID, its parent. A separate file, because the table is part of the
+      data digest and the names serve no matching.
 
 The rows carry the AOSP carrier list's own values (Apache-2.0, the Android
 Open Source Project). Only the standard library is used.
@@ -29,7 +32,9 @@ from pathlib import Path
 from typing import Any
 
 TABLE = Path(__file__).resolve().parent / "aosp" / "carrier-id-table.json"
+NAMES = TABLE.with_name("carrier-id-names.json")
 SCHEMA = "ocd-aosp-carrier-id-table/1"
+NAMES_SCHEMA = "ocd-aosp-carrier-id-names/1"
 
 # CarrierIdProvider's column for each repeated field of a carrier_attribute,
 # in the order convertCarrierAttrToContentValues walks them.
@@ -105,6 +110,19 @@ def provider_rows(carrier_list: dict[str, list[Any]]) -> list[dict[str, Any]]:
     return rows
 
 
+def carrier_names(carrier_list: dict[str, list[Any]], source_sha256: str) -> dict[str, Any]:
+    """Each carrier ID's name, and the parents of the child IDs."""
+    carriers = carrier_list.get("carrier_id", [])
+    return {
+        "schema": NAMES_SCHEMA,
+        "about": "The names in the AOSP carrier list (Apache-2.0, the Android Open Source Project), for people: "
+                 "nothing matches on them. tools/aosp_carrier_list.py writes this file from the list carrier-id-table.json reads.",
+        "source_sha256": source_sha256,
+        "names": {str(c["canonical_id"][0]): c["carrier_name"][0] for c in carriers if c.get("carrier_name")},
+        "parents": {str(c["canonical_id"][0]): c["parent_canonical_id"][0] for c in carriers if c.get("parent_canonical_id", [0])[0] > 0},
+    }
+
+
 def dump(document: dict[str, Any]) -> str:
     head = {k: v for k, v in document.items() if k != "rows"}
     lines = ",\n".join(json.dumps(row, ensure_ascii=False, separators=(", ", ": ")) for row in document["rows"])
@@ -141,6 +159,8 @@ def main(argv: list[str] | None = None) -> int:
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(dump(document), encoding="utf-8")
+    names = carrier_names(carrier_list, document["source"]["sha256"])
+    args.out.with_name(NAMES.name).write_text(json.dumps(names, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"{args.out}: version {document['version']}, {len(carrier_list.get('carrier_id', []))} carrier IDs, {len(rows)} rows")
     return 0
 

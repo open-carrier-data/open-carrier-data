@@ -6,6 +6,10 @@ For what changed in the data itself, read the publish pull requests, `tools/chec
 
 ## Format and meaning changes
 
+### 2026-11-05: new file `generated/operators/entities.json`
+
+Networks, operators and brands (migration step 5, rule round 47, item 4). A new file for people: no existing file, value or match changes. See [data model](data-model.md#networks-operators-and-brands).
+
 ### 2026-11-04: `lookup.json` `schema_version` 2 (`fdf77267`, #369)
 
 The documented resolution order changes from the number of selectors a profile uses (`specificity`, then `profile_id`) to the order OcdCarrierSettings and the OCD Android app already use (rule round 45, item 3):

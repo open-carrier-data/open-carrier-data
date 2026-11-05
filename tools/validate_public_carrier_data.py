@@ -340,6 +340,7 @@ GENERATED_FILES = {
     # checked by tools/validate_operators.py.
     "operators/README.md",
     "operators/carrier-identity.json",
+    "operators/entities.json",
     "operators/statements.json",
 }
 
