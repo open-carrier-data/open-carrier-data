@@ -6,6 +6,10 @@ For what changed in the data itself, read the publish pull requests, `tools/chec
 
 ## Format and meaning changes
 
+### 2026-11-05: new file `generated/operators/sim-groups.json`
+
+Brands per SIM group and whether a phone can tell them apart (migration step 6, rule round 47, item 4). A new file for people: no existing file, value or match changes. See [data model](data-model.md#brands-per-sim-group).
+
 ### 2026-11-05: new file `generated/operators/entities.json`
 
 Networks, operators and brands (migration step 5, rule round 47, item 4). A new file for people: no existing file, value or match changes. See [data model](data-model.md#networks-operators-and-brands).

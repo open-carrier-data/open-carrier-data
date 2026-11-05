@@ -89,6 +89,12 @@ jobs:
             base=(--base-ref "$BASE_SHA")
           fi
           python3 tools/two_answers.py check --root . "${base[@]}"
+      # Migration step 6 (rule round 47, item 4): brands per SIM group, a view
+      # of the identity table and the profiles that no one edits.
+      - name: Test the brands per SIM group
+        run: python3 tools/test_sim_groups.py
+      - name: Check the brands per SIM group against the identity table
+        run: python3 tools/sim_groups.py check --root .
       - name: Validate the device catalog
         run: python3 tools/validate_device_catalog.py generated/devices --freshness warn
       - name: Validate the device records
