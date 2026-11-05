@@ -239,6 +239,14 @@ class IdentityTest(unittest.TestCase):
             errors, _ = tree.validate()
             self.assertTrue(any("host_only" in e for e in errors), errors)
 
+    def test_host_only_networks_stay_off_the_entrys_own_selectors(self):
+        # Rule round 51, item 5.
+        identity = identity_file()
+        identity["entries"][0].update(kind="mvno", host_networks=["00101", "00102"], host_only_networks=["00101"])
+        with Tree(statements_file([statement()]), identity) as tree:
+            errors, _ = tree.validate()
+            self.assertTrue(any("no selector of the entry stands" in e for e in errors), errors)
+
 
 def entities_file():
     source = {"url": "https://operator.example.test/hosts", "publisher": "Test network", "kind": "operator", "read_on": "2026-10-28"}

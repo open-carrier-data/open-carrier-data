@@ -55,6 +55,13 @@ class SimGroupsTest(unittest.TestCase):
         self.assertEqual(rows[PLAIN]["brands"], ["zz.brand", "zz.net"])
         self.assertEqual(rows[PLAIN]["tellable"], "no")
 
+    def test_a_brand_with_its_own_network_stays_host_only_on_the_old_host(self):
+        own = entry("zz.own", "mvno", [], networks=("00101", "00102"))
+        own["host_only_networks"] = ["00101"]
+        rows = self.rows([entry("zz.net", "operator", [PLAIN]), own])
+        self.assertEqual(rows[PLAIN]["brands"], ["zz.net", "zz.own"])
+        self.assertEqual(rows[PLAIN]["tellable"], "no")
+
     def test_a_host_only_brand_on_another_network_changes_nothing(self):
         rows = self.rows([entry("zz.net", "operator", [PLAIN]), entry("zz.brand", "brand", [], networks=("00102",), host_only=True)])
         self.assertEqual(rows[PLAIN]["tellable"], "yes")

@@ -171,10 +171,20 @@ class Identity:
                 if pid in live:
                     self.listing.setdefault(pid, []).append(entry)
                     self.selectors.append((entry, live[pid]))
-        self.host_only = [e for e in self.entries if e.get("host_only")]
+
+    @staticmethod
+    def host_only_networks(entry: dict[str, Any]) -> set[str]:
+        """Where no source gives this entry a selector, so it rides the host's
+        plain profile. An entry that owns a network and still has SIMs on a
+        host names them in host_only_networks: Lebara owns 262-14 and stays
+        host-only on 262-01 (rule round 51, item 5). Otherwise host_only says
+        it for every host network."""
+        if "host_only_networks" in entry:
+            return set(entry["host_only_networks"])
+        return set(entry.get("host_networks", [])) if entry.get("host_only") else set()
 
     def host_only_on(self, codes: list[str]) -> list[dict[str, Any]]:
-        return [e for e in self.host_only if set(codes) & set(e.get("host_networks", []))]
+        return [e for e in self.entries if set(codes) & self.host_only_networks(e)]
 
     def brand_alone(self, profile_id: str, match: dict[str, Any]) -> dict[str, Any] | None:
         """The one entry the table maps this profile to, or None: the profile

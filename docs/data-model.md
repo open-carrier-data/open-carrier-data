@@ -220,7 +220,7 @@ The **canonical match-set hash** of a profile is the hash part of `hash_id` over
 
 **A `runs_on` link** names a `host` and carries `valid_from`, `valid_to`, `note`, `sources`, `core` and `same_subscribers`. A date with the prefix `≤` is an upper bound, and `null` means no date is known, not that the link still runs. A brand may have two links at once while it moves in waves. An empty list says nothing about the host. `core` is `host`, `own` or `null`; `same_subscribers` is true for the same customers split by a SIM field, false for another brand's customers, and `null` when no source read says. Both are recorded links only: nothing reads them to carry a value or a `for_you` answer across.
 
-The regulator gives no earlier holders and no assignment dates, so a holder is true on the list's date. `networks` publishes the code and holder of every row of the list, with source and date: [DATA-LICENSE.md](../DATA-LICENSE.md#regulator-lists) says what that means for the licence. `operator_key` on a brand can differ from the identity table's where a source says so: the table has Lebara under Telekom, and the regulator lists 262-14 for Lebara itself.
+The regulator gives no earlier holders and no assignment dates, so a holder is true on the list's date. `networks` publishes the code and holder of every row of the list, with source and date: [DATA-LICENSE.md](../DATA-LICENSE.md#regulator-lists) says what that means for the licence. `entities.json` decides a brand's operator, the identity table copies it, and the table records where a brand's SIMs appear: Lebara is its own operator with 262-14, the regulator's row, and the table keeps its old SIMs on 262-01 as `host_only_networks`.
 
 ### Brands per SIM group
 

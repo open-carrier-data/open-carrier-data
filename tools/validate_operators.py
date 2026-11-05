@@ -306,6 +306,13 @@ def identity_problems(data: dict[str, Any], root: Path) -> list[str]:
             out.append(f"{where}: host_only means a brand or MVNO without any selector a source states")
         if entry["host_networks"] != sorted(entry["host_networks"]):
             out.append(f"{where}: host_networks are sorted")
+        if "host_only_networks" in entry:
+            riding = entry["host_only_networks"]
+            stated = {str(code) for selector in entry["selectors"] for code in selector["match"]["mccmnc"]}
+            if entry["kind"] == "operator" or entry["host_only"] or not riding or riding != sorted(riding):
+                out.append(f"{where}: host_only_networks are sorted and on a brand or MVNO with selectors elsewhere")
+            if not set(riding) <= set(entry["host_networks"]) or set(riding) & stated:
+                out.append(f"{where}: host_only_networks are host networks where no selector of the entry stands")
         ids = [selector["profile_id"] for selector in entry["selectors"]]
         if ids != sorted(set(ids)):
             out.append(f"{where}: selectors are sorted by profile_id and unique")
