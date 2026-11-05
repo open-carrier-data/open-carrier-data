@@ -137,6 +137,15 @@
             "$ref": "#/$defs/code"
           }
         },
+        "host_only_networks": {
+          "description": "Rule round 51, item 5: on a brand or MVNO that has selectors on a network of its own and still has SIMs on a host, the host networks where it has none. Elsewhere host_only says it for every host network.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
         "host_only": {
           "type": "boolean"
         },

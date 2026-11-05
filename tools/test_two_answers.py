@@ -95,6 +95,20 @@ class DependsOnTest(unittest.TestCase):
         self.assertEqual(ta.depends_on_of(profile({"mccmnc": ["26202"]}, volte="supported"), None, variants), {})
 
 
+class HostOnlyPerNetworkTest(unittest.TestCase):
+    """Rule round 51, item 5: Lebara owns 262-14 and stays host-only on 262-01."""
+
+    def test_host_only_says_it_for_every_host_network(self) -> None:
+        identity = ta.Identity({"entries": [{"key": "zz.b", "host_only": True, "host_networks": ["00101", "00102"], "selectors": []}]}, {})
+        self.assertEqual([e["key"] for e in identity.host_only_on(["00102"])], ["zz.b"])
+
+    def test_an_entry_with_its_own_network_rides_only_where_it_says(self) -> None:
+        identity = ta.Identity({"entries": [{"key": "zz.b", "host_only": False, "host_networks": ["00101", "00102"],
+                                             "host_only_networks": ["00101"], "selectors": []}]}, {})
+        self.assertEqual([e["key"] for e in identity.host_only_on(["00101"])], ["zz.b"])
+        self.assertEqual(identity.host_only_on(["00102"]), [])
+
+
 class ForYouTest(unittest.TestCase):
     def derived(self, profiles: list[dict], **kwargs) -> dict:
         with tempfile.TemporaryDirectory() as tmp:
