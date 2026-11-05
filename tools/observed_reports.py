@@ -387,8 +387,10 @@ def consistency_problems(report: dict[str, Any], today: date) -> list[str]:
     if report["ocd_profile"] is None and "gid1_prefix" in report["sim"]:
         out.append("$.sim.gid1_prefix: is sent only with the OCD profile that matches by it")
     if plan_of(report) != PLAN_UNKNOWN:
-        # Migration step 8 publishes the carriers' offer lists; until then unknown is the only choice.
-        out.append("$.plan: no carrier has a published offer list yet, so the only choice is unknown")
+        # Round 47 opens this field once an offer list exists, and round 48 keeps
+        # the plan off what a phone sends. generated/operators/offers.json now
+        # exists, but no ruling lets a report name an offer.
+        out.append("$.plan: no phone sends a plan (rule round 48), so the only choice is unknown")
     seen: set[str] = set()
     pointers: dict[str, dict[str, list[str]]] = {}
     for index, result in enumerate(report["results"]):

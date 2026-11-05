@@ -1,0 +1,363 @@
+{
+  "brand_features": [
+    {
+      "brand": "de.1und1",
+      "checked_at": "2026-11-02",
+      "first_day_without": "2026-07-01",
+      "service": "mms",
+      "state": "ended",
+      "statement": "de.1und1.mms"
+    },
+    {
+      "brand": "de.aldi-talk",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.aldi-talk.wifi_calling"
+    },
+    {
+      "brand": "de.congstar",
+      "checked_at": "2026-11-02",
+      "first_day_without": "2026-07-01",
+      "service": "mms",
+      "state": "ended",
+      "statement": "de.congstar.mms"
+    },
+    {
+      "brand": "de.congstar",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.congstar.wifi_calling"
+    },
+    {
+      "brand": "de.fraenk",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.fraenk.wifi_calling"
+    },
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.lidl-connect.wifi_calling"
+    },
+    {
+      "brand": "de.telefonica",
+      "checked_at": "2026-11-02",
+      "service": "5g_sa",
+      "state": "depends_on_plan",
+      "statement": "de.telefonica.5g_sa"
+    },
+    {
+      "brand": "de.telefonica",
+      "checked_at": "2026-11-02",
+      "first_day_without": "2026-06-30",
+      "service": "mms",
+      "state": "ended",
+      "statement": "de.telefonica.mms"
+    },
+    {
+      "brand": "de.telefonica",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.telefonica.wifi_calling"
+    },
+    {
+      "brand": "de.telekom",
+      "checked_at": "2026-11-02",
+      "service": "5g_sa",
+      "state": "depends_on_plan",
+      "statement": "de.telekom.5g_sa"
+    },
+    {
+      "brand": "de.vodafone",
+      "checked_at": "2026-11-02",
+      "service": "5g_sa",
+      "state": "depends_on_plan",
+      "statement": "de.vodafone.5g_sa"
+    },
+    {
+      "brand": "de.vodafone",
+      "checked_at": "2026-11-02",
+      "first_day_without": "2023-01-17",
+      "service": "mms",
+      "state": "ended",
+      "statement": "de.vodafone.mms"
+    },
+    {
+      "brand": "de.vodafone",
+      "checked_at": "2026-11-02",
+      "service": "wifi_calling",
+      "state": "depends_on_plan",
+      "statement": "de.vodafone.wifi_calling"
+    }
+  ],
+  "counts": {
+    "brand_features": 13,
+    "lapsed": 0,
+    "offers": 8
+  },
+  "description": "Migration step 8 of the device > carrier > plan model (rule round 47, item 4): dated tariffs, options and packs as the carrier's own pages name them, with feature states. A state other than depends_on_plan, ended, not_offered or unknown rests on a passage of that page. brand_features says what a brand states for a feature with no named offer; depends_on_plan means the plan decides. No phone can see an offer: this is a dated claim, never proof that a line has a feature. Nothing here changes a for_you answer, a value or a match, no phone sends a plan, and phones never read this file.",
+  "display_rule": "Show a state as what the carrier states, read on checked_at. Say that the person's plan is not checked. Never show a state as works, booked or you have it.",
+  "license": "CC0-1.0",
+  "offers": [
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-05",
+      "condition": null,
+      "country": "DE",
+      "features": [
+        {
+          "service": "wifi_calling",
+          "state": "unknown",
+          "statement": "de.lidl-connect.wifi_calling"
+        }
+      ],
+      "id": "de.lidl-connect.classic",
+      "name": "Classic",
+      "paraphrase": "LIDL Connect lists Classic as a tariff with no monthly fee. Its pages do not tie WLAN calls to this tariff, so the state stays unknown.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:1175bbd4097e1f696325814ae435089ef6685ac33b27ffb5dae8414532420656",
+          "publisher": "LIDL Connect (tariff overview)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.lidl-connect.de/tarife"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "tariff",
+      "valid_from": "≤2026-11-05",
+      "valid_to": null
+    },
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-05",
+      "condition": null,
+      "country": "DE",
+      "features": [
+        {
+          "service": "wifi_calling",
+          "state": "unknown",
+          "statement": "de.lidl-connect.wifi_calling"
+        }
+      ],
+      "id": "de.lidl-connect.smart-l",
+      "name": "Smart L",
+      "paraphrase": "LIDL Connect lists Smart L among its Smart tariffs. Its pages do not tie WLAN calls to this tariff, so the state stays unknown.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:64b422f76e7dabeb942ac1dc8570f971307c639d24a78559d853e5cc236a73c8",
+          "publisher": "LIDL Connect (tariff overview)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.lidl-connect.de/tarife"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "tariff",
+      "valid_from": "≤2026-11-05",
+      "valid_to": null
+    },
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-05",
+      "condition": null,
+      "country": "DE",
+      "features": [
+        {
+          "service": "wifi_calling",
+          "state": "unknown",
+          "statement": "de.lidl-connect.wifi_calling"
+        }
+      ],
+      "id": "de.lidl-connect.smart-m",
+      "name": "Smart M",
+      "paraphrase": "LIDL Connect lists Smart M among its Smart tariffs. Its pages do not tie WLAN calls to this tariff, so the state stays unknown.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:64b422f76e7dabeb942ac1dc8570f971307c639d24a78559d853e5cc236a73c8",
+          "publisher": "LIDL Connect (tariff overview)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.lidl-connect.de/tarife"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "tariff",
+      "valid_from": "≤2026-11-05",
+      "valid_to": null
+    },
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-05",
+      "condition": null,
+      "country": "DE",
+      "features": [
+        {
+          "service": "wifi_calling",
+          "state": "unknown",
+          "statement": "de.lidl-connect.wifi_calling"
+        }
+      ],
+      "id": "de.lidl-connect.smart-s",
+      "name": "Smart S",
+      "paraphrase": "LIDL Connect lists Smart S among its Smart tariffs. Its pages do not tie WLAN calls to this tariff, so the state stays unknown.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:64b422f76e7dabeb942ac1dc8570f971307c639d24a78559d853e5cc236a73c8",
+          "publisher": "LIDL Connect (tariff overview)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.lidl-connect.de/tarife"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "tariff",
+      "valid_from": "≤2026-11-05",
+      "valid_to": null
+    },
+    {
+      "brand": "de.lidl-connect",
+      "checked_at": "2026-11-05",
+      "condition": null,
+      "country": "DE",
+      "features": [
+        {
+          "service": "wifi_calling",
+          "state": "unknown",
+          "statement": "de.lidl-connect.wifi_calling"
+        }
+      ],
+      "id": "de.lidl-connect.smart-xs",
+      "name": "Smart XS",
+      "paraphrase": "LIDL Connect lists Smart XS among its Smart tariffs. Its pages do not tie WLAN calls to this tariff, so the state stays unknown.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "brand",
+          "passage_sha256": "sha256:64b422f76e7dabeb942ac1dc8570f971307c639d24a78559d853e5cc236a73c8",
+          "publisher": "LIDL Connect (tariff overview)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.lidl-connect.de/tarife"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "tariff",
+      "valid_from": "≤2026-11-05",
+      "valid_to": null
+    },
+    {
+      "brand": "de.telefonica",
+      "checked_at": "2026-11-05",
+      "condition": "Free for twelve months; switched on in the Mein o2 app or on o2online.de.",
+      "country": "DE",
+      "features": [
+        {
+          "service": "5g_sa",
+          "state": "free_option",
+          "statement": "de.telefonica.5g_sa"
+        },
+        {
+          "service": "vonr",
+          "state": "free_option",
+          "statement": "de.telefonica.vonr"
+        }
+      ],
+      "id": "de.telefonica.5g-plus",
+      "name": "5G Plus",
+      "paraphrase": "Telefónica states that o2 customers need the 5G Plus pack to browse and call on the 5G standalone network, and that the pack is free for twelve months.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:22fe7ec2a7606d7d801996e2f3801d9578fdd0656effe50ba54728c17eecebd5",
+          "publisher": "Telefónica Deutschland (news on 5G Plus)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.telefonica.de/news/corporate/2025/04/5g-plus-fuer-iphones-neue-technologie-ab-heute-fuer-viele-o2-kunden-verfuegbar.html"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "pack",
+      "valid_from": "≤2025-04-03",
+      "valid_to": null
+    },
+    {
+      "brand": "de.telekom",
+      "checked_at": "2026-11-05",
+      "condition": "For customers with a current MagentaMobil plan from August 2024 and a compatible phone.",
+      "country": "DE",
+      "features": [
+        {
+          "service": "5g_sa",
+          "state": "free_option",
+          "statement": "de.telekom.5g_sa"
+        }
+      ],
+      "id": "de.telekom.5g-plus-ultra",
+      "name": "5G+ Ultra",
+      "paraphrase": "Telekom states that its 5G+ Ultra add-on on the 5G standalone network can be added free of charge.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:f6f36f72a558b1782220ecf3b8f7f197616a67572405dbd895e612bafc3d5035",
+          "publisher": "Deutsche Telekom (media information on 5G+ Ultra)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://www.telekom.com/en/newsroom/latest-updates/media-information/2026/4/5g-ultra-for-video-calls"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "option",
+      "valid_from": "2026-04-21",
+      "valid_to": null
+    },
+    {
+      "brand": "de.vodafone",
+      "checked_at": "2026-11-05",
+      "condition": "Unlocked for example in the MeinVodafone app.",
+      "country": "DE",
+      "features": [
+        {
+          "service": "5g_sa",
+          "state": "free_option",
+          "statement": "de.vodafone.5g_sa"
+        }
+      ],
+      "id": "de.vodafone.5g-plus",
+      "name": "5G+",
+      "paraphrase": "Vodafone states that whoever wants 5G standalone, sold as 5G+, can unlock the access free of charge.",
+      "sources": [
+        {
+          "date": null,
+          "kind": "operator",
+          "passage_sha256": "sha256:926588d3082f35e169f5c1d2f2784534bef090e8681e6396c54bc49f81f5e123",
+          "publisher": "Vodafone Deutschland (newsroom, 5G standalone)",
+          "read_on": "2026-11-05",
+          "role": "admits",
+          "url": "https://unternehmen.vodafone.de/newsroom/vodafone-schaltet-5g-standalone-bundesweit-frei"
+        }
+      ],
+      "swept_at": "2026-11-05",
+      "type": "option",
+      "valid_from": "≤2024-10-08",
+      "valid_to": null
+    }
+  ],
+  "schema_version": 1
+}

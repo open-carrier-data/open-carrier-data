@@ -9,7 +9,9 @@ page, the day it was read and a passage hash, never quoted text.
 generated/operators/carrier-identity.json (schemas/carrier-identity.schema.json)
 is the carrier-identity table. generated/operators/entities.json
 (schemas/operator-entities.schema.json, migration step 5, rule round 47,
-item 4) holds its entries as networks, operators and brands. The checks:
+item 4) holds its entries as networks, operators and brands.
+generated/operators/offers.json (schemas/operator-offers.schema.json, step 8)
+holds dated offers with feature states. The checks:
 
 - both files match their schemas, are sorted and unique, and name only keys
   the identity table has;
@@ -27,6 +29,10 @@ item 4) holds its entries as networks, operators and brands. The checks:
 - entities.json is sorted and unique, lists every identity entry, names only
   operators it has, keeps MCC and MNC apart, keeps a link's dates in order, and
   stays out of what phones pull;
+- every offer is sorted, belongs to a known brand, rests on an admitted statement
+  of that brand and service, and has a state that statement allows: a lapsed
+  statement or offer reads unknown, and a state stronger than depends_on_plan
+  needs a passage of the carrier's own page;
 - every IMSI and ICCID selector in every published file (carriers/,
   generated/, devices/, observed/: JSON selectors, the Google lane's rules
   and fill conditions, apns-conf.xml's mvno_match_data and
@@ -58,12 +64,13 @@ OPERATORS_DIR = "generated/operators"
 STATEMENTS = f"{OPERATORS_DIR}/statements.json"
 IDENTITY = f"{OPERATORS_DIR}/carrier-identity.json"
 ENTITIES = f"{OPERATORS_DIR}/entities.json"
+OFFERS = f"{OPERATORS_DIR}/offers.json"
 # What phones pull: the dataset's manifest. The files below are for people and
 # are never a value, so they stay out of it (rule round 47, item 4).
 MANIFEST = "generated/ocd-dataset/manifest.json"
 SIM_GROUPS = f"{OPERATORS_DIR}/sim-groups.json"
 PLAN_FAMILIES = f"{OPERATORS_DIR}/plan-families.json"
-NEVER_PULLED = (ENTITIES, SIM_GROUPS, PLAN_FAMILIES,)
+NEVER_PULLED = (ENTITIES, OFFERS, SIM_GROUPS, PLAN_FAMILIES,)
 OPERATOR_STATEMENT = "operator_statement"
 LAPSED_GATE = "operator_statement_lapsed"
 LAPSE_UNCONFIRMED_DAYS = 180
@@ -447,6 +454,59 @@ def entity_problems(document: dict[str, Any], identity: dict[str, Any] | None) -
     return out
 
 
+STATE_OF_STATUS = {"ended": "ended", "not_offered": "not_offered", "offered": "depends_on_plan", "unknown": "unknown"}
+
+
+def offer_problems(document: dict[str, Any], statements: dict[str, Any] | None, identity: dict[str, Any] | None) -> list[str]:
+    """What the schema cannot say about offers.json."""
+    out: list[str] = []
+    by_id = {item["id"]: item for item in (statements or {}).get("statements", [])}
+    brands = {entry["key"] for entry in identity["entries"]} if identity else None
+    offers = document["offers"]
+    out += sorted_unique([item["id"] for item in offers], f"{OFFERS}: offers")
+    features = [(item["brand"], item["service"]) for item in document["brand_features"]]
+    out += sorted_unique(features, f"{OFFERS}: brand_features")
+    counts = {"offers": len(offers), "lapsed": sum(1 for item in offers if "lapsed" in item), "brand_features": len(features)}
+    if document["counts"] != counts:
+        out.append(f"{OFFERS}: counts must be {counts}")
+    for item in offers:
+        where = f"{OFFERS}: {item['id']}"
+        if not item["id"].startswith(item["brand"] + "."):
+            out.append(f"{where}: an offer ID starts with its brand's key")
+        if brands is not None and item["brand"] not in brands:
+            out.append(f"{where}: unknown brand {item['brand']}")
+        start, end = day_of(item["valid_from"]), day_of(item["valid_to"])
+        if start and end and start > end:
+            out.append(f"{where}: ends before it starts")
+        for name in ("name", "paraphrase", "condition"):
+            problem = text_problem(item[name], f"{where}.{name}") if item[name] else None
+            if problem:
+                out.append(problem)
+        for feature in item["features"]:
+            statement = by_id.get(feature["statement"])
+            if statement is None:
+                out.append(f"{where}: rests on {feature['statement']}, which statements.json does not list")
+                continue
+            if statement["identity_key"] != item["brand"] or statement["service"] != feature["service"]:
+                out.append(f"{where}: {feature['service']} rests on another brand's or service's statement")
+            status = statement["status"]
+            state = feature["state"]
+            if "lapsed" in item and state != "unknown":
+                out.append(f"{where}: a lapsed offer reads unknown")
+            elif status != "offered" and state not in (STATE_OF_STATUS[status], "unknown"):
+                out.append(f"{where}: {state} does not fit the statement's status {status}")
+    for item in document["brand_features"]:
+        where = f"{OFFERS}: {item['brand']} {item['service']}"
+        statement = by_id.get(item["statement"])
+        if statement is None:
+            out.append(f"{where}: rests on {item['statement']}, which statements.json does not list")
+        elif statement["identity_key"] != item["brand"] or statement["service"] != item["service"]:
+            out.append(f"{where}: rests on another brand's or service's statement")
+        elif item["state"] != STATE_OF_STATUS[statement["status"]]:
+            out.append(f"{where}: must read {STATE_OF_STATUS[statement['status']]}, as its statement does")
+    return out
+
+
 def pulled_problems(root: Path) -> list[str]:
     """Files for people stay out of what phones pull."""
     path = root / MANIFEST
@@ -495,6 +555,13 @@ def validate(root: Path, today: date, freshness: str, require: bool) -> tuple[li
         errors.extend(problems)
         if not problems:
             errors.extend(entity_problems(entities, identity))
+    offers_path = root / OFFERS
+    if offers_path.is_file():
+        offers = load(offers_path)
+        problems = schema_problems(offers_path, offers, "operator-offers.schema.json")
+        errors.extend(problems)
+        if not problems:
+            errors.extend(offer_problems(offers, statements, identity))
     errors.extend(pulled_problems(root))
     errors.extend(override_problems(root, statements))
     errors.extend(prefix_problems(root))

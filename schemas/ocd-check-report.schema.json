@@ -149,7 +149,7 @@
           }
         }
       ],
-      "description": "The plan the person chose next to the report (rule round 47, item 4): unknown, or a closed offer ID with booked options from the carrier's published list. Never free text, and never read from an account, USSD, carrier SMS or TS.43. A report without it reads as unknown. Until a carrier has an offer list, unknown is the only choice the bot takes. Plan is never a matching key and feeds no carrier value: it shows in observed/results.json and can only open a source review."
+      "description": "The plan the person chose next to the report (rule round 47, item 4): unknown, or a closed offer ID with booked options from the carrier's published list. Never free text, and never read from an account, USSD, carrier SMS or TS.43. A report without it reads as unknown. No phone sends a plan (rule round 48), so unknown is the only choice the bot takes, offer list or not. Plan is never a matching key and feeds no carrier value: it shows in observed/results.json and can only open a source review."
     },
     "results": {
       "type": "array",

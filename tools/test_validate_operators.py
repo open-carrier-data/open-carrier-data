@@ -313,6 +313,68 @@ class EntitiesTest(unittest.TestCase):
             self.assertTrue(any("phones never read" in e for e in tree.validate()[0]))
 
 
+def offers_file():
+    return {
+        "schema_version": 1,
+        "description": "test",
+        "license": "CC0-1.0",
+        "display_rule": "test",
+        "counts": {"offers": 1, "lapsed": 0, "brand_features": 1},
+        "offers": [{
+            "id": "zz.net.option", "brand": "zz.net", "country": "ZZ", "type": "option", "name": "Option", "condition": None,
+            "valid_from": "≤2026-10-28", "valid_to": None, "checked_at": "2026-10-28", "swept_at": "2026-10-28",
+            "paraphrase": "The test network states that the option is free.",
+            "features": [{"service": "mms", "state": "ended", "statement": "zz.net.mms"}],
+            "sources": [{
+                "url": "https://operator.example.test/option", "publisher": "Test network", "kind": "operator", "date": None,
+                "read_on": "2026-10-28", "role": "admits", "passage_sha256": "sha256:" + "0" * 64,
+            }],
+        }],
+        "brand_features": [{"brand": "zz.net", "service": "mms", "state": "ended", "statement": "zz.net.mms", "checked_at": "2026-10-28"}],
+    }
+
+
+class OffersTest(unittest.TestCase):
+    def errors(self, document):
+        with Tree(statements_file([statement()]), identity_file()) as tree:
+            tree.write(vo.OFFERS, document)
+            return tree.validate()[0]
+
+    def test_a_valid_file(self):
+        self.assertEqual(self.errors(offers_file()), [])
+
+    def test_a_statement_must_exist(self):
+        document = offers_file()
+        document["offers"][0]["features"][0]["statement"] = "zz.net.other"
+        self.assertTrue(any("does not list" in e for e in self.errors(document)))
+
+    def test_a_state_must_fit_the_statement(self):
+        document = offers_file()
+        document["offers"][0]["features"][0]["state"] = "included"
+        self.assertTrue(any("does not fit" in e for e in self.errors(document)))
+
+    def test_a_lapsed_offer_reads_unknown(self):
+        document = offers_file()
+        document["offers"][0]["lapsed"] = {"reason": "not_confirmed_180_days", "since": "2026-10-01"}
+        document["counts"]["lapsed"] = 1
+        self.assertTrue(any("a lapsed offer reads unknown" in e for e in self.errors(document)))
+
+    def test_a_brand_feature_repeats_its_statement(self):
+        document = offers_file()
+        document["brand_features"][0]["state"] = "depends_on_plan"
+        self.assertTrue(any("as its statement does" in e for e in self.errors(document)))
+
+    def test_an_offer_id_starts_with_its_brand(self):
+        document = offers_file()
+        document["offers"][0]["id"] = "zz.other.option"
+        self.assertTrue(any("starts with its brand" in e for e in self.errors(document)))
+
+    def test_phones_never_pull_it(self):
+        with Tree(statements_file([statement()]), identity_file()) as tree:
+            tree.write(vo.MANIFEST, {"files": [{"path": vo.OFFERS}]})
+            self.assertTrue(any("phones never read" in e for e in tree.validate()[0]))
+
+
 class OverrideTest(unittest.TestCase):
     def test_a_profile_outside_every_statement(self):
         item = statement(mccmnc=["00102"])
