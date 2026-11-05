@@ -39,6 +39,10 @@ python3 -c 'print(*[(s["source_name"], s["revision_date"], s["checked_at"]) for 
 
 The refresh methods below, the AOSP branch name, and the Samsung scope rules come from the private importer configuration. They cannot be checked from this repo.
 
+## Regulators name who holds a network code
+
+`generated/operators/entities.json` names each German network code's holder from the Bundesnetzagentur's list of assigned IMSI blocks, read by hand: the page, the list's date and the file's hash are in `regulators`. It is a fact about a network code. It sets no value, counts toward no source family and never confirms a carrier fact.
+
 ## How a source's on and off count
 
 A source family that turns a capability on makes it `supported`, as long as none turns it off. An off counts only when the operator's own configuration gives it, or when two independent families give it. One family's off alone leaves the capability `unknown` and leaves its false CarrierConfig switch out. [docs/data-model.md](docs/data-model.md#capability-names-and-values) defines the values.

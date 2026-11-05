@@ -240,6 +240,79 @@ class IdentityTest(unittest.TestCase):
             self.assertTrue(any("host_only" in e for e in errors), errors)
 
 
+def entities_file():
+    source = {"url": "https://operator.example.test/hosts", "publisher": "Test network", "kind": "operator", "read_on": "2026-10-28"}
+    return {
+        "schema_version": 1,
+        "description": "test",
+        "license": "CC0-1.0",
+        "regulators": [{
+            "country": "ZZ", "publisher": "Test regulator", "url": "https://regulator.example.test/list.pdf",
+            "as_of": "2026-08-03", "read_on": "2026-10-28", "sha256": "sha256:" + "0" * 64,
+        }],
+        "networks": [{
+            "mcc": "001", "mnc": "01", "country": "ZZ", "on_regulator_list": True, "holder": "Test network GmbH",
+            "operator_key": "zz.net", "vendor_names": [{"name": "Old name", "families": ["aosp"], "agrees": False}],
+        }],
+        "operators": [{"key": "zz.net", "name": "Test network", "country": "ZZ", "kind": "radio_network_operator", "own_core": True, "sources": [source]}],
+        "brands": [{
+            "key": "zz.net", "name": "Test network", "country": "ZZ", "identity_kind": "operator", "operator_key": "zz.net", "part_of": None,
+            "runs_on": [{
+                "host": "zz.net", "core": "own", "same_subscribers": None, "valid_from": "≤2024-01-31", "valid_to": None,
+                "note": "On its own network.", "sources": [source],
+            }],
+        }],
+    }
+
+
+class EntitiesTest(unittest.TestCase):
+    def errors(self, document, identity=None):
+        with Tree(statements_file([statement()]), identity or identity_file()) as tree:
+            tree.write(vo.ENTITIES, document)
+            return tree.validate()[0]
+
+    def test_a_valid_file(self):
+        self.assertEqual(self.errors(entities_file()), [])
+
+    def test_a_packed_code_is_refused(self):
+        document = entities_file()
+        document["networks"][0]["mcc"] = "00101"
+        self.assertTrue(any("does not match" in e for e in self.errors(document)))
+
+    def test_only_the_regulator_gives_a_holder(self):
+        document = entities_file()
+        document["networks"][0]["on_regulator_list"] = False
+        self.assertTrue(any("only the regulator" in e for e in self.errors(document)))
+
+    def test_no_list_read_means_null(self):
+        document = entities_file()
+        document["regulators"] = []
+        self.assertTrue(any("on_regulator_list is null" in e for e in self.errors(document)))
+
+    def test_a_host_must_be_listed(self):
+        document = entities_file()
+        document["brands"][0]["runs_on"][0]["host"] = "zz.other"
+        self.assertTrue(any("which the file does not list" in e for e in self.errors(document)))
+
+    def test_dates_stay_in_order(self):
+        document = entities_file()
+        document["brands"][0]["runs_on"][0]["valid_to"] = "2023-01-01"
+        self.assertTrue(any("ends before it starts" in e for e in self.errors(document)))
+
+    def test_every_identity_entry_is_listed(self):
+        identity = identity_file()
+        brand = copy.deepcopy(identity["entries"][0])
+        brand.update(key="zz.brand", name="Brand", kind="brand", host_only=True, selectors=[])
+        identity["entries"].insert(0, brand)
+        self.assertTrue(any("zz.brand is not a brand here" in e for e in self.errors(entities_file(), identity)))
+
+    def test_phones_never_pull_it(self):
+        with Tree(statements_file([statement()]), identity_file()) as tree:
+            tree.write(vo.ENTITIES, entities_file())
+            tree.write(vo.MANIFEST, {"files": [{"path": vo.ENTITIES}]})
+            self.assertTrue(any("phones never read" in e for e in tree.validate()[0]))
+
+
 class OverrideTest(unittest.TestCase):
     def test_a_profile_outside_every_statement(self):
         item = statement(mccmnc=["00102"])

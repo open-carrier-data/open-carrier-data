@@ -7,7 +7,9 @@ generated/operators/statements.json (schemas/operator-statements.schema.json)
 holds what operators, brands and MVNOs state on their own pages, with the
 page, the day it was read and a passage hash, never quoted text.
 generated/operators/carrier-identity.json (schemas/carrier-identity.schema.json)
-is the carrier-identity table. The checks:
+is the carrier-identity table. generated/operators/entities.json
+(schemas/operator-entities.schema.json, migration step 5, rule round 47,
+item 4) holds its entries as networks, operators and brands. The checks:
 
 - both files match their schemas, are sorted and unique, and name only keys
   the identity table has;
@@ -22,6 +24,9 @@ is the carrier-identity table. The checks:
 - every profile that publishes mms unsupported from operator_statement lies
   inside a value-setting statement's network codes and MMSC hosts, and every
   operator_statement_lapsed:mms gate inside a lapsed one;
+- entities.json is sorted and unique, lists every identity entry, names only
+  operators it has, keeps MCC and MNC apart, keeps a link's dates in order, and
+  stays out of what phones pull;
 - every IMSI and ICCID selector in every published file (carriers/,
   generated/, devices/, observed/: JSON selectors, the Google lane's rules
   and fill conditions, apns-conf.xml's mvno_match_data and
@@ -52,6 +57,11 @@ import validate_public_carrier_data as carrier_validator  # noqa: E402
 OPERATORS_DIR = "generated/operators"
 STATEMENTS = f"{OPERATORS_DIR}/statements.json"
 IDENTITY = f"{OPERATORS_DIR}/carrier-identity.json"
+ENTITIES = f"{OPERATORS_DIR}/entities.json"
+# What phones pull: the dataset's manifest. The files below are for people and
+# are never a value, so they stay out of it (rule round 47, item 4).
+MANIFEST = "generated/ocd-dataset/manifest.json"
+NEVER_PULLED = (ENTITIES,)
 OPERATOR_STATEMENT = "operator_statement"
 LAPSED_GATE = "operator_statement_lapsed"
 LAPSE_UNCONFIRMED_DAYS = 180
@@ -371,6 +381,79 @@ def override_problems(root: Path, statements: dict[str, Any] | None) -> list[str
     return out
 
 
+# ---------------------------------------------------------------- entities
+
+
+def day_of(bound: str | None) -> str | None:
+    return bound.removeprefix("≤") if bound else None
+
+
+def sorted_unique(values: list[Any], where: str) -> list[str]:
+    if values != sorted(set(values)):
+        return [f"{where}: must be sorted and unique"]
+    return []
+
+
+def entity_problems(document: dict[str, Any], identity: dict[str, Any] | None) -> list[str]:
+    """What the schema cannot say about entities.json."""
+    out: list[str] = []
+    networks = document["networks"]
+    operators = {item["key"] for item in document["operators"]}
+    brands = {item["key"] for item in document["brands"]}
+    regulated = {item["country"] for item in document["regulators"]}
+    out += sorted_unique([item["country"] for item in document["regulators"]], f"{ENTITIES}: regulators")
+    out += sorted_unique([(item["mcc"], item["mnc"]) for item in networks], f"{ENTITIES}: networks")
+    out += sorted_unique([item["key"] for item in document["operators"]], f"{ENTITIES}: operators")
+    out += sorted_unique([item["key"] for item in document["brands"]], f"{ENTITIES}: brands")
+    for item in networks:
+        where = f"{ENTITIES}: network {item['mcc']}-{item['mnc']}"
+        listed = item["on_regulator_list"]
+        if (listed is None) != (item["country"] not in regulated):
+            out.append(f"{where}: on_regulator_list is null exactly where no regulator's list was read")
+        if listed is True and not item["holder"]:
+            out.append(f"{where}: a code on the regulator's list names its holder")
+        if listed is not True and item["holder"]:
+            out.append(f"{where}: only the regulator's list gives a holder")
+        if item["operator_key"] is not None and item["operator_key"] not in operators:
+            out.append(f"{where}: names operator {item['operator_key']}, which the file does not list")
+        out += sorted_unique([name["name"] for name in item["vendor_names"]], f"{where}: vendor_names")
+    for item in document["brands"]:
+        where = f"{ENTITIES}: brand {item['key']}"
+        if item["operator_key"] is not None and item["operator_key"] not in operators:
+            out.append(f"{where}: names operator {item['operator_key']}, which the file does not list")
+        if item["part_of"] is not None and item["part_of"] not in brands:
+            out.append(f"{where}: part_of {item['part_of']} is not a brand")
+        for link in item["runs_on"]:
+            if link["host"] not in operators:
+                out.append(f"{where}: runs on {link['host']}, which the file does not list")
+            start, end = day_of(link["valid_from"]), day_of(link["valid_to"])
+            if start and end and start > end:
+                out.append(f"{where}: a link ends before it starts")
+            if link["note"]:
+                problem = text_problem(link["note"], where)
+                if problem:
+                    out.append(problem)
+    if identity is not None:
+        for entry in identity["entries"]:
+            if entry["key"] not in brands:
+                out.append(f"{ENTITIES}: identity entry {entry['key']} is not a brand here")
+            if entry["kind"] == "operator" and entry["key"] not in operators:
+                out.append(f"{ENTITIES}: identity operator {entry['key']} is not an operator here")
+        known = {entry["key"] for entry in identity["entries"]}
+        for key in sorted(brands - known):
+            out.append(f"{ENTITIES}: brand {key} is not in the identity table")
+    return out
+
+
+def pulled_problems(root: Path) -> list[str]:
+    """Files for people stay out of what phones pull."""
+    path = root / MANIFEST
+    if not path.is_file():
+        return []
+    listed = {str(item.get("path")) for item in load(path).get("files", []) if isinstance(item, dict)}
+    return [f"{MANIFEST}: lists {name}, which phones never read" for name in NEVER_PULLED if name in listed]
+
+
 # ---------------------------------------------------------------- main
 
 
@@ -403,6 +486,14 @@ def validate(root: Path, today: date, freshness: str, require: bool) -> tuple[li
             (errors if freshness == "fail" else warnings).extend(stale)
         else:
             statements = None
+    entities_path = root / ENTITIES
+    if entities_path.is_file():
+        entities = load(entities_path)
+        problems = schema_problems(entities_path, entities, "operator-entities.schema.json")
+        errors.extend(problems)
+        if not problems:
+            errors.extend(entity_problems(entities, identity))
+    errors.extend(pulled_problems(root))
     errors.extend(override_problems(root, statements))
     errors.extend(prefix_problems(root))
     return errors, warnings

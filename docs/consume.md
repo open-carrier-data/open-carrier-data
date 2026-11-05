@@ -247,6 +247,8 @@ Since rule round 32, `generated/operators/statements.json` (schema `schemas/oper
 
 The same folder carries the carrier-identity table: which operators, brands and MVNOs run on which network codes, with the SIM selectors a source states and `host_only` where none does. A host-only brand, such as LIDL Connect on 26202, cannot be told apart from its host's SIMs, so show it as a brand on that network, never as a statement about the SIM. Every selector in it passes the same prefix limits as every other published file.
 
+`generated/operators/entities.json` gives the same entries as networks, operators and brands: MCC and MNC apart, the holder the regulator lists, what vendor lists call a network where that differs, and dated host links. Read it to name a network or a brand for a person. It says nothing about a SIM ([data model](data-model.md#networks-operators-and-brands)).
+
 ### Two answers: what the phone tries, and what the brand states
 
 Since rule round 45 (item 4) a profile can carry two maps next to `capabilities`, and `lookup.json` repeats them ([data-model.md](data-model.md#two-answers-per-feature)). `capabilities` is unchanged: what the phone should be set up to try. `for_you` says, per feature, what an admitted operator or brand statement says about availability for this customer: `ended`, `not_offered` or `depends_on_plan` today (`included`, `free_option` and `paid_option` only where a statement says exactly that). A missing entry means unknown. `depends_on` says why a `conditional` value is not single: `device`, `firmware`, `ims_stack` or `sources_disagree`.

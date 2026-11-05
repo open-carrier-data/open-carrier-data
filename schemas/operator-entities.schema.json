@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/operator-entities.schema.json",
+  "title": "Networks, operators and brands (generated/operators/entities.json)",
+  "description": "Migration step 5 of the device > carrier > plan model (rule round 47, item 4), CC0-1.0. The carrier-identity table's entries as named things: networks with MCC and MNC as two fields and the holder the regulator lists, operators with their kind, and brands with dated runs_on links. Where a vendor list names a network differently from its holder, vendor_names says so. A label for people: nothing here changes a match, a value or a phone. tools/validate_operators.py checks the file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "description", "license", "regulators", "networks", "operators", "brands"],
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z]{2}\\.[a-z0-9][a-z0-9-]{1,40}$"
+    },
+    "day": {
+      "type": "string",
+      "format": "date"
+    },
+    "bound": {
+      "description": "A day, or a day with the prefix ≤ when only an upper bound is known.",
+      "type": "string",
+      "pattern": "^≤?[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "country": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "own_words": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300,
+      "pattern": "^[^\"“”„‟«»@]*$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "publisher", "kind", "read_on"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://[^\\s\"'<>]{4,500}$"
+        },
+        "publisher": {
+          "$ref": "#/$defs/own_words"
+        },
+        "kind": {
+          "enum": ["operator", "brand", "mvno", "regulator", "press"]
+        },
+        "read_on": {
+          "$ref": "#/$defs/day"
+        }
+      }
+    },
+    "regulator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["country", "publisher", "url", "as_of", "read_on", "sha256"],
+      "properties": {
+        "country": {
+          "$ref": "#/$defs/country"
+        },
+        "publisher": {
+          "$ref": "#/$defs/own_words"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://[^\\s\"'<>]{4,500}$"
+        },
+        "as_of": {
+          "$ref": "#/$defs/day"
+        },
+        "read_on": {
+          "$ref": "#/$defs/day"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "vendor_name": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "families", "agrees"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "families": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{1,60}$"
+          }
+        },
+        "agrees": {
+          "description": "true when the identity table's mapping names this label as the network's operator or a brand on it; false when the name differs from the holder.",
+          "type": "boolean"
+        }
+      }
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mcc", "mnc", "country", "on_regulator_list", "holder", "operator_key", "vendor_names"],
+      "properties": {
+        "mcc": {
+          "type": "string",
+          "pattern": "^[0-9]{3}$"
+        },
+        "mnc": {
+          "type": "string",
+          "pattern": "^[0-9]{2,3}$"
+        },
+        "country": {
+          "$ref": "#/$defs/country"
+        },
+        "on_regulator_list": {
+          "description": "null when OCD has read no regulator's list for this country.",
+          "type": ["boolean", "null"]
+        },
+        "holder": {
+          "description": "The holder as the regulator lists it, as of that list's date; the regulator gives no earlier holders and no assignment dates.",
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "operator_key": {
+          "anyOf": [
+            { "$ref": "#/$defs/key" },
+            { "type": "null" }
+          ]
+        },
+        "vendor_names": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/vendor_name"
+          }
+        }
+      }
+    },
+    "operator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "name", "country", "kind", "own_core", "sources"],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "country": {
+          "$ref": "#/$defs/country"
+        },
+        "kind": {
+          "enum": ["radio_network_operator", "full_mvno", "service_provider", "unknown"]
+        },
+        "own_core": {
+          "description": "true when a source states that it runs its own core; null when no source was read.",
+          "type": ["boolean", "null"]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "core", "same_subscribers", "valid_from", "valid_to", "note", "sources"],
+      "properties": {
+        "host": {
+          "description": "The operator whose radio network this link uses.",
+          "$ref": "#/$defs/key"
+        },
+        "core": {
+          "description": "host: the brand runs on the host's core and IMS. own: on its own. null: no source read says.",
+          "enum": ["host", "own", null]
+        },
+        "same_subscribers": {
+          "description": "true: the same customers split by a SIM field. false: another brand's customers. null: no source read says. A recorded link only: nothing reads it to carry a value or an answer across.",
+          "type": ["boolean", "null"]
+        },
+        "valid_from": {
+          "anyOf": [
+            { "$ref": "#/$defs/bound" },
+            { "type": "null" }
+          ]
+        },
+        "valid_to": {
+          "anyOf": [
+            { "$ref": "#/$defs/bound" },
+            { "type": "null" }
+          ]
+        },
+        "note": {
+          "anyOf": [
+            { "$ref": "#/$defs/own_words" },
+            { "type": "null" }
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        }
+      }
+    },
+    "brand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "name", "country", "identity_kind", "operator_key", "part_of", "runs_on"],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "country": {
+          "$ref": "#/$defs/country"
+        },
+        "identity_kind": {
+          "enum": ["operator", "brand", "mvno"]
+        },
+        "operator_key": {
+          "description": "The operator that runs the brand. Differs from the identity table's operator_key where a source read here says so; the identity table stays as its rule decided.",
+          "anyOf": [
+            { "$ref": "#/$defs/key" },
+            { "type": "null" }
+          ]
+        },
+        "part_of": {
+          "anyOf": [
+            { "$ref": "#/$defs/key" },
+            { "type": "null" }
+          ]
+        },
+        "runs_on": {
+          "description": "Dated host links, oldest first. Empty when no source was read: an empty list says nothing about the host.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "license": {
+      "const": "CC0-1.0"
+    },
+    "regulators": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/regulator"
+      }
+    },
+    "networks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/network"
+      }
+    },
+    "operators": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/operator"
+      }
+    },
+    "brands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/brand"
+      }
+    }
+  }
+}
