@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/open-carrier-data/open-carrier-data/main/schemas/carrier-identity.schema.json",
   "title": "The carrier-identity table (generated/operators/carrier-identity.json)",
-  "description": "Which operators, brands and MVNOs run on which network codes (rule round 32, GOAL decision 2), CC0-1.0, built from the sources' own labels: LineageOS APN carrier names, Samsung network names and sales codes, Google carrier ID names and Apple bundle names. selectors are SIM selectors exactly as a source states them, each with the OCD profile it maps to; host_only means no source gives the brand a selector, so no phone can tell its SIMs from the host's. Every IMSI and ICCID selector passes rule 3's prefix limits. tools/validate_operators.py checks the file.",
+  "description": "Which operators, brands and MVNOs run on which network codes (rule round 32, GOAL decision 2), CC0-1.0, built from the sources' own labels: LineageOS APN carrier names, Samsung network names and sales codes, Google carrier ID names and Apple bundle names. selectors are SIM selectors exactly as a source states them, each with the OCD profile it maps to; host_only means no source gives the brand a selector, so OCD does not tell its SIMs from the host's; the SIM may still show a name. Every IMSI and ICCID selector passes rule 3's prefix limits. tools/validate_operators.py checks the file.",
   "type": "object",
   "additionalProperties": false,
   "required": [

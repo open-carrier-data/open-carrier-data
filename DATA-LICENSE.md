@@ -12,6 +12,10 @@ The project publishes no vendor files. This repo holds no source's raw files, pa
 
 The Open Carrier Data contributors waive their own rights in the published data under the Creative Commons CC0 1.0 Universal Public Domain Dedication. The waiver covers any copyright or database right they hold in the profiles, the indexes, and the generated files.
 
+## Regulator lists
+
+`generated/operators/entities.json` publishes the code and holder of every row of Germany's Bundesnetzagentur list, read by hand as one listed page, with the source and its date. This is the one place where OCD publishes all the rows of a source's list. The CC0 waiver above covers OCD's own work, not the regulator's list. The file's `regulators` block records the list's terms as `license_expression` `NOASSERTION`, and whether those terms allow this is recorded as open.
+
 ## The source terms on record
 
 `generated/evidence-index.json` records the terms each source family states, as `source_snapshots[].license_expression`. The value is a fact about the source: `Apache-2.0`, `CC-PD`, or `NOASSERTION` when the source states none. [SOURCES.md](SOURCES.md) describes each source family.
