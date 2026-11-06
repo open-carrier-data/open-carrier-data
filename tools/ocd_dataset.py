@@ -51,7 +51,9 @@ docs/ocd-dataset.md explains them for consumers.
       What each proceed group A item acts on (rule round 61, item 3): the
       bundles whose value comes only through the read, by class, each on the
       owner profile's own fill or on another entry's SIM. --read FILE lists one
-      read's bundles and the `reach report:` line for its sources_read.
+      read's bundles and the `reach report:` line for its sources_read. Which
+      reads must carry that line comes from the read records alone (rule round
+      62, item 6), so this report never fails validate.
 
 Only the standard library is used, as in the other public tools.
 """
@@ -249,6 +251,7 @@ GROUP_A_READ_SCHEMA = "ocd-group-a-read/2"
 ID_FREEZE_DATE = "2026-10-31"
 GROUP_A_EFFECTS = ("call_path", "display_only")
 # Rule round 61, item 3: a proceed read made from this day on faces its reach.
+# Rule round 62, item 6: whether it must show that is read from the record alone.
 REACH_FROM_DATE = "2026-11-06"
 REACH_LINE = "reach report:"
 REACH_CLASSES = {
@@ -1482,29 +1485,39 @@ def has_reach_line(read: dict[str, Any]) -> bool:
 
 
 def group_a_reach_problems(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]]) -> tuple[list[str], list[str]]:
-    """(refused, reported) of rule round 61, item 3. Each names a proceed read
-    without a reach report line whose value has google as its only family and
-    acts on a SIM of another entry: refused when read on or after
-    REACH_FROM_DATE, reported when older. An overlay-backed value is neither,
-    and the check never weighs a verdict: the line is all it asks for. The
-    reach itself is today's, so a read without a line that first gains another
-    entry's SIM in a later data update is refused then; any read may carry the
-    line, and one that does can never be."""
+    """(refused, reported) of rule round 61, item 3 and round 62, item 6. The
+    check never weighs a verdict: the line is all it asks for.
+
+    refused comes from READS alone, never from REACH, profiles.json or the lane:
+    a proceed read of a value, read on or after REACH_FROM_DATE, with google
+    among its families (a mixed google and overlay read too) and no reach report
+    line. So its answer is fixed when the read is written, whatever it acts on
+    that day, and no data update can fail validate through it. A nightly refresh
+    or publish would stop on that with nobody at the keyboard.
+
+    reported comes from REACH and fails nothing: an older read without the line
+    whose value has google as its only family and acts on a SIM of another
+    entry."""
+    refused = [
+        f"{path}: a proceed read of a value with google among its families, read on or after {REACH_FROM_DATE}, "
+        f"holds no line in sources_read that starts '{REACH_LINE}'; tools/ocd_dataset.py reach --read {Path(path).name} "
+        "gives it (rule round 61, item 3, and round 62, item 6)"
+        for path, read in sorted(reads.items())
+        if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA and read.get("verdict") == "proceed"
+        and read.get("subject") == "value" and str(read.get("read_at"))[:10] >= REACH_FROM_DATE
+        and FAMILY in (read.get("families") or []) and not has_reach_line(read)
+    ]
     foreign: dict[str, int] = defaultdict(int)
     for item in reach:
         for path in item["references"]:
             foreign[path] += sum(b["google_only"] and b["fill"] == "another_entry" for b in item["bundles"])
-    refused, reported = [], []
+    reported = []
     for path, count in sorted(foreign.items()):
         read = reads.get(path)
-        if not count or read is None or has_reach_line(read):
+        if not count or read is None or has_reach_line(read) or str(read.get("read_at"))[:10] >= REACH_FROM_DATE:
             continue
-        what = (f"{path}: a proceed read of a value whose only family is google acts on {count} bundle(s) on another entry's SIM, "
-                f"and sources_read holds no line that starts '{REACH_LINE}'")
-        if str(read.get("read_at"))[:10] >= REACH_FROM_DATE:
-            refused.append(f"{what}; tools/ocd_dataset.py reach --read {Path(path).name} gives it (rule round 61, item 3)")
-        else:
-            reported.append(what)
+        reported.append(f"{path}: a proceed read of a value whose only family is google acts on {count} bundle(s) on another entry's SIM, "
+                        f"and sources_read holds no line that starts '{REACH_LINE}'")
     return refused, reported
 
 

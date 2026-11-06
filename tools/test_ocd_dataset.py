@@ -935,15 +935,15 @@ class Round61ReachTest(unittest.TestCase):
 
     KEY = "rtt_supported_bool"
     PATH = "devices/records/reads/group-a/rtt_supported_bool.aaaaaaaaaaaa.json"
-    HOST = "open.00101.aaaaaaaaaaaa"
+    HOST = "open.99901.aaaaaaaaaaaa"
     MVNO_FILL = [{"entry": "mvno_zz", "when": None}]
     HOST_FILL = [{"entry": "host_zz", "when": None}]
     LANE = {"entries": {"default": {"values": {}}, "host_zz": {"values": {KEY: True}}, "mvno_zz": {"values": {}},
                         "plain_zz": {"values": {}}, "against_zz": {"values": {KEY: False}}}}
 
     def profile(self, suffix: str, match: dict, fill: list, values: dict | None = None, families: tuple = ("google",)) -> dict:
-        full = {"mccmnc": [{"mcc": "001", "mnc": "01"}], **match}
-        return {"id": f"open.00101.{suffix * 12}", "kind": "ocd", "name": "Test", "match": full, "specificity": ocd.specificity_of(full),
+        full = {"mccmnc": [{"mcc": "999", "mnc": "01"}], **match}
+        return {"id": f"open.99901.{suffix * 12}", "kind": "ocd", "name": "Test", "match": full, "specificity": ocd.specificity_of(full),
                 "fill": fill, "values": values or {}, "sources": {k: list(families) for k in values or {}}, "alternatives": {}, "apn_rows": 0}
 
     def host(self, fill: list | None = None, families: tuple = ("google",)) -> dict:
@@ -955,7 +955,7 @@ class Round61ReachTest(unittest.TestCase):
     def reach(self, members: list, lane: dict | None = None, **read) -> tuple[list, list, list]:
         """(the report, refused, reported) for one read of the host's value."""
         profiles = tiny_profiles({}, [])
-        profiles["networks"] = {"001-01": {"mcc": "001", "mnc": "01", "profiles": sorted(members, key=ocd.stack_order)}}
+        profiles["networks"] = {"999-01": {"mcc": "999", "mnc": "01", "profiles": sorted(members, key=ocd.stack_order)}}
         record = group_a_read(**{"families": ["google"], "profiles": [self.HOST], "read_at": "2026-11-06T00:00:00Z", **read})
         lane = lane or self.LANE
         served, _ = ocd.group_a_documents("sha256:" + "0" * 64, profiles, lane, {self.PATH: record})
@@ -981,16 +981,34 @@ class Round61ReachTest(unittest.TestCase):
         for line in ("reach report:", "reach report:   ", "see the reach report: 1 bundles"):
             self.assertEqual(len(self.reach([self.host(), self.mvno()], sources_read=[*sources, line])[1]), 1, line)
 
-    def test_a_profile_with_only_its_own_fill_passes(self) -> None:
+    def test_a_dated_google_read_with_no_line_is_refused_with_0_foreign_bundles(self) -> None:
+        """Rule round 62, item 6: the answer does not wait for the reach."""
         own = [{"entry": "plain_zz", "when": None}]
         report, refused, reported = self.reach([self.host(own)])
         self.assertEqual([b["fill"] for b in report[0]["bundles"]], ["own"])  # it acts, on its own SIMs
-        self.assertEqual((refused, reported), ([], []))
+        self.assertEqual((len(refused), reported), (1, []))
+        # It acts on nothing at all: the lane serves the value by itself.
+        lane = {"entries": {**self.LANE["entries"], "mvno_zz": {"values": {self.KEY: True}}}}
+        report, refused, reported = self.reach([self.host(), self.mvno()], lane)
+        self.assertEqual(sum(len(i["bundles"]) for i in report), 0)
+        self.assertEqual((len(refused), reported), (1, []))
 
-    def test_an_overlay_backed_value_passes(self) -> None:
+    def test_a_dated_google_read_with_the_line_passes_with_0_foreign_bundles(self) -> None:
+        own = [{"entry": "plain_zz", "when": None}]
+        self.assertEqual(self.reach([self.host(own)], sources_read=["reach report: 1 bundles"])[1:], ([], []))
+
+    def test_a_mixed_google_and_overlay_read_needs_the_line(self) -> None:
         families = ("google", "lineageos_device_overlays")
         report, refused, reported = self.reach([self.host(families=families), self.mvno()], families=list(families))
         self.assertEqual([(b["fill"], b["google_only"]) for b in report[0]["bundles"]], [("another_entry", False)])
+        self.assertEqual((len(refused), reported), (1, []))
+        lined = self.reach([self.host(families=families), self.mvno()], families=list(families), sources_read=["reach report: 1 bundles"])
+        self.assertEqual(lined[1:], ([], []))
+
+    def test_a_read_with_no_google_family_passes(self) -> None:
+        families = ("lineageos_device_overlays",)
+        report, refused, reported = self.reach([self.host(families=families), self.mvno()], families=list(families))
+        self.assertEqual(len(report[0]["bundles"]), 1)
         self.assertEqual((refused, reported), ([], []))
 
     def test_a_read_dated_before_the_day_is_reported_only(self) -> None:
@@ -998,6 +1016,33 @@ class Round61ReachTest(unittest.TestCase):
         self.assertEqual(refused, [])
         self.assertEqual(len(reported), 1)
         self.assertIn(self.PATH, reported[0])
+
+    def test_a_data_change_that_gives_an_older_read_a_foreign_sim_fails_nothing(self) -> None:
+        own = [{"entry": "plain_zz", "when": None}]
+        older = "2026-11-05T23:59:59Z"
+        self.assertEqual(self.reach([self.host(own)], read_at=older)[1:], ([], []))
+        _, refused, reported = self.reach([self.host(), self.mvno()], read_at=older)
+        self.assertEqual((refused, len(reported)), ([], 1))
+
+    def test_the_refusal_has_no_input_but_the_reads(self) -> None:
+        """Rule round 62, item 6: any reach gives the same refused list, and the
+        call never needs profiles.json or the lane."""
+        record = group_a_read(families=["google"], profiles=[self.HOST], read_at="2026-11-06T00:00:00Z")
+        older = group_a_read(families=["google"], profiles=[self.HOST])
+        reads = {self.PATH: record, "older.json": older}
+        foreign = [{"references": [self.PATH, "older.json"], "bundles": [{"google_only": True, "fill": "another_entry"}]}]
+        none: list = []
+        own = [{"references": [self.PATH], "bundles": [{"google_only": True, "fill": "own"}]}]
+        answers = [ocd.group_a_reach_problems(reach, reads)[0] for reach in (foreign, none, own)]
+        self.assertEqual(len(answers[0]), 1)
+        self.assertEqual(answers[0], answers[1])
+        self.assertEqual(answers[0], answers[2])
+
+    def test_only_a_proceed_read_of_a_value_can_be_refused(self) -> None:
+        dated = {"families": ["google"], "read_at": "2026-11-06T00:00:00Z"}
+        for changes in ({"verdict": "hold"}, {"subject": "key"}, {"schema": "another/1"}):
+            self.assertEqual(ocd.group_a_reach_problems([], {self.PATH: group_a_read(**dated, **changes)})[0], [], changes)
+        self.assertEqual(ocd.group_a_reach_problems([], {"x.json": ["not a record"]})[0], [])
 
     def test_a_hold_read_is_outside_the_report(self) -> None:
         """A hold serves nothing, and the round's own hold records carry this date."""
@@ -1015,7 +1060,7 @@ class Round61ReachTest(unittest.TestCase):
         self.assertEqual([b["class"] for b in report[0]["bundles"]], ["google_default_other"])
         # The lane serving the value by itself is no reach: no read is needed there.
         lane = {"entries": {**self.LANE["entries"], "mvno_zz": {"values": {self.KEY: True}}}}
-        self.assertEqual(self.reach([self.host(), self.mvno()], lane), ([], [], []))
+        self.assertEqual(self.reach([self.host(), self.mvno()], lane, sources_read=["reach report: 0 bundles"]), ([], [], []))
 
 
 class Round31WithheldTest(unittest.TestCase):
