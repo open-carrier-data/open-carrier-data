@@ -75,6 +75,14 @@
     {
       "apn": "ims",
       "name": "Simple IMS",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "Simple IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
@@ -86,14 +94,6 @@
       "name": "Simple IMS",
       "protocol": "IPV6",
       "roaming_protocol": "IP",
-      "types": [
-        "ims"
-      ]
-    },
-    {
-      "apn": "ims",
-      "name": "Simple IMS",
-      "protocol": "IPV6",
       "types": [
         "ims"
       ]
@@ -121,6 +121,15 @@
       "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
       "name": "service",
       "protocol": "IPV4V6",
+      "types": [
+        "mms"
+      ]
+    },
+    {
+      "apn": "service",
+      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
+      "name": "service",
+      "protocol": "IPV4V6",
       "roaming_protocol": "IPV4V6",
       "types": [
         "mms"
@@ -137,12 +146,11 @@
       ]
     },
     {
-      "apn": "service",
-      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
-      "name": "service",
+      "apn": "simple",
+      "name": "TFWAP",
       "protocol": "IPV4V6",
       "types": [
-        "mms"
+        "default"
       ]
     },
     {
@@ -195,6 +203,15 @@
       "types": [
         "default",
         "xcap"
+      ]
+    },
+    {
+      "apn": "simple",
+      "mmsc": "http://TF.mmsmvno.com/mms/wapenc",
+      "name": "Simple MMS",
+      "protocol": "IPV4V6",
+      "types": [
+        "mms"
       ]
     },
     {

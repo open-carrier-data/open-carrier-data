@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:cce9f086b4d9e1d19d692c6dcee6337108f7af5306cdd739b7e962daccc5adf0
+    data_digest: sha256:ebc9b929021757da250e3b0866271117559d4b03c041b14b8d0720a6f62db01c
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -3270,13 +3270,14 @@
   <apn apn="xcap.kenamobile.it" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="XCAP" carrier_id="2511" mcc="222" mnc="07" protocol="IPV4V6" type="xcap" />
   <apn apn="apn.fastweb.it" carrier="apn.fastweb.it" carrier_id="2416" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="apn.fastweb.it" authtype="0" carrier="apn.fastweb.it" carrier_enabled="true" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" protocol="IP" roaming_protocol="IP" type="mms,supl" />
-  <apn apn="apn.fastweb.it" carrier="Fastweb" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" type="default" />
+  <apn apn="apn.fastweb.it" carrier="apn.fastweb.it" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" type="default,mms" />
   <apn apn="apn.fastweb.it" carrier="FW WEB" mcc="222" mnc="08" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="apn.fastweb.it" authtype="0" carrier="FW WEB" carrier_enabled="true" mcc="222" mnc="08" protocol="IP" roaming_protocol="IP" type="default" />
   <apn apn="apn.fastweb.it" carrier="FW WEB" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="apn.fastweb.it" carrier="Fastweb" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IP" type="default,dun" />
   <apn apn="apn.fastweb.it" carrier="FW WEB" carrier_id="2416" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ia" />
   <apn apn="apn.fastweb.it" carrier="apn.fastweb.it" carrier_id="2416" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" type="mms,supl" />
+  <apn apn="apn.fastweb.it" carrier="FW MMS" mcc="222" mmsc="http://mms.fastweb.it/mms/wapenc" mmsport="8080" mmsproxy="85.18.189.217" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" authtype="0" carrier="FW IMS" carrier_enabled="true" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="222" mnc="08" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -11534,6 +11535,7 @@
   <apn apn="fast.t-mobile.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="T-Mobile US" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="260" mtu="1440" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" type="default,ia,mms,supl,xcap" user_editable="false" />
   <apn apn="tracfone-wfm" carrier="Family Mobile" mcc="310" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IP" type="default,xcap" />
   <apn apn="tracfone-wfm" carrier="Family Mobile" mcc="310" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="default,xcap" />
+  <apn apn="tracfone-wfm" carrier="Family Mobile" mcc="310" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="alpha" carrier="TFW" mcc="310" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="web.omwtoday.com" carrier="Family Mobile" mcc="310" mmsc="http://wirelessfour.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="4d4b" mvno_type="gid" type="default,mms,supl" />
   <apn apn="service" carrier="service" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
@@ -11543,6 +11545,7 @@
   <apn apn="tracfone-wfm" carrier="WalMart Family Mobile MMS" mcc="310" mmsc="http://wirelessfour.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IP" type="mms" />
   <apn apn="tracfone-wfm" carrier="WalMart Family Mobile MMS" mcc="310" mmsc="http://wirelessfour.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="mms" />
   <apn apn="TMUS" bearer_bitmask="18" carrier="T-Mobile MMS" carrier_id="2022" mcc="310" mmsc="http://mms.msg.eng.t-mobile.com/mms/wapenc" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="mms,xcap" />
+  <apn apn="tracfone-wfm" carrier="WalMart Family Mobile MMS" mcc="310" mmsc="http://wirelessfour.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="T-Mobile US IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="WalMart Family Mobile IMS" mcc="310" mnc="260" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="ims" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|20" carrier="T-Mobile US IMS" mcc="310" mnc="260" mtu="1440" mvno_match_data="4D4B" mvno_type="gid" protocol="IPV6" type="ims" user_visible="false" />
@@ -11567,6 +11570,7 @@
   <apn apn="simple" carrier="Simple Mobile" mcc="310" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="simple" carrier="Simple Mobile" mcc="310" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="default,xcap" />
   <apn apn="simple" carrier="simple" mcc="310" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IP" type="default,xcap" />
+  <apn apn="simple" carrier="TFWAP" mcc="310" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="simple" carrier="SIMPLE" carrier_id="2078" mcc="310" mmsc="http://smpl.mms.msg.eng.t-mobile.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,fota,hipri,ia,mms,supl" />
   <apn apn="simple" carrier="SIMPLE" carrier_id="2022" mcc="310" mmsc="http://smpl.mms.msg.eng.t-mobile.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" type="default,fota,hipri,mms,supl" />
   <apn apn="simple" carrier="Simple" mcc="310" mmsc="http://smpl.mms.msg.eng.t-mobile.com/mms/wapenc" mnc="260" mvno_match_data="534d" mvno_type="gid" type="default,mms,supl" />
@@ -11574,6 +11578,7 @@
   <apn apn="simple" carrier="Simple MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IP" type="mms" />
   <apn apn="simple" carrier="Simple MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="simple" carrier="Simple MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="mms" />
+  <apn apn="simple" carrier="Simple MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="service" carrier="service" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="service" carrier="service" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="service" carrier="TFW" mcc="310" mmsc="http://tf.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="534D" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
@@ -12198,9 +12203,11 @@
   <apn apn="wap.tracfone" carrier="TFWAP" mcc="310" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IP" type="default,xcap" />
   <apn apn="wap.tracfone" carrier="TFWAP" mcc="310" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="default,xcap" />
   <apn apn="wap.tracfone" carrier="TFWAP" carrier_id="2022" mcc="310" mmsc="http://mms.tracfone.com" mnc="260" mvno_match_data="deff" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,fota,hipri,ia,mms,supl" />
+  <apn apn="wap.tracfone" carrier="TFWAP" mcc="310" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="wap.tracfone" carrier="Straight Talk" mcc="310" mmsc="http://mms.tracfone.com" mnc="260" mvno_match_data="deff" mvno_type="gid" port="8080" type="default,mms,supl" />
   <apn apn="wap.tracfone" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="Tracfone" carrier_id="10001" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" type="default,mms,supl" />
   <apn apn="wap.tracfone" carrier="Tracfone - T Mobile MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IPV6" roaming_protocol="IP" type="mms" />
+  <apn apn="wap.tracfone" carrier="Tracfone - T Mobile MMS" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="service" bearer_bitmask="18" carrier="service" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" type="mms" user_visible="false" />
   <apn apn="service" carrier="service" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="service" bearer_bitmask="18" carrier="service" carrier_id="10001" mcc="310" mmsc="http://TF.mmsmvno.com/mms/wapenc" mnc="260" mvno_match_data="DEFF" mvno_type="gid" type="mms" />
@@ -13364,10 +13371,12 @@
   <apn apn="VZWADMIN" bearer_bitmask="14" carrier="Gci FOTA" mcc="310" mnc="430" mvno_match_data="gci" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="VZWADMIN" bearer_bitmask="13" carrier="Gci FOTA" mcc="310" mnc="430" mvno_match_data="gci" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="internet.vedge.com" carrier="Viaero Connect" carrier_id="1193" mcc="310" mnc="450" type="default,ia,supl" />
-  <apn apn="internet.vedge.com" carrier="internet.vedge.com" mcc="310" mnc="450" protocol="IP" type="default,supl" />
+  <apn apn="internet.vedge.com" carrier="Viaero Internet" mcc="310" mnc="450" protocol="IPV4V6" type="default" />
+  <apn apn="internet.vedge.com" carrier="Viaero Internet" mcc="310" mnc="450" protocol="IP" type="default,supl" />
   <apn apn="internet.vedge.com" carrier="Viero" mcc="310" mnc="450" port="9401" proxy="10.168.3.23" type="default,supl" />
   <apn apn="mms" carrier="Viaero MMS" carrier_id="1193" mcc="310" mmsc="http://mms.viaero.com" mmsport="9401" mmsproxy="10.168.3.23" mnc="450" type="mms" />
   <apn apn="mms" carrier="Viaero MMS" mcc="310" mmsc="http://mms.viaero.com" mmsport="9401" mmsproxy="10.168.3.23" mnc="450" protocol="IP" type="mms" />
+  <apn apn="mms" carrier="Viaero MMS" mcc="310" mmsc="http://mms.viaero.com" mmsport="9401" mmsproxy="10.168.3.23" mnc="450" protocol="IPV4V6" type="mms" />
   <apn apn="mms" carrier="Viero MMS" mcc="310" mmsc="http://mms.viero.com" mmsport="9401" mmsproxy="10.168.3.23" mnc="450" type="mms" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS" mcc="310" mnc="450" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" carrier="Viaero IMS" mcc="310" mnc="450" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
@@ -27346,6 +27355,7 @@
   <apn apn="mms.ideasclaro" carrier="mms.ideasclaro" mcc="708" mmsc="http://10.6.32.27/servlets/mms" mmsport="8080" mmsproxy="10.6.32.2" mnc="00" type="mms" />
   <apn apn="internet.ideasclaro" carrier="Internet Claro" carrier_id="773" mcc="708" mnc="001" type="default,ia,supl" />
   <apn apn="internet.ideasclaro" carrier="internet.ideasclaro" mcc="708" mnc="001" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="web.digicelsv.com" carrier="Internet Claro" mcc="708" mnc="001" protocol="IPV4V6" type="default" />
   <apn apn="mms.ideasclaro" carrier="MMS Claro" carrier_id="773" mcc="708" mmsc="http://10.6.32.27/servlets/mms" mmsport="8080" mmsproxy="10.6.32.2" mnc="001" type="mms" />
   <apn apn="mms.ideasclaro" carrier="mms.ideasclaro" mcc="708" mmsc="http://10.6.32.27/servlets/mms" mmsport="8080" mmsproxy="10.6.32.2" mnc="001" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="708" mnc="001" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -28020,6 +28030,7 @@
   <apn apn="ims" carrier="IMS" mcc="730" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS Claro CL" mcc="730" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="IMS Claro CL" carrier_id="1427" mcc="730" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="IMS" mcc="730" mnc="01" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="ims" carrier="entel" mcc="730" mnc="01" protocol="IPV6" type="ims" />
   <apn apn="bam.entelpcs.cl" authtype="1" carrier="Internet Movil" mcc="730" mnc="01" password="entelpcs" protocol="IPV4V6" type="supl" user="entelpcs" />
   <apn apn="imovil.entelpcs.cl" carrier="imovil.entelpcs.cl" mcc="730" mnc="01" password="entelpcs" type="supl" user="entelpcs" />
@@ -28102,6 +28113,7 @@
   <apn apn="mms.entelpcs.cl" carrier="MMS Entel PCS" mcc="730" mmsc="http://mmsc.entelpcs.cl" mmsport="8080" mmsproxy="10.99.0.10" mnc="10" password="entelmms" type="mms" user="entelpcs" />
   <apn apn="mms.entelpcs.cl" carrier="MMS EPCS" mcc="730" mmsc="http://mmsc.entelpcs.cl" mmsport="8080" mmsproxy="10.99.0.10" mnc="10" password="entelpcs" type="mms" user="entelmms" />
   <apn apn="ims" carrier="IMS" mcc="730" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="IMS" mcc="730" mnc="10" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="ims" carrier="entel" mcc="730" mnc="10" protocol="IPV6" type="ims" />
   <apn apn="bam.entelpcs.cl" authtype="1" carrier="Internet Movil" mcc="730" mnc="10" password="entelpcs" protocol="IPV4V6" type="supl" user="entelpcs" />
   <apn apn="imovil.entelpcs.cl" carrier="imovil.entelpcs.cl" mcc="730" mnc="10" password="entelpcs" type="supl" user="entelpcs" />
@@ -28250,6 +28262,7 @@
   <apn apn="internetmovil.etb.net.co" carrier="ETB" mcc="732" mnc="187" type="dun" />
   <apn apn="internetmovil.etb.net.co" authtype="0" carrier="internetmovil.etb.net.co" mcc="732" mnc="187" type="default,supl" />
   <apn apn="internet.wom.co" carrier="Internet WOM" carrier_id="626" mcc="732" mnc="360" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl" />
+  <apn apn="internet.wom.co" carrier="WOM Vo4G" mcc="732" mnc="360" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="internet.wom.co" carrier="internet.wom.co" mcc="732" mnc="360" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="ims" carrier="WOM Vo4G" carrier_id="626" mcc="732" mnc="360" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="ims" mcc="732" mnc="360" mtu="1500" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -28413,8 +28426,8 @@
   <apn apn="internet.tigo.py" authtype="1" carrier="internet.tigo.py" mcc="744" mnc="04" type="supl" />
   <apn apn="xcap" carrier="IMS XCAP" mcc="744" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="sos" carrier="EMERGENCY TIGO PY" mcc="744" mnc="04" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" />
-  <apn apn="internet" authtype="1" carrier="internet" mcc="744" mnc="05" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="internet" authtype="1" carrier="Personal Datos Py" carrier_id="1928" mcc="744" mnc="05" password="personal" type="default,ia,supl" user="personal" />
+  <apn apn="internet" authtype="1" carrier="internet" mcc="744" mnc="05" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="internet" authtype="1" carrier="internet" mcc="744" mnc="05" type="supl" />
   <apn apn="internet" authtype="1" carrier="Personal Datos Py" mcc="744" mnc="05" password="personal" type="default,supl" user="personal" />
   <apn apn="mms" authtype="1" carrier="Personal MMS Py" carrier_id="1928" mcc="744" mmsc="http://mms" mmsport="8080" mmsproxy="172.16.192.7" mnc="05" password="mms" type="mms" user="mms" />
