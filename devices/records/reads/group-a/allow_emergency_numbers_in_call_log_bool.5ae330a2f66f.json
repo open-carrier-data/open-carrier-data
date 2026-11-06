@@ -9,7 +9,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "allow_emergency_numbers_in_call_log_bool",
-  "notes": "Proceed: the key leaves group A. Its single consumer decides only whether Telecom writes a finished emergency call into the call log (and therefore whether the missed-call notification and redial suggestions see it). No component involved in placing, routing, holding or calling back an emergency, TTY, RTT or priority call, or in emergency SMS, reads the call log or this key on LineageOS 23.2 with the AOSP ImsStack, and the 24.0 phone build carries the key only in Telecom's service jar.",
+  "notes": "Proceed: the key leaves group A. Its single consumer decides only whether Telecom writes a finished emergency call into the call log (and therefore whether the missed-call notification and redial suggestions see it). No component involved in placing, routing, holding or calling back an emergency, TTY, RTT or priority call, or in emergency SMS, reads the call log or this key on LineageOS 23.2 with the AOSP ImsStack, and the 24.0 phone build carries the key only in Telecom's service jar. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
   "profiles": [],
   "read_at": "2026-10-28T19:04:37Z",
   "reader": "independent group A reader (Claude subagent, not the value's builder)",

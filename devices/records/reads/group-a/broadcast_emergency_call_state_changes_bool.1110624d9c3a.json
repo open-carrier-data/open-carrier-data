@@ -9,7 +9,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "broadcast_emergency_call_state_changes_bool",
-  "notes": "Hold: the key stays in group A. Although it only gates a broadcast, the platform's Wi-Fi stack acts on that broadcast during the emergency call (hotspot off, Wi-Fi commands dropped, optional Wi-Fi shutdown), and any app can receive it, which is exactly the 'broadcast that other apps act on' case in the ruling. It is dormant on today's phone build (domain selection off, Wi-Fi overlay false), but that is a property of the current build, not of the key.",
+  "notes": "Hold: the key stays in group A. Although it only gates a broadcast, the platform's Wi-Fi stack acts on that broadcast during the emergency call (hotspot off, Wi-Fi commands dropped, optional Wi-Fi shutdown), and any app can receive it, which is exactly the 'broadcast that other apps act on' case in the ruling. It is dormant on today's phone build (domain selection off, Wi-Fi overlay false), but that is a property of the current build, not of the key. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
   "profiles": [],
   "read_at": "2026-10-28T19:04:37Z",
   "reader": "independent group A reader (Claude subagent, not the value's builder)",

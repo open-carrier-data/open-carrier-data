@@ -9,7 +9,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "ims_reasoninfo_mapping_string_array",
-  "notes": "Proceed. The value is a subset of the Google-lane value; the only difference is a call-log label for incoming calls answered elsewhere. The basis is AOSP's DOCOMO carrier config.",
+  "notes": "Proceed. The value is a subset of the Google-lane value; the only difference is a call-log label for incoming calls answered elsewhere. The basis is AOSP's DOCOMO carrier config. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
   "profiles": [
     "open.44010.b85efa52ac89"
   ],
