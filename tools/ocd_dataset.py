@@ -33,8 +33,8 @@ docs/ocd-dataset.md explains them for consumers.
       digests, strict parse, closed and typed keys, specificity, network
       copies, APN version, APN index), the conflict checker of rule round 45
       (no tie up to the profile ID with served values that differ), the
-      device-record rules, the privacy guard, and a regeneration that must
-      give the same bytes. With
+      device-record rules, the privacy guard, the reach check of rule round
+      61 (item 3), and a regeneration that must give the same bytes. With
       --base-manifest (main's manifest, on a pull request), a changed dataset
       must carry a later generated_at. Exit 1 on a problem.
   match --mcc MCC --mnc MNC [--spn S] [--imsi I] [--gid1 G] [--gid2 G] [--iccid I]
@@ -47,6 +47,11 @@ docs/ocd-dataset.md explains them for consumers.
       that the resolution order (rule round 45) puts apart only by profile
       ID: the tie report, with what such a SIM is served differently. Exit 1
       when any is served differently (validate fails on the same).
+  reach [--root DIR] [--read FILE] [--json]
+      What each proceed group A item acts on (rule round 61, item 3): the
+      bundles whose value comes only through the read, by class, each on the
+      owner profile's own fill or on another entry's SIM. --read FILE lists one
+      read's bundles and the `reach report:` line for its sources_read.
 
 Only the standard library is used, as in the other public tools.
 """
@@ -243,6 +248,15 @@ GROUP_A_READ_SCHEMA = "ocd-group-a-read/2"
 # later stores the match-set hash it was made under.
 ID_FREEZE_DATE = "2026-10-31"
 GROUP_A_EFFECTS = ("call_path", "display_only")
+# Rule round 61, item 3: a proceed read made from this day on faces its reach.
+REACH_FROM_DATE = "2026-11-06"
+REACH_LINE = "reach report:"
+REACH_CLASSES = {
+    "no_google_entry": "no Google entry",
+    "own_entry_silent": "own entry silent",
+    "google_default_other": "Google default another value",
+    "own_entry_other": "own entry another value",
+}
 GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 # Rule round 56, item 1: the evidence flag on a value whose every supporting
 # observation is an overlay block no LineageOS build applied. No read reaches
@@ -1246,22 +1260,27 @@ def build_registry(inputs: Inputs, records: list[dict[str, Any]], declared: dict
 # ---------------------------------------------------------------- group A reads (round 31, emergencyValues)
 
 
-def google_variants(profile: dict[str, Any], entries: dict[str, Any]) -> list[dict[str, Any]]:
+def google_fill_variants(profile: dict[str, Any], entries: dict[str, Any]) -> list[tuple[str | None, dict[str, Any]]]:
     """The Google-lane bundles (steps 2 and 3) a SIM that PROFILE serves on
-    this network copy can get: `default` with each fill entry in order, and
-    `default` alone when no fill item may hold. A fill entry the lane lacks
-    is skipped, as the reader does."""
+    this network copy can get, each with its fill entry: `default` with each
+    fill entry in order, and `default` alone (None) when no fill item may
+    hold. A fill entry the lane lacks is skipped, as the reader does."""
     default = entries.get("default", {}).get("values", {})
-    out = []
+    out: list[tuple[str | None, dict[str, Any]]] = []
     for item in profile["fill"]:
         entry = entries.get(item["entry"])
         if entry is None:
             continue
-        out.append({**default, **entry["values"]})
+        out.append((item["entry"], {**default, **entry["values"]}))
         if item["when"] is None:
             return out
-    out.append(dict(default))
+    out.append((None, dict(default)))
     return out
+
+
+def google_variants(profile: dict[str, Any], entries: dict[str, Any]) -> list[dict[str, Any]]:
+    """google_fill_variants' bundles alone."""
+    return [bundle for _, bundle in google_fill_variants(profile, entries)]
 
 
 def group_a_keys(profiles: dict[str, Any]) -> set[str]:
@@ -1388,6 +1407,134 @@ def group_a_unapplied_problems(read: dict[str, Any], where: str, unapplied: set[
     if not marked:
         return []
     return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS or Sony Open Devices build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; unapplied_on_sony_build, rule round 58; no_open_reader_match, rule round 57)"]
+
+
+def group_a_reach(profiles: dict[str, Any], lane: dict[str, Any] | None, reads_document: dict[str, Any]) -> list[dict[str, Any]]:
+    """What each proceed item of READS_DOCUMENT (group-a-reads.json) acts on
+    (rule round 61, item 3). A read names the profile that owns a value, but
+    the value reaches every bundle stacked on that profile, and R31.7 admits it
+    wherever the bundle's Google value differs. A reader who sees only the
+    owner does not see those SIMs.
+
+    One item per key, owner and value, with its `bundles`: each profile variant
+    (profile_stack, then google_fill_variants) that gets the value only through
+    the read. `class` is one of REACH_CLASSES. `fill` is `own` when the bundle's
+    entry is an unconditional fill entry of the owner, else `another_entry`; a
+    SIM with no entry counts as another's. `google_only` says the value's only
+    source family there is google."""
+    entries = (lane or {}).get("entries", {})
+    default = entries.get("default", {}).get("values", {})
+    items: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for read in reads_document["reads"]:
+        if read["verdict"] != "proceed":
+            continue
+        item = items.setdefault((read["key"], read["profile_id"], compact(read["value"])), {
+            "key": read["key"], "value": read["value"], "profile_id": read["profile_id"], "families": set(), "references": set(), "bundles": []})
+        item["families"].add(read["family"])
+        item["references"].add(read["reference"])
+    keys = {key for key, _, _ in items}
+    owners = {profile_id for _, profile_id, _ in items}
+    for network_key, network in sorted(profiles["networks"].items()):
+        members = network["profiles"]
+        if not any(p["id"] in owners for p in members):
+            continue
+        for profile in members:
+            carried: dict[str, dict[str, Any]] = {}
+            for q in profile_stack(members, profile, network["mcc"] + network["mnc"]):
+                carried.update({key: q for key in q["values"] if key in keys})
+            variants = dict(google_fill_variants(profile, entries))  # an entry two fill items name is one bundle
+            for key, owner in carried.items():
+                text = compact(owner["values"][key])
+                families = set(owner["sources"].get(key, []))
+                item = items.get((key, owner["id"], text))
+                if item is None or not item["families"] & families:
+                    continue
+                own = {i["entry"] for i in owner["fill"] if i["when"] is None}
+                for entry, bundle in variants.items():
+                    if key in bundle and compact(bundle[key]) == text:
+                        continue  # the lane serves this value by itself
+                    if entry is None:
+                        kind = "no_google_entry"
+                    elif key in entries[entry]["values"]:
+                        kind = "own_entry_other"
+                    elif key in default:
+                        kind = "google_default_other"
+                    else:
+                        kind = "own_entry_silent"
+                    item["bundles"].append({"network": network_key, "profile_id": profile["id"], "entry": entry, "class": kind,
+                                            "fill": "own" if entry in own else "another_entry", "google_only": families == {FAMILY}})
+    return [{**item, "families": sorted(item["families"]), "references": sorted(item["references"])}
+            for _, item in sorted(items.items())]
+
+
+def reach_counts(bundles: list[dict[str, Any]]) -> str:
+    """BUNDLES of the reach report in words, within sources_read's 600 characters."""
+    classes = ", ".join(f"{word} {sum(b['class'] == name for b in bundles)}" for name, word in REACH_CLASSES.items())
+    other = sum(b["fill"] == "another_entry" for b in bundles)
+    return f"{len(bundles)} bundle(s): {classes}; {other} on another entry's SIM, {len(bundles) - other} on the profile's own fill"
+
+
+def has_reach_line(read: dict[str, Any]) -> bool:
+    """Whether sources_read holds a reach report line. Only its presence
+    counts: the numbers stay as the reader wrote them, so a later data update
+    cannot fail validate through them."""
+    return any(isinstance(s, str) and s.startswith(REACH_LINE) and s[len(REACH_LINE):].strip() for s in read.get("sources_read") or [])
+
+
+def group_a_reach_problems(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]]) -> tuple[list[str], list[str]]:
+    """(refused, reported) of rule round 61, item 3. Each names a proceed read
+    without a reach report line whose value has google as its only family and
+    acts on a SIM of another entry: refused when read on or after
+    REACH_FROM_DATE, reported when older. An overlay-backed value is neither,
+    and the check never weighs a verdict: the line is all it asks for. The
+    reach itself is today's, so a read without a line that first gains another
+    entry's SIM in a later data update is refused then; any read may carry the
+    line, and one that does can never be."""
+    foreign: dict[str, int] = defaultdict(int)
+    for item in reach:
+        for path in item["references"]:
+            foreign[path] += sum(b["google_only"] and b["fill"] == "another_entry" for b in item["bundles"])
+    refused, reported = [], []
+    for path, count in sorted(foreign.items()):
+        read = reads.get(path)
+        if not count or read is None or has_reach_line(read):
+            continue
+        what = (f"{path}: a proceed read of a value whose only family is google acts on {count} bundle(s) on another entry's SIM, "
+                f"and sources_read holds no line that starts '{REACH_LINE}'")
+        if str(read.get("read_at"))[:10] >= REACH_FROM_DATE:
+            refused.append(f"{what}; tools/ocd_dataset.py reach --read {Path(path).name} gives it (rule round 61, item 3)")
+        else:
+            reported.append(what)
+    return refused, reported
+
+
+def print_reach(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]], wanted: str | None) -> int:
+    """The reach CLI: the totals and one line per read, or with WANTED one
+    read's bundles and the line for its sources_read."""
+    if wanted is not None:
+        items = [i for i in reach if any(Path(path).name == wanted for path in i["references"])]
+        if not items:
+            print(f"error: no proceed item comes from a read named {wanted}; a new read needs tools/ocd_dataset.py generate first", file=sys.stderr)
+            return 1
+        bundles = [b for item in items for b in item["bundles"]]
+        for b in bundles:
+            print(f"{b['network']} {b['profile_id']} {b['entry'] or '(no Google entry)'}: {REACH_CLASSES[b['class']]}, {b['fill']}")
+        print(f"{REACH_LINE} {reach_counts(bundles)} (tools/ocd_dataset.py reach --read {wanted})")
+        return 0
+    acting = [i for i in reach if i["bundles"]]
+    print(f"{len(reach)} items (one per key, owner and value), {len(acting)} act on a bundle: {reach_counts([b for i in reach for b in i['bundles']])}")
+    only = [{**i, "bundles": [b for b in i["bundles"] if b["google_only"]]} for i in acting]
+    only = [i for i in only if i["bundles"]]
+    paths = sorted({path for i in only for path in i["references"]})
+    print(f"google as the only family: {len(paths)} reads, {len({i['key'] for i in only})} keys, {len(only)} items, "
+          f"{reach_counts([b for i in only for b in i['bundles']])}")
+    refused, reported = group_a_reach_problems(reach, reads)
+    for path in paths:
+        bundles = [b for i in only if path in i["references"] for b in i["bundles"]]
+        line = "line present" if has_reach_line(reads.get(path, {})) else "no line"
+        print(f"  {Path(path).name}: {reach_counts(bundles)}; {line}")
+    print(f"{len(refused)} read(s) refused, {len(reported)} older read(s) reported, not failed")
+    return 0
 
 
 def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
@@ -2197,8 +2344,10 @@ def registry_and_value_problems(parsed: dict[str, Any]) -> list[str]:
     return out[:200]
 
 
-def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate: bool = True) -> list[str]:
-    """Every rule the dataset of ROOT must keep; an empty list when it does."""
+def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate: bool = True,
+             notes: list[str] | None = None) -> list[str]:
+    """Every rule the dataset of ROOT must keep; an empty list when it does.
+    NOTES, when given, takes what is reported without failing."""
     out: list[str] = []
     files: dict[str, bytes] = {}
     for role, (name, path, _) in FILES.items():
@@ -2287,6 +2436,11 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
         out += schema_check(root, read_json_file(group_a_path), "ocd-dataset-group-a-reads.schema.json", GROUP_A_READS_FILE)
     if (root / GROUP_A_PENDING_FILE).is_file():
         out += schema_check(root, read_json_file(root / GROUP_A_PENDING_FILE), "ocd-dataset-group-a-pending.schema.json", GROUP_A_PENDING_FILE)
+    if group_a_path.is_file() and not out:
+        refused, reported = group_a_reach_problems(group_a_reach(parsed["profiles"], lane, read_json_file(group_a_path)), reads)
+        out += refused
+        if notes is not None:
+            notes += reported
     listed_roles = {entry["role"] for entry in parsed["manifest"]["files"]}
     if ("group_a_reads" in listed_roles) != LIST_GROUP_A_READS:
         out.append(f"manifest.json: group_a_reads is {'not ' if LIST_GROUP_A_READS else ''}listed; this tool's LIST_GROUP_A_READS says otherwise")
@@ -2522,6 +2676,10 @@ def main(argv: list[str] | None = None) -> int:
     mat.add_argument("--specific-carrier-id", type=int, default=-1)
     tie = sub.add_parser("ties")
     tie.add_argument("--root", type=Path, default=TOOLS.parent)
+    rea = sub.add_parser("reach")
+    rea.add_argument("--root", type=Path, default=TOOLS.parent)
+    rea.add_argument("--read", help="one read's file name: its bundles and its reach report line")
+    rea.add_argument("--json", action="store_true", help="the whole report as JSON")
     args = parser.parse_args(argv)
     try:
         if args.command == "generate":
@@ -2549,9 +2707,12 @@ def main(argv: list[str] | None = None) -> int:
             base = None
             if args.base_manifest and args.base_manifest.is_file() and args.base_manifest.stat().st_size:
                 base = read_json_file(args.base_manifest)
-            problems = validate(args.root, base, regenerate=not args.no_regenerate)
+            notes: list[str] = []
+            problems = validate(args.root, base, regenerate=not args.no_regenerate, notes=notes)
             for problem in problems:
                 print(f"error: {problem}", file=sys.stderr)
+            for note in notes:
+                print(f"note: {note}")
             if not problems:
                 manifest = read_json_file(args.root / FILES["manifest"][1])
                 print(f"ocd dataset: valid, {manifest['counts']}, {manifest['dataset_digest']}")
@@ -2575,6 +2736,13 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{len(report)} tie(s) up to the profile ID, {conflicting} served differently; pairs one SIM can match, "
                   "by the step that orders them: " + ", ".join(f"{step} {counts[step]}" for step in ORDER_STEPS))
             return 1 if conflicting else 0
+        if args.command == "reach":
+            data = load_dataset_dir(args.root)
+            report = group_a_reach(data["profiles"], data["lane"], read_json_file(args.root / GROUP_A_READS_FILE))
+            if args.json:
+                print(json.dumps(report, indent=2, ensure_ascii=False))
+                return 0
+            return print_reach(report, read_record_sources(args.root)[1], args.read)
     except DatasetError as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
