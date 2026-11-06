@@ -1,5 +1,42 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "csprefer"
+    },
+    "ims": {
+      "contacts_operator_style": "EVR",
+      "support_ims_clir_overriding": true
+    },
+    "network_policy": {
+      "display_antenna_limited": true,
+      "gcf_sor": true,
+      "network_selection_menu_style": "NUMERIC",
+      "network_type_capability": "EUR-EUR-GSM-EUR"
+    },
+    "operator_display": {
+      "five_g_icon_branding": "5GAvailable",
+      "five_g_icon_configuration": [
+        "connected_mmwave:5G",
+        "connected:5G",
+        "not_restricted_rrc_idle:5G",
+        "not_restricted_rrc_con:5G"
+      ],
+      "refer_eons_without_lac": true
+    },
+    "wifi_calling": {
+      "operator_branding": "EE",
+      "show_vowifi_end_call": true
+    }
+  },
   "android_apns": [
+    {
+      "apn": "EEZONE",
+      "name": "EEZONE",
+      "protocol": "IP",
+      "types": [
+        "xcap"
+      ]
+    },
     {
       "apn": "broadband.t-mobile.uk",
       "name": "T-Mobile Broadband",
@@ -16,7 +53,7 @@
       "mmsc": "http://mms/",
       "mmsport": 8080,
       "mmsproxy": "149.254.201.135",
-      "name": "EE MMS",
+      "name": "eezone",
       "password": "secure",
       "types": [
         "mms"
@@ -26,7 +63,7 @@
     {
       "apn": "everywhere",
       "authtype": 1,
-      "name": "EE Internet",
+      "name": "everywhere",
       "password": "secure",
       "protocol": "IPV4V6",
       "roaming_protocol": "IP",
@@ -88,6 +125,23 @@
       "name": "Virgin UK MMS",
       "types": [
         "mms"
+      ]
+    },
+    {
+      "apn": "ims",
+      "name": "ims",
+      "protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "sos",
+      "name": "EE Emergency",
+      "protocol": "IPV6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "emergency"
       ]
     }
   ],
