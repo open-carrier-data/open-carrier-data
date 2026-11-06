@@ -1,0 +1,58 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Rule round 58, item 3. The value is new on this profile. Until round 58, Sony's comma list said true on this code, it conflicted with this false, and the key was left out (evidence index at public de9ade94: conflict, omitted_from_stable). The list left with item 1, so the false became the profile's own value. It comes from one LineageOS bundle of two device trees: android_device_fairphone_FP4 block 118 (vendor.xml:2631, commit edcae39b) and android_device_fairphone_FP5 block 123 (vendor.xml:2825, commit 5ad1d4a2). Both blocks name mcc 240 and mnc 01 and nothing narrower, and the SHA-256 of both files fetched at those commits equals the candidates' source hashes. Both files are byte-equal at lineage-24.0 today, and the lane dates the block 2024-05-10. FP6 says the same for this operator through cid 1690 (CarrierConfigResCommon_Sys vendor.xml:1676), a selector the lane does not take. The other 15 LineageOS bundles on this code leave the key unset, and the evidence index names no other source for it now. The Google lane's telia_se leaves the key unset, and its only entry that sets the key anywhere is jazztel_es. So this is the same key, value and family as read 4ab268623714, from the same Fairphone files it read, and the same kind of source: each file's default block already says false, and 51 blocks on FP4 and 55 on FP5 turn it to true for a network, 240-06, 240-07 and 240-08 among them, but not 240-01. That makes the false a choice in a Qualcomm device file, and these blocks also hold vendor keys such as config_update_volte_icon. Whether Telia asked for it is not known, because no Telia or Qualcomm document was read. It is plausible that a CS-first setting suits a phone whose modem still handles IMS, as read 4ab268623714 says, but nobody here read that modem code, so that part stays assumed. It does not decide this read: what decides it is this phone's stack, below.",
+    "effect": "Read again in the tree, not taken from 4ab268623714, and the same result. GsmCdmaPhone.java equals LineageOS lineage-24.0 with 0 lines of difference. The domain selection service is off here: config_domain_selection_service_component_name is empty (config.xml:393), and nothing in device/samsung, vendor/lineage or vendor/extra overlays it, so no EXTRA_DIAL_DOMAIN exists (GsmCdmaPhone.java:1349-1378) and the legacy path decides. On that path the key has one reader, GsmCdmaPhone.useImsForEmergency() (:1243-1252): the key and a ready ImsPhone (isImsAvailable, which needs the service and no registration) and TTY allowing VoLTE. dial() takes it at :1337 and goes to IMS when useImsForCall or useImsForEmergency is true (:1422-1424). A failed IMS dial falls back to CS for an emergency call (:1434-1437). If ImsStack fails the emergency start, its default action asks for a CS retry (EmergencyStartErrorHandler.cpp:139-140, the same in the ocd fork fd360f32), and Telephony redials on CS. The same gate decides the redial on IMS when the modem answers a CS emergency call with EMC_REDIAL_ON_IMS or EMC_REDIAL_ON_VOWIFI (GsmCdmaCallTracker.java:1319, 1449-1459). So false changes nothing while IMS is registered for voice and VoLTE or Wi-Fi calling is on, because useImsForCall still carries the call. In every other state, false means the call is only tried on CS, and the modem's redial cause is dropped. ImsStack never reads the key, and neither does device/samsung or vendor/extra. On a phone: no proceed read exists, so admitted returns null, the Google lane has no value, and the key is removed, which gives Android's default true (Serving.kt:410-421, 424-441; CarrierConfigManager.java:11864). A hold changes none of that.",
+    "risk": "The LTE-only finding of 4ab268623714, answered for this network. 240-01 is not LTE-only today, so that finding cannot simply be copied here. Telia keeps 2G until the end of 2027 (Telekomradgivarna, page of 2025-10-23; PTS, 2025-11-21, says until 2027). Its 3G was due to close by the end of 2025, which that page implies and no Telia page confirmed. So today a CS-only call has Telia's 2G wherever that layer reaches, and the usual harm is the delay of leaving LTE, not a certain failure. 2G coverage was not measured, and neither was how long the modem takes to find a cell. The harm remains in three cases. Where LTE reaches and 2G does not, a CS-only call can fail, and the modem's redial on IMS is dropped too, which leaves no working domain. With Wi-Fi as the only coverage, false removes the only path when Wi-Fi calling is registered but off or registration was lost. And the value has no end date, while the 2G layer does: after Telia closes it, 240-01 has no CS layer of its own, and the other Swedish operators are closing theirs too, so the finding then applies in full. PTS has also said, about the other operators' SIMs, that emergency roaming to Telia's 2G is not enough by itself. So the hold rests on this stack, not on the network being LTE-only: CS first means CS only here whenever IMS is not registered for voice. I found no state where false gives a call a path that true lacks, since true keeps the CS fallback. The cost of true is the time an IMS attempt takes before the CS retry, which nobody measured, because no test may place an emergency call."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "carrier_use_ims_first_for_emergency_bool",
+  "match_set_hashes": {
+    "open.24001.aa6951bda708": "aa6951bda708"
+  },
+  "notes": "Hold. Keep Android's default true on 240-01. This read cites 4ab268623714 and rests on the same stack finding, but not on its LTE-only example: Telia keeps 2G until the end of 2027, so 240-01 is not LTE-only today. With false, an emergency call placed while IMS is not registered for voice is tried on CS only and the modem's redial on IMS is dropped, so a place with LTE and no 2G can be left with no working domain, and the case grows when the 2G layer closes. Nothing here is measured on a phone or by an emergency call. Read 58816a637b45 stays in place and is about the value true, so this read does not touch it. A hold serves nothing through applyGroupA. The false stays visible as a published value in carriers/ and in generated/android/carrier-config-list.xml, whose header says it is not for ROM application. Redo this read if the value, its basis or the stack changes, and a proceed would need an answer to the cases above.",
+  "profiles": [
+    "open.24001.aa6951bda708"
+  ],
+  "read_at": "2026-11-06T03:37:27Z",
+  "reader": "independent group A reader (Claude subagent, not the value's builder)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round58/ruling.json (item 3-emergency-reads) and round58/record.md (Item 3)",
+    "devices/records/reads/group-a/carrier_use_ims_first_for_emergency_bool.4ab268623714.json (cited, findings risk and notes answered)",
+    "devices/records/reads/group-a/carrier_use_ims_first_for_emergency_bool.58816a637b45.json (left in place)",
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:1104-1109,11864",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaPhone.java:1235-1252,1337,1346-1378,1422-1437",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/GsmCdmaCallTracker.java:1319-1332,1449-1459",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhone.java:685-687",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java:1855-1861,3640-3670",
+    "frameworks/opt/telephony/src/java/com/android/internal/telephony/domainselection/DomainSelectionResolver.java:139-146",
+    "packages/services/Telephony/src/com/android/phone/PhoneGlobals.java:520-525",
+    "packages/services/Telephony/res/values/config.xml:393",
+    "packages/modules/ImsStack/native/libimsstack/enabler/mtc/call/termination/EmergencyStartErrorHandler.cpp:102-141, and the same lines in rom-repos/platform_packages_modules_ImsStack.git branch ocd (fd360f32)",
+    "grep of the key and of config_domain_selection over frameworks/base/telephony, frameworks/opt/telephony, packages/services/Telephony, packages/services/Telecomm, packages/modules/ImsStack, device/samsung, vendor/lineage, vendor/extra",
+    "LineageOS android_frameworks_opt_telephony lineage-24.0 through the GitHub API: GsmCdmaPhone.java whole-file diff against the 23.2 tree, 0 lines (the tree's manifest tracks lineage-24.0)",
+    "S20_Project/reports/S20 modem and radio interface study.md:47-67,264",
+    "Open_Carrier_Data/app-ocd-check/carriersettings/ocd/src/com/android/carriersettings/ocd/Serving.kt:410-441 (applyGroupA, admitted)",
+    "LineageOS android_device_fairphone_FP4 at edcae39b and lineage-24.0, overlay/CarrierConfigResCommon/res/xml/vendor.xml through the GitHub API: lines 7 (default block), 2631-2654 (240-01), SHA-256 equal to the candidate's source hash",
+    "LineageOS android_device_fairphone_FP5 at 5ad1d4a2 and lineage-24.0, overlay/CarrierConfigResCommon/res/xml/vendor.xml through the GitHub API: lines 7 (default block), 2825-2847 (240-01), SHA-256 equal to the candidate's source hash",
+    "LineageOS android_device_fairphone_FP6 at lineage-24.0, overlay/CarrierConfigResCommon_Sys/res/xml/vendor.xml through the GitHub API: line 1676 (cid 1690)",
+    "private main candidates/lineage-device-carrier-overlays/profiles-*.json: the 16 bundles on 240-01, one of them with this key",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round57/sony-run.md:70,92 and generated/evidence-index.json at public de9ade94 (the conflict that held this key back)",
+    "generated/ocd-dataset/profiles.json, google-lane.json, group-a-pending.json, generated/android/lookup.json, generated/android/carrier-config-list.xml, generated/evidence-index.json, carriers/open/24001.aa6951bda708.json at public main 62b49252",
+    "tools/profile_ids.py match_set_hash of the profile's match in lookup.json: aa6951bda708, counter 0, the ID's own hash as for all 108 entries of the reads on main",
+    "docs/consume.md:27,97 (PTS and networks without 2G or 3G voice)",
+    "robots.txt of telekomradgivarna.se, via.tt.se, pts.se, www.telia.se and forum.fairphone.com read first, none blocks these pages",
+    "telekomradgivarna.se/en/fragor-och-svar/when-will-the-2g-and-3g-networks-be-phased-out-and-who-is-responsible/ (last updated 2025-10-23)",
+    "via.tt.se/pressmeddelande/4154877 (PTS press release of 2025-11-21)",
+    "forum.fairphone.com thread 127883 (Fairphone and 112 over VoLTE in Sweden): no test of 112 and no statement on this key, so it supports nothing here"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "hold"
+}
