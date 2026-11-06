@@ -11,7 +11,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "carrier_use_ims_first_for_emergency_bool",
-  "notes": "Hold. On LineageOS 24.0 with the AOSP ImsStack and domain selection off, the key decides whether Telephony tries IMS for an emergency call whenever IMS is not registered for voice. The false value comes from Qualcomm device overlays where the modem's own IMS still handles a CS emergency dial. On this phone that does not happen, so false removes the IMS attempt and the IMS retry. It can leave an emergency call with no working domain on LTE-only networks such as FET in Taiwan. Keep serving the Google lane / Android default (true) for all 17 profiles.",
+  "notes": "Hold. On LineageOS 24.0 with the AOSP ImsStack and domain selection off, the key decides whether Telephony tries IMS for an emergency call whenever IMS is not registered for voice. The false value comes from Qualcomm device overlays where the modem's own IMS still handles a CS emergency dial. On this phone that does not happen, so false removes the IMS attempt and the IMS retry. It can leave an emergency call with no working domain on LTE-only networks such as FET in Taiwan. Keep serving the Google lane / Android default (true) for all 17 profiles. Correction, 2026-11-06 (rule round 64, item 2): read, not run. The CS fallback this read names holds when IMS fails before Initiating, and after it only once the fix is on the phone. On build P a failure after Initiating ends with no CS retry. Sentences here that say IMS always falls back to CS are limited to that window. No verdict or value moves for this. read_at and findings stay as first written.",
   "profiles": [
     "open.20408.79d679c5823f",
     "open.20469.b3f8cd93525e",
