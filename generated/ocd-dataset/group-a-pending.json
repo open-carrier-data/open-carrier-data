@@ -1,4 +1,4 @@
-{"based_on_data_digest":"sha256:022bf1b4d91a31848df0ee4b064e54f1707e4e1103c1cdb0034e6444b2fdcc0e","key_reads":[
+{"based_on_data_digest":"sha256:cce9f086b4d9e1d19d692c6dcee6337108f7af5306cdd739b7e962daccc5adf0","key_reads":[
 {"effect":"display_only","key":"allow_emergency_numbers_in_call_log_bool","reference":"devices/records/reads/group-a/allow_emergency_numbers_in_call_log_bool.5ae330a2f66f.json","verdict":"proceed"},
 {"effect":"display_only","key":"always_show_emergency_alert_onoff_bool","reference":"devices/records/reads/group-a/always_show_emergency_alert_onoff_bool.c9c76e3a6cdd.json","verdict":"proceed"},
 {"effect":"call_path","key":"broadcast_emergency_call_state_changes_bool","reference":"devices/records/reads/group-a/broadcast_emergency_call_state_changes_bool.1110624d9c3a.json","verdict":"hold"},
@@ -6,7 +6,9 @@
 {"effect":"call_path","key":"hide_tty_hco_vco_with_rtt","reference":"devices/records/reads/group-a/hide_tty_hco_vco_with_rtt.d673aa43c5c5.json","verdict":"hold"},
 {"effect":"call_path","key":"ims_reasoninfo_mapping_string_array","reference":"devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.6dc7fbef894f.json","verdict":"hold"},
 {"effect":"call_path","key":"wfc_emergency_address_carrier_app_string","reference":"devices/records/reads/group-a/wfc_emergency_address_carrier_app_string.5b572e348fda.json","verdict":"hold"}
-],"left_group_a":["allow_emergency_numbers_in_call_log_bool","always_show_emergency_alert_onoff_bool"],"pending":[],"schema_version":1,"targets":[{"ims_stack":"aosp_imsstack","rom_family":"lineageos"}],"unrecorded_basis":[
+],"left_group_a":["allow_emergency_numbers_in_call_log_bool","always_show_emergency_alert_onoff_bool"],"pending":[
+{"families":["lineageos_device_overlays"],"ims_stack":"aosp_imsstack","key":"rtt_supported_bool","profiles":["open.313640.9f527c6a0ab6"],"rom_family":"lineageos","value":true}
+],"schema_version":1,"targets":[{"ims_stack":"aosp_imsstack","rom_family":"lineageos"}],"unrecorded_basis":[
 {"key":"allow_emergency_video_calls_bool","profile_id":"open.31001.2353d9a69eb5","reference":"devices/records/reads/group-a/allow_emergency_video_calls_bool.cc82c73b7b6a.json","value":true},
 {"key":"allow_emergency_video_calls_bool","profile_id":"open.31002.a546092fd5c4","reference":"devices/records/reads/group-a/allow_emergency_video_calls_bool.cc82c73b7b6a.json","value":true},
 {"key":"allow_emergency_video_calls_bool","profile_id":"open.31088.a1782402f7dc","reference":"devices/records/reads/group-a/allow_emergency_video_calls_bool.cc82c73b7b6a.json","value":true},
@@ -169,7 +171,6 @@
 {"key":"rtt_supported_bool","profile_id":"open.313340.ddf2d1cba364","reference":"devices/records/reads/group-a/rtt_supported_bool.3289cbfd36b7.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.313340.eea2e5badb96","reference":"devices/records/reads/group-a/rtt_supported_bool.3289cbfd36b7.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.313590.e2ea7b973bdb","reference":"devices/records/reads/group-a/rtt_supported_bool.28d099e3e833.json","value":true},
-{"key":"rtt_supported_bool","profile_id":"open.313640.9f527c6a0ab6","reference":"devices/records/reads/group-a/rtt_supported_bool.28d099e3e833.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.313930.1148ba0d021b","reference":"devices/records/reads/group-a/rtt_supported_bool.28d099e3e833.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.314090.db0807db01b4","reference":"devices/records/reads/group-a/rtt_supported_bool.7f5053825544.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.46019.1905d8ef05a4","reference":"devices/records/reads/group-a/rtt_supported_bool.b29292bf3263.json","value":true},
