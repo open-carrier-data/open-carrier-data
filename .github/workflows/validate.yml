@@ -123,6 +123,8 @@ jobs:
         run: python3 tools/test_diff_carrier_config.py
       - name: Test the device records validator
         run: python3 tools/test_validate_carrier_variants.py
+      - name: Test the digest chain and the refresh bot's use of it
+        run: python3 tools/test_digest_chain.py
       - name: Test the OCD Android report tool
         run: python3 tools/test_observed_reports.py
       - name: Test the OCD dataset (matcher vectors, selectors, generator, reader checks)

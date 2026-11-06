@@ -13,7 +13,11 @@ name: Refresh generated outputs on pull request branches
 #   rewrites the file;
 # - always regenerates with the branch's own tools:
 #   tools/generate_android_outputs.py, tools/f5_read.py publish from main's
-#   chain (never with --agent-read) and tools/ocd_dataset.py generate;
+#   chain (never with --agent-read), tools/ocd_dataset.py generate and
+#   tools/digest_chain.py stamp. The private publisher writes
+#   generated/devices/carrier-variants.json, so no generator rewrites its
+#   based_on_data_digest; the stamp does, and tools/digest_chain.py check stops
+#   the bot unless metadata, manifest and records name one digest;
 # - commits only generated/ changes, pushes with the built-in token and
 #   dispatches validate on the branch. That run takes accept lines only from
 #   the one open pull request whose head SHA is the run's
@@ -171,6 +175,10 @@ jobs:
           fi
           python3 tools/ocd_dataset.py generate --root . \
             || finish stopped "tools/ocd_dataset.py generate failed on the merged branch."
+          python3 tools/digest_chain.py stamp --root . \
+            || finish stopped "tools/digest_chain.py stamp failed on the merged branch."
+          python3 tools/digest_chain.py check --root . \
+            || finish stopped "metadata.json, the manifest and carrier-variants.json name different digests on the merged branch."
           outside="$(git status --porcelain --untracked-files=all | cut -c4- | grep -v '^generated/' || true)"
           if [ -n "$outside" ]; then
             finish stopped "The regeneration wrote outside generated/: $(tr '\n' ' ' <<< "$outside")"
