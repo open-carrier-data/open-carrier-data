@@ -545,18 +545,25 @@
     }
   ],
   "android_carrier_config": {
-    "allow_adding_apns_bool": true,
     "allow_emergency_video_calls_bool": true,
-    "apn_expand_bool": true,
-    "auto_retry_failed_wifi_emergency_call": true,
     "carrier_default_wfc_ims_enabled_bool": true,
     "carrier_default_wfc_ims_mode_int": 1,
     "carrier_default_wfc_ims_roaming_enabled_bool": true,
     "carrier_default_wfc_ims_roaming_mode_int": 2,
     "carrier_ims_gba_required_bool": true,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
+    "carrier_metered_roaming_apn_types_strings": [
+      "default",
+      "dun",
+      "supl",
+      "mms"
+    ],
     "carrier_supports_ss_over_ut_bool": true,
     "carrier_volte_available_bool": true,
-    "carrier_volte_provisioned_bool": true,
     "carrier_volte_tty_supported_bool": false,
     "carrier_vowifi_tty_supported_bool": false,
     "carrier_vt_available_bool": true,
@@ -566,7 +573,9 @@
     "enableMMSReadReports": true,
     "enabledMMS": true,
     "enhanced_4g_lte_on_by_default_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
     "hide_ims_apn_bool": true,
+    "ignore_data_enabled_changed_for_video_calls": false,
     "ims.enable_presence_capability_exchange_bool": true,
     "ims.enable_presence_publish_bool": true,
     "ims_reasoninfo_mapping_string_array": [
@@ -582,7 +591,6 @@
     "recipientLimit": 20,
     "rtt_supported_bool": true,
     "rtt_supported_while_roaming_bool": true,
-    "show_apn_setting_cdma_bool": true,
     "smsToMmsTextThreshold": 12,
     "support_video_conference_call_bool": true,
     "volte_replacement_rat_int": 3,
