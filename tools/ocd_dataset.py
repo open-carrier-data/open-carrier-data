@@ -248,8 +248,13 @@ GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 # observation is an overlay block no LineageOS build applied. No read reaches
 # proceed on such a value (group_a_unapplied_problems) and no proceed admits it
 # (group_a_documents), so its SIMs stay on the Google-lane value.
+# Rule round 57, item 2: the same for no_open_reader_match, the flag on a value
+# whose every supporting observation is an iccid block of the device overlays
+# or of Sony Open Devices, which no AOSP or LineageOS reader read matches.
 EVIDENCE_INDEX_FILE = "generated/evidence-index.json"
 UNAPPLIED_FLAG = "unapplied_on_lineage_build"
+NO_OPEN_READER_FLAG = "no_open_reader_match"
+REFUSED_READ_FLAGS = (UNAPPLIED_FLAG, NO_OPEN_READER_FLAG)
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
 # Whether the manifest lists group-a-reads.json as the role group_a_reads.
 # The round 31 readers (OcdCarrierSettings protocol 3, the OCD Android owner
@@ -1352,24 +1357,27 @@ def group_a_read_problems(read: Any, where: str) -> list[str]:
 
 
 def unapplied_values(root: Path) -> set[tuple[str, str]]:
-    """(profile, key) of every value the evidence index flags
-    unapplied_on_lineage_build. Empty when the index is not there."""
+    """(profile, key) of every CarrierConfig value the evidence index flags
+    unapplied_on_lineage_build or no_open_reader_match. Empty when the index is
+    not there."""
     path = root / EVIDENCE_INDEX_FILE
     if not path.is_file():
         return set()
     return {(profile["profile_id"], flag["key"]) for profile in read_json_file(path)["profiles"]
-            for flag in profile.get("flags", []) if flag["flag"] == UNAPPLIED_FLAG}
+            for flag in profile.get("flags", [])
+            if flag["flag"] in REFUSED_READ_FLAGS and flag["section"] == "android_carrier_config"}
 
 
 def group_a_unapplied_problems(read: dict[str, Any], where: str, unapplied: set[tuple[str, str]]) -> list[str]:
     """A proceed value read may not cover a value that rests only on blocks no
-    LineageOS build applied (rule round 56, item 1). A hold may."""
+    LineageOS build applied (rule round 56, item 1), or only on iccid blocks no
+    AOSP or LineageOS reader read matches (rule round 57, item 2). A hold may."""
     if read.get("subject") != "value" or read.get("verdict") != "proceed":
         return []
     marked = sorted(p for p in read.get("profiles") or [] if (p, read.get("key")) in unapplied)
     if not marked:
         return []
-    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS build applied (unapplied_on_lineage_build, rule round 56)"]
+    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; no_open_reader_match, rule round 57)"]
 
 
 def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
@@ -1398,7 +1406,8 @@ def group_a_documents(inputs_digest: str, profiles: dict[str, Any], lane: dict[s
     that left group A.
 
     UNAPPLIED is unapplied_values: a proceed read does not cover such a
-    value, which stays in pending (rule round 56, item 1)."""
+    value, which stays in pending (rule round 56, item 1; rule round 57,
+    item 2)."""
     registry = profiles["keys"]
     value_reads, key_reads = [], []
     for path, read in sorted(reads.items()):
