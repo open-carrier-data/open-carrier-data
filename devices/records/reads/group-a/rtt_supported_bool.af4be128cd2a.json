@@ -1,0 +1,46 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Re-read of round 60, ruled in rule round 61, item 2. Plain 310-240 and 310-260, with google as the only recorded family. Through read 76ac4b69f950 the plain value true reached 3 bundles whose own Google entry says false: fi_tmo_us and u264a_us on 310-240, and fi_tmo_us on 310-260. Every 2026 Google build read gives false for both entries, the newest dated 2026-10-15. Older vendor bundles vary, some of them unset, so this record claims the 2026 builds only. Read f235ca7b3aa5 is the matching Fi reading: there Google's own false for Fi stands against a Verizon value the lane would otherwise carry.",
+    "effect": "rtt_supported_bool (CarrierConfigManager.java:3418, default false at :12190). With true and ignore_rtt_mode_setting_bool at its default true (:11996), ImsManager.updateRttConfigValue provisions RTT on and keeps IMS turned on even when nothing else needs it (ImsManager.java:2756-2797, 1763-1785). ImsRegistrationTracker then adds TEXT beside each VOICE capability, using rtt_supported_while_roaming_bool when roaming (ImsRegistrationTracker.java:419-424, 585-598). AosHandleEmergencyMtc adds TEXT to the emergency registration whenever the key is true, with no roaming or network check (AosHandleEmergencyMtc.cpp:45-63). AosCondition.IsDeregRequiredForTty deregisters in TTY mode only when RTT is off, VoLTE TTY is off and the phone is combined-attached (AosCondition.cpp:998-1031). AosRegistration.UpdateNetworkFeatureRtt marks TEXT unavailable on a normal registration the network does not confirm (AosRegistration.cpp:1210-1245). A call type is cut down to the registered features (CallTypeUtil.cpp:24-66), and a voice call stays audio only (MtcMediaUtil.cpp:74-92, IdleState.cpp:550-552). Emergency TTY routing reads carrier_volte_tty_supported_bool, not this key (EmergencyCallDomainSelector.java:755-756, 1168-1169, 2045-2057). Telephony's own gate needs R.bool.config_support_rtt, which is false on 23.2 and on lineage-24.0 (config.xml:235, no overlay in the x1s device trees), so isRttSupported and isRttEnabled are false and the PhoneAccount has no RTT capability (PhoneInterfaceManager.java:7995-8035, TelecomAccountRegistry.java:1128-1154). Telecom still creates RTT streams for an emergency call when the calling app asks for RTT (CallsManager.java:2650-2662). ImsManager.java at android-17.0.0_r1 equals the tree. On a phone: admitted only for the most specific profile that sets the key, else the Google-lane value, else Android's default false (Serving.kt:405-440).",
+    "risk": "No harm was found. Served true, the plain T-Mobile profile's value won over Google's explicit false with no read of those SIMs. From holding, the phone reads Google's false on the 3 bundles, which is also Android's default. SIMs with the fill tmobile_us keep true from the Google lane. rtt_supported_while_roaming_bool stays as it is in this merge: it is inert once this key is false, and a hold there would change SIMs nobody read. Read cbb4ccfd78f3 is not changed here, and its 3 Fi bundles go to round 61's roaming reader."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_supported_bool",
+  "match_set_hashes": {
+    "open.310240.25c6dcd2afb6": "25c6dcd2afb6",
+    "open.310260.f201405c108e": "f201405c108e"
+  },
+  "notes": "Not admitted on this stack: on these 3 bundles the phone reads Google's own false, which is also Android's default. No harm was found, and nothing shows these networks lack RTT. The hold rests on missing basis, and it is no fact about the networks. SIMs with the fill tmobile_us still read true.",
+  "profiles": [
+    "open.310240.25c6dcd2afb6",
+    "open.310260.f201405c108e"
+  ],
+  "read_at": "2026-11-06T08:02:28Z",
+  "reader": "independent re-reader of round 60 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "frameworks/base/telephony/java/android/telephony/CarrierConfigManager.java:3418,11996,12190",
+    "frameworks/opt/net/ims/src/java/com/android/ims/ImsManager.java:1763-1785,2756-2797",
+    "packages/modules/ImsStack/java/src/com/android/imsstack/imsservice/mmtel/ImsRegistrationTracker.java:421,585 (branch ocd :422,:586)",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/handle/AosHandleEmergencyMtc.cpp:56-59, byte-identical in branch ocd",
+    "packages/modules/ImsStack/native/libimsstack/enabler/aos/condition/AosCondition.cpp:1029",
+    "packages/services/Telephony/res/values/config.xml:235",
+    "packages/services/Telephony/src/com/android/phone/PhoneInterfaceManager.java:8007",
+    "packages/services/Telecomm/src/com/android/server/telecom/CallsManager.java:2650-2662",
+    "app-ocd-check Serving.kt:410-421,431 at b93d5f5, carriersettings/overlay/res/values/config.xml:5, CarrierConfigService.kt",
+    "devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json and rtt_supported_bool.4ac6fb36a86e.json",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round60/reread-76ac4b69f950.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/ruling.json (item 2-google-false)",
+    "devices/records/reads/group-a/rtt_supported_bool.f235ca7b3aa5.json",
+    "generated/ocd-dataset/google-lane.json entries fi_tmo_us, u264a_us and tmobile_us"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}
