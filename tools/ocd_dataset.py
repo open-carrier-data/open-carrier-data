@@ -251,10 +251,14 @@ GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 # Rule round 57, item 2: the same for no_open_reader_match, the flag on a value
 # whose every supporting observation is an iccid block of the device overlays
 # or of Sony Open Devices, which no AOSP or LineageOS reader read matches.
+# Rule round 58, item 6: the same for unapplied_on_sony_build, the flag on a
+# value whose every supporting observation is a Sony Open Devices block whose
+# build loses the mnc's leading zero.
 EVIDENCE_INDEX_FILE = "generated/evidence-index.json"
 UNAPPLIED_FLAG = "unapplied_on_lineage_build"
+UNAPPLIED_SONY_FLAG = "unapplied_on_sony_build"
 NO_OPEN_READER_FLAG = "no_open_reader_match"
-REFUSED_READ_FLAGS = (UNAPPLIED_FLAG, NO_OPEN_READER_FLAG)
+REFUSED_READ_FLAGS = (UNAPPLIED_FLAG, UNAPPLIED_SONY_FLAG, NO_OPEN_READER_FLAG)
 GROUP_A_PENDING_FILE = f"{DATASET_DIR}/group-a-pending.json"
 # Whether the manifest lists group-a-reads.json as the role group_a_reads.
 # The round 31 readers (OcdCarrierSettings protocol 3, the OCD Android owner
@@ -609,11 +613,13 @@ def value_implies(kind: str, w: str, v: str) -> bool:
     raise ValueError(kind)
 
 
-def compute_fill(match: dict[str, Any], network_rules: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def compute_fill(match: dict[str, Any], network_rules: list[dict[str, Any]], name: str | None = None) -> list[dict[str, Any]]:
     """The ordered Google-lane fill list of one profile on one network: the
     network's rules in file order; a rule without MVNO data ends the list;
     a compatible MVNO rule is appended with its condition, or without one,
-    ending the list, when the profile's values imply it."""
+    ending the list, when the profile's values imply it. A profile that pins
+    iccid and no spn also takes a Google spn rule whose value equals its name,
+    with the condition, and the list goes on (rule round 58, item 5)."""
     fill: list[dict[str, Any]] = []
     for rule in network_rules:
         mvno = rule["mvno"]
@@ -622,6 +628,9 @@ def compute_fill(match: dict[str, Any], network_rules: list[dict[str, Any]]) -> 
             break
         kind, value = mvno["kind"], mvno["value"]
         own = match.get(KIND_DIMENSION[kind])
+        if not own and kind == "spn" and match.get("iccid_prefixes") and name and java_equals_ignore_case(name, value):
+            fill.append({"entry": rule["canonical_name"], "when": {"kind": kind, "value": value}})
+            continue
         if not own or not any(values_overlap(kind, w, value) for w in own):
             continue
         if all(value_implies(kind, w, value) for w in own):
@@ -1358,8 +1367,8 @@ def group_a_read_problems(read: Any, where: str) -> list[str]:
 
 def unapplied_values(root: Path) -> set[tuple[str, str]]:
     """(profile, key) of every CarrierConfig value the evidence index flags
-    unapplied_on_lineage_build or no_open_reader_match. Empty when the index is
-    not there."""
+    unapplied_on_lineage_build, unapplied_on_sony_build or
+    no_open_reader_match. Empty when the index is not there."""
     path = root / EVIDENCE_INDEX_FILE
     if not path.is_file():
         return set()
@@ -1370,14 +1379,15 @@ def unapplied_values(root: Path) -> set[tuple[str, str]]:
 
 def group_a_unapplied_problems(read: dict[str, Any], where: str, unapplied: set[tuple[str, str]]) -> list[str]:
     """A proceed value read may not cover a value that rests only on blocks no
-    LineageOS build applied (rule round 56, item 1), or only on iccid blocks no
-    AOSP or LineageOS reader read matches (rule round 57, item 2). A hold may."""
+    LineageOS build applied (rule round 56, item 1), only on Sony blocks that
+    lose the mnc's leading zero (rule round 58, item 6), or only on iccid blocks
+    no AOSP or LineageOS reader read matches (rule round 57, item 2). A hold may."""
     if read.get("subject") != "value" or read.get("verdict") != "proceed":
         return []
     marked = sorted(p for p in read.get("profiles") or [] if (p, read.get("key")) in unapplied)
     if not marked:
         return []
-    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; no_open_reader_match, rule round 57)"]
+    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS or Sony Open Devices build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; unapplied_on_sony_build, rule round 58; no_open_reader_match, rule round 57)"]
 
 
 def group_a_read_id(reference: str, profile_id: str, family: str) -> str:
@@ -1783,7 +1793,7 @@ def build_profiles(
             key = f"{network['mcc']}-{network['mnc']}"
             slot = networks.setdefault(key, {"mcc": network["mcc"], "mnc": network["mnc"], "profiles": []})
             copy = dict(profile)
-            copy["fill"] = compute_fill(profile["match"], rules_by_network.get(key, []))
+            copy["fill"] = compute_fill(profile["match"], rules_by_network.get(key, []), profile.get("name"))
             slot["profiles"].append(copy)
     for slot in networks.values():
         slot["profiles"].sort(key=stack_order)

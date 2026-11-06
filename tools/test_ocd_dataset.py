@@ -229,6 +229,19 @@ class PrimitivesTest(unittest.TestCase):
         self.assertEqual(ocd.compute_fill({"gid1_prefixes": ["010300"]}, rules), [{"entry": "a", "when": None}])
         self.assertEqual(ocd.compute_fill({"spn": ["x"]}, rules), [{"entry": "b", "when": None}])
         self.assertEqual(ocd.compute_fill({}, rules[:2]), [])
+        # Rule round 58, item 5: a profile that pins iccid and no spn takes an
+        # spn rule whose value equals its name, with the condition, and the
+        # list goes on, so a SIM without that SPN stays where it was.
+        iccid = {"iccid_prefixes": ["99901"]}
+        self.assertEqual(ocd.compute_fill(iccid, rules, "x"),
+                         [{"entry": "b", "when": {"kind": "spn", "value": "X"}}, {"entry": "c", "when": None}])
+        self.assertEqual(ocd.compute_fill(iccid, rules), [{"entry": "c", "when": None}])
+        self.assertEqual(ocd.compute_fill(iccid, rules, "other name"), [{"entry": "c", "when": None}])
+        # No iccid, or an spn of its own: the name decides nothing.
+        self.assertEqual(ocd.compute_fill({}, rules, "x"), [{"entry": "c", "when": None}])
+        self.assertEqual(ocd.compute_fill({"iccid_prefixes": ["99901"], "spn": ["y"]}, rules, "x"), [{"entry": "c", "when": None}])
+        self.assertEqual(ocd.pick_fill(ocd.compute_fill(iccid, rules, "x"), {"spn": "X"}), "b")
+        self.assertEqual(ocd.pick_fill(ocd.compute_fill(iccid, rules, "x"), {"spn": "Y"}), "c")
         fill = [{"entry": "a", "when": {"kind": "gid1", "value": "0103"}}, {"entry": "c", "when": None}]
         self.assertEqual(ocd.pick_fill(fill, {"gid1": "0103aa"}), "a")
         self.assertEqual(ocd.pick_fill(fill, {"gid1": "0103aa"}, {"c"}), "c")  # an entry the lane lacks is skipped
@@ -852,6 +865,24 @@ class Round31GroupATest(unittest.TestCase):
         served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: read}, None, carried)
         self.assertEqual(served["reads"], [])
         self.assertEqual([p["key"] for p in status["pending"]], ["rtt_supported_bool"])
+
+    def test_a_value_resting_only_on_unapplied_sony_blocks_gets_no_proceed(self) -> None:
+        """Rule round 58, item 6: the refusal reads Sony's flag too. A hold
+        stays recorded, and it serves nothing."""
+        profile = "open.99901.000000000000"
+        where = "devices/records/reads/group-a/rtt_supported_bool.000000000003.json"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "generated").mkdir()
+            (root / ocd.EVIDENCE_INDEX_FILE).write_text(json.dumps({"profiles": [
+                {"profile_id": profile, "flags": [
+                    {"section": "android_carrier_config", "key": "rtt_supported_bool", "flag": "unapplied_on_sony_build"}]}]}), encoding="utf-8")
+            marked = ocd.unapplied_values(root)
+        self.assertEqual(marked, {(profile, "rtt_supported_bool")})
+        refused = ocd.group_a_unapplied_problems(group_a_read(profiles=[profile]), where, marked)
+        self.assertEqual(len(refused), 1)
+        self.assertIn("unapplied_on_sony_build", refused[0])
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
 
     def test_unapplied_values_come_from_the_evidence_index(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
