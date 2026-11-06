@@ -12,7 +12,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "call_forwarding_blocks_while_roaming_string_array",
-  "notes": "Proceed. The value blocks only '*71'/'*72' forwarding codes while roaming without IMS voice. The check runs on the emergency dial path too, but no emergency number, WPS prefix or TTY/RTT number can start with these prefixes. The basis is the AOSP Verizon/Xfinity carrier config and Google's CarrierSettings for Verizon-network operators. Read on the LineageOS 23.2 tree; this path has not changed in years, so 24.0 should read the same.",
+  "notes": "Proceed. The value blocks only '*71'/'*72' forwarding codes while roaming without IMS voice. The check runs on the emergency dial path too, but no emergency number, WPS prefix or TTY/RTT number can start with these prefixes. The basis is the AOSP Verizon/Xfinity carrier config and Google's CarrierSettings for Verizon-network operators. Read on the LineageOS 23.2 tree; this path has not changed in years, so 24.0 should read the same. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
   "profiles": [
     "open.310012.debc4502ecb5",
     "open.310591.4143bd6a5b07",

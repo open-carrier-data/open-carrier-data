@@ -12,7 +12,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "ims_reasoninfo_mapping_string_array",
-  "notes": "Proceed. Against the Google lane the only change is one entry the ImsStack already applies itself; against the 510-only lane the added entries are Verizon multi-device and Wi-Fi labels that no emergency, TTY, RTT or WPS path reads. The basis is AOSP and Samsung Verizon-family config.",
+  "notes": "Proceed. Against the Google lane the only change is one entry the ImsStack already applies itself; against the 510-only lane the added entries are Verizon multi-device and Wi-Fi labels that no emergency, TTY, RTT or WPS path reads. The basis is AOSP and Samsung Verizon-family config. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
   "profiles": [
     "open.20404.254ec306a250",
     "open.310012.debc4502ecb5",
