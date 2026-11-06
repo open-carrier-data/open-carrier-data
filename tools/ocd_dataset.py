@@ -1521,6 +1521,18 @@ def group_a_reach_problems(reach: list[dict[str, Any]], reads: dict[str, dict[st
     return refused, reported
 
 
+def listed_no_item(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]]) -> list[tuple[str, int]]:
+    """Per proceed value read, how many profiles it lists without an item (rule
+    round 62, item 4). A report only: such a listing admits nothing today, and
+    it wakes with no read if a family is later recorded."""
+    owners: dict[str, set[str]] = defaultdict(set)
+    for item in reach:
+        for path in item["references"]:
+            owners[path].add(item["profile_id"])
+    return [(path, len(set(read["profiles"]) - owners[path])) for path, read in sorted(reads.items())
+            if read.get("schema") == GROUP_A_READ_SCHEMA and read.get("subject") == "value" and read.get("verdict") == "proceed"]
+
+
 def print_reach(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]], wanted: str | None) -> int:
     """The reach CLI: the totals and one line per read, or with WANTED one
     read's bundles and the line for its sources_read."""
@@ -1547,6 +1559,8 @@ def print_reach(reach: list[dict[str, Any]], reads: dict[str, dict[str, Any]], w
         line = "line present" if has_reach_line(reads.get(path, {})) else "no line"
         print(f"  {Path(path).name}: {reach_counts(bundles)}; {line}")
     print(f"{len(refused)} read(s) refused, {len(reported)} older read(s) reported, not failed")
+    for path, count in listed_no_item(reach, reads):
+        print(f"  {Path(path).name}: listed, no item: {count}")
     return 0
 
 
@@ -1877,6 +1891,17 @@ def evidence_sources(evidence: dict[str, Any]) -> dict[str, dict[str, list[str]]
     return out
 
 
+def value_sources(values: dict[str, Any], facts: dict[str, list[str]], whole: list[str], group_a: set[str]) -> dict[str, list[str]]:
+    """The source families of a profile's VALUES. The evidence index keeps a
+    fact_sources entry only for a fact whose sources differ from the whole
+    profile's (FACTS); a fact without an entry rests on every source of the
+    profile (WHOLE). Rule round 62, item 4: only group A code reads these
+    families, so a group A key takes that fallback and no other key does: a
+    wider one has every phone download about 14 percent more for values
+    nothing reads, and needs its own ruling."""
+    return {key: facts.get(key) or whole for key in sorted(values) if facts.get(key) or (whole and key in group_a)}
+
+
 def lane_rules_by_network(lane: dict[str, Any] | None) -> dict[str, list[dict[str, Any]]]:
     out: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for rule in (lane or {}).get("rules", []):
@@ -1888,6 +1913,8 @@ def build_profiles(
     inputs: Inputs, registry: dict[str, dict[str, Any]], apn_counts: dict[str, int], carriers: dict[str, dict[str, Any]]
 ) -> tuple[dict[str, Any], dict[str, int]]:
     sources = evidence_sources(inputs.evidence)
+    whole_sources = {p["profile_id"]: sorted({SOURCE_FAMILY_NAMES.get(s, s) for s in p.get("sources", [])}) for p in inputs.evidence.get("profiles", [])}
+    group_a = {key for key, meta in registry.items() if meta["group"] == "A"} | set(GROUP_A_NAMES)
     rules_by_network = lane_rules_by_network(inputs.lane)
     base: dict[str, dict[str, Any]] = {}
     ocd_by_network: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -1911,10 +1938,10 @@ def build_profiles(
             "match": match,
             "specificity": specificity_of(match),
             "values": values,
-            # The evidence index names the families behind a value only where
-            # observations give exactly that value; a value without such an
-            # entry has no sources listed here.
-            "sources": {key: own_sources[key] for key in sorted(values) if own_sources.get(key)},
+            # The evidence index lists the families behind a value only where
+            # they differ from the whole profile's; a value without an entry
+            # rests on every source of the profile (value_sources).
+            "sources": value_sources(values, own_sources, whole_sources.get(profile_id, []), group_a),
             "alternatives": {},
             "apn_rows": apn_counts.get(profile_id, 0),
         }

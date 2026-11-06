@@ -8,13 +8,16 @@ on this repository's dataset, and the device-record rules."""
 from __future__ import annotations
 
 import copy
+import io
 import json
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from types import SimpleNamespace
 from unittest import mock
 
 import ocd_dataset as ocd
@@ -1061,6 +1064,78 @@ class Round61ReachTest(unittest.TestCase):
         # The lane serving the value by itself is no reach: no read is needed there.
         lane = {"entries": {**self.LANE["entries"], "mvno_zz": {"values": {self.KEY: True}}}}
         self.assertEqual(self.reach([self.host(), self.mvno()], lane, sources_read=["reach report: 0 bundles"]), ([], [], []))
+
+
+class Round62WakeTest(unittest.TestCase):
+    """Rule round 62, item 4: a group A value with no fact_sources entry rests
+    on every source of its profile, and a family that appears wakes nothing a
+    read did not list. Network and selectors are made up."""
+
+    KEY = "rtt_supported_bool"
+    ID = "open.00101.aaaaaaaaaaaa"
+    PATH = "devices/records/reads/group-a/rtt_supported_bool.aaaaaaaaaaaa.json"
+    REGISTRY = {"rtt_supported_bool": {"type": "bool", "group": "A", "origin": ["google"], "fork": None},
+                "carrier_volte_available_bool": {"type": "bool", "group": None, "origin": ["google"], "fork": None}}
+    LANE = {"rules": [], "entries": {"default": {"values": {}}}}
+
+    def built(self, whole: list, facts: list | None = None) -> dict:
+        """profiles.json for one profile whose evidence is WHOLE and FACTS."""
+        entry = {"profile_id": self.ID, "display_name": "Test", "path": "carriers/open/test.json", "match": {"mccmnc": ["00101"]}}
+        evidence = {"profiles": [{"profile_id": self.ID, "sources": whole, "fact_sources": facts or []}]}
+        inputs = SimpleNamespace(evidence=evidence, lookup={"profiles": [entry]}, lane=self.LANE, data_digest="sha256:" + "0" * 64)
+        carriers = {self.ID: {"android_carrier_config": {self.KEY: True, "carrier_volte_available_bool": True}}}
+        document, _ = ocd.build_profiles(inputs, self.REGISTRY, {}, carriers)
+        return document
+
+    def sources(self, document: dict) -> dict:
+        return document["networks"]["001-01"]["profiles"][0]["sources"]
+
+    def documents(self, document: dict, **read) -> tuple[dict, dict]:
+        reads = {self.PATH: group_a_read(**{"families": ["google"], "profiles": [self.ID], **read})}
+        return ocd.group_a_documents("sha256:" + "0" * 64, document, self.LANE, reads)
+
+    def test_a_no_entry_value_gets_the_profile_sources(self) -> None:
+        self.assertEqual(self.sources(self.built(["google_carriersettings"])), {self.KEY: ["google"]})
+
+    def test_only_group_a_takes_the_fallback(self) -> None:
+        self.assertNotIn("carrier_volte_available_bool", self.sources(self.built(["google_carriersettings"])))
+
+    def test_an_entry_wins_over_the_fallback(self) -> None:
+        facts = [{"section": "android_carrier_config", "key": self.KEY, "sources": ["lineageos"]}]
+        self.assertEqual(self.sources(self.built(["google_carriersettings", "lineageos"], facts)), {self.KEY: ["lineageos"]})
+
+    def test_no_profile_sources_gives_no_family(self) -> None:
+        self.assertEqual(self.sources(self.built([])), {})
+
+    def test_a_listed_value_with_no_entry_wakes(self) -> None:
+        """The reason the listed profiles without an item leave with the fallback."""
+        served, _ = self.documents(self.built(["google_carriersettings"]))
+        self.assertEqual([r["profile_id"] for r in served["reads"]], [self.ID])
+
+    def test_an_unrelated_source_gains_no_item(self) -> None:
+        facts = [{"section": "android_carrier_config", "key": self.KEY, "sources": ["google_carriersettings"]}]
+        served, status = self.documents(self.built(["google_carriersettings", "lineageos"], facts), families=["lineageos"])
+        self.assertEqual(served["reads"], [])
+        self.assertEqual([p["key"] for p in status["pending"]], [self.KEY])
+
+    def test_a_listed_then_removed_value_returning_goes_to_pending(self) -> None:
+        document = self.built(["google_carriersettings"])
+        served, status = self.documents(document, profiles=["open.00101.bbbbbbbbbbbb"])
+        self.assertEqual(served["reads"], [])
+        self.assertEqual([(p["key"], p["profiles"]) for p in status["pending"]], [(self.KEY, [self.ID])])
+
+    def test_listed_no_item_is_counted_per_proceed_read(self) -> None:
+        other = "open.00101.bbbbbbbbbbbb"
+        reach = [{"profile_id": self.ID, "references": [self.PATH]}]
+        reads = {self.PATH: group_a_read(profiles=[self.ID, other]), "hold.json": group_a_read(verdict="hold"), "key.json": group_a_read(subject="key")}
+        self.assertEqual(ocd.listed_no_item(reach, reads), [(self.PATH, 1)])
+
+    def test_reach_prints_it_and_fails_nothing(self) -> None:
+        out = io.StringIO()
+        with redirect_stdout(out):
+            status = ocd.print_reach([], {self.PATH: group_a_read()}, None)
+        self.assertEqual(status, 0)
+        self.assertIn("rtt_supported_bool.aaaaaaaaaaaa.json: listed, no item: 1", out.getvalue())
 
 
 class Round31WithheldTest(unittest.TestCase):
