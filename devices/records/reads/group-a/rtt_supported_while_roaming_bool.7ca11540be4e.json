@@ -1,0 +1,38 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1, a close part. AT&T 310-280, 310-380 and 310-410, 6 bundles: defensemobile_us, agms_us and gigsky_us. att_us's word alone; no overlay states this key. att_us SIMs keep true from the lane.",
+    "effect": "Android's default is false (CarrierConfigManager.java:10991-10992,12197). ImsRegistrationTracker.isRttSupported (:585-598) and AosCondition::IsRttSupported (:999-1011) read it after the main key, so it does nothing while rtt_supported_bool is off. On a SIM with RTT on, true adds TEXT to the normal REGISTER while roaming and stops the native TTY deregistration; false leaves both as on any SIM with RTT off. Nothing on the emergency path reads this key (AosHandleEmergencyMtc.cpp:56 reads the main key only). Telephony's readers sit behind config_support_rtt, which is false. Read, not tested.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_supported_while_roaming_bool",
+  "match_set_hashes": {
+    "open.310280.37026d92df43": "37026d92df43",
+    "open.310380.15e45647dd5a": "15e45647dd5a",
+    "open.310410.cdedc056c91a": "cdedc056c91a"
+  },
+  "notes": "Hold. Not admitted on this stack: the host's word does not reach these 6 bundles, so the phone reads Android's default false. They change while roaming only: the normal REGISTER drops TEXT. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.310280.37026d92df43",
+    "open.310380.15e45647dd5a",
+    "open.310410.cdedc056c91a"
+  ],
+  "read_at": "2026-11-06T09:09:37Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/rtt_supported_while_roaming_bool.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/rtt_supported_while_roaming_bool.cbb4ccfd78f3.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}

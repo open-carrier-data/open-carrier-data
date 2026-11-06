@@ -12,10 +12,9 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "rtt_upgrade_supported_for_downgraded_vt_call",
-  "notes": "Proceed. The key has no reader in the platform, Telecom, Dialer or the AOSP ImsStack on this ROM, so the value cannot put an emergency, TTY, RTT or priority call at risk, and it is Verizon's and Google's real setting. The key stays in group A (no key read written): it is call-path by design, and the 24.0 build and future stack versions were not checked for readers. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
+  "notes": "Proceed. The key has no reader in the platform, Telecom, Dialer or the AOSP ImsStack on this ROM, so the value cannot put an emergency, TTY, RTT or priority call at risk, and it is Verizon's and Google's real setting. The key stays in group A (no key read written): it is call-path by design, and the 24.0 build and future stack versions were not checked for readers. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written. Correction, 2026-11-06 (rule round 62, item 1): a fresh read split this record. 4 profiles, 51 bundles, moved to holds 2d0702c8aa3c, 466cdc207311: there the value is not admitted on this stack, and the phone reads Android's default true. Nothing on this ROM reads this key, so no call changes, and no reader is ordered while a tree search finds none. Proceed stands on Verizon by carrier ID 1839, 27 bundles, the SIM's own word. 'Matches the Verizon and Google settings for these SIMs' is wrong for the 51. The open point on 24.0 is closed: no reader on the 24.0 tree or on ImsStack branch ocd. No harm was found. Nothing here says what the network does. read_at and findings stay as first written.",
   "profiles": [
     "open.310012.debc4502ecb5",
-    "open.310590.31e9321fed14",
     "open.310591.4143bd6a5b07",
     "open.310592.5015ac112f52",
     "open.310593.2d2433622add",
@@ -23,10 +22,7 @@
     "open.310595.351fb29c1b57",
     "open.310596.cd6b60ad405a",
     "open.310597.2f0c1d6ff489",
-    "open.310598.28b37f812730",
-    "open.310599.89d72280c9f5",
-    "open.311480.07ddc410f094",
-    "open.999480.e5f9b1ce032e"
+    "open.310598.28b37f812730"
   ],
   "read_at": "2026-10-28T19:16:56Z",
   "reader": "independent group A reader (Claude subagent, not the value's builder)",
@@ -44,7 +40,8 @@
     "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/akita/fi_extended_us.textproto:1215-1225,1292-1296",
     "Open_Carrier_Data/live-private/work/google-carriersettings/graphene/devices/*/verizononsitelte_us.textproto (keys absent in all 24 device folders)",
     "Open_Carrier_Data/live-private/candidates/google-pixel-vendor-carriersettings/google-pixel-vendor-carriersettings/bundle.642689dece92dee4011fd35006ca0eeb.json",
-    "Open_Carrier_Data/worktrees-r31/public/generated/evidence-index.json"
+    "Open_Carrier_Data/worktrees-r31/public/generated/evidence-index.json",
+    "reach report: 27 bundle(s): no Google entry 27, own entry silent 0, Google default another value 0, own entry another value 0; 27 on another entry's SIM, 0 on the profile's own fill (tools/ocd_dataset.py reach --read rtt_upgrade_supported_for_downgraded_vt_call.af71cf074492.json)"
   ],
   "subject": "value",
   "value": false,

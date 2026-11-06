@@ -1,0 +1,40 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 7. Read ad4144cf6698, 4 bundles: 2 on 262-11 with no Google entry, 6 trees, and 2 on 293-41 on telekom_si, silent, 9 trees, of 3 to 4 makers. That is short of the 9 to 11 makers on which group 7 of the allow_hold read stands, and no second word is shown. The list replaces Google's one entry.",
+    "effect": "Android's default is null (CarrierConfigManager.java:2827,12152), and Google's default entry sets this key, so the key is never unset on a served bundle. The one reader is ImsPhoneCallTracker (:2022-2061, :3243-3291). It matches code and lower-cased message by prefix, and an empty message matches every message for that code. The mapped code reaches only the disconnect cause, the precise cause and metrics; every redial reads the raw code (:3625-3640, :3795-3824). ImsStack never reads the key. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. Nothing here says what the network does. Targets are 338 and 510. maybeRemapReasonCode feeds only the disconnect cause, the precise cause and metrics, and every redial reads the raw code, so no target reaches a door. From holding, these SIMs follow Google's own entry both ways, and a value that changes little still stops beating what Google later writes."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "ims_reasoninfo_mapping_string_array",
+  "match_set_hashes": {
+    "open.26211.c64f13cbbb33": "c64f13cbbb33",
+    "open.29341.3a2634265233": "3a2634265233"
+  },
+  "notes": "Hold. 1014|decline|510 and 1014|call rejected by user|510 only change how a call ended elsewhere is shown and logged: the label and the log, and no entry here has an empty message. Targets are 338 and 510. maybeRemapReasonCode feeds only the disconnect cause, the precise cause and metrics, and every redial reads the raw code, so no target reaches a door. A held SIM gets Google's default list, one entry, as a Pixel does. Not admitted on this stack: no second word for these SIMs, so that default list is the value the phone reads on these 4 bundles. No harm was found. Nothing here says what the network does. Only an entry for those SIMs or an operator statement read in full releases them. One phone's vendor table does not.",
+  "profiles": [
+    "open.26211.c64f13cbbb33",
+    "open.29341.3a2634265233"
+  ],
+  "read_at": "2026-11-06T10:28:07Z",
+  "reader": "round 62 tie-breaker read",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/ims_reasoninfo_mapping_string_array.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 7-unread)",
+    "devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.ad4144cf6698.json (the proceed record these profiles left in rule round 62; it listed nothing else and left main with them, and stays in git history at 62b79b7e6409)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409",
+    "reach report: 4 bundle(s): no Google entry 2, own entry silent 0, Google default another value 2, own entry another value 0; 2 on another entry's SIM, 2 on the profile's own fill (tools/ocd_dataset.py reach --read at 62b79b7e6409, before this hold)"
+  ],
+  "subject": "value",
+  "value": [
+    "1014|decline|510",
+    "1014|call rejected by user|510"
+  ],
+  "verdict": "hold"
+}

@@ -1,0 +1,44 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1, group 1 of the round 61 read of fe117f80d4da. Vodafone 204-04, SFR 208-09 and 208-10, O2 234-10, Jump 234-39 and Vodafone 272-01, 60 bundles. True comes from Google's host entry only, on SIMs whose own entry sets nothing on any build read, and no device tree naming these codes sets the key. On 204-04 the SIMs include foreign brands and travel eSIMs. A read works per profile, so it cannot keep the MVNOs at home and drop those.",
+    "effect": "Android's default is false (CarrierConfigManager.java:11820). The one reader is ImsPhoneCallTracker.java:1995-1996, used at :3810-3820, behind the branch at :3796, for reason 1514 arriving as a termination. As read on both aosp_imsstack cells that branch is not reached: 1514 has one producer, and it ends as start failed. So on this ROM true and false change no call. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. On this ROM a hold changes the value the phone reads and no call. A proceed would leave a value with no word for these SIMs, waiting for any change that wakes the path. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "auto_retry_failed_wifi_emergency_call",
+  "match_set_hashes": {
+    "open.20404.e431cf6d3200": "e431cf6d3200",
+    "open.20809.210b32a375f2": "210b32a375f2",
+    "open.20810.3ed448616819": "3ed448616819",
+    "open.23410.9ad93b565a11": "9ad93b565a11",
+    "open.23439.a1c1917f6945": "a1c1917f6945",
+    "open.27201.4a6ed2a3918d": "4a6ed2a3918d"
+  },
+  "notes": "Hold. Not admitted on this stack: the host's word does not reach these 60 bundles, so the phone reads Android's default false. The key is not reached on this stack, so no call changes. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20404.e431cf6d3200",
+    "open.20809.210b32a375f2",
+    "open.20810.3ed448616819",
+    "open.23410.9ad93b565a11",
+    "open.23439.a1c1917f6945",
+    "open.27201.4a6ed2a3918d"
+  ],
+  "read_at": "2026-11-06T09:35:24Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/auto_retry_failed_wifi_emergency_call.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}

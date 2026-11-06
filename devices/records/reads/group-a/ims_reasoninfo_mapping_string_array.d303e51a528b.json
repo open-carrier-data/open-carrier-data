@@ -1,0 +1,37 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. Read 60cabdf77441, KPN on other SIMs, 3 bundles: truphone_zz, enreach_nl and RABO MOBIEL. It maps 338 with a multi-device text to 1017.",
+    "effect": "Android's default is null (CarrierConfigManager.java:2827,12152), and Google's default entry sets this key, so the key is never unset on a served bundle. The one reader is ImsPhoneCallTracker (:2022-2061, :3243-3291). It matches code and lower-cased message by prefix, and an empty message matches every message for that code. The mapped code reaches only the disconnect cause, the precise cause and metrics; every redial reads the raw code (:3625-3640, :3795-3824). ImsStack never reads the key. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways, and a value that changes little still stops beating what Google later writes. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "ims_reasoninfo_mapping_string_array",
+  "match_set_hashes": {
+    "open.20408.79d679c5823f": "79d679c5823f"
+  },
+  "notes": "Hold. Not admitted on this stack: another entry's word, so the phone reads Google's default list, one entry, what a Pixel gives these SIMs, on these 3 bundles. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20408.79d679c5823f"
+  ],
+  "read_at": "2026-11-06T09:07:26Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/ims_reasoninfo_mapping_string_array.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.60cabdf77441.json (the proceed record these profiles left in rule round 62; it listed nothing else and left main with them, and stays in git history at 62b79b7e6409)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": [
+    "338|another device sent all devices busy response|1017",
+    "510|Call completed elsewhere|1014"
+  ],
+  "verdict": "hold"
+}

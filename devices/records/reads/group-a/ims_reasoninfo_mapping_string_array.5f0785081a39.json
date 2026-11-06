@@ -11,7 +11,7 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "ims_reasoninfo_mapping_string_array",
-  "notes": "Proceed. The added entries are Verizon multi-device and Wi-Fi relabels that no emergency, TTY, RTT or WPS path reads; the dropped entry is still applied natively by the ImsStack for the usual cause-200 Reason. The basis is Google's CarrierSettings for these operators.",
+  "notes": "Proceed. The added entries are Verizon multi-device and Wi-Fi relabels that no emergency, TTY, RTT or WPS path reads; the dropped entry is still applied natively by the ImsStack for the usual cause-200 Reason. The basis is Google's CarrierSettings for these operators. Correction, 2026-11-06 (rule round 62, item 1): 2 profiles, 4 bundles, moved to holds f52f84e617a6, 502c163c97ba: there the value is not admitted on this stack, and the phone reads Google's default list. No harm was found. Nothing here says what the network does. read_at and findings stay as first written.",
   "profiles": [
     "open.310591.4143bd6a5b07",
     "open.310592.5015ac112f52",
@@ -20,9 +20,7 @@
     "open.310595.351fb29c1b57",
     "open.310596.cd6b60ad405a",
     "open.310597.2f0c1d6ff489",
-    "open.310598.28b37f812730",
-    "open.314020.98f1f3f31fdb",
-    "open.999480.e5f9b1ce032e"
+    "open.310598.28b37f812730"
   ],
   "read_at": "2026-10-28T19:11:13Z",
   "reader": "independent group A reader (Claude subagent, not the value's builder)",
