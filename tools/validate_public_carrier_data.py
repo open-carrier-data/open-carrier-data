@@ -1741,10 +1741,20 @@ OLD_SELECTOR_SUPERSEDED = "old_selector_superseded"
 # proceed read on such a value).
 UNAPPLIED_ON_LINEAGE_BUILD = "unapplied_on_lineage_build"
 LINEAGE_OVERLAY_SOURCE = "lineageos_device_overlays"
+# no_open_reader_match (round 57, item 2): every observation behind this
+# CarrierConfig key or capability is an iccid block of the LineageOS device
+# overlays or of Sony Open Devices. On every AOSP and LineageOS reader read,
+# the selector matches no SIM, and no build flag revives it. OCD's own service
+# reads the ICCID and does match it, so the value stays. It is a label like
+# unapplied_on_lineage_build: no merge, conflict, capability or gate reads it,
+# only the group A tooling, which refuses a proceed read on such a value.
+NO_OPEN_READER_MATCH = "no_open_reader_match"
+NO_OPEN_READER_MATCH_SOURCES = {LINEAGE_OVERLAY_SOURCE, "sony_open_devices_aosp"}
 FLAG_SECTIONS = {
-    "old_single_source": "capabilities",
-    OLD_SELECTOR_SUPERSEDED: "match",
-    UNAPPLIED_ON_LINEAGE_BUILD: "android_carrier_config",
+    "old_single_source": {"capabilities"},
+    OLD_SELECTOR_SUPERSEDED: {"match"},
+    UNAPPLIED_ON_LINEAGE_BUILD: {"android_carrier_config"},
+    NO_OPEN_READER_MATCH: {"android_carrier_config", "capabilities"},
 }
 SELECTOR_MATCH_KEYS = {"spn", "gid1_prefixes", "imsi_prefix_patterns", "iccid_prefixes"}
 
@@ -1760,7 +1770,9 @@ def validate_flags(
     unique. old_single_source names a capability that capability_sources names
     and capability_newest_entries dates. unapplied_on_lineage_build names a
     published CarrierConfig key of a profile the LineageOS device overlays
-    source."""
+    source. no_open_reader_match names a published CarrierConfig key or a
+    sourced capability of a profile with an iccid selector that the device
+    overlays or Sony Open Devices source."""
     if "flags" not in evidence:
         return
     label = f"profiles[{index}].flags"
@@ -1775,7 +1787,7 @@ def validate_flags(
         if set(item) != {"section", "key", "flag"}:
             raise ValidationError(f"{path}: {item_label} has invalid keys")
         flag, section, key = item["flag"], item["section"], item["key"]
-        if FLAG_SECTIONS.get(flag) != section:
+        if section not in FLAG_SECTIONS.get(flag, ()):
             raise ValidationError(f"{path}: {item_label} is not a valid flag")
         if flag == OLD_SELECTOR_SUPERSEDED:
             if key != "selector" or evidence.get("sources") != ["samsung_omc"]:
@@ -1790,6 +1802,18 @@ def validate_flags(
             ):
                 raise ValidationError(
                     f"{path}: {item_label} flags a key the profile does not publish from the LineageOS device overlays"
+                )
+            keys.append((section, key, flag))
+            continue
+        if flag == NO_OPEN_READER_MATCH:
+            published = (
+                config_keys is None or key in config_keys
+                if section == "android_carrier_config"
+                else capabilities is None or (key in CAPABILITY_KEYS and capabilities.get(key, "unknown") != "unknown")
+            )
+            if not NO_OPEN_READER_MATCH_SOURCES & set(evidence.get("sources") or []) or not published:
+                raise ValidationError(
+                    f"{path}: {item_label} flags a value the profile does not publish from the device overlays or Sony Open Devices"
                 )
             keys.append((section, key, flag))
             continue

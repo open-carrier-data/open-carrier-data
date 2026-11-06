@@ -2662,6 +2662,29 @@ def check_old_selector_superseded() -> None:
     assert_true(not unapplied_valid("android_carrier_config", ["aosp"], published), "the flag needs the device overlays as a source")
     assert_true(not unapplied_valid("android_carrier_config", [overlay], {}), "the flag names a published key")
 
+    # Round 57, item 2: an iccid block no open reader matches, in either lane, on a key or a capability.
+    def no_reader_valid(section: str, key: str, sources: list[str], capabilities: dict | None, config: dict | None) -> bool:
+        evidence = {"sources": sources, "flags": [{"section": section, "key": key, "flag": "no_open_reader_match"}]}
+        try:
+            validate_public_carrier_data.validate_flags(Path("x.json"), evidence, 0, capabilities, config)
+        except validate_public_carrier_data.ValidationError:
+            return False
+        return True
+
+    sony = "sony_open_devices_aosp"
+    config_key, capability = "carrier_volte_available_bool", "volte"
+    config, labels = {config_key: True}, {capability: "supported"}
+    assert_true(no_reader_valid("android_carrier_config", config_key, [overlay], labels, config), "the overlays' block")
+    assert_true(no_reader_valid("android_carrier_config", config_key, [sony], labels, config), "Sony's block")
+    assert_true(no_reader_valid("capabilities", capability, [overlay, sony], labels, config), "the flag sits on capabilities too")
+    assert_true(no_reader_valid("capabilities", capability, ["apple", overlay], labels, config), "another source may stand on the profile")
+    assert_true(not no_reader_valid("android_carrier_config", config_key, ["apple", "google"], labels, config), "the flag needs one of the two lanes")
+    assert_true(not no_reader_valid("capabilities", capability, ["apple"], labels, config), "on capabilities too")
+    assert_true(not no_reader_valid("android_carrier_config", config_key, [sony], labels, {}), "the flag names a published key")
+    assert_true(not no_reader_valid("capabilities", capability, [sony], {capability: "unknown"}, config), "the flag names a published capability")
+    assert_true(not no_reader_valid("capabilities", "not_a_capability", [sony], labels, config), "the flag names a capability")
+    assert_true(not no_reader_valid("match", "selector", [sony], labels, config), "not on the match")
+
 
 def check_superseded_pack_values() -> None:
     """A Samsung value that only carrier packs superseded for the fact's type

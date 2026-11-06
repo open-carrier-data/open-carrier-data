@@ -827,6 +827,32 @@ class Round31GroupATest(unittest.TestCase):
         served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: group_a_read(verdict="hold")}, None, marked)
         self.assertEqual(([r["verdict"] for r in served["reads"]], status["pending"]), (["hold"], []))
 
+    def test_a_value_resting_only_on_no_open_reader_blocks_gets_no_proceed(self) -> None:
+        """Rule round 57: the refusal reads the new flag too, for a value of
+        either lane, and a capability flag of the same word refuses nothing."""
+        profile = "open.20404.000000000000"
+        where = "devices/records/reads/group-a/rtt_supported_bool.000000000002.json"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "generated").mkdir()
+            (root / ocd.EVIDENCE_INDEX_FILE).write_text(json.dumps({"profiles": [
+                {"profile_id": profile, "flags": [
+                    {"section": "android_carrier_config", "key": "rtt_supported_bool", "flag": "no_open_reader_match"},
+                    {"section": "capabilities", "key": "volte", "flag": "no_open_reader_match"}]}]}), encoding="utf-8")
+            marked = ocd.unapplied_values(root)
+        self.assertEqual(marked, {(profile, "rtt_supported_bool")})
+        refused = ocd.group_a_unapplied_problems(group_a_read(profiles=[profile]), where, marked)
+        self.assertEqual(len(refused), 1)
+        self.assertIn("no_open_reader_match", refused[0])
+        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
+        profiles = tiny_profiles({"rtt_supported_bool": True}, [{"entry": "o2_de", "when": None}])
+        read = group_a_read()
+        digest = "sha256:" + "0" * 64
+        carried = {(read["profiles"][0], "rtt_supported_bool")}
+        served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: read}, None, carried)
+        self.assertEqual(served["reads"], [])
+        self.assertEqual([p["key"] for p in status["pending"]], ["rtt_supported_bool"])
+
     def test_unapplied_values_come_from_the_evidence_index(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
