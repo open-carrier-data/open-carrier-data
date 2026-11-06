@@ -105,24 +105,21 @@
   ],
   "android_carrier_config": {
     "allow_add_call_during_video_call": false,
-    "allow_adding_apns_bool": true,
     "allow_hold_call_during_emergency_bool": false,
     "allow_hold_video_call_bool": false,
-    "apn_expand_bool": true,
-    "auto_retry_failed_wifi_emergency_call": true,
     "carrier_allow_turnoff_ims_bool": false,
-    "carrier_default_wfc_ims_enabled_bool": true,
-    "carrier_supports_ss_over_ut_bool": true,
+    "carrier_metered_apn_types_strings": [
+      "default",
+      "dun",
+      "supl"
+    ],
     "carrier_volte_available_bool": true,
-    "carrier_volte_provisioned_bool": true,
     "carrier_vt_available_bool": true,
-    "carrier_wfc_supports_wifi_only_bool": false,
     "editable_enhanced_4g_lte_bool": false,
-    "editable_wfc_roaming_mode_bool": true,
     "enableMMSDeliveryReports": false,
     "enableMMSReadReports": false,
     "enabledMMS": true,
-    "enhanced_4g_lte_on_by_default_bool": true,
+    "hide_enhanced_4g_lte_bool": true,
     "hide_ims_apn_bool": false,
     "ignore_data_enabled_changed_for_video_calls": true,
     "imssms.sms_over_ims_supported_bool": true,
@@ -130,10 +127,8 @@
     "maxImageWidth": 2592,
     "maxSubjectLength": 80,
     "recipientLimit": 20,
-    "show_apn_setting_cdma_bool": true,
     "show_ims_registration_status_bool": true,
-    "smsToMmsTextThreshold": 1,
-    "support_video_conference_call_bool": true
+    "smsToMmsTextThreshold": 1
   },
   "capabilities": {
     "esim": "unknown",

@@ -1,4 +1,4 @@
-{"based_on_data_digest":"sha256:f632a07b66fff7279b00fd2bf62fca8a4fdb1ae0cfd40bff97d02538bf1e67b5","key_reads":[
+{"based_on_data_digest":"sha256:022bf1b4d91a31848df0ee4b064e54f1707e4e1103c1cdb0034e6444b2fdcc0e","key_reads":[
 {"effect":"display_only","key":"allow_emergency_numbers_in_call_log_bool","reference":"devices/records/reads/group-a/allow_emergency_numbers_in_call_log_bool.5ae330a2f66f.json","verdict":"proceed"},
 {"effect":"display_only","key":"always_show_emergency_alert_onoff_bool","reference":"devices/records/reads/group-a/always_show_emergency_alert_onoff_bool.c9c76e3a6cdd.json","verdict":"proceed"},
 {"effect":"call_path","key":"broadcast_emergency_call_state_changes_bool","reference":"devices/records/reads/group-a/broadcast_emergency_call_state_changes_bool.1110624d9c3a.json","verdict":"hold"},
@@ -7,7 +7,7 @@
 {"effect":"call_path","key":"ims_reasoninfo_mapping_string_array","reference":"devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.6dc7fbef894f.json","verdict":"hold"},
 {"effect":"call_path","key":"wfc_emergency_address_carrier_app_string","reference":"devices/records/reads/group-a/wfc_emergency_address_carrier_app_string.5b572e348fda.json","verdict":"hold"}
 ],"left_group_a":["allow_emergency_numbers_in_call_log_bool","always_show_emergency_alert_onoff_bool"],"pending":[
-{"families":["sony_open_devices_aosp"],"ims_stack":"aosp_imsstack","key":"auto_retry_failed_wifi_emergency_call","profiles":["open.20404.d9abf8dd6b95"],"rom_family":"lineageos","value":true}
+{"families":["lineageos_device_overlays"],"ims_stack":"aosp_imsstack","key":"carrier_use_ims_first_for_emergency_bool","profiles":["open.24001.aa6951bda708"],"rom_family":"lineageos","value":false}
 ],"schema_version":1,"targets":[{"ims_stack":"aosp_imsstack","rom_family":"lineageos"}],"unrecorded_basis":[
 {"key":"allow_emergency_video_calls_bool","profile_id":"open.31001.2353d9a69eb5","reference":"devices/records/reads/group-a/allow_emergency_video_calls_bool.cc82c73b7b6a.json","value":true},
 {"key":"allow_emergency_video_calls_bool","profile_id":"open.31002.a546092fd5c4","reference":"devices/records/reads/group-a/allow_emergency_video_calls_bool.cc82c73b7b6a.json","value":true},
@@ -61,12 +61,6 @@
 {"key":"allow_hold_call_during_emergency_bool","profile_id":"open.314720.31d855b88a11","reference":"devices/records/reads/group-a/allow_hold_call_during_emergency_bool.8c4ede5ebb12.json","value":false},
 {"key":"allow_hold_call_during_emergency_bool","profile_id":"open.310590.4b81daaf0f07","reference":"devices/records/reads/group-a/allow_hold_call_during_emergency_bool.da65744c4d18.json","value":true},
 {"key":"allow_hold_call_during_emergency_bool","profile_id":"open.310599.43046fff0752","reference":"devices/records/reads/group-a/allow_hold_call_during_emergency_bool.da65744c4d18.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.312120.5e45524c258b","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.42002.857a4076d83a","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.45400.14ec3f575e49","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.45400.1e017a129dfc","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.45400.4a17d8889a99","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
-{"key":"auto_retry_failed_wifi_emergency_call","profile_id":"open.45400.708cc3df9c6e","reference":"devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json","value":true},
 {"key":"call_forwarding_blocks_while_roaming_string_array","profile_id":"open.310591.4143bd6a5b07","reference":"devices/records/reads/group-a/call_forwarding_blocks_while_roaming_string_array.09b20ed28fe2.json","value":["*71","*72"]},
 {"key":"call_forwarding_blocks_while_roaming_string_array","profile_id":"open.310592.5015ac112f52","reference":"devices/records/reads/group-a/call_forwarding_blocks_while_roaming_string_array.09b20ed28fe2.json","value":["*71","*72"]},
 {"key":"call_forwarding_blocks_while_roaming_string_array","profile_id":"open.310593.2d2433622add","reference":"devices/records/reads/group-a/call_forwarding_blocks_while_roaming_string_array.09b20ed28fe2.json","value":["*71","*72"]},
@@ -164,7 +158,6 @@
 {"key":"rtt_supported_bool","profile_id":"open.311650.e2d6f3854fe9","reference":"devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.311830.80890a8adb23","reference":"devices/records/reads/group-a/rtt_supported_bool.28d099e3e833.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.312010.2f197a7b1dcb","reference":"devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json","value":true},
-{"key":"rtt_supported_bool","profile_id":"open.312120.5e45524c258b","reference":"devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.312570.3f80751ac5a0","reference":"devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.312580.86de852a7d51","reference":"devices/records/reads/group-a/rtt_supported_bool.b29292bf3263.json","value":true},
 {"key":"rtt_supported_bool","profile_id":"open.312720.0424e3bc954c","reference":"devices/records/reads/group-a/rtt_supported_bool.76ac4b69f950.json","value":true},
