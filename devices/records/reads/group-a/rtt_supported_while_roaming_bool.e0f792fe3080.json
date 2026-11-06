@@ -1,0 +1,70 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. 19 plain profiles, 70 bundles, whose true is Google's host entry alone on SIMs whose own entry is silent on every build read. rtt_supported_bool is held on all 70, so the first read's second leg ended. 12 of the bundles are travel eSIMs, sorted by name.",
+    "effect": "Android's default is false (CarrierConfigManager.java:10991-10992,12197). ImsRegistrationTracker.isRttSupported (:585-598) and AosCondition::IsRttSupported (:999-1011) read it after the main key, so it does nothing while rtt_supported_bool is off. On a SIM with RTT on, true adds TEXT to the normal REGISTER while roaming and stops the native TTY deregistration; false leaves both as on any SIM with RTT off. Nothing on the emergency path reads this key (AosHandleEmergencyMtc.cpp:56 reads the main key only). Telephony's readers sit behind config_support_rtt, which is false. Read, not tested.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_supported_while_roaming_bool",
+  "match_set_hashes": {
+    "open.20408.79d679c5823f": "79d679c5823f",
+    "open.20601.4cc0dd6731f7": "4cc0dd6731f7",
+    "open.20620.38456e90752e": "38456e90752e",
+    "open.20809.210b32a375f2": "210b32a375f2",
+    "open.20810.3ed448616819": "3ed448616819",
+    "open.20815.e9796746e60a": "e9796746e60a",
+    "open.20820.44678cb62031": "44678cb62031",
+    "open.21405.c6fbe22142a2": "c6fbe22142a2",
+    "open.21407.c83fa22ba6da": "c83fa22ba6da",
+    "open.21601.43770ba804d8": "43770ba804d8",
+    "open.21670.1b3b9f7d0a6f": "1b3b9f7d0a6f",
+    "open.22201.c91d2d45b3df": "c91d2d45b3df",
+    "open.22210.16b3c9864691": "16b3c9864691",
+    "open.23210.9f174d86e571": "9f174d86e571",
+    "open.24201.eabf2bb87887": "eabf2bb87887",
+    "open.24202.3705f06cc6f3": "3705f06cc6f3",
+    "open.26006.18b57b00219b": "18b57b00219b",
+    "open.29370.6cd315b6ca11": "6cd315b6ca11",
+    "open.310300.a45d2276b6ea": "a45d2276b6ea"
+  },
+  "notes": "Hold. Not admitted on this stack: the host's word does not reach these 70 bundles, so the phone reads Android's default false. RTT is off on them, so the key does nothing there. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20408.79d679c5823f",
+    "open.20601.4cc0dd6731f7",
+    "open.20620.38456e90752e",
+    "open.20809.210b32a375f2",
+    "open.20810.3ed448616819",
+    "open.20815.e9796746e60a",
+    "open.20820.44678cb62031",
+    "open.21405.c6fbe22142a2",
+    "open.21407.c83fa22ba6da",
+    "open.21601.43770ba804d8",
+    "open.21670.1b3b9f7d0a6f",
+    "open.22201.c91d2d45b3df",
+    "open.22210.16b3c9864691",
+    "open.23210.9f174d86e571",
+    "open.24201.eabf2bb87887",
+    "open.24202.3705f06cc6f3",
+    "open.26006.18b57b00219b",
+    "open.29370.6cd315b6ca11",
+    "open.310300.a45d2276b6ea"
+  ],
+  "read_at": "2026-11-06T09:09:37Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/rtt_supported_while_roaming_bool.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/rtt_supported_while_roaming_bool.cbb4ccfd78f3.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}

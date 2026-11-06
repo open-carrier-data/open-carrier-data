@@ -1,0 +1,57 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. Read a3de5caf5371's host value on 11 profiles, 76 bundles of other entries. The list adds one Wi-Fi entry over Google's default. Its text appears nowhere in ImsStack, which raises the code itself, so it fires on nothing on this stack unless a network sends that text. Google is silent for these SIMs on every build read.",
+    "effect": "Android's default is null (CarrierConfigManager.java:2827,12152), and Google's default entry sets this key, so the key is never unset on a served bundle. The one reader is ImsPhoneCallTracker (:2022-2061, :3243-3291). It matches code and lower-cased message by prefix, and an empty message matches every message for that code. The mapped code reaches only the disconnect cause, the precise cause and metrics; every redial reads the raw code (:3625-3640, :3795-3824). ImsStack never reads the key. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways, and a value that changes little still stops beating what Google later writes. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "ims_reasoninfo_mapping_string_array",
+  "match_set_hashes": {
+    "open.20801.4d7b2188b945": "4d7b2188b945",
+    "open.20809.210b32a375f2": "210b32a375f2",
+    "open.20810.3ed448616819": "3ed448616819",
+    "open.21403.600a924caecc": "600a924caecc",
+    "open.23410.9ad93b565a11": "9ad93b565a11",
+    "open.23439.a1c1917f6945": "a1c1917f6945",
+    "open.310120.53fe464fbdf5": "53fe464fbdf5",
+    "open.310240.25c6dcd2afb6": "25c6dcd2afb6",
+    "open.310260.f201405c108e": "f201405c108e",
+    "open.310300.a45d2276b6ea": "a45d2276b6ea",
+    "open.312530.26dc0f7e0142": "26dc0f7e0142"
+  },
+  "notes": "Hold. Not admitted on this stack: another entry's word, so the phone reads Google's default list, one entry, what a Pixel gives these SIMs, on these 76 bundles. As read, this changes no call or label on this stack. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20801.4d7b2188b945",
+    "open.20809.210b32a375f2",
+    "open.20810.3ed448616819",
+    "open.21403.600a924caecc",
+    "open.23410.9ad93b565a11",
+    "open.23439.a1c1917f6945",
+    "open.310120.53fe464fbdf5",
+    "open.310240.25c6dcd2afb6",
+    "open.310260.f201405c108e",
+    "open.310300.a45d2276b6ea",
+    "open.312530.26dc0f7e0142"
+  ],
+  "read_at": "2026-11-06T09:07:26Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/ims_reasoninfo_mapping_string_array.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.a3de5caf5371.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": [
+    "510|Call completed elsewhere|1014",
+    "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+  ],
+  "verdict": "hold"
+}

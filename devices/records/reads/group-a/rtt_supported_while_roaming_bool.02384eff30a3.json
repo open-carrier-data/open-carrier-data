@@ -1,0 +1,48 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. 259-01, 262-11, 270-99, 294-01, 297-02, 308-03, 340-01 and 647-00, 11 bundles. One MediaTek file in 3 trees and no other word. These are its 7 scopes Google leaves unset and its 1 with no rule, so the file's average agreement does not reach them. The first read's reason, that RTT is on for them, ended with round 61's hold.",
+    "effect": "Android's default is false (CarrierConfigManager.java:10991-10992,12197). ImsRegistrationTracker.isRttSupported (:585-598) and AosCondition::IsRttSupported (:999-1011) read it after the main key, so it does nothing while rtt_supported_bool is off. On a SIM with RTT on, true adds TEXT to the normal REGISTER while roaming and stops the native TTY deregistration; false leaves both as on any SIM with RTT off. Nothing on the emergency path reads this key (AosHandleEmergencyMtc.cpp:56 reads the main key only). Telephony's readers sit behind config_support_rtt, which is false. Read, not tested.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_supported_while_roaming_bool",
+  "match_set_hashes": {
+    "open.25901.cec477271b1a": "cec477271b1a",
+    "open.26211.c64f13cbbb33": "c64f13cbbb33",
+    "open.27099.dbeb3c5bc34a": "dbeb3c5bc34a",
+    "open.29401.11da49b92377": "11da49b92377",
+    "open.29702.3954236620b4": "3954236620b4",
+    "open.30803.b8824df33412": "b8824df33412",
+    "open.34001.03c571dc7d98": "03c571dc7d98",
+    "open.64700.b4e882076bf3": "b4e882076bf3"
+  },
+  "notes": "Hold. Not admitted on this stack: one file's word, so the phone reads Android's default false on these 11 bundles. RTT is off on them, so the key does nothing there. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.25901.cec477271b1a",
+    "open.26211.c64f13cbbb33",
+    "open.27099.dbeb3c5bc34a",
+    "open.29401.11da49b92377",
+    "open.29702.3954236620b4",
+    "open.30803.b8824df33412",
+    "open.34001.03c571dc7d98",
+    "open.64700.b4e882076bf3"
+  ],
+  "read_at": "2026-11-06T09:09:37Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/rtt_supported_while_roaming_bool.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/rtt_supported_while_roaming_bool.cbb4ccfd78f3.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}

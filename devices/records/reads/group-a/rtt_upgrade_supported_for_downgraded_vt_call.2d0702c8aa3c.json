@@ -1,0 +1,38 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. Plain Verizon on 310-590, 310-599 and 311-480, 49 bundles of 11 other entries (xfinity_us, xfinity2_us, spectrum_us, tracfoneverizon_us, visible_us, visiblev_us, cox_us, mediacom_us, bluegrass_us, cellcom_us, thumbcellular_us). Those entries are silent on every build read, 2022 to 2026, so only OCD's stack puts false there, and the read split one brand by code. Verizon's own SIMs keep false from the lane. This is the close part: Google says false wherever it speaks on Verizon's network, and no source says true.",
+    "effect": "Android's default is true (CarrierConfigManager.java:3452-3453,12198). A search of the 24.0 tree and of ImsStack branch ocd finds no reader of this key: ImsPhoneConnection.startRtt sends the request with no check on the call's history, and config_support_rtt is false. Read, not tested.",
+    "risk": "No harm was found. From holding, these SIMs follow their own Google entry both ways. If a reader ever appears the key needs a fresh read. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "rtt_upgrade_supported_for_downgraded_vt_call",
+  "match_set_hashes": {
+    "open.310590.31e9321fed14": "31e9321fed14",
+    "open.310599.89d72280c9f5": "89d72280c9f5",
+    "open.311480.07ddc410f094": "07ddc410f094"
+  },
+  "notes": "Hold. Not admitted on this stack: another entry's word, so the phone reads Android's default true on these 49 bundles. Nothing on this ROM reads this key, so no call changes. No reader is ordered while a tree search finds none. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.310590.31e9321fed14",
+    "open.310599.89d72280c9f5",
+    "open.311480.07ddc410f094"
+  ],
+  "read_at": "2026-11-06T08:58:08Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/rtt_upgrade_supported_for_downgraded_vt_call.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/rtt_upgrade_supported_for_downgraded_vt_call.af71cf074492.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "hold"
+}

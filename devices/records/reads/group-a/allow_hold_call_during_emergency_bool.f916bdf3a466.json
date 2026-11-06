@@ -1,0 +1,34 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1, group 2. M1 525-03, 1 bundle. The Google word is one barbet baseline dated 2024-06-30. m1_sg is silent on the 33 other models read, on every date from 2022-09 to 2026-10-15, and in the served lane, and none of the 16 trees naming the code sets false.",
+    "effect": "Android's default is true (CarrierConfigManager.java:2515,12089). shouldHoldForEmergencyCall (TelephonyConnectionService.java:3704-3714) reads the config of the phone placing the emergency call. With false it hangs up the other calls first (:2392-2408), on a dual SIM phone those on the other SIM too. With true it holds them and dials. Telecom reads the key per ongoing call's account (CallSequencingController.java:1016-1037) and fills a missing key with true (CallsManager.java:4623-4647). With false Telecom waits up to 5 s per call for the disconnect, and a timeout or a failed disconnect aborts the emergency call (VerifyCallStateChangeTransaction.java:44, CallsManager.java:2458), and nothing redials it. With true a hold nobody answers makes the call wait. Neither value is shown safer for the emergency call; the only certain cost of false falls on the other call, which is lost. Read, not tested.",
+    "risk": "No harm was found. A hold changes the other call's fate: the phone holds it instead of dropping it, as a Pixel does on these SIMs. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "allow_hold_call_during_emergency_bool",
+  "match_set_hashes": {
+    "open.52503.d911af4eb6dd": "d911af4eb6dd"
+  },
+  "notes": "Hold. Not admitted on this stack: the only word is one old model's, so the phone reads Android's default true on this bundle. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.52503.d911af4eb6dd"
+  ],
+  "read_at": "2026-11-06T09:07:43Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/allow_hold_call_during_emergency_bool.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/allow_hold_call_during_emergency_bool.8c4ede5ebb12.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": false,
+  "verdict": "hold"
+}

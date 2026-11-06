@@ -1,0 +1,46 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "lineageos_device_overlays"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1, group 3. 202-01, 204-16, 204-20, 216-30, 219-01, 230-01 and 260-02, 66 bundles. Sony's trees only, the same 8 trees and 4 blocks, dated 2020 to 2025. Google is silent on every build read. Only a Google entry or an operator statement read in full releases a one-maker value.",
+    "effect": "Android's default is false (CarrierConfigManager.java:11820). The one reader is ImsPhoneCallTracker.java:1995-1996, used at :3810-3820, behind the branch at :3796, for reason 1514 arriving as a termination. As read on both aosp_imsstack cells that branch is not reached: 1514 has one producer, and it ends as start failed. So on this ROM true and false change no call. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. On this ROM a hold changes the value the phone reads and no call. A proceed would leave a value with no word for these SIMs, waiting for any change that wakes the path. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "auto_retry_failed_wifi_emergency_call",
+  "match_set_hashes": {
+    "open.20201.fd1c122e9839": "fd1c122e9839",
+    "open.20416.36115ee75135": "36115ee75135",
+    "open.20420.0175c484a1a3": "0175c484a1a3",
+    "open.21630.ef99bfd00e2e": "ef99bfd00e2e",
+    "open.21901.214aca9b8710": "214aca9b8710",
+    "open.23001.a3e214f2fab1": "a3e214f2fab1",
+    "open.26002.9993f5bf77fd": "9993f5bf77fd"
+  },
+  "notes": "Hold. Not admitted on this stack: one maker's word, so the phone reads Android's default false on these 66 bundles. The key is not reached on this stack, so no call changes. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20201.fd1c122e9839",
+    "open.20416.36115ee75135",
+    "open.20420.0175c484a1a3",
+    "open.21630.ef99bfd00e2e",
+    "open.21901.214aca9b8710",
+    "open.23001.a3e214f2fab1",
+    "open.26002.9993f5bf77fd"
+  ],
+  "read_at": "2026-11-06T09:35:24Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/auto_retry_failed_wifi_emergency_call.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/auto_retry_failed_wifi_emergency_call.fe117f80d4da.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": true,
+  "verdict": "hold"
+}

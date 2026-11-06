@@ -12,18 +12,13 @@
   },
   "ims_stack": "aosp_imsstack",
   "key": "ims_reasoninfo_mapping_string_array",
-  "notes": "Proceed. Against the Google lane the only change is one entry the ImsStack already applies itself; against the 510-only lane the added entries are Verizon multi-device and Wi-Fi labels that no emergency, TTY, RTT or WPS path reads. The basis is AOSP and Samsung Verizon-family config. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written.",
+  "notes": "Proceed. Against the Google lane the only change is one entry the ImsStack already applies itself; against the 510-only lane the added entries are Verizon multi-device and Wi-Fi labels that no emergency, TTY, RTT or WPS path reads. The basis is AOSP and Samsung Verizon-family config. Correction, 2026-11-06 (rule round 61, item 4): the AOSP CarrierConfig assets this read names are a source, and they are not read on an OCD ROM. OCD's overlay points platform_carrier_config_package at com.android.carriersettings, so the assets are no lower layer and serve nothing there. read_at and findings stay as first written. Correction, 2026-11-06 (rule round 62, item 1): a fresh read split this record. 5 profiles, 38 bundles, moved to hold 77637495e929: there the value is not admitted on this stack, and the phone reads the SIM's own Google list of 11 entries. Proceed stands on plain Verizon Wireless, 33 bundles, the closest call: 27 have no Google entry and get Verizon's list through this read alone, and 6 with verizon_us keep this older 10-entry form, because a read works per profile. 'The ImsStack already applies itself' holds for CANCEL only. No harm was found. Nothing here says what the network does. read_at and findings stay as first written.",
   "profiles": [
-    "open.20404.254ec306a250",
     "open.310012.debc4502ecb5",
-    "open.310590.0a4d8b840b51",
-    "open.310590.0e3c0e33eb73",
     "open.310590.5be798fbc95e",
-    "open.310590.c147e28baafe",
     "open.310590.d5381eb77a2f",
     "open.310599.9d2e36097ee5",
-    "open.313450.e6063c091b3c",
-    "open.314240.73697514665b"
+    "open.313450.e6063c091b3c"
   ],
   "read_at": "2026-10-28T19:11:13Z",
   "reader": "independent group A reader (Claude subagent, not the value's builder)",
@@ -63,7 +58,8 @@
     "rom-repos/platform_packages_modules_ImsStack.git ocd: git grep for the key (no reader in ImsStack)",
     "packages/apps/CarrierConfig/assets/carrier_config_carrierid_1839_Verizon-Wireless.xml",
     "Open_Carrier_Data/live-private/candidates/aosp-carrier-config/aosp-carrier-config/1839.verizon-wireless.debc4502ec.json",
-    "Open_Carrier_Data/live-private/candidates/samsung-carrier-config/samsung-carrier-config/samsung-cc.sm-s942b.eux.s942bxxs4bzig.{310590,310599,313450}.*.json"
+    "Open_Carrier_Data/live-private/candidates/samsung-carrier-config/samsung-carrier-config/samsung-cc.sm-s942b.eux.s942bxxs4bzig.{310590,310599,313450}.*.json",
+    "reach report: 33 bundle(s): no Google entry 27, own entry silent 0, Google default another value 0, own entry another value 6; 27 on another entry's SIM, 6 on the profile's own fill (tools/ocd_dataset.py reach --read ims_reasoninfo_mapping_string_array.a5d1e948e936.json)"
   ],
   "subject": "value",
   "value": [

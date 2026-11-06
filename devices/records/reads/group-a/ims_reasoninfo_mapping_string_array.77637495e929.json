@@ -1,0 +1,54 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "aosp",
+    "samsung_carrier_config"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. Read a5d1e948e936 on Xfinity, Xfinity 2.0 (2 profiles), Tracfone-VZW and Verizon on 204-04, 38 bundles. The read carries an older 10-entry form of Google's own list, and each SIM's own entry has held 11 for nearly four years. The value does not fit better than Google's list: it is the same list, one entry shorter.",
+    "effect": "Android's default is null (CarrierConfigManager.java:2827,12152), and Google's default entry sets this key, so the key is never unset on a served bundle. The one reader is ImsPhoneCallTracker (:2022-2061, :3243-3291). It matches code and lower-cased message by prefix, and an empty message matches every message for that code. The mapped code reaches only the disconnect cause, the precise cause and metrics; every redial reads the raw code (:3625-3640, :3795-3824). ImsStack never reads the key. Read, not tested, with the tracker's lines as on the phone's code from 2026-11-01.",
+    "risk": "No harm was found. From holding, these SIMs follow Google's own entry both ways, and a value that changes little still stops beating what Google later writes. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "ims_reasoninfo_mapping_string_array",
+  "match_set_hashes": {
+    "open.20404.254ec306a250": "254ec306a250",
+    "open.310590.0a4d8b840b51": "0a4d8b840b51",
+    "open.310590.0e3c0e33eb73": "0e3c0e33eb73",
+    "open.310590.c147e28baafe": "c147e28baafe",
+    "open.314240.73697514665b": "73697514665b"
+  },
+  "notes": "Hold. Not admitted on this stack: the phone reads the SIM's own Google list of 11 entries, on these 38 bundles. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.20404.254ec306a250",
+    "open.310590.0a4d8b840b51",
+    "open.310590.0e3c0e33eb73",
+    "open.310590.c147e28baafe",
+    "open.314240.73697514665b"
+  ],
+  "read_at": "2026-11-06T09:07:26Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/ims_reasoninfo_mapping_string_array.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/ims_reasoninfo_mapping_string_array.a5d1e948e936.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": [
+    "332|simultaneous call limit has already been reached|1403",
+    "332|Forbidden: Simultaneous Call Limit Has Already Been Reached|1403",
+    "338|another device sent all devices busy response|1404",
+    "501|call completion elsewhere|1014",
+    "501|call has been pulled by another device|1016",
+    "510|call has been pulled by another device|1016",
+    "501|another device sent all devices busy response|1404",
+    "510|another device sent all devices busy response|1404",
+    "1014|call has been pulled by another device|1016",
+    "*|Call is dropped due to Wi-Fi signal is degraded|1407"
+  ],
+  "verdict": "hold"
+}

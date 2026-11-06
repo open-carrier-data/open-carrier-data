@@ -1,0 +1,37 @@
+{
+  "builder": "OCD's source import (live-private importer and sanitizer), from the value's source families",
+  "effect": "call_path",
+  "families": [
+    "google"
+  ],
+  "findings": {
+    "basis": "Rule round 62, item 1. Verizon on-site 999-480, 2 bundles. Google took the value out of the entry it came from by 2024-06-30 and has left it out since; the plain SIM now gets pn_xx, which never held the key.",
+    "effect": "Android's default is null (CarrierConfigManager.java:12172), and with null the check never runs. blockCallForwardingNumberWhileRoaming (TelephonyConnectionService.java:2153-2180) refuses a dial only while roaming, without IMS voice, when the dialled string starts with a listed prefix. No emergency number or priority prefix read starts with these prefixes. ImsStack does not read the key. Read, not tested.",
+    "risk": "No harm was found. With null the check never runs, so a hold cannot refuse a dial. support_3gpp_call_forwarding_while_roaming_bool is not group A and stays as served. Nothing here says what the network does."
+  },
+  "ims_stack": "aosp_imsstack",
+  "key": "call_forwarding_blocks_while_roaming_string_array",
+  "match_set_hashes": {
+    "open.999480.e5f9b1ce032e": "e5f9b1ce032e"
+  },
+  "notes": "Hold. Not admitted on this stack: a word Google took back, so the phone reads Android's default null and blocks no dial on these 2 bundles. No harm was found. Nothing here says what the network does. The hold rests on missing basis.",
+  "profiles": [
+    "open.999480.e5f9b1ce032e"
+  ],
+  "read_at": "2026-11-06T08:56:05Z",
+  "reader": "independent group A reader of rule round 61 (Claude subagent, neither the value's builder nor the first reader)",
+  "rom_family": "lineageos",
+  "schema": "ocd-group-a-read/2",
+  "sources_read": [
+    "Open_Carrier_Data/research/rule-decisions-20261006/round61/reads/call_forwarding_blocks_while_roaming_string_array.md",
+    "Open_Carrier_Data/research/rule-decisions-20261006/round62/ruling.json (item 1-eight-reads)",
+    "devices/records/reads/group-a/call_forwarding_blocks_while_roaming_string_array.09b20ed28fe2.json (the proceed record these profiles left in rule round 62)",
+    "generated/ocd-dataset/profiles.json and google-lane.json at 62b79b7e6409"
+  ],
+  "subject": "value",
+  "value": [
+    "*71",
+    "*72"
+  ],
+  "verdict": "hold"
+}
