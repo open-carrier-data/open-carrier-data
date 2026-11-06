@@ -83,6 +83,7 @@ For the keys a profile does not publish, the phone takes the value of the Google
 1. A rule without MVNO data ends the list.
 2. An MVNO rule is skipped unless the profile uses the same dimension with a value one SIM could also satisfy.
 3. A compatible rule is added with its condition (`when`). When every SIM the profile matches also satisfies it, it is added without a condition, and the list ends there.
+4. A profile that pins `iccid` and no `spn` also takes an SPN rule whose value equals the profile's name (compared as `java_equals_ignore_case` does), with its condition, and the list goes on (rule round 58). Such a SIM takes that entry only when it shows that SPN, as a Pixel does, and any other SIM stays where it was.
 
 The phone takes the first item whose `when` is null or holds for the SIM. MTS Mobility's profile on 302-370 (GID1 `2C` or `4D`), for example, gets `mts_ca` for GID1 `2C` SIMs and `fido_ca` for the rest.
 
@@ -196,7 +197,7 @@ On 2026-10-28 the reads ran for every non-Google group A value on `main` (32 val
 
 By 2026-11-05 the data had brought 7 pending items: 107 profile values of `allow_hold_call_during_emergency_bool`, `rtt_supported_bool`, `rtt_supported_while_roaming_bool` and `ims_reasoninfo_mapping_string_array`. That day's reads (rule round 56) cover all of them in 18 records, so `pending` is empty until the data brings a new value. An independent second read turned one of them, `rtt_supported_bool` true on 311-560, 311-670, 312-130, 312-480 and 313-380, from `proceed` to `hold`, which leaves 9 `proceed` over 36 profile values and 9 `hold` over 71. The served file holds 680 items, 566 of them `proceed`, and 217 profile values have no recorded basis. 11 of the values rest only on blocks no LineageOS build applied (`unapplied_on_lineage_build`, see [the data model](data-model.md#values-a-lineageos-build-did-not-apply)), so they got a `hold`. The tooling refuses a `proceed` read on such a value, and a `proceed` already on file admits nothing. Since rule round 57 the same refusal covers `no_open_reader_match`, a value that rests only on `iccid` blocks of the device overlays or of Sony Open Devices (see [the data model](data-model.md#values-only-ocds-own-matcher-reaches)).
 
-One class has no flag yet, so a plain rule covers it. Sony Open Devices' file holds 26 blocks whose `mnc` is a comma list, which no AOSP or LineageOS reader read matches, and OCD's Sony lane still splits them. Until rule round 58 rules on them, no new `proceed` read goes on a group A value whose only support is one of those 26 blocks. The tooling cannot check this, because a flag on those values would fail reads already served before any ruling on them.
+Since rule round 58 the same refusal covers `unapplied_on_sony_build`, a value that rests only on Sony Open Devices blocks whose build loses the `mnc`'s leading zero (see [the data model](data-model.md#values-a-sony-open-devices-build-did-not-apply)). Sony's 26 blocks whose `mnc` is a comma list give no observation since that round, so the plain rule that covered them until then has nothing left to cover.
 
 ## F5 reads
 

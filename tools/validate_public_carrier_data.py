@@ -1378,6 +1378,12 @@ CAPABILITY_GATING_CONFIG_KEYS = {
     "support_ims_conference_call_bool": "ims_conference",
     "support_conference_call_bool": "ims_conference",
 }
+# Rule round 58, item 2: a false of this key that one device family alone sets
+# is left out too, with the gate single_family_off:<key>. It gates no capability,
+# so it stays out of the mapping above and no label reads it. Google's own false
+# stays. Mirrors SINGLE_FAMILY_OFF_DEFAULT_ON_KEY in the private sanitizer.
+SINGLE_FAMILY_OFF_DEFAULT_ON_KEY = "enhanced_4g_lte_on_by_default_bool"
+SINGLE_FAMILY_OFF_CONFIG_KEYS = {*CAPABILITY_GATING_CONFIG_KEYS, SINGLE_FAMILY_OFF_DEFAULT_ON_KEY}
 CAPABILITY_SOURCE_KINDS = {"on", "off", "conditional"}
 # Round 8's label change, made as round 17's step 2 (rule decisions of
 # 2026-10-10 and 2026-10-17): VoLTE, Wi-Fi calling or video calling is
@@ -1569,7 +1575,8 @@ def validate_stale_capability_gates(
     off is kept as device records (round 17, step 2). The profile publishes no
     capability-gating key of a capability the first three gates withhold: a
     withheld label takes its switch with it. A single-family gate on a
-    CarrierConfig key names a capability-gating key the profile does not
+    CarrierConfig key names a capability-gating key, or
+    enhanced_4g_lte_on_by_default_bool (round 58), that the profile does not
     publish false: the false was left out, and the key may be published true
     (change 33). config_keys is the profile's published CarrierConfig, key to
     value."""
@@ -1581,7 +1588,7 @@ def validate_stale_capability_gates(
         if gate["resolution"] != "omitted_from_stable":
             raise ValidationError(f"{path}: {label} is not a valid {name} gate")
         if name == SINGLE_FAMILY_OFF_GATE and gate["section"] == "android_carrier_config":
-            if key not in CAPABILITY_GATING_CONFIG_KEYS:
+            if key not in SINGLE_FAMILY_OFF_CONFIG_KEYS:
                 raise ValidationError(f"{path}: {label} names no capability-gating key")
             if config_keys is not None and config_keys.get(key) is False:
                 raise ValidationError(
@@ -1741,6 +1748,15 @@ OLD_SELECTOR_SUPERSEDED = "old_selector_superseded"
 # proceed read on such a value).
 UNAPPLIED_ON_LINEAGE_BUILD = "unapplied_on_lineage_build"
 LINEAGE_OVERLAY_SOURCE = "lineageos_device_overlays"
+# unapplied_on_sony_build (round 58, item 6): the same label for Sony Open
+# Devices, whose CarrierConfig overlay is built without --keep-raw-values. Every
+# observation behind this CarrierConfig key is a Sony block that loses the
+# leading zero of its mnc. It is its own flag because this is no LineageOS build.
+# Shown with aapt2 and a read of Soong in the 23.2 tree, not by a build of Sony's
+# android-16 tree or on a phone; it says nothing about stock Xperia. Only the
+# group A tooling reads it.
+UNAPPLIED_ON_SONY_BUILD = "unapplied_on_sony_build"
+SONY_OPEN_DEVICES_SOURCE = "sony_open_devices_aosp"
 # no_open_reader_match (round 57, item 2): every observation behind this
 # CarrierConfig key or capability is an iccid block of the LineageOS device
 # overlays or of Sony Open Devices. On every AOSP and LineageOS reader read,
@@ -1749,11 +1765,12 @@ LINEAGE_OVERLAY_SOURCE = "lineageos_device_overlays"
 # unapplied_on_lineage_build: no merge, conflict, capability or gate reads it,
 # only the group A tooling, which refuses a proceed read on such a value.
 NO_OPEN_READER_MATCH = "no_open_reader_match"
-NO_OPEN_READER_MATCH_SOURCES = {LINEAGE_OVERLAY_SOURCE, "sony_open_devices_aosp"}
+NO_OPEN_READER_MATCH_SOURCES = {LINEAGE_OVERLAY_SOURCE, SONY_OPEN_DEVICES_SOURCE}
 FLAG_SECTIONS = {
     "old_single_source": {"capabilities"},
     OLD_SELECTOR_SUPERSEDED: {"match"},
     UNAPPLIED_ON_LINEAGE_BUILD: {"android_carrier_config"},
+    UNAPPLIED_ON_SONY_BUILD: {"android_carrier_config"},
     NO_OPEN_READER_MATCH: {"android_carrier_config", "capabilities"},
 }
 SELECTOR_MATCH_KEYS = {"spn", "gid1_prefixes", "imsi_prefix_patterns", "iccid_prefixes"}
@@ -1770,7 +1787,8 @@ def validate_flags(
     unique. old_single_source names a capability that capability_sources names
     and capability_newest_entries dates. unapplied_on_lineage_build names a
     published CarrierConfig key of a profile the LineageOS device overlays
-    source. no_open_reader_match names a published CarrierConfig key or a
+    source, and unapplied_on_sony_build one of a profile Sony Open Devices
+    sources. no_open_reader_match names a published CarrierConfig key or a
     sourced capability of a profile with an iccid selector that the device
     overlays or Sony Open Devices source."""
     if "flags" not in evidence:
@@ -1802,6 +1820,15 @@ def validate_flags(
             ):
                 raise ValidationError(
                     f"{path}: {item_label} flags a key the profile does not publish from the LineageOS device overlays"
+                )
+            keys.append((section, key, flag))
+            continue
+        if flag == UNAPPLIED_ON_SONY_BUILD:
+            if SONY_OPEN_DEVICES_SOURCE not in (evidence.get("sources") or []) or (
+                config_keys is not None and key not in config_keys
+            ):
+                raise ValidationError(
+                    f"{path}: {item_label} flags a key the profile does not publish from Sony Open Devices"
                 )
             keys.append((section, key, flag))
             continue

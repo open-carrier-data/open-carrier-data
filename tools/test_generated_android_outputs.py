@@ -698,6 +698,17 @@ def check_capability_sources(
             shaped(new_sources, [gate("single_family_off:rtt_supported_bool", "android_carrier_config")]),
             "a single-family gate on a key that gates no capability passed",
         )
+        # Round 58, item 2: the on-by-default key gates no capability, and it
+        # takes the gate all the same, on the same terms: true beside it, never false.
+        on_by_default = [gate("single_family_off:enhanced_4g_lte_on_by_default_bool", "android_carrier_config")]
+        validate(shaped(new_sources, on_by_default))
+        try:
+            config_keys[target] = {**published_config, "enhanced_4g_lte_on_by_default_bool": True}
+            validate(shaped(new_sources, on_by_default))
+            config_keys[target] = {**published_config, "enhanced_4g_lte_on_by_default_bool": False}
+            expect_failure(shaped(new_sources, on_by_default), "the on-by-default gate next to the false it withholds passed")
+        finally:
+            config_keys[target] = published_config
         expect_failure(
             shaped(new_sources, [gate("single_family_off:vonr", "android_apns")]),
             "a single-family gate outside capabilities and CarrierConfig passed",
@@ -2661,6 +2672,23 @@ def check_old_selector_superseded() -> None:
     assert_true(not unapplied_valid("capabilities", [overlay], published), "the flag belongs to android_carrier_config")
     assert_true(not unapplied_valid("android_carrier_config", ["aosp"], published), "the flag needs the device overlays as a source")
     assert_true(not unapplied_valid("android_carrier_config", [overlay], {}), "the flag names a published key")
+
+    def sony_valid(section: str, sources: list[str], config: dict | None) -> bool:
+        evidence = {"sources": sources, "flags": [
+            {"section": section, "key": "wfc_spn_format_idx_int", "flag": "unapplied_on_sony_build"}]}
+        try:
+            validate_public_carrier_data.validate_flags(Path("x.json"), evidence, 0, None, config)
+        except validate_public_carrier_data.ValidationError:
+            return False
+        return True
+
+    sony = "sony_open_devices_aosp"
+    assert_true(sony_valid("android_carrier_config", [sony], published), "the validator takes Sony's flag on a published key")
+    assert_true(sony_valid("android_carrier_config", ["aosp", sony], published), "another family may source the profile")
+    assert_true(not sony_valid("capabilities", [sony], published), "Sony's flag belongs to android_carrier_config")
+    assert_true(not sony_valid("android_carrier_config", [overlay], published), "Sony's flag needs Sony Open Devices as a source")
+    assert_true(not sony_valid("android_carrier_config", [sony], {}), "Sony's flag names a published key")
+    assert_true(not unapplied_valid("android_carrier_config", [sony], published), "the LineageOS flag still needs the device overlays")
 
     # Round 57, item 2: an iccid block no open reader matches, in either lane, on a key or a capability.
     def no_reader_valid(section: str, key: str, sources: list[str], capabilities: dict | None, config: dict | None) -> bool:
