@@ -514,6 +514,21 @@ class GeneratorTest(unittest.TestCase):
     def test_validates(self) -> None:
         self.assertEqual(ocd.validate(self.root), [])
 
+    def test_a_data_update_that_flags_a_read_value_fails_nothing(self) -> None:
+        """Rule round 62, item 6, for the unapplied flags: the evidence index is
+        data, so a flag that lands on a value a proceed read covers goes to the
+        notes, and validate still passes."""
+        reads = [json.loads(p.read_text(encoding="utf-8")) for p in sorted((self.root / "devices/records/reads/group-a").glob("*.json"))]
+        read = next(r for r in reads if r["subject"] == "value" and r["verdict"] == "proceed" and r["profiles"])
+        flagged = {(read["profiles"][0], read["key"])}
+        self.assertEqual(ocd.validate(self.root, regenerate=False), [])
+        notes: list[str] = []
+        with mock.patch.object(ocd, "unapplied_values", return_value=flagged):
+            self.assertEqual(ocd.validate(self.root, regenerate=False, notes=notes), [])
+        flagged_notes = [n for n in notes if "unapplied_on_lineage_build" in n]
+        self.assertEqual(len(flagged_notes), 1, notes)
+        self.assertIn(read["profiles"][0], flagged_notes[0])
+
     def test_validate_takes_the_reach_check(self) -> None:
         """Rule round 61, item 3: refused fails validate, reported goes to the notes."""
         notes: list[str] = []
@@ -824,21 +839,22 @@ class Round31GroupATest(unittest.TestCase):
         self.assertEqual((served["reads"], [u["profile_id"] for u in status["unrecorded_basis"]]), ([], ["open.26207.c07dcc040b58"]))
 
     def test_a_value_resting_only_on_unapplied_blocks_gets_no_proceed(self) -> None:
-        """Rule round 56, item 1: the refusal lands before any further group
-        A read. The read is refused, and if one is there anyway it admits
-        nothing: the value stays pending and its SIMs stay on Google's value."""
+        """Rule round 56, item 1: a proceed read on such a value admits
+        nothing: the value stays pending and its SIMs stay on Google's value.
+        Since rule round 62, item 6 the read is reported, never refused: the
+        flag is data, and validate refuses a read only on the record."""
         profile = "open.26207.c07dcc040b58"
         marked = {(profile, "rtt_supported_bool")}
         where = "devices/records/reads/group-a/rtt_supported_bool.000000000001.json"
-        refused = ocd.group_a_unapplied_problems(group_a_read(), where, marked)
+        refused = ocd.group_a_unapplied_reports(group_a_read(), where, marked)
         self.assertEqual(len(refused), 1)
         self.assertIn(profile, refused[0])
         self.assertIn("unapplied_on_lineage_build", refused[0])
         # A hold, another key, an unmarked profile and a key read all pass.
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(verdict="hold"), where, marked), [])
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(key="allow_hold_call_during_emergency_bool"), where, marked), [])
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=["open.26201.13528695fee7"]), where, marked), [])
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(), where, set()), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(verdict="hold"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(key="allow_hold_call_during_emergency_bool"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(profiles=["open.26201.13528695fee7"]), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(), where, set()), [])
         profiles = tiny_profiles({"rtt_supported_bool": True}, [{"entry": "o2_de", "when": None}])
         digest = "sha256:" + "0" * 64
         served, status = ocd.group_a_documents(digest, profiles, self.LANE, {where: group_a_read()}, None, marked)
@@ -865,10 +881,10 @@ class Round31GroupATest(unittest.TestCase):
                     {"section": "capabilities", "key": "volte", "flag": "no_open_reader_match"}]}]}), encoding="utf-8")
             marked = ocd.unapplied_values(root)
         self.assertEqual(marked, {(profile, "rtt_supported_bool")})
-        refused = ocd.group_a_unapplied_problems(group_a_read(profiles=[profile]), where, marked)
+        refused = ocd.group_a_unapplied_reports(group_a_read(profiles=[profile]), where, marked)
         self.assertEqual(len(refused), 1)
         self.assertIn("no_open_reader_match", refused[0])
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
         profiles = tiny_profiles({"rtt_supported_bool": True}, [{"entry": "o2_de", "when": None}])
         read = group_a_read()
         digest = "sha256:" + "0" * 64
@@ -890,10 +906,10 @@ class Round31GroupATest(unittest.TestCase):
                     {"section": "android_carrier_config", "key": "rtt_supported_bool", "flag": "unapplied_on_sony_build"}]}]}), encoding="utf-8")
             marked = ocd.unapplied_values(root)
         self.assertEqual(marked, {(profile, "rtt_supported_bool")})
-        refused = ocd.group_a_unapplied_problems(group_a_read(profiles=[profile]), where, marked)
+        refused = ocd.group_a_unapplied_reports(group_a_read(profiles=[profile]), where, marked)
         self.assertEqual(len(refused), 1)
         self.assertIn("unapplied_on_sony_build", refused[0])
-        self.assertEqual(ocd.group_a_unapplied_problems(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
+        self.assertEqual(ocd.group_a_unapplied_reports(group_a_read(profiles=[profile], verdict="hold"), where, marked), [])
 
     def test_unapplied_values_come_from_the_evidence_index(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
