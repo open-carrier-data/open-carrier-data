@@ -328,7 +328,7 @@ Each `conflicts` and `quality_gates` item has `section`, `key`, `kind`, `observe
 
 `unapplied_on_lineage_build` (section `android_carrier_config`, rule round 56) marks a key whose every supporting observation is a block of a LineageOS device overlay that this device's LineageOS build did not apply. The overlay's own `Android.bp` does not set aapt2's `--keep-raw-values`, so the build compiles `mnc="01"` to the integer 1, the reader on that build compares `1` with the SIM's `01`, and the block matches no SIM there. The block's text still names a network, so OCD keeps its value at the code as written, never at the code the build reads back, and the file's real date stays. This finding rests on the LineageOS 23.2 tree and AOSP's aapt2, not on a lineage-24.0 build.
 
-The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: no read reaches `proceed` on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). The next fetch clears the mark by itself when the build file gains the option, with no value or ID change.
+The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: a `proceed` read admits nothing on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). The next fetch clears the mark by itself when the build file gains the option, with no value or ID change.
 
 So far every such value traces to `motorola_lyriq`. That file was imported from a Motorola stock build, according to its commit title. Stock was not read. The file's form suggests that stock kept the zeros. Nothing here says that stock applied any block.
 
@@ -338,13 +338,13 @@ So far every such value traces to `motorola_lyriq`. That file was imported from 
 
 This was shown with aapt2 on a made-up file and a read of Soong in the LineageOS 23.2 tree, not by a build of Sony's android-16 tree and not on a phone. It says nothing about stock Xperia, and it does not call the value wrong.
 
-The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: no read reaches `proceed` on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). The next fetch clears the mark by itself when the build file gains the option, with no value or ID change. A value that rests on unapplied blocks of both lanes carries both flags.
+The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: a `proceed` read admits nothing on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). The next fetch clears the mark by itself when the build file gains the option, with no value or ID change. A value that rests on unapplied blocks of both lanes carries both flags.
 
 ### Values only OCD's own matcher reaches
 
 `no_open_reader_match` (sections `android_carrier_config` and `capabilities`, rule round 57) marks a key or a capability whose every supporting observation is a block with an `iccid` selector from the LineageOS device overlays or from Sony Open Devices. On every AOSP and LineageOS reader read, `DefaultCarrierConfigService.checkFilters` has no `iccid` case, so such a block matches no SIM there, and no build flag revives it. That makes it a different thing from `unapplied_on_lineage_build`. The block's text names a SIM group, and OCD's own service reads the ICCID and does match it, so the value stays. The closed readers of the makers these blocks came from were not read.
 
-The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: no read reaches `proceed` on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). An `iccid` rule from Google or Apple has a reader of its own and gets no flag, and a value that such a source also supports gets none either.
+The flag is a label. It changes no value, conflict, capability, gate or served file, and a phone gets what it would get without it. Only group A reads it: a `proceed` read admits nothing on such a value (see [Group A reads](ocd-dataset.md#group-a-reads)). An `iccid` rule from Google or Apple has a reader of its own and gets no flag, and a value that such a source also supports gets none either.
 
 ## Device records
 

@@ -262,9 +262,12 @@ REACH_CLASSES = {
 }
 GROUP_A_READS_FILE = f"{DATASET_DIR}/group-a-reads.json"
 # Rule round 56, item 1: the evidence flag on a value whose every supporting
-# observation is an overlay block no LineageOS build applied. No read reaches
-# proceed on such a value (group_a_unapplied_problems) and no proceed admits it
-# (group_a_documents), so its SIMs stay on the Google-lane value.
+# observation is an overlay block no LineageOS build applied. No proceed admits
+# such a value (group_a_documents), so its SIMs stay on the Google-lane value.
+# A proceed read that covers one is reported by validate, never refused
+# (group_a_unapplied_reports): the flag comes from the evidence index, which
+# any data update can change, and validate refuses a read only on the record
+# itself (rule round 62, item 6).
 # Rule round 57, item 2: the same for no_open_reader_match, the flag on a value
 # whose every supporting observation is an iccid block of the device overlays
 # or of Sony Open Devices, which no AOSP or LineageOS reader read matches.
@@ -1399,17 +1402,25 @@ def unapplied_values(root: Path) -> set[tuple[str, str]]:
             if flag["flag"] in REFUSED_READ_FLAGS and flag["section"] == "android_carrier_config"}
 
 
-def group_a_unapplied_problems(read: dict[str, Any], where: str, unapplied: set[tuple[str, str]]) -> list[str]:
-    """A proceed value read may not cover a value that rests only on blocks no
-    LineageOS build applied (rule round 56, item 1), only on Sony blocks that
-    lose the mnc's leading zero (rule round 58, item 6), or only on iccid blocks
-    no AOSP or LineageOS reader read matches (rule round 57, item 2). A hold may."""
+def group_a_unapplied_reports(read: dict[str, Any], where: str, unapplied: set[tuple[str, str]]) -> list[str]:
+    """Report lines, never refusals: a proceed value read that covers a value
+    resting only on blocks no LineageOS build applied (rule round 56, item 1),
+    only on Sony blocks that lose the mnc's leading zero (rule round 58, item
+    6), or only on iccid blocks no AOSP or LineageOS reader read matches (rule
+    round 57, item 2). A hold is not reported.
+
+    UNAPPLIED comes from the evidence index, which a data update can change at
+    any time, so the line goes to validate's notes and fails nothing: a nightly
+    refresh or publish would otherwise stop with nobody at the keyboard (rule
+    round 62, item 6: validate refuses a read only on the record alone). The
+    safety stands in group_a_documents: no proceed admits such a value, so its
+    SIMs stay on the Google-lane value while the flag stands."""
     if read.get("subject") != "value" or read.get("verdict") != "proceed":
         return []
     marked = sorted(p for p in read.get("profiles") or [] if (p, read.get("key")) in unapplied)
     if not marked:
         return []
-    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS or Sony Open Devices build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; unapplied_on_sony_build, rule round 58; no_open_reader_match, rule round 57)"]
+    return [f"{where}: a proceed read covers {read.get('key')} on {', '.join(marked)}, a value resting only on blocks no LineageOS or Sony Open Devices build applied or no open reader matches (unapplied_on_lineage_build, rule round 56; unapplied_on_sony_build, rule round 58; no_open_reader_match, rule round 57); it admits nothing there while the flag stands"]
 
 
 def group_a_reach(profiles: dict[str, Any], lane: dict[str, Any] | None, reads_document: dict[str, Any]) -> list[dict[str, Any]]:
@@ -2457,8 +2468,8 @@ def validate(root: Path, base_manifest: dict[str, Any] | None = None, regenerate
         if isinstance(read, dict) and read.get("schema") == GROUP_A_READ_SCHEMA:
             problems = group_a_read_problems(read, path)
             out += problems or schema_check(root, read, "group-a-read.schema.json", path)
-            if not problems:
-                out += group_a_unapplied_problems(read, path, unapplied)
+            if not problems and notes is not None:
+                notes += group_a_unapplied_reports(read, path, unapplied)
         else:
             out += read_problems(read, path)
     registry = parsed["profiles"]["keys"]
