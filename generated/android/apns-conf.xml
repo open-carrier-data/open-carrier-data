@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:0e265a1766eec29c8429479af4dd42b46241202edbf09eac0556320bf250f8a2
+    data_digest: sha256:d19c06af16aec3136eb506f81007d5280e3fc5d237f26c7ffaa6897e3001c328
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -8697,6 +8697,7 @@
   <apn apn="chatrweb.apn" carrier="Chatr Internet" carrier_id="2055" mcc="302" mmsc="http://mms.chatrwireless.com" mmsport="80" mmsproxy="mmsproxy.chatrwireless.com" mnc="320" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,mms,supl" />
   <apn apn="chatrweb.apn" carrier="Chatr Internet" mcc="302" mmsc="http://mms.chatrwireless.com" mmsport="80" mmsproxy="mmsproxy.chatrwireless.com" mnc="320" protocol="IPV4V6" roaming_protocol="IP" type="default,mms,supl" />
   <apn apn="wap.davewireless.com" carrier="Mobilicity" mcc="302" mnc="320" password="password" type="default,supl" user="dave" />
+  <apn apn="wap.davewireless.com" carrier="wap.davewireless.com" mcc="302" mnc="320" type="default" />
   <apn apn="wap.davewireless.com" carrier="MOWAP" mcc="302" mnc="320" port="8080" proxy="10.100.3.4" type="default,supl" />
   <apn apn="mms.davewireless.com" carrier="mms.davewireless.com" mcc="302" mmsc="http://mms.mobilicity.net" mmsport="8080" mmsproxy="10.100.3.4" mnc="320" type="mms" />
   <apn apn="ims" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="IMS" mcc="302" mnc="320" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -9137,10 +9138,10 @@
   <apn apn="chatrweb.apn" carrier="chatr Internet" mcc="302" mnc="720" mvno_match_data="84" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="chatrweb.apn" carrier="chatr MMS" mcc="302" mmsc="http://mms.chatrwireless.com" mmsport="80" mmsproxy="mmsproxy.chatrwireless.com" mnc="720" mvno_match_data="84" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="data.apn" carrier="Rogers Tethering" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="ltedata.apn" carrier="Rogers Tethering" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="ltedata.apn" carrier="Rogers Tethering" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="default" />
-  <apn apn="ltemobile.apn" carrier="Rogers Internet" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV4V6" type="default" />
+  <apn apn="ltedata.apn" carrier="ltedata.apn" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="ltemobile.apn" carrier="Rogers Internet" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="ltemobile.apn" carrier="ltemobile.apn" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV4V6" type="default" />
   <apn apn="mobile.apn" carrier="Rogers Internet" mcc="302" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ltemobile.apn" carrier="Rogers MMS" mcc="302" mmsc="http://mms.gprs.rogers.com" mmsport="80" mmsproxy="mmsproxy.rogers.com" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="ltemobile.apn" carrier="Rogers MMS" mcc="302" mmsc="http://mms.gprs.rogers.com" mmsport="80" mmsproxy="mmsproxy.rogers.com" mnc="720" mvno_match_data="A1" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="mms" />
@@ -9362,6 +9363,7 @@
   <apn apn="pda.stm.sk.ca" carrier="pda.stm.sk.ca" mcc="302" mnc="990" mvno_match_data="5A" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
   <apn apn="pda.stm.sk.ca" carrier="SaskTel-MMS" mcc="302" mmsc="http://mms.sasktel.com" mmsport="80" mmsproxy="mig.sasktel.com" mnc="990" mvno_match_data="5A" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="IMS" mcc="302" mnc="990" mvno_match_data="5A" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="IMS" mcc="302" mnc="990" mvno_match_data="5A" mvno_type="gid" protocol="IP" type="ims" />
   <apn apn="spmtelecom" carrier="spmtelecom" carrier_id="1667" mcc="308" mnc="01" type="default" />
   <apn apn="spmtelecom" carrier="spmtelecom" mcc="308" mnc="01" type="default" />
   <apn apn="ims" bearer_bitmask="14|20" carrier="St. Pierre-et-Miquelon Télécom IMS" mcc="308" mnc="01" mtu="1300" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
@@ -9761,9 +9763,9 @@
   <apn apn="n.ispsn" carrier="Sprint" mcc="310" mmsc="http://mms.sprintpcs.com" mnc="120" type="default,mms" />
   <apn apn="n.t8.ispsn" carrier="Ting" mcc="310" mmsc="http://mms.plspictures.com" mmsport="80" mmsproxy="68.28.31.7" mnc="120" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,mms,supl" />
   <apn apn="otasn" carrier="OTA" mcc="310" mnc="120" password="null" protocol="IPV4V6" type="fota,ia" user="null" />
-  <apn apn="otasn" carrier="SPR OTA" mcc="310" mnc="120" protocol="IPV4V6" type="default" />
-  <apn apn="pamsn" carrier="SPR DUN" mcc="310" mnc="120" protocol="IPV4V6" type="default" />
-  <apn apn="x.ispsn" carrier="SPR Internet" mcc="310" mmsc="https://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="120" protocol="IPV4V6" type="default,mms" />
+  <apn apn="otasn" carrier="otasn" mcc="310" mnc="120" protocol="IPV4V6" type="default" />
+  <apn apn="pamsn" carrier="pamsn" mcc="310" mnc="120" protocol="IPV4V6" type="default" />
+  <apn apn="x.ispsn" carrier="x.ispsn" mcc="310" mmsc="https://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="120" protocol="IPV4V6" type="default,mms" />
   <apn apn="mms" carrier="MMS" mcc="310" mmsc="http://mms.plspictures.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="120" type="mms" />
   <apn apn="Sprint" authtype="3" carrier="Sprint MMS" mcc="310" mmsc="http://oap7.sprintpcs.com" mmsport="80" mmsproxy="68.28.31.7" mnc="120" password="*" server="*" type="mms" user="Sprint" />
   <apn apn="n.ispsn" carrier="Sprint internet" mcc="310" mmsc="http://mms.sprintpcs.com" mmsport="80" mmsproxy="68.28.31.7" mnc="120" protocol="IPV4V6" roaming_protocol="IPV4V6" type="hipri,mms,supl" />
@@ -9774,7 +9776,7 @@
   <apn apn="n.vmu.ispsn" carrier="Virgin Mobile" mcc="310" mmsc="http://mmsc.vmobl.com:8088/mms?" mmsport="80" mmsproxy="68.28.31.7" mnc="120" password="*" type="dun,fota,mms,supl" user="Sprint" />
   <apn apn="n.w1.ispsn" carrier="Credo Mobile" mcc="310" mmsc="http://mms.plspictures.com" mmsport="80" mmsproxy="68.28.31.7" mnc="120" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="n.f6.ispsn" bearer="14" carrier="FreedomPop LTE" mcc="310" mmsc="http://mms.sprintpcs.com" mmsport="80" mmsproxy="68.28.31.7" mnc="120" type="mms,supl" />
-  <apn apn="ims" carrier="SPR IMS" mcc="310" mnc="120" protocol="IPV4V6" type="ims" />
+  <apn apn="ims" carrier="ims" mcc="310" mnc="120" protocol="IPV4V6" type="ims" />
   <apn apn="pamsn" carrier="Sprint" mcc="310" mnc="120" type="dun" />
   <apn apn="otasn" carrier="otasn" mcc="310" mnc="120" protocol="IPV4V6" roaming_protocol="IPV4V6" type="fota" />
   <apn apn="sprint" bearer_bitmask="4|5|6|7|8|12" carrier="Sprint" mcc="310" mmsc="http://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="120" modem_cognitive="true" mvno_match_data="000001" mvno_type="gid" profile_id="1" type="cbs,default,dun,ims,supl" />
@@ -15489,7 +15491,7 @@
   <apn apn="hos.gci" carrier="GCI MMS" mcc="311" mmsc="http://mmsc.gci.net" mmsport="9201" mmsproxy="24.237.158.34" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="hos.gci" carrier="GCI" mcc="311" mmsc="http://mmsc.gci.net" mmsport="9201" mmsproxy="24.237.158.34" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="mms" />
   <apn apn="service" carrier="GCI Service EPDG" mcc="311" mmsc="http://mmsc.gci.net" mmsport="9201" mmsproxy="24.237.158.34" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IPV4V6" type="mms,xcap" />
-  <apn apn="mms.gci" carrier="GCI" mcc="311" mmsc="http://mmsc.gci.net" mmsport="9201" mmsproxy="24.237.158.34" mnc="370" mvno_match_data="0050" mvno_type="gid" type="mms" />
+  <apn apn="mms.gci" carrier="mms.gci" mcc="311" mmsc="http://mmsc.gci.net" mmsport="9201" mmsproxy="24.237.158.34" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="GCI IMS" mcc="311" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="GCI" mcc="311" mnc="370" mvno_match_data="0050" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="ims" />
   <apn apn="web.gci" carrier="GCI" mcc="311" mnc="370" mvno_match_data="0050" mvno_type="gid" type="dun" />
@@ -16884,8 +16886,8 @@
   <apn apn="otasn" carrier="OTA" mcc="312" mnc="530" password="null" protocol="IPV4V6" type="fota,ia" user="null" />
   <apn apn="otasn" carrier="otasn" mcc="312" mnc="530" protocol="IPV4V6" type="default" />
   <apn apn="cinet.spcs" bearer_bitmask="1|2|3|9|10|11|15|16" carrier="SPCS Global" mcc="312" mmsc="http://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="530" type="default,dun,mms,supl" />
-  <apn apn="pamsn" carrier="SPR DUN" mcc="312" mnc="530" protocol="IPV4V6" type="default" />
-  <apn apn="x.ispsn" carrier="SPR Internet" mcc="312" mmsc="https://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="530" protocol="IPV4V6" type="default,mms" />
+  <apn apn="pamsn" carrier="pamsn" mcc="312" mnc="530" protocol="IPV4V6" type="default" />
+  <apn apn="x.ispsn" carrier="x.ispsn" mcc="312" mmsc="https://mms.sprintpcs.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="530" protocol="IPV4V6" type="default,mms" />
   <apn apn="otasn" carrier="OTA" carrier_id="1788" mcc="312" mnc="530" password="null" protocol="IPV4V6" type="fota,ia" user="null" />
   <apn apn="mms" carrier="MMS" mcc="312" mmsc="http://mms.plspictures.com" mmsport="80" mmsproxy="oap7.sprintpcs.com" mnc="530" type="mms" />
   <apn apn="CdmaNai" bearer="6" carrier="Sprint CdmaNai" carrier_enabled="false" mcc="312" mmsc="http://mms.sprintpcs.com" mmsport="80" mmsproxy="68.28.31.7" mnc="530" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
@@ -17838,6 +17840,8 @@
   <apn apn="web.iusacellgsm.mx" authtype="0" carrier="web.iusacellgsm.mx" mcc="334" mnc="050" password="iusacellgsm" protocol="IP" type="default,supl" user="iusacellgsm" />
   <apn apn="web.iusacellgsm.mx" carrier="Iusacell Internet" carrier_id="1915" mcc="334" mnc="050" password="iusacellgsm" type="default,supl" user="iusacellgsm" />
   <apn apn="web.iusacellgsm.mx" carrier="Internet" mcc="334" mnc="050" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
+  <apn apn="supl.attmex.mx" carrier="Location" mcc="334" mnc="050" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="supl.attmex.mx" carrier="Location" mcc="334" mnc="050" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.attmex.mx" carrier="MMS" mcc="334" mmsc="http://mms.att.com.mx" mmsport="8080" mmsproxy="129.192.129.104" mnc="050" protocol="IP" roaming_protocol="IP" type="mms" />
   <apn apn="mms.attmex.mx" carrier="mms.attmex.mx" mcc="334" mmsc="http://mms.att.com.mx" mmsport="8080" mmsproxy="129.192.129.104" mnc="050" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="mms.iusacellgsm.mx" carrier="Iusacell MMS" carrier_id="1915" mcc="334" mmsc="http://mms.iusacell3g.com/" mnc="050" password="mmsiusacellgsm" type="mms" user="mmsiusacellgsm" />
@@ -17940,6 +17944,8 @@
   <apn apn="modem.attmex.mx" carrier="modem.attmex.mx" mcc="334" mnc="090" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="wap.nexteldata.com.mx" authtype="0" carrier="Navegación" carrier_id="1912" mcc="334" mnc="090" type="default" />
   <apn apn="wap.nexteldata.com.mx" authtype="0" carrier="wap.nexteldata.com.mx" mcc="334" mnc="090" type="default,supl" />
+  <apn apn="location.attmex.mx" carrier="Location" mcc="334" mnc="090" protocol="IP" roaming_protocol="IP" type="default" />
+  <apn apn="supl.attmex.mx" carrier="Location" mcc="334" mnc="090" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms.attmex.mx" carrier="MMS" mcc="334" mmsc="http://mms.att.com.mx" mmsport="8080" mmsproxy="129.192.129.104" mnc="090" type="mms" user_editable="false" />
   <apn apn="mms.attmex.mx" carrier="AT&amp;T" mcc="334" mmsc="http://mms.att.com.mx" mmsport="8080" mmsproxy="129.192.129.104" mnc="090" type="mms" />
   <apn apn="mms.attmex.mx" carrier="mms.attmex.mx" mcc="334" mmsc="http://mms.att.com.mx" mmsport="8080" mmsproxy="129.192.129.104" mnc="090" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" />
@@ -17956,6 +17962,7 @@
   <apn always_on="true" apn="asm" carrier="INTERNET" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" user_editable="false" />
   <apn apn="asm" carrier="INTERNET" carrier_id="2506" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun" />
   <apn apn="airbus1" carrier="Internet" mcc="334" mnc="130" protocol="IPV4V6" type="default" />
+  <apn apn="axtel" carrier="Internet" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="ims" carrier="IMS" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn always_on="true" apn="ims" bearer_bitmask="14|18|20" carrier="IMS" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" user_visible="false" />
   <apn apn="ims" bearer_bitmask="14|18|20" carrier="IMS" carrier_id="2506" mcc="334" mnc="130" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -22452,6 +22459,7 @@
   <apn apn="internet.mic1.com.lb" carrier="Alfa Internet" carrier_id="1920" mcc="415" mnc="01" password="mic1" type="default,supl" user="mic1" />
   <apn apn="internet.mic1.com.lb" carrier="ALFA_INTERNET" mcc="415" mnc="01" type="default,supl" />
   <apn apn="internet.mic1.com.lb" carrier="internet.mic1.com.lb" mcc="415" mnc="01" password="mic1" type="default,supl" user="mic1" />
+  <apn apn="Internet" carrier="Internet" mcc="415" mnc="01" type="default" />
   <apn apn="wap.mic1.com.lb" carrier="Alfawap" carrier_id="1920" mcc="415" mnc="01" password="mic1" port="80" proxy="192.168.23.50" type="default,supl" user="mic1" />
   <apn apn="wap.mic1.com.lb" carrier="wap.mic1.com.lb" mcc="415" mnc="01" password="mic1" port="80" proxy="192.168.23.50" type="default,supl" user="mic1" />
   <apn apn="mms.mic1.com.lb" carrier="Alfa MMS" carrier_id="1920" mcc="415" mmsc="http://mms.mic1.com.lb" mmsport="8080" mmsproxy="192.168.23.51" mnc="01" password="mic1" type="mms" user="mic1" />
@@ -22944,8 +22952,8 @@
   <apn apn="internet.golantelecom.net.il" carrier="GOLAN T" mcc="425" mnc="08" protocol="IPV4V6" type="dun" />
   <apn apn="internet.golantelecom.net.il" authtype="0" carrier="internet.golantelecom.net.il" mcc="425" mnc="08" protocol="IPV4V6" type="default" />
   <apn apn="internet.golantelecom.net.il" carrier="GolanTelecom Internet" carrier_id="1990" mcc="425" mnc="08" type="default,ia,supl" />
-  <apn apn="mms.golantelecom.net.il" authtype="0" carrier="mms.golantelecom.net.il" mcc="425" mmsc="http://mmsc.golantelecom.co.il" mmsport="80" mmsproxy="10.224.228.81" mnc="08" protocol="IPV4V6" type="mms" />
   <apn apn="mms.golantelecom.net.il" carrier="GolanTelecom MMS" carrier_id="1990" mcc="425" mmsc="http://mmsc.golantelecom.co.il" mmsport="80" mmsproxy="10.224.228.81" mnc="08" type="mms" />
+  <apn apn="mms.golantelecom.net.il" authtype="0" carrier="mms.golantelecom.net.il" mcc="425" mmsc="http://mmsc.golantelecom.co.il" mmsport="80" mmsproxy="10.224.228.81" mnc="08" protocol="IPV4V6" type="mms" />
   <apn apn="internet.golantelecom.net.il" authtype="0" carrier="internet.golantelecom.net.il" mcc="425" mnc="08" type="supl" />
   <apn apn="INTERNET" carrier="we" mcc="425" mnc="09" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="we" carrier="we" mcc="425" mnc="09" mvno_match_data="we" mvno_type="spn" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
@@ -22975,14 +22983,15 @@
   <apn apn="fastaccess" carrier="Internet free telecom" mcc="425" mnc="12" mvno_match_data="FreeTelecom" mvno_type="spn" type="default" />
   <apn apn="IMS" carrier="IMS" mcc="425" mnc="12" mvno_match_data="FreeTelecom" mvno_type="spn" protocol="IPV4V6" type="ims" />
   <apn apn="XCAP" carrier="XCAP" mcc="425" mnc="12" mvno_match_data="FreeTelecom" mvno_type="spn" protocol="IPV4V6" type="xcap" />
-  <apn apn="data.youphone.co.il" carrier="data.youphone.co.il" mcc="425" mmsc="http://192.168.220.15/servlets/mms" mmsport="80" mnc="14" protocol="IPV4V6" type="default,mms" />
   <apn apn="data.youphone.co.il" carrier="YouPhone" carrier_id="2169" mcc="425" mmsc="http://192.168.220.15/servlets/mms" mnc="14" type="default,ia,mms,supl" />
+  <apn apn="data.youphone.co.il" carrier="data.youphone.co.il" mcc="425" mmsc="http://192.168.220.15/servlets/mms" mmsport="80" mnc="14" protocol="IPV4V6" type="default,mms" />
   <apn apn="data.youphone.co.il" carrier="data.youphone.co.il" mcc="425" mmsc="http://192.168.220.15/servlets/mms" mmsport="80" mnc="14" type="supl" />
   <apn apn="hcminternet" carrier="Home Cellular Internet" carrier_id="2170" mcc="425" mnc="15" type="default,ia,supl" />
   <apn apn="hcminternet" carrier="hcminternet" mcc="425" mnc="15" protocol="IPV4V6" type="default" />
   <apn apn="hcmMMS" carrier="Home Cellular MMS" carrier_id="2170" mcc="425" mmsc="http://82.166.164.229:9000/mmsc" mmsport="8898" mmsproxy="82.166.164.229" mnc="15" type="mms" />
   <apn apn="hcmMMS" carrier="Home Cellular MMS" mcc="425" mmsc="http://82.166.164.229:9000/mmsc" mmsport="8898" mmsproxy="82.166.164.229" mnc="15" type="mms" />
   <apn apn="hcmMMS" carrier="MMS" mcc="425" mmsc="http://82.166.229:9000/mmsc" mmsport="8898" mmsproxy="82.166.164.229" mnc="15" protocol="IPV4V6" type="mms" />
+  <apn apn="hcmMMS" carrier="MMS" mcc="425" mmsc="http://82.166.229:9000/mmsc" mmsport="8898" mmsproxy="82.166.164.229" mnc="15" type="mms" />
   <apn apn="hcminternet" carrier="hcminternet" mcc="425" mnc="15" type="supl" />
   <apn apn="internet.rl" carrier="Rami Levi 3G" carrier_id="2171" mcc="425" mnc="16" type="default,ia,supl" />
   <apn apn="internet.rl" carrier="Rami Levi 3G" mcc="425" mnc="16" type="default,supl" />
@@ -23788,6 +23797,8 @@
   <apn apn="natcom" carrier="NATCOM" mcc="452" mnc="04" mvno_match_data="8950903" mvno_type="iccid" type="default,dun" />
   <apn apn="WAP" carrier="NATCOM" mcc="452" mmsc="http://natcom.mmsc.com" mmsport="8000" mmsproxy="192.168.3.134" mnc="04" mvno_match_data="8950903" mvno_type="iccid" type="mms" />
   <apn apn="metfone" carrier="Metfone" mcc="452" mnc="04" mvno_match_data="8985508" mvno_type="iccid" type="default,dun" />
+  <apn apn="metfone" carrier="METFONE GPRS" mcc="452" mnc="04" mvno_match_data="Metfone" mvno_type="spn" type="default" />
+  <apn apn="mms" carrier="METFONE MMS" mcc="452" mmsc="http://192.168.24.10:38090" mmsport="8080" mmsproxy="192.168.23.85" mnc="04" mvno_match_data="Metfone" mvno_type="spn" type="mms" />
   <apn apn="internet" carrier="Vietnamobile_GPRS3" carrier_id="1994" mcc="452" mnc="05" type="default,ia,supl" />
   <apn apn="internet" carrier="internet" mcc="452" mnc="05" type="default,supl" />
   <apn apn="wap" carrier="Vietnamobile_GPRS2" carrier_id="1994" mcc="452" mnc="05" type="default,supl" />
@@ -26214,6 +26225,7 @@
   <apn apn="hos" carrier="XCAP" mcc="605" mnc="03" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="hos" carrier="XCAP" mcc="605" mnc="03" protocol="IPV4V6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="web" carrier="libyanaweb" mcc="606" mnc="00" protocol="IPV4V6" roaming_protocol="IP" type="default,xcap" />
+  <apn apn="web" carrier="libyana wap" mcc="606" mnc="00" port="8000" proxy="192.168.8.148" type="default" />
   <apn apn="wap" carrier="wap" mcc="606" mnc="00" port="8000" proxy="192.168.8.148" type="default,supl" />
   <apn apn="default" carrier="Libyana" carrier_id="1973" mcc="606" mnc="00" type="default,supl" />
   <apn apn="default" carrier="Libyana" mcc="606" mnc="00" type="default,supl" />
@@ -26986,8 +26998,8 @@
   <apn apn="default" carrier="Airtel" mcc="650" mnc="10" type="default,supl" />
   <apn apn="mms" carrier="Airtel" mcc="650" mmsc="http://mms.mw.airtel.com:8002" mmsport="9401" mmsproxy="10.150.0.142" mnc="10" type="mms" />
   <apn apn="internet" carrier="Airtel" mcc="650" mnc="10" type="dun" />
-  <apn apn="internet" carrier="internet" mcc="651" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="internet" carrier="VCL Internet GPRS" carrier_id="2392" mcc="651" mnc="01" type="default,ia,supl" />
+  <apn apn="internet" carrier="internet" mcc="651" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default" />
   <apn apn="mms" carrier="VCL MMS GPRS" carrier_id="2392" mcc="651" mmsc="http://mmsc.vodacom4me.co.ls" mmsport="8080" mmsproxy="10.113.63.11" mnc="01" type="mms" />
   <apn apn="mms" carrier="VCL MMS GPRS" mcc="651" mmsc="http://mmsc.vodacom4me.co.ls" mmsport="8080" mmsproxy="10.113.63.11" mnc="01" type="mms" />
   <apn apn="mms" carrier="VCL MMS GPRS" mcc="651" mmsc="http://mmsc.vodacom4me.co.za/" mmsport="8080" mmsproxy="10.113.63.12" mnc="01" roaming_protocol="IPV4V6" type="mms" />
@@ -27027,7 +27039,7 @@
   <apn apn="internet" authtype="3" carrier="Vlive!" mcc="655" mnc="01" port="8080" proxy="196.6.128.12" type="default,supl" />
   <apn apn="lte.vodacom.za" carrier="MMS.Vodacom" carrier_id="24" mcc="655" mmsc="http://mmsc.vodacom4me.co.za" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="mms" />
   <apn apn="lte.vodacom.za" carrier="MMS.Vodacom" mcc="655" mmsc="http://mmsc.vodacom4me.co.za" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="mms" />
-  <apn apn="lte.vodacom.za" carrier="Vodacom" mcc="655" mmsc="http://mmsc.vodacom4me.co.za/" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="dun,mms" />
+  <apn apn="lte.vodacom.za" carrier="lte.vodacom.za" mcc="655" mmsc="http://mmsc.vodacom4me.co.za/" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="dun,mms" />
   <apn apn="mms.vodacom.net" carrier="MMS.Vodacom" carrier_id="24" mcc="655" mmsc="http://mmsc.vodacom4me.co.za" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="mms" />
   <apn apn="mms.vodacom.net" carrier="mms.vodacom.net" mcc="655" mmsc="http://mmsc.vodacom4me.co.za" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="mms" />
   <apn apn="mms.vodacom.net" authtype="3" carrier="Vlive!MMS" mcc="655" mmsc="http://mmsc.vodacom4me.co.za" mmsport="8080" mmsproxy="196.6.128.13" mnc="01" type="mms" />
@@ -27054,7 +27066,7 @@
   <apn apn="ims" carrier="Cell C" mcc="655" mnc="07" type="ims" />
   <apn apn="hos" carrier="hos" mcc="655" mnc="07" protocol="IPV4V6" roaming_protocol="IP" type="xcap" />
   <apn apn="vdata" carrier="virgin_internet" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" type="default" />
-  <apn apn="vdata" carrier="VIRGIN_INTERNET_1" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" port="8080" proxy="196.31.116.241" type="default,supl" />
+  <apn apn="vdata" carrier="vdata" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" port="8080" proxy="196.31.116.241" type="default,supl" />
   <apn apn="vdata" carrier="VIRGIN_INTERNET_2" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" port="9201" proxy="196.31.116.241" type="default,supl" />
   <apn apn="vdata" carrier="VIRGIN_INTERNET_1" carrier_id="2335" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" port="8080" proxy="196.31.116.241" type="default,ia,supl" />
   <apn apn="vdata" carrier="VIRGIN_INTERNET_2" carrier_id="2335" mcc="655" mnc="07" mvno_match_data="6550710" mvno_type="imsi" port="9201" proxy="196.31.116.241" type="default,ia,supl" />
@@ -27560,7 +27572,7 @@
   <apn apn="claro.pe" authtype="1" carrier="CLARO DATOS" carrier_id="1647" mcc="716" mnc="10" password="claro" type="ia" user="claro" />
   <apn apn="mms.claro.pe" authtype="1" carrier="CLARO MMS" carrier_id="1647" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="claro" />
   <apn apn="mms.claro.pe" authtype="1" carrier="CLARO MMS" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" protocol="IPV4V6" roaming_protocol="IPV4V6" type="mms" user="claro" />
-  <apn apn="mms.claro.pe" carrier="CLARO PERU" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" protocol="IP" type="mms" user="claro" />
+  <apn apn="mms.claro.pe" carrier="CLARO MMS" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" protocol="IP" roaming_protocol="IP" type="mms" user="claro" />
   <apn apn="mms.claro.pe" authtype="1" carrier="mms.claro.pe" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" type="mms" user="claro" />
   <apn apn="mms.claro.pe" carrier="CLARO MMS" mcc="716" mmsc="http://claro/servlets/mms" mmsport="80" mmsproxy="192.168.231.30" mnc="10" password="claro" protocol="IPV4V6" type="mms" user="claro" />
   <apn apn="ims" carrier="IMS" mcc="716" mnc="10" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
@@ -27579,6 +27591,7 @@
   <apn apn="entel.pe" carrier="entel.pe" mcc="716" mnc="17" type="default" />
   <apn apn="entel.pe" authtype="0" carrier="Entel PE" mcc="716" mnc="17" protocol="IP" type="default,supl" />
   <apn apn="entel.pe" carrier="Entel PE" mcc="716" mnc="17" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" />
+  <apn apn="supl.google.com" carrier="Location" mcc="716" mnc="17" type="default" />
   <apn apn="mms.entel.pe" authtype="0" carrier="Entel MMS" carrier_id="1930" mcc="716" mmsc="http://mms.entel.pe" mmsport="8080" mmsproxy="10.0.215.74" mnc="17" protocol="IP" type="mms" />
   <apn apn="mms.entel.pe" authtype="0" carrier="Entel MMS" mcc="716" mmsc="http://mms.entel.pe" mmsport="8080" mmsproxy="10.0.215.74" mnc="17" protocol="IP" type="mms" />
   <apn apn="mms.entel.pe" authtype="0" carrier="Entel MMS" mcc="716" mmsc="http://mms.nextel.pe" mnc="17" type="mms" />
@@ -28125,6 +28138,7 @@
   <apn apn="ims" carrier="IMS" mcc="730" mnc="21" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="bam.clarochile.cl" carrier="BAM Claro" mcc="730" mnc="23" password="clarochile" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,xcap" user="clarochile" />
   <apn apn="bam.clarochile.cl" carrier="BAM Claro" mcc="730" mnc="23" password="clarochile" protocol="IP" roaming_protocol="IP" type="default,xcap" user="clarochile" />
+  <apn apn="gtel.netline.net" carrier="Gtel" mcc="730" mnc="23" type="default" />
   <apn apn="mms.clarochile.cl" carrier="MMS Claro" mcc="730" mmsc="http://mms.clarochile.cl" mmsport="8080" mmsproxy="172.23.200.200" mnc="23" password="clarochile" type="mms" user="clarochile" />
   <apn apn="ims" carrier="IMS Claro" mcc="730" mnc="23" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="IMS Claro" mcc="730" mnc="23" protocol="IP" roaming_protocol="IP" type="ims" />
