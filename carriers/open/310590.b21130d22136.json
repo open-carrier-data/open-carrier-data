@@ -1,4 +1,22 @@
 {
+  "addons": {
+    "emergency_calling": {
+      "e911_routing_policy": "auto",
+      "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
+    },
+    "network_policy": {
+      "mobile_network_setting_menu_tokens": [
+        "-cdmasystemselect",
+        "-preferrednetworkmode",
+        "-voltecall_sim_mobility"
+      ],
+      "network_type_capability": "VZW-TFN-GLB-USA",
+      "voice_network_setting_style": "SystemSelectionAutoAB,SupportDataPopup"
+    },
+    "operator_display": {
+      "indicator_icon_branding": "VZW"
+    }
+  },
   "android_apns": [
     {
       "apn": "IMS",
@@ -16,6 +34,15 @@
         "ims"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "IMS",
+      "name": "Visible IMS NEW",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
     },
     {
       "apn": "VZWADMIN",
@@ -50,6 +77,16 @@
       "user_visible": false
     },
     {
+      "apn": "VZWAPP",
+      "mmsc": "http://mms.vzwreseller.com/servlets/mms",
+      "name": "Visible MMS NEW",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "mms"
+      ]
+    },
+    {
       "apn": "VZWEMERGENCY",
       "name": "Visible Emergency",
       "protocol": "IPV4V6",
@@ -58,6 +95,15 @@
         "emergency"
       ],
       "user_visible": false
+    },
+    {
+      "apn": "VZWINTERNET",
+      "name": "VZWINTERNET",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
+      "types": [
+        "default"
+      ]
     },
     {
       "apn": "VZWINTERNET",
@@ -206,7 +252,7 @@
     "vowifi": "supported",
     "wifi_calling_roaming": "supported"
   },
-  "display_name": "Visiblev Us",
+  "display_name": "FKR NEW",
   "match": {
     "gid1_prefixes": [
       "BAE2000000000000"

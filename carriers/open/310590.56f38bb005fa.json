@@ -4,10 +4,6 @@
       "e911_routing_policy": "auto",
       "emergency_dial_call_style": "BlockRecent,BlockLog,DisableMuteHold"
     },
-    "network_policy": {
-      "network_type_capability": "VZW-VZW-GLB-USA",
-      "voice_network_setting_style": "ManualSelectionWhenBootup,SystemSelectionAutoAB,SupportDataPopup"
-    },
     "operator_display": {
       "five_g_icon_branding": "UseDisplayTimer"
     }
@@ -18,6 +14,15 @@
       "name": "Verizon IMS",
       "protocol": "IPV4V6",
       "roaming_protocol": "IPV6",
+      "types": [
+        "ims"
+      ]
+    },
+    {
+      "apn": "IMS",
+      "name": "Verizon IMS",
+      "protocol": "IPV4V6",
+      "roaming_protocol": "IP",
       "types": [
         "ims"
       ]
