@@ -5,7 +5,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:7570b446a437c8bbb5801f5565776c36fd0cedc801436e20b74bfd94face74d1
+    data_digest: sha256:353944eb2b3ad7a38f4881e0805b064d507a6e301f8bab16581d35720c425fc2
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -8347,8 +8347,9 @@
   <apn apn="sp.koodo.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="Koodo SP" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV4V6" type="default,dun,ia,mms" user_editable="false" />
   <apn apn="sp.koodo.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17" carrier="Koodo SP" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,dun,ia,mms" user_editable="false" />
   <apn apn="sp.koodo.com" bearer_bitmask="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|17|20" carrier="Koodo SP" carrier_id="2020" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV4V6" type="default,dun,ia,mms" />
+  <apn apn="sp.koodo.com" carrier="sp.koodo.com" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,mms" />
   <apn apn="sp.koodo.com" carrier="Koodo" carrier_id="2020" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" type="default,ia,mms,supl" />
-  <apn apn="sp.koodo.com" carrier="Koodo" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IP" roaming_protocol="IP" type="default,mms" />
+  <apn apn="sp.koodo.com" carrier="Koodo MMS" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8080" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" type="mms" />
   <apn apn="services.koodo.com" bearer_bitmask="18" carrier="Koodo Services" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="mms,xcap" user_editable="false" />
   <apn apn="services.koodo.com" bearer_bitmask="18" carrier="Koodo Services" carrier_id="2020" mcc="302" mmsc="http://aliasredirect.net/proxy/koodo/mmsc" mmsport="8799" mmsproxy="mmscproxy.mobility.ca" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="mms,xcap" />
   <apn apn="ims" carrier="Koodo IMS" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" user_visible="false" />
@@ -8356,6 +8357,7 @@
   <apn apn="ims" bearer_bitmask="3|9|10|11|14|15|18|20" carrier="Koodo IMS" carrier_id="2020" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV6" type="ims" />
   <apn apn="ims" carrier="Koodo" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ims" carrier="Koodo IMS" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" type="ims" user_visible="false" />
+  <apn apn="sp.koodo.com" carrier="Internet" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" type="supl" />
   <apn apn="sp.koodo.com" carrier="Koodo Tether" carrier_id="2020" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" server="*" type="dun" />
   <apn apn="services.koodo.com" carrier="Koodo" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" />
   <apn apn="services.koodo.com" bearer_bitmask="1|2|3|9|10|11|13|14|15|20" carrier="Koodo Services" mcc="302" mnc="220" mvno_match_data="4B4F" mvno_type="gid" protocol="IPV6" roaming_protocol="IPV4V6" type="xcap" user_visible="false" />
@@ -13725,15 +13727,19 @@
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="xfinity" carrier_id="2556" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BA01640000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" />
   <apn apn="VZWINTERNET" carrier="VZWINTERNET" mcc="310" mnc="590" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="VZWAPP" carrier="Verizon CBS" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
+  <apn apn="IMS" carrier="Verizon IMS" mcc="310" mnc="590" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="ims" />
   <apn apn="IMS" carrier="Verizon IMS" mcc="310" mnc="590" mvno_match_data="BAE0000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" carrier_id="2146" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
+  <apn apn="VZWINTERNET" carrier="VZWINTERNET" mcc="310" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="default" />
   <apn apn="VZWINTERNET" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="0" protocol="IPV4V6" type="default,dun,supl" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" user_visible="false" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Visible" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" user_visible="false" />
   <apn apn="internet" authtype="3" bearer_bitmask="4|5|6|7|8|12" carrier="Visible" carrier_id="2146" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" type="cbs,default,dun,fota,mms,supl" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Visible" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" user_visible="false" />
   <apn apn="IMS" authtype="0" bearer_bitmask="14|18|20" carrier="Visible" carrier_id="2146" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="2" protocol="IPV4V6" roaming_protocol="IPV6" type="ia,ims" />
+  <apn apn="VZWAPP" carrier="Visible MMS NEW" mcc="310" mmsc="http://mms.vzwreseller.com/servlets/mms" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IP" type="mms" />
   <apn apn="VZWAPP" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" carrier_id="2146" max_conns="20" max_conns_time="300" mcc="310" mmsc="http://mms.vtext.com/servlets/mms" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="4" protocol="IPV4V6" type="cbs,mms" />
+  <apn apn="IMS" carrier="Visible IMS NEW" mcc="310" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV6" type="ims" />
   <apn apn="VZWEMERGENCY" carrier="Visible Emergency" mcc="310" mnc="590" mvno_match_data="BAE2000000000000" mvno_type="gid" protocol="IPV4V6" roaming_protocol="IPV4V6" type="emergency" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" user_visible="false" />
   <apn apn="VZWADMIN" authtype="0" bearer_bitmask="1|2|3|9|10|11|13|14|15|18|20" carrier="Visible" carrier_id="2146" max_conns="20" max_conns_time="300" mcc="310" mnc="590" modem_cognitive="true" mvno_match_data="BAE2000000000000" mvno_type="gid" profile_id="3" protocol="IPV4V6" type="fota" />
@@ -24655,13 +24661,17 @@
   <apn apn="ctwap" authtype="3" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="13" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,dun,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="cmwap" carrier="中国移动 (China Mobile) WAP&amp;MMS" carrier_id="1435" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="13" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="中国移动 (China Mobile) NET IMS" carrier_id="1435" mcc="460" mnc="13" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
-  <apn apn="cbnet" carrier="cbnet" mcc="460" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,supl,xcap" />
+  <apn apn="cbnet" carrier="cbnet" mcc="460" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,dun,ia,supl,xcap" />
+  <apn apn="cmwap" carrier="中国广电 (CBN) NET MMS" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="15" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="IMS" carrier="中国广电" mcc="460" mnc="15" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="cmnet" carrier="CMCC Internet" mcc="460" mnc="20" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" />
   <apn apn="cmwap" carrier="CMCC HTTP" mcc="460" mnc="20" password="wap" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="default" user="wap" />
   <apn apn="cmwap" carrier="CMCC MMS" mcc="460" mmsc="http://mmsc.monternet.com" mnc="20" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
   <apn apn="ims" carrier="ims" mcc="460" mnc="20" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
+  <apn apn="cmnet" carrier="中国广电 (CBN) NET" mcc="460" mnc="60" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,ia,supl,xcap" />
+  <apn apn="cmwap" carrier="中国广电 (CBN) NET MMS" mcc="460" mmsc="http://mmsc.monternet.com" mmsport="80" mmsproxy="10.0.0.172" mnc="60" port="80" protocol="IPV4V6" proxy="10.0.0.172" roaming_protocol="IPV4V6" type="mms" />
+  <apn apn="ims" carrier="中国广电 (CBN) NET IMS" mcc="460" mnc="60" protocol="IPV4V6" roaming_protocol="IPV4V6" type="ims" />
   <apn apn="ctnet" authtype="3" carrier="中国电信互联网设置CTNET" mcc="460" mnc="99" password="vnet.mobi" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,supl" user="ctnet@mycdma.cn" />
   <apn apn="ctwap" authtype="2" carrier="中国电信WAP设置CTWAP" mcc="460" mmsc="http://mmsc.vnet.mobi" mmsport="80" mmsproxy="10.0.0.200" mnc="99" password="vnet.mobi" port="80" proxy="10.0.0.200" type="default,mms,supl" user="ctwap@mycdma.cn" />
   <apn apn="internet" carrier="遠傳電信(Far EasTone) (Internet)" carrier_id="1881" mcc="466" mnc="01" protocol="IPV4V6" roaming_protocol="IPV4V6" type="default,hipri,supl" />

@@ -7,7 +7,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:7570b446a437c8bbb5801f5565776c36fd0cedc801436e20b74bfd94face74d1
+    data_digest: sha256:353944eb2b3ad7a38f4881e0805b064d507a6e301f8bab16581d35720c425fc2
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -4176,6 +4176,11 @@
   <carrier_config mcc="244" mnc="47" name="Erillisverkot">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.24483.2c5d0c2e3116 -->
+  <carrier_config mcc="244" mnc="83" name="Carrier 24483">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
   <!-- open.24491.4c3880f70fe0 -->
   <carrier_config mcc="244" mnc="91" name="Telia">
@@ -17726,7 +17731,7 @@
     <int name="volte_replacement_rat_int" value="6" />
   </carrier_config>
   <!-- open.46060.cc7d28cf9a4f -->
-  <carrier_config mcc="460" mnc="60" name="Carrier 46060">
+  <carrier_config mcc="460" mnc="60" name="中国广电 (CBN) NET">
     <string-array name="carrier_metered_apn_types_strings" num="3">
       <item value="default" />
       <item value="supl" />
