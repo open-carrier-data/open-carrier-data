@@ -256,12 +256,23 @@ jobs:
             cat "$RUNNER_TEMP/carrier-config-diff.txt"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+      # The hosted image has no xmllint, so it comes from the runner's package
+      # mirror. A mirror that does not resolve for a moment failed this check on
+      # 2026-11-11 and with it the publish (private #315): the install is tried
+      # five times over about two and a half minutes before the check fails.
       - name: Check the APN file against LineageOS's apns-conf.xsd
         run: |
-          if ! command -v xmllint >/dev/null; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq libxml2-utils
-          fi
+          attempt=1
+          while ! command -v xmllint >/dev/null; do
+            sudo apt-get update -qq || true
+            sudo apt-get install -y -qq -o Acquire::Retries=3 libxml2-utils && break
+            if [ "$attempt" -ge 5 ]; then
+              echo "::error::xmllint could not be installed in 5 attempts: the runner's package mirror did not answer."
+              exit 1
+            fi
+            sleep $((attempt * 15))
+            attempt=$((attempt + 1))
+          done
           xmllint --noout --schema tools/lineageos/apns-conf.xsd \
             generated/android/apns-conf.xml
 
