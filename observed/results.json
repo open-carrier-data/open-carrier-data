@@ -2,5 +2,47 @@
   "schema_version": 1,
   "description": "What people reported from OCD Android, as device > carrier > plan (rule round 47, item 4). Each result is one report's or several reports' claim about one entry of OCD's data on one model, firmware, ROM and IMS stack, on one OCD carrier profile, with the plan the person chose or unknown. Reported, not checked by OCD: anyone can open an issue. A result past old_after is old. No result says what a tariff includes, and none is proof for another SIM. Phones and ROM builds never read this file; it changes no carrier value. Rebuilt from the current report issues, so a deleted issue drops out.",
   "verification": "unverified",
-  "devices": []
+  "devices": [
+    {
+      "device": {
+        "firmware": "CP2A.260605.016 1793218910",
+        "ims_stack": "aosp_imsstack",
+        "model": "SM-G981B",
+        "rom_family": "lineageos",
+        "rom_line": "android-17"
+      },
+      "carriers": [
+        {
+          "carrier": "open.26203.ec645827a22d",
+          "plans": [
+            {
+              "plan": "unknown",
+              "results": [
+                {
+                  "entry": "volte:on",
+                  "result": "failed",
+                  "tested_on": "2026-10-28",
+                  "old_after": "2027-01-26",
+                  "newer_firmware_has_results": false,
+                  "accounts": 1,
+                  "contested": true,
+                  "status": "reported, not checked by OCD"
+                },
+                {
+                  "entry": "vowifi:on",
+                  "result": "signed_in",
+                  "tested_on": "2026-10-28",
+                  "old_after": "2027-01-26",
+                  "newer_firmware_has_results": false,
+                  "accounts": 1,
+                  "contested": false,
+                  "status": "reported, not checked by OCD"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

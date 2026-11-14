@@ -8,10 +8,10 @@
     "retested_by_ocd": "Always null. No account or list gives a result a stronger status: every result reads \"reported, not checked by OCD\" (rule round 47, item 2). This field leaves the file once the app without it is on the phones."
   },
   "reports": {
-    "counted": 0,
+    "counted": 1,
     "duplicate": 0,
     "expired": 0,
-    "held": 1,
+    "held": 0,
     "superseded": 2
   },
   "cells": [
@@ -28,10 +28,34 @@
         "android_major": 17
       },
       "entry": "volte:on",
-      "reported": null,
-      "contested": null,
+      "reported": {
+        "status": "reported, not checked by OCD",
+        "count": 1,
+        "results": {
+          "works": 0,
+          "signed_in": 0,
+          "service_off": 0,
+          "not_possible": 0,
+          "failed": 1,
+          "not_tested": 0
+        },
+        "first_report": "2026-10-30",
+        "last_report": "2026-10-30",
+        "issues": [
+          339
+        ]
+      },
+      "contested": {
+        "status": "contested: a clean measured failure was reported",
+        "count": 1,
+        "first_report": "2026-10-30",
+        "last_report": "2026-10-30",
+        "issues": [
+          339
+        ]
+      },
       "retested_by_ocd": null,
-      "held": 1,
+      "held": 0,
       "verification": "unverified"
     },
     {
@@ -47,10 +71,26 @@
         "android_major": 17
       },
       "entry": "vowifi:on",
-      "reported": null,
+      "reported": {
+        "status": "reported, not checked by OCD",
+        "count": 1,
+        "results": {
+          "works": 0,
+          "signed_in": 1,
+          "service_off": 0,
+          "not_possible": 0,
+          "failed": 0,
+          "not_tested": 0
+        },
+        "first_report": "2026-10-30",
+        "last_report": "2026-10-30",
+        "issues": [
+          339
+        ]
+      },
       "contested": null,
       "retested_by_ocd": null,
-      "held": 1,
+      "held": 0,
       "verification": "unverified"
     }
   ]
