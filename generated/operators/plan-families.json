@@ -2,7 +2,7 @@
  "android_carrier_list_version": 134217778,
  "counts": {
   "families": 41,
-  "profiles": 97,
+  "profiles": 98,
   "with_profile": 38
  },
  "description": "Migration step 7 of the device > carrier > plan model (rule round 47, item 4): the plan families a SIM itself shows, from the child IDs of Android's pinned carrier ID table, as labels over the OCD profiles that already state their rules. segment is read from Android's name: prepaid, postpaid, 5g, 5g_sa or business; other marks a child that names something else, such as a host network. profiles lists the OCD profiles inside the child's rules, parent_profiles the ones that name the parent's ID, and rules_without_profile counts the child's rules no profile states. A plan family stays a selector in carrier data: it is never a new SIM group or a matching key, nothing here changes a value, and phones never read this file.",
@@ -199,6 +199,7 @@
    "parent_profiles": [],
    "profiles": [
     "open.310280.3471c1073329",
+    "open.310280.bea79ea120c4",
     "open.310410.574f87849a32",
     "open.310950.a80116961999",
     "open.311180.b7030660ad1c"

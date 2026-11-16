@@ -7,7 +7,7 @@
     SPDX-License-Identifier: CC0-1.0
     The project waives its rights in these derived facts; DATA-LICENSE.md
     in the repository records each source's own terms.
-    data_digest: sha256:98334a6695720b55da6c632bec03c07294c7f53a36ececc92ee77dfbc109d364
+    data_digest: sha256:c30168c85e0fa3587582f455c352548da30b1705b2ab2c5daaced12cec69b3f9
     checks_through: 2026-07-14
     stale_after: 2027-01-10
 -->
@@ -87,6 +87,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -318,6 +319,7 @@
   <!-- open.20433.6085a49814e0 -->
   <carrier_config mcc="204" mnc="33" name="Truphone">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.20469.b3f8cd93525e -->
@@ -735,8 +737,14 @@
     <int name="maxSubjectLength" value="80" />
     <int name="smsToMmsTextThreshold" value="6" />
   </carrier_config>
+  <!-- open.20812.03f738d8f616 -->
+  <carrier_config mcc="208" mnc="12" name="Truphone">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.20813.185a15b5da9a -->
   <carrier_config mcc="208" mnc="13" name="ACCESS DATA">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -871,6 +879,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -882,6 +891,7 @@
   <!-- open.20827.a9ffc7cfe26b -->
   <carrier_config mcc="208" mnc="27" name="Coriolis">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
@@ -1053,6 +1063,13 @@
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="hide_ims_apn_bool" value="true" />
   </carrier_config>
+  <!-- open.20899.e33c2379e864 -->
+  <carrier_config mcc="208" mnc="99" name="Carrier 20899">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.21210.6c5ca4bd5bcd -->
   <carrier_config mcc="212" mnc="10" name="Monaco Telecom">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -1153,6 +1170,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1206,6 +1224,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1320,6 +1339,8 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.21421.a8026648bb07 -->
   <carrier_config mcc="214" mnc="21" name="JAZZTEL">
@@ -1352,9 +1373,16 @@
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
+  <!-- open.21424.0af74c4d993c -->
+  <carrier_config mcc="214" mnc="24" name="Eroski Móvil">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.21427.89a006a7e580 -->
   <carrier_config mcc="214" mnc="27" name="Truphone">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.21432.39e0e7d42b5a -->
   <carrier_config mcc="214" mnc="32" name="Tuenti">
@@ -1430,6 +1458,7 @@
   <carrier_config mcc="216" mnc="03" name="DIGI HU">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1540,6 +1569,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1607,6 +1637,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -1720,7 +1751,6 @@
   <carrier_config mcc="222" mnc="07" name="Kena Mobile">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
-    <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -2135,6 +2165,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
@@ -2272,7 +2303,9 @@
   </carrier_config>
   <!-- open.23099.64f085f86907 -->
   <carrier_config mcc="230" mnc="99" name="GPRS">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.23101.94e10df99074 -->
@@ -2994,6 +3027,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="10" />
   </carrier_config>
   <!-- open.23426.56c5d40b2273 -->
@@ -3978,6 +4012,7 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.24208.8fa320141bd3 -->
   <carrier_config mcc="242" mnc="08" name="TDC">
@@ -4096,6 +4131,7 @@
   </carrier_config>
   <!-- open.244083.6be0bdc5b7dd -->
   <carrier_config mcc="244" mnc="083" name="Carrier 244083">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
@@ -4160,6 +4196,9 @@
   </carrier_config>
   <!-- open.24436.51e7bcf16e27 -->
   <carrier_config mcc="244" mnc="36" name="Carrier 24436">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
   </carrier_config>
   <!-- open.24445.9e57bf93f2f2 -->
@@ -4273,6 +4312,12 @@
     <boolean name="rtt_supported_bool" value="true" />
     <boolean name="rtt_supported_while_roaming_bool" value="true" />
     <int name="wfc_spn_format_idx_int" value="1" />
+  </carrier_config>
+  <!-- open.24608.a76176b61c42 -->
+  <carrier_config mcc="246" mnc="08" name="Carrier 24608">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
   <!-- open.24701.35db60488459 -->
   <carrier_config mcc="247" mnc="01" name="LMT">
@@ -4501,6 +4546,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -4574,6 +4620,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -4663,6 +4710,7 @@
   </carrier_config>
   <!-- open.25902.745900f1bc67 -->
   <carrier_config mcc="259" mnc="02" name="Moldcell">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -4671,6 +4719,7 @@
   <!-- open.25915.5290aad32bdd -->
   <carrier_config mcc="259" mnc="15" name="IDC">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enhanced_4g_lte_on_by_default_bool" value="false" />
     <string name="iwlan.epdg_static_address_string">epdg.epc.mnc015.mcc259.pub.3gppnetwork.org</string>
     <string-array name="read_only_apn_types_string_array" num="0">
@@ -4855,6 +4904,7 @@
   <!-- open.26033.76bbf3fa9de7 -->
   <carrier_config mcc="260" mnc="33" name="Truphone">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.26034.1d60ad1182d9 -->
   <carrier_config mcc="260" mnc="34" name="Carrier 26034">
@@ -5221,6 +5271,11 @@
   <carrier_config mcc="262" mnc="25" name="Mtel De">
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="ims.sip_over_ipsec_enabled_bool" value="false" />
+  </carrier_config>
+  <!-- open.26242.fa2945c3d2cf -->
+  <carrier_config mcc="262" mnc="42" name="Truphone">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.26277.b08a9533d50b -->
   <carrier_config mcc="262" mnc="77" name="E-Plus">
@@ -5892,6 +5947,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -6208,6 +6264,8 @@
   </carrier_config>
   <!-- open.29402.0f86f1cb38aa -->
   <carrier_config mcc="294" mnc="02" name="ONE">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -6340,6 +6398,9 @@
   <!-- open.302221.f52cf205e8a4 -->
   <carrier_config mcc="302" mnc="221" name="TELUS">
     <boolean name="always_play_remote_hold_tone_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -6348,6 +6409,10 @@
   </carrier_config>
   <!-- open.302222.65aae3b006b6 -->
   <carrier_config mcc="302" mnc="222" name="TELUS">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+    <boolean name="enabledMMS" value="true" />
     <int name="maxMessageSize" value="614400" />
     <int name="recipientLimit" value="20" />
   </carrier_config>
@@ -6438,6 +6503,7 @@
   </carrier_config>
   <!-- open.302500.2892106e91c7 -->
   <carrier_config mcc="302" mnc="500" name="Videotron">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -6505,6 +6571,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="true" />
     <boolean name="enableGroupMms" value="true" />
@@ -6534,6 +6601,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -6558,6 +6626,7 @@
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
@@ -6607,6 +6676,10 @@
   </carrier_config>
   <!-- open.302690.a39ea94886ea -->
   <carrier_config mcc="302" mnc="690" name="Bell IoT CC">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="ims_conference_size_limit_int" value="5" />
     <boolean name="is_ims_conference_size_enforced_bool" value="true" />
   </carrier_config>
@@ -6646,6 +6719,7 @@
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
@@ -6687,6 +6761,13 @@
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
     <int name="wfc_spn_format_idx_int" value="1" />
+  </carrier_config>
+  <!-- open.302820.5d22ee0bdd60 -->
+  <carrier_config mcc="302" mnc="820" name="Carrier 302820">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.302880.1dd6102129da -->
   <carrier_config mcc="302" mnc="880" name="Bell Mobility">
@@ -6755,6 +6836,11 @@
     <boolean name="rtt_supported_bool" value="true" />
     <int name="smsToMmsTextThreshold" value="6" />
     <int name="volte_replacement_rat_int" value="6" />
+  </carrier_config>
+  <!-- open.310002.222632e14bb3 -->
+  <carrier_config mcc="310" mnc="002" name="Verizon">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.310004.7d6255ffa15e -->
   <carrier_config mcc="310" mnc="004" name="Verizon">
@@ -7056,6 +7142,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -8742,6 +8829,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -8775,6 +8863,13 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="rtt_supported_bool" value="true" />
+  </carrier_config>
+  <!-- open.310720.7a05cfa34ad5 -->
+  <carrier_config mcc="310" mnc="720" name="Carrier 310720">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.310750.9939ef837034 -->
   <carrier_config mcc="310" mnc="750" name="Appalachian">
@@ -9062,6 +9157,7 @@
   <carrier_config mcc="310" mnc="980" name="ATT Broadband">
     <boolean name="allow_merging_rtt_calls_bool" value="true" />
     <boolean name="carrier_allow_turnoff_ims_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="enableSMSDeliveryReports" value="false" />
@@ -10596,6 +10692,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="cdma_3waycall_flash_delay_int" value="200" />
     <boolean name="editable_wfc_mode_bool" value="false" />
     <boolean name="editable_wfc_roaming_mode_bool" value="true" />
@@ -11849,7 +11946,6 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="true" />
-    <boolean name="carrier_supports_ss_over_ut_bool" value="false" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -11904,6 +12000,11 @@
     <int name="recipientLimit" value="30" />
     <int name="smsToMmsTextThreshold" value="-1" />
   </carrier_config>
+  <!-- open.334240.47e76b6c95ca -->
+  <carrier_config mcc="334" mnc="240" name="Carrier 334240">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.33430.a0b4af088105 -->
   <carrier_config mcc="334" mnc="30" name="Movistar">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -11942,6 +12043,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -12162,6 +12264,7 @@
   <!-- open.37002.ded18e6e365d -->
   <carrier_config mcc="370" mnc="02" name="Claro">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -12308,6 +12411,7 @@
   </carrier_config>
   <!-- open.40211.72617c493e3a -->
   <carrier_config mcc="402" mnc="11" name="B-Mobile">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -12321,6 +12425,8 @@
   <!-- open.40400.59cef7a58fe6 -->
   <carrier_config mcc="404" mnc="00" name="MTS MODEM">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.40401.5be8be099267 -->
   <carrier_config mcc="404" mnc="01" name="Vodafone">
@@ -15108,6 +15214,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -15165,6 +15272,8 @@
   <!-- open.41008.abac4c93aff2 -->
   <carrier_config mcc="410" mnc="08" name="Axis">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.410092.a27e7cf41cc5 -->
   <carrier_config mcc="410" mnc="092" name="MOD">
@@ -15206,6 +15315,7 @@
   </carrier_config>
   <!-- open.41301.8e87e97e3b3e -->
   <carrier_config mcc="413" mnc="01" name="Mobitel">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -15286,6 +15396,7 @@
   </carrier_config>
   <!-- open.41409.5a4be54c052e -->
   <carrier_config mcc="414" mnc="09" name="MYTEL">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
@@ -15296,6 +15407,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -15394,6 +15506,7 @@
   </carrier_config>
   <!-- open.41805.b868636c5f79 -->
   <carrier_config mcc="418" mnc="05" name="Asiacell">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -15405,6 +15518,7 @@
   </carrier_config>
   <!-- open.41820.d2f22e136180 -->
   <carrier_config mcc="418" mnc="20" name="Zain">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -15414,6 +15528,9 @@
   </carrier_config>
   <!-- open.41830.6d2e37fecba6 -->
   <carrier_config mcc="418" mnc="30" name="Zain">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
@@ -15462,6 +15579,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -15507,6 +15625,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="enabledMMS" value="true" />
@@ -15562,6 +15681,7 @@
   </carrier_config>
   <!-- open.42005.0e1fa3249fa4 -->
   <carrier_config mcc="420" mnc="05" name="Virgin">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -15629,6 +15749,7 @@
   </carrier_config>
   <!-- open.42206.cc2f71348827 -->
   <carrier_config mcc="422" mnc="06" name="Vodafone OM">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -15712,6 +15833,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -15915,6 +16037,7 @@
       <item value="supl" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
@@ -15940,8 +16063,10 @@
   </carrier_config>
   <!-- open.42707.56008ec92885 -->
   <carrier_config mcc="427" mnc="07" name="MOD">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.42801.00b8af6c4d89 -->
@@ -15980,6 +16105,7 @@
   <carrier_config mcc="429" mnc="01" name="Nepal Telecom">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16221,6 +16347,7 @@
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="disable_dun_apn_while_roaming_with_preset_apn_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -16623,6 +16750,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableMMSDeliveryReports" value="false" />
@@ -16730,6 +16858,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -16744,6 +16873,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16794,6 +16924,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16822,6 +16953,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16845,6 +16977,7 @@
   <carrier_config mcc="454" mnc="03" name="3">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16899,6 +17032,7 @@
   <!-- open.45406.b0c8a8bd479c -->
   <carrier_config mcc="454" mnc="06" name="SmarTone">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16919,6 +17053,7 @@
   </carrier_config>
   <!-- open.45407.6e7702aa0978 -->
   <carrier_config mcc="454" mnc="07" name="中國聯通">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16928,6 +17063,7 @@
   <!-- open.45408.7ae605f324ca -->
   <carrier_config mcc="454" mnc="08" name="Truphone">
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.45409.53b7baddc029 -->
   <carrier_config mcc="454" mnc="09" name="SCT">
@@ -16945,6 +17081,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16973,6 +17110,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -16991,6 +17129,7 @@
   <carrier_config mcc="454" mnc="13" name="CMHK">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17007,6 +17146,7 @@
   <carrier_config mcc="454" mnc="14" name="3-DB-GPRS">
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17023,6 +17163,7 @@
   <!-- open.45415.5b317f2beaa7 -->
   <carrier_config mcc="454" mnc="15" name="SmarTone">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17046,6 +17187,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17067,6 +17209,7 @@
   <!-- open.45417.3d47850166ca -->
   <carrier_config mcc="454" mnc="17" name="SmarTone">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17090,6 +17233,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17114,6 +17258,7 @@
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17136,6 +17281,7 @@
   <carrier_config mcc="454" mnc="20" name="csl">
     <boolean name="carrier_default_wfc_ims_roaming_enabled_bool" value="false" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17177,6 +17323,11 @@
     <int name="wfc_data_spn_format_idx_int" value="1" />
     <int name="wfc_spn_format_idx_int" value="1" />
   </carrier_config>
+  <!-- open.454299.3dc6b234a27f -->
+  <carrier_config mcc="454" mnc="299" name="Carrier 454299">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.45430.97b47b9361cb -->
   <carrier_config mcc="454" mnc="30" name="HKIA-5G">
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
@@ -17192,6 +17343,7 @@
   </carrier_config>
   <!-- open.45431.9aed89961092 -->
   <carrier_config mcc="454" mnc="31" name="CTExcel">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17225,6 +17377,7 @@
   </carrier_config>
   <!-- open.45501.0853f15f7db6 -->
   <carrier_config mcc="455" mnc="01" name="CTM">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -17273,6 +17426,7 @@
   </carrier_config>
   <!-- open.45504.fa0ed369e7e9 -->
   <carrier_config mcc="455" mnc="04" name="CTM">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enableGroupMms" value="false" />
@@ -17337,8 +17491,15 @@
   <carrier_config mcc="456" mnc="04" name="qb">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
+  <!-- open.45605.61f5c822c525 -->
+  <carrier_config mcc="456" mnc="05" name="Smart">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.45606.803b2f7f6796 -->
   <carrier_config mcc="456" mnc="06" name="Smart">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -17357,6 +17518,7 @@
   <!-- open.45611.ec4d5d62ab38 -->
   <carrier_config mcc="456" mnc="11" name="Excell">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -17393,6 +17555,7 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17419,6 +17582,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17437,6 +17601,7 @@
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17464,6 +17629,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17484,6 +17650,7 @@
   <carrier_config mcc="460" mnc="04" name="中国移动 (China Mobile) NET">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17505,6 +17672,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17528,6 +17696,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17543,6 +17712,7 @@
   <carrier_config mcc="460" mnc="07" name="中国移动 (China Mobile) GPRS">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17561,6 +17731,7 @@
   <carrier_config mcc="460" mnc="08" name="中国移动 (China Mobile) GPRS">
     <boolean name="allow_hold_call_during_emergency_bool" value="false" />
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17587,6 +17758,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17619,6 +17791,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17643,6 +17816,7 @@
     <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17712,6 +17886,7 @@
       <item value="default" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17738,6 +17913,12 @@
       <item value="dun" />
     </string-array>
     <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.46099.62a012a954a7 -->
+  <carrier_config mcc="460" mnc="99" name="中国电信互联网设置CTNET">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
   <!-- open.46601.9fbca613688c -->
   <carrier_config mcc="466" mnc="01" name="遠傳電信(Far EasTone) (Internet)">
@@ -17831,6 +18012,7 @@
       <item value="mms" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_use_ims_first_for_emergency_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -17852,6 +18034,7 @@
   </carrier_config>
   <!-- open.46612.cdf135f2d252 -->
   <carrier_config mcc="466" mnc="12" name="Carrier 46612">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
@@ -17961,6 +18144,7 @@
       <item value="mms" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -17986,6 +18170,7 @@
   </carrier_config>
   <!-- open.47003.a4503b9c4ae8 -->
   <carrier_config mcc="470" mnc="03" name="Banglalink">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18188,6 +18373,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18255,6 +18441,7 @@
     </string-array>
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="hide_enhanced_4g_lte_bool" value="true" />
     <int name="imsvoice.conference_subscribe_type_int" value="0" />
@@ -18401,6 +18588,7 @@
   <carrier_config mcc="505" mnc="06" name="Planet 3">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18429,6 +18617,11 @@
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="2097152" />
     <boolean name="support_video_conference_call_bool" value="true" />
+  </carrier_config>
+  <!-- open.50538.72d2837582f3 -->
+  <carrier_config mcc="505" mnc="38" name="Crazy John's">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.50539.a56b68cdddde -->
   <carrier_config mcc="505" mnc="39" name="Telstra">
@@ -18565,6 +18758,7 @@
   </carrier_config>
   <!-- open.51001.de3a128b1e5b -->
   <carrier_config mcc="510" mnc="01" name="INDOSAT">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -18573,10 +18767,13 @@
   </carrier_config>
   <!-- open.51008.f30af3b6387f -->
   <carrier_config mcc="510" mnc="08" name="AXIS">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
   </carrier_config>
   <!-- open.51009.5e95ed52fc49 -->
   <carrier_config mcc="510" mnc="09" name="Smartfren">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -18584,6 +18781,7 @@
   <!-- open.51010.71c745473f31 -->
   <carrier_config mcc="510" mnc="10" name="Telkomsel">
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18594,6 +18792,7 @@
   </carrier_config>
   <!-- open.51011.a3a900e26594 -->
   <carrier_config mcc="510" mnc="11" name="XL">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -18610,6 +18809,7 @@
   </carrier_config>
   <!-- open.51028.20eee8f372df -->
   <carrier_config mcc="510" mnc="28" name="Smartfren">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -18625,6 +18825,7 @@
   </carrier_config>
   <!-- open.51089.0b4016c56c50 -->
   <carrier_config mcc="510" mnc="89" name="3">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -18654,6 +18855,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18774,6 +18976,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18796,6 +18999,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18827,6 +19031,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18855,6 +19060,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18883,6 +19089,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -18927,6 +19134,7 @@
       <item value="supl" />
       <item value="dun" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -19085,6 +19293,12 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
+  <!-- open.52598.50e255cfff43 -->
+  <carrier_config mcc="525" mnc="98" name="Carrier 52598">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.52801.287c28b5ec60 -->
   <carrier_config mcc="528" mnc="01" name="Imagine">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -19148,6 +19362,7 @@
   <!-- open.53024.22668f168326 -->
   <carrier_config mcc="530" mnc="24" name="2-Degrees">
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19218,6 +19433,7 @@
   <!-- open.54705.59f15b21c71f -->
   <carrier_config mcc="547" mnc="05" name="Viti Pf">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -19343,6 +19559,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -19552,6 +19769,10 @@
     <int name="cdma_3waycall_flash_delay_int" value="0" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
+  <!-- open.61820.34a1c4ad7d31 -->
+  <carrier_config mcc="618" mnc="20" name="LIBTELCO">
+    <boolean name="carrier_volte_available_bool" value="true" />
+  </carrier_config>
   <!-- open.61905.4f0d75a74f37 -->
   <carrier_config mcc="619" mnc="05" name="Africell">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -19628,6 +19849,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.62140.2a4baf19cd5d -->
@@ -19821,6 +20043,7 @@
   </carrier_config>
   <!-- open.63910.2ee64c8d6eff -->
   <carrier_config mcc="639" mnc="10" name="Jamil Ke">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_volte_tty_supported_bool" value="false" />
     <boolean name="carrier_vt_available_bool" value="true" />
@@ -19833,6 +20056,7 @@
   <carrier_config mcc="639" mnc="11" name="Jambotel">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.64002.76f122ce91a1 -->
   <carrier_config mcc="640" mnc="02" name="Tigo">
@@ -20001,6 +20225,7 @@
   </carrier_config>
   <!-- open.64704.ba139bfa69f8 -->
   <carrier_config mcc="647" mnc="04" name="Zeop">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -20114,6 +20339,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -20138,6 +20364,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -20173,6 +20400,7 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -20193,27 +20421,43 @@
       <item value="dun" />
       <item value="supl" />
     </string-array>
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
   </carrier_config>
   <!-- open.65514.59c29e81a888 -->
   <carrier_config mcc="655" mnc="14" name="Liquid Mobile">
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
-  <!-- open.65538.1a6f4de26c18 -->
-  <carrier_config mcc="655" mnc="38" name="rain">
+  <!-- open.65519.10bd75a59d30 -->
+  <carrier_config mcc="655" mnc="19" name="Carrier 65519">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
+  <!-- open.65538.1a6f4de26c18 -->
+  <carrier_config mcc="655" mnc="38" name="rain">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.65573.e959a5dbd083 -->
   <carrier_config mcc="655" mnc="73" name="rain">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.65574.1b370decb34d -->
   <carrier_config mcc="655" mnc="74" name="Rain ZA">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
   <!-- open.70267.0137cb9bf2b4 -->
@@ -20236,6 +20480,7 @@
   <!-- open.70402.296aad482e1c -->
   <carrier_config mcc="704" mnc="02" name="TIGO">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="editable_enhanced_4g_lte_bool" value="false" />
@@ -20337,6 +20582,7 @@
   </carrier_config>
   <!-- open.708002.ff4c284629be -->
   <carrier_config mcc="708" mnc="002" name="Celtel Hn">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
   </carrier_config>
   <!-- open.70801.e0d696d703f7 -->
@@ -20346,6 +20592,7 @@
   </carrier_config>
   <!-- open.70802.65fc306aceab -->
   <carrier_config mcc="708" mnc="02" name="Tigo">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -20353,6 +20600,7 @@
   </carrier_config>
   <!-- open.708020.c71fffb96d98 -->
   <carrier_config mcc="708" mnc="020" name="INTERNET TIGO">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
@@ -20500,6 +20748,7 @@
   <!-- open.71606.889fa002c99b -->
   <carrier_config mcc="716" mnc="06" name="Movistar">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -20584,9 +20833,16 @@
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="maxMessageSize" value="307200" />
   </carrier_config>
+  <!-- open.722034.2c859d8c0813 -->
+  <carrier_config mcc="722" mnc="034" name="Carrier 722034">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_vt_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.72207.2b2212bf4c52 -->
   <carrier_config mcc="722" mnc="07" name="Movistar">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -20883,6 +21139,12 @@
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
   </carrier_config>
+  <!-- open.72438.39193c283b79 -->
+  <carrier_config mcc="724" mnc="38" name="Carrier 72438">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.72439.785163868cfd -->
   <carrier_config mcc="724" mnc="39" name="Nextel">
     <boolean name="carrier_volte_available_bool" value="true" />
@@ -20945,6 +21207,7 @@
   <!-- open.73003.2b576dc8c395 -->
   <carrier_config mcc="730" mnc="03" name="Claro">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="editable_wfc_mode_bool" value="false" />
@@ -20958,6 +21221,9 @@
   </carrier_config>
   <!-- open.73007.d6c2aac33f18 -->
   <carrier_config mcc="730" mnc="07" name="GTD Movil">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enableGroupMms" value="false" />
     <boolean name="enableMultipartSMS" value="true" />
     <boolean name="hide_ims_apn_bool" value="false" />
@@ -21016,6 +21282,7 @@
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="1" />
     <int name="carrier_default_wfc_ims_roaming_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -21031,6 +21298,7 @@
   <carrier_config mcc="732" mnc="103" name="UNE">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -21045,6 +21313,7 @@
   <carrier_config mcc="732" mnc="111" name="UNE">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -21068,6 +21337,7 @@
   <!-- open.732123.cfd5a39a7eb5 -->
   <carrier_config mcc="732" mnc="123" name="Movistar">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
@@ -21079,6 +21349,7 @@
   <carrier_config mcc="732" mnc="130" name="Avantel">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
     <int name="carrier_default_wfc_ims_mode_int" value="2" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -21193,6 +21464,7 @@
   <!-- open.74001.ed1f1ce2a467 -->
   <carrier_config mcc="740" mnc="01" name="CLARO">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -21244,6 +21516,7 @@
   </carrier_config>
   <!-- open.74405.b6ae5fbf5ed9 -->
   <carrier_config mcc="744" mnc="05" name="Personal Datos Py">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
@@ -21262,6 +21535,7 @@
   <carrier_config mcc="748" mnc="01" name="Antel">
     <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <boolean name="enabledMMS" value="true" />
     <boolean name="imssms.sms_over_ims_supported_bool" value="true" />
     <int name="maxMessageSize" value="512000" />
@@ -21283,6 +21557,7 @@
   </carrier_config>
   <!-- open.74810.bb6a7fe079dc -->
   <carrier_config mcc="748" mnc="10" name="Claro">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
     <boolean name="carrier_volte_available_bool" value="true" />
     <boolean name="carrier_vt_available_bool" value="true" />
     <boolean name="carrier_wfc_ims_available_bool" value="true" />
@@ -29326,6 +29601,12 @@
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
   </carrier_config>
+  <!-- open.24005.fd67aed67b47 -->
+  <carrier_config mcc="240" mnc="05" name="Carrier 24005" spn="\QTELIA\E">
+    <boolean name="carrier_supports_ss_over_ut_bool" value="true" />
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
+  </carrier_config>
   <!-- open.24006.bd96a4dfcfe1 -->
   <carrier_config mcc="240" mnc="06" name="Telavox Se" spn="\QTelavox\E">
     <boolean name="carrier_default_wfc_ims_enabled_bool" value="false" />
@@ -29405,6 +29686,8 @@
   </carrier_config>
   <!-- open.24024.ffe52758ae16 -->
   <carrier_config mcc="240" mnc="24" name="Carrier 24024" spn="\QTELE2\E">
+    <boolean name="carrier_volte_available_bool" value="true" />
+    <boolean name="carrier_wfc_ims_available_bool" value="true" />
     <int name="maxImageHeight" value="1944" />
     <int name="maxImageWidth" value="2592" />
     <int name="maxMessageSize" value="614400" />
