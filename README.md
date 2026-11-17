@@ -1,6 +1,6 @@
 # Open Carrier Data
 
-> **Early development.** Open Carrier Data is in early development. Data, formats, tools and apps change often, and values can be wrong or missing. Don't rely on it for anything important yet. Feedback and reports are welcome.
+> **Paused, data frozen (2026-11-17).** The automatic imports and publishes are switched off. The data on `main` stays as it is and is not updated: its `stale_after` date (2027-01-10 for most of it) still applies, and after it the data counts as too old to ship. A test on the maintainer's phone found that its own SIM worked the same with Android's built-in carrier settings, so the large database is not being kept up. Use the data only if you check it yourself. The tools and history stay here, and the pipeline can be switched on again.
 
 Open Carrier Data is a public database of mobile carrier settings. It stores neutral JSON carrier profiles in `carriers/open/` and turns them into Android APN and CarrierConfig files under `generated/`. It exists for ROM builders, carrier configuration apps, eSIM tools, and build systems. They can ship APN, MMS, IMS, RCS, and eSIM data locally instead of maintaining the same fixes alone. Phones read the packaged files at runtime. Nothing in this project is a network service.
 
